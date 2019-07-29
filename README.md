@@ -7,3 +7,6 @@ Anything inside the assets folder is proprietary. Some files can be freely downl
 
 If you have any questions regarding this game, feel free to write me an e-mail: antokolos@gmail.com
 
+# Related issues
+Shadows looks highly pixelated when using ConeTrace and simply incorrect when using RayTrace:
+https://github.com/godotengine/godot/issues/30929
