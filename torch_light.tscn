@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://torch_light.gd" type="Script" id=1]
+
+[node name="torch_light" type="OmniLight"]
+light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
+shadow_enabled = true
+shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
+omni_attenuation = 0.554785
+script = ExtResource( 1 )

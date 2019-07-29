@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_urania.png-c457a881a6e087fcf0b973a80c9901f1.image"
+
+[deps]
+
+source_file="res://assets/items/statue_urania.png"
+dest_files=[ "res://.import/statue_urania.png-c457a881a6e087fcf0b973a80c9901f1.image" ]
+
+[params]
+

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/vasya.escn" type="PackedScene" id=1]
+[ext_resource path="res://vasya.gd" type="Script" id=2]
+[ext_resource path="res://scenes/shocker.tscn" type="PackedScene" id=3]
+
+[node name="vasya" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="metarig002" parent="." index="0"]
+bones_in_world_transform = true
+
+[node name="male_casualsuit01Mesh" parent="metarig002" index="4"]
+transform = Transform( 0.109722, -5.82077e-011, 0, 0, -1.78759e-008, -0.109722, 5.82077e-011, 0.109722, -1.78759e-008, -2.91038e-011, 0, -0.0543653 )
+
+[node name="shoes04Mesh" parent="metarig002" index="6"]
+transform = Transform( 0.109722, -5.82077e-011, 0, 0, -1.78759e-008, -0.109722, 5.82077e-011, 0.109722, -1.78759e-008, -2.91038e-011, 0, -0.0543653 )
+
+[node name="short02Mesh" parent="metarig002" index="7"]
+transform = Transform( 0.109722, -5.82077e-011, 0, 0, -1.78759e-008, -0.109722, 5.82077e-011, 0.109722, -1.78759e-008, -2.91038e-011, 0, -0.0543653 )
+
+[node name="shocker" parent="." index="1" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.210881, 1.20413, 0.144724 )

@@ -1,0 +1,438 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://tablet.gd" type="Script" id=1]
+[ext_resource path="res://chat.gd" type="Script" id=2]
+[ext_resource path="res://StoryNode.cs" type="Script" id=3]
+[ext_resource path="res://assets/ui/lightblue_equirectangular.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/80-80_white.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/gear.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/home-button.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/home-button-pressed.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/home-button-hover.png" type="Texture" id=9]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 2048, 1024 )
+
+[node name="tablet" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="TabletPanel" type="Panel" parent="."]
+anchor_left = 0.32
+anchor_top = 0.01
+anchor_right = 0.68
+anchor_bottom = 0.99
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panelf = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
+custom_styles/panelnc = SubResource( 3 )
+
+[node name="TabletScreen" type="PanelContainer" parent="TabletPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = -40.0
+margin_bottom = -40.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="apps" type="Container" parent="TabletPanel/TabletScreen"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 604.2
+margin_bottom = 971.4
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="chat" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="StoryNode" type="Node" parent="TabletPanel/TabletScreen/apps/chat"]
+script = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/chat"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChatWindow" type="RichTextLabel" parent="TabletPanel/TabletScreen/apps/chat/VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+bbcode_enabled = true
+scroll_following = true
+
+[node name="InfoLabel" type="Label" parent="TabletPanel/TabletScreen/apps/chat/VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="settings_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+
+[node name="HTabletOrientation" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_right = 577.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation"]
+margin_top = 3.0
+margin_right = 113.0
+margin_bottom = 17.0
+text = "Tablet orientation"
+
+[node name="TabletOrientation" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation"]
+margin_left = 117.0
+margin_right = 156.0
+margin_bottom = 20.0
+
+[node name="HVsync" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 24.0
+margin_right = 577.0
+margin_bottom = 48.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync"]
+margin_top = 5.0
+margin_right = 37.0
+margin_bottom = 19.0
+text = "Vsync"
+
+[node name="Vsync" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync"]
+margin_left = 41.0
+margin_right = 65.0
+margin_bottom = 24.0
+pressed = true
+
+[node name="HFullscreen" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 52.0
+margin_right = 577.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen"]
+margin_top = 5.0
+margin_right = 66.0
+margin_bottom = 19.0
+text = "Fullscreen"
+
+[node name="Fullscreen" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen"]
+margin_left = 70.0
+margin_right = 94.0
+margin_bottom = 24.0
+
+[node name="HQuality" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 80.0
+margin_right = 577.0
+margin_bottom = 100.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality"]
+margin_top = 3.0
+margin_right = 46.0
+margin_bottom = 17.0
+text = "Quality"
+
+[node name="Quality" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality"]
+margin_left = 50.0
+margin_right = 89.0
+margin_bottom = 20.0
+
+[node name="HResolution" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 104.0
+margin_right = 577.0
+margin_bottom = 124.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution"]
+margin_top = 3.0
+margin_right = 68.0
+margin_bottom = 17.0
+text = "Resolution"
+
+[node name="Resolution" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution"]
+margin_left = 72.0
+margin_right = 111.0
+margin_bottom = 20.0
+
+[node name="HAA" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 128.0
+margin_right = 577.0
+margin_bottom = 148.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA"]
+margin_top = 3.0
+margin_right = 79.0
+margin_bottom = 17.0
+text = "Anti-aliasing"
+
+[node name="AA" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA"]
+margin_left = 83.0
+margin_right = 122.0
+margin_bottom = 20.0
+
+[node name="HLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 152.0
+margin_right = 577.0
+margin_bottom = 172.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage"]
+margin_top = 3.0
+margin_right = 59.0
+margin_bottom = 17.0
+text = "Language"
+
+[node name="Language" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage"]
+margin_left = 63.0
+margin_right = 102.0
+margin_bottom = 20.0
+
+[node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 604.2
+margin_bottom = 971.4
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 4 )
+
+[node name="GridContainer" type="GridContainer" parent="TabletPanel/TabletScreen/desktop"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 20
+custom_constants/hseparation = 20
+columns = 3
+
+[node name="VChatContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+visible = false
+margin_right = 80.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HChatContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="ChatButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "Chat"
+align = 1
+valign = 2
+
+[node name="VMapContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+visible = false
+margin_right = 80.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HMapContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="MapButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer/HMapContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "Map"
+align = 1
+valign = 2
+
+[node name="VDocumentsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+visible = false
+margin_right = 80.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HDocumentsContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="DocumentsButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer/HDocumentsContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "Documents"
+align = 1
+valign = 2
+
+[node name="VInventoryContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+visible = false
+margin_right = 80.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HInventoryContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="InventoryButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer/HInventoryContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "Inventory"
+align = 1
+valign = 2
+
+[node name="VSettingsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_right = 80.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HSettingsContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="SettingsButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HSettingsContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 6 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "Settings"
+align = 1
+valign = 2
+
+[node name="VSystemContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+visible = false
+margin_left = 100.0
+margin_right = 180.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HSystemContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="SystemButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer/HSystemContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer"]
+margin_top = 84.0
+margin_right = 80.0
+margin_bottom = 98.0
+text = "System"
+align = 1
+valign = 2
+
+[node name="HomeButton" type="TextureButton" parent="TabletPanel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -40.0
+margin_right = 20.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 9 )
+[connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/Quality" to="." method="_on_Quality_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer/ChatButton" to="." method="_on_ChatButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HSettingsContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="TabletPanel/HomeButton" to="." method="_on_HomeButton_pressed"]
