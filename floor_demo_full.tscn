@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_1.tscn" type="PackedScene" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://scenes/column_3_half_2.tscn" type="PackedScene" id=35]
 [ext_resource path="res://scenes/column_3_half_3.tscn" type="PackedScene" id=36]
 [ext_resource path="res://scenes/column_3_half_4.tscn" type="PackedScene" id=37]
+[ext_resource path="res://baked_lightmap.gd" type="Script" id=38]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
@@ -310,10 +311,14 @@ transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.723
 [node name="column_3_half_5" parent="." instance=ExtResource( 37 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4423, 1.49637, -11.7263 )
 
-[node name="BakedLightmap" type="BakedLightmap" parent="."]
+[node name="BakedLightmap" type="BakedLightmap" parent="." groups=[
+"lightmaps",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.67306, 9.01957, 3.81598 )
+bake_energy = 2.5
 bake_extents = Vector3( 15.9858, 10, 29.7424 )
 image_path = "res://light_data/floor_demo_full"
+script = ExtResource( 38 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]

@@ -89,6 +89,7 @@ func change_quality(quality):
 			get_tree().call_group("fire_sources", "set_quality_normal")
 			get_tree().call_group("light_sources", "enable", false)
 			get_tree().call_group("light_sources", "shadow_enable", false)
+			get_tree().call_group("lightmaps", "enable", true)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
 		settings.QUALITY_OPT:
@@ -98,6 +99,7 @@ func change_quality(quality):
 			get_tree().call_group("fire_sources", "set_quality_optimal")
 			get_tree().call_group("light_sources", "enable", false)
 			get_tree().call_group("light_sources", "shadow_enable", false)
+			get_tree().call_group("lightmaps", "enable", true)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
 		settings.QUALITY_GOOD:
@@ -107,6 +109,7 @@ func change_quality(quality):
 			get_tree().call_group("fire_sources", "set_quality_good")
 			get_tree().call_group("light_sources", "enable", true)
 			get_tree().call_group("light_sources", "shadow_enable", false)
+			get_tree().call_group("lightmaps", "enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
 		settings.QUALITY_HIGH:
@@ -116,6 +119,7 @@ func change_quality(quality):
 			get_tree().call_group("fire_sources", "set_quality_high")
 			get_tree().call_group("light_sources", "enable", true)
 			get_tree().call_group("light_sources", "shadow_enable", true)
+			get_tree().call_group("lightmaps", "enable", false)
 			flashlight.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", true)
 	get_node("Rotation_Helper/Camera/viewpoint/shader_cache").refresh()
