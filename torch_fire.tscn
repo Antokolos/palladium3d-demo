@@ -76,3 +76,8 @@ angle_random = 1.0
 scale_amount = 0.3
 scale_amount_random = 0.5
 color_ramp = SubResource( 5 )
+
+[node name="ExtinguishTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="ExtinguishTimer" to="." method="_on_ExtinguishTimer_timeout"]
