@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_1.tscn" type="PackedScene" id=2]
@@ -27,17 +27,15 @@
 [ext_resource path="res://chest_bottom.gd" type="Script" id=25]
 [ext_resource path="res://text_4.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/ceiling_moving_2.tscn" type="PackedScene" id=27]
-[ext_resource path="res://scenes/torch_wall.tscn" type="PackedScene" id=28]
-[ext_resource path="res://torch_fire.tscn" type="PackedScene" id=29]
-[ext_resource path="res://torch_light.tscn" type="PackedScene" id=30]
-[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=31]
-[ext_resource path="res://scenes/floor_demo.tscn" type="PackedScene" id=32]
-[ext_resource path="res://scenes/ceiling_2.tscn" type="PackedScene" id=33]
-[ext_resource path="res://scenes/column_3_half_1.tscn" type="PackedScene" id=34]
-[ext_resource path="res://scenes/column_3_half_2.tscn" type="PackedScene" id=35]
-[ext_resource path="res://scenes/column_3_half_3.tscn" type="PackedScene" id=36]
-[ext_resource path="res://scenes/column_3_half_4.tscn" type="PackedScene" id=37]
-[ext_resource path="res://baked_lightmap.gd" type="Script" id=38]
+[ext_resource path="res://torch_full.tscn" type="PackedScene" id=28]
+[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=29]
+[ext_resource path="res://scenes/floor_demo.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/ceiling_2.tscn" type="PackedScene" id=31]
+[ext_resource path="res://scenes/column_3_half_1.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scenes/column_3_half_2.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scenes/column_3_half_3.tscn" type="PackedScene" id=34]
+[ext_resource path="res://scenes/column_3_half_4.tscn" type="PackedScene" id=35]
+[ext_resource path="res://baked_lightmap.gd" type="Script" id=36]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
@@ -57,21 +55,16 @@ extents = Vector3( 0.18048, 0.556927, 0.223631 )
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.46938, 0.02, 0.370902 )
 
-[sub_resource type="CylinderMesh" id=6]
-top_radius = 0.11
-bottom_radius = 0.11
-height = 0.01
-
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 2.29507, 2.67184, 4.90563 )
 
-[sub_resource type="CylinderShape" id=8]
+[sub_resource type="CylinderShape" id=7]
 radius = 4.21339
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 2.22422, 1, 0.925723 )
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 1.71043, 1, 2.39451 )
 
 [node name="floor_demo_full" type="Spatial"]
@@ -206,134 +199,76 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4801, 4.16082, -16.9074 )
 [node name="ceiling_moving_2" parent="." instance=ExtResource( 27 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 11.5697, 7.46452, -11.5707 )
 
-[node name="torch_wall" parent="." instance=ExtResource( 28 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98722, 3.964, -3.362 )
+[node name="torch_full" parent="." instance=ExtResource( 28 )]
 
-[node name="torch_fire" parent="torch_wall" groups=[
-"fire_sources",
-] instance=ExtResource( 29 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.3, 0.3, 0 )
+[node name="torch_full2" parent="." instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61169, 3.964, -8.4701 )
 
-[node name="torch_light" parent="torch_wall" groups=[
-"light_sources",
-] instance=ExtResource( 30 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.508, 0 )
+[node name="torch_full3" parent="." instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55626, 3.964, -12.6261 )
 
-[node name="MeshInstance" type="MeshInstance" parent="torch_wall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0 )
-mesh = SubResource( 6 )
-material/0 = null
+[node name="torch_full4" parent="." instance=ExtResource( 28 )]
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.44923, 3.964, 1.02825 )
 
-[node name="torch_wall2" parent="." instance=ExtResource( 28 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61147, 3.964, -8.473 )
-
-[node name="torch_fire2" parent="torch_wall2" groups=[
-"fire_sources",
-] instance=ExtResource( 29 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.3, 0.3, 0 )
-
-[node name="torch_light" parent="torch_wall2" groups=[
-"light_sources",
-] instance=ExtResource( 30 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.508, 0 )
-
-[node name="MeshInstance" type="MeshInstance" parent="torch_wall2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.299941, 0.299682, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="torch_wall3" parent="." instance=ExtResource( 28 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55689, 3.964, -12.63 )
-
-[node name="torch_fire3" parent="torch_wall3" groups=[
-"fire_sources",
-] instance=ExtResource( 29 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.3, 0.3, 0 )
-
-[node name="torch_light" parent="torch_wall3" groups=[
-"light_sources",
-] instance=ExtResource( 30 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.508, 0 )
-
-[node name="MeshInstance" type="MeshInstance" parent="torch_wall3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="torch_wall4" parent="." instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.45183, 3.96366, 1.02817 )
-
-[node name="torch_fire4" parent="torch_wall4" groups=[
-"fire_sources",
-] instance=ExtResource( 29 )]
-transform = Transform( 0.999998, 0, -2.22045e-015, 0, -4.37114e-008, 1, 2.6077e-008, -1, -4.37114e-008, -0.3, 0.3, 0 )
-
-[node name="torch_light" parent="torch_wall4" groups=[
-"light_sources",
-] instance=ExtResource( 30 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.508, 0 )
-
-[node name="MeshInstance" type="MeshInstance" parent="torch_wall4"]
-transform = Transform( -0.999156, 0, -0.0410719, 0, 1, 0, 0.0410719, 0, -0.999156, -0.3, 0.3, 0 )
-mesh = SubResource( 6 )
-material/0 = null
+[node name="torch_full5" parent="." instance=ExtResource( 28 )]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 10.2314, 3.964, 2.03201 )
 
 [node name="AreaDeadEnd" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.024, 4.1691, -14.0941 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="AreaApata" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaApata"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8601, 2.56802, -14.6261 )
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="AreaMuses" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaMuses"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8538, 2.49317, -18.3981 )
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="AreaApataDone" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaApataDone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02142, 3.33161, -15.2891 )
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 
-[node name="column_3" parent="." instance=ExtResource( 31 )]
+[node name="column_3" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -4.09756 )
 
-[node name="column_4" parent="." instance=ExtResource( 31 )]
+[node name="column_4" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -9.4252 )
 
-[node name="column_5" parent="." instance=ExtResource( 31 )]
+[node name="column_5" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -13.2711 )
 
-[node name="floor_demo" parent="." instance=ExtResource( 32 )]
+[node name="floor_demo" parent="." instance=ExtResource( 30 )]
 
-[node name="ceiling_2" parent="." instance=ExtResource( 33 )]
+[node name="ceiling_2" parent="." instance=ExtResource( 31 )]
 
-[node name="column_3_half_1" parent="." instance=ExtResource( 34 )]
+[node name="column_3_half_1" parent="." instance=ExtResource( 32 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 2.861, 1.63342, 1.86201 )
 
-[node name="column_3_half_8" parent="." instance=ExtResource( 34 )]
+[node name="column_3_half_8" parent="." instance=ExtResource( 32 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.2938, 1.63342, -6.69589 )
 
-[node name="column_3_half_2" parent="." instance=ExtResource( 35 )]
+[node name="column_3_half_2" parent="." instance=ExtResource( 33 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 17.9131, 1.48325, 2.06161 )
 
-[node name="column_3_half_6" parent="." instance=ExtResource( 35 )]
+[node name="column_3_half_6" parent="." instance=ExtResource( 33 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4213, 1.58236, -1.75063 )
 
-[node name="column_3_half_3" parent="." instance=ExtResource( 36 )]
+[node name="column_3_half_3" parent="." instance=ExtResource( 34 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 12.9615, 1.57532, 2.07701 )
 
-[node name="column_3_half_4" parent="." instance=ExtResource( 37 )]
+[node name="column_3_half_4" parent="." instance=ExtResource( 35 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.72398, 1.49637, 2.03438 )
 
-[node name="column_3_half_5" parent="." instance=ExtResource( 37 )]
+[node name="column_3_half_5" parent="." instance=ExtResource( 35 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4423, 1.49637, -11.7263 )
 
 [node name="BakedLightmap" type="BakedLightmap" parent="." groups=[
@@ -343,7 +278,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.67306, 9.01957, 3.81598 )
 bake_mode = 1
 bake_extents = Vector3( 15.9858, 10, 29.7424 )
 image_path = "res://light_data/floor_demo_full"
-script = ExtResource( 38 )
+script = ExtResource( 36 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
