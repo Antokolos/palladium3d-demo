@@ -15,7 +15,6 @@ onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
 
 var available_resolutions = [
-Vector2(0, 480),
 Vector2(0, 576),
 Vector2(0, 720),
 Vector2(0, 1080)

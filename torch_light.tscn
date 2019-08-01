@@ -4,9 +4,9 @@
 
 [node name="torch_light" type="OmniLight"]
 light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
-light_indirect_energy = 1.25
-light_bake_mode = 2
 shadow_enabled = true
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
-omni_attenuation = 0.554785
+shadow_bias = 0.1
+omni_range = 6.6
+omni_attenuation = 2.07054
 script = ExtResource( 1 )

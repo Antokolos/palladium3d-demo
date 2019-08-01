@@ -172,10 +172,11 @@ transform = Transform( -1, 8.74228e-008, 0, -8.74228e-008, -1, 0, 0, 0, 1, 0, 0,
 visible = false
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.8
-shadow_reverse_cull_face = true
-spot_range = 30.0
-spot_attenuation = 2.0
-spot_angle = 50.0
+shadow_bias = 0.3
+spot_range = 9.0
+spot_attenuation = 1.7411
+spot_angle = 42.0
+spot_angle_attenuation = 2.07053
 
 [node name="HUD" type="Control" parent="."]
 anchor_right = 1.0

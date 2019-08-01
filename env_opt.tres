@@ -5,7 +5,7 @@
 [resource]
 background_mode = 2
 background_sky = ExtResource( 1 )
-background_energy = 0.07
+background_energy = 0.05
 tonemap_mode = 2
 glow_enabled = true
 glow_levels/1 = true

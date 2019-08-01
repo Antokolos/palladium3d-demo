@@ -80,6 +80,13 @@ func _physics_process(delta):
 	use_point.highlight()
 	change_culling()
 
+# Settings applied in the following way will be loaded after game restart
+# see https://github.com/godotengine/godot/issues/30087
+#func apply_advanced_settings(force_vertex_shading):
+#	var config = ConfigFile.new()
+#	config.set_value("rendering", "quality/shading/force_vertex_shading", force_vertex_shading)
+#	config.save("user://settings.ini")
+
 func change_quality(quality):
 	match quality:
 		settings.QUALITY_NORM:
@@ -87,41 +94,41 @@ func change_quality(quality):
 			if giprobe:
 				giprobe.visible = false
 			get_tree().call_group("fire_sources", "set_quality_normal")
-			get_tree().call_group("light_sources", "enable", false)
-			get_tree().call_group("light_sources", "shadow_enable", false)
-			get_tree().call_group("lightmaps", "enable", true)
+			get_tree().call_group("light_sources", "set_quality_normal")
+			#get_tree().call_group("lightmaps", "enable", false)
 			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
+			get_viewport().shadow_atlas_size = 2048
 		settings.QUALITY_OPT:
 			camera.environment = env_opt
 			if giprobe:
 				giprobe.visible = false
 			get_tree().call_group("fire_sources", "set_quality_optimal")
-			get_tree().call_group("light_sources", "enable", false)
-			get_tree().call_group("light_sources", "shadow_enable", false)
-			get_tree().call_group("lightmaps", "enable", true)
+			get_tree().call_group("light_sources", "set_quality_optimal")
+			#get_tree().call_group("lightmaps", "enable", true)
 			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
+			get_viewport().shadow_atlas_size = 2048
 		settings.QUALITY_GOOD:
 			camera.environment = env_good
 			if giprobe:
 				giprobe.visible = true
 			get_tree().call_group("fire_sources", "set_quality_good")
-			get_tree().call_group("light_sources", "enable", true)
-			get_tree().call_group("light_sources", "shadow_enable", false)
-			get_tree().call_group("lightmaps", "enable", false)
+			get_tree().call_group("light_sources", "set_quality_good")
+			#get_tree().call_group("lightmaps", "enable", false)
 			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", false)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
+			get_viewport().shadow_atlas_size = 4096
 		settings.QUALITY_HIGH:
 			camera.environment = env_high
 			if giprobe:
 				giprobe.visible = true
 			get_tree().call_group("fire_sources", "set_quality_high")
-			get_tree().call_group("light_sources", "enable", true)
-			get_tree().call_group("light_sources", "shadow_enable", true)
-			get_tree().call_group("lightmaps", "enable", false)
+			get_tree().call_group("light_sources", "set_quality_high")
+			#get_tree().call_group("lightmaps", "enable", false)
 			flashlight.set("shadow_enabled", true)
-			ProjectSettings.set_setting("rendering/quality/voxel_cone_tracing/high_quality", true)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
+			get_viewport().shadow_atlas_size = 8192
 	get_node("Rotation_Helper/Camera/viewpoint/shader_cache").refresh()
 
 func process_input(delta):

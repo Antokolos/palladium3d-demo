@@ -1,7 +1,7 @@
 extends Spatial
 
 export var player_path = "../player"
-export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_2/StaticBodyFloor"
+export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
