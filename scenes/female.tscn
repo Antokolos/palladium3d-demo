@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/female.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/female.gd" type="Script" id=2]
 
-[sub_resource type="AnimationNodeAdd2" id=1]
-filter_enabled = true
-filters = [ ".:clavicle.L", ".:clavicle.R", ".:eye.L", ".:eye.R", ".:head", ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:lowerarm01.L", ".:lowerarm01.R", ".:neck01", ".:neck02", ".:neck03", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:orbicularis03.L", ".:orbicularis03.R", ".:orbicularis04.L", ".:orbicularis04.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:shoulder01.L", ".:shoulder01.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:special05.L", ".:special05.R", ".:special06.L", ".:special06.R", ".:spine01", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R", ".:upperarm01.L", ".:upperarm01.R", ".:upperarm02.L", ".:upperarm02.R" ]
-
-[sub_resource type="AnimationNodeAdd3" id=2]
+[sub_resource type="AnimationNodeAdd3" id=1]
 filter_enabled = true
 filters = [ ".:clavicle.L", ".:clavicle.R", ".:head", ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:lowerarm01.L", ".:lowerarm01.R", ".:neck01", ".:neck02", ".:neck03", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:shoulder01.L", ".:shoulder01.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:spine01", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R", ".:upperarm01.L", ".:upperarm01.R", ".:upperarm02.L", ".:upperarm02.R" ]
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "female_walk_2"
 
 [sub_resource type="AnimationNodeBlend2" id=3]
 filter_enabled = true
@@ -18,46 +18,53 @@ filters = [ ".:clavicle.L", ".:clavicle.R", ".:head", ".:jaw", ".:levator02.L", 
 filter_enabled = true
 filters = [ ".:clavicle.L", ".:clavicle.R", ".:head", ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:lowerarm01.L", ".:lowerarm01.R", ".:neck01", ".:neck02", ".:neck03", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:shoulder01.L", ".:shoulder01.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:spine01", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R", ".:upperarm01.L", ".:upperarm01.R", ".:upperarm02.L", ".:upperarm02.R" ]
 
-[sub_resource type="AnimationNodeBlend3" id=5]
+[sub_resource type="AnimationNodeBlend2" id=5]
+filter_enabled = true
+filters = [ ".:breast.L", ".:breast.R", ".:eye.L", ".:eye.R", ".:finger1-1.L", ".:finger1-1.R", ".:finger1-2.L", ".:finger1-2.R", ".:finger1-3.L", ".:finger1-3.R", ".:finger2-1.L", ".:finger2-1.R", ".:finger2-2.L", ".:finger2-2.R", ".:finger2-3.L", ".:finger2-3.R", ".:finger3-1.L", ".:finger3-1.R", ".:finger3-2.L", ".:finger3-2.R", ".:finger3-3.L", ".:finger3-3.R", ".:finger4-1.L", ".:finger4-1.R", ".:finger4-2.L", ".:finger4-2.R", ".:finger4-3.L", ".:finger4-3.R", ".:finger5-1.L", ".:finger5-1.R", ".:finger5-2.L", ".:finger5-2.R", ".:finger5-3.L", ".:finger5-3.R", ".:foot.L", ".:foot.R", ".:lowerleg01.L", ".:lowerleg01.R", ".:metacarpal1.L", ".:metacarpal1.R", ".:metacarpal2.L", ".:metacarpal2.R", ".:metacarpal3.L", ".:metacarpal3.R", ".:metacarpal4.L", ".:metacarpal4.R", ".:orbicularis03.L", ".:orbicularis03.R", ".:orbicularis04.L", ".:orbicularis04.R", ".:pelvis.L", ".:pelvis.R", ".:root", ".:special05.L", ".:special05.R", ".:special06.L", ".:special06.R", ".:spine02", ".:spine03", ".:spine04", ".:spine05", ".:toe1-1.L", ".:toe1-1.R", ".:toe1-2.L", ".:toe1-2.R", ".:toe2-1.L", ".:toe2-1.R", ".:toe2-2.L", ".:toe2-2.R", ".:toe2-3.L", ".:toe2-3.R", ".:toe3-1.L", ".:toe3-1.R", ".:toe3-2.L", ".:toe3-2.R", ".:toe3-3.L", ".:toe3-3.R", ".:toe4-1.L", ".:toe4-1.R", ".:toe4-2.L", ".:toe4-2.R", ".:toe4-3.L", ".:toe4-3.R", ".:toe5-1.L", ".:toe5-1.R", ".:toe5-2.L", ".:toe5-2.R", ".:toe5-3.L", ".:toe5-3.R", ".:upperleg01.L", ".:upperleg01.R", ".:upperleg02.L", ".:upperleg02.R", ".:wrist.L", ".:wrist.R" ]
 
-[sub_resource type="AnimationNodeAnimation" id=6]
-animation = "female_headturn_left"
+[sub_resource type="AnimationNodeBlend3" id=6]
 
 [sub_resource type="AnimationNodeAnimation" id=7]
-animation = "female_headturn_right"
+animation = "female_headturn_left"
 
 [sub_resource type="AnimationNodeAnimation" id=8]
+animation = "female_headturn_right"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "female_rest_99"
 
-[sub_resource type="AnimationNodeBlendTree" id=9]
-graph_offset = Vector2( -37.1042, -9.49246 )
-nodes/Add2/node = SubResource( 1 )
-nodes/Add2/position = Vector2( -240, 140 )
-nodes/Add3/node = SubResource( 2 )
-nodes/Add3/position = Vector2( 1020, 240 )
-nodes/Blend2/node = SubResource( 3 )
-nodes/Blend2/position = Vector2( 660, -20 )
-nodes/Blend2_Main/node = SubResource( 4 )
-nodes/Blend2_Main/position = Vector2( 920, 40 )
-nodes/Blend3/node = SubResource( 5 )
-nodes/Blend3/position = Vector2( 740, 260 )
-nodes/female_headturn_left/node = SubResource( 6 )
+[sub_resource type="AnimationNodeBlendTree" id=10]
+graph_offset = Vector2( 172.007, 0 )
+nodes/Add3_temp/node = SubResource( 1 )
+nodes/Add3_temp/position = Vector2( 40, 40 )
+nodes/Animation/node = SubResource( 2 )
+nodes/Animation/position = Vector2( 734, 306.928 )
+nodes/Blend2_Aux/node = SubResource( 3 )
+nodes/Blend2_Aux/position = Vector2( 660, -20 )
+nodes/Blend2_Head/node = SubResource( 4 )
+nodes/Blend2_Head/position = Vector2( 920, 40 )
+nodes/Blend2_Walk/node = SubResource( 5 )
+nodes/Blend2_Walk/position = Vector2( 1120, 220 )
+nodes/Blend3_temp/node = SubResource( 6 )
+nodes/Blend3_temp/position = Vector2( 40, 260 )
+nodes/female_headturn_left/node = SubResource( 7 )
 nodes/female_headturn_left/position = Vector2( 260, 280 )
-nodes/female_headturn_right/node = SubResource( 7 )
+nodes/female_headturn_right/node = SubResource( 8 )
 nodes/female_headturn_right/position = Vector2( 260, 140 )
-nodes/female_rest/node = SubResource( 8 )
+nodes/female_rest/node = SubResource( 9 )
 nodes/female_rest/position = Vector2( 280, 0 )
-nodes/output/position = Vector2( 1200, 40 )
-node_connections = [ "output", 0, "Blend2_Main", "Blend2", 0, "female_rest", "Blend2", 1, "female_headturn_right", "Blend2_Main", 0, "Blend2", "Blend2_Main", 1, "female_headturn_left" ]
+nodes/output/position = Vector2( 1400, 140 )
+node_connections = [ "output", 0, "Blend2_Walk", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "female_headturn_left", "Blend2_Aux", 0, "female_rest", "Blend2_Aux", 1, "female_headturn_right", "Blend2_Walk", 0, "Blend2_Head", "Blend2_Walk", 1, "Animation" ]
 
 [node name="female" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 9 )
+tree_root = SubResource( 10 )
 anim_player = NodePath("../Female_palladium/AnimationPlayer")
 active = true
-parameters/Add2/add_amount = 1.0
-parameters/Add3/add_amount = 1.0
-parameters/Blend2/blend_amount = 1.0
-parameters/Blend2_Main/blend_amount = 0.5
-parameters/Blend3/blend_amount = -1.0
+parameters/Add3_temp/add_amount = 1.0
+parameters/Blend2_Aux/blend_amount = 1.0
+parameters/Blend2_Head/blend_amount = 0.5
+parameters/Blend2_Walk/blend_amount = 1.0
+parameters/Blend3_temp/blend_amount = -1.0

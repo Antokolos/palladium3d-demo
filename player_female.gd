@@ -5,7 +5,7 @@ export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/St
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
-onready var anim_player = $Rotation_Helper/Model/female/Female_palladium/AnimationPlayer
+onready var female = get_node("Rotation_Helper/Model/female")
 onready var pyramid = get_node("/root/palladium")
 onready var pathfinder = $pathfinder
 const ANGLE_TOLERANCE = 0.01
@@ -27,9 +27,9 @@ var exclusions = []
 var pathfinder_stop_sheduled = false
 
 func _ready():
-	anim_player.get_animation("female_rest_99").set_loop(true)
-	anim_player.get_animation("female_walk_2").set_loop(true)
-	anim_player.connect("animation_finished", self, "_on_female_anim_finished")
+	# Should be done in escn by editing it by hand, or even in Blender
+	#anim_player.get_animation("female_rest_99").set_loop(true)
+	#anim_player.get_animation("female_walk_2").set_loop(true)
 	exclusions.append(self)
 	exclusions.append(get_node(floor_path))
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
@@ -42,18 +42,35 @@ func _ready():
 		exclusions.append(player.get_node("Body_CollisionShape"))
 		exclusions.append(player.get_node("Feet_CollisionShape"))
 
-func _on_female_anim_finished(anim_name):
-#	anim_player.play(anim_name)
-	pass
+func get_viewpoint_vector():
+	var eyepoint_pos = get_node("eyepoint").get_global_transform().origin
+	eyepoint_pos.y = 0
+	var viewpoint_pos = get_node("viewpoint").get_global_transform().origin
+	viewpoint_pos.y = 0
+	return viewpoint_pos - eyepoint_pos
 
-func change_animation(animation_name, from_end = false, speed = 1.0):
-	if not animation_name:
-		anim_player.stop()
-		return
-	
-	if cur_animation != animation_name:
-		cur_animation = animation_name
-		anim_player.play(animation_name, 1, -speed if from_end else speed, from_end)
+func get_player_vector():
+	var player = get_node(player_path)
+	if not player:
+		return Vector3(0, 0, 0)
+	var eyepoint_pos = get_node("eyepoint").get_global_transform().origin
+	eyepoint_pos.y = 0
+	var player_pos = player.get_node("Rotation_Helper/Camera").get_global_transform().origin
+	player_pos.y = 0
+	return player_pos - eyepoint_pos
+
+func get_angle_to_player():
+	var player_vector = get_player_vector().normalized()
+	if player_vector.length() == 0:
+		return 0.0
+	var viewpoint_vector = get_viewpoint_vector().normalized()
+	var cross = viewpoint_vector.cross(player_vector)
+	var clen = cross.length()
+	if clen > 1.0:
+		clen = 1.0
+	elif clen < -1.0:
+		clen = -1.0
+	return rad2deg(asin(clen)) if cross.y > 0 else -rad2deg(asin(clen))
 
 func get_rotation_angle(cur_dir, target_dir, force_forward = true):
 	var c = cur_dir.normalized()
@@ -93,14 +110,14 @@ func follow(state, current_transform, target_position):
 	if not path.empty():
 		if distance <= ALIGNMENT_RANGE:
 			path.pop_front()
-		change_animation("female_walk_2", false, 1.0)
+		female.walk(get_angle_to_player())
 		state.set_linear_velocity(target_dir.normalized() * linear_speed)
 	elif distance > CLOSEUP_RANGE:
-		change_animation("female_walk_2", false, 1.0)
+		female.walk(get_angle_to_player())
 		state.set_linear_velocity(target_dir.normalized() * linear_speed)
 	else:
 #		aggression_level = 0
-		change_animation("female_rest_99")
+		female.look(get_angle_to_player())
 		state.set_angular_velocity(zero_dir)
 
 func can_move_without_collision(motion):
