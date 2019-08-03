@@ -11,6 +11,7 @@ onready var pathfinder = $pathfinder
 const ANGLE_TOLERANCE = 0.01
 
 const CONVERSATION_RANGE = 7
+const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 
@@ -25,6 +26,9 @@ var stuck_frames = 0
 
 var exclusions = []
 var pathfinder_stop_sheduled = false
+
+enum COMPANION_STATE {REST, WALK, RUN}
+var companion_state = COMPANION_STATE.REST
 
 func _ready():
 	# Should be done in escn by editing it by hand, or even in Blender
@@ -108,15 +112,21 @@ func follow(state, current_transform, target_position):
 		conversation_manager.stop_conversation(get_node(player_path))
 	
 	if not path.empty():
+		companion_state = COMPANION_STATE.WALK
 		if distance <= ALIGNMENT_RANGE:
 			path.pop_front()
 		female.walk(get_angle_to_player())
 		state.set_linear_velocity(target_dir.normalized() * linear_speed)
-	elif distance > CLOSEUP_RANGE:
+	elif distance > FOLLOW_RANGE:
+		companion_state = COMPANION_STATE.WALK
+		female.walk(get_angle_to_player())
+		state.set_linear_velocity(target_dir.normalized() * linear_speed)
+	elif distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK:
 		female.walk(get_angle_to_player())
 		state.set_linear_velocity(target_dir.normalized() * linear_speed)
 	else:
 #		aggression_level = 0
+		companion_state = COMPANION_STATE.REST
 		female.look(get_angle_to_player())
 		state.set_angular_velocity(zero_dir)
 

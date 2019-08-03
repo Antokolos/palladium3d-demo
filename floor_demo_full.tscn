@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_1.tscn" type="PackedScene" id=2]
@@ -14,28 +14,32 @@
 [ext_resource path="res://scenes/text_3.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/statue_4.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/granite_base_3.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/vase_8.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/vase_7.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/vase_6.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/vase_5.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/vase_6.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/vase_5.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/vase_3.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/vase_8.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/vase_4.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/vase_3.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/vase_1.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/vase_2.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/text_1.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=24]
-[ext_resource path="res://chest_bottom.gd" type="Script" id=25]
-[ext_resource path="res://text_4.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/ceiling_moving_2.tscn" type="PackedScene" id=27]
-[ext_resource path="res://torch_full.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=29]
-[ext_resource path="res://scenes/floor_demo.tscn" type="PackedScene" id=30]
-[ext_resource path="res://scenes/ceiling_2.tscn" type="PackedScene" id=31]
-[ext_resource path="res://scenes/column_3_half_1.tscn" type="PackedScene" id=32]
-[ext_resource path="res://scenes/column_3_half_2.tscn" type="PackedScene" id=33]
-[ext_resource path="res://scenes/column_3_half_3.tscn" type="PackedScene" id=34]
-[ext_resource path="res://scenes/column_3_half_4.tscn" type="PackedScene" id=35]
-[ext_resource path="res://baked_lightmap.gd" type="Script" id=36]
+[ext_resource path="res://scenes/spider_small.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/vase_7.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/vase_1.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/vase_2.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/text_1.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=25]
+[ext_resource path="res://chest_bottom.gd" type="Script" id=26]
+[ext_resource path="res://text_4.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/ceiling_moving_2.tscn" type="PackedScene" id=28]
+[ext_resource path="res://torch_full.tscn" type="PackedScene" id=29]
+[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/floor_demo.tscn" type="PackedScene" id=31]
+[ext_resource path="res://scenes/ceiling_2.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scenes/column_3_half_1.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scenes/column_3_half_2.tscn" type="PackedScene" id=34]
+[ext_resource path="res://scenes/column_3_half_3.tscn" type="PackedScene" id=35]
+[ext_resource path="res://scenes/column_3_half_4.tscn" type="PackedScene" id=36]
+[ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=37]
+[ext_resource path="res://scenes/spider_web_2.tscn" type="PackedScene" id=38]
+[ext_resource path="res://baked_lightmap.gd" type="Script" id=39]
+[ext_resource path="res://scenes/rat_grey.tscn" type="PackedScene" id=40]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
@@ -149,68 +153,76 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7816, 1.49921, -10.8702 )
 [node name="granite_base_4" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72264, 1.63741, -18.9329 )
 
-[node name="vase_8" parent="granite_base_4" instance=ExtResource( 15 )]
-
-[node name="vase_7" parent="granite_base_4" instance=ExtResource( 16 )]
-transform = Transform( -0.689322, 0, -0.724455, 0, 1, 0, 0.724455, 0, -0.689322, 6.4985, 0.622998, 0.145529 )
-
-[node name="vase_6" parent="granite_base_4" instance=ExtResource( 17 )]
+[node name="vase_6" parent="granite_base_4" instance=ExtResource( 15 )]
 transform = Transform( 0.282367, 0.887932, 0.363104, 0.00872518, 0.376114, -0.926532, -0.959267, 0.26479, 0.0984549, -0.143509, 0.638411, -0.340303 )
 
-[node name="vase_5" parent="granite_base_4" instance=ExtResource( 18 )]
+[node name="vase_5" parent="granite_base_4" instance=ExtResource( 16 )]
 transform = Transform( 0.266005, 0, 0.963972, 0, 1, 0, -0.963972, 0, 0.266005, -0.222795, 0.622285, 0 )
 
-[node name="vase_4" parent="granite_base_4" instance=ExtResource( 19 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.403918, -0.0188807, 7.79819 )
-
-[node name="vase_9" parent="granite_base_4" instance=ExtResource( 19 )]
-transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, -0.417255, -0.014663, 8.83364 )
-
-[node name="vase_3" parent="granite_base_4" instance=ExtResource( 20 )]
+[node name="vase_3" parent="granite_base_4" instance=ExtResource( 17 )]
 transform = Transform( -0.83682, 0, 0.547477, 0, 1, 0, -0.547477, 0, -0.83682, 0.06427, 0.614901, 0.188084 )
 
-[node name="vase_1" parent="granite_base_4" instance=ExtResource( 21 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72145, 0.62881, 0 )
+[node name="vase_8" parent="." instance=ExtResource( 18 )]
+transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 1.05273, 1.63741, -14.2118 )
 
-[node name="vase_2" parent="granite_base_4" instance=ExtResource( 22 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19101, 0.63276, -0.197407 )
+[node name="vase_4" parent="." instance=ExtResource( 19 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.31872, 1.61853, -11.1347 )
+
+[node name="vase_9" parent="." instance=ExtResource( 19 )]
+transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 8.30538, 1.62275, -10.0993 )
+
+[node name="vase_52" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.266005, 0, 0.963972, 0, 1, 0, -0.963972, 0, 0.266005, 20.8829, 1.5378, -14.0349 )
+
+[node name="spider_small" parent="vase_52" instance=ExtResource( 20 )]
+transform = Transform( -0.670786, 0.571057, 0.473224, 0.695452, 0.706, 0.133833, -0.25767, 0.418877, -0.870717, 1.90735e-006, 0.524231, -9.53674e-006 )
 
 [node name="granite_base_5" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9496, 1.6472, -18.9329 )
 
-[node name="text_1" parent="." instance=ExtResource( 23 )]
+[node name="vase_7" parent="granite_base_5" instance=ExtResource( 21 )]
+transform = Transform( -0.689322, 0, -0.724455, 0, 1, 0, 0.724455, 0, -0.689322, 0.27154, 0.613208, 0.145529 )
+
+[node name="vase_1" parent="granite_base_5" instance=ExtResource( 22 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.50551, 0.61902, 0 )
+
+[node name="vase_2" parent="granite_base_5" instance=ExtResource( 23 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0359497, 0.62297, -0.197407 )
+
+[node name="text_1" parent="." instance=ExtResource( 24 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0881, 3.32825, -21.6701 )
 
-[node name="chest_2" parent="." instance=ExtResource( 24 )]
+[node name="chest_2" parent="." instance=ExtResource( 25 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7455, 2.12253, -10.8603 )
 
 [node name="chest_bottom" type="Spatial" parent="chest_2"]
 
 [node name="StaticBody" type="StaticBody" parent="chest_2/chest_bottom"]
-script = ExtResource( 25 )
+script = ExtResource( 26 )
 
 [node name="CollisionShape" type="CollisionShape" parent="chest_2/chest_bottom/StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0745938, 0 )
 shape = SubResource( 5 )
 
-[node name="text_4" parent="." instance=ExtResource( 26 )]
+[node name="text_4" parent="." instance=ExtResource( 27 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4801, 4.16082, -16.9074 )
 
-[node name="ceiling_moving_2" parent="." instance=ExtResource( 27 )]
+[node name="ceiling_moving_2" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 11.5697, 7.46452, -11.5707 )
 
-[node name="torch_full" parent="." instance=ExtResource( 28 )]
+[node name="torch_full" parent="." instance=ExtResource( 29 )]
 
-[node name="torch_full2" parent="." instance=ExtResource( 28 )]
+[node name="torch_full2" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61169, 3.964, -8.4701 )
 
-[node name="torch_full3" parent="." instance=ExtResource( 28 )]
+[node name="torch_full3" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55626, 3.964, -12.6261 )
 
-[node name="torch_full4" parent="." instance=ExtResource( 28 )]
+[node name="torch_full4" parent="." instance=ExtResource( 29 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.44923, 3.964, 1.02825 )
 
-[node name="torch_full5" parent="." instance=ExtResource( 28 )]
+[node name="torch_full5" parent="." instance=ExtResource( 29 )]
 transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 10.2314, 3.964, 2.03201 )
 
 [node name="AreaDeadEnd" type="Area" parent="."]
@@ -237,39 +249,49 @@ shape = SubResource( 8 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02142, 3.33161, -15.2891 )
 shape = SubResource( 9 )
 
-[node name="column_3" parent="." instance=ExtResource( 29 )]
+[node name="column_3" parent="." instance=ExtResource( 30 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -4.09756 )
 
-[node name="column_4" parent="." instance=ExtResource( 29 )]
+[node name="column_4" parent="." instance=ExtResource( 30 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -9.4252 )
 
-[node name="column_5" parent="." instance=ExtResource( 29 )]
+[node name="column_5" parent="." instance=ExtResource( 30 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -13.2711 )
 
-[node name="floor_demo" parent="." instance=ExtResource( 30 )]
+[node name="floor_demo" parent="." instance=ExtResource( 31 )]
 
-[node name="ceiling_2" parent="." instance=ExtResource( 31 )]
+[node name="ceiling_2" parent="." instance=ExtResource( 32 )]
 
-[node name="column_3_half_1" parent="." instance=ExtResource( 32 )]
+[node name="column_3_half_1" parent="." instance=ExtResource( 33 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 2.861, 1.63342, 1.86201 )
 
-[node name="column_3_half_8" parent="." instance=ExtResource( 32 )]
+[node name="column_3_half_8" parent="." instance=ExtResource( 33 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.2938, 1.63342, -6.69589 )
 
-[node name="column_3_half_2" parent="." instance=ExtResource( 33 )]
+[node name="column_3_half_2" parent="." instance=ExtResource( 34 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 17.9131, 1.48325, 2.06161 )
 
-[node name="column_3_half_6" parent="." instance=ExtResource( 33 )]
+[node name="column_3_half_6" parent="." instance=ExtResource( 34 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4213, 1.58236, -1.75063 )
 
-[node name="column_3_half_3" parent="." instance=ExtResource( 34 )]
+[node name="column_3_half_3" parent="." instance=ExtResource( 35 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 12.9615, 1.57532, 2.07701 )
 
-[node name="column_3_half_4" parent="." instance=ExtResource( 35 )]
+[node name="column_3_half_4" parent="." instance=ExtResource( 36 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.72398, 1.49637, 2.03438 )
 
-[node name="column_3_half_5" parent="." instance=ExtResource( 35 )]
+[node name="column_3_half_5" parent="." instance=ExtResource( 36 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4423, 1.49637, -11.7263 )
+
+[node name="spider_web_1" parent="." instance=ExtResource( 37 )]
+transform = Transform( -0.0497746, -0.663827, 0.746228, -0.620722, 0.605896, 0.497588, -0.782449, -0.438433, -0.44221, 17.8993, 6.94027, -14.9173 )
+
+[node name="spider_small" parent="spider_web_1" instance=ExtResource( 20 )]
+
+[node name="spider_web_2" parent="." instance=ExtResource( 38 )]
+transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134, 0.999996, -0.00252308, 0.00131254, 20.9499, 6.15073, -12.9688 )
+
+[node name="spider_small" parent="spider_web_2" instance=ExtResource( 20 )]
 
 [node name="BakedLightmap" type="BakedLightmap" parent="." groups=[
 "lightmaps",
@@ -278,7 +300,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.67306, 9.01957, 3.81598 )
 bake_mode = 1
 bake_extents = Vector3( 15.9858, 10, 29.7424 )
 image_path = "res://light_data/floor_demo_full"
-script = ExtResource( 36 )
+script = ExtResource( 39 )
+
+[node name="rat_grey" parent="." instance=ExtResource( 40 )]
+transform = Transform( -0.605722, 0, 0.795676, 0, 1, 0, -0.795676, 0, -0.605722, 11.0403, 1.59556, 1.49627 )
+
+[node name="rat_grey2" parent="." instance=ExtResource( 40 )]
+transform = Transform( -0.35423, 0, -0.935158, 0, 1, 0, 0.935158, 0, -0.35423, 18.8186, 1.59556, -13.7346 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]

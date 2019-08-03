@@ -22,7 +22,7 @@ filters = [ ".:head", ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L"
 
 [sub_resource type="AnimationNodeTransition" id=6]
 input_count = 2
-xfade_time = 1.0
+xfade_time = 0.5
 input_0/name = "look"
 input_0/auto_advance = false
 input_1/name = "walk"
@@ -38,7 +38,7 @@ animation = "female_headturn_right"
 animation = "female_rest_99"
 
 [sub_resource type="AnimationNodeBlendTree" id=10]
-graph_offset = Vector2( -209.306, -85.597 )
+graph_offset = Vector2( 0, -136.331 )
 nodes/Add3_temp/node = SubResource( 1 )
 nodes/Add3_temp/position = Vector2( 40, 40 )
 nodes/Animation/node = SubResource( 2 )
@@ -69,6 +69,6 @@ anim_player = NodePath("../Female_palladium/AnimationPlayer")
 active = true
 parameters/Add3_temp/add_amount = 1.0
 parameters/Blend2_Aux/blend_amount = 1.0
-parameters/Blend2_Head/blend_amount = 0.09
+parameters/Blend2_Head/blend_amount = 0.0
 parameters/Blend3_temp/blend_amount = -1.0
 parameters/Transition/current = 0

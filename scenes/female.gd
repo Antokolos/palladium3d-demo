@@ -1,11 +1,20 @@
 extends Spatial
 
+func normalize_angle(look_angle_deg):
+	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)
+
+func rotate_head(look_angle_deg):
+	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (normalize_angle(look_angle_deg) / 45.0))
+
+func set_transition(t):
+	var transition = $AnimationTree.get("parameters/Transition/current")
+	if transition != t:
+		$AnimationTree.set("parameters/Transition/current", t)
+
 func look(look_angle_deg):
-	var angle = look_angle_deg if abs(look_angle_deg) < 90.0 else (90.0 if look_angle_deg > 0 else -90.0)
-	$AnimationTree.set("parameters/Transition/current", 0)
-	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (look_angle_deg / 90.0))
+	rotate_head(look_angle_deg)
+	set_transition(0)
 
 func walk(look_angle_deg):
-	var angle = look_angle_deg if abs(look_angle_deg) < 90.0 else (90.0 if look_angle_deg > 0 else -90.0)
-	$AnimationTree.set("parameters/Transition/current", 1)
-	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (look_angle_deg / 90.0))
+	rotate_head(look_angle_deg)
+	set_transition(1)
