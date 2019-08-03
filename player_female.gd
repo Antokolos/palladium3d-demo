@@ -212,6 +212,7 @@ func pathfinder_start():
 
 func pathfinder_stop():
 	pathfinder_stop_sheduled = true
+	_on_pathfinder_timeout()
 
 func clear_path():
 	for ch in pyramid.get_node("path_holder").get_children():

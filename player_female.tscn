@@ -39,7 +39,6 @@ transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0, -1
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -0.104132, 0, 3.6024e-008 )
 
 [node name="pathfinder" type="Timer" parent="."]
-process_mode = 0
 one_shot = true
 
 [node name="eyepoint" type="Position3D" parent="."]
