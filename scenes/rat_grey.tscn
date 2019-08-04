@@ -3,25 +3,25 @@
 [ext_resource path="res://assets/rat_grey.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/rat_grey.gd" type="Script" id=2]
 
-[sub_resource type="AnimationNodeAnimation" id=2]
+[sub_resource type="AnimationNodeAnimation" id=1]
 animation = "rat_run"
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=2]
 animation = "rat_sits_down"
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeAnimation" id=3]
 animation = "rat_sits_down_scratchinh"
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=4]
 animation = "rat_sits_down_sniffing"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "rat_snifs_standing"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "rat_rest"
 
-[sub_resource type="AnimationNodeTransition" id=8]
+[sub_resource type="AnimationNodeTransition" id=7]
 input_count = 6
 xfade_time = 0.2
 input_0/name = "rest"
@@ -37,21 +37,21 @@ input_4/auto_advance = false
 input_5/name = "run"
 input_5/auto_advance = false
 
-[sub_resource type="AnimationNodeBlendTree" id=9]
+[sub_resource type="AnimationNodeBlendTree" id=8]
 graph_offset = Vector2( -515.191, 34.1334 )
-nodes/Animation/node = SubResource( 7 )
+nodes/Animation/node = SubResource( 6 )
 nodes/Animation/position = Vector2( 140, -20 )
-"nodes/Animation 2/node" = SubResource( 2 )
+"nodes/Animation 2/node" = SubResource( 1 )
 "nodes/Animation 2/position" = Vector2( 280, 480 )
-"nodes/Animation 3/node" = SubResource( 3 )
+"nodes/Animation 3/node" = SubResource( 2 )
 "nodes/Animation 3/position" = Vector2( 120, 220 )
-"nodes/Animation 4/node" = SubResource( 4 )
+"nodes/Animation 4/node" = SubResource( 3 )
 "nodes/Animation 4/position" = Vector2( -40, 340 )
-"nodes/Animation 5/node" = SubResource( 5 )
+"nodes/Animation 5/node" = SubResource( 4 )
 "nodes/Animation 5/position" = Vector2( -60, 460 )
-"nodes/Animation 6/node" = SubResource( 6 )
+"nodes/Animation 6/node" = SubResource( 5 )
 "nodes/Animation 6/position" = Vector2( 140, 100 )
-nodes/Transition/node = SubResource( 8 )
+nodes/Transition/node = SubResource( 7 )
 nodes/Transition/position = Vector2( 520, 40 )
 nodes/output/position = Vector2( 780, 20 )
 node_connections = [ "output", 0, "Transition", "Transition", 0, "Animation", "Transition", 1, "Animation 6", "Transition", 2, "Animation 3", "Transition", 3, "Animation 4", "Transition", 4, "Animation 5", "Transition", 5, "Animation 2" ]
@@ -63,7 +63,7 @@ script = ExtResource( 2 )
 bones_in_world_transform = true
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 9 )
+tree_root = SubResource( 8 )
 anim_player = NodePath("../rat_grey_armature/AnimationPlayer")
 active = true
 parameters/Transition/current = 0

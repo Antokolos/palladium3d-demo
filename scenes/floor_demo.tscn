@@ -57,7 +57,7 @@ extents = Vector3( 2.12705, 3.30995, 1.46975 )
 extents = Vector3( 1.94147, 2.42343, 0.299519 )
 
 [sub_resource type="BoxShape" id=19]
-extents = Vector3( 19.6539, 0.189777, 17.2858 )
+extents = Vector3( 19.6539, 0.189777, 17.0325 )
 
 [sub_resource type="BoxShape" id=20]
 extents = Vector3( 2.30433, 0.869232, 15.5059 )
@@ -65,12 +65,12 @@ extents = Vector3( 2.30433, 0.869232, 15.5059 )
 [sub_resource type="BoxShape" id=21]
 extents = Vector3( 1, 0.794213, 14.281 )
 
-[node name="floor_demo" index="0" instance=ExtResource( 1 )]
+[node name="floor_demo" instance=ExtResource( 1 )]
 
-[node name="rock_4545" parent="." index="133"]
+[node name="rock_4545" parent="." index="229"]
 transform = Transform( -9.89449e-007, 7.30363e-006, 1, -1.60536e-006, 1, -7.30363e-006, -1, -1.60536e-006, -9.89437e-007, 6.45174, 7.33189, 2.62443 )
 
-[node name="rock_4536" parent="." index="139"]
+[node name="rock_4536" parent="." index="235"]
 transform = Transform( 1.3868e-006, -1.5855e-006, 1, -1, -1.71381e-012, 1.3868e-006, -4.84952e-013, -1, -1.5855e-006, 9.79447, 7.33189, -3.51338 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="353"]
@@ -162,7 +162,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape19" type="CollisionShape" parent="StaticBodyFloor" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.69906, 1.30184, -8.38569 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.69906, 1.40888, -8.38569 )
 shape = SubResource( 19 )
 
 [node name="CollisionShape20" type="CollisionShape" parent="StaticBodyFloor" index="1"]

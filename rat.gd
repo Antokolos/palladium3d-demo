@@ -1,12 +1,24 @@
 extends RigidBody
 
 export var player_path = "../player"
+export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
+onready var exclusions = [get_node(floor_path), self]
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
 
-const SAFE_RANGE = 3
-const WARN_RANGE = 2
+const SAFE_RANGE = 6
+const SNIFF_RANGE = 5
+const WARN_RANGE = 3
 const RETREAT_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
+
+var zero_dir = Vector3(0, 0, 0)
+var x_dir = Vector3(6, 0, 0)
+var retreating = false
+
+func can_move_without_collision(motion):
+	# This condition WAS CORRECTED after switching to 3.1, see here:
+	# https://github.com/godotengine/godot/issues/21212
+	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
 	var player = get_node(player_path)
@@ -17,9 +29,26 @@ func _integrate_forces(state):
 	var player_position = player.get_global_transform().origin
 	var dir = player_position - current_position
 	var l = dir.length()
-	if l > SAFE_RANGE:
+	state.set_linear_velocity(zero_dir)
+	if not retreating and l > SAFE_RANGE:
 		rat.rest()
-	elif l > WARN_RANGE:
+	elif not retreating and l > SNIFF_RANGE:
+		rat.rest_sniff()
+	elif not retreating and l > WARN_RANGE:
 		rat.sits_sniff()
-	elif l > RETREAT_RANGE:
+	elif retreating or l > RETREAT_RANGE:
+		retreating = true
 		rat.run()
+		var run_dir = current_transform.basis.xform(x_dir)
+		var space_state = state.get_space_state()
+		var param = PhysicsShapeQueryParameters.new()
+		param.collision_mask = self.collision_mask
+		param.set_shape($CollisionShape.shape)
+		param.transform = current_transform
+		param.exclude = exclusions
+		param.margin = 0.001 # When almost collided
+		var motion = space_state.cast_motion(param, run_dir.normalized())
+		if not can_move_without_collision(motion):
+			queue_free()
+		state.set_linear_velocity(run_dir)
+	state.set_angular_velocity(zero_dir)
