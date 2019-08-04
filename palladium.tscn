@@ -22,16 +22,22 @@ navmesh = SubResource( 1 )
 
 [node name="player" parent="." groups=[
 "player",
+"moving",
 ] instance=ExtResource( 3 )]
 transform = Transform( -0.998252, 0, -0.0591066, 0, 1, 0, 0.0591066, 0, -0.998252, -1.47366, 8.80445, 17.1124 )
 
 [node name="player_female" parent="." groups=[
+"moving",
 "party",
 ] instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.565025, 1.86862, -10.2396 )
 
-[node name="rat" parent="." instance=ExtResource( 5 )]
+[node name="rat" parent="." groups=[
+"moving",
+] instance=ExtResource( 5 )]
 transform = Transform( -0.682678, 0, 0.730718, 0, 1, 0, -0.730718, 0, -0.682678, 12.3926, 1.61551, 0.93354 )
 
-[node name="rat2" parent="." instance=ExtResource( 5 )]
+[node name="rat2" parent="." groups=[
+"moving",
+] instance=ExtResource( 5 )]
 transform = Transform( 0.901367, 0, -0.433054, 0, 1, 0, 0.433054, 0, 0.901367, 18.8173, 1.58919, -13.7799 )
