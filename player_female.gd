@@ -278,3 +278,6 @@ func remove_highlight():
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass
+
+func shadow_casting_enable(enable):
+	common_utils.shadow_casting_enable(self, enable)

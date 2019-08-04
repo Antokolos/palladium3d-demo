@@ -52,3 +52,6 @@ func _integrate_forces(state):
 			queue_free()
 		state.set_linear_velocity(run_dir)
 	state.set_angular_velocity(zero_dir)
+
+func shadow_casting_enable(enable):
+	common_utils.shadow_casting_enable(self, enable)

@@ -97,6 +97,7 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_normal")
 			get_tree().call_group("light_sources", "set_quality_normal")
+			get_tree().call_group("moving", "shadow_casting_enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_OPT:
@@ -107,6 +108,7 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_optimal")
 			get_tree().call_group("light_sources", "set_quality_optimal")
+			get_tree().call_group("moving", "shadow_casting_enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_GOOD:
@@ -117,6 +119,7 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 4096
 			get_tree().call_group("fire_sources", "set_quality_good")
 			get_tree().call_group("light_sources", "set_quality_good")
+			get_tree().call_group("moving", "shadow_casting_enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_HIGH:
@@ -127,6 +130,7 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 8192
 			get_tree().call_group("fire_sources", "set_quality_high")
 			get_tree().call_group("light_sources", "set_quality_high")
+			get_tree().call_group("moving", "shadow_casting_enable", true)
 			flashlight.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
 	get_node("Rotation_Helper/Camera/viewpoint/shader_cache").refresh()
@@ -347,3 +351,6 @@ func _on_QuitDialog_popup_hide():
 		dimmer.visible = false
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func shadow_casting_enable(enable):
+	common_utils.shadow_casting_enable(self, enable)
