@@ -58,9 +58,9 @@ nodes/female_headturn_right/position = Vector2( 260, 140 )
 nodes/female_rest/node = SubResource( 9 )
 nodes/female_rest/position = Vector2( 260, -100 )
 nodes/output/position = Vector2( 1400, 140 )
-node_connections = [ "output", 0, "Blend2_Head", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "female_headturn_left", "Transition", 0, "female_rest", "Transition", 1, "Animation", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "female_headturn_right" ]
+node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "female_rest", "Transition", 1, "Animation", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "female_headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "female_headturn_left" ]
 
-[node name="female" index="0" instance=ExtResource( 1 )]
+[node name="female" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
