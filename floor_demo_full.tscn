@@ -2,8 +2,8 @@
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_1.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/door_2.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/door_4.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/granite_base_1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/text_2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/statue_1.tscn" type="PackedScene" id=7]
@@ -76,14 +76,13 @@ script = ExtResource( 1 )
 [node name="door_1" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53164, 1.79007, -6.07936 )
 
-[node name="door_2" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3954, 1.60447, -13.4889 )
-
-[node name="door_3" parent="." instance=ExtResource( 4 )]
+[node name="door_3" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6966, 1.63239, -19.6789 )
 
+[node name="door_4" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.52115, 3.89026, -13.4658 )
+
 [node name="granite_base_1" parent="." instance=ExtResource( 5 )]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8107, 1.3909, -20.5937 )
 
 [node name="text_2" parent="granite_base_1" instance=ExtResource( 6 )]
@@ -171,10 +170,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.31872, 1.61853, -11.1347 )
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 8.30538, 1.62275, -10.0993 )
 
 [node name="vase_52" parent="." instance=ExtResource( 16 )]
-transform = Transform( 0.266005, 0, 0.963972, 0, 1, 0, -0.963972, 0, 0.266005, 20.8829, 1.5378, -14.0349 )
+transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 20.8829, 1.5378, -13.6901 )
 
 [node name="spider_small" parent="vase_52" instance=ExtResource( 20 )]
-transform = Transform( -0.670786, 0.571057, 0.473224, 0.695452, 0.706, 0.133833, -0.25767, 0.418877, -0.870717, 1.90735e-006, 0.524231, -9.53674e-006 )
+transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
 
 [node name="granite_base_5" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9496, 1.6472, -18.9329 )
@@ -189,7 +188,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.50551, 0.61902, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0359497, 0.62297, -0.197407 )
 
 [node name="text_1" parent="." instance=ExtResource( 24 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0881, 3.32825, -21.6701 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.97776, 3.32825, -21.6701 )
 
 [node name="chest_2" parent="." instance=ExtResource( 25 )]
 editor/display_folded = true
@@ -223,30 +222,6 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.44
 
 [node name="torch_full5" parent="." instance=ExtResource( 29 )]
 transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 10.2314, 3.964, 2.03201 )
-
-[node name="AreaDeadEnd" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.024, 4.1691, -14.0941 )
-shape = SubResource( 6 )
-
-[node name="AreaApata" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaApata"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8601, 2.56802, -14.6261 )
-shape = SubResource( 7 )
-
-[node name="AreaMuses" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaMuses"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8538, 2.49317, -18.3981 )
-shape = SubResource( 8 )
-
-[node name="AreaApataDone" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaApataDone"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02142, 3.33161, -15.2891 )
-shape = SubResource( 9 )
 
 [node name="column_3" parent="." instance=ExtResource( 30 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32685, 1.56589, -4.09756 )
@@ -283,14 +258,44 @@ transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.723
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 21.4423, 1.49637, -11.7263 )
 
 [node name="spider_web_1" parent="." instance=ExtResource( 37 )]
+editor/display_folded = true
 transform = Transform( -0.0497746, -0.663827, 0.746228, -0.620722, 0.605896, 0.497588, -0.782449, -0.438433, -0.44221, 17.8993, 6.94027, -14.9173 )
 
 [node name="spider_small" parent="spider_web_1" instance=ExtResource( 20 )]
 
 [node name="spider_web_2" parent="." instance=ExtResource( 38 )]
+editor/display_folded = true
 transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134, 0.999996, -0.00252308, 0.00131254, 20.9499, 6.15073, -12.9688 )
 
 [node name="spider_small" parent="spider_web_2" instance=ExtResource( 20 )]
+
+[node name="AreaDeadEnd" type="Area" parent="."]
+editor/display_folded = true
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.024, 4.1691, -14.0941 )
+shape = SubResource( 6 )
+
+[node name="AreaApata" type="Area" parent="."]
+editor/display_folded = true
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaApata"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8601, 2.56802, -14.6261 )
+shape = SubResource( 7 )
+
+[node name="AreaMuses" type="Area" parent="."]
+editor/display_folded = true
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaMuses"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8538, 2.49317, -18.3981 )
+shape = SubResource( 8 )
+
+[node name="AreaApataDone" type="Area" parent="."]
+editor/display_folded = true
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaApataDone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02142, 3.33161, -15.2891 )
+shape = SubResource( 9 )
 
 [node name="BakedLightmap" type="BakedLightmap" parent="." groups=[
 "lightmaps",

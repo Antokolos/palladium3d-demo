@@ -12,7 +12,7 @@ const RETREAT_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
 
 var zero_dir = Vector3(0, 0, 0)
-var x_dir = Vector3(6, 0, 0)
+var x_dir = Vector3(4, 0, 0)
 var retreating = false
 
 func can_move_without_collision(motion):

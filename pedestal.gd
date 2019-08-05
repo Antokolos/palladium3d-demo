@@ -29,7 +29,7 @@ func use(player_node):
 			for child in pedestal_history.get_children():
 				if "statue_name" in child and child.statue_name != "statue_clio":
 					return
-			get_node("../../../door_2").activate()
+			get_node("../../../door_4").activate()
 
 func add_highlight():
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
