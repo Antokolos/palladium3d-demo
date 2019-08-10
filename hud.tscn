@@ -1,0 +1,277 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://hud.gd" type="Script" id=2]
+[ext_resource path="res://StoryNode.cs" type="Script" id=3]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=4]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=5]
+[ext_resource path="res://Gun_label.gd" type="Script" id=6]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=7]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+corner_radius_bottom_right = 90
+corner_detail = 10
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.158587, 0.106689, 0.179688, 1 )
+border_color = Color( 0.277183, 0.201141, 0.304688, 1 )
+corner_radius_bottom_right = 80
+corner_detail = 10
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=3]
+size = 42
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+corner_radius_top_left = 90
+corner_detail = 10
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.156863, 0.105882, 0.176471, 1 )
+corner_radius_top_left = 80
+corner_detail = 10
+
+[node name="hud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Hints" type="ColorRect" parent="."]
+editor/display_folded = true
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.141176, 0.141176, 0.141176, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Hints"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HintLabel" type="Label" parent="Hints/HBoxContainer"]
+margin_top = 97.0
+margin_right = 234.0
+margin_bottom = 172.0
+text = "F -- фонарик
+Tab -- инвентарь"
+
+[node name="ActionHintLabel" type="Label" parent="Hints/HBoxContainer"]
+margin_left = 238.0
+margin_top = 117.0
+margin_right = 1920.0
+margin_bottom = 153.0
+size_flags_horizontal = 3
+align = 1
+valign = 1
+
+[node name="Conversation" type="ColorRect" parent="."]
+editor/display_folded = true
+visible = false
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Conversation"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Conversation/HBoxContainer"]
+margin_right = 126.0
+margin_bottom = 111.0
+alignment = 1
+
+[node name="ConversationText" type="Label" parent="Conversation/HBoxContainer/VBoxContainer"]
+margin_right = 126.0
+margin_bottom = 19.0
+text = "ConversationText"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Conversation/HBoxContainer/VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Choice1" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 126.0
+margin_bottom = 65.0
+text = "Choice1"
+
+[node name="Choice2" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 69.0
+margin_right = 126.0
+margin_bottom = 88.0
+text = "Choice2"
+
+[node name="Choice3" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 126.0
+margin_bottom = 111.0
+text = "Choice3"
+
+[node name="Choice4" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 126.0
+margin_bottom = 111.0
+text = "Choice3"
+
+[node name="Choice5" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 126.0
+margin_bottom = 111.0
+text = "Choice3"
+
+[node name="StoryNode" type="Node" parent="Conversation"]
+script = ExtResource( 3 )
+
+[node name="Inventory" type="ColorRect" parent="."]
+visible = false
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Crosshair" type="Control" parent="."]
+editor/display_folded = true
+modulate = Color( 1, 1, 1, 0.705882 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -21.0
+margin_top = -21.0
+margin_right = 21.0
+margin_bottom = 21.0
+
+[node name="Bottom_IMG" type="TextureRect" parent="Crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.5
+margin_top = 4.5
+margin_right = 2.5
+margin_bottom = 20.5
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Top_IMG" type="TextureRect" parent="Crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.5
+margin_top = -20.5
+margin_right = 2.5
+margin_bottom = -4.5
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Left_IMG" type="TextureRect" parent="Crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.5
+margin_top = -2.5
+margin_right = 0.5
+margin_bottom = 12.5
+rect_rotation = 90.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Right_IMG" type="TextureRect" parent="Crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 19.5
+margin_top = -2.5
+margin_right = 24.5
+margin_bottom = 12.5
+rect_rotation = 90.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Stats" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.705882 )
+margin_right = 190.0
+margin_bottom = 90.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Stats_border" type="Panel" parent="Stats"]
+modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
+margin_right = 180.0
+margin_bottom = 80.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="Stats_label" type="Label" parent="Stats"]
+self_modulate = Color( 1, 1, 1, 0.705882 )
+margin_left = 10.0
+margin_top = 20.0
+margin_right = 380.0
+margin_bottom = 109.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "FPS: ???"
+script = ExtResource( 6 )
+
+[node name="Indicators" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.705882 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -190.0
+margin_top = -90.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Indicators_border" type="Panel" parent="Indicators"]
+modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -180.0
+margin_top = -80.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="IndicatorCrouch" type="Panel" parent="Indicators/Indicators_border"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -72.0
+margin_top = -72.0
+margin_right = -8.0
+margin_bottom = -8.0
+custom_styles/panel = ExtResource( 7 )
+
+[node name="Dimmer" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+
+[node name="tablet" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="QuitDialog" type="ConfirmationDialog" parent="."]
+pause_mode = 2
+margin_right = 274.0
+margin_bottom = 102.0
+popup_exclusive = true
+dialog_text = "Are you sure?"
+[connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
+[connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]

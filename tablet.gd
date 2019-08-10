@@ -20,7 +20,7 @@ Vector2(0, 720),
 Vector2(0, 1080)
 ]
 
-onready var player = get_parent().get_parent()
+onready var hud = get_parent()
 
 func _ready():
 	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
@@ -107,7 +107,7 @@ func on_viewport_resize():
 
 func _unhandled_input(event):
 	if get_tree().paused and event.is_action_pressed("ui_cancel"):
-		player.show_tablet(false)
+		hud.show_tablet(false)
 
 func _on_HomeButton_pressed():
 	for node in apps.get_children():
@@ -168,7 +168,9 @@ func _on_Fullscreen_pressed():
 	settings.fullscreen = fs
 
 func _on_Quality_item_selected(ID):
-	player.change_quality(ID)
+	var camera = get_node("../../../Rotation_Helper/Camera/camera")
+	if camera:
+		camera.change_quality(ID)
 	settings.quality = ID
 
 func _on_Resolution_item_selected(ID):

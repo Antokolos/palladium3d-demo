@@ -1,6 +1,6 @@
 extends Label
 
-onready var camera = get_node("../../../Rotation_Helper/Camera")
+onready var camera = get_node("../../../../Rotation_Helper/Camera/camera")
 
 func _physics_process(delta):
 	var stats = [

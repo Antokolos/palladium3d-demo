@@ -10,13 +10,13 @@ func stop_conversation(player):
 	if conversation_active:
 		story_choose(player, max_choice - 1)
 	conversation_active = false
-	player.get_node("HUD/Conversation").visible = false
-	player.get_node("HUD/Hints").visible = true
+	player.get_node("HUD/hud/Conversation").visible = false
+	player.get_node("HUD/hud/Hints").visible = true
 
 func start_conversation(player, conversation_path):
 	conversation_active = true
-	player.get_node("HUD/Hints").visible = false
-	var conversation = player.get_node("HUD/Conversation")
+	player.get_node("HUD/hud/Hints").visible = false
+	var conversation = player.get_node("HUD/hud/Conversation")
 	conversation.visible = true
 	max_choice = 0
 	var story = conversation.get_node('StoryNode')
@@ -25,14 +25,14 @@ func start_conversation(player, conversation_path):
 	story_proceed(player)
 
 func story_choose(player, idx):
-	var conversation = player.get_node("HUD/Conversation")
+	var conversation = player.get_node("HUD/hud/Conversation")
 	var story = conversation.get_node('StoryNode')
 	if story.CanChoose() and max_choice > 0 and idx < max_choice:
 		story.Choose(idx)
 		story_proceed(player)
 
 func story_proceed(player):
-	var conversation = player.get_node("HUD/Conversation")
+	var conversation = player.get_node("HUD/hud/Conversation")
 	var story = conversation.get_node('StoryNode')
 	var conversation_text = conversation.get_node("HBoxContainer/VBoxContainer/ConversationText")
 	conversation_text.text = ""

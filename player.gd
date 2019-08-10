@@ -1,7 +1,5 @@
 extends KinematicBody
 
-export var giprobe_path = "../GIProbe" 
-
 const GRAVITY = -6.2
 var vel = Vector3()
 const MAX_SPEED = 5
@@ -10,65 +8,25 @@ const ACCEL= 1.5
 
 const MAX_SPRINT_SPEED = 15
 const SPRINT_ACCEL = 4.5
-var is_sprinting = false
-
-onready var flashlight = $Rotation_Helper/Camera/Flashlight
-onready var hints = get_node("HUD/Hints")
-onready var inventory = get_node("HUD/Inventory")
-onready var inventory_panel = inventory.get_node("HBoxContainer")
-onready var dimmer = get_node("HUD/Dimmer")
-onready var tablet = get_node("HUD/tablet")
-onready var use_point = get_node("Rotation_Helper/Camera/Gun_Fire_Points/Use_Point")
-onready var giprobe = get_node(giprobe_path)
 
 var dir = Vector3()
 
 const DEACCEL= 16
 const MAX_SLOPE_ANGLE = 40
 
-onready var camera = $Rotation_Helper/Camera
-onready var env_norm = preload("res://env_norm.tres")
-onready var env_opt = preload("res://env_opt.tres")
-onready var env_good = preload("res://env_good.tres")
-onready var env_high = preload("res://env_high.tres")
-
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
 onready var model = rotation_helper.get_node("Model")
-var crouch = false
-onready var indicator_crouch = get_node("HUD/Indicators/Indicators_border/IndicatorCrouch")
-onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
-onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
-onready var culling_rays = get_node("Rotation_Helper/Camera/culling_rays")
+var is_walking = false
+var is_crouching = false
+var is_sprinting = false
 
 var rot_x = 0
 var rot_y = 0
 
 var MOUSE_SENSITIVITY = 0.1 #0.05
 var KEY_LOOK_SPEED_FACTOR = 30
-
-var active_item_idx = -1
-
-func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	change_quality(settings.quality)
-	var dialog = $QuitDialog
-	dialog.get_ok().text = "Yes"
-	dialog.get_cancel().text = "No"
-	use_point.player_node = self
-	get_tree().set_auto_accept_quit(false)
-
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			dimmer.visible = true
-		get_tree().paused = true
-		$QuitDialog.popup_centered()
-
-func change_culling():
-	camera.far = culling_rays.get_max_distance(camera.get_global_transform().origin)
 
 func _physics_process(delta):
 	process_input(delta)
@@ -77,69 +35,13 @@ func _physics_process(delta):
 		rotation_helper.rotate_x(deg2rad(rot_x * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY))
 	if rot_y != 0:
 		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
-	use_point.highlight()
-	change_culling()
-
-# Settings applied in the following way will be loaded after game restart
-# see https://github.com/godotengine/godot/issues/30087
-#func apply_advanced_settings(force_vertex_shading):
-#	var config = ConfigFile.new()
-#	config.set_value("rendering", "quality/shading/force_vertex_shading", force_vertex_shading)
-#	config.save("user://settings.ini")
-
-func change_quality(quality):
-	match quality:
-		settings.QUALITY_NORM:
-			camera.environment = env_norm
-			if giprobe:
-				giprobe.visible = false
-			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 2048
-			get_tree().call_group("fire_sources", "set_quality_normal")
-			get_tree().call_group("light_sources", "set_quality_normal")
-			get_tree().call_group("moving", "shadow_casting_enable", false)
-			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
-		settings.QUALITY_OPT:
-			camera.environment = env_opt
-			if giprobe:
-				giprobe.visible = false
-			#get_tree().call_group("lightmaps", "enable", true)
-			#get_viewport().shadow_atlas_size = 2048
-			get_tree().call_group("fire_sources", "set_quality_optimal")
-			get_tree().call_group("light_sources", "set_quality_optimal")
-			get_tree().call_group("moving", "shadow_casting_enable", false)
-			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
-		settings.QUALITY_GOOD:
-			camera.environment = env_good
-			if giprobe:
-				giprobe.visible = true
-			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 4096
-			get_tree().call_group("fire_sources", "set_quality_good")
-			get_tree().call_group("light_sources", "set_quality_good")
-			get_tree().call_group("moving", "shadow_casting_enable", false)
-			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
-		settings.QUALITY_HIGH:
-			camera.environment = env_high
-			if giprobe:
-				giprobe.visible = true
-			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 8192
-			get_tree().call_group("fire_sources", "set_quality_high")
-			get_tree().call_group("light_sources", "set_quality_high")
-			get_tree().call_group("moving", "shadow_casting_enable", true)
-			flashlight.set("shadow_enabled", true)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
-	get_node("Rotation_Helper/Camera/viewpoint/shader_cache").refresh()
 
 func process_input(delta):
 
 	# ----------------------------------
 	# Walking
 	dir = Vector3()
+	var camera = $Rotation_Helper/Camera/camera
 	var cam_xform = camera.get_global_transform()
 
 	var input_movement_vector = Vector2()
@@ -154,6 +56,7 @@ func process_input(delta):
 		input_movement_vector.x += 1
 
 	input_movement_vector = input_movement_vector.normalized()
+	is_walking = input_movement_vector.length() > 0
 
 	dir += -cam_xform.basis.z.normalized() * input_movement_vector.y
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
@@ -175,48 +78,11 @@ func process_input(delta):
 	# ----------------------------------
 	
 	# ----------------------------------
-	# Turning the flashlight on/off
-	if Input.is_action_just_pressed("flashlight"):
-		if flashlight.is_visible_in_tree():
-			flashlight.hide()
-		else:
-			flashlight.show()
-	# ----------------------------------
-	
-	# ----------------------------------
 	# Crouching on/off
 	if Input.is_action_just_pressed("crouch"):
 		toggle_crouch()
 	# ----------------------------------
 	
-	# ----------------------------------
-	# Inventory on/off
-	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active:
-		active_item_idx = -1
-		if inventory.visible:
-			inventory.visible = false
-			hints.visible = true
-		else:
-			inventory.visible = true
-			hints.visible = false
-			var items = inventory_panel.get_children()
-			var idx = 0
-			for item in items:
-				items[idx].get_node("LabelKey").text = "F" + str(idx + 1)
-				idx = idx + 1
-	# ----------------------------------
-	
-	# ----------------------------------
-	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			show_tablet(false)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			show_tablet(true)
-	# ----------------------------------
-
 	# ----------------------------------
 	# Rotation via keyboard
 	if Input.is_action_pressed("ui_up"):
@@ -241,32 +107,14 @@ func process_input(delta):
 func toggle_crouch():
 	if $AnimationPlayer.is_playing():
 		return
-	if crouch:
+	if is_crouching:
 		$AnimationPlayer.play_backwards("crouch")
 	else:
 		$AnimationPlayer.play("crouch")
-	# Code below can be used to toggle crouching without animations
-	#var hdiff = -1.0 if crouch else 1.0
-	#body_shape.shape.height = body_shape.shape.height - hdiff
-	#body_shape.translation = body_shape.translation + Vector3(0, -hdiff/2.0, 0)
-	#rotation_helper.translation = rotation_helper.translation + Vector3(0, -hdiff, 0)
-	#model.translation = model.translation + Vector3(0, hdiff, 0)
-	crouch = not crouch
-	if crouch:
-		indicator_crouch.set("custom_styles/panel", tex_crouch_on)
-	else:
-		indicator_crouch.set("custom_styles/panel", tex_crouch_off)
-
-func show_tablet(is_show):
-	if is_show:
-		dimmer.visible = true
-		tablet.visible = true
-		get_tree().paused = true
-	else:
-		get_tree().paused = false
-		tablet.visible = false
-		dimmer.visible = false
-		settings.save_settings()
+	is_crouching = not is_crouching
+	var hud = get_node("HUD/hud")
+	if hud:
+		hud.set_crouch_indicator(is_crouching)
 
 func process_movement(delta):
 	dir.y = 0
@@ -305,52 +153,11 @@ func _input(event):
 		var camera_rot = rotation_helper.rotation_degrees
 		camera_rot.x = clamp(camera_rot.x, -70, 70)
 		rotation_helper.rotation_degrees = camera_rot
-	if event.is_action_pressed("action"):
-		use_point.action()
 
 func take(nam, model_path):
-	var item = load("res://item.tscn").instance()
-	item.nam = nam
-	item.model_path = model_path
-	var image_file = "res://assets/items/%s.png" % nam
-	var image = load(image_file)
-	var texture = ImageTexture.new()
-	texture.create_from_image(image)
-	item.get_node("TextureRect").texture = texture
-	item.get_node("LabelDesc").text = tr(nam)
-	inventory_panel.add_child(item)
-
-func get_active_item():
-	return inventory_panel.get_child(active_item_idx) if active_item_idx >= 0 else null
-
-func _unhandled_input(event):
-	if inventory.is_visible_in_tree() and event is InputEventKey and event.is_pressed():
-		if event.scancode < KEY_F1 or event.scancode > KEY_F9:
-			return
-		active_item_idx = -1
-		var items = inventory_panel.get_children()
-		if items.empty():
-			return
-		var idx = 0
-		var target_idx = event.scancode - KEY_F1
-		for item in items:
-			var label_key = items[idx].get_node("LabelKey")
-			if idx == target_idx:
-				label_key.set("custom_colors/font_color", Color(1, 0, 0))
-				active_item_idx = idx
-			else:
-				label_key.set("custom_colors/font_color", Color(1, 1, 1))
-			idx = idx + 1
-
-func _on_QuitDialog_confirmed():
-	get_tree().quit()
-
-func _on_QuitDialog_popup_hide():
-	if not tablet.visible:
-		get_tree().paused = false
-		dimmer.visible = false
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var hud = get_node("HUD/hud")
+	if hud:
+		hud.take(nam, model_path)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

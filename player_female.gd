@@ -232,14 +232,15 @@ func clear_path():
 	stuck_frames = 0
 
 func use(player_node):
+	var hud = player_node.get_node("HUD/hud")
 	if conversation_manager.conversation_active:
 		conversation_manager.stop_conversation(get_node(player_path))
-	elif not player_node.inventory.visible:
+	elif not hud.inventory.visible:
 		conversation_manager.start_conversation(get_node(player_path), "ink-scripts/Conversation.ink.json")
-	else: # player_node.inventory.visible:
-		var item = player_node.get_active_item()
+	else: # hud.inventory.visible:
+		var item = hud.get_active_item()
 		if item and item.nam == "saffron_bun":
-			player_node.inventory.visible = false
+			hud.inventory.visible = false
 			item.remove()
 			conversation_manager.start_conversation(get_node(player_path), "ink-scripts/Bun.ink.json")
 
@@ -247,7 +248,7 @@ func _unhandled_input(event):
 	var player = get_node(player_path)
 	if not player:
 		return
-	var conversation = player.get_node("HUD/Conversation")
+	var conversation = player.get_node("HUD/hud/Conversation")
 	if conversation.is_visible_in_tree() and event is InputEventKey:
 		var story = conversation.get_node('StoryNode')
 		if story.CanChoose() and event.is_pressed() and event.scancode == KEY_1:

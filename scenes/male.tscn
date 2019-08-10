@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/male.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/character.gd" type="Script" id=2]
+
+[sub_resource type="AnimationNodeBlend2" id=1]
+filter_enabled = true
+filters = [ ".:head", ".:neck01", ".:neck02", ".:neck03" ]
+
+[sub_resource type="AnimationNodeBlend2" id=2]
+filter_enabled = true
+filters = [ ".:head", ".:neck01", ".:neck02", ".:neck03" ]
+
+[sub_resource type="AnimationNodeTransition" id=3]
+input_count = 2
+xfade_time = 0.5
+input_0/name = "look"
+input_0/auto_advance = false
+input_1/name = "walk"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "female_headturn_left"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "female_headturn_right"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "female_rest_99"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "female_walk_2"
+
+[sub_resource type="AnimationNodeBlendTree" id=8]
+graph_offset = Vector2( 0, 97.5 )
+nodes/Blend2_Aux/node = SubResource( 1 )
+nodes/Blend2_Aux/position = Vector2( 788.137, 26.7061 )
+nodes/Blend2_Head/node = SubResource( 2 )
+nodes/Blend2_Head/position = Vector2( 1120, 120 )
+nodes/Transition/node = SubResource( 3 )
+nodes/Transition/position = Vector2( 540, 0 )
+nodes/headturn_left/node = SubResource( 4 )
+nodes/headturn_left/position = Vector2( 290.137, 419.393 )
+nodes/headturn_right/node = SubResource( 5 )
+nodes/headturn_right/position = Vector2( 260, 280 )
+nodes/look/node = SubResource( 6 )
+nodes/look/position = Vector2( 260, 20 )
+nodes/output/position = Vector2( 1380, 60 )
+nodes/walk/node = SubResource( 7 )
+nodes/walk/position = Vector2( 266, 158.361 )
+node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right" ]
+
+[node name="male" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="1"]
+tree_root = SubResource( 8 )
+anim_player = NodePath("../Female_palladium/AnimationPlayer")
+parameters/Blend2_Aux/blend_amount = 1.0
+parameters/Blend2_Head/blend_amount = 1.0
+parameters/Transition/current = 0

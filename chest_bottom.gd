@@ -1,10 +1,11 @@
 extends StaticBody
 
 func use(player_node):
-	if player_node.inventory.visible:
-		var item = player_node.get_active_item()
+	var hud = player_node.get_node("HUD/hud")
+	if hud.inventory.visible:
+		var item = hud.get_active_item()
 		if item and item.nam.begins_with("statue_"):
-			player_node.inventory.visible = false
+			hud.inventory.visible = false
 			item.remove()
 			var inst = item.get_model_instance()
 			inst.translate(Vector3(0.4, 0.3, 0))
