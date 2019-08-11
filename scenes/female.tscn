@@ -58,7 +58,7 @@ nodes/look/position = Vector2( 260, -100 )
 nodes/output/position = Vector2( 1400, 140 )
 nodes/walk/node = SubResource( 9 )
 nodes/walk/position = Vector2( 260, 20 )
-node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
+node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right" ]
 
 [node name="female" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -66,7 +66,6 @@ script = ExtResource( 2 )
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 10 )
 anim_player = NodePath("../Female_palladium/AnimationPlayer")
-active = true
 parameters/Add3_temp/add_amount = 1.0
 parameters/Blend2_Aux/blend_amount = 1.0
 parameters/Blend2_Head/blend_amount = 0.0

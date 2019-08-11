@@ -1,5 +1,6 @@
 extends Node
 
+var player_path = "/root/palladium/player"
 var conversation_dead_end = false
 var conversation_apata_statue = false
 var conversation_muses = false

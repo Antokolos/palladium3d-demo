@@ -1,10 +1,12 @@
 extends Spatial
 
-export var simple_mode = false
 export var look_anim_name = "female_rest_99"
 export var walk_anim_name = "female_walk_2"
 
-func _ready():
+var simple_mode = true
+
+func set_simple_mode(sm):
+	simple_mode = sm
 	$AnimationTree.active = not simple_mode
 	if simple_mode:
 		look(0)
