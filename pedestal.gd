@@ -1,5 +1,7 @@
 extends StaticBody
 
+export var level_path = "../../.."
+
 func use(player_node):
 	var hud = player_node.get_node("HUD/hud")
 	if hud.inventory.visible:
@@ -30,7 +32,10 @@ func use(player_node):
 			for child in pedestal_history.get_children():
 				if "statue_name" in child and child.statue_name != "statue_clio":
 					return
-			get_node("../../../door_4").activate()
+			var level = get_node(level_path)
+			level.get_door("door_4").activate()
+			level.get_node("ceiling_moving_2").deactivate()
+			level.get_node("door_3").close()
 
 func add_highlight():
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)

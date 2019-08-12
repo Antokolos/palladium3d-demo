@@ -2,6 +2,7 @@ extends StaticBody
 
 export var item_name = "statue_urania"
 export var model_path = "res://scenes/statue_1.tscn"
+export var level_path = "../../../.."
 
 func use(player_node):
 	player_node.take(item_name, model_path)
@@ -9,8 +10,9 @@ func use(player_node):
 	if item_name == "statue_apata":
 		game_params.apata_in_chest = false
 		if game_params.apata_on_pedestal:
-			get_node("../../../../door_1").close()
-			get_node("../../../../ceiling_moving_2").activate()
+			var level = get_node(level_path)
+			level.get_door("door_1").close()
+			level.get_node("ceiling_moving_2").activate()
 			conversation_manager.start_conversation(get_node("/root/palladium/player"), "ink-scripts/ApataTrap.ink.json")
 		game_params.apata_on_pedestal = false
 

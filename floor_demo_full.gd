@@ -1,5 +1,11 @@
 extends Spatial
 
+export var doors_path = "../../doors/floor_demo_full"
+onready var doors = get_node(doors_path)
+
+func get_door(door_path):
+	return doors.get_node(door_path)
+
 func _on_AreaDeadEnd_body_entered(body):
 	if body.is_in_group("party") and not game_params.conversation_dead_end:
 		game_params.conversation_dead_end = true

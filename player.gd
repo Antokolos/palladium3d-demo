@@ -139,6 +139,13 @@ func build_path():
 	if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
 		clear_path()
 		return
+	# filter out points of the path, distance to which is greater than distance to player
+	while not path.empty():
+		var pt = path.front()
+		var mov_pt = player_position - pt
+		if mov_pt.length() <= mov_vec.length():
+			break
+		path.pop_front()
 	if is_on_wall() and path.empty(): # should check possible stuck
 		#clear_path()
 		path = get_navpath(get_global_transform().origin, get_node(game_params.player_path).get_global_transform().origin)
