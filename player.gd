@@ -182,30 +182,29 @@ func use(player_node):
 			conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/Bun.ink.json")
 
 func _unhandled_input(event):
-	var player = get_node(game_params.player_path)
-	if not player:
+	if not is_player():
 		return
-	var conversation = player.get_node("HUD/hud/Conversation")
+	var conversation = get_node("HUD/hud/Conversation")
 	if conversation.is_visible_in_tree() and event is InputEventKey:
 		var story = conversation.get_node('StoryNode')
 		if story.CanChoose() and event.is_pressed() and event.scancode == KEY_1:
-			conversation_manager.story_choose(player, 0)
+			conversation_manager.story_choose(self, 0)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_2:
-			conversation_manager.story_choose(player, 1)
+			conversation_manager.story_choose(self, 1)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_3:
-			conversation_manager.story_choose(player, 2)
+			conversation_manager.story_choose(self, 2)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_4:
-			conversation_manager.story_choose(player, 3)
+			conversation_manager.story_choose(self, 3)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_5:
-			conversation_manager.story_choose(player, 4)
+			conversation_manager.story_choose(self, 4)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_6:
-			conversation_manager.story_choose(player, 5)
+			conversation_manager.story_choose(self, 5)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_7:
-			conversation_manager.story_choose(player, 6)
+			conversation_manager.story_choose(self, 6)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_8:
-			conversation_manager.story_choose(player, 7)
+			conversation_manager.story_choose(self, 7)
 		elif story.CanChoose() and event.is_pressed() and event.scancode == KEY_9:
-			conversation_manager.story_choose(player, 8)
+			conversation_manager.story_choose(self, 8)
 
 func add_highlight():
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
