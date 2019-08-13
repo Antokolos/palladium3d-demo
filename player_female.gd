@@ -1,6 +1,5 @@
 extends Spatial
 
-export var player_path = "../player"
 export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
@@ -38,7 +37,7 @@ func _ready():
 	exclusions.append(get_node(floor_path))
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
-	var player = get_node(player_path)
+	var player = get_node(game_params.player_path)
 	if player:
 		exclusions.append(player)
 		exclusions.append(player.get_node("Rotation_Helper/Camera/Gun_Fire_Points/Knife_Point/InteractArea"))
@@ -54,7 +53,7 @@ func get_viewpoint_vector():
 	return viewpoint_pos - eyepoint_pos
 
 func get_player_vector():
-	var player = get_node(player_path)
+	var player = get_node(game_params.player_path)
 	if not player:
 		return Vector3(0, 0, 0)
 	var eyepoint_pos = get_node("eyepoint").get_global_transform().origin
@@ -109,7 +108,7 @@ func follow(state, current_transform, target_position):
 #		return
 	
 	if distance > CONVERSATION_RANGE:
-		conversation_manager.stop_conversation(get_node(player_path))
+		conversation_manager.stop_conversation(get_node(game_params.player_path))
 	
 	if not path.empty():
 		companion_state = COMPANION_STATE.WALK
@@ -161,7 +160,7 @@ func check_obstacle(state, current_transform, player_position):
 			pathfinder_start()
 
 func _integrate_forces(state):
-	var player = get_node(player_path)
+	var player = get_node(game_params.player_path)
 	if not player:
 		return
 	var current_transform = get_global_transform()
@@ -192,13 +191,13 @@ func _on_pathfinder_timeout():
 		return
 	var current_transform = get_global_transform()
 	var current_position = current_transform.origin
-	var player_position = get_node(player_path).get_global_transform().origin
+	var player_position = get_node(game_params.player_path).get_global_transform().origin
 	var mov_vec = player_position - current_position
 	mov_vec.y = 0
 #	if mov_vec.length() > SAFE_RANGE:
 #		clear_path()
 #		return
-	path = get_navpath(get_global_transform().origin, get_node(player_path).get_global_transform().origin)
+	path = get_navpath(get_global_transform().origin, get_node(game_params.player_path).get_global_transform().origin)
 	previous_path_size = path.size()
 	stuck_frames = 0
 	#draw_path()
@@ -234,18 +233,18 @@ func clear_path():
 func use(player_node):
 	var hud = player_node.get_node("HUD/hud")
 	if conversation_manager.conversation_active:
-		conversation_manager.stop_conversation(get_node(player_path))
+		conversation_manager.stop_conversation(get_node(game_params.player_path))
 	elif not hud.inventory.visible:
-		conversation_manager.start_conversation(get_node(player_path), "ink-scripts/Conversation.ink.json")
+		conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/Conversation.ink.json")
 	else: # hud.inventory.visible:
 		var item = hud.get_active_item()
 		if item and item.nam == "saffron_bun":
 			hud.inventory.visible = false
 			item.remove()
-			conversation_manager.start_conversation(get_node(player_path), "ink-scripts/Bun.ink.json")
+			conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/Bun.ink.json")
 
 func _unhandled_input(event):
-	var player = get_node(player_path)
+	var player = get_node(game_params.player_path)
 	if not player:
 		return
 	var conversation = player.get_node("HUD/hud/Conversation")

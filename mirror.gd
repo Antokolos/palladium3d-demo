@@ -8,16 +8,12 @@ export var cam_fov = 30
 export var cam_coeff_1 = 700
 export var cam_coeff_2 = 0.85
 export var activator_add = 2.1
-export var player_path = "/root/Testing_Area/player"
 var is_mirror = true
 var active = false
 
 onready var mirror_plane = get_node('MirrorPlane')
 onready var viewport = get_node('Viewport')
 onready var camera = get_node('Viewport/Camera')
-onready var player = get_node(player_path)
-onready var eyes = player.get_node("Rotation_Helper/Camera") if player else null
-onready var viewpoint = player.get_node("Rotation_Helper/Camera/viewpoint") if player else null
 onready var activation_shape = get_node('Area/CollisionShape')
 
 func _ready():
@@ -35,10 +31,15 @@ func _on_resolution_changed():
 	viewport.size = Vector2(int(width * pixels_size), int(height * pixels_size))
 
 func _process(delta):
-	if player and active:
-		persp()
+	if active:
+		var player = get_node(game_params.player_path)
+		persp(player)
 
-func persp():
+func persp(player):
+	if not player:
+		return
+	var eyes = player.get_node("Rotation_Helper/Camera").get_child(0)
+	var viewpoint = eyes.get_node("viewpoint")
 	var cam_pos = mirror_plane.get_global_transform().origin
 	var init = cam_pos
 	var player_pos = eyes.get_global_transform().origin
@@ -56,7 +57,11 @@ func persp():
 		cam_pos.x = init.x + d
 	camera.look_at_from_position(cam_pos, target_pos, Vector3(0,1,0))
 
-func ortho():
+func ortho(player):
+	if not player:
+		return
+	var eyes = player.get_node("Rotation_Helper/Camera").get_child(0)
+	var viewpoint = eyes.get_node("viewpoint")
 	var cam_pos = to_global(mirror_plane.get_translation())
 	var player_pos = to_global(player.get_translation())
 	camera.v_offset = cam_pos.y - player_pos.y
@@ -75,6 +80,7 @@ func ortho():
 func _on_Area_body_entered(body):
 	if active:
 		return
+	var player = get_node(game_params.player_path)
 	if body == player:
 		active = true
 		camera.far = 9
@@ -82,6 +88,7 @@ func _on_Area_body_entered(body):
 func _on_Area_body_exited(body):
 	if not active:
 		return
+	var player = get_node(game_params.player_path)
 	if body == player:
 		active = false
 		camera.far = 0.1

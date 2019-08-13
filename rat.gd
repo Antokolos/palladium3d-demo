@@ -1,6 +1,5 @@
 extends RigidBody
 
-export var player_path = "../player"
 export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
 onready var exclusions = [get_node(floor_path), self]
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
@@ -21,7 +20,7 @@ func can_move_without_collision(motion):
 	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
-	var player = get_node(player_path)
+	var player = get_node(game_params.player_path)
 	if not player:
 		return
 	var current_transform = get_global_transform()

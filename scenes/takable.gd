@@ -13,7 +13,7 @@ func use(player_node):
 			var level = get_node(level_path)
 			level.get_door("door_1").close()
 			level.get_node("ceiling_moving_2").activate()
-			conversation_manager.start_conversation(get_node("/root/palladium/player"), "ink-scripts/ApataTrap.ink.json")
+			conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/ApataTrap.ink.json")
 		game_params.apata_on_pedestal = false
 
 func add_highlight():

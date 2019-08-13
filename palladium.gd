@@ -1,6 +1,6 @@
 extends Navigation
 
-var player_toggle_enable = false
+var player_toggle_enable = true
 
 func _ready():
 	$player.take("saffron_bun", null)
