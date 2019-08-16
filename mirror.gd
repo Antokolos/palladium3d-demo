@@ -4,10 +4,13 @@ export var width = 3.0
 export var height = 2.0
 export var quality = 0.3
 export var cam_shift = 0.0
-export var cam_fov = 30
+export var cam_fov = 45
+export var cam_far = 18.2
 export var cam_coeff_1 = 700
 export var cam_coeff_2 = 0.85
-export var activator_add = 2.1
+export var activator_add = 1.6
+export var activator_depth = 10.7
+
 var is_mirror = true
 var active = false
 
@@ -20,8 +23,7 @@ func _ready():
 	# The following line is not needed, see https://github.com/godotengine/godot/issues/23750#issuecomment-440708856
 	#mirror_plane.material_override.albedo_texture = viewport.get_texture()
 	mirror_plane.mesh.size = Vector2(width, height)
-	activation_shape.shape.extents = Vector3(width / 2.0 + activator_add, height / 2.0, 4)
-	camera.fov = cam_fov
+	activation_shape.shape.extents = Vector3(width / 2.0 + activator_add, height / 2.0 + activator_add, activator_depth)
 	get_tree().get_root().connect("size_changed", self, "_on_resolution_changed")
 	_on_resolution_changed()
 
@@ -77,18 +79,28 @@ func ortho(player):
 	camera.h_offset = sgn * sqrt(d1 - d2)
 	camera.look_at_from_position(cam_pos, player_pos, Vector3(0,1,0))
 
+func activate():
+	active = true
+	camera.fov = cam_fov
+	camera.far = cam_far
+	$Viewport.render_target_update_mode = Viewport.UPDATE_WHEN_VISIBLE
+
+func deactivate():
+	active = false
+	camera.fov = cam_fov
+	camera.far = 0.1
+	$Viewport.render_target_update_mode = Viewport.UPDATE_ONCE
+
 func _on_Area_body_entered(body):
 	if active:
 		return
 	var player = get_node(game_params.player_path)
 	if body == player:
-		active = true
-		camera.far = 9
+		activate()
 
 func _on_Area_body_exited(body):
 	if not active:
 		return
 	var player = get_node(game_params.player_path)
 	if body == player:
-		active = false
-		camera.far = 0.1
+		deactivate()

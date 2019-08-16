@@ -32,7 +32,6 @@ transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0,
 [node name="Rifle_Point" type="Spatial" parent="Gun_Fire_Points"]
 
 [node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Rifle_Point"]
-enabled = true
 cast_to = Vector3( 0, 0, 32 )
 
 [node name="Knife_Point" type="Spatial" parent="Gun_Fire_Points"]
@@ -63,7 +62,7 @@ visible = false
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.8
 shadow_bias = 0.3
-spot_range = 9.0
+spot_range = 18.0
 spot_attenuation = 1.7411
 spot_angle = 42.0
 spot_angle_attenuation = 2.07053
