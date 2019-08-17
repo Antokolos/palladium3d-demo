@@ -44,6 +44,7 @@ model_path = "res://scenes/male.tscn"
 "party",
 ] instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.565025, 1.86862, -10.2396 )
+name_hint = "female"
 
 [node name="rat" parent="." groups=[
 "moving",

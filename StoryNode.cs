@@ -45,6 +45,11 @@ public class StoryNode : Node
 		_inkStory.ChooseChoiceIndex(i);
 		return true;
 	}
+	
+	public String[] GetCurrentTags()
+	{
+		return _inkStory.currentTags.ToArray();
+	}
 
 	public String[] GetChoices()
 	{

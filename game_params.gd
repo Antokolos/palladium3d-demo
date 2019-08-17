@@ -1,6 +1,7 @@
 extends Node
 
 var player_path = "/root/palladium/player"
+var companion_path = "/root/palladium/player_female"
 var conversation_dead_end = false
 var conversation_apata_statue = false
 var conversation_muses = false

@@ -1,13 +1,17 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
-[ext_resource path="res://StoryNode.cs" type="Script" id=3]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=4]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=5]
-[ext_resource path="res://Gun_label.gd" type="Script" id=6]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=7]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=8]
+[ext_resource path="res://styles/actorname_prev_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://StoryNode.cs" type="Script" id=7]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=8]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=9]
+[ext_resource path="res://Gun_label.gd" type="Script" id=10]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=11]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -23,7 +27,7 @@ anti_aliasing = false
 [sub_resource type="DynamicFont" id=3]
 size = 42
 use_filter = true
-font_data = ExtResource( 5 )
+font_data = ExtResource( 9 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 corner_radius_top_left = 90
@@ -54,79 +58,139 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HintLabel" type="Label" parent="Hints/HBoxContainer"]
-margin_top = 97.0
-margin_right = 234.0
-margin_bottom = 172.0
+margin_top = 101.0
+margin_right = 202.0
+margin_bottom = 168.0
 text = "F -- фонарик
 Tab -- инвентарь"
 
 [node name="ActionHintLabel" type="Label" parent="Hints/HBoxContainer"]
-margin_left = 238.0
-margin_top = 117.0
+margin_left = 206.0
+margin_top = 119.0
 margin_right = 1920.0
-margin_bottom = 153.0
+margin_bottom = 151.0
 size_flags_horizontal = 3
 align = 1
 valign = 1
 
 [node name="Conversation" type="ColorRect" parent="."]
-editor/display_folded = true
 visible = false
 anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+color = Color( 0, 0, 0, 0.501961 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Conversation"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Conversation/HBoxContainer"]
-margin_right = 126.0
-margin_bottom = 111.0
+[node name="VBox" type="VBoxContainer" parent="Conversation"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+custom_constants/separation = 30
 alignment = 1
 
-[node name="ConversationText" type="Label" parent="Conversation/HBoxContainer/VBoxContainer"]
-margin_right = 126.0
-margin_bottom = 19.0
+[node name="VBoxText" type="VBoxContainer" parent="Conversation/VBox"]
+margin_right = 1920.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+alignment = 1
+
+[node name="HBoxTextPrev" type="HBoxContainer" parent="Conversation/VBox/VBoxText"]
+margin_right = 1920.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ActorName" type="Label" parent="Conversation/VBox/VBoxText/HBoxTextPrev"]
+margin_right = 191.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
+text = "ActorName"
+align = 2
+
+[node name="ConversationText" type="Label" parent="Conversation/VBox/VBoxText/HBoxTextPrev"]
+margin_left = 195.0
+margin_right = 1920.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ConversationText"
+valign = 1
+autowrap = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Conversation/HBoxContainer/VBoxContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HBoxText" type="HBoxContainer" parent="Conversation/VBox/VBoxText"]
+margin_top = 28.0
+margin_right = 1920.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
 
-[node name="Choice1" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 46.0
-margin_right = 126.0
-margin_bottom = 65.0
+[node name="ActorName" type="Label" parent="Conversation/VBox/VBoxText/HBoxText"]
+margin_right = 191.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
+text = "ActorName"
+align = 2
+
+[node name="ConversationText" type="Label" parent="Conversation/VBox/VBoxText/HBoxText"]
+margin_left = 195.0
+margin_right = 1920.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 6 )
+text = "ConversationText"
+valign = 1
+autowrap = true
+
+[node name="VBoxChoices" type="VBoxContainer" parent="Conversation/VBox"]
+editor/display_folded = true
+margin_left = 913.0
+margin_top = 104.0
+margin_right = 1007.0
+margin_bottom = 280.0
+size_flags_horizontal = 4
+
+[node name="Choice1" type="Label" parent="Conversation/VBox/VBoxChoices"]
+margin_right = 94.0
+margin_bottom = 32.0
 text = "Choice1"
 
-[node name="Choice2" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 69.0
-margin_right = 126.0
-margin_bottom = 88.0
+[node name="Choice2" type="Label" parent="Conversation/VBox/VBoxChoices"]
+margin_top = 36.0
+margin_right = 94.0
+margin_bottom = 68.0
 text = "Choice2"
 
-[node name="Choice3" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 92.0
-margin_right = 126.0
-margin_bottom = 111.0
+[node name="Choice3" type="Label" parent="Conversation/VBox/VBoxChoices"]
+margin_top = 72.0
+margin_right = 94.0
+margin_bottom = 104.0
 text = "Choice3"
 
-[node name="Choice4" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 92.0
-margin_right = 126.0
-margin_bottom = 111.0
-text = "Choice3"
+[node name="Choice4" type="Label" parent="Conversation/VBox/VBoxChoices"]
+margin_top = 108.0
+margin_right = 94.0
+margin_bottom = 140.0
+text = "Choice4"
 
-[node name="Choice5" type="Label" parent="Conversation/HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 92.0
-margin_right = 126.0
-margin_bottom = 111.0
-text = "Choice3"
+[node name="Choice5" type="Label" parent="Conversation/VBox/VBoxChoices"]
+margin_top = 144.0
+margin_right = 94.0
+margin_bottom = 176.0
+text = "Choice5"
 
 [node name="StoryNode" type="Node" parent="Conversation"]
-script = ExtResource( 3 )
+script = ExtResource( 7 )
 
 [node name="Inventory" type="ColorRect" parent="."]
 visible = false
@@ -163,7 +227,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 4 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -175,7 +239,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 4 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -188,7 +252,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 4 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -201,7 +265,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 4 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
@@ -225,7 +289,7 @@ margin_bottom = 109.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 6 )
+script = ExtResource( 10 )
 
 [node name="Indicators" type="Panel" parent="."]
 modulate = Color( 1, 1, 1, 0.705882 )
@@ -256,7 +320,7 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 7 )
+custom_styles/panel = ExtResource( 11 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -264,7 +328,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 8 )]
+[node name="tablet" parent="." instance=ExtResource( 12 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]

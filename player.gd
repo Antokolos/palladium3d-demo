@@ -1,6 +1,7 @@
 extends KinematicBody
 
 export var initial_player = false
+export var name_hint = "player"
 export var model_path = "res://scenes/female.tscn"
 
 const GRAVITY = -6.2
@@ -171,15 +172,15 @@ func clear_path():
 func use(player_node):
 	var hud = player_node.get_node("HUD/hud")
 	if conversation_manager.conversation_active:
-		conversation_manager.stop_conversation(get_node(game_params.player_path))
+		conversation_manager.stop_conversation(player_node)
 	elif not hud.inventory.visible:
-		conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/Conversation.ink.json")
+		conversation_manager.start_conversation(player_node, self, "Conversation")
 	else: # hud.inventory.visible:
 		var item = hud.get_active_item()
 		if item and item.nam == "saffron_bun":
 			hud.inventory.visible = false
 			item.remove()
-			conversation_manager.start_conversation(get_node(game_params.player_path), "ink-scripts/Bun.ink.json")
+			conversation_manager.start_conversation(player_node, self, "Bun")
 
 func _unhandled_input(event):
 	if not is_player():
@@ -244,6 +245,7 @@ func become_player():
 	var model = model_container.get_child(0)
 	model.set_simple_mode(true)
 	player_rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	game_params.companion_path = game_params.player_path
 	game_params.player_path = get_path()
 
 func _ready():
