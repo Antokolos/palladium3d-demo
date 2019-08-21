@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dver_zakrylas.ogg-61bc0b0a86556668cd8b13a9f6f903d2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/root/ApataTrap/dver_zakrylas.ogg"
+dest_files=[ "res://.import/dver_zakrylas.ogg-61bc0b0a86556668cd8b13a9f6f903d2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/potom_rasskazhu.ogg-a0f8f6290472e285c2359879408d1bd3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/player/Conversation/potom_rasskazhu.ogg"
+dest_files=[ "res://.import/potom_rasskazhu.ogg-a0f8f6290472e285c2359879408d1bd3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

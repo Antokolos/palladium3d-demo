@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/begi_k_vykhodu.ogg-1f0d40c2c2420049f74a00d8a99f6841.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/root/ApataTrap/begi_k_vykhodu.ogg"
+dest_files=[ "res://.import/begi_k_vykhodu.ogg-1f0d40c2c2420049f74a00d8a99f6841.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

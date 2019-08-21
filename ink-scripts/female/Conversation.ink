@@ -1,8 +1,10 @@
 - (conversation)
 * 	[Ты боишься крыс?]
-	Конечно нет.
+	Ты боишься крыс? # female # ty_boishsya_krys.ogg
+	Конечно нет. # player # konechno_net.ogg
 	* * [А здесь есть крысы?]
-		Это вероятно.
-	+ + \[ЗАВЕРШИТЬ РАЗГОВОР\] -> END
-+	Давай позже поговорим, нельзя отвлекаться. -> END
+	    А здесь есть крысы? # female # a_zdes_est_krysy.ogg
+		Это вероятно. # player # eto_veroyatno.ogg
++	[Давай позже поговорим, нельзя отвлекаться.]
+    Давай позже поговорим, нельзя отвлекаться. -> END # female # davai_pozhe_pogovorim.ogg
 -	-> conversation

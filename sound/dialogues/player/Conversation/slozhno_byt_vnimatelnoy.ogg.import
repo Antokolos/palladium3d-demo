@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/slozhno_byt_vnimatelnoy.ogg-e4099f1157220b23d2670df53c857d5b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/player/Conversation/slozhno_byt_vnimatelnoy.ogg"
+dest_files=[ "res://.import/slozhno_byt_vnimatelnoy.ogg-e4099f1157220b23d2670df53c857d5b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
