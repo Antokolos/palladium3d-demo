@@ -31,7 +31,7 @@ input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=7]
 input_count = 17
-xfade_time = 0.15
+xfade_time = 0.08
 input_0/name = "b0"
 input_0/auto_advance = false
 input_1/name = "b1"
@@ -98,7 +98,7 @@ animation = "female_rest_99"
 animation = "female_walk_2"
 
 [sub_resource type="AnimationNodeBlendTree" id=18]
-graph_offset = Vector2( 793.083, 71.6799 )
+graph_offset = Vector2( 0, 146.25 )
 nodes/Add3_temp/node = SubResource( 1 )
 nodes/Add3_temp/position = Vector2( 40, 40 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -134,7 +134,7 @@ nodes/look/position = Vector2( 260, -100 )
 nodes/output/position = Vector2( 1580, 80 )
 nodes/walk/node = SubResource( 17 )
 nodes/walk/position = Vector2( 260, 20 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Transition_Lips", 0, "b0", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 7, "b7", "Transition_Lips", 9, "b9", "Transition_Lips", 15, "b15", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition_Lips", 0, "b0", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 7, "b7", "Transition_Lips", 9, "b9", "Transition_Lips", 15, "b15", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
 
 [node name="female" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -151,6 +151,6 @@ parameters/Transition/current = 0
 parameters/Transition_Lips/current = 0
 
 [node name="SpeechTimer" type="Timer" parent="." index="2"]
-wait_time = 0.15
+process_mode = 0
 one_shot = true
 [connection signal="timeout" from="SpeechTimer" to="." method="_on_SpeechTimer_timeout"]

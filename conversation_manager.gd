@@ -29,7 +29,6 @@ func stop_conversation(player):
 func start_conversation(player, target, conversation_name):
 	conversation_active = true
 	conversation_target = target
-	target.get_model().speech_test()
 	player.get_node("HUD/hud/Hints").visible = false
 	var conversation = player.get_node("HUD/hud/Conversation")
 	conversation.visible = true
@@ -90,6 +89,7 @@ func play_sound(file_name):
 	stream.data = bytes
 	$AudioStreamPlayer.stream = stream
 	$AudioStreamPlayer.play()
+	conversation_target.get_model().speech_test(stream.get_length())
 	return true
 
 func story_proceed(player):

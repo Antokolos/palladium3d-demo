@@ -119,17 +119,33 @@ func speak(states):
 	set_transition_lips(0)
 	speech_timer.start()
 
-func speech_test():
-	var states = [4, 9, 7, 3, 15, 4, 0,
-	15, 3, 15, 0,
-	4, 9, 7, 3, 15, 4, 0,
-	3, 0,
-	9, 3, 7, 15, 3, 0,
-	15, 3, 15, 0,
-	7, 3, 15, 0,
-	4, 15, 4, 7, 4, 0,
-	4, 9, 7, 3, 15, 3
-	] # Oblako kak oblako a balka kak lak okolo oblaka
+func speech_test(audio_length):
+	# text = Oblako kak oblako, a balka kak lak okolo oblaka
+	# phonetic = ob kak ob a bal kak lak ok ob
+	var states = [
+	0,
+	4, 9,
+	0,
+	15, 3, 15,
+	0,
+	4, 9,
+	0,
+	3,
+	0,
+	9, 3, 7,
+	0,
+	15, 3, 15,
+	0,
+	7, 3, 15,
+	0,
+	4, 15,
+	0,
+	4, 9, 
+	0
+	]
+	var phoneme_time = audio_length / float(states.size())
+	phoneme_time = floor(phoneme_time * 100) / 100.0
+	speech_timer.wait_time = phoneme_time
 	speak(states)
 
 func _process(delta):

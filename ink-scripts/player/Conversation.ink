@@ -1,3 +1,4 @@
+Облако как облако, а балка как лак около облака. # female # oblako_kak_oblako.ogg
 - (conversation)
 * 	[Ничего здесь не трогай. И не отставай.]
     Ничего здесь не трогай. И не отставай. # player # nichego_zdes_ne_trogai.ogg
