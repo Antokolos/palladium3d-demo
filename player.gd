@@ -182,6 +182,9 @@ func use(player_node):
 			item.remove()
 			conversation_manager.start_conversation(player_node, self, "Bun")
 
+func get_model():
+	return get_node("Rotation_Helper/Model").get_child(0)
+
 func _unhandled_input(event):
 	if not is_player():
 		return

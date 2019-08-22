@@ -29,6 +29,7 @@ func stop_conversation(player):
 func start_conversation(player, target, conversation_name):
 	conversation_active = true
 	conversation_target = target
+	target.get_model().speech_test()
 	player.get_node("HUD/hud/Hints").visible = false
 	var conversation = player.get_node("HUD/hud/Conversation")
 	conversation.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/female.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/character.gd" type="Script" id=2]
@@ -15,9 +15,13 @@ filters = [ ".:head", ".:neck01", ".:neck02", ".:neck03" ]
 filter_enabled = true
 filters = [ ".:head", ".:neck01", ".:neck02", ".:neck03" ]
 
-[sub_resource type="AnimationNodeBlend3" id=4]
+[sub_resource type="AnimationNodeBlend2" id=4]
+filter_enabled = true
+filters = [ ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R" ]
 
-[sub_resource type="AnimationNodeTransition" id=5]
+[sub_resource type="AnimationNodeBlend3" id=5]
+
+[sub_resource type="AnimationNodeTransition" id=6]
 input_count = 2
 xfade_time = 0.5
 input_0/name = "look"
@@ -25,49 +29,128 @@ input_0/auto_advance = false
 input_1/name = "walk"
 input_1/auto_advance = false
 
-[sub_resource type="AnimationNodeAnimation" id=6]
-animation = "female_headturn_left"
-
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "female_headturn_right"
+[sub_resource type="AnimationNodeTransition" id=7]
+input_count = 17
+xfade_time = 0.15
+input_0/name = "b0"
+input_0/auto_advance = false
+input_1/name = "b1"
+input_1/auto_advance = false
+input_2/name = "b2"
+input_2/auto_advance = false
+input_3/name = "b3"
+input_3/auto_advance = false
+input_4/name = "b4"
+input_4/auto_advance = false
+input_5/name = "b5"
+input_5/auto_advance = false
+input_6/name = "b6"
+input_6/auto_advance = false
+input_7/name = "b7"
+input_7/auto_advance = false
+input_8/name = "b8"
+input_8/auto_advance = false
+input_9/name = "b9"
+input_9/auto_advance = false
+input_10/name = "b10"
+input_10/auto_advance = false
+input_11/name = "b11"
+input_11/auto_advance = false
+input_12/name = "b12"
+input_12/auto_advance = false
+input_13/name = "b13"
+input_13/auto_advance = false
+input_14/name = "b14"
+input_14/auto_advance = false
+input_15/name = "b15"
+input_15/auto_advance = false
+input_16/name = "b16"
+input_16/auto_advance = false
 
 [sub_resource type="AnimationNodeAnimation" id=8]
-animation = "female_rest_99"
+animation = "b0"
 
 [sub_resource type="AnimationNodeAnimation" id=9]
+animation = "b15"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "b3"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "b4"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "b7"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "b9"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "female_headturn_left"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "female_headturn_right"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "female_rest_99"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "female_walk_2"
 
-[sub_resource type="AnimationNodeBlendTree" id=10]
-graph_offset = Vector2( 0, -40.8444 )
+[sub_resource type="AnimationNodeBlendTree" id=18]
+graph_offset = Vector2( 793.083, 71.6799 )
 nodes/Add3_temp/node = SubResource( 1 )
 nodes/Add3_temp/position = Vector2( 40, 40 )
 nodes/Blend2_Aux/node = SubResource( 2 )
 nodes/Blend2_Aux/position = Vector2( 780, -60 )
 nodes/Blend2_Head/node = SubResource( 3 )
-nodes/Blend2_Head/position = Vector2( 1060, 40 )
-nodes/Blend3_temp/node = SubResource( 4 )
+nodes/Blend2_Head/position = Vector2( 1080, -20 )
+nodes/Blend2_Lips/node = SubResource( 4 )
+nodes/Blend2_Lips/position = Vector2( 1360.49, 144 )
+nodes/Blend3_temp/node = SubResource( 5 )
 nodes/Blend3_temp/position = Vector2( 40, 260 )
-nodes/Transition/node = SubResource( 5 )
+nodes/Transition/node = SubResource( 6 )
 nodes/Transition/position = Vector2( 540, -100 )
-nodes/headturn_left/node = SubResource( 6 )
+nodes/Transition_Lips/node = SubResource( 7 )
+nodes/Transition_Lips/position = Vector2( 1080, 240 )
+nodes/b0/node = SubResource( 8 )
+nodes/b0/position = Vector2( 760, 280 )
+nodes/b15/node = SubResource( 9 )
+nodes/b15/position = Vector2( 760, 880 )
+nodes/b3/node = SubResource( 10 )
+nodes/b3/position = Vector2( 760, 400 )
+nodes/b4/node = SubResource( 11 )
+nodes/b4/position = Vector2( 760, 520 )
+nodes/b7/node = SubResource( 12 )
+nodes/b7/position = Vector2( 760, 640 )
+nodes/b9/node = SubResource( 13 )
+nodes/b9/position = Vector2( 760, 760 )
+nodes/headturn_left/node = SubResource( 14 )
 nodes/headturn_left/position = Vector2( 260, 280 )
-nodes/headturn_right/node = SubResource( 7 )
+nodes/headturn_right/node = SubResource( 15 )
 nodes/headturn_right/position = Vector2( 260, 140 )
-nodes/look/node = SubResource( 8 )
+nodes/look/node = SubResource( 16 )
 nodes/look/position = Vector2( 260, -100 )
-nodes/output/position = Vector2( 1400, 140 )
-nodes/walk/node = SubResource( 9 )
+nodes/output/position = Vector2( 1580, 80 )
+nodes/walk/node = SubResource( 17 )
 nodes/walk/position = Vector2( 260, 20 )
-node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Transition_Lips", 0, "b0", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 7, "b7", "Transition_Lips", 9, "b9", "Transition_Lips", 15, "b15", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips" ]
 
-[node name="female" instance=ExtResource( 1 )]
+[node name="female" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 10 )
+tree_root = SubResource( 18 )
 anim_player = NodePath("../Female_palladium/AnimationPlayer")
 parameters/Add3_temp/add_amount = 1.0
 parameters/Blend2_Aux/blend_amount = 1.0
-parameters/Blend2_Head/blend_amount = 0.0
+parameters/Blend2_Head/blend_amount = 0.5
+parameters/Blend2_Lips/blend_amount = 1.0
 parameters/Blend3_temp/blend_amount = -1.0
 parameters/Transition/current = 0
+parameters/Transition_Lips/current = 0
+
+[node name="SpeechTimer" type="Timer" parent="." index="2"]
+wait_time = 0.15
+one_shot = true
+[connection signal="timeout" from="SpeechTimer" to="." method="_on_SpeechTimer_timeout"]
