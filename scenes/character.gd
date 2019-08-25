@@ -20,6 +20,7 @@ export var b13_anim_name = "b13"
 export var b14_anim_name = "b14"
 export var b15_anim_name = "b15"
 export var b16_anim_name = "b16"
+export var b17_anim_name = "b17"
 
 var simple_mode = true
 
@@ -100,6 +101,8 @@ func get_anim_name_by_transition_lips(t):
 			return b15_anim_name
 		16:
 			return b16_anim_name
+		17:
+			return b17_anim_name
 		_:
 			return b0_anim_name
 
@@ -108,7 +111,7 @@ func get_lips_transition_by_phoneme(phoneme):
 	match p:
 		"IY", "IE", "И", "Ы":
 			return 1
-		"IH", "EY", "EH", "AE", "AH", "AY", "AW", "E", "EE", "AN", "H", "Е", "Х", "Э":
+		"IH", "EY", "EH", "AE", "AH", "AY", "AW", "E", "EE", "AN", "H", "Х":
 			return 2
 		"AA", "AO", "AR", "А":
 			return 3
@@ -118,7 +121,7 @@ func get_lips_transition_by_phoneme(phoneme):
 			return 5
 		"Y", "Й":
 			return 6
-		"L", "T", "D", "Л", "Т", "Д", "Р", "Ц":
+		"L", "T", "D", "Л", "Т", "Д", "Р":
 			return 7
 		"R":
 			return 8
@@ -130,7 +133,7 @@ func get_lips_transition_by_phoneme(phoneme):
 			return 11
 		"TH", "DH":
 			return 12
-		"S", "Z", "С", "З":
+		"S", "Z", "С", "З", "Ц":
 			return 13
 		"SH", "ZH", "CH", "Ж", "Ш", "Щ", "Ч":
 			return 14
@@ -138,6 +141,8 @@ func get_lips_transition_by_phoneme(phoneme):
 			return 15
 		"J":
 			return 16
+		"Э":
+			return 17
 		".":
 			return 0
 		_:
@@ -194,14 +199,10 @@ func speak_text(phonetic, audio_length):
 					print("WARN: error recognizing phonetic %s/%s for word %s" % [bigram, bigram[1], word])
 				else:
 					states.append(t)
-		states.append(0)
+		#states.append(0)
 	var phoneme_time = audio_length / float(states.size())
 	phoneme_time = floor(phoneme_time * 100) / 100.0
-#	if phoneme_time < 0.15:
-#		phoneme_time = 0.15
 	speech_timer.wait_time = phoneme_time
-	print(states)
-	print(phoneme_time)
 	speak(states)
 
 func _process(delta):
