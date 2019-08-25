@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/female.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/character.gd" type="Script" id=2]
@@ -31,7 +31,7 @@ input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=7]
 input_count = 17
-xfade_time = 0.08
+xfade_time = 0.05
 input_0/name = "b0"
 input_0/auto_advance = false
 input_1/name = "b1"
@@ -71,34 +71,66 @@ input_16/auto_advance = false
 animation = "b0"
 
 [sub_resource type="AnimationNodeAnimation" id=9]
-animation = "b15"
+animation = "b1"
 
 [sub_resource type="AnimationNodeAnimation" id=10]
-animation = "b3"
+animation = "b10"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
-animation = "b4"
+animation = "b11"
 
 [sub_resource type="AnimationNodeAnimation" id=12]
-animation = "b7"
+animation = "b12"
 
 [sub_resource type="AnimationNodeAnimation" id=13]
-animation = "b9"
+animation = "b13"
 
 [sub_resource type="AnimationNodeAnimation" id=14]
-animation = "female_headturn_left"
+animation = "b14"
 
 [sub_resource type="AnimationNodeAnimation" id=15]
-animation = "female_headturn_right"
+animation = "b15"
 
 [sub_resource type="AnimationNodeAnimation" id=16]
-animation = "female_rest_99"
 
 [sub_resource type="AnimationNodeAnimation" id=17]
+animation = "b2"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "b3"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "b4"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "b5"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "b6"
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "b7"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "b8"
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "b9"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "female_headturn_left"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "female_headturn_right"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "female_rest_99"
+
+[sub_resource type="AnimationNodeAnimation" id=28]
 animation = "female_walk_2"
 
-[sub_resource type="AnimationNodeBlendTree" id=18]
-graph_offset = Vector2( 0, 146.25 )
+[sub_resource type="AnimationNodeBlendTree" id=29]
+graph_offset = Vector2( 0, 1048.14 )
 nodes/Add3_temp/node = SubResource( 1 )
 nodes/Add3_temp/position = Vector2( 40, 40 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -106,42 +138,65 @@ nodes/Blend2_Aux/position = Vector2( 780, -60 )
 nodes/Blend2_Head/node = SubResource( 3 )
 nodes/Blend2_Head/position = Vector2( 1080, -20 )
 nodes/Blend2_Lips/node = SubResource( 4 )
-nodes/Blend2_Lips/position = Vector2( 1360.49, 144 )
+nodes/Blend2_Lips/position = Vector2( 1380, 620 )
 nodes/Blend3_temp/node = SubResource( 5 )
 nodes/Blend3_temp/position = Vector2( 40, 260 )
 nodes/Transition/node = SubResource( 6 )
 nodes/Transition/position = Vector2( 540, -100 )
 nodes/Transition_Lips/node = SubResource( 7 )
-nodes/Transition_Lips/position = Vector2( 1080, 240 )
+nodes/Transition_Lips/position = Vector2( 1080, 1060 )
 nodes/b0/node = SubResource( 8 )
-nodes/b0/position = Vector2( 760, 280 )
-nodes/b15/node = SubResource( 9 )
-nodes/b15/position = Vector2( 760, 880 )
-nodes/b3/node = SubResource( 10 )
-nodes/b3/position = Vector2( 760, 400 )
-nodes/b4/node = SubResource( 11 )
-nodes/b4/position = Vector2( 760, 520 )
-nodes/b7/node = SubResource( 12 )
-nodes/b7/position = Vector2( 760, 640 )
-nodes/b9/node = SubResource( 13 )
-nodes/b9/position = Vector2( 760, 760 )
-nodes/headturn_left/node = SubResource( 14 )
+nodes/b0/position = Vector2( 760, 220 )
+nodes/b1/node = SubResource( 9 )
+nodes/b1/position = Vector2( 760, 340 )
+nodes/b10/node = SubResource( 10 )
+nodes/b10/position = Vector2( 760, 1420 )
+nodes/b11/node = SubResource( 11 )
+nodes/b11/position = Vector2( 760, 1540 )
+nodes/b12/node = SubResource( 12 )
+nodes/b12/position = Vector2( 760, 1660 )
+nodes/b13/node = SubResource( 13 )
+nodes/b13/position = Vector2( 760, 1780 )
+nodes/b14/node = SubResource( 14 )
+nodes/b14/position = Vector2( 760, 1900 )
+nodes/b15/node = SubResource( 15 )
+nodes/b15/position = Vector2( 760, 2020 )
+nodes/b16/node = SubResource( 16 )
+nodes/b16/position = Vector2( 760, 2140 )
+nodes/b2/node = SubResource( 17 )
+nodes/b2/position = Vector2( 760, 460 )
+nodes/b3/node = SubResource( 18 )
+nodes/b3/position = Vector2( 760, 580 )
+nodes/b4/node = SubResource( 19 )
+nodes/b4/position = Vector2( 760, 700 )
+nodes/b5/node = SubResource( 20 )
+nodes/b5/position = Vector2( 760, 820 )
+nodes/b6/node = SubResource( 21 )
+nodes/b6/position = Vector2( 760, 940 )
+nodes/b7/node = SubResource( 22 )
+nodes/b7/position = Vector2( 760, 1060 )
+nodes/b8/node = SubResource( 23 )
+nodes/b8/position = Vector2( 760, 1180 )
+nodes/b9/node = SubResource( 24 )
+nodes/b9/position = Vector2( 760, 1300 )
+nodes/headturn_left/node = SubResource( 25 )
 nodes/headturn_left/position = Vector2( 260, 280 )
-nodes/headturn_right/node = SubResource( 15 )
+nodes/headturn_right/node = SubResource( 26 )
 nodes/headturn_right/position = Vector2( 260, 140 )
-nodes/look/node = SubResource( 16 )
+nodes/look/node = SubResource( 27 )
 nodes/look/position = Vector2( 260, -100 )
-nodes/output/position = Vector2( 1580, 80 )
-nodes/walk/node = SubResource( 17 )
+nodes/output/position = Vector2( 1580, 620 )
+nodes/walk/node = SubResource( 28 )
 nodes/walk/position = Vector2( 260, 20 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition_Lips", 0, "b0", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 7, "b7", "Transition_Lips", 9, "b9", "Transition_Lips", 15, "b15", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16" ]
 
 [node name="female" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 18 )
+tree_root = SubResource( 29 )
 anim_player = NodePath("../Female_palladium/AnimationPlayer")
+active = true
 parameters/Add3_temp/add_amount = 1.0
 parameters/Blend2_Aux/blend_amount = 1.0
 parameters/Blend2_Head/blend_amount = 0.5

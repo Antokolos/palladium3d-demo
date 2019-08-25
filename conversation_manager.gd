@@ -52,6 +52,9 @@ func start_conversation(player, target, conversation_name):
 	conversation_text_prev.text = ""
 	story_proceed(player)
 
+func sanitize_text(text):
+	return text.replace("_", "")
+
 func story_choose(player, idx):
 	var has_sound = false
 	var conversation = player.get_node("HUD/hud/Conversation")
@@ -65,13 +68,13 @@ func story_choose(player, idx):
 		story.Choose(idx)
 		if story.CanContinue():
 			var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
-			conversation_text_prev.text = story.Continue()
+			conversation_text_prev.text = sanitize_text(story.Continue())
 			var tags = story.GetCurrentTags()
 			var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 			var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
 			conversation_actor_prev.text = actor_name + ": "
 			if tags and tags.size() > 1:
-				has_sound = play_sound(tags[1])
+				has_sound = play_sound_and_start_lipsync(tags[1], null) # no lipsync for choices
 				in_choice = true
 		if not has_sound:
 			story_proceed(player)
@@ -81,7 +84,7 @@ func proceed_story_immediately(player):
 		$AudioStreamPlayer.stop()
 		story_proceed(player)
 
-func play_sound(file_name):
+func play_sound_and_start_lipsync(file_name, phonetic):
 	var ogg_file = File.new()
 	ogg_file.open(conversation_sound_path + file_name, File.READ)
 	var bytes = ogg_file.get_buffer(ogg_file.get_len())
@@ -89,8 +92,106 @@ func play_sound(file_name):
 	stream.data = bytes
 	$AudioStreamPlayer.stream = stream
 	$AudioStreamPlayer.play()
-	conversation_target.get_model().speech_test(stream.get_length())
+	if phonetic:
+		print(phonetic)
+		conversation_target.get_model().speak_text(phonetic, stream.get_length())
 	return true
+
+func letter_vowel(letter):
+	var vowels = ["А", "Е", "Ё", "И", "О", "У", "Ы", "Э", "Ю", "Я"]
+	return vowels.has(letter.to_upper())
+
+func letter_consonant(letter):
+	var consonants = ["Б", "В", "Г", "Д", "Ж", "З", "Й", "К", "Л", "М", "Н", "П", "Р", "С", "Т", "Ф", "Х", "Ц", "Ч", "Ш", "Щ"]
+	return consonants.has(letter.to_upper())
+
+func letter_consonant_important(letter):
+	var consonants = ["В", "З", "Л", "М", "Ш", "Ц", "Ж"]
+	return consonants.has(letter.to_upper())
+
+func letter_consonant_special(letter):
+	var special_consonants = ["Ж", "Ш", "Ц"]
+	return special_consonants.has(letter.to_upper())
+
+func letter_special(letter):
+	var specials = ["Ь", "Ъ"]
+	return specials.has(letter.to_upper())
+
+func letter_skip(letter):
+	return not (letter_vowel(letter) or letter_consonant(letter))
+
+func letter_to_phonetic(letter, prev_letter, is_word_begin):
+	var l = letter.to_upper()
+	if letter_special(l) or letter_skip(l):
+		return ""
+	var pl = prev_letter.to_upper()
+	var pl_vowel = letter_vowel(pl)
+	var pl_consonant = letter_consonant(pl)
+	var pl_consonant_special = letter_consonant_special(pl)
+	var pl_special = letter_special(pl)
+	match l:
+		"Е":
+			return "ЙЭ" if pl_vowel or is_word_begin or pl_special else "Э"
+		"Ё":
+			return "ЙО" if pl_vowel or is_word_begin or pl_special else "О"
+		"Ю":
+			return "ЙУ" if pl_vowel or is_word_begin or pl_special else "У"
+		"Я":
+			return "ЙА" if pl_vowel or is_word_begin or pl_special else "А"
+		"И":
+			return "Ы" if pl_consonant_special else "И"
+		_:
+			#return letter if not letter_consonant(letter) or letter_consonant_important(letter) else ""
+			return letter
+
+func text_to_phonetic(text):
+	var result = ""
+	var words = text.split(" ", false)
+	for word in words:
+		var i = 0
+		var wl = word.length()
+		var prev_letter = ""
+		var dont_speak = false
+		var vowels = {}
+		var consonants = {}
+		var addition = ""
+		while i < wl:
+			var letter = word[i]
+			var word_begin = (i == 0)
+			consonants[i] = ""
+			vowels[i] = ""
+			if letter == "_":
+				dont_speak = true
+				i = i + 1
+				continue
+			if dont_speak:
+				addition = addition + "."
+			if letter_consonant(letter):
+				consonants[i] = letter_to_phonetic(letter, prev_letter, word_begin)
+			elif letter_vowel(letter) and not dont_speak:
+				vowels[i] = letter_to_phonetic(letter, prev_letter, word_begin)
+			if not letter_skip(letter):
+				prev_letter = letter
+			i = i + 1
+		var phonetic = {}
+		var pi = 2
+		i = wl - 1
+		phonetic[0] = ""
+		phonetic[1] = ""
+		phonetic[2] = ""
+		#print(vowels)
+		#print(consonants)
+		while i >= 0:
+			if (pi == 2 or pi == 0) and consonants[i] != "":
+				phonetic[pi] = consonants[i]
+				if pi == 0:
+					break
+			if pi == 2 and vowels[i] != "":
+				phonetic[1] = vowels[i]
+				pi = 0
+			i = i - 1
+		result = result + phonetic[0] + phonetic[1] + phonetic[2] + addition + " "
+	return result
 
 func story_proceed(player):
 	in_choice = false
@@ -106,7 +207,8 @@ func story_proceed(player):
 	var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
 	conversation_actor.text = actor_name + ": " if actor_name and not conversation_text.text.empty() else ""
 	if tags and tags.size() > 1:
-		play_sound(tags[1])
+		play_sound_and_start_lipsync(tags[1], tags[2] if tags.size() > 2 else text_to_phonetic(conversation_text.text))
+	conversation_text.text = sanitize_text(conversation_text.text)
 	change_stretch_ratio(conversation)
 	if story.CanChoose():
 		display_choices(story, conversation)

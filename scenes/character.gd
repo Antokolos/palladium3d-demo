@@ -103,6 +103,46 @@ func get_anim_name_by_transition_lips(t):
 		_:
 			return b0_anim_name
 
+func get_lips_transition_by_phoneme(phoneme):
+	var p = phoneme.to_upper()
+	match p:
+		"IY", "IE", "И", "Ы":
+			return 1
+		"IH", "EY", "EH", "AE", "AH", "AY", "AW", "E", "EE", "AN", "H", "Е", "Х", "Э":
+			return 2
+		"AA", "AO", "AR", "А":
+			return 3
+		"OW", "UW", "UE", "OY", "W", "О":
+			return 4
+		"UH", "ER", "У":
+			return 5
+		"Y", "Й":
+			return 6
+		"L", "T", "D", "Л", "Т", "Д", "Р", "Ц":
+			return 7
+		"R":
+			return 8
+		"M", "P", "B", "М", "П", "Б":
+			return 9
+		"N", "Н":
+			return 10
+		"F", "V", "Ф", "В":
+			return 11
+		"TH", "DH":
+			return 12
+		"S", "Z", "С", "З":
+			return 13
+		"SH", "ZH", "CH", "Ж", "Ш", "Щ", "Ч":
+			return 14
+		"G", "K", "Г", "К":
+			return 15
+		"J":
+			return 16
+		".":
+			return 0
+		_:
+			return -1
+
 func look(look_angle_deg):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
@@ -119,33 +159,49 @@ func speak(states):
 	set_transition_lips(0)
 	speech_timer.start()
 
-func speech_test(audio_length):
-	# text = Oblako kak oblako, a balka kak lak okolo oblaka
-	# phonetic = ob kak ob a bal kak lak ok ob
-	var states = [
-	0,
-	4, 9,
-	0,
-	15, 3, 15,
-	0,
-	4, 9,
-	0,
-	3,
-	0,
-	9, 3, 7,
-	0,
-	15, 3, 15,
-	0,
-	7, 3, 15,
-	0,
-	4, 15,
-	0,
-	4, 9, 
-	0
-	]
+func speak_text(phonetic, audio_length):
+	var states = []
+	var words = phonetic.split(" ", false)
+	for word in words:
+		var bigrams = word.bigrams()
+		if bigrams.size() == 0:
+			if word.length() == 1:
+				var tw = get_lips_transition_by_phoneme(word)
+				if tw == 0:
+					print("WARN: error recognizing phonetic for word %s" % word)
+				states.append(tw)
+			else:
+				print("ERROR: word %s cannot be split to bigrams!")
+		var i = 0
+		var bs = bigrams.size()
+		while i < bs:
+			var bigram = bigrams[i]
+			i = i + 1
+			var last = (bs == i)
+			var t = get_lips_transition_by_phoneme(bigram)
+			var split = (t == -1)
+			if split:
+				t = get_lips_transition_by_phoneme(bigram[0])
+				if t == -1:
+					print("WARN: error recognizing phonetic %s/%s for word %s" % [bigram[0], bigram, word])
+				else:
+					states.append(t)
+			else:
+				states.append(t)
+			if split and last:
+				t = get_lips_transition_by_phoneme(bigram[1])
+				if t == -1:
+					print("WARN: error recognizing phonetic %s/%s for word %s" % [bigram, bigram[1], word])
+				else:
+					states.append(t)
+		states.append(0)
 	var phoneme_time = audio_length / float(states.size())
 	phoneme_time = floor(phoneme_time * 100) / 100.0
+#	if phoneme_time < 0.15:
+#		phoneme_time = 0.15
 	speech_timer.wait_time = phoneme_time
+	print(states)
+	print(phoneme_time)
 	speak(states)
 
 func _process(delta):
