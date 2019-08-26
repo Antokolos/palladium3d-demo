@@ -75,7 +75,7 @@ func story_choose(player, idx):
 			var tags = story.GetCurrentTags()
 			var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 			var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
-			conversation_actor_prev.text = actor_name + ": "
+			conversation_actor_prev.text = tr(actor_name) + ": "
 			if tags and tags.size() > 1:
 				has_sound = play_sound_and_start_lipsync(tags[1], null) # no lipsync for choices
 				in_choice = true
@@ -158,7 +158,7 @@ func story_proceed(player):
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var tags = story.GetCurrentTags()
 	var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
-	conversation_actor.text = actor_name + ": " if actor_name and not conversation_text.text.empty() else ""
+	conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 	if tags and tags.size() > 1:
 		play_sound_and_start_lipsync(tags[1], tags[2] if tags.size() > 2 else text_to_phonetic(conversation_text.text))
 	change_stretch_ratio(conversation)
