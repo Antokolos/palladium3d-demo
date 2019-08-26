@@ -5,6 +5,7 @@ const CONSONANTS =           ["Б", "В", "Г", "Д", "Ж", "З", "К", "Л", "�
 const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "Н",      "Р",      "Т",      "Х"]
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
+const MINIMUM_AUTO_ADVANCE_TIME_SEC = 2.1
 
 var conversation_active
 var conversation_target
@@ -52,30 +53,37 @@ func start_conversation(player, target, conversation_name):
 		conversation_sound_path = "sound/dialogues/root/%s/" % conversation_name
 	story.LoadStory(cp_player if exists_cp_player else (cp if exists_cp else "ink-scripts/Monsieur.ink.json"))
 	story.Reset()
-	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
-	conversation_actor_prev.text = ""
-	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
-	conversation_text_prev.text = ""
+	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
+	conversation_actor.text = ""
+	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
+	conversation_text.text = ""
 	story_proceed(player)
+
+func move_current_text_to_prev(conversation):
+	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
+	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
+	conversation_text_prev.text = conversation_text.text
+	conversation_text.text = ""
+	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
+	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
+	conversation_actor_prev.text = conversation_actor.text
+	conversation_actor.text = ""
 
 func story_choose(player, idx):
 	var has_sound = false
 	var conversation = player.get_node("HUD/hud/Conversation")
+	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
+	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var story = conversation.get_node('StoryNode')
 	if story.CanChoose() and max_choice > 0 and idx < max_choice:
-		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
-		conversation_text.text = ""
-		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-		conversation_actor.text = ""
+		move_current_text_to_prev(conversation)
 		clear_choices(story, conversation)
 		story.Choose(idx)
 		if story.CanContinue():
-			var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
-			conversation_text_prev.text = story.Continue()
+			conversation_text.text = story.Continue().strip_edges()
 			var tags = story.GetCurrentTags()
-			var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 			var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
-			conversation_actor_prev.text = tr(actor_name) + ": "
+			conversation_actor.text = tr(actor_name) + ": "
 			if tags and tags.size() > 1:
 				has_sound = play_sound_and_start_lipsync(tags[1], null) # no lipsync for choices
 				in_choice = true
@@ -93,11 +101,13 @@ func play_sound_and_start_lipsync(file_name, phonetic):
 	var bytes = ogg_file.get_buffer(ogg_file.get_len())
 	var stream = AudioStreamOGGVorbis.new()
 	stream.data = bytes
+	var length = stream.get_length()
+	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
 	$AudioStreamPlayer.stream = stream
 	$AudioStreamPlayer.play()
 	if phonetic:
 		#print(phonetic)
-		conversation_target.get_model().speak_text(phonetic, stream.get_length())
+		conversation_target.get_model().speak_text(phonetic, length)
 	return true
 
 func letter_vowel(letter):
@@ -151,7 +161,7 @@ func story_proceed(player):
 	var conversation = player.get_node("HUD/hud/Conversation")
 	var story = conversation.get_node('StoryNode')
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
-	conversation_text.text = ""
+	move_current_text_to_prev(conversation)
 	while story.CanContinue():
 		conversation_text.text = conversation_text.text + " " + story.Continue()
 	conversation_text.text = conversation_text.text.strip_edges()
@@ -190,3 +200,11 @@ func _on_AudioStreamPlayer_finished():
 	var story = conversation.get_node('StoryNode')
 	if in_choice:
 		story_proceed(player)
+	elif story.CanChoose():
+		var ch = story.GetChoices()
+		if ch.size() == 1:
+			$ShortPhraseTimer.start()
+
+func _on_ShortPhraseTimer_timeout():
+	var player = get_node(game_params.player_path)
+	story_choose(player, 0)
