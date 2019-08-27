@@ -23,5 +23,5 @@
 		* * *	[Это вероятно.]
 		        Это вероятно. # player # eto_veroyatno.ogg
 +	[Давай позже поговорим, нельзя отвлекаться.]
-    Давай позже поговорим, нельзя отвлекаться. -> END # player # davay_pozhe_pogovorim.ogg
+    Давай позже поговорим, нельзя отвлекаться. # finalizer # davay_pozhe_pogovorim.ogg
 -	-> conversation

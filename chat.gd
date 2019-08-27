@@ -10,7 +10,6 @@ var chat_log = ""
 
 func _ready():
 	story.LoadStory("ink-scripts/Monsieur.ink.json")
-	story.Reset()
 
 func _unhandled_input(event):
 	if self.is_visible_in_tree() and event is InputEventKey:

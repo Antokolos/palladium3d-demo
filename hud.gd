@@ -13,6 +13,7 @@ onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 var active_item_idx = -1
 
 func _ready():
+	get_node("Conversation/StoryNode").BuildStoriesCache("ink-scripts")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"

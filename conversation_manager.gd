@@ -11,7 +11,6 @@ var conversation_active
 var conversation_target
 var conversation_sound_path
 var in_choice
-var conversation_
 var max_choice = 0
 
 func _ready():
@@ -51,7 +50,6 @@ func start_conversation(player, target, conversation_name):
 	if exists_cp:
 		conversation_sound_path = "sound/dialogues/root/%s/" % conversation_name
 	story.LoadStory(cp_player if exists_cp_player else (cp if exists_cp else "ink-scripts/Monsieur.ink.json"))
-	story.Reset()
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	conversation_actor.text = ""
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -83,7 +81,11 @@ func story_choose(player, idx):
 		if story.CanContinue():
 			conversation_text.text = story.Continue().strip_edges()
 			var tags = story.GetCurrentTags()
-			var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
+			var finalizer = tags and tags.size() > 0 and tags[0] == "finalizer"
+			if finalizer:
+				stop_conversation(player)
+				return
+			var actor_name = tags[0] if not finalizer and tags and tags.size() > 0 else player.name_hint
 			conversation_actor.text = tr(actor_name) + ": "
 			if tags and tags.size() > 1:
 				has_sound = play_sound_and_start_lipsync(tags[1], null) # no lipsync for choices
