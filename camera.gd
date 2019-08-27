@@ -40,7 +40,7 @@ func change_quality(quality):
 			get_tree().call_group("light_sources", "set_quality_optimal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_GOOD:
 			self.environment = env_good
 			#get_tree().call_group("lightmaps", "enable", false)
