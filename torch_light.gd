@@ -14,22 +14,18 @@ func enable(enable):
 	visible = enable
 
 func set_quality_normal():
-	set_shadow(false)
 	flicker = false
 	moving = false
 
 func set_quality_optimal():
-	set_shadow(true)
-	flicker = false
+	flicker = true
 	moving = false
 
 func set_quality_good():
-	set_shadow(true)
 	flicker = true
 	moving = true
 
 func set_quality_high():
-	set_shadow(true)
 	flicker = true
 	moving = true
 
