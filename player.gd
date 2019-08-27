@@ -194,24 +194,8 @@ func _unhandled_input(event):
 		if event.is_pressed():
 			if conversation_manager.in_choice and event.scancode == KEY_1:
 				conversation_manager.proceed_story_immediately(self)
-			elif story.CanChoose() and event.scancode == KEY_1:
-				conversation_manager.story_choose(self, 0)
-			elif story.CanChoose() and event.scancode == KEY_2:
-				conversation_manager.story_choose(self, 1)
-			elif story.CanChoose() and event.scancode == KEY_3:
-				conversation_manager.story_choose(self, 2)
-			elif story.CanChoose() and event.scancode == KEY_4:
-				conversation_manager.story_choose(self, 3)
-			elif story.CanChoose() and event.scancode == KEY_5:
-				conversation_manager.story_choose(self, 4)
-			elif story.CanChoose() and event.scancode == KEY_6:
-				conversation_manager.story_choose(self, 5)
-			elif story.CanChoose() and event.scancode == KEY_7:
-				conversation_manager.story_choose(self, 6)
-			elif story.CanChoose() and event.scancode == KEY_8:
-				conversation_manager.story_choose(self, 7)
-			elif story.CanChoose() and event.scancode == KEY_9:
-				conversation_manager.story_choose(self, 8)
+			elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
+				conversation_manager.story_choose(self, event.scancode - KEY_1)
 
 func add_highlight():
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)

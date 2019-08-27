@@ -11,6 +11,7 @@ var conversation_active
 var conversation_target
 var conversation_sound_path
 var in_choice
+var conversation_
 var max_choice = 0
 
 func _ready():
@@ -27,8 +28,6 @@ func change_stretch_ratio(conversation):
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
 func stop_conversation(player):
-	if conversation_active:
-		story_choose(player, max_choice - 1)
 	conversation_active = false
 	player.get_node("HUD/hud/Conversation").visible = false
 	player.get_node("HUD/hud/Hints").visible = true
@@ -75,7 +74,9 @@ func story_choose(player, idx):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var story = conversation.get_node('StoryNode')
-	if story.CanChoose() and max_choice > 0 and idx < max_choice:
+	if not story.CanChoose() and not story.CanContinue() and idx == 0:
+		stop_conversation(player)
+	elif story.CanChoose() and max_choice > 0 and idx < max_choice:
 		move_current_text_to_prev(conversation)
 		clear_choices(story, conversation)
 		story.Choose(idx)
@@ -160,22 +161,20 @@ func story_proceed(player):
 	in_choice = false
 	var conversation = player.get_node("HUD/hud/Conversation")
 	var story = conversation.get_node('StoryNode')
-	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
-	move_current_text_to_prev(conversation)
-	while story.CanContinue():
-		conversation_text.text = conversation_text.text + " " + story.Continue()
-	conversation_text.text = conversation_text.text.strip_edges()
-	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-	var tags = story.GetCurrentTags()
-	var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
-	conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
-	if tags and tags.size() > 1:
-		play_sound_and_start_lipsync(tags[1], tags[2] if tags.size() > 2 else text_to_phonetic(conversation_text.text))
-	change_stretch_ratio(conversation)
-	if story.CanChoose():
-		display_choices(story, conversation)
-	else:
-		stop_conversation(player)
+	if story.CanContinue():
+		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
+		move_current_text_to_prev(conversation)
+		while story.CanContinue():
+			conversation_text.text = conversation_text.text + " " + story.Continue()
+		conversation_text.text = conversation_text.text.strip_edges()
+		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
+		var tags = story.GetCurrentTags()
+		var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
+		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
+		if tags and tags.size() > 1:
+			play_sound_and_start_lipsync(tags[1], tags[2] if tags.size() > 2 else text_to_phonetic(conversation_text.text))
+		change_stretch_ratio(conversation)
+	display_choices(story, conversation, story.GetChoices() if story.CanChoose() else [tr("end_conversation")])
 
 func clear_choices(story, conversation):
 	var ch = story.GetChoices()
@@ -185,14 +184,13 @@ func clear_choices(story, conversation):
 		c.text = ""
 		i += 1
 
-func display_choices(story, conversation):
-	var ch = story.GetChoices()
-	var choices = conversation.get_node("VBox/VBoxChoices").get_children()
+func display_choices(story, conversation, choices):
+	var choice_nodes = conversation.get_node("VBox/VBoxChoices").get_children()
 	var i = 1
-	for c in choices:
-		c.text = str(i) + ". " + ch[i - 1] if i <= ch.size() else ""
+	for c in choice_nodes:
+		c.text = str(i) + ". " + choices[i - 1] if i <= choices.size() else ""
 		i += 1
-	max_choice = ch.size()
+	max_choice = choices.size()
 
 func _on_AudioStreamPlayer_finished():
 	var player = get_node(game_params.player_path)
