@@ -1,14 +1,15 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://tablet.gd" type="Script" id=1]
 [ext_resource path="res://chat.gd" type="Script" id=2]
 [ext_resource path="res://StoryNode.cs" type="Script" id=3]
-[ext_resource path="res://assets/ui/lightblue_equirectangular.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/80-80_white.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/gear.png" type="Texture" id=6]
-[ext_resource path="res://assets/ui/home-button.png" type="Texture" id=7]
-[ext_resource path="res://assets/ui/home-button-pressed.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/home-button-hover.png" type="Texture" id=9]
+[ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/ui/lightblue_equirectangular.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/80-80_white.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/gear.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/home-button.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/home-button-pressed.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/home-button-hover.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
@@ -32,7 +33,7 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 2048, 1024 )
 
 [node name="tablet" type="Control"]
@@ -235,6 +236,194 @@ margin_left = 63.0
 margin_right = 102.0
 margin_bottom = 20.0
 
+[node name="save_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+alignment = 1
+
+[node name="Caption" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 414.0
+margin_right = 577.0
+margin_bottom = 434.0
+alignment = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Caption"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 4 )
+text = "TABLET_SAVE_GAME_CAPTION"
+align = 1
+
+[node name="Slot1" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 414.0
+margin_right = 577.0
+margin_bottom = 434.0
+alignment = 1
+
+[node name="ButtonSlot1" type="Button" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot1"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot2" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 438.0
+margin_right = 577.0
+margin_bottom = 458.0
+alignment = 1
+
+[node name="ButtonSlot2" type="Button" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot2"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot3" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 462.0
+margin_right = 577.0
+margin_bottom = 482.0
+alignment = 1
+
+[node name="ButtonSlot3" type="Button" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot4" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 486.0
+margin_right = 577.0
+margin_bottom = 506.0
+alignment = 1
+
+[node name="ButtonSlot4" type="Button" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot4"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot5" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer"]
+margin_top = 510.0
+margin_right = 577.0
+margin_bottom = 530.0
+alignment = 1
+
+[node name="ButtonSlot5" type="Button" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot5"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="load_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+alignment = 1
+
+[node name="Caption" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 414.0
+margin_right = 577.0
+margin_bottom = 434.0
+alignment = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Caption"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 4 )
+text = "TABLET_LOAD_GAME_CAPTION"
+align = 1
+
+[node name="Slot1" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 414.0
+margin_right = 577.0
+margin_bottom = 434.0
+alignment = 1
+
+[node name="ButtonSlot1" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot1"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot2" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 438.0
+margin_right = 577.0
+margin_bottom = 458.0
+alignment = 1
+
+[node name="ButtonSlot2" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot2"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot3" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 462.0
+margin_right = 577.0
+margin_bottom = 482.0
+alignment = 1
+
+[node name="ButtonSlot3" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot3"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot4" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 486.0
+margin_right = 577.0
+margin_bottom = 506.0
+alignment = 1
+
+[node name="ButtonSlot4" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot4"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot5" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 510.0
+margin_right = 577.0
+margin_bottom = 530.0
+alignment = 1
+
+[node name="ButtonSlot5" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot5"]
+margin_left = 243.0
+margin_right = 334.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
 [node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
 margin_left = 7.0
 margin_top = 7.0
@@ -272,7 +461,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
@@ -298,7 +487,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer"]
@@ -324,7 +513,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer"]
@@ -350,7 +539,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer"]
@@ -362,54 +551,109 @@ align = 1
 valign = 2
 
 [node name="VSettingsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_right = 80.0
+margin_right = 129.0
 margin_bottom = 98.0
 alignment = 1
 
-[node name="HSettingsContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
-margin_right = 80.0
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
+margin_right = 129.0
 margin_bottom = 80.0
 alignment = 1
 
-[node name="SettingsButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HSettingsContainer"]
-margin_right = 80.0
+[node name="SettingsButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HContainer"]
+margin_left = 24.0
+margin_right = 104.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
+margin_top = 84.0
+margin_right = 129.0
+margin_bottom = 98.0
+text = "TABLET_SETTINGS"
+align = 1
+valign = 2
+
+[node name="VSaveGameContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 149.0
+margin_right = 276.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer"]
+margin_right = 127.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="SaveGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer/HContainer"]
+margin_left = 23.0
+margin_right = 103.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer"]
 margin_top = 84.0
-margin_right = 80.0
+margin_right = 127.0
 margin_bottom = 98.0
-text = "Settings"
+text = "TABLET_SAVE_GAME"
 align = 1
 valign = 2
 
-[node name="VSystemContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-visible = false
-margin_left = 100.0
-margin_right = 180.0
+[node name="VLoadGameContainer2" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 296.0
+margin_right = 429.0
 margin_bottom = 98.0
 alignment = 1
 
-[node name="HSystemContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer"]
-margin_right = 80.0
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2"]
+margin_right = 133.0
 margin_bottom = 80.0
 alignment = 1
 
-[node name="SystemButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer/HSystemContainer"]
-margin_right = 80.0
+[node name="LoadGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2/HContainer"]
+margin_left = 26.0
+margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSystemContainer"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2"]
 margin_top = 84.0
-margin_right = 80.0
+margin_right = 133.0
 margin_bottom = 98.0
-text = "System"
+text = "TABLET_LOAD_GAME"
+align = 1
+valign = 2
+
+[node name="VQuitGameContainer3" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_top = 118.0
+margin_right = 129.0
+margin_bottom = 216.0
+alignment = 1
+
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3"]
+margin_right = 129.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="QuitGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3/HContainer"]
+margin_left = 24.0
+margin_right = 104.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 6 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3"]
+margin_top = 84.0
+margin_right = 129.0
+margin_bottom = 98.0
+text = "TABLET_QUIT_GAME"
 align = 1
 valign = 2
 
@@ -422,9 +666,9 @@ margin_left = -20.0
 margin_top = -40.0
 margin_right = 20.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 8 )
-texture_hover = ExtResource( 9 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
 [connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
@@ -433,6 +677,19 @@ texture_hover = ExtResource( 9 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSaveSlot1_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSaveSlot2_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSaveSlot3_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot4/ButtonSlot4" to="." method="_on_ButtonSaveSlot4_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot5/ButtonSlot5" to="." method="_on_ButtonSaveSlot5_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonLoadSlot1_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonLoadSlot2_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonLoadSlot3_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot4/ButtonSlot4" to="." method="_on_ButtonLoadSlot4_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot5/ButtonSlot5" to="." method="_on_ButtonLoadSlot5_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer/ChatButton" to="." method="_on_ChatButton_pressed"]
-[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HSettingsContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer/HContainer/SaveGameButton" to="." method="_on_SaveGameButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2/HContainer/LoadGameButton" to="." method="_on_LoadGameButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3/HContainer/QuitGameButton" to="." method="_on_QuitGameButton_pressed"]
 [connection signal="pressed" from="TabletPanel/HomeButton" to="." method="_on_HomeButton_pressed"]

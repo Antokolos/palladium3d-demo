@@ -22,16 +22,19 @@ func _ready():
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			dimmer.visible = true
-		get_tree().paused = true
-		$QuitDialog.popup_centered()
+		ask_quit()
+
+func ask_quit():
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		dimmer.visible = true
+	get_tree().paused = true
+	$QuitDialog.popup_centered()
 
 func _process(delta):
 	# ----------------------------------
 	# Inventory on/off
-	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active:
+	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
 		active_item_idx = -1
 		if inventory.visible:
 			inventory.visible = false
@@ -62,6 +65,7 @@ func show_tablet(is_show):
 		dimmer.visible = true
 		tablet.visible = true
 		get_tree().paused = true
+		tablet._on_HomeButton_pressed()
 	else:
 		get_tree().paused = false
 		tablet.visible = false

@@ -6,6 +6,8 @@ onready var desktop = get_node("TabletPanel/TabletScreen/desktop")
 onready var apps = get_node("TabletPanel/TabletScreen/apps")
 onready var chat = apps.get_node("chat")
 onready var settings_app = apps.get_node("settings_app")
+onready var save_game_app = apps.get_node("save_game_app")
+onready var load_game_app = apps.get_node("load_game_app")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
@@ -121,6 +123,81 @@ func _on_ChatButton_pressed():
 func _on_SettingsButton_pressed():
 	desktop.hide()
 	settings_app.show()
+
+func refresh_slot_captions(base_node):
+	var hud = get_parent()
+	var story_node = hud.get_node("Conversation/StoryNode")
+	for i in range(1, 6):
+		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
+		var caption = story_node.GetSlotCaption(i)
+		node.text = caption if caption.length() > 0 else tr("TABLET_EMPTY_SLOT")
+
+func _on_SaveGameButton_pressed():
+	desktop.hide()
+	save_game_app.show()
+	refresh_slot_captions(save_game_app)
+
+func _on_LoadGameButton_pressed():
+	desktop.hide()
+	load_game_app.show()
+	refresh_slot_captions(load_game_app)
+
+func _on_QuitGameButton_pressed():
+	var hud = get_parent() # Can also be accessed via player node
+	hud.ask_quit()
+
+func simulate_esc():
+	# Why we need such workarounds?
+	# Why not just call hud.show_tablet(false) and set mouse mode to Input.MOUSE_MODE_CAPTURED?
+	# Well, I tried, but I failed, for some reason it didn't work for me and I don't know why.
+	# If you'll simplify this code, please tell me, what am I doing wrong :(
+	var ev = InputEventAction.new()
+	ev.set_action("ui_cancel")
+	ev.set_pressed(true)
+	get_tree().input_event(ev)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func save_to_slot(slot):
+	var hud = get_parent()
+	var story_node = hud.get_node("Conversation/StoryNode")
+	story_node.SaveAll(slot)
+	simulate_esc()
+
+func load_from_slot(slot):
+	var hud = get_parent()
+	var story_node = hud.get_node("Conversation/StoryNode")
+	story_node.ReloadAllSaves(slot)
+	simulate_esc()
+
+func _on_ButtonSaveSlot1_pressed():
+	save_to_slot(1)
+
+func _on_ButtonSaveSlot2_pressed():
+	save_to_slot(2)
+
+func _on_ButtonSaveSlot3_pressed():
+	save_to_slot(3)
+
+func _on_ButtonSaveSlot4_pressed():
+	save_to_slot(4)
+
+func _on_ButtonSaveSlot5_pressed():
+	save_to_slot(5)
+
+func _on_ButtonLoadSlot1_pressed():
+	load_from_slot(1)
+
+func _on_ButtonLoadSlot2_pressed():
+	load_from_slot(2)
+
+func _on_ButtonLoadSlot3_pressed():
+	load_from_slot(3)
+
+func _on_ButtonLoadSlot4_pressed():
+	load_from_slot(4)
+
+func _on_ButtonLoadSlot5_pressed():
+	load_from_slot(5)
 
 func _on_TabletOrientation_item_selected(ID):
 	if ID == settings.TABLET_HORIZONTAL:

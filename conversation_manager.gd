@@ -7,14 +7,14 @@ const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 2.1
 
-var conversation_active
+var conversation_name
 var conversation_target
 var conversation_sound_path
 var in_choice
 var max_choice = 0
 
 func _ready():
-	conversation_active = false
+	conversation_name = null
 	conversation_target = null
 	conversation_sound_path = ""
 	in_choice = false
@@ -27,17 +27,19 @@ func change_stretch_ratio(conversation):
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
 func stop_conversation(player):
-	conversation_active = false
+	conversation_name = null
 	player.get_node("HUD/hud/Conversation").visible = false
 	player.get_node("HUD/hud/Hints").visible = true
 
-func start_conversation(player, target, conversation_name):
-	conversation_active = true
-	conversation_target = target
-	player.get_node("HUD/hud/Hints").visible = false
+func conversation_is_finished(player, target, conversation_name):
+	return not conversation_is_not_finished(player, target, conversation_name)
+
+func conversation_is_not_finished(player, target, conversation_name):
 	var conversation = player.get_node("HUD/hud/Conversation")
-	conversation.visible = true
-	max_choice = 0
+	var story = init_story(player, conversation, conversation_name)
+	return story.CanContinue() or story.CanChoose()
+
+func init_story(player, conversation, conversation_name):
 	var story = conversation.get_node('StoryNode')
 	var f = File.new()
 	conversation_sound_path = ""
@@ -50,11 +52,35 @@ func start_conversation(player, target, conversation_name):
 	if exists_cp:
 		conversation_sound_path = "sound/dialogues/root/%s/" % conversation_name
 	story.LoadStory(cp_player if exists_cp_player else (cp if exists_cp else "ink-scripts/Monsieur.ink.json"))
-	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-	conversation_actor.text = ""
-	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
-	conversation_text.text = ""
+	return story
+
+func conversation_active():
+	return conversation_name and conversation_name.length() > 0
+ 
+func start_conversation(player, target, conversation_name):
+	if self.conversation_name == conversation_name:
+		return
+	self.conversation_name = conversation_name
+	conversation_target = target
+	player.get_node("HUD/hud/Hints").visible = false
+	var conversation = player.get_node("HUD/hud/Conversation")
+	conversation.visible = true
+	max_choice = 0
+	var story = init_story(player, conversation, conversation_name)
+	clear_actors_and_texts(player, story, conversation)
 	story_proceed(player)
+
+func clear_actors_and_texts(player, story, conversation):
+	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
+	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
+	conversation_text_prev.text = ""
+	conversation_text.text = story.CurrentText()
+	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
+	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
+	conversation_actor_prev.text = ""
+	var tags = story.GetCurrentTags()
+	var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
+	conversation_actor.text = tr(actor_name) + ": "
 
 func move_current_text_to_prev(conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -90,6 +116,7 @@ func story_choose(player, idx):
 			if tags and tags.size() > 1:
 				has_sound = play_sound_and_start_lipsync(tags[1], null) # no lipsync for choices
 				in_choice = true
+			change_stretch_ratio(conversation)
 		if not has_sound:
 			story_proceed(player)
 

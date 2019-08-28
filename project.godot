@@ -24,6 +24,7 @@ boot_splash/image="res://assets/images/nlblogo.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.00392157, 0.0745098, 0.133333, 1 )
 config/icon="res://icon.png"
+config/auto_accept_quit=false
 
 [autoload]
 

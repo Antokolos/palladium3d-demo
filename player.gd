@@ -171,7 +171,7 @@ func clear_path():
 
 func use(player_node):
 	var hud = player_node.get_node("HUD/hud")
-	if conversation_manager.conversation_active:
+	if conversation_manager.conversation_active():
 		conversation_manager.stop_conversation(player_node)
 	elif not hud.inventory.visible:
 		conversation_manager.start_conversation(player_node, self, "Conversation")
