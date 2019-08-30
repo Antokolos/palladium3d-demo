@@ -4,7 +4,6 @@ var player_toggle_enable = true
 
 func _ready():
 	$player.take("saffron_bun", null)
-	TranslationServer.set_locale("ru")
 
 func _unhandled_input(event):
 	if not player_toggle_enable:

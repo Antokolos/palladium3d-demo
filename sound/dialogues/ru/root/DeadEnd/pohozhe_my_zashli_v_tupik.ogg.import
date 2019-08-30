@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pohozhe_my_zashli_v_tupik.ogg-cb338835c0ce278936ab65bd0d78b851.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/DeadEnd/pohozhe_my_zashli_v_tupik.ogg"
+dest_files=[ "res://.import/pohozhe_my_zashli_v_tupik.ogg-cb338835c0ce278936ab65bd0d78b851.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

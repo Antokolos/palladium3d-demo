@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ya_dolzhen_koe_chto.ogg-143db4d7938fc7ec15a39df1f72bf945.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/ya_dolzhen_koe_chto.ogg"
+dest_files=[ "res://.import/ya_dolzhen_koe_chto.ogg-143db4d7938fc7ec15a39df1f72bf945.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/potolok_opuskaetsya.ogg-40d5049700e5c21e11ee8ab8717d5839.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/ApataTrap/potolok_opuskaetsya.ogg"
+dest_files=[ "res://.import/potolok_opuskaetsya.ogg-40d5049700e5c21e11ee8ab8717d5839.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

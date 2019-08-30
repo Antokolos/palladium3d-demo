@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/net_no_ya_risuyu.ogg-fa696bcec694a219174cccf27e845d2d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/DeadEnd/net_no_ya_risuyu.ogg"
+dest_files=[ "res://.import/net_no_ya_risuyu.ogg-fa696bcec694a219174cccf27e845d2d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

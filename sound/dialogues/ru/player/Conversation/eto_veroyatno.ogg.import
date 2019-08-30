@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/eto_veroyatno.ogg-ce73537e92da224499f0cb37173bebee.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/eto_veroyatno.ogg"
+dest_files=[ "res://.import/eto_veroyatno.ogg-ce73537e92da224499f0cb37173bebee.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

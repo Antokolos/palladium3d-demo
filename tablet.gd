@@ -96,7 +96,7 @@ func _ready():
 	match (settings.language):
 		settings.LANGUAGE_EN:
 			language.select(0)
-		settings.language_RU:
+		settings.LANGUAGE_RU:
 			language.select(1)
 		_:
 			language.select(0)
@@ -274,3 +274,8 @@ func _on_AA_item_selected(ID):
 
 func _on_Language_item_selected(ID):
 	settings.language = ID
+	match ID:
+		settings.LANGUAGE_RU:
+			TranslationServer.set_locale("ru")
+		_:
+			TranslationServer.set_locale("en")

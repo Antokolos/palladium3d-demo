@@ -5,8 +5,9 @@ using Ink.Runtime;
 
 public class StoryNode : Node
 {
-	private Story _inkStory = null;
-	private Dictionary<String, Story> stories = new Dictionary<String, Story>();
+	private static String[] AvailableLocales = {"en", "ru"};
+	private Story _inkStory; // = new Dictionary<String, Story>();
+	private Dictionary<String, Dictionary<String, Story>> stories = new Dictionary<String, Dictionary<String, Story>>();
 
 	public override void _Ready()
 	{
@@ -25,14 +26,29 @@ public class StoryNode : Node
 		string basePath = string.Format("user://saves/slot_{0}", i);
 		dir.MakeDir(basePath);
 		dir.MakeDir(basePath + "/ink-scripts");
-		dir.MakeDir(basePath + "/ink-scripts/player");
-		dir.MakeDir(basePath + "/ink-scripts/female");
+		foreach (var locale in AvailableLocales)
+		{
+			dir.MakeDir(string.Format("{0}/ink-scripts/{1}", basePath, locale));
+			dir.MakeDir(string.Format("{0}/ink-scripts/{1}/player", basePath, locale));
+			dir.MakeDir(string.Format("{0}/ink-scripts/{1}/female", basePath, locale));
+		}
 	}
 
 	public void BuildStoriesCache(String storiesDirectoryPath)
 	{
+		foreach (var locale in AvailableLocales)
+		{
+			var storiesByLocale = new Dictionary<String, Story>();
+			stories.Add(locale, storiesByLocale);
+			BuildStoriesCacheForLocale(storiesDirectoryPath, locale, "", storiesByLocale);
+		}
+	}
+
+	public void BuildStoriesCacheForLocale(String storiesDirectoryPath, String locale, String subPath, Dictionary<String, Story> storiesByLocale)
+	{
 		var dir = new Directory();
-		dir.Open(storiesDirectoryPath);
+		String basePath = storiesDirectoryPath + "/" + locale + (subPath.Empty() ? "" : "/" + subPath);
+		dir.Open(basePath);
 		dir.ListDirBegin(true);
 		while (true)
 		{
@@ -43,48 +59,49 @@ public class StoryNode : Node
 			}
 			else if (dir.CurrentIsDir())
 			{
-				BuildStoriesCache(storiesDirectoryPath + "/" + file);
+				BuildStoriesCacheForLocale(storiesDirectoryPath, locale, file, storiesByLocale);
 			}
 			else if (file.EndsWith(".ink.json"))
 			{
-				var storyPath = storiesDirectoryPath + "/" + file;
+				var storyPath = basePath + "/" + file;
 				Story story = LoadStoryFromFile(storyPath);
-				LoadSaveOrReset(0, storyPath, story);
-				stories.Add(storyPath, story);
+				LoadSaveOrReset(0, locale, storyPath, story);
+				storiesByLocale.Add((subPath.Empty() ? "" : subPath + "/") + file, story);
 			}
 		}
 		dir.ListDirEnd();
 	}
 
-	private Story LoadStoryFromFile(String input_path)
+	private Story LoadStoryFromFile(String path)
 	{
-		String text = System.IO.File.ReadAllText(input_path);
+		String text = System.IO.File.ReadAllText(path);
 		return new Story(text);
 	}
 
-	public void LoadStory(String input_path)
+	public void LoadStory(String storiesDirectoryPath, String locale, String storyPath)
 	{
+		Dictionary<String, Story> storiesByLocale;
+		if (!stories.TryGetValue(locale, out storiesByLocale))
+		{
+			return;
+		}
 		Story mapValue;
-		if (stories.TryGetValue(input_path, out mapValue))
+		if (storiesByLocale.TryGetValue(storyPath, out mapValue))
 		{
 			_inkStory = mapValue;
 		}
 		else
 		{
-			_inkStory = LoadStoryFromFile(input_path);
-			LoadSaveOrReset(0, input_path, _inkStory);
-			stories.Add(input_path, _inkStory);
+			String path = storiesDirectoryPath + "/" + locale + "/" + storyPath;
+			_inkStory = LoadStoryFromFile(path);
+			LoadSaveOrReset(0, locale, path, _inkStory);
+			storiesByLocale.Add(storyPath, _inkStory);
 		}
 	}
 
 	public void Reset()
 	{
 		_inkStory.ResetState();
-	}
-
-	private String GetSaveFilePath(int slot, String storyPath)
-	{
-		return string.Format("user://saves/slot_{0}/", slot) + storyPath + ".sav";
 	}
 
 	private String GetSlotCaptionFilePath(int slot)
@@ -106,30 +123,39 @@ public class StoryNode : Node
 		return result;
 	}
 
+	private String GetSaveFilePath(int slot, String locale, String storyPath)
+	{
+		return string.Format("user://saves/slot_{0}/ink-scripts/{1}/{2}.sav", slot, locale, storyPath);
+	}
+
 	// Saves all stories from the stories dictionary. Each one will create its own file in the user's profile folder.
 	public void SaveAll(int slot)
 	{
 		foreach (var pair in stories)
 		{
-			String path = pair.Key;
-			Story story = pair.Value;
-			string savedJson = story.state.ToJson();
-			File saveFile = new File();
-			saveFile.Open(GetSaveFilePath(slot, path), 2); // File.ModeFlags.WRITE
-			saveFile.StoreString(savedJson);
-			saveFile.Close();
-			
-			File slotCaptionFile = new File();
-			slotCaptionFile.Open(GetSlotCaptionFilePath(slot), 2); // File.ModeFlags.WRITE
-			slotCaptionFile.StoreString(DateTime.Now.ToString());
-			slotCaptionFile.Close();
+			String locale = pair.Key;
+			Dictionary<String, Story> storiesByLocale = pair.Value;
+			foreach (var pairStories in storiesByLocale)
+			{
+				String path = pairStories.Key;
+				Story story = pairStories.Value;
+				string savedJson = story.state.ToJson();
+				File saveFile = new File();
+				saveFile.Open(GetSaveFilePath(slot, locale, path), 2); // File.ModeFlags.WRITE
+				saveFile.StoreString(savedJson);
+				saveFile.Close();
+			}
 		}
+		File slotCaptionFile = new File();
+		slotCaptionFile.Open(GetSlotCaptionFilePath(slot), 2); // File.ModeFlags.WRITE
+		slotCaptionFile.StoreString(DateTime.Now.ToString());
+		slotCaptionFile.Close();
 	}
 
-	private bool LoadSaveOrReset(int slot, String path, Story story)
+	private bool LoadSaveOrReset(int slot, String locale, String path, Story story)
 	{
 		File saveFile = new File();
-		String saveFilePath = GetSaveFilePath(slot, path);
+		String saveFilePath = GetSaveFilePath(slot, locale, path);
 		if (saveFile.FileExists(saveFilePath))
 		{
 			saveFile.Open(saveFilePath, 1); // File.ModeFlags.READ
@@ -150,9 +176,14 @@ public class StoryNode : Node
 	{
 		foreach (var pair in stories)
 		{
-			String path = pair.Key;
-			Story story = pair.Value;
-			LoadSaveOrReset(slot, path, story);
+			String locale = pair.Key;
+			Dictionary<String, Story> storiesByLocale = pair.Value;
+			foreach (var pairStories in storiesByLocale)
+			{
+				String path = pairStories.Key;
+				Story story = pairStories.Value;
+				LoadSaveOrReset(slot, locale, path, story);
+			}
 		}
 	}
 

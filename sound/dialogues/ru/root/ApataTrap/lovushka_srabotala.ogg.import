@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lovushka_srabotala.ogg-c9aaa37f9ffee7c141941ec54aeb9e19.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/ApataTrap/lovushka_srabotala.ogg"
+dest_files=[ "res://.import/lovushka_srabotala.ogg-c9aaa37f9ffee7c141941ec54aeb9e19.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/net_i_nasekomykh.ogg-bfabd520ec93fc1f4cfeec68c7767e02.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/net_i_nasekomykh.ogg"
+dest_files=[ "res://.import/net_i_nasekomykh.ogg-bfabd520ec93fc1f4cfeec68c7767e02.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

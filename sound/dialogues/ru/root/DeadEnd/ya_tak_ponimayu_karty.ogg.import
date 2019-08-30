@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ya_tak_ponimayu_karty.ogg-a6307d2c5ea0427411cff03794ee43dd.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/DeadEnd/ya_tak_ponimayu_karty.ogg"
+dest_files=[ "res://.import/ya_tak_ponimayu_karty.ogg-a6307d2c5ea0427411cff03794ee43dd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

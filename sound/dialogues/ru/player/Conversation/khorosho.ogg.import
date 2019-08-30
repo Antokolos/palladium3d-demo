@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/khorosho.ogg-9e8344ba5c83e13a9717e563fcaca214.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/khorosho.ogg"
+dest_files=[ "res://.import/khorosho.ogg-9e8344ba5c83e13a9717e563fcaca214.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

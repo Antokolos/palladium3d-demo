@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/kak_interesno_a_chto.ogg-45e2af70c5ed15017f7692929875a41d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/kak_interesno_a_chto.ogg"
+dest_files=[ "res://.import/kak_interesno_a_chto.ogg-45e2af70c5ed15017f7692929875a41d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

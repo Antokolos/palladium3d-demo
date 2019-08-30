@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/da_no_ya_zdes_ne_zatem.ogg-a45ee1c216b03bfe666eb1915bba5403.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Conversation/da_no_ya_zdes_ne_zatem.ogg"
+dest_files=[ "res://.import/da_no_ya_zdes_ne_zatem.ogg-a45ee1c216b03bfe666eb1915bba5403.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

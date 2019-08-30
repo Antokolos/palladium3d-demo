@@ -40,18 +40,19 @@ func conversation_is_not_finished(player, target, conversation_name):
 	return story.CanContinue() or story.CanChoose()
 
 func init_story(player, conversation, conversation_name):
+	var locale = TranslationServer.get_locale()
 	var story = conversation.get_node('StoryNode')
 	var f = File.new()
 	conversation_sound_path = ""
-	var cp_player = "ink-scripts/%s/%s.ink.json" % [player.name_hint, conversation_name]
-	var exists_cp_player = f.file_exists(cp_player)
+	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
+	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
 	if exists_cp_player:
-		conversation_sound_path = "sound/dialogues/%s/%s/" % [player.name_hint, conversation_name]
-	var cp = "ink-scripts/%s.ink.json" % conversation_name
-	var exists_cp = f.file_exists(cp)
+		conversation_sound_path = "sound/dialogues/%s/%s/%s/" % [locale, player.name_hint, conversation_name]
+	var cp = "%s.ink.json" % conversation_name
+	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
 	if exists_cp:
-		conversation_sound_path = "sound/dialogues/root/%s/" % conversation_name
-	story.LoadStory(cp_player if exists_cp_player else (cp if exists_cp else "ink-scripts/Monsieur.ink.json"))
+		conversation_sound_path = "sound/dialogues/%s/root/%s/" % [locale, conversation_name]
+	story.LoadStory("ink-scripts", locale, cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
 	return story
 
 func conversation_active():
