@@ -9,7 +9,7 @@ var max_choice = 0
 var chat_log = ""
 
 func _ready():
-	story.LoadStory("ink-scripts", TranslationServer.get_locale(), "Monsieur.ink.json")
+	story.LoadStory("ink-scripts", "Monsieur.ink.json")
 
 func _unhandled_input(event):
 	if self.is_visible_in_tree() and event is InputEventKey:
@@ -41,7 +41,7 @@ func story_proceed(choice_response):
 	var hour = timeDict.hour;
 	var minute = timeDict.minute;
 	var seconds = timeDict.second;
-	var phrase = "%02d:%02d:%02d\n" % [hour, minute, seconds] + story.Continue()
+	var phrase = "%02d:%02d:%02d\n" % [hour, minute, seconds] + story.Continue(TranslationServer.get_locale())
 	var text = "[right]%s[/right]\n" % phrase if choice_response else phrase + "\n"
 	chat_log = chat_log + text
 	chat_window.bbcode_text = chat_log
@@ -55,7 +55,7 @@ func story_choose(idx):
 
 func display_choices():
 	in_choice = true
-	var ch = story.GetChoices()
+	var ch = story.GetChoices(TranslationServer.get_locale())
 	var i = 1
 	info_label.text = ""
 	for c in ch:

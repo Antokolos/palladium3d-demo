@@ -52,7 +52,7 @@ func init_story(player, conversation, conversation_name):
 	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
 	if exists_cp:
 		conversation_sound_path = "sound/dialogues/%s/root/%s/" % [locale, conversation_name]
-	story.LoadStory("ink-scripts", locale, cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
+	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
 	return story
 
 func conversation_active():
@@ -75,11 +75,11 @@ func clear_actors_and_texts(player, story, conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
 	conversation_text_prev.text = ""
-	conversation_text.text = story.CurrentText()
+	conversation_text.text = story.CurrentText(TranslationServer.get_locale())
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 	conversation_actor_prev.text = ""
-	var tags = story.GetCurrentTags()
+	var tags = story.GetCurrentTags(TranslationServer.get_locale())
 	var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
 	conversation_actor.text = tr(actor_name) + ": "
 
@@ -106,8 +106,8 @@ func story_choose(player, idx):
 		clear_choices(story, conversation)
 		story.Choose(idx)
 		if story.CanContinue():
-			conversation_text.text = story.Continue().strip_edges()
-			var tags = story.GetCurrentTags()
+			conversation_text.text = story.Continue(TranslationServer.get_locale()).strip_edges()
+			var tags = story.GetCurrentTags(TranslationServer.get_locale())
 			var finalizer = tags and tags.size() > 0 and tags[0] == "finalizer"
 			if finalizer:
 				stop_conversation(player)
@@ -195,19 +195,19 @@ func story_proceed(player):
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 		move_current_text_to_prev(conversation)
 		while story.CanContinue():
-			conversation_text.text = conversation_text.text + " " + story.Continue()
+			conversation_text.text = conversation_text.text + " " + story.Continue(TranslationServer.get_locale())
 		conversation_text.text = conversation_text.text.strip_edges()
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-		var tags = story.GetCurrentTags()
+		var tags = story.GetCurrentTags(TranslationServer.get_locale())
 		var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
 		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 		if tags and tags.size() > 1:
 			play_sound_and_start_lipsync(tags[1], tags[2] if tags.size() > 2 else text_to_phonetic(conversation_text.text))
 		change_stretch_ratio(conversation)
-	display_choices(story, conversation, story.GetChoices() if story.CanChoose() else [tr("end_conversation")])
+	display_choices(story, conversation, story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else [tr("end_conversation")])
 
 func clear_choices(story, conversation):
-	var ch = story.GetChoices()
+	var ch = story.GetChoices(TranslationServer.get_locale())
 	var choices = conversation.get_node("VBox/VBoxChoices").get_children()
 	var i = 1
 	for c in choices:
@@ -229,7 +229,7 @@ func _on_AudioStreamPlayer_finished():
 	if in_choice:
 		story_proceed(player)
 	elif story.CanChoose():
-		var ch = story.GetChoices()
+		var ch = story.GetChoices(TranslationServer.get_locale())
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
 
