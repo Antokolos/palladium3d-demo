@@ -245,7 +245,7 @@ func _on_Fullscreen_pressed():
 	settings.fullscreen = fs
 
 func _on_Quality_item_selected(ID):
-	var camera = get_node("../../../Rotation_Helper/Camera/camera")
+	var camera = get_node("../../..").get_cam()
 	if camera:
 		camera.change_quality(ID)
 	settings.quality = ID

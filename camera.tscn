@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://camera.gd" type="Script" id=2]
 [ext_resource path="res://culling_rays.gd" type="Script" id=3]
 [ext_resource path="res://action_use.gd" type="Script" id=4]
 [ext_resource path="res://shader_cache.gd" type="Script" id=5]
+[ext_resource path="res://item_preview.gd" type="Script" id=6]
+[ext_resource path="res://default_theme.tres" type="Theme" id=7]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.24, 0.36, 0.2 )
@@ -27,6 +29,7 @@ cast_to = Vector3( 0, 0, -23 )
 collision_mask = 2
 
 [node name="Gun_Fire_Points" type="Spatial" parent="."]
+editor/display_folded = true
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0, -0.05 )
 
 [node name="Rifle_Point" type="Spatial" parent="Gun_Fire_Points"]
@@ -55,6 +58,42 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
 
 [node name="shader_cache" type="Spatial" parent="viewpoint"]
 script = ExtResource( 5 )
+
+[node name="item_preview" type="Spatial" parent="viewpoint"]
+pause_mode = 2
+script = ExtResource( 6 )
+
+[node name="item_holder" type="Spatial" parent="viewpoint/item_preview"]
+
+[node name="ActionsPanel" type="ColorRect" parent="viewpoint/item_preview"]
+visible = false
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 7 )
+color = Color( 0, 0, 0, 0.141176 )
+
+[node name="ActionsContainer" type="VBoxContainer" parent="viewpoint/item_preview/ActionsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HintLabelClose" type="Label" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
+margin_right = 1920.0
+margin_bottom = 32.0
+text = "E -- закрыть"
+align = 1
+valign = 1
+
+[node name="CustomActions" type="VBoxContainer" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
+margin_top = 36.0
+margin_right = 1920.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
 
 [node name="Flashlight" type="SpotLight" parent="."]
 transform = Transform( -1, 8.74228e-008, 0, -8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.3 )

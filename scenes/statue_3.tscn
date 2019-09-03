@@ -9,6 +9,7 @@ radius = 0.148653
 height = 0.771136
 
 [node name="statue_3" instance=ExtResource( 1 )]
+pause_mode = 2
 script = ExtResource( 2 )
 anim_player_path = "Statue002/AnimationPlayer"
 anim_name = "StatueAction.002"

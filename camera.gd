@@ -10,6 +10,7 @@ onready var env_high = preload("res://env_high.tres")
 
 onready var culling_rays = get_node("culling_rays")
 onready var shader_cache = get_node("viewpoint/shader_cache")
+onready var item_preview = get_node("viewpoint/item_preview")
 
 func _ready():
 	change_quality(settings.quality)
@@ -82,3 +83,14 @@ func _input(event):
 	if event.is_action_pressed("action"):
 		var player = get_node("../../..")
 		use_point.action(player)
+
+func _unhandled_input(event):
+	var is_key = event is InputEventKey and event.is_pressed()
+	if not is_key:
+		return
+	var hud = get_node("../../..").get_hud()
+	if hud.inventory.visible:
+		if event.scancode != KEY_E:
+			return
+		var item = hud.get_active_item()
+		item_preview.open_preview(item, hud, flashlight)

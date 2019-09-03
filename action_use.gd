@@ -18,10 +18,10 @@ func switch_highlight(player_node, body):
 		return
 	if action_body and action_body.get_ref() and action_body.get_ref().has_method("remove_highlight"):
 		action_body.get_ref().remove_highlight()
-		player_node.get_node("HUD/hud/Hints/HBoxContainer/ActionHintLabel").text = ""
+		player_node.get_hud().get_node("Hints/HBoxContainer/ActionHintLabel").text = ""
 	if body and body.has_method("add_highlight"):
 		var hint_message = body.add_highlight()
-		player_node.get_node("HUD/hud/Hints/HBoxContainer/ActionHintLabel").text = hint_message
+		player_node.get_hud().get_node("Hints/HBoxContainer/ActionHintLabel").text = hint_message
 	action_body = weakref(body) if body else null
 
 func highlight(player_node):

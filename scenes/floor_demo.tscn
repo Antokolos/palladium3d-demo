@@ -1,7 +1,7 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/floor_demo.escn" type="PackedScene" id=1]
-[ext_resource path="res://vantablack.tres" type="Material" id=2]
+[ext_resource path="res://scenes/vantablack_1.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 9.96189, 3.04551, 0.966352 )
@@ -18,61 +18,55 @@ extents = Vector3( 2.32273, 3.14798, 0.364928 )
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.675213, 3.05361, 6.15413 )
 
-[sub_resource type="CubeMesh" id=6]
-size = Vector3( 0.675, 7.6, 11.8 )
-
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.683987, 3.19838, 1.17426 )
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 2.38116, 3.22246, 0.572491 )
 
-[sub_resource type="CubeMesh" id=23]
-size = Vector3( 5, 7.6, 0.6 )
-
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.563652, 3.11797, 1.8462 )
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.575573, 3.13419, 3.07193 )
 
-[sub_resource type="BoxShape" id=11]
+[sub_resource type="BoxShape" id=10]
 extents = Vector3( 2.07323, 3.13579, 1.2623 )
 
-[sub_resource type="BoxShape" id=12]
+[sub_resource type="BoxShape" id=11]
 extents = Vector3( 2.11193, 3.17596, 0.430577 )
 
-[sub_resource type="BoxShape" id=13]
+[sub_resource type="BoxShape" id=12]
 extents = Vector3( 3.53204, 3.52426, 0.321101 )
 
-[sub_resource type="BoxShape" id=14]
+[sub_resource type="BoxShape" id=13]
 extents = Vector3( 7.08287, 3.04218, 0.614428 )
 
-[sub_resource type="BoxShape" id=15]
+[sub_resource type="BoxShape" id=14]
 extents = Vector3( 0.241252, 3.31608, 8.03787 )
 
-[sub_resource type="BoxShape" id=16]
+[sub_resource type="BoxShape" id=15]
 extents = Vector3( 0.328631, 3.40913, 11.3809 )
 
-[sub_resource type="BoxShape" id=17]
+[sub_resource type="BoxShape" id=16]
 extents = Vector3( 0.180622, 2.18626, 17.3637 )
 
-[sub_resource type="BoxShape" id=18]
+[sub_resource type="BoxShape" id=17]
 extents = Vector3( 2.12705, 3.30995, 1.46975 )
 
-[sub_resource type="BoxShape" id=19]
+[sub_resource type="BoxShape" id=18]
 extents = Vector3( 1.94147, 2.42343, 0.299519 )
 
-[sub_resource type="BoxShape" id=20]
+[sub_resource type="BoxShape" id=19]
 extents = Vector3( 19.6539, 0.189777, 17.0325 )
 
-[sub_resource type="BoxShape" id=21]
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 2.30433, 0.869232, 15.5059 )
 
-[sub_resource type="BoxShape" id=22]
+[sub_resource type="BoxShape" id=21]
 extents = Vector3( 1, 0.794213, 14.281 )
 
-[node name="floor_demo" instance=ExtResource( 1 )]
+[node name="floor_demo" index="0" instance=ExtResource( 1 )]
 
 [node name="rock_4545" parent="." index="229"]
 transform = Transform( -9.89449e-007, 7.30363e-006, 1, -1.60536e-006, 1, -7.30363e-006, -1, -1.60536e-006, -9.89437e-007, 6.45174, 7.33189, 2.62443 )
@@ -104,77 +98,65 @@ shape = SubResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14846, 4.62206, -13.9958 )
 shape = SubResource( 5 )
 
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody/CollisionShape5" index="0"]
-material_override = ExtResource( 2 )
-cast_shadow = 2
-mesh = SubResource( 6 )
-material/0 = null
-
 [node name="CollisionShape7" type="CollisionShape" parent="StaticBody" index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22052, 4.60383, 6.82362 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape10" type="CollisionShape" parent="StaticBody" index="6"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47292, 4.56491, -8.48621 )
-shape = SubResource( 8 )
-
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody/CollisionShape10" index="0"]
-material_override = ExtResource( 2 )
-cast_shadow = 2
-mesh = SubResource( 23 )
-material/0 = null
+shape = SubResource( 7 )
 
 [node name="CollisionShape11" type="CollisionShape" parent="StaticBody" index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19861, 4.59994, -10.0609 )
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="CollisionShape12" type="CollisionShape" parent="StaticBody" index="8"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.28311, 4.60041, -17.8902 )
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 
 [node name="CollisionShape13" type="CollisionShape" parent="StaticBody" index="9"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2673, 4.70755, -17.0546 )
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 
 [node name="CollisionShape14" type="CollisionShape" parent="StaticBody" index="10"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.57981, 4.87003, -19.1374 )
-shape = SubResource( 12 )
+shape = SubResource( 11 )
 
 [node name="CollisionShape15" type="CollisionShape" parent="StaticBody" index="11"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2366, 4.9466, -19.6238 )
-shape = SubResource( 13 )
+shape = SubResource( 12 )
 
 [node name="CollisionShape16" type="CollisionShape" parent="StaticBody" index="12"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09181, 4.66091, -3.45743 )
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape17" type="CollisionShape" parent="StaticBody" index="13"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.3284, 4.44404, -11.2666 )
-shape = SubResource( 15 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape18" type="CollisionShape" parent="StaticBody" index="14"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.6526, 4.438, -8.97259 )
-shape = SubResource( 16 )
+shape = SubResource( 15 )
 
 [node name="CollisionShape21" type="CollisionShape" parent="StaticBody" index="15"]
 transform = Transform( 1, 0, 0, 0, 0.94563, 0.325244, 0, -0.325244, 0.94563, -3.13375, 8.76527, 18.9462 )
-shape = SubResource( 17 )
+shape = SubResource( 16 )
 
 [node name="CollisionShape22" type="CollisionShape" parent="StaticBody" index="16"]
 transform = Transform( 1, 0, 0, 0, 0.941839, 0.336065, 0, -0.336065, 0.941839, 0.903646, 9.11858, 18.5476 )
-shape = SubResource( 17 )
+shape = SubResource( 16 )
 
 [node name="CollisionShape25" type="CollisionShape" parent="StaticBody" index="17"]
 transform = Transform( 1, 0, 0, 0, 0.999558, -0.0297111, 0, 0.0297111, 0.999558, -1.1336, 12.2891, 30.0197 )
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
 [node name="CollisionShape26" type="CollisionShape" parent="StaticBody" index="18"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7669, 6.15487, -19.6238 )
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
 [node name="CollisionShape27" type="CollisionShape" parent="StaticBody" index="19"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.88355, 4.12424, -19.6238 )
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
 [node name="StaticBodyFloor" type="StaticBody" parent="." index="354"]
 collision_layer = 3
@@ -182,16 +164,18 @@ collision_mask = 3
 
 [node name="CollisionShape19" type="CollisionShape" parent="StaticBodyFloor" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.69906, 1.40888, -8.38569 )
-shape = SubResource( 20 )
+shape = SubResource( 19 )
 
 [node name="CollisionShape20" type="CollisionShape" parent="StaticBodyFloor" index="1"]
 transform = Transform( 1, 0, 0, 0, 0.94545, 0.325767, 0, -0.325767, 0.94545, -1.11218, 5.89795, 17.9429 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
 
 [node name="CollisionShape23" type="CollisionShape" parent="StaticBodyFloor" index="2"]
 transform = Transform( 0.858192, -0.513328, 0, 0.484742, 0.810401, 0.329052, -0.168912, -0.282391, 0.944311, -2.04345, 9.82793, 15.0667 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape24" type="CollisionShape" parent="StaticBodyFloor" index="3"]
 transform = Transform( 0.747013, 0.66481, 0, -0.6293, 0.707112, 0.322449, 0.214368, -0.240874, 0.946586, -0.114703, 10.5221, 16.1383 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
+
+[node name="vantablack_1" parent="." index="451" instance=ExtResource( 2 )]

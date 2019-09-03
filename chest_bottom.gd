@@ -1,7 +1,7 @@
 extends StaticBody
 
 func use(player_node):
-	var hud = player_node.get_node("HUD/hud")
+	var hud = player_node.get_hud()
 	if hud.inventory.visible:
 		var item = hud.get_active_item()
 		if item and item.nam.begins_with("statue_"):

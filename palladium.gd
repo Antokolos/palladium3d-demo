@@ -3,7 +3,7 @@ extends Navigation
 var player_toggle_enable = true
 
 func _ready():
-	$player.take("saffron_bun", null)
+	$player.take("saffron_bun", "res://scenes/bun.tscn")
 
 func _unhandled_input(event):
 	if not player_toggle_enable:

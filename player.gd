@@ -169,8 +169,20 @@ func clear_path():
 		pyramid.get_node("path_holder").remove_child(ch)
 	path.clear()
 
+func get_hud_holder():
+	return get_node("HUD")
+
+func get_cam_holder():
+	return get_node("Rotation_Helper/Camera")
+
+func get_hud():
+	return get_hud_holder().get_node("hud")
+
+func get_cam():
+	return get_cam_holder().get_node("camera")
+
 func use(player_node):
-	var hud = player_node.get_node("HUD/hud")
+	var hud = player_node.get_hud()
 	if conversation_manager.conversation_active():
 		conversation_manager.stop_conversation(player_node)
 	elif not hud.inventory.visible:
@@ -188,14 +200,17 @@ func get_model():
 func _unhandled_input(event):
 	if not is_player():
 		return
-	var conversation = get_node("HUD/hud/Conversation")
-	if conversation.is_visible_in_tree() and event is InputEventKey:
+	var is_key = event is InputEventKey and event.is_pressed()
+	if not is_key:
+		return
+	var hud = get_hud()
+	var conversation = hud.get_node("Conversation")
+	if conversation.is_visible_in_tree():
 		var story = conversation.get_node('StoryNode')
-		if event.is_pressed():
-			if conversation_manager.in_choice and event.scancode == KEY_1:
-				conversation_manager.proceed_story_immediately(self)
-			elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
-				conversation_manager.story_choose(self, event.scancode - KEY_1)
+		if conversation_manager.in_choice and event.scancode == KEY_1:
+			conversation_manager.proceed_story_immediately(self)
+		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
+			conversation_manager.story_choose(self, event.scancode - KEY_1)
 
 func add_highlight():
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
@@ -216,8 +231,8 @@ func become_player():
 	if is_player():
 		return
 	var player = get_node(game_params.player_path)
-	var hud_container = get_node("HUD")
-	var player_hud_container = player.get_node("HUD")
+	var hud_container = get_hud_holder()
+	var player_hud_container = player.get_hud_holder()
 	var hud = player_hud_container.get_child(0)
 	player_hud_container.remove_child(hud)
 	hud_container.add_child(hud)
@@ -244,7 +259,7 @@ func _ready():
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
-		var hud_container = get_node("HUD")
+		var hud_container = get_hud_holder()
 		hud_container.add_child(load("res://hud.tscn").instance())
 		var camera_container = get_node("Rotation_Helper/Camera")
 		camera_container.add_child(load("res://camera.tscn").instance())
@@ -360,7 +375,7 @@ func toggle_crouch():
 	else:
 		$AnimationPlayer.play("crouch")
 	is_crouching = not is_crouching
-	var hud = get_node("HUD/hud")
+	var hud = get_hud()
 	if hud:
 		hud.set_crouch_indicator(is_crouching)
 
@@ -394,7 +409,7 @@ func process_movement(delta):
 	vel = move_and_slide(vel,Vector3(0,1,0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func take(nam, model_path):
-	var hud = get_node("HUD/hud")
+	var hud = get_hud()
 	if hud:
 		hud.take(nam, model_path)
 

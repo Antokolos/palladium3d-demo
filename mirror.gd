@@ -40,7 +40,7 @@ func _process(delta):
 func persp(player):
 	if not player:
 		return
-	var eyes = player.get_node("Rotation_Helper/Camera").get_child(0)
+	var eyes = player.get_cam_holder().get_child(0)
 	var viewpoint = eyes.get_node("viewpoint")
 	var cam_pos = mirror_plane.get_global_transform().origin
 	var init = cam_pos
@@ -62,7 +62,7 @@ func persp(player):
 func ortho(player):
 	if not player:
 		return
-	var eyes = player.get_node("Rotation_Helper/Camera").get_child(0)
+	var eyes = player.get_cam_holder().get_child(0)
 	var viewpoint = eyes.get_node("viewpoint")
 	var cam_pos = to_global(mirror_plane.get_translation())
 	var player_pos = to_global(player.get_translation())
