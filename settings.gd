@@ -8,6 +8,10 @@ const AA_DISABLED = 0
 const LANGUAGE_RU = 1
 const LANGUAGE_EN = 0
 
+const VLANGUAGE_EN = 2
+const VLANGUAGE_RU = 1
+const VLANGUAGE_NONE = 0
+
 const QUALITY_HIGH = 3
 const QUALITY_GOOD = 2
 const QUALITY_OPT = 1
@@ -29,6 +33,7 @@ var quality = QUALITY_OPT
 var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
 var language = LANGUAGE_EN
+var vlanguage = VLANGUAGE_RU
 
 func load_settings():
 	var f = File.new()
@@ -62,7 +67,10 @@ func load_settings():
 
 	if ("language" in d):
 		language = int(d.language)
-	
+
+	if ("vlanguage" in d):
+		vlanguage = int(d.vlanguage)
+
 func save_settings():
 	var f = File.new()
 	var error = f.open("user://settings.json", File.WRITE)
@@ -75,7 +83,8 @@ func save_settings():
 		"quality" : quality,
 		"resolution" : resolution,
 		"aa_quality" : aa_quality,
-		"language" : language
+		"language" : language,
+		"vlanguage" : vlanguage
 	}
 	f.store_line( to_json(d) )
 

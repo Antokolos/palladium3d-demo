@@ -136,7 +136,7 @@ text = "Tablet orientation"
 
 [node name="TabletOrientation" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation"]
 margin_left = 117.0
-margin_right = 156.0
+margin_right = 158.0
 margin_bottom = 20.0
 
 [node name="HVsync" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
@@ -185,7 +185,7 @@ text = "Quality"
 
 [node name="Quality" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality"]
 margin_left = 50.0
-margin_right = 89.0
+margin_right = 91.0
 margin_bottom = 20.0
 
 [node name="HResolution" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
@@ -201,7 +201,7 @@ text = "Resolution"
 
 [node name="Resolution" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution"]
 margin_left = 72.0
-margin_right = 111.0
+margin_right = 113.0
 margin_bottom = 20.0
 
 [node name="HAA" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
@@ -217,7 +217,7 @@ text = "Anti-aliasing"
 
 [node name="AA" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA"]
 margin_left = 83.0
-margin_right = 122.0
+margin_right = 124.0
 margin_bottom = 20.0
 
 [node name="HLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
@@ -233,10 +233,27 @@ text = "Language"
 
 [node name="Language" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage"]
 margin_left = 63.0
-margin_right = 102.0
+margin_right = 104.0
+margin_bottom = 20.0
+
+[node name="HVLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 176.0
+margin_right = 577.0
+margin_bottom = 196.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage"]
+margin_top = 3.0
+margin_right = 123.0
+margin_bottom = 17.0
+text = "Voiceover language"
+
+[node name="VLanguage" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage"]
+margin_left = 127.0
+margin_right = 168.0
 margin_bottom = 20.0
 
 [node name="save_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -331,6 +348,7 @@ rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="load_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -425,6 +443,7 @@ rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
+editor/display_folded = true
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 604.2
@@ -677,6 +696,7 @@ texture_hover = ExtResource( 10 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/VLanguage" to="." method="_on_VLanguage_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSaveSlot1_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSaveSlot2_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSaveSlot3_pressed"]

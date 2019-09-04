@@ -15,6 +15,7 @@ onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
 onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolution")
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
+onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
 
 var available_resolutions = [
 Vector2(0, 576),
@@ -101,6 +102,17 @@ func _ready():
 		_:
 			language.select(0)
 	_on_Language_item_selected(settings.language)
+	
+	vlanguage.add_item("None", settings.VLANGUAGE_NONE)
+	vlanguage.add_item("Russian", settings.VLANGUAGE_RU)
+	match (settings.vlanguage):
+		settings.VLANGUAGE_NONE:
+			vlanguage.select(0)
+		settings.VLANGUAGE_RU:
+			vlanguage.select(1)
+		_:
+			language.select(0)
+	_on_VLanguage_item_selected(settings.vlanguage)
 
 func on_viewport_resize():
 	# Uncomment the following line to look at the viewport size changes
@@ -279,3 +291,6 @@ func _on_Language_item_selected(ID):
 			TranslationServer.set_locale("ru")
 		_:
 			TranslationServer.set_locale("en")
+
+func _on_VLanguage_item_selected(ID):
+	settings.vlanguage = ID

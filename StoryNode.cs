@@ -238,6 +238,25 @@ public class StoryNode : Node
 		return result;
 	}
 
+	public Godot.Collections.Dictionary<String, String> ContinueWhileYouCan()
+	{
+		Godot.Collections.Dictionary<String, String> result = new Godot.Collections.Dictionary<String, String>();
+		foreach (var loc in AvailableLocales)
+		{
+			Story story;
+			if (_inkStory.TryGetValue(loc, out story))
+			{
+				String text = "";
+				while (story.canContinue)
+				{
+					text = text + " " + story.Continue();
+				}
+				result.Add(loc, text);
+			}
+		}
+		return result;
+	}
+
 	public String CurrentText(String locale)
 	{
 		Story story;
@@ -280,6 +299,16 @@ public class StoryNode : Node
 			}
 		}
 		return success;
+	}
+	
+	public Godot.Collections.Dictionary<String, String[]> GetCurrentTags()
+	{
+		Godot.Collections.Dictionary<String, String[]> result = new Godot.Collections.Dictionary<String, String[]>();
+		foreach (var locale in AvailableLocales)
+		{
+			result.Add(locale, GetCurrentTags(locale));
+		}
+		return result;
 	}
 	
 	public String[] GetCurrentTags(String locale)
