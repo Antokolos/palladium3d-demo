@@ -8,9 +8,9 @@ func use(player_node):
 			hud.inventory.visible = false
 			item.remove()
 			var inst = item.get_model_instance()
-			inst.translate(Vector3(0.4, 0.3, 0))
+			inst.translate(Vector3(-0.05, 0.27, 0))
 			inst.rotate_y(PI/2)
-			inst.rotate_z(PI/2)
+			inst.rotate_z(deg2rad(83))
 			get_parent().add_child(inst)
 			game_params.apata_in_chest = true
 

@@ -83,7 +83,7 @@ alignment = 1
 [node name="HintLabelClose" type="Label" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
 margin_right = 1920.0
 margin_bottom = 32.0
-text = "E -- закрыть"
+text = "Q -- закрыть"
 align = 1
 valign = 1
 

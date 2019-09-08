@@ -90,7 +90,7 @@ func _unhandled_input(event):
 		return
 	var hud = get_node("../../..").get_hud()
 	if hud.inventory.visible:
-		if event.scancode != KEY_E:
+		if event.scancode != KEY_Q:
 			return
 		var item = hud.get_active_item()
 		item_preview.open_preview(item, hud, flashlight)

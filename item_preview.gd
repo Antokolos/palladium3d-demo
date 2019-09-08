@@ -17,22 +17,8 @@ func vmin(vec):
 	var m = min(vec.x, vec.y)
 	return min(m, vec.z)
 
-func coord_mult(vec1, vec2):
-	return Vector3(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z)
-
 func coord_div(vec1, vec2):
 	return Vector3(vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z)
-
-func get_aabb(inst):
-	if not inst is Spatial:
-		return null
-	var aabb = inst.get_aabb() if inst is VisualInstance else null
-	for ch in inst.get_children():
-		var aabb_ch = get_aabb(ch)
-		if not aabb_ch:
-			continue
-		aabb = aabb.merge(aabb_ch) if aabb else aabb_ch
-	return AABB(coord_mult(inst.scale, aabb.position), coord_mult(inst.scale, aabb.size)) if aabb else null
 
 func open_preview(item, hud, flashlight):
 	if item:
@@ -43,7 +29,7 @@ func open_preview(item, hud, flashlight):
 		for ch in item_holder_node.get_children():
 			ch.queue_free()
 		item_holder_node.add_child(inst)
-		var aabb = get_aabb(inst)
+		var aabb = item.get_aabb(inst)
 		var vm = min(vmin(coord_div(MAX_SIZE, aabb.size)), MAX_SIZE.x)
 		inst.scale_object_local(Vector3(vm, vm, vm))
 		hud.inventory.visible = false
@@ -81,7 +67,7 @@ func _unhandled_input(event):
 		var is_key = event is InputEventKey and event.is_pressed()
 		if not is_key:
 			return
-		var is_action = event.scancode == KEY_E
+		var is_action = event.scancode == KEY_Q
 		for act in custom_actions:
 			is_action = is_action or (event.scancode == act.key_code)
 		if not is_action:

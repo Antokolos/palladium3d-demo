@@ -9,7 +9,11 @@ func use(player_node):
 		if item and item.nam.begins_with("statue_"):
 			hud.inventory.visible = false
 			item.remove()
-			get_parent().add_child(item.get_model_instance())
+			var inst = item.get_model_instance()
+			var aabb = item.get_aabb(inst)
+			get_parent().add_child(inst)
+			if aabb and aabb.position:
+				inst.translate(Vector3(0, abs(aabb.position.y), 0))
 			if item.nam == "statue_apata":
 				return
 			var base = get_node("../..")
