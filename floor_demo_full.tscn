@@ -84,6 +84,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.480825, 0.891173, 0.238459 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.135, 0 )
 
 [node name="statue_1" parent="granite_base_1/pedestal_theatre" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.362241, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="granite_base_1/pedestal_theatre"]
 script = ExtResource( 6 )
@@ -96,6 +97,7 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.104, 1.133, 0 )
 
 [node name="statue_2" parent="granite_base_1/pedestal_astronomy" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.401248, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="granite_base_1/pedestal_astronomy"]
 script = ExtResource( 6 )
@@ -108,7 +110,7 @@ shape = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.165, 1.132, 0 )
 
 [node name="statue_3" parent="granite_base_1/pedestal_history" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000479698, -0.000170231, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000479698, 0.443215, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="granite_base_1/pedestal_history"]
 script = ExtResource( 6 )
@@ -127,7 +129,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.339883, 0.815664, 0.206286 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011, 1.136, -0.022 )
 
 [node name="statue_4" parent="granite_base_2/pedestal_apata" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000490189, 0.00019002, 0.000167847 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0122013, 0.454323, -0.00111103 )
 
 [node name="StaticBody2" type="StaticBody" parent="granite_base_2/pedestal_apata"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0109997, -1.136, 0.0220003 )
