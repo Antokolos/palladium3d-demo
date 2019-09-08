@@ -1,6 +1,7 @@
 extends KinematicBody
 
-export var initial_player = false
+export var initial_player = true
+export var initial_companion = false
 export var name_hint = "player"
 export var model_path = "res://scenes/female.tscn"
 
@@ -38,7 +39,7 @@ export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/St
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
-onready var pyramid = get_node("/root/palladium")
+onready var pyramid = get_parent()
 const ANGLE_TOLERANCE = 0.01
 
 const CONVERSATION_RANGE = 7
@@ -225,7 +226,9 @@ func remove_highlight():
 #####
 
 func is_player():
-	return get_node(game_params.player_path) == self
+	var pl_path = game_params.player_path
+	var pl_node = get_node(pl_path) if pl_path else null
+	return pl_node == self
 
 func become_player():
 	if is_player():
@@ -263,6 +266,9 @@ func _ready():
 		hud_container.add_child(load("res://hud.tscn").instance())
 		var camera_container = get_node("Rotation_Helper/Camera")
 		camera_container.add_child(load("res://camera.tscn").instance())
+		game_params.player_path = get_path()
+	if initial_companion:
+		game_params.companion_path = get_path()
 	var model_container = get_node("Rotation_Helper/Model")
 	for ch in model_container.get_children():
 		ch.queue_free()

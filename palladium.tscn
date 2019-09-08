@@ -36,7 +36,6 @@ navmesh = SubResource( 1 )
 "party",
 ] instance=ExtResource( 5 )]
 transform = Transform( -0.998252, 0, -0.0591066, 0, 1, 0, 0.0591066, 0, -0.998252, -1.47366, 8.80445, 17.1124 )
-initial_player = true
 model_path = "res://scenes/male.tscn"
 
 [node name="player_female" parent="." groups=[
@@ -44,6 +43,8 @@ model_path = "res://scenes/male.tscn"
 "party",
 ] instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.565025, 1.86862, -10.2396 )
+initial_player = false
+initial_companion = true
 name_hint = "female"
 
 [node name="rat" parent="." groups=[
