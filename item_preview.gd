@@ -51,7 +51,7 @@ func _input(event):
 	if item_holder_node.get_child_count() > 0:
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			item_holder_node.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
-			item_holder_node.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
+			item_holder_node.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
 
 func close_preview():
 	for ch in item_holder_node.get_children():

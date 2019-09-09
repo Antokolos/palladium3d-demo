@@ -14,12 +14,17 @@ func use(player_node):
 			get_parent().add_child(inst)
 			game_params.apata_in_chest = true
 
-func add_highlight():
+func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	return "E: Положить предмет в ларец (необходимо открыть инвентарь и выбрать предмет)"
+	var hud = player_node.get_hud()
+	if hud.inventory.visible:
+		var item = hud.get_active_item()
+		if item and item.nam == "statue_apata":
+			return "E: Положить статуэтку в ларец"
+	return ""
 
-func remove_highlight():
+func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass

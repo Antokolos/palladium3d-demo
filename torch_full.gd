@@ -13,8 +13,8 @@ func use(player_node):
 	torch_fire.enable(burning)
 	torch_light.enable(burning)
 
-func add_highlight():
+func add_highlight(player_node):
 	return ("E: Потушить факел" if burning else "E: Зажечь факел")
 
-func remove_highlight():
+func remove_highlight(player_node):
 	pass

@@ -44,26 +44,43 @@ anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="Hints" type="ColorRect" parent="."]
+[node name="ActionHintLabelAlt" type="Label" parent="."]
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 0.75
+grow_vertical = 0
+size_flags_horizontal = 3
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
+alignment = 1
+
+[node name="Hints" type="ColorRect" parent="VBoxContainer"]
+editor/display_folded = true
+margin_right = 1920.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0.141176, 0.141176, 0.141176, 0 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Hints"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Hints"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HintLabel" type="Label" parent="Hints/HBoxContainer"]
+[node name="HintLabel" type="Label" parent="VBoxContainer/Hints/HBoxContainer"]
 margin_top = 101.0
 margin_right = 202.0
 margin_bottom = 168.0
 text = "F -- фонарик
 Tab -- инвентарь"
 
-[node name="ActionHintLabel" type="Label" parent="Hints/HBoxContainer"]
+[node name="ActionHintLabel" type="Label" parent="VBoxContainer/Hints/HBoxContainer"]
 margin_left = 206.0
 margin_top = 119.0
 margin_right = 1920.0
@@ -72,36 +89,39 @@ size_flags_horizontal = 3
 align = 1
 valign = 1
 
-[node name="Conversation" type="ColorRect" parent="."]
+[node name="Conversation" type="ColorRect" parent="VBoxContainer"]
+editor/display_folded = true
 visible = false
-anchor_top = 0.75
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 137.0
+margin_right = 1920.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0, 0, 0, 0.501961 )
 
-[node name="VBox" type="VBoxContainer" parent="Conversation"]
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/Conversation"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 4
 custom_constants/separation = 30
 alignment = 1
 
-[node name="VBoxText" type="VBoxContainer" parent="Conversation/VBox"]
+[node name="VBoxText" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
 margin_right = 1920.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 alignment = 1
 
-[node name="HBoxTextPrev" type="HBoxContainer" parent="Conversation/VBox/VBoxText"]
+[node name="HBoxTextPrev" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox/VBoxText"]
 margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ActorName" type="Label" parent="Conversation/VBox/VBoxText/HBoxTextPrev"]
-margin_right = 191.0
+[node name="ActorName" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxText/HBoxTextPrev"]
+margin_right = 958.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -110,8 +130,8 @@ custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
 
-[node name="ConversationText" type="Label" parent="Conversation/VBox/VBoxText/HBoxTextPrev"]
-margin_left = 195.0
+[node name="ConversationText" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxText/HBoxTextPrev"]
+margin_left = 962.0
 margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -122,7 +142,7 @@ text = "ConversationText"
 valign = 1
 autowrap = true
 
-[node name="HBoxText" type="HBoxContainer" parent="Conversation/VBox/VBoxText"]
+[node name="HBoxText" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox/VBoxText"]
 margin_top = 28.0
 margin_right = 1920.0
 margin_bottom = 64.0
@@ -130,8 +150,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ActorName" type="Label" parent="Conversation/VBox/VBoxText/HBoxText"]
-margin_right = 191.0
+[node name="ActorName" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxText/HBoxText"]
+margin_right = 958.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -140,8 +160,8 @@ custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
 
-[node name="ConversationText" type="Label" parent="Conversation/VBox/VBoxText/HBoxText"]
-margin_left = 195.0
+[node name="ConversationText" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxText/HBoxText"]
+margin_left = 962.0
 margin_right = 1920.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
@@ -151,55 +171,56 @@ text = "ConversationText"
 valign = 1
 autowrap = true
 
-[node name="VBoxChoices" type="VBoxContainer" parent="Conversation/VBox"]
+[node name="VBoxChoices" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
 editor/display_folded = true
 margin_left = 913.0
-margin_top = 104.0
+margin_top = 94.0
 margin_right = 1007.0
-margin_bottom = 280.0
+margin_bottom = 270.0
 size_flags_horizontal = 4
 
-[node name="Choice1" type="Label" parent="Conversation/VBox/VBoxChoices"]
+[node name="Choice1" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_right = 94.0
 margin_bottom = 32.0
 text = "Choice1"
 
-[node name="Choice2" type="Label" parent="Conversation/VBox/VBoxChoices"]
+[node name="Choice2" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_top = 36.0
 margin_right = 94.0
 margin_bottom = 68.0
 text = "Choice2"
 
-[node name="Choice3" type="Label" parent="Conversation/VBox/VBoxChoices"]
+[node name="Choice3" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_top = 72.0
 margin_right = 94.0
 margin_bottom = 104.0
 text = "Choice3"
 
-[node name="Choice4" type="Label" parent="Conversation/VBox/VBoxChoices"]
+[node name="Choice4" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_top = 108.0
 margin_right = 94.0
 margin_bottom = 140.0
 text = "Choice4"
 
-[node name="Choice5" type="Label" parent="Conversation/VBox/VBoxChoices"]
+[node name="Choice5" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_top = 144.0
 margin_right = 94.0
 margin_bottom = 176.0
 text = "Choice5"
 
-[node name="StoryNode" type="Node" parent="Conversation"]
+[node name="StoryNode" type="Node" parent="VBoxContainer/Conversation"]
 script = ExtResource( 7 )
 
-[node name="Inventory" type="ColorRect" parent="."]
+[node name="Inventory" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
 visible = false
-anchor_top = 0.75
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Inventory"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory"]
 margin_right = 40.0
 margin_bottom = 40.0
 size_flags_horizontal = 3

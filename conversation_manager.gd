@@ -27,14 +27,14 @@ func change_stretch_ratio(conversation):
 func stop_conversation(player):
 	conversation_name = null
 	var hud = player.get_hud()
-	hud.get_node("Conversation").visible = false
-	hud.get_node("Hints").visible = true
+	hud.conversation.visible = false
+	hud.hints.visible = true
 
 func conversation_is_finished(player, target, conversation_name):
 	return not conversation_is_not_finished(player, target, conversation_name)
 
 func conversation_is_not_finished(player, target, conversation_name):
-	var conversation = player.get_hud().get_node("Conversation")
+	var conversation = player.get_hud().conversation
 	var story = init_story(player, conversation, conversation_name)
 	return story.CanContinue() or story.CanChoose()
 
@@ -70,8 +70,9 @@ func start_conversation(player, target, conversation_name):
 		return
 	self.conversation_name = conversation_name
 	conversation_target = target
-	player.get_hud().get_node("Hints").visible = false
-	var conversation = player.get_hud().get_node("Conversation")
+	player.get_hud().hints.visible = false
+	player.get_hud().inventory.visible = false
+	var conversation = player.get_hud().conversation
 	conversation.visible = true
 	max_choice = 0
 	var story = init_story(player, conversation, conversation_name)
@@ -105,7 +106,7 @@ func get_vvalue(dict):
 
 func story_choose(player, idx):
 	var has_sound = false
-	var conversation = player.get_hud().get_node("Conversation")
+	var conversation = player.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var story = conversation.get_node('StoryNode')
@@ -204,7 +205,7 @@ func text_to_phonetic(text):
 
 func story_proceed(player):
 	in_choice = false
-	var conversation = player.get_hud().get_node("Conversation")
+	var conversation = player.get_hud().conversation
 	var story = conversation.get_node('StoryNode')
 	if story.CanContinue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -241,7 +242,7 @@ func display_choices(story, conversation, choices):
 
 func _on_AudioStreamPlayer_finished():
 	var player = get_node(game_params.player_path)
-	var conversation = player.get_hud().get_node("Conversation")
+	var conversation = player.get_hud().conversation
 	var story = conversation.get_node('StoryNode')
 	if in_choice:
 		story_proceed(player)

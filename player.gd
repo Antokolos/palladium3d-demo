@@ -143,11 +143,11 @@ func build_path():
 		return
 	# filter out points of the path, distance to which is greater than distance to player
 	while not path.empty():
-		var pt = path.front()
+		var pt = path.back()
 		var mov_pt = player_position - pt
 		if mov_pt.length() <= mov_vec.length():
 			break
-		path.pop_front()
+		path.pop_back()
 	if is_on_wall() and path.empty(): # should check possible stuck
 		#clear_path()
 		path = get_navpath(get_global_transform().origin, get_node(game_params.player_path).get_global_transform().origin)
@@ -205,7 +205,7 @@ func _unhandled_input(event):
 	if not is_key:
 		return
 	var hud = get_hud()
-	var conversation = hud.get_node("Conversation")
+	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
 		var story = conversation.get_node('StoryNode')
 		if conversation_manager.in_choice and event.scancode == KEY_1:
@@ -213,12 +213,14 @@ func _unhandled_input(event):
 		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
 			conversation_manager.story_choose(self, event.scancode - KEY_1)
 
-func add_highlight():
+func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	return "E: Поговорить"
+	var inventory = player_node.get_hud().inventory
+	var conversation = player_node.get_hud().conversation
+	return "" if inventory.visible or conversation.visible else "E: Поговорить"
 
-func remove_highlight():
+func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass

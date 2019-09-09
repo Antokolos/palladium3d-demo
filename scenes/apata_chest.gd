@@ -48,12 +48,12 @@ func use(player_node):
 		collision_opened.disabled = false
 		opened = true
 
-func add_highlight():
+func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	return "" if game_params.apata_in_chest else ("E: Закрыть ларец" if opened else "E: Открыть ларец")
 
-func remove_highlight():
+func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass

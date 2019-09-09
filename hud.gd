@@ -1,8 +1,10 @@
 extends Control
 
-onready var hints = get_node("Hints")
-onready var inventory = get_node("Inventory")
+onready var hints = get_node("VBoxContainer/Hints")
+onready var alt_hint = get_node("ActionHintLabelAlt")
+onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer")
+onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
@@ -13,7 +15,7 @@ onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 var active_item_idx = -1
 
 func _ready():
-	get_node("Conversation/StoryNode").BuildStoriesCache("ink-scripts")
+	conversation.get_node("StoryNode").BuildStoriesCache("ink-scripts")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"

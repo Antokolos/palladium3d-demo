@@ -41,12 +41,12 @@ func use(player_node):
 			level.get_node("ceiling_moving_2").deactivate()
 			level.get_node("door_3").close()
 
-func add_highlight():
+func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	return "E: Поставить предмет на пьедестал" if get_child_count() == 0 else ""
 
-func remove_highlight():
+func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass

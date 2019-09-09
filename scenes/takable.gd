@@ -16,12 +16,12 @@ func use(player_node):
 			conversation_manager.start_conversation(player_node, get_node(game_params.companion_path), "ApataTrap")
 		game_params.apata_on_pedestal = false
 
-func add_highlight():
+func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	return "E: Взять"
 
-func remove_highlight():
+func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass

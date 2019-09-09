@@ -138,7 +138,7 @@ func _on_SettingsButton_pressed():
 
 func refresh_slot_captions(base_node):
 	var hud = get_parent()
-	var story_node = hud.get_node("Conversation/StoryNode")
+	var story_node = hud.conversation.get_node("StoryNode")
 	for i in range(1, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
 		var caption = story_node.GetSlotCaption(i)
@@ -171,13 +171,13 @@ func simulate_esc():
 
 func save_to_slot(slot):
 	var hud = get_parent()
-	var story_node = hud.get_node("Conversation/StoryNode")
+	var story_node = hud.conversation.get_node("StoryNode")
 	story_node.SaveAll(slot)
 	simulate_esc()
 
 func load_from_slot(slot):
 	var hud = get_parent()
-	var story_node = hud.get_node("Conversation/StoryNode")
+	var story_node = hud.conversation.get_node("StoryNode")
 	story_node.ReloadAllSaves(slot)
 	simulate_esc()
 
