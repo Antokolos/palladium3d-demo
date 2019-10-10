@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/472399__joseagudelo__16-raton-chillando.wav-0be86dc92a5b6f2e64c43c6e39025f6f.sample"
+
+[deps]
+
+source_file="res://sound/environment/472399__joseagudelo__16-raton-chillando.wav"
+dest_files=[ "res://.import/472399__joseagudelo__16-raton-chillando.wav-0be86dc92a5b6f2e64c43c6e39025f6f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

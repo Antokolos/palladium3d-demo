@@ -1,8 +1,6 @@
 extends Spatial
 
-const CAMERA_LIMIT = 40
 const CAMERA_FOV_DEGREES = 55
-const LENGTH_LIMIT = CAMERA_LIMIT
 const STEPS = 4
 
 #const WIDTH_LIMIT = 12
@@ -37,12 +35,15 @@ func add_raycast(x, y, z):
 func _ready():
 	init3()
 
+func get_length_limit():
+	return get_camera_limit()
+
 func init():
-	var width_limit = LENGTH_LIMIT * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
+	var width_limit = get_length_limit() * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
 	var height_limit = width_limit
 	var xstep = width_limit / STEPS
 	var x = xstep
-	var z = -LENGTH_LIMIT
+	var z = -get_length_limit()
 	while x <= width_limit + 2 * xstep:
 		var ystep = height_limit / STEPS
 		var y = ystep
@@ -59,8 +60,8 @@ func init():
 		x = x + xstep
 
 func init2():
-	var z = -LENGTH_LIMIT
-	var width_limit = LENGTH_LIMIT * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
+	var z = -get_length_limit()
+	var width_limit = get_length_limit() * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
 	var height_limit = width_limit
 	var xstep = width_limit / STEPS
 	var x = xstep
@@ -85,8 +86,8 @@ func init2():
 		y = y + ystep
 
 func init3():
-	var z = -LENGTH_LIMIT
-	var width_limit = LENGTH_LIMIT * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
+	var z = -get_length_limit()
+	var width_limit = get_length_limit() * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
 	var height_limit = width_limit
 	var xstep = width_limit / STEPS
 	var x = xstep
@@ -106,8 +107,11 @@ func init3():
 		add_raycast(0, -y, z)
 		y = y + ystep
 
+func get_camera_limit():
+	return 50 if game_params.is_inside() else 330
+
 func get_max_distance(camera_origin):
-	var dsup = CAMERA_LIMIT
+	var dsup = get_camera_limit()
 	if not CUTOFF_ENABLE:
 		return dsup
 	var distances = []

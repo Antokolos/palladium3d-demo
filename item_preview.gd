@@ -74,4 +74,4 @@ func _unhandled_input(event):
 			return
 		close_preview()
 		if inst.has_method("execute_action"):
-			 inst.execute_action(event.scancode, item)
+			inst.execute_action(event.scancode, item)

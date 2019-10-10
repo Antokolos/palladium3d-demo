@@ -8,11 +8,11 @@ func use(player_node):
 			hud.inventory.visible = false
 			item.remove()
 			var inst = item.get_model_instance()
-			inst.translate(Vector3(-0.05, 0.27, 0))
+			inst.translate(Vector3(-0.05, 0.4, 0))
 			inst.rotate_y(PI/2)
 			inst.rotate_z(deg2rad(83))
 			get_parent().add_child(inst)
-			game_params.apata_in_chest = true
+			game_params.story_vars.apata_in_chest = true
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/underwater.ogg-af5436096e8f3df2aa0455c0ff1f9577.oggstr"
+
+[deps]
+
+source_file="res://music/underwater.ogg"
+dest_files=[ "res://.import/underwater.ogg-af5436096e8f3df2aa0455c0ff1f9577.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

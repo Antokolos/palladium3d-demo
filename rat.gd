@@ -1,6 +1,6 @@
 extends RigidBody
 
-export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
+export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo_floor_2/StaticBodyFloor"
 onready var exclusions = [get_node(floor_path), self]
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
 
@@ -36,6 +36,8 @@ func _integrate_forces(state):
 	elif not retreating and l > WARN_RANGE:
 		rat.sits_sniff()
 	elif retreating or l > RETREAT_RANGE:
+		if not retreating:
+			$AudioStreamPlayer3D.play()
 		retreating = true
 		rat.run()
 		var run_dir = current_transform.basis.xform(x_dir)

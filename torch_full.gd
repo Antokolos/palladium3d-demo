@@ -10,6 +10,10 @@ func _ready():
 
 func use(player_node):
 	burning = not burning
+	if burning:
+		$AudioStreamLighter.play()
+	else:
+		$AudioStreamBurning.stop()
 	torch_fire.enable(burning)
 	torch_light.enable(burning)
 
@@ -18,3 +22,6 @@ func add_highlight(player_node):
 
 func remove_highlight(player_node):
 	pass
+
+func _on_AudioStreamLighter_finished():
+	$AudioStreamBurning.play()

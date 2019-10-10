@@ -4,13 +4,13 @@
 [ext_resource path="res://scenes/door_save.gd" type="Script" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.297097, 3.12578, 1.4063 )
+extents = Vector3( 0.523002, 3.12578, 2.26724 )
 
-[node name="door_4" index="0" instance=ExtResource( 1 )]
+[node name="door_4" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.114336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.395788 )
 shape = SubResource( 1 )

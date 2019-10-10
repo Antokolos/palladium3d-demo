@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://rat.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rat_grey.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sound/environment/472399__joseagudelo__16-raton-chillando.wav" type="AudioStream" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -26,3 +27,8 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 [node name="Model" type="Spatial" parent="Rotation_Helper"]
 
 [node name="rat_grey" parent="Rotation_Helper/Model" instance=ExtResource( 2 )]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+stream = ExtResource( 3 )
+bus = "Sound"

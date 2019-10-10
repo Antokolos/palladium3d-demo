@@ -7,6 +7,8 @@ public class StoryNode : Node
 {
 	/// Available translations of the stories.
 	private static String[] AvailableLocales = {"en", "ru"};
+	private static String[] TagSeparators = { ":" }; 
+	private static int TagParts = 2;
 	/// Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 	/// The key is the locale name, the value is the ink story.
 	private Dictionary<String, Story> _inkStory = new Dictionary<String, Story>();
@@ -16,6 +18,11 @@ public class StoryNode : Node
 
 	public override void _Ready()
 	{
+		foreach (var locale in AvailableLocales)
+		{
+			var storiesByLocale = new Dictionary<String, Story>();
+			_inkStories.Add(locale, storiesByLocale);
+		}
 		MakeSaveSlotDirs(0);
 		MakeSaveSlotDirs(1);
 		MakeSaveSlotDirs(2);
@@ -43,8 +50,11 @@ public class StoryNode : Node
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			var storiesByLocale = new Dictionary<String, Story>();
-			_inkStories.Add(locale, storiesByLocale);
+			Dictionary<String, Story> storiesByLocale;
+			if (!_inkStories.TryGetValue(locale, out storiesByLocale))
+			{
+				continue;
+			}
 			BuildStoriesCacheForLocale(storiesDirectoryPath, locale, "", storiesByLocale);
 		}
 	}
@@ -105,6 +115,30 @@ public class StoryNode : Node
 				LoadSaveOrReset(0, locale, path, story);
 				storiesByLocale.Add(storyPath, story);
 				_inkStory.Add(locale, story);
+			}
+		}
+	}
+
+	public void InitVariables(Godot.Collections.Dictionary<String, object> storyVars)
+	{
+		var keys = storyVars.Keys;
+		foreach (var locale in AvailableLocales)
+		{
+			Story story;
+			if (_inkStory.TryGetValue(locale, out story))
+			{
+				foreach (var key in keys)
+				{
+					try
+					{
+						story.variablesState[key] = storyVars[key];
+						story.RemoveVariableObserver(null, key);
+						story.ObserveVariable(key, (string varName, object newValue) => {
+							storyVars[key] = newValue;
+						});
+					} catch (StoryException ignore)
+					{}
+				}
 			}
 		}
 	}
@@ -301,9 +335,9 @@ public class StoryNode : Node
 		return success;
 	}
 	
-	public Godot.Collections.Dictionary<String, String[]> GetCurrentTags()
+	public Godot.Collections.Dictionary<String, Godot.Collections.Dictionary<String, String>> GetCurrentTags()
 	{
-		Godot.Collections.Dictionary<String, String[]> result = new Godot.Collections.Dictionary<String, String[]>();
+		Godot.Collections.Dictionary<String, Godot.Collections.Dictionary<String, String>> result = new Godot.Collections.Dictionary<String, Godot.Collections.Dictionary<String, String>>();
 		foreach (var locale in AvailableLocales)
 		{
 			result.Add(locale, GetCurrentTags(locale));
@@ -311,14 +345,26 @@ public class StoryNode : Node
 		return result;
 	}
 	
-	public String[] GetCurrentTags(String locale)
+	public Godot.Collections.Dictionary<String, String> GetCurrentTags(String locale)
 	{
+		Godot.Collections.Dictionary<String, String> result = new Godot.Collections.Dictionary<String, String>();
 		Story story;
 		if (_inkStory.TryGetValue(locale, out story))
 		{
-			return story.currentTags.ToArray();
+			foreach (var tag in story.currentTags)
+			{
+				String[] tagParts = tag.Trim().Split(TagSeparators, TagParts, StringSplitOptions.RemoveEmptyEntries);
+				if (tagParts.Length > 1)
+				{
+					result.Add(tagParts[0], tagParts[1]);
+				}
+				else
+				{
+					result.Add(tagParts[0], "");
+				}
+			}
 		}
-		return new String[0];
+		return result;
 	}
 
 	public String[] GetChoices(String locale)

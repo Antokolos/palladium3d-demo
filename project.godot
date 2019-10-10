@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="palladium"
-run/main_scene="res://palladium.tscn"
+run/main_scene="res://scene_loader.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="palladium"
 config/project_settings_override="user://settings.ini"
@@ -32,6 +32,10 @@ settings="*res://settings.gd"
 game_params="*res://game_params.tscn"
 conversation_manager="*res://conversation_manager.tscn"
 common_utils="*res://common_utils.tscn"
+
+[debug]
+
+gdscript/warnings/enable=false
 
 [display]
 
@@ -1175,5 +1179,6 @@ quality/reflections/texture_array_reflections=false
 quality/reflections/high_quality_ggx=false
 quality/filters/use_nearest_mipmap_filter=true
 limits/buffers/immediate_buffer_size_kb=4096
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

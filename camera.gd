@@ -12,7 +12,16 @@ onready var culling_rays = get_node("culling_rays")
 onready var shader_cache = get_node("viewpoint/shader_cache")
 onready var item_preview = get_node("viewpoint/item_preview")
 
+var sky_outside
+var sky_inside
+
 func _ready():
+	sky_outside = PanoramaSky.new()
+	sky_outside.panorama = load("res://assets/spherical_hdr.hdr")
+	sky_outside.radiance_size = Sky.RADIANCE_SIZE_512
+	sky_inside = PanoramaSky.new()
+	sky_inside.panorama = load("res://assets/ui/undersky5.png")
+	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	change_quality(settings.quality)
 
 # Settings applied in the following way will be loaded after game restart
@@ -30,7 +39,9 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_normal")
 			get_tree().call_group("light_sources", "set_quality_normal")
+			get_tree().call_group("grass", "set_quality_normal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
+			get_tree().call_group("trees", "wind_effect_enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_OPT:
@@ -39,7 +50,9 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_optimal")
 			get_tree().call_group("light_sources", "set_quality_optimal")
+			get_tree().call_group("grass", "set_quality_optimal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
+			get_tree().call_group("trees", "wind_effect_enable", false)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_GOOD:
@@ -48,7 +61,9 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 4096
 			get_tree().call_group("fire_sources", "set_quality_good")
 			get_tree().call_group("light_sources", "set_quality_good")
+			get_tree().call_group("grass", "set_quality_good")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
+			get_tree().call_group("trees", "wind_effect_enable", true)
 			flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_HIGH:
@@ -57,10 +72,19 @@ func change_quality(quality):
 			#get_viewport().shadow_atlas_size = 8192
 			get_tree().call_group("fire_sources", "set_quality_high")
 			get_tree().call_group("light_sources", "set_quality_high")
+			get_tree().call_group("grass", "set_quality_high")
 			get_tree().call_group("moving", "shadow_casting_enable", true)
+			get_tree().call_group("trees", "wind_effect_enable", true)
 			flashlight.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
+	set_inside(game_params.is_inside())
 	shader_cache.refresh()
+
+func set_inside(inside):
+	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
+	environment.set_bg_color(Color(0, 0, 0))
+	environment.set("background_sky", sky_inside if inside else sky_outside)
+	environment.set("background_energy", 0.05 if inside else 0.85)
 
 func change_culling():
 	self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
@@ -70,8 +94,10 @@ func _process(delta):
 	# Turning the flashlight on/off
 	if Input.is_action_just_pressed("flashlight"):
 		if flashlight.is_visible_in_tree():
+			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
 		else:
+			$AudioStreamFlashlightOn.play()
 			flashlight.show()
 	# ----------------------------------
 	

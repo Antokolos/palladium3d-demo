@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/161815__dasdeer__sand-walk.ogg-ad96498e5506d17629393f4e160c45b3.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/161815__dasdeer__sand-walk.ogg"
+dest_files=[ "res://.import/161815__dasdeer__sand-walk.ogg-ad96498e5506d17629393f4e160c45b3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

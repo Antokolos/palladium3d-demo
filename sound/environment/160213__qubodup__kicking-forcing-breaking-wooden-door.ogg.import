@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/160213__qubodup__kicking-forcing-breaking-wooden-door.ogg-7b5442d559d493574d0e8e1e31b6fbc4.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/160213__qubodup__kicking-forcing-breaking-wooden-door.ogg"
+dest_files=[ "res://.import/160213__qubodup__kicking-forcing-breaking-wooden-door.ogg-7b5442d559d493574d0e8e1e31b6fbc4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

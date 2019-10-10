@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/forest_door_2.escn" type="PackedScene" id=1]
+
+[node name="forest_door_2" index="0" instance=ExtResource( 1 )]

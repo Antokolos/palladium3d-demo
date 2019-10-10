@@ -47,10 +47,10 @@ func load_settings():
 	if (typeof(d)!=TYPE_DICTIONARY):
 		return
 
-	if ("tablet_orientation" in d):	
+	if ("tablet_orientation" in d):
 		tablet_orientation = int(d.tablet_orientation)
 
-	if ("vsync" in d):	
+	if ("vsync" in d):
 		vsync = bool(d.vsync)
 
 	if ("fullscreen" in d):

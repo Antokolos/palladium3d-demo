@@ -97,16 +97,17 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ChatWindow" type="RichTextLabel" parent="TabletPanel/TabletScreen/apps/chat/VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 577.0
+margin_bottom = 926.0
 size_flags_horizontal = 3
 size_flags_vertical = 15
 bbcode_enabled = true
 scroll_following = true
 
 [node name="InfoLabel" type="Label" parent="TabletPanel/TabletScreen/apps/chat/VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 930.0
+margin_right = 577.0
+margin_bottom = 944.0
 
 [node name="settings_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
 editor/display_folded = true
@@ -443,7 +444,6 @@ rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
-editor/display_folded = true
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 604.2
@@ -466,18 +466,18 @@ custom_constants/hseparation = 20
 columns = 3
 
 [node name="VChatContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-visible = false
-margin_right = 80.0
+margin_right = 133.0
 margin_bottom = 98.0
 alignment = 1
 
 [node name="HChatContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
-margin_right = 80.0
+margin_right = 133.0
 margin_bottom = 80.0
 alignment = 1
 
 [node name="ChatButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer"]
-margin_right = 80.0
+margin_left = 26.0
+margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
@@ -485,7 +485,7 @@ stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
 margin_top = 84.0
-margin_right = 80.0
+margin_right = 133.0
 margin_bottom = 98.0
 text = "Chat"
 align = 1
@@ -570,7 +570,8 @@ align = 1
 valign = 2
 
 [node name="VSettingsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_right = 129.0
+margin_left = 153.0
+margin_right = 282.0
 margin_bottom = 98.0
 alignment = 1
 
@@ -596,8 +597,8 @@ align = 1
 valign = 2
 
 [node name="VSaveGameContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_left = 149.0
-margin_right = 276.0
+margin_left = 302.0
+margin_right = 429.0
 margin_bottom = 98.0
 alignment = 1
 
@@ -623,9 +624,9 @@ align = 1
 valign = 2
 
 [node name="VLoadGameContainer2" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_left = 296.0
-margin_right = 429.0
-margin_bottom = 98.0
+margin_top = 118.0
+margin_right = 133.0
+margin_bottom = 216.0
 alignment = 1
 
 [node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2"]
@@ -650,8 +651,9 @@ align = 1
 valign = 2
 
 [node name="VQuitGameContainer3" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 153.0
 margin_top = 118.0
-margin_right = 129.0
+margin_right = 282.0
 margin_bottom = 216.0
 alignment = 1
 

@@ -1,10 +1,10 @@
 - (conversation)
 * 	[Are you afraid of rats?]
-	Are you afraid of rats? # female
-	Of course not. # player
+	Are you afraid of rats? # actor:female
+	Of course not. # actor:player
 	* * [Are there any rats here?]
-	    Are there any rats here? # female
-		Probably so. # player
+	    Are there any rats here? # actor:female
+		Probably so. # actor:player
 +	[Let's talk later, we should not be distracted.]
-    Let's talk later, we should not be distracted. # finalizer
+    Let's talk later, we should not be distracted. # actor:female # finalizer
 -	-> conversation

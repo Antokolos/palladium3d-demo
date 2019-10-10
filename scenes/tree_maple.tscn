@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/tree_maple.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/tree_maple.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.342628
+height = 8.8243
+
+[node name="tree_maple" groups=[
+"trees",
+] instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="." index="1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, -0.00615156, 0.999981, 0, -0.999981, -0.00615156, 0.188575, 4.63874, 0 )
+shape = SubResource( 1 )

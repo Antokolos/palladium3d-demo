@@ -3,7 +3,5 @@
 [ext_resource path="res://assets/ui/undersky5.png" type="Texture" id=1]
 
 [resource]
-
 radiance_size = 0
 panorama = ExtResource( 1 )
-

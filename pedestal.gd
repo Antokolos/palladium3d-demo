@@ -38,7 +38,7 @@ func use(player_node):
 					return
 			var level = get_node(level_path)
 			level.get_door("door_4").activate()
-			level.get_node("ceiling_moving_2").deactivate()
+			level.get_node("ceiling_moving_1").deactivate()
 			level.get_node("door_3").close()
 
 func add_highlight(player_node):

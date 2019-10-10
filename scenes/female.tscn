@@ -135,7 +135,7 @@ animation = "female_rest_99"
 animation = "female_walk_2"
 
 [sub_resource type="AnimationNodeBlendTree" id=30]
-graph_offset = Vector2( 0, 889 )
+graph_offset = Vector2( 0, -127 )
 nodes/Add3_temp/node = SubResource( 1 )
 nodes/Add3_temp/position = Vector2( 40, 40 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -195,7 +195,7 @@ nodes/look/position = Vector2( 260, -100 )
 nodes/output/position = Vector2( 1580, 620 )
 nodes/walk/node = SubResource( 29 )
 nodes/walk/position = Vector2( 260, 20 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Lips", 0, "Blend2_Head", "Blend2_Lips", 1, "Transition_Lips", "Transition", 0, "look", "Transition", 1, "walk", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17" ]
 
 [node name="female" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -203,7 +203,6 @@ script = ExtResource( 2 )
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 30 )
 anim_player = NodePath("../Female_palladium/AnimationPlayer")
-active = true
 parameters/Add3_temp/add_amount = 1.0
 parameters/Blend2_Aux/blend_amount = 1.0
 parameters/Blend2_Head/blend_amount = 0.5

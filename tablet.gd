@@ -173,12 +173,11 @@ func save_to_slot(slot):
 	var hud = get_parent()
 	var story_node = hud.conversation.get_node("StoryNode")
 	story_node.SaveAll(slot)
+	game_params.save_params(slot)
 	simulate_esc()
 
 func load_from_slot(slot):
-	var hud = get_parent()
-	var story_node = hud.conversation.get_node("StoryNode")
-	story_node.ReloadAllSaves(slot)
+	game_params.initiate_load(slot)
 	simulate_esc()
 
 func _on_ButtonSaveSlot1_pressed():

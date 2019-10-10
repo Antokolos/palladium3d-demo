@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/apatha_chest.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/apata_chest.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.855053, 0.408947, 0.0169827 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.821802, 0.0204961, 0.530928 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.0209916, 0.401219, 0.505819 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.900902, 0.524562, 0.0612238 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.816781, 0.0795784, 0.493305 )
+
+[node name="apatha_chest" instance=ExtResource( 1 )]
+
+[node name="StaticBody" type="StaticBody" parent="." index="5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0140776, 0.348608, 0.513906 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0169476, 0.344588, -0.484527 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="StaticBody" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0232594, -0.0340149, 0.00904908 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="StaticBody" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.858216, 0.346846, -0.00302777 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="StaticBody" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.857601, 0.34474, 0.0086984 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.282262, -0.0568609 )
+script = ExtResource( 2 )
+
+[node name="opened_door" type="CollisionShape" parent="StaticBody2" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.998071, 0.0620869, 0, -0.0620869, 0.998071, -0.0299191, 0.963972, -0.453037 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="closed_door" type="CollisionShape" parent="StaticBody2" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, -0.000288066, 0, 0.000288066, 1, -0.00269903, 0.517502, 0.0429995 )
+shape = SubResource( 5 )

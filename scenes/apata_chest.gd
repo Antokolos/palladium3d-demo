@@ -3,10 +3,10 @@ extends Spatial
 export var path_blocker = ""
 export var path_collision_closed = "closed_door"
 export var path_collision_opened = "opened_door"
-export var path_animation_player = "../AnimationPlayer"
+export var path_animation_player = "../Armature004/AnimationPlayer"
 export var path_door_mesh = ""
 export var surface_idx_door = 0
-export var anim_name = "default"
+export var anim_name = "Armature.010Action.003"
 
 var opened
 
@@ -38,9 +38,9 @@ func use(player_node):
 		collision_closed.disabled = false
 		collision_opened.disabled = true
 		opened = false
-		if game_params.apata_in_chest:
+		if game_params.story_vars.apata_in_chest:
 			get_node("../../door_3").open()
-	elif not game_params.apata_in_chest:
+	elif not game_params.story_vars.apata_in_chest:
 		if blocker_node and blocker_node.opened:
 			return
 		animation_player.play(anim_name)
@@ -51,7 +51,7 @@ func use(player_node):
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	return "" if game_params.apata_in_chest else ("E: Закрыть ларец" if opened else "E: Открыть ларец")
+	return "" if game_params.story_vars.apata_in_chest else ("E: Закрыть ларец" if opened else "E: Открыть ларец")
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

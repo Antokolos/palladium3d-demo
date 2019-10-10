@@ -5,6 +5,11 @@ export var initial_companion = false
 export var name_hint = "player"
 export var model_path = "res://scenes/female.tscn"
 
+const SOUND_WALK_NONE = 0
+const SOUND_WALK_SAND = 1
+const SOUND_WALK_GRASS = 2
+const SOUND_WALK_CONCRETE = 3
+
 const GRAVITY = -6.2
 var vel = Vector3()
 const MAX_SPEED = 5
@@ -26,6 +31,7 @@ onready var model = rotation_helper.get_node("Model")
 var is_walking = false
 var is_crouching = false
 var is_sprinting = false
+var is_in_jump = false
 
 var rot_x = 0
 var rot_y = 0
@@ -35,7 +41,7 @@ var KEY_LOOK_SPEED_FACTOR = 30
 
 #####
 
-export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo/StaticBodyFloor"
+export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo_floor_2/StaticBodyFloor"
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
@@ -112,13 +118,19 @@ func follow(current_transform, target_position):
 			dir = Vector3()
 		else:
 			dir = target_dir.normalized()
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
 	elif distance > FOLLOW_RANGE:
 		companion_state = COMPANION_STATE.WALK
 		model.walk(rotation_angle_to_player_deg)
 		dir = target_dir.normalized()
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
 	elif distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK:
 		model.walk(rotation_angle_to_player_deg)
 		dir = target_dir.normalized()
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
 	else:
 #		aggression_level = 0
 		companion_state = COMPANION_STATE.REST
@@ -272,8 +284,8 @@ func _ready():
 	if initial_companion:
 		game_params.companion_path = get_path()
 	var model_container = get_node("Rotation_Helper/Model")
-	for ch in model_container.get_children():
-		ch.queue_free()
+	var placeholder = get_node("Rotation_Helper/placeholder")
+	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
 	model.set_simple_mode(initial_player)
 	model_container.add_child(model)
@@ -338,6 +350,11 @@ func process_input(delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed("movement_jump"):
 			vel.y = JUMP_SPEED
+			is_in_jump = true
+		else:
+			if is_in_jump:
+				$SoundFallingToFloor.play()
+				is_in_jump = false
 	# ----------------------------------
 	
 	# ----------------------------------
@@ -414,7 +431,39 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel*delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
+	if vel.x > 0.001 or vel.x < -0.001 or vel.z > 0.001 or vel.z < -0.001:
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
+		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
+	else:
+		$SoundWalking.stop()
 	vel = move_and_slide(vel,Vector3(0,1,0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
+
+func set_sound_walk(mode):
+	var spl = $SoundWalking
+	spl.stop()
+	if mode == SOUND_WALK_NONE:
+		spl.stream = null
+		spl.set_unit_db(0)
+		return
+	var sound_file = File.new()
+	match mode:
+		SOUND_WALK_SAND:
+			sound_file.open("res://sound/environment/161815__dasdeer__sand-walk.ogg", File.READ)
+			spl.set_unit_db(0)
+		SOUND_WALK_GRASS:
+			sound_file.open("res://sound/environment/400123__harrietniamh__footsteps-on-grass.ogg", File.READ)
+			spl.set_unit_db(0)
+		SOUND_WALK_CONCRETE:
+			sound_file.open("res://sound/environment/336598__inspectorj__footsteps-concrete-a.ogg", File.READ)
+			spl.set_unit_db(0)
+		_:
+			sound_file.open("res://sound/environment/336598__inspectorj__footsteps-concrete-a.ogg", File.READ)
+			spl.set_unit_db(0)
+	var bytes = sound_file.get_buffer(sound_file.get_len())
+	var stream = AudioStreamOGGVorbis.new()
+	stream.data = bytes
+	spl.stream = stream
 
 func take(nam, model_path):
 	var hud = get_hud()

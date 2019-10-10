@@ -1,6 +1,129 @@
 extends Node
 
+var scene_path = "res://forest.tscn"
+var slot_to_load_from = -1
 var player_path = null
 var companion_path = null
-var apata_on_pedestal = true
-var apata_in_chest = false
+var story_vars = {
+"is_game_start" : true,
+"relationship_female" : 0,
+"relationship_bandit" : 0,
+"apata_on_pedestal" : true,
+"apata_in_chest" : false
+}
+
+func is_inside():
+	return scene_path == "res://palladium.tscn"
+
+func initiate_load(slot):
+	var f = File.new()
+	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
+
+	if (error):
+		print("no params to load.")
+		return
+
+	var d = parse_json( f.get_as_text() )
+	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
+		return
+
+	if ("scene_path" in d):
+		scene_path = d.scene_path
+	slot_to_load_from = slot
+	
+	get_tree().change_scene("res://scene_loader.tscn")
+
+func finish_load():
+	if slot_to_load_from > 0:
+		load_params(slot_to_load_from)
+		slot_to_load_from = -1
+		return true
+	return false
+
+func load_params(slot):
+	var player = get_node(player_path)
+	var hud = player.get_hud()
+	var story_node = hud.conversation.get_node("StoryNode")
+	story_node.ReloadAllSaves(slot)
+	
+	var f = File.new()
+	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
+
+	if (error):
+		print("no params to load.")
+		return
+
+	var d = parse_json( f.get_as_text() )
+	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
+		return
+
+	if ("scene_path" in d):
+		scene_path = d.scene_path
+
+	var companion = get_node(companion_path)
+	var player_basis = player.get_transform().basis
+	var player_origin = player.get_transform().origin
+	var companion_basis = companion.get_transform().basis
+	var companion_origin = companion.get_transform().origin
+
+	if ("player_path" in d):
+		player_path = d.player_path
+
+	if ("player_basis" in d and (typeof(d.player_basis) == TYPE_ARRAY)):
+		var bx = Vector3(d.player_basis[0][0], d.player_basis[0][1], d.player_basis[0][2])
+		var by = Vector3(d.player_basis[1][0], d.player_basis[1][1], d.player_basis[1][2])
+		var bz = Vector3(d.player_basis[2][0], d.player_basis[2][1], d.player_basis[2][2])
+		player_basis = Basis(bx, by, bz)
+
+	if ("player_origin" in d and (typeof(d.player_origin) == TYPE_ARRAY)):
+		player_origin = Vector3(d.player_origin[0], d.player_origin[1], d.player_origin[2])
+
+	if ("companion_path" in d):
+		companion_path = d.companion_path
+
+	if ("companion_basis" in d and (typeof(d.companion_basis) == TYPE_ARRAY)):
+		var bx = Vector3(d.companion_basis[0][0], d.companion_basis[0][1], d.companion_basis[0][2])
+		var by = Vector3(d.companion_basis[1][0], d.companion_basis[1][1], d.companion_basis[1][2])
+		var bz = Vector3(d.companion_basis[2][0], d.companion_basis[2][1], d.companion_basis[2][2])
+		companion_basis = Basis(bx, by, bz)
+
+	if ("companion_origin" in d and (typeof(d.companion_origin) == TYPE_ARRAY)):
+		companion_origin = Vector3(d.companion_origin[0], d.companion_origin[1], d.companion_origin[2])
+
+	player.set_transform(Transform(player_basis, player_origin))
+	companion.set_transform(Transform(companion_basis, companion_origin))
+
+	if ("story_vars" in d):
+		story_vars = d.story_vars
+
+func save_params(slot):
+	var f = File.new()
+	var error = f.open("user://saves/slot_%d/params.json" % slot, File.WRITE)
+	assert( not error )
+	
+	var player = get_node(player_path)
+	var companion = get_node(companion_path)
+	var player_basis = player.get_transform().basis
+	var player_origin = player.get_transform().origin
+	var companion_basis = companion.get_transform().basis
+	var companion_origin = companion.get_transform().origin
+
+	var d = {
+		"scene_path" : scene_path,
+		"player_path" : player_path,
+		"player_origin" : [player_origin.x, player_origin.y, player_origin.z],
+		"player_basis" : [
+			[player_basis.x.x, player_basis.x.y, player_basis.x.z],
+			[player_basis.y.x, player_basis.y.y, player_basis.y.z],
+			[player_basis.z.x, player_basis.z.y, player_basis.z.z]
+		],
+		"companion_path" : companion_path,
+		"companion_origin" : [companion_origin.x, companion_origin.y, companion_origin.z],
+		"companion_basis" : [
+			[companion_basis.x.x, companion_basis.x.y, companion_basis.x.z],
+			[companion_basis.y.x, companion_basis.y.y, companion_basis.y.z],
+			[companion_basis.z.x, companion_basis.z.y, companion_basis.z.z]
+		],
+		"story_vars" : story_vars
+	}
+	f.store_line( to_json(d) )

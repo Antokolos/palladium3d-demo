@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://camera.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://shader_cache.gd" type="Script" id=5]
 [ext_resource path="res://item_preview.gd" type="Script" id=6]
 [ext_resource path="res://default_theme.tres" type="Theme" id=7]
+[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=8]
+[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=9]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.24, 0.36, 0.2 )
@@ -105,3 +107,11 @@ spot_range = 18.0
 spot_attenuation = 1.7411
 spot_angle = 42.0
 spot_angle_attenuation = 2.07053
+
+[node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "Sound"
+
+[node name="AudioStreamFlashlightOff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "Sound"

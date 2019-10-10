@@ -47,6 +47,7 @@ func init_story(player, conversation, conversation_name):
 	var cp = "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
 	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
+	story.InitVariables(game_params.story_vars)
 	return story
 
 func get_conversation_sound_path(player, conversation_name):
@@ -64,7 +65,7 @@ func get_conversation_sound_path(player, conversation_name):
 
 func conversation_active():
 	return conversation_name and conversation_name.length() > 0
- 
+
 func start_conversation(player, target, conversation_name):
 	if self.conversation_name == conversation_name:
 		return
@@ -88,7 +89,7 @@ func clear_actors_and_texts(player, story, conversation):
 	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 	conversation_actor_prev.text = ""
 	var tags = story.GetCurrentTags(TranslationServer.get_locale())
-	var actor_name = tags[0] if tags and tags.size() > 0 else player.name_hint
+	var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 	conversation_actor.text = tr(actor_name) + ": "
 
 func move_current_text_to_prev(conversation):
@@ -120,15 +121,15 @@ func story_choose(player, idx):
 			conversation_text.text = story.Continue(TranslationServer.get_locale()).strip_edges()
 			var tags_dict = story.GetCurrentTags()
 			var tags = tags_dict[TranslationServer.get_locale()]
-			var finalizer = tags and tags.size() > 0 and tags[0] == "finalizer"
+			var finalizer = tags and tags.has("finalizer")
 			if finalizer:
 				stop_conversation(player)
 				return
-			var actor_name = tags[0] if not finalizer and tags and tags.size() > 0 else player.name_hint
+			var actor_name = tags["actor"] if not finalizer and tags and tags.has("actor") else player.name_hint
 			conversation_actor.text = tr(actor_name) + ": "
 			var vtags = get_vvalue(tags_dict)
-			if vtags and vtags.size() > 1:
-				has_sound = play_sound_and_start_lipsync(player, vtags[1], null) # no lipsync for choices
+			if vtags and vtags.has("voiceover"):
+				has_sound = play_sound_and_start_lipsync(player, vtags["voiceover"], null) # no lipsync for choices
 				in_choice = true
 			change_stretch_ratio(conversation)
 		if not has_sound:
@@ -215,12 +216,12 @@ func story_proceed(player):
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 		var tags_dict = story.GetCurrentTags()
 		var tags = tags_dict[TranslationServer.get_locale()]
-		var actor_name = tags[0] if tags and tags.size() > 0 else (conversation_target.name_hint if conversation_target else null)
+		var actor_name = tags["actor"] if tags and tags.has("actor") else (conversation_target.name_hint if conversation_target else null)
 		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
-		if vtags and vtags.size() > 1:
+		if vtags and vtags.has("voiceover"):
 			var text = get_vvalue(texts)
-			play_sound_and_start_lipsync(player, vtags[1], vtags[2] if vtags.size() > 2 else (text_to_phonetic(text.strip_edges()) if text else null))
+			play_sound_and_start_lipsync(player, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
 		change_stretch_ratio(conversation)
 	display_choices(story, conversation, story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else [tr("end_conversation")])
 
