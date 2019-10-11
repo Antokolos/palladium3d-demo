@@ -16,8 +16,10 @@ func action(player_node):
 func switch_highlight(player_node, body):
 	if action_body == body:
 		return
-	if action_body and action_body.get_ref() and action_body.get_ref().has_method("remove_highlight"):
-		action_body.get_ref().remove_highlight(player_node)
+	if action_body:
+		var ref = action_body.get_ref()
+		if ref and ref.has_method("remove_highlight"):
+			ref.remove_highlight(player_node)
 		var hints = player_node.get_hud().hints
 		player_node.get_hud().alt_hint.text = ""
 		hints.get_node("HBoxContainer/ActionHintLabel").text = ""
