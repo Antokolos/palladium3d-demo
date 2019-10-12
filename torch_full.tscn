@@ -52,4 +52,14 @@ bus = "Sound"
 [node name="AudioStreamLighter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 bus = "Sound"
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0, 0 )
+collision_mask = 2
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52761, 0.149422, 0 )
+aabb = AABB( -1.51315, -1.6963, -1.54402, 3.0263, 3.3926, 3.08803 )
 [connection signal="finished" from="AudioStreamLighter" to="." method="_on_AudioStreamLighter_finished"]
+[connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

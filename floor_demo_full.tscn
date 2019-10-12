@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=2]
@@ -48,6 +48,9 @@
 [ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=46]
 [ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=47]
 [ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=48]
+[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=49]
+[ext_resource path="res://scenes/demo_dome.tscn" type="PackedScene" id=50]
+[ext_resource path="res://scenes/test_floor.tscn" type="PackedScene" id=51]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
@@ -420,6 +423,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 
 [node name="door_debris" parent="." instance=ExtResource( 48 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83106, 1.759, 33.1479 )
+
+[node name="demo_ceiling" parent="." instance=ExtResource( 49 )]
+
+[node name="demo_dome" parent="." instance=ExtResource( 50 )]
+
+[node name="test_floor" parent="." instance=ExtResource( 51 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58613, 1.56919, 39.3761 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]

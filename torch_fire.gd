@@ -7,8 +7,10 @@ func enable(enable):
 	flames.emitting = enable
 	smoke.emitting = enable
 	if not enable:
-		$ExtinguishTimer.start()
+		if $ExtinguishTimer.is_stopped():
+			$ExtinguishTimer.start()
 	else:
+		$ExtinguishTimer.stop()
 		visible = true
 		flames.restart()
 		smoke.restart()
