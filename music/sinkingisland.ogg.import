@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/sinkingisland.ogg-097821c05ff60e052d371d510004c5cd.oggstr"
+
+[deps]
+
+source_file="res://music/sinkingisland.ogg"
+dest_files=[ "res://.import/sinkingisland.ogg-097821c05ff60e052d371d510004c5cd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

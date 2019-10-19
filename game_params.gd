@@ -11,6 +11,18 @@ var story_vars = {
 "apata_on_pedestal" : true,
 "apata_in_chest" : false
 }
+var music = {}
+var current_music = null
+var is_loop = {
+	"loading.ogg" : true,
+	"underwater.ogg" : true,
+	"sinkingisland.ogg" : true
+}
+
+func _ready():
+	add_music("loading.ogg")
+	add_music("underwater.ogg")
+	add_music("sinkingisland.ogg")
 
 func is_inside():
 	return scene_path == "res://palladium.tscn"
@@ -39,6 +51,30 @@ func finish_load():
 		slot_to_load_from = -1
 		return true
 	return false
+
+func abspath(relpath):
+	var dir = Directory.new()
+	dir.open(".")
+	return dir.get_current_dir() + "/" + relpath
+
+func add_music(music_file):
+	if music.has(music_file):
+		return music[music_file]
+	var ogg_file = File.new()
+	ogg_file.open(abspath("music/" + music_file), File.READ)
+	var bytes = ogg_file.get_buffer(ogg_file.get_len())
+	var stream = AudioStreamOGGVorbis.new()
+	stream.data = bytes
+	music[music_file] = stream
+	return music[music_file]
+
+func change_music_to(music_file_name):
+	current_music = music_file_name
+	$MusicPlayer.stream = music[music_file_name]
+	$MusicPlayer.play()
+
+func stop_music():
+	$MusicPlayer.stop()
 
 func load_params(slot):
 	var player = get_node(player_path)
@@ -127,3 +163,8 @@ func save_params(slot):
 		"story_vars" : story_vars
 	}
 	f.store_line( to_json(d) )
+
+func _on_MusicPlayer_finished():
+	if current_music and is_loop[current_music]:
+		# Make the loop programmatically, because loop in ogg import parameters doesn't work if the track is assigned programmatically
+		$MusicPlayer.play()

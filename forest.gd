@@ -17,6 +17,7 @@ func _ready():
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
 	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)
+	game_params.change_music_to("underwater.ogg")
 	player_female.set_sound_walk(player_female.SOUND_WALK_GRASS if female_in_grass else player_female.SOUND_WALK_SAND)
 
 func _on_AreaGrass_body_entered(body):

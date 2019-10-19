@@ -5,6 +5,7 @@ onready var label = get_node("VBoxContainer/HBoxContainer/VBoxContainer/Progress
 var loader = null
 
 func _ready():
+	game_params.change_music_to("loading.ogg")
 	loader = ResourceLoader.load_interactive(game_params.scene_path)
 
 func _process(delta):

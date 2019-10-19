@@ -6,6 +6,7 @@ var player_toggle_enable = true
 
 func _ready():
 	game_params.finish_load()
+	game_params.stop_music()
 	game_params.player_path = player.get_path()
 	game_params.companion_path = player_female.get_path()
 	player.take("saffron_bun", "res://scenes/bun.tscn")

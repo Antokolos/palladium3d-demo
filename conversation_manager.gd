@@ -5,7 +5,7 @@ const CONSONANTS =           ["Б", "В", "Г", "Д", "Ж", "З", "К", "Л", "�
 const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "Н",      "Р",      "Т",      "Х"]
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
-const MINIMUM_AUTO_ADVANCE_TIME_SEC = 2.1
+const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
 var conversation_name
 var conversation_target
@@ -84,13 +84,18 @@ func clear_actors_and_texts(player, story, conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
 	conversation_text_prev.text = ""
-	conversation_text.text = story.CurrentText(TranslationServer.get_locale())
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 	conversation_actor_prev.text = ""
 	var tags = story.GetCurrentTags(TranslationServer.get_locale())
-	var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
-	conversation_actor.text = tr(actor_name) + ": "
+	var cur_text = story.CurrentText(TranslationServer.get_locale())
+	if tags.has("finalizer") or cur_text.empty():
+		conversation_text.text = ""
+		conversation_actor.text = ""
+	else:
+		conversation_text.text = cur_text
+		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
+		conversation_actor.text = tr(actor_name) + ": "
 
 func move_current_text_to_prev(conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
