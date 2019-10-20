@@ -5,16 +5,21 @@ onready var info_label = get_node('VBoxContainer/InfoLabel')
 
 var in_choice = false
 var max_choice = 0
-var chat_log = ""
+
+func _ready():
+	StoryNode.LoadStory("ink-scripts", "Monsieur.ink.json", true)
+	StoryNode.InitVariables(game_params.story_vars)
 
 func load_chat():
-	StoryNode.LoadStory("ink-scripts", "Monsieur.ink.json")
-	StoryNode.InitVariables(game_params.story_vars)
-	if chat_log.empty() and StoryNode.CanChoose():
+	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
+	if StoryNode.ChatDriven() and StoryNode.CanChoose():
 		display_choices()
 
 func _unhandled_input(event):
 	if self.is_visible_in_tree() and event is InputEventKey:
+		if not StoryNode.ChatDriven():
+			return
+		
 		if StoryNode.CanContinue() and event.is_pressed() and event.scancode == KEY_SPACE:
 			story_proceed(false)
 			if StoryNode.CanChoose():
@@ -39,14 +44,8 @@ func _unhandled_input(event):
 			story_choose(8)
 
 func story_proceed(choice_response):
-	var timeDict = OS.get_time();
-	var hour = timeDict.hour;
-	var minute = timeDict.minute;
-	var seconds = timeDict.second;
-	var phrase = "%02d:%02d:%02d\n" % [hour, minute, seconds] + StoryNode.Continue(TranslationServer.get_locale())
-	var text = "[right]%s[/right]\n" % phrase if choice_response else phrase + "\n"
-	chat_log = chat_log + text
-	chat_window.bbcode_text = chat_log
+	StoryNode.Continue(TranslationServer.get_locale(), choice_response)
+	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
 	info_label.text = "...typing..." if StoryNode.CanContinue() else ""
 	in_choice = false
 

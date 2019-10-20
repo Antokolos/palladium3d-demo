@@ -35,8 +35,17 @@ func conversation_is_finished(player, target, conversation_name):
 
 func conversation_is_not_finished(player, target, conversation_name):
 	var conversation = player.get_hud().conversation
-	var story = init_story(player, conversation, conversation_name)
-	return story.CanContinue() or story.CanChoose()
+	return check_story_not_finished(player, conversation, conversation_name)
+
+func check_story_not_finished(player, conversation, conversation_name):
+	var locale = TranslationServer.get_locale()
+	var story = StoryNode
+	var f = File.new()
+	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
+	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
+	var cp = "%s.ink.json" % conversation_name
+	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
+	return story.CheckStoryNotFinished("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
 
 func init_story(player, conversation, conversation_name):
 	var locale = TranslationServer.get_locale()
@@ -46,7 +55,7 @@ func init_story(player, conversation, conversation_name):
 	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
 	var cp = "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
+	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"), false)
 	story.InitVariables(game_params.story_vars)
 	return story
 
@@ -123,7 +132,7 @@ func story_choose(player, idx):
 		clear_choices(story, conversation)
 		story.Choose(idx)
 		if story.CanContinue():
-			conversation_text.text = story.Continue(TranslationServer.get_locale()).strip_edges()
+			conversation_text.text = story.Continue(TranslationServer.get_locale(), true).strip_edges()
 			var tags_dict = story.GetCurrentTags()
 			var tags = tags_dict[TranslationServer.get_locale()]
 			var finalizer = tags and tags.has("finalizer")

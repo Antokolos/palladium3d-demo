@@ -11,16 +11,16 @@ public class StoryNode : Node
 	private static int TagParts = 2;
 	/// Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 	/// The key is the locale name, the value is the ink story.
-	private Dictionary<String, Story> _inkStory = new Dictionary<String, Story>();
+	private Dictionary<String, PalladiumStory> _inkStory = new Dictionary<String, PalladiumStory>();
 	/// Contains all ink stories for all locales. Can be used as the stories cache (all possible stories can be preloaded when the game starts).
 	/// The key is the locale name, the value is the Dictionary whose key is the story path and the value is the story itself.
-	private Dictionary<String, Dictionary<String, Story>> _inkStories = new Dictionary<String, Dictionary<String, Story>>();
+	private Dictionary<String, Dictionary<String, PalladiumStory>> _inkStories = new Dictionary<String, Dictionary<String, PalladiumStory>>();
 
 	public override void _Ready()
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			var storiesByLocale = new Dictionary<String, Story>();
+			var storiesByLocale = new Dictionary<String, PalladiumStory>();
 			_inkStories.Add(locale, storiesByLocale);
 		}
 		MakeSaveSlotDirs(0);
@@ -51,7 +51,7 @@ public class StoryNode : Node
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			Dictionary<String, Story> storiesByLocale;
+			Dictionary<String, PalladiumStory> storiesByLocale;
 			if (!_inkStories.TryGetValue(locale, out storiesByLocale))
 			{
 				continue;
@@ -60,7 +60,7 @@ public class StoryNode : Node
 		}
 	}
 
-	private void BuildStoriesCacheForLocale(String storiesDirectoryPath, String locale, String subPath, Dictionary<String, Story> storiesByLocale)
+	private void BuildStoriesCacheForLocale(String storiesDirectoryPath, String locale, String subPath, Dictionary<String, PalladiumStory> storiesByLocale)
 	{
 		var dir = new Directory();
 		String basePath = storiesDirectoryPath + "/" + locale + (subPath.Empty() ? "" : "/" + subPath);
@@ -81,8 +81,11 @@ public class StoryNode : Node
 			{
 				var storyPath = basePath + "/" + file;
 				Story story = LoadStoryFromFile(storyPath);
-				LoadSaveOrReset(0, locale, storyPath, story);
-				storiesByLocale.Add((subPath.Empty() ? "" : subPath + "/") + file, story);
+				// TODO: restore story log from save
+				bool chatDriven = false; // TODO: restore chatDriven from save
+				PalladiumStory palladiumStory = new PalladiumStory(story, chatDriven);
+				LoadSaveOrReset(0, locale, storyPath, palladiumStory);
+				storiesByLocale.Add((subPath.Empty() ? "" : subPath + "/") + file, palladiumStory);
 			}
 		}
 		dir.ListDirEnd();
@@ -94,7 +97,38 @@ public class StoryNode : Node
 		return new Story(text);
 	}
 
-	public void LoadStory(String storiesDirectoryPath, String storyPath)
+	// Very similar to LoadStory, but does not changing the _inkStory
+	public bool CheckStoryNotFinished(String storiesDirectoryPath, String storyPath)
+	{
+		bool result = true;
+		foreach (var locale in AvailableLocales)
+		{
+			Dictionary<String, PalladiumStory> storiesByLocale;
+			if (!_inkStories.TryGetValue(locale, out storiesByLocale))
+			{
+				continue;
+			}
+			PalladiumStory ps;
+			if (storiesByLocale.TryGetValue(storyPath, out ps))
+			{
+				Story story = ps.InkStory;
+				result = result && (story.canContinue || story.currentChoices.Count > 0);
+			}
+			else
+			{
+				String path = storiesDirectoryPath + "/" + locale + "/" + storyPath;
+				Story story = LoadStoryFromFile(path);
+				bool chatDriven = false; // TODO: restore chatDriven from save
+				PalladiumStory palladiumStory = new PalladiumStory(story, chatDriven);
+				LoadSaveOrReset(0, locale, path, palladiumStory);
+				storiesByLocale.Add(storyPath, palladiumStory);
+				result = result && (story.canContinue || story.currentChoices.Count > 0);
+			}
+		}
+		return result;
+	}
+
+	public void LoadStory(String storiesDirectoryPath, String storyPath, bool chatDriven)
 	{
 		foreach (var locale in AvailableLocales)
 		{
@@ -102,23 +136,25 @@ public class StoryNode : Node
 			{
 				_inkStory.Remove(locale);
 			}
-			Dictionary<String, Story> storiesByLocale;
+			Dictionary<String, PalladiumStory> storiesByLocale;
 			if (!_inkStories.TryGetValue(locale, out storiesByLocale))
 			{
 				continue;
 			}
-			Story mapValue;
-			if (storiesByLocale.TryGetValue(storyPath, out mapValue))
+			PalladiumStory cachedPalladiumStory;
+			if (storiesByLocale.TryGetValue(storyPath, out cachedPalladiumStory))
 			{
-				_inkStory.Add(locale, mapValue);
+				cachedPalladiumStory.ChatDriven = chatDriven;
+				_inkStory.Add(locale, cachedPalladiumStory);
 			}
 			else
 			{
 				String path = storiesDirectoryPath + "/" + locale + "/" + storyPath;
 				Story story = LoadStoryFromFile(path);
-				LoadSaveOrReset(0, locale, path, story);
-				storiesByLocale.Add(storyPath, story);
-				_inkStory.Add(locale, story);
+				PalladiumStory palladiumStory = new PalladiumStory(story, chatDriven);
+				LoadSaveOrReset(0, locale, path, palladiumStory);
+				storiesByLocale.Add(storyPath, palladiumStory);
+				_inkStory.Add(locale, palladiumStory);
 			}
 		}
 	}
@@ -128,13 +164,14 @@ public class StoryNode : Node
 		var keys = storyVars.Keys;
 		foreach (var locale in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(locale, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
 				foreach (var key in keys)
 				{
 					try
 					{
+						Story story = palladiumStory.InkStory;
 						story.variablesState[key] = storyVars[key];
 						story.RemoveVariableObserver(null, key);
 						story.ObserveVariable(key, (string varName, object newValue) => {
@@ -151,9 +188,10 @@ public class StoryNode : Node
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(locale, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				story.ResetState();
 			}
 		}
@@ -189,11 +227,12 @@ public class StoryNode : Node
 		foreach (var pair in _inkStories)
 		{
 			String locale = pair.Key;
-			Dictionary<String, Story> storiesByLocale = pair.Value;
+			Dictionary<String, PalladiumStory> storiesByLocale = pair.Value;
 			foreach (var pairStories in storiesByLocale)
 			{
 				String path = pairStories.Key;
-				Story story = pairStories.Value;
+				PalladiumStory palladiumStory = pairStories.Value;
+				Story story = palladiumStory.InkStory;
 				string savedJson = story.state.ToJson();
 				File saveFile = new File();
 				saveFile.Open(GetSaveFilePath(slot, locale, path), 2); // File.ModeFlags.WRITE
@@ -207,8 +246,9 @@ public class StoryNode : Node
 		slotCaptionFile.Close();
 	}
 
-	private bool LoadSaveOrReset(int slot, String locale, String path, Story story)
+	private bool LoadSaveOrReset(int slot, String locale, String path, PalladiumStory palladiumStory)
 	{
+		Story story = palladiumStory.InkStory;
 		File saveFile = new File();
 		String saveFilePath = GetSaveFilePath(slot, locale, path);
 		if (saveFile.FileExists(saveFilePath))
@@ -232,12 +272,12 @@ public class StoryNode : Node
 		foreach (var pair in _inkStories)
 		{
 			String locale = pair.Key;
-			Dictionary<String, Story> storiesByLocale = pair.Value;
+			Dictionary<String, PalladiumStory> storiesByLocale = pair.Value;
 			foreach (var pairStories in storiesByLocale)
 			{
 				String path = pairStories.Key;
-				Story story = pairStories.Value;
-				LoadSaveOrReset(slot, locale, path, story);
+				PalladiumStory palladiumStory = pairStories.Value;
+				LoadSaveOrReset(slot, locale, path, palladiumStory);
 			}
 		}
 	}
@@ -246,9 +286,10 @@ public class StoryNode : Node
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(locale, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				if (!story.canContinue)
 				{
 					return false;
@@ -258,15 +299,31 @@ public class StoryNode : Node
 		return true;
 	}
 
-	public String Continue(String locale)
+	private void UpdateLog(PalladiumStory palladiumStory, String locale, String text, bool choiceResponse)
+	{
+		String fullLog = "";
+		if (palladiumStory.StoryLog.TryGetValue(locale, out fullLog))
+		{
+			palladiumStory.StoryLog.Remove(locale);
+		}
+		String currentLog = (choiceResponse) ? "[right]" : "";
+		currentLog += DateTime.Now.ToString() + "\n";
+		currentLog += text + ((choiceResponse) ? "[/right]\n" : "\n");
+		fullLog += currentLog;
+		palladiumStory.StoryLog.Add(locale, fullLog);
+	}
+
+	public String Continue(String locale, bool choiceResponse)
 	{
 		String result = "";
 		foreach (var loc in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(loc, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(loc, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				String text = story.Continue();
+				UpdateLog(palladiumStory, loc, text, choiceResponse);
 				if (loc == locale)
 				{
 					result = text;
@@ -281,14 +338,16 @@ public class StoryNode : Node
 		Godot.Collections.Dictionary<String, String> result = new Godot.Collections.Dictionary<String, String>();
 		foreach (var loc in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(loc, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(loc, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				String text = "";
 				while (story.canContinue)
 				{
 					text = text + " " + story.Continue();
 				}
+				UpdateLog(palladiumStory, loc, text, false);
 				result.Add(loc, text);
 			}
 		}
@@ -297,21 +356,51 @@ public class StoryNode : Node
 
 	public String CurrentText(String locale)
 	{
-		Story story;
-		if (_inkStory.TryGetValue(locale, out story))
+		PalladiumStory palladiumStory;
+		if (_inkStory.TryGetValue(locale, out palladiumStory))
 		{
+			Story story = palladiumStory.InkStory;
 			return story.currentText;
 		}
 		return "";
+	}
+
+	public String CurrentLog(String locale)
+	{
+		PalladiumStory palladiumStory;
+		if (_inkStory.TryGetValue(locale, out palladiumStory))
+		{
+			Dictionary<String, String> storyLog = palladiumStory.StoryLog;
+			String result;
+			if (storyLog.TryGetValue(locale, out result))
+			{
+				return result;
+			}
+		}
+		return "";
+	}
+
+	public bool ChatDriven()
+	{
+		foreach (var loc in AvailableLocales)
+		{
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(loc, out palladiumStory))
+			{
+				return palladiumStory.ChatDriven;
+			}
+		}
+		return false;
 	}
 
 	public bool CanChoose()
 	{
 		foreach (var locale in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(locale, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				if (story.currentChoices.Count <= 0)
 				{
 					return false;
@@ -326,9 +415,10 @@ public class StoryNode : Node
 		bool success = true;
 		foreach (var locale in AvailableLocales)
 		{
-			Story story;
-			if (_inkStory.TryGetValue(locale, out story))
+			PalladiumStory palladiumStory;
+			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				success = success && (i >= 0 && i < story.currentChoices.Count);
 				if (success)
 				{
@@ -352,9 +442,10 @@ public class StoryNode : Node
 	public Godot.Collections.Dictionary<String, String> GetCurrentTags(String locale)
 	{
 		Godot.Collections.Dictionary<String, String> result = new Godot.Collections.Dictionary<String, String>();
-		Story story;
-		if (_inkStory.TryGetValue(locale, out story))
+		PalladiumStory palladiumStory;
+		if (_inkStory.TryGetValue(locale, out palladiumStory))
 		{
+			Story story = palladiumStory.InkStory;
 			foreach (var tag in story.currentTags)
 			{
 				String[] tagParts = tag.Trim().Split(TagSeparators, TagParts, StringSplitOptions.RemoveEmptyEntries);
@@ -373,9 +464,10 @@ public class StoryNode : Node
 
 	public String[] GetChoices(String locale)
 	{
-		Story story;
-		if (_inkStory.TryGetValue(locale, out story))
+		PalladiumStory palladiumStory;
+		if (_inkStory.TryGetValue(locale, out palladiumStory))
 		{
+			Story story = palladiumStory.InkStory;
 			var ret = new String[story.currentChoices.Count];
 			for (int i = 0; i < story.currentChoices.Count; ++i) {
 				Choice choice = story.currentChoices [i];
