@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -6,12 +6,11 @@
 [ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://StoryNode.cs" type="Script" id=7]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=9]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=10]
-[ext_resource path="res://Gun_label.gd" type="Script" id=11]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=8]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=9]
+[ext_resource path="res://Gun_label.gd" type="Script" id=10]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=11]
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -36,7 +35,7 @@ corner_detail = 10
 [sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
-font_data = ExtResource( 10 )
+font_data = ExtResource( 9 )
 
 [node name="hud" type="Control"]
 anchor_right = 1.0
@@ -90,7 +89,6 @@ align = 1
 valign = 1
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 visible = false
 margin_top = 137.0
 margin_right = 1920.0
@@ -208,9 +206,6 @@ margin_right = 94.0
 margin_bottom = 176.0
 text = "Choice5"
 
-[node name="StoryNode" type="Node" parent="VBoxContainer/Conversation"]
-script = ExtResource( 7 )
-
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
 visible = false
@@ -248,7 +243,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -260,7 +255,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -273,7 +268,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -286,7 +281,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
@@ -330,7 +325,7 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 9 )
+custom_styles/panel = ExtResource( 8 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
@@ -340,7 +335,7 @@ grow_horizontal = 0
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -348,7 +343,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 12 )]
+[node name="tablet" parent="." instance=ExtResource( 11 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]

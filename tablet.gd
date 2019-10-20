@@ -130,6 +130,7 @@ func _on_HomeButton_pressed():
 
 func _on_ChatButton_pressed():
 	desktop.hide()
+	chat.load_chat()
 	chat.show()
 
 func _on_SettingsButton_pressed():
@@ -137,11 +138,9 @@ func _on_SettingsButton_pressed():
 	settings_app.show()
 
 func refresh_slot_captions(base_node):
-	var hud = get_parent()
-	var story_node = hud.conversation.get_node("StoryNode")
 	for i in range(1, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
-		var caption = story_node.GetSlotCaption(i)
+		var caption = StoryNode.GetSlotCaption(i)
 		node.text = caption if caption.length() > 0 else tr("TABLET_EMPTY_SLOT")
 
 func _on_SaveGameButton_pressed():
@@ -170,9 +169,7 @@ func simulate_esc():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func save_to_slot(slot):
-	var hud = get_parent()
-	var story_node = hud.conversation.get_node("StoryNode")
-	story_node.SaveAll(slot)
+	StoryNode.SaveAll(slot)
 	game_params.save_params(slot)
 	simulate_esc()
 

@@ -40,7 +40,7 @@ func conversation_is_not_finished(player, target, conversation_name):
 
 func init_story(player, conversation, conversation_name):
 	var locale = TranslationServer.get_locale()
-	var story = conversation.get_node('StoryNode')
+	var story = StoryNode
 	var f = File.new()
 	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
 	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
@@ -115,7 +115,7 @@ func story_choose(player, idx):
 	var conversation = player.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-	var story = conversation.get_node('StoryNode')
+	var story = StoryNode
 	if not story.CanChoose() and not story.CanContinue() and idx == 0:
 		stop_conversation(player)
 	elif story.CanChoose() and max_choice > 0 and idx < max_choice:
@@ -212,7 +212,7 @@ func text_to_phonetic(text):
 func story_proceed(player):
 	in_choice = false
 	var conversation = player.get_hud().conversation
-	var story = conversation.get_node('StoryNode')
+	var story = StoryNode
 	if story.CanContinue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 		move_current_text_to_prev(conversation)
@@ -248,12 +248,10 @@ func display_choices(story, conversation, choices):
 
 func _on_AudioStreamPlayer_finished():
 	var player = get_node(game_params.player_path)
-	var conversation = player.get_hud().conversation
-	var story = conversation.get_node('StoryNode')
 	if in_choice:
 		story_proceed(player)
-	elif story.CanChoose():
-		var ch = story.GetChoices(TranslationServer.get_locale())
+	elif StoryNode.CanChoose():
+		var ch = StoryNode.GetChoices(TranslationServer.get_locale())
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
 

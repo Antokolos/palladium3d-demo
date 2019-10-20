@@ -32,6 +32,7 @@ settings="*res://settings.gd"
 game_params="*res://game_params.tscn"
 conversation_manager="*res://conversation_manager.tscn"
 common_utils="*res://common_utils.tscn"
+StoryNode="*res://StoryNode.cs"
 
 [debug]
 

@@ -29,6 +29,7 @@ public class StoryNode : Node
 		MakeSaveSlotDirs(3);
 		MakeSaveSlotDirs(4);
 		MakeSaveSlotDirs(5);
+		BuildStoriesCache("ink-scripts");
 	}
 
 	private void MakeSaveSlotDirs(int i)
@@ -95,9 +96,12 @@ public class StoryNode : Node
 
 	public void LoadStory(String storiesDirectoryPath, String storyPath)
 	{
-		_inkStory = new Dictionary<String, Story>();
 		foreach (var locale in AvailableLocales)
 		{
+			if (_inkStory.ContainsKey(locale))
+			{
+				_inkStory.Remove(locale);
+			}
 			Dictionary<String, Story> storiesByLocale;
 			if (!_inkStories.TryGetValue(locale, out storiesByLocale))
 			{

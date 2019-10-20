@@ -79,8 +79,7 @@ func stop_music():
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
-	var story_node = hud.conversation.get_node("StoryNode")
-	story_node.ReloadAllSaves(slot)
+	StoryNode.ReloadAllSaves(slot)
 	
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)

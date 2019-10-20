@@ -219,7 +219,6 @@ func _unhandled_input(event):
 	var hud = get_hud()
 	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
-		var story = conversation.get_node('StoryNode')
 		if conversation_manager.in_choice and event.scancode == KEY_1:
 			conversation_manager.proceed_story_immediately(self)
 		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
