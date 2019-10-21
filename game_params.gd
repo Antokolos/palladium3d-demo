@@ -6,6 +6,7 @@ var player_path = null
 var companion_path = null
 var story_vars = {
 "is_game_start" : true,
+"apata_chest_rigid" : 0,
 "relationship_female" : 0,
 "relationship_bandit" : 0,
 "apata_on_pedestal" : true,

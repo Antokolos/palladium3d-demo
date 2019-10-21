@@ -1,9 +1,9 @@
-extends Spatial
+extends RigidBody
 
 export var path_blocker = ""
 export var path_collision_closed = "closed_door"
 export var path_collision_opened = "opened_door"
-export var path_animation_player = "../Armature004/AnimationPlayer"
+export var path_animation_player = "apatha_chest/Armature004/AnimationPlayer"
 export var path_door_mesh = ""
 export var surface_idx_door = 0
 export var anim_name = "Armature.010Action.003"
@@ -29,6 +29,12 @@ func _ready():
 #	outlined_material = material.duplicate()
 #	outlined_material.next_pass = outline_material
 
+func _physics_process(delta):
+	if game_params.story_vars.apata_chest_rigid > 0 and mode != RigidBody.MODE_RIGID:
+		set_mode(RigidBody.MODE_RIGID)
+	elif game_params.story_vars.apata_chest_rigid <= 0 and mode != RigidBody.MODE_STATIC:
+		set_mode(RigidBody.MODE_STATIC)
+
 func use(player_node):
 	if animation_player.is_playing():
 		return
@@ -39,7 +45,7 @@ func use(player_node):
 		collision_opened.disabled = true
 		opened = false
 		if game_params.story_vars.apata_in_chest:
-			get_node("../../door_3").open()
+			get_node("../../../../door_3").open()
 	elif not game_params.story_vars.apata_in_chest:
 		if blocker_node and blocker_node.opened:
 			return

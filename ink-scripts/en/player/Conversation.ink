@@ -22,6 +22,9 @@
 		Are there any rats here? # actor:female
 		* * *	[Probably so.]
 		        Probably so. # actor:player
+* 	[Well, I agree, let's push the chest.]
+    Well, I agree, let's push the chest.
+	Okay.
 +	[Let's talk later, we should not be distracted.]
     Let's talk later, we should not be distracted. # actor:player # finalizer
 -	-> conversation

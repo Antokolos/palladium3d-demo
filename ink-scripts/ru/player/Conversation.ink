@@ -1,4 +1,5 @@
 VAR relationship_female = 0
+VAR apata_chest_rigid = 0
 - (conversation)
 * 	[Ничего здесь не трогай. И не отставай.]
     Ничего здесь не трогай. И не отставай. # actor:player # voiceover:nichego_zdes_ne_trogai.ogg
@@ -24,6 +25,10 @@ VAR relationship_female = 0
 		А здесь есть крысы? # actor:female # voiceover:a_zdes_est_krysy.ogg
 		* * *	[Это вероятно.]
 		        Это вероятно. # actor:player # voiceover:eto_veroyatno.ogg
+* 	[Я согласен, помоги толкать сундук.]
+	~ apata_chest_rigid = 1
+    Я согласен, помоги толкать сундук.
+	Хорошо.
 +	[Давай позже поговорим, нельзя отвлекаться.]
     Давай позже поговорим, нельзя отвлекаться. # actor:player # voiceover:davay_pozhe_pogovorim.ogg # finalizer
 -	-> conversation

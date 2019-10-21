@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/apata_chest.gd" type="Script" id=1]
+[ext_resource path="res://scenes/apatha_chest.tscn" type="PackedScene" id=2]
+
+[sub_resource type="PhysicsMaterial" id=6]
+friction = 100.0
+rough = true
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.855053, 0.408947, 0.0641045 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.88052, 0.15385, 0.530928 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.0553912, 0.401219, 0.505819 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.900902, 0.524562, 0.0612238 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.816781, 0.0795784, 0.493305 )
+
+[node name="apata_chest" type="RigidBody"]
+mode = 1
+mass = 500.0
+physics_material_override = SubResource( 6 )
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+linear_damp = 10.0
+angular_damp = 10.0
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028387, -0.575521, 0.477434 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0338639, -0.579541, -0.488867 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0125303, -1.07038, -2.49492e-005 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.864192, -0.577283, -0.00736776 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.829821, -0.579389, 0.00435841 )
+shape = SubResource( 3 )
+
+[node name="opened_door" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.998071, 0.0620869, 0, -0.0620869, 0.998071, -0.0468354, 0.322105, -0.514238 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="closed_door" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, -0.000288066, 0, 0.000288066, 1, -0.0196153, -0.124365, -0.0182014 )
+shape = SubResource( 5 )
+
+[node name="apatha_chest" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0294083, -0.964687, 0 )
