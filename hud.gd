@@ -91,6 +91,12 @@ func take(nam, model_path):
 func get_active_item():
 	return inventory_panel.get_child(active_item_idx) if active_item_idx >= 0 else null
 
+func has_item(item_nam):
+	for item in inventory_panel.get_children():
+		if item.nam == item_nam:
+			return true
+	return false
+
 func _on_QuitDialog_confirmed():
 	get_tree().quit()
 

@@ -4,13 +4,14 @@ var scene_path = "res://forest.tscn"
 var slot_to_load_from = -1
 var player_path = null
 var companion_path = null
+enum ApataTrapStages { ARMED = 0, GOING_DOWN = 1, PAUSED = 2, DISABLED = 3 }
 var story_vars = {
 "is_game_start" : true,
 "apata_chest_rigid" : 0,
 "relationship_female" : 0,
 "relationship_bandit" : 0,
-"apata_on_pedestal" : true,
-"apata_in_chest" : false
+"hope_on_pedestal" : false,
+"apata_trap_stage" : ApataTrapStages.ARMED
 }
 var music = {}
 var current_music = null
