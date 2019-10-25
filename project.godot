@@ -1172,7 +1172,6 @@ common/physics_jitter_fix=0.25
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 quality/shadow_atlas/size=8192
 quality/shadow_atlas/size.mobile=4096

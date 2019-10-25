@@ -1,6 +1,6 @@
 extends Spatial
 
-const SHADER_CACHE_ENABLED = false
+const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
 const STEP = 0.0004
 const HALFROW = 40
@@ -75,7 +75,7 @@ func _process(delta):
 			pass
 		1:
 			stage = stage + 1
-			self.visible = true
+			#self.visible = true
 			for node in get_children():
 				node.queue_free()
 		2:
@@ -84,7 +84,9 @@ func _process(delta):
 			pos = add_material_meshes(pos, get_node("/root"))
 		_:
 			if SHADER_CACHE_HIDING_ENABLED:
-				self.visible = false
+				for node in get_children():
+					node.visible = false
+				#self.visible = false
 			stage = 0
 
 func refresh():

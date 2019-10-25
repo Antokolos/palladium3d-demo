@@ -84,7 +84,8 @@ func set_inside(inside):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
 	environment.set_bg_color(Color(0, 0, 0))
 	environment.set("background_sky", sky_inside if inside else sky_outside)
-	environment.set("background_energy", 0.05 if inside else 0.85)
+	environment.set("background_energy", 0.04 if inside else 0.4)
+	environment.set("ambient_light_energy", 0.04 if inside else 0.4)
 
 func change_culling():
 	self.far = culling_rays.get_max_distance(self.get_global_transform().origin)

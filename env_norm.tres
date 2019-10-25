@@ -6,8 +6,11 @@
 background_mode = 2
 background_sky = ExtResource( 1 )
 background_color = Color( 1, 1, 1, 1 )
-background_energy = 0.05
-tonemap_mode = 2
+background_energy = 0.4
+ambient_light_color = Color( 0.639216, 0.639216, 0.639216, 1 )
+ambient_light_energy = 0.4
+ambient_light_sky_contribution = 0.8
+tonemap_mode = 3
 glow_levels/1 = true
 glow_levels/2 = true
 glow_levels/5 = false
