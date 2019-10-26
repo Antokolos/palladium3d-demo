@@ -106,7 +106,6 @@ margin_right = 577.0
 margin_bottom = 944.0
 
 [node name="settings_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -248,6 +247,57 @@ text = "Voiceover language"
 margin_left = 127.0
 margin_right = 168.0
 margin_bottom = 20.0
+
+[node name="HMusicVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 200.0
+margin_right = 577.0
+margin_bottom = 216.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume"]
+margin_top = 1.0
+margin_right = 90.0
+margin_bottom = 15.0
+text = "Music volume"
+
+[node name="MusicVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume"]
+margin_left = 94.0
+margin_right = 344.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="HSoundVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 220.0
+margin_right = 577.0
+margin_bottom = 236.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume"]
+margin_top = 1.0
+margin_right = 91.0
+margin_bottom = 15.0
+text = "Sound volume"
+
+[node name="SoundVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume"]
+margin_left = 95.0
+margin_right = 345.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="HSpeechVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 240.0
+margin_right = 577.0
+margin_bottom = 256.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume"]
+margin_top = 1.0
+margin_right = 87.0
+margin_bottom = 15.0
+text = "Speech volume"
+
+[node name="SpeechVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume"]
+margin_left = 91.0
+margin_right = 341.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 250, 0 )
 
 [node name="save_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
 editor/display_folded = true
@@ -695,6 +745,9 @@ texture_hover = ExtResource( 9 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/VLanguage" to="." method="_on_VLanguage_item_selected"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume/MusicVolume" to="." method="_on_MusicVolume_value_changed"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume/SoundVolume" to="." method="_on_SoundVolume_value_changed"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume/SpeechVolume" to="." method="_on_SpeechVolume_value_changed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSaveSlot1_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSaveSlot2_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSaveSlot3_pressed"]

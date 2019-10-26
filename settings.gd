@@ -12,6 +12,10 @@ const VLANGUAGE_EN = 2
 const VLANGUAGE_RU = 1
 const VLANGUAGE_NONE = 0
 
+const MUSIC_VOLUME_DEFAULT = 50
+const SOUND_VOLUME_DEFAULT = 100
+const SPEECH_VOLUME_DEFAULT = 100
+
 const QUALITY_HIGH = 3
 const QUALITY_GOOD = 2
 const QUALITY_OPT = 1
@@ -34,6 +38,12 @@ var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
 var language = LANGUAGE_EN
 var vlanguage = VLANGUAGE_RU
+onready var music_bus_id = AudioServer.get_bus_index("Music")
+onready var sound_bus_id = AudioServer.get_bus_index("Sound")
+onready var speech_bus_id = AudioServer.get_bus_index("Speech")
+var music_volume = MUSIC_VOLUME_DEFAULT
+var sound_volume = SOUND_VOLUME_DEFAULT
+var speech_volume = SPEECH_VOLUME_DEFAULT
 
 func load_settings():
 	var f = File.new()
@@ -71,6 +81,15 @@ func load_settings():
 	if ("vlanguage" in d):
 		vlanguage = int(d.vlanguage)
 
+	if ("music_volume" in d):
+		music_volume = int(d.music_volume)
+
+	if ("sound_volume" in d):
+		sound_volume = int(d.sound_volume)
+
+	if ("speech_volume" in d):
+		speech_volume = int(d.speech_volume)
+
 func save_settings():
 	var f = File.new()
 	var error = f.open("user://settings.json", File.WRITE)
@@ -84,9 +103,36 @@ func save_settings():
 		"resolution" : resolution,
 		"aa_quality" : aa_quality,
 		"language" : language,
-		"vlanguage" : vlanguage
+		"vlanguage" : vlanguage,
+		"music_volume" : music_volume,
+		"sound_volume" : sound_volume,
+		"speech_volume" : speech_volume
 	}
 	f.store_line( to_json(d) )
 
+func set_volume(bus_id, level):
+	# level in [0, 100] => volume from -30 dB to 0 dB
+	var volume_db = 0.3 * level - 30
+	if level > 0:
+		AudioServer.set_bus_mute(bus_id, false)
+		AudioServer.set_bus_volume_db(bus_id, volume_db)
+	else:
+		AudioServer.set_bus_mute(bus_id, true)
+
+func set_music_volume(level):
+	music_volume = level
+	set_volume(music_bus_id, level)
+
+func set_sound_volume(level):
+	sound_volume = level
+	set_volume(sound_bus_id, level)
+
+func set_speech_volume(level):
+	speech_volume = level
+	set_volume(speech_bus_id, level)
+
 func _ready():
 	load_settings()
+	set_music_volume(music_volume)
+	set_sound_volume(sound_volume)
+	set_speech_volume(speech_volume)

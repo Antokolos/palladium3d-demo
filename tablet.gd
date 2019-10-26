@@ -16,6 +16,9 @@ onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolu
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
 onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
+onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
+onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
+onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
 
 var available_resolutions = [
 Vector2(0, 576),
@@ -113,6 +116,10 @@ func _ready():
 		_:
 			language.select(0)
 	_on_VLanguage_item_selected(settings.vlanguage)
+	
+	music_volume_node.value = settings.music_volume
+	sound_volume_node.value = settings.sound_volume
+	speech_volume_node.value = settings.speech_volume
 
 func on_viewport_resize():
 	# Uncomment the following line to look at the viewport size changes
@@ -290,3 +297,12 @@ func _on_Language_item_selected(ID):
 
 func _on_VLanguage_item_selected(ID):
 	settings.vlanguage = ID
+
+func _on_MusicVolume_value_changed(value):
+	settings.set_music_volume(value)
+
+func _on_SoundVolume_value_changed(value):
+	settings.set_sound_volume(value)
+
+func _on_SpeechVolume_value_changed(value):
+	settings.set_speech_volume(value)
