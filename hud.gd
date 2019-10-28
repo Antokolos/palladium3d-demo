@@ -25,6 +25,21 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		ask_quit()
 
+func get_conversation_root():
+	return get_node("VBoxContainer/Conversation/VBox")
+
+func get_actorname_prev():
+	return get_conversation_root().get_node("VBoxText/HBoxTextPrev/ActorName")
+
+func get_conversation_text_prev():
+	return get_conversation_root().get_node("VBoxText/HBoxTextPrev/ConversationText")
+
+func get_actorname():
+	return get_conversation_root().get_node("VBoxText/HBoxText/ActorName")
+
+func get_conversation_text():
+	return get_conversation_root().get_node("VBoxText/HBoxText/ConversationText")
+
 func ask_quit():
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

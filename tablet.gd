@@ -21,9 +21,33 @@ onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolum
 onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
 
 var available_resolutions = [
-Vector2(0, 576),
-Vector2(0, 720),
-Vector2(0, 1080)
+{
+	"resolution_height" : 576,
+	"default_font" : 14,
+	"text_separation" : 3,
+	"actorname_prev_font" : 10,
+	"conversation_prev_font" : 10,
+	"actorname_font" : 16,
+	"conversation_font" : 16
+},
+{
+	"resolution_height" : 720,
+	"default_font" : 18,
+	"text_separation" : 10,
+	"actorname_prev_font" : 14,
+	"conversation_prev_font" : 14,
+	"actorname_font" : 20,
+	"conversation_font" : 20
+},
+{
+	"resolution_height" : 1080,
+	"default_font" : 26,
+	"text_separation" : 30,
+	"actorname_prev_font" : 20,
+	"conversation_prev_font" : 20,
+	"actorname_font" : 30,
+	"conversation_font" : 30
+}
 ]
 
 onready var hud = get_parent()
@@ -64,7 +88,7 @@ func _ready():
 	var i = 0
 	var ssize = OS.get_screen_size()
 	for r in available_resolutions:
-		resolution.add_item("%d x %d" % [ssize.x * available_resolutions[i].y / ssize.y, available_resolutions[i].y], i)
+		resolution.add_item("%d x %d" % [ssize.x * available_resolutions[i].resolution_height / ssize.y, available_resolutions[i].resolution_height], i)
 		i = i + 1
 	resolution.add_item("Native (%d x %d)" % [ssize.x, ssize.y], i)
 	match (settings.resolution):
@@ -266,14 +290,34 @@ func _on_Quality_item_selected(ID):
 	settings.quality = ID
 
 func _on_Resolution_item_selected(ID):
-	if ID >= available_resolutions.size():
+	var default_font = hud.get_theme().get_default_font()
+	var conversation_root = hud.get_conversation_root()
+	var actorname_prev_font = hud.get_actorname_prev().get("custom_fonts/font")
+	var conversation_prev_font = hud.get_conversation_text_prev().get("custom_fonts/font")
+	var actorname_font = hud.get_actorname().get("custom_fonts/font")
+	var conversation_font = hud.get_conversation_text().get("custom_fonts/font")
+	var maxid = available_resolutions.size() - 1
+	if ID > maxid:
 		var ssize = OS.get_screen_size()
 		get_tree().get_root().set_size_override(true, ssize)
 		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, ssize)
+		# TODO: maybe upscale font size for native resolution?
+		default_font.set_size(available_resolutions[maxid].default_font)
+		actorname_prev_font.set_size(available_resolutions[maxid].actorname_prev_font)
+		conversation_prev_font.set_size(available_resolutions[maxid].conversation_prev_font)
+		actorname_font.set_size(available_resolutions[maxid].actorname_font)
+		conversation_font.set_size(available_resolutions[maxid].conversation_font)
+		conversation_root.set("custom_constants/separation", available_resolutions[maxid].text_separation)
 	else:
-		var minsize=Vector2( OS.window_size.x * available_resolutions[ID].y / OS.window_size.y, available_resolutions[ID].y)
+		var minsize=Vector2( OS.window_size.x * available_resolutions[ID].resolution_height / OS.window_size.y, available_resolutions[ID].resolution_height)
 		get_tree().get_root().set_size_override(true, minsize)
 		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
+		default_font.set_size(available_resolutions[ID].default_font)
+		actorname_prev_font.set_size(available_resolutions[ID].actorname_prev_font)
+		conversation_prev_font.set_size(available_resolutions[ID].conversation_prev_font)
+		actorname_font.set_size(available_resolutions[ID].actorname_font)
+		conversation_font.set_size(available_resolutions[ID].conversation_font)
+		conversation_root.set("custom_constants/separation", available_resolutions[ID].text_separation)
 	settings.resolution = ID
 
 func _on_AA_item_selected(ID):

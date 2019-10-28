@@ -66,8 +66,8 @@ tracks/3/keys = {
 }
 
 [node name="player" type="KinematicBody" groups=[
-"moving",
 "party",
+"moving",
 ]]
 script = ExtResource( 1 )
 

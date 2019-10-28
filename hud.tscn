@@ -59,7 +59,6 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="Hints" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 270.0
 size_flags_horizontal = 3
@@ -105,6 +104,7 @@ custom_constants/separation = 30
 alignment = 1
 
 [node name="VBoxText" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
+editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
@@ -112,6 +112,7 @@ size_flags_vertical = 2
 alignment = 1
 
 [node name="HBoxTextPrev" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox/VBoxText"]
+editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -170,12 +171,12 @@ valign = 1
 autowrap = true
 
 [node name="VBoxChoices" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
-editor/display_folded = true
 margin_left = 913.0
 margin_top = 94.0
 margin_right = 1007.0
 margin_bottom = 270.0
 size_flags_horizontal = 4
+size_flags_vertical = 3
 
 [node name="Choice1" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
 margin_right = 94.0
@@ -206,8 +207,14 @@ margin_right = 94.0
 margin_bottom = 176.0
 text = "Choice5"
 
+[node name="VBoxFooter" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
+margin_top = 300.0
+margin_right = 1920.0
+margin_bottom = 300.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 visible = false
 margin_right = 1920.0
 margin_bottom = 270.0
