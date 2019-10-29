@@ -24,6 +24,7 @@ func use(player_node):
 		level.get_door("door_8").activate()
 	
 	player_node.take(item_name, model_path)
+	
 	if item_in_parent:
 		get_parent().queue_free()
 	else:

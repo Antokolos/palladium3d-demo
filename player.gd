@@ -468,6 +468,7 @@ func take(nam, model_path):
 	var hud = get_hud()
 	if hud:
 		hud.take(nam, model_path)
+		game_params.take(nam, model_path)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

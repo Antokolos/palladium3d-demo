@@ -20,6 +20,8 @@ func _ready():
 	dialog.get_ok().text = "Yes"
 	dialog.get_cancel().text = "No"
 	get_tree().set_auto_accept_quit(false)
+	for key in game_params.inventory.keys():
+		take(key, game_params.inventory[key])
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

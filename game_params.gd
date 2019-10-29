@@ -13,6 +13,9 @@ var story_vars = {
 "hope_on_pedestal" : false,
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
+var inventory = {
+	"saffron_bun" : { "model_path" : "res://scenes/bun.tscn" }
+}
 var music = {}
 var current_music = null
 var is_loop = {
@@ -78,6 +81,12 @@ func change_music_to(music_file_name):
 func stop_music():
 	$MusicPlayer.stop()
 
+func take(nam, model_path):
+	inventory[nam] = { "model_path" : model_path }
+
+func remove(nam):
+	inventory.erase(nam)
+
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
@@ -132,6 +141,9 @@ func load_params(slot):
 
 	if ("story_vars" in d):
 		story_vars = d.story_vars
+	
+	if ("inventory" in d):
+		inventory = d.inventory
 
 func save_params(slot):
 	var f = File.new()
@@ -161,7 +173,8 @@ func save_params(slot):
 			[companion_basis.y.x, companion_basis.y.y, companion_basis.y.z],
 			[companion_basis.z.x, companion_basis.z.y, companion_basis.z.z]
 		],
-		"story_vars" : story_vars
+		"story_vars" : story_vars,
+		"inventory" : inventory
 	}
 	f.store_line( to_json(d) )
 

@@ -45,4 +45,5 @@ func get_model_instance():
 	return instance.instance() if instance else null
 
 func remove():
+	game_params.remove(nam)
 	self.queue_free()
