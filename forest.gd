@@ -14,6 +14,7 @@ func _ready():
 	game_params.story_vars.is_game_start = false
 	game_params.player_path = player.get_path()
 	game_params.companion_path = player_female.get_path()
+	player.take("saffron_bun", "res://scenes/bun.tscn")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
 	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)

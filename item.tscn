@@ -3,36 +3,42 @@
 [ext_resource path="res://item.gd" type="Script" id=1]
 
 [node name="item" type="VBoxContainer"]
-margin_top = 1.0
-margin_right = 200.0
-margin_bottom = 266.0
+margin_right = 216.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 216, 216 )
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 3
 script = ExtResource( 1 )
 
 [node name="LabelKey" type="Label" parent="."]
-margin_left = 96.0
-margin_right = 104.0
+margin_right = 216.0
 margin_bottom = 14.0
-size_flags_horizontal = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "1"
+align = 1
+valign = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = 10.0
+margin_left = 26.0
 margin_top = 18.0
 margin_right = 190.0
-margin_bottom = 198.0
-rect_min_size = Vector2( 180, 180 )
+margin_bottom = 182.0
+rect_min_size = Vector2( 164, 164 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 expand = true
 stretch_mode = 7
 
 [node name="LabelDesc" type="Label" parent="."]
-margin_left = 64.0
-margin_top = 202.0
-margin_right = 135.0
+margin_top = 186.0
+margin_right = 216.0
 margin_bottom = 216.0
-size_flags_horizontal = 4
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
 text = "Saffron bun"
+align = 1
+autowrap = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -6,11 +6,12 @@
 [ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=7]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=8]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=9]
-[ext_resource path="res://Gun_label.gd" type="Script" id=10]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=11]
+[ext_resource path="res://inventory.gd" type="Script" id=7]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=9]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=10]
+[ext_resource path="res://Gun_label.gd" type="Script" id=11]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -35,7 +36,7 @@ corner_detail = 10
 [sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
-font_data = ExtResource( 9 )
+font_data = ExtResource( 10 )
 
 [node name="hud" type="Control"]
 anchor_right = 1.0
@@ -104,7 +105,6 @@ custom_constants/separation = 30
 alignment = 1
 
 [node name="VBoxText" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
-editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
@@ -221,13 +221,15 @@ margin_bottom = 270.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+script = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-alignment = 1
+custom_constants/separation = 8
 
 [node name="Crosshair" type="Control" parent="."]
 editor/display_folded = true
@@ -250,7 +252,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -262,7 +264,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -275,7 +277,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -288,7 +290,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
@@ -332,7 +334,7 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 8 )
+custom_styles/panel = ExtResource( 9 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
@@ -342,7 +344,7 @@ grow_horizontal = 0
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -350,7 +352,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 11 )]
+[node name="tablet" parent="." instance=ExtResource( 12 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]
