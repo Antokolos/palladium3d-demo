@@ -1,16 +1,38 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://item.gd" type="Script" id=1]
 
-[node name="item" type="VBoxContainer"]
+[sub_resource type="StyleBoxFlat" id=1]
+resource_local_to_scene = true
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 0, 0, 0 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="item" type="PanelContainer"]
 margin_right = 216.0
-margin_bottom = 216.0
-rect_min_size = Vector2( 216, 216 )
+margin_bottom = 234.0
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 4
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 
-[node name="LabelKey" type="Label" parent="."]
+[node name="ItemBox" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 9.0
+margin_right = 221.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 216, 216 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LabelKey" type="Label" parent="ItemBox"]
 margin_right = 216.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
@@ -20,7 +42,7 @@ text = "1"
 align = 1
 valign = 1
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="ItemBox"]
 margin_left = 26.0
 margin_top = 18.0
 margin_right = 190.0
@@ -31,7 +53,7 @@ size_flags_vertical = 4
 expand = true
 stretch_mode = 7
 
-[node name="LabelDesc" type="Label" parent="."]
+[node name="LabelDesc" type="Label" parent="ItemBox"]
 margin_top = 186.0
 margin_right = 216.0
 margin_bottom = 216.0

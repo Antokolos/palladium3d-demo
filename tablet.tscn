@@ -248,6 +248,23 @@ margin_left = 127.0
 margin_right = 168.0
 margin_bottom = 20.0
 
+[node name="HMasterVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 200.0
+margin_right = 577.0
+margin_bottom = 216.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume"]
+margin_top = 1.0
+margin_right = 90.0
+margin_bottom = 15.0
+text = "Master volume"
+
+[node name="MasterVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume"]
+margin_left = 94.0
+margin_right = 344.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 250, 0 )
+
 [node name="HMusicVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 200.0
 margin_right = 577.0
@@ -745,6 +762,7 @@ texture_hover = ExtResource( 9 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/VLanguage" to="." method="_on_VLanguage_item_selected"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume/MasterVolume" to="." method="_on_MasterVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume/MusicVolume" to="." method="_on_MusicVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume/SoundVolume" to="." method="_on_SoundVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume/SpeechVolume" to="." method="_on_SpeechVolume_value_changed"]

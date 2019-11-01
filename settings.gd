@@ -12,6 +12,7 @@ const VLANGUAGE_EN = 2
 const VLANGUAGE_RU = 1
 const VLANGUAGE_NONE = 0
 
+const MASTER_VOLUME_DEFAULT = 100
 const MUSIC_VOLUME_DEFAULT = 50
 const SOUND_VOLUME_DEFAULT = 100
 const SPEECH_VOLUME_DEFAULT = 100
@@ -38,9 +39,11 @@ var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
 var language = LANGUAGE_EN
 var vlanguage = VLANGUAGE_RU
+onready var master_bus_id = AudioServer.get_bus_index("Master")
 onready var music_bus_id = AudioServer.get_bus_index("Music")
 onready var sound_bus_id = AudioServer.get_bus_index("Sound")
 onready var speech_bus_id = AudioServer.get_bus_index("Speech")
+var master_volume = MASTER_VOLUME_DEFAULT
 var music_volume = MUSIC_VOLUME_DEFAULT
 var sound_volume = SOUND_VOLUME_DEFAULT
 var speech_volume = SPEECH_VOLUME_DEFAULT
@@ -81,6 +84,9 @@ func load_settings():
 	if ("vlanguage" in d):
 		vlanguage = int(d.vlanguage)
 
+	if ("master_volume" in d):
+		master_volume = int(d.master_volume)
+
 	if ("music_volume" in d):
 		music_volume = int(d.music_volume)
 
@@ -104,6 +110,7 @@ func save_settings():
 		"aa_quality" : aa_quality,
 		"language" : language,
 		"vlanguage" : vlanguage,
+		"master_volume" : master_volume,
 		"music_volume" : music_volume,
 		"sound_volume" : sound_volume,
 		"speech_volume" : speech_volume
@@ -119,6 +126,10 @@ func set_volume(bus_id, level):
 	else:
 		AudioServer.set_bus_mute(bus_id, true)
 
+func set_master_volume(level):
+	master_volume = level
+	set_volume(master_bus_id, level)
+
 func set_music_volume(level):
 	music_volume = level
 	set_volume(music_bus_id, level)
@@ -133,6 +144,7 @@ func set_speech_volume(level):
 
 func _ready():
 	load_settings()
+	set_master_volume(master_volume)
 	set_music_volume(music_volume)
 	set_sound_volume(sound_volume)
 	set_speech_volume(speech_volume)

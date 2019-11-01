@@ -63,7 +63,7 @@ func _process(delta):
 			var items = inventory_panel.get_children()
 			var idx = 0
 			for item in items:
-				items[idx].get_node("LabelKey").text = "F" + str(idx + 1)
+				items[idx].get_node("ItemBox/LabelKey").text = "F" + str(idx + 1)
 				idx = idx + 1
 	# ----------------------------------
 	
@@ -101,8 +101,8 @@ func take(nam, model_path):
 	var image = load(image_file)
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
-	item.get_node("TextureRect").texture = texture
-	item.get_node("LabelDesc").text = tr(nam)
+	item.get_node("ItemBox/TextureRect").texture = texture
+	item.get_node("ItemBox/LabelDesc").text = tr(nam)
 	inventory_panel.add_child(item)
 
 func get_active_item():
@@ -135,10 +135,12 @@ func _unhandled_input(event):
 		var idx = 0
 		var target_idx = event.scancode - KEY_F1
 		for item in items:
-			var label_key = items[idx].get_node("LabelKey")
+			var label_key = items[idx].get_node("ItemBox/LabelKey")
 			if idx == target_idx:
+				item.set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
 				active_item_idx = idx
 			else:
+				item.set_selected(false)
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
 			idx = idx + 1

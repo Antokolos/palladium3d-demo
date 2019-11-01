@@ -16,6 +16,7 @@ onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolu
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
 onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
+onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVolume/MasterVolume")
 onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
 onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
@@ -141,6 +142,7 @@ func _ready():
 			language.select(0)
 	_on_VLanguage_item_selected(settings.vlanguage)
 	
+	master_volume_node.value = settings.master_volume
 	music_volume_node.value = settings.music_volume
 	sound_volume_node.value = settings.sound_volume
 	speech_volume_node.value = settings.speech_volume
@@ -341,6 +343,9 @@ func _on_Language_item_selected(ID):
 
 func _on_VLanguage_item_selected(ID):
 	settings.vlanguage = ID
+
+func _on_MasterVolume_value_changed(value):
+	settings.set_master_volume(value)
 
 func _on_MusicVolume_value_changed(value):
 	settings.set_music_volume(value)
