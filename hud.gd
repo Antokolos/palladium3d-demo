@@ -21,7 +21,7 @@ func _ready():
 	dialog.get_cancel().text = "No"
 	get_tree().set_auto_accept_quit(false)
 	for key in game_params.inventory.keys():
-		take(key, game_params.inventory[key])
+		take(key, game_params.inventory[key].model_path)
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
