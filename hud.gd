@@ -3,7 +3,7 @@ extends Control
 onready var hints = get_node("VBoxContainer/Hints")
 onready var alt_hint = get_node("ActionHintLabelAlt")
 onready var inventory = get_node("VBoxContainer/Inventory")
-onready var inventory_panel = inventory.get_node("HBoxContainer")
+onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")

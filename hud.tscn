@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -7,11 +7,13 @@
 [ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
 [ext_resource path="res://inventory.gd" type="Script" id=7]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=9]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=10]
-[ext_resource path="res://Gun_label.gd" type="Script" id=11]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=10]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=11]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
+[ext_resource path="res://Gun_label.gd" type="Script" id=13]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -36,7 +38,7 @@ corner_detail = 10
 [sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
-font_data = ExtResource( 10 )
+font_data = ExtResource( 12 )
 
 [node name="hud" type="Control"]
 anchor_right = 1.0
@@ -89,6 +91,7 @@ align = 1
 valign = 1
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
+editor/display_folded = true
 visible = false
 margin_top = 137.0
 margin_right = 1920.0
@@ -226,10 +229,82 @@ script = ExtResource( 7 )
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ArrowLeft" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 180, 206 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowLeft"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowLeft/HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Inventory/HBoxContainer/ArrowLeft/HBoxContainer/VBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+text = "Z"
+align = 1
+valign = 1
+
+[node name="InventoryContainer" type="HBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer"]
+margin_left = 184.0
+margin_right = 1736.0
+margin_bottom = 270.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 8
+
+[node name="ArrowRight" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
+margin_left = 1740.0
+margin_right = 1920.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 180, 206 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowRight"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowRight/HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Inventory/HBoxContainer/ArrowRight/HBoxContainer/VBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+text = "X"
+align = 1
+valign = 1
 
 [node name="Crosshair" type="Control" parent="."]
 editor/display_folded = true
@@ -252,7 +327,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -264,7 +339,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -277,7 +352,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -290,7 +365,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
@@ -334,7 +409,7 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 9 )
+custom_styles/panel = ExtResource( 11 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
@@ -344,7 +419,7 @@ grow_horizontal = 0
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 11 )
+script = ExtResource( 13 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -352,7 +427,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 12 )]
+[node name="tablet" parent="." instance=ExtResource( 14 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]
