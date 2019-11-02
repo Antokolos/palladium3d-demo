@@ -1,6 +1,7 @@
 extends ColorRect
 
 var need_restore = false
+var stage = 0
 
 func _ready():
 	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
@@ -24,10 +25,20 @@ func on_viewport_resize():
 	get_node("HBoxContainer/ArrowRight").set_custom_minimum_size(arrow_size)
 	if not need_restore:
 		need_restore = visible
+		stage = 0
 		hide()
 
 func _process(delta):
 	if not need_restore:
 		return
-	show()
-	need_restore = false
+	match stage:
+		0:
+			show()
+			stage = stage + 1
+		1:
+			hide()
+			stage = stage + 1
+		_:
+			show()
+			need_restore = false
+			stage = 0
