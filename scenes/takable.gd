@@ -12,7 +12,7 @@ func use(player_node):
 				var level = get_node(level_path)
 				level.get_door("door_0").close()
 				level.get_node("ceiling_moving_1").activate()
-				conversation_manager.start_conversation(player_node, get_node(game_params.companion_path), "ApataTrap")
+				conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
 				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 			game_params.ApataTrapStages.GOING_DOWN:
 				pass
@@ -23,7 +23,7 @@ func use(player_node):
 		level.get_door("door_5").activate()
 		level.get_door("door_8").activate()
 	
-	player_node.take(item_name, model_path)
+	player_node.take(item_name, item_name + ".png", model_path)
 	
 	if item_in_parent:
 		get_parent().queue_free()

@@ -16,5 +16,4 @@ glow_levels/2 = true
 glow_levels/5 = false
 glow_intensity = 1.0
 glow_strength = 1.1
-glow_bloom = 0.7
 glow_hdr_threshold = 0.2

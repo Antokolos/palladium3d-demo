@@ -256,7 +256,7 @@ func display_choices(story, conversation, choices):
 	max_choice = choices.size()
 
 func _on_AudioStreamPlayer_finished():
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	if in_choice:
 		story_proceed(player)
 	elif StoryNode.CanChoose():
@@ -265,5 +265,5 @@ func _on_AudioStreamPlayer_finished():
 			$ShortPhraseTimer.start()
 
 func _on_ShortPhraseTimer_timeout():
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	story_choose(player, 0)

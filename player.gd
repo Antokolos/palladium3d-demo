@@ -94,7 +94,7 @@ func follow(current_transform, target_position):
 
 	# Angle to player
 	var current_position = current_transform.origin
-	var player_position = get_node(game_params.player_path).get_global_transform().origin
+	var player_position = game_params.get_player().get_global_transform().origin
 	var mov_vec = player_position - current_position
 	mov_vec.y = 0
 	var rotation_angle_to_player_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
@@ -147,7 +147,7 @@ func get_navpath(pstart, pend):
 func build_path():
 	var current_transform = get_global_transform()
 	var current_position = current_transform.origin
-	var player_position = get_node(game_params.player_path).get_global_transform().origin
+	var player_position = game_params.get_player().get_global_transform().origin
 	var mov_vec = player_position - current_position
 	mov_vec.y = 0
 	if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
@@ -162,7 +162,7 @@ func build_path():
 		path.pop_back()
 	if is_on_wall() and path.empty(): # should check possible stuck
 		#clear_path()
-		path = get_navpath(get_global_transform().origin, get_node(game_params.player_path).get_global_transform().origin)
+		path = get_navpath(get_global_transform().origin, game_params.get_player().get_global_transform().origin)
 		#draw_path()
 
 func draw_path():
@@ -239,14 +239,12 @@ func remove_highlight(player_node):
 #####
 
 func is_player():
-	var pl_path = game_params.player_path
-	var pl_node = get_node(pl_path) if pl_path else null
-	return pl_node == self
+	return game_params.get_player() == self
 
 func become_player():
 	if is_player():
 		return
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	var hud_container = get_hud_holder()
 	var player_hud_container = player.get_hud_holder()
 	var hud = player_hud_container.get_child(0)
@@ -293,7 +291,7 @@ func _physics_process(delta):
 	if is_player():
 		process_input(delta)
 	else:
-		var player = get_node(game_params.player_path)
+		var player = game_params.get_player()
 		if not player:
 			return
 		var current_transform = get_global_transform()
@@ -464,11 +462,11 @@ func set_sound_walk(mode):
 	stream.data = bytes
 	spl.stream = stream
 
-func take(nam, model_path):
+func take(nam, item_image, model_path):
+	game_params.take(nam, item_image, model_path)
 	var hud = get_hud()
 	if hud:
-		hud.take(nam, model_path)
-		game_params.take(nam, model_path)
+		hud.synchronize_items()
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

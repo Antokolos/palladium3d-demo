@@ -32,7 +32,7 @@ func _on_AudioStreamLighter_finished():
 func _physics_process(delta):
 	if not torch_light.visible:
 		return
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	if player:
 		raycast.cast_to = raycast.to_local(player.get_global_transform().origin)
 		self.visible = persistent or raycast.cast_to.x < 0

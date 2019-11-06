@@ -34,7 +34,7 @@ func _on_resolution_changed():
 
 func _process(delta):
 	if active:
-		var player = get_node(game_params.player_path)
+		var player = game_params.get_player()
 		persp(player)
 
 func persp(player):
@@ -94,13 +94,13 @@ func deactivate():
 func _on_Area_body_entered(body):
 	if active:
 		return
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	if body == player:
 		activate()
 
 func _on_Area_body_exited(body):
 	if not active:
 		return
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	if body == player:
 		deactivate()

@@ -7,5 +7,5 @@ func execute_action(key_code, item):
 	match key_code:
 		KEY_R:
 			item.remove()
-			var player = get_node(game_params.player_path)
+			var player = game_params.get_player()
 			conversation_manager.start_conversation(player, player, "BunEaten")

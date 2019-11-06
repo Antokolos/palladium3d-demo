@@ -13,9 +13,9 @@ var story_vars = {
 "hope_on_pedestal" : false,
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
-var inventory = {
-	"saffron_bun" : { "model_path" : "res://scenes/bun.tscn" }
-}
+var inventory = [
+	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1 }
+]
 var music = {}
 var current_music = null
 var is_loop = {
@@ -28,6 +28,12 @@ func _ready():
 	add_music("loading.ogg")
 	add_music("underwater.ogg")
 	add_music("sinkingisland.ogg")
+
+func get_player():
+	return get_node(player_path) if player_path else null
+
+func get_companion():
+	return get_node(companion_path) if companion_path else null
 
 func is_inside():
 	return scene_path == "res://palladium.tscn"
@@ -81,11 +87,22 @@ func change_music_to(music_file_name):
 func stop_music():
 	$MusicPlayer.stop()
 
-func take(nam, model_path):
-	inventory[nam] = { "model_path" : model_path }
+func take(nam, item_image, model_path):
+	for item in inventory:
+		if nam == item.nam:
+			item.count = item.count + 1
+			return
+	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1 })
 
-func remove(nam):
-	inventory.erase(nam)
+func remove(nam, count = 1):
+	var idx = 0
+	for item in inventory:
+		if nam == item.nam:
+			item.count = item.count - count
+			if item.count <= 0:
+				inventory.remove(idx)
+			return
+		idx = idx + 1
 
 func load_params(slot):
 	var player = get_node(player_path)

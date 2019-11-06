@@ -4,6 +4,7 @@ const BORDER_COLOR = Color(0, 1, 1, 1)
 const TRANSPARENT_COLOR = Color(0, 1, 1, 0)
 
 var nam = null
+var item_image = null
 var model_path = null
 
 func _ready():
@@ -11,16 +12,18 @@ func _ready():
 	on_viewport_resize()
 
 func get_control_sizes(viewport_size):
-	match int(viewport_size.y):
-		576:
-			return [Vector2(121, 121), Vector2(69, 69)]
-		720:
-			return [Vector2(146, 146), Vector2(94, 94)]
-		1080:
-			return [Vector2(206, 206), Vector2(154, 154)]
-		_:
-			var multiplier = viewport_size.y / 1080.0
-			return [Vector2(206 * multiplier, 206 * multiplier), Vector2(154 * multiplier, 154 * multiplier)]
+	var multiplier = viewport_size.y / 576.0
+	return [Vector2(125 * multiplier, 125 * multiplier), Vector2(69 * multiplier, 69 * multiplier)]
+#	match int(viewport_size.y):
+#		576:
+#			return [Vector2(121, 121), Vector2(69, 69)]
+#		720:
+#			return [Vector2(146, 146), Vector2(94, 94)]
+#		1080:
+#			return [Vector2(206, 206), Vector2(154, 154)]
+#		_:
+#			var multiplier = viewport_size.y / 576.0
+#			return [Vector2(121 * multiplier, 121 * multiplier), Vector2(69 * multiplier, 69 * multiplier)]
 
 func set_selected(selected):
 	var panel = get("custom_styles/panel")

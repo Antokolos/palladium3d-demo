@@ -20,7 +20,7 @@ func can_move_without_collision(motion):
 	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
-	var player = get_node(game_params.player_path)
+	var player = game_params.get_player()
 	if not player:
 		return
 	var current_transform = get_global_transform()
