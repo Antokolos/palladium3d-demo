@@ -42,7 +42,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_normal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", false)
-			flashlight.set("shadow_enabled", false)
+			if flashlight:
+				flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_OPT:
 			self.environment = env_opt
@@ -53,7 +54,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_optimal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", false)
-			flashlight.set("shadow_enabled", false)
+			if flashlight:
+				flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_GOOD:
 			self.environment = env_good
@@ -64,7 +66,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_good")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", true)
-			flashlight.set("shadow_enabled", false)
+			if flashlight:
+				flashlight.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_HIGH:
 			self.environment = env_high
@@ -75,10 +78,12 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_high")
 			get_tree().call_group("moving", "shadow_casting_enable", true)
 			get_tree().call_group("trees", "wind_effect_enable", true)
-			flashlight.set("shadow_enabled", true)
+			if flashlight:
+				flashlight.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
 	set_inside(game_params.is_inside())
-	shader_cache.refresh()
+	if shader_cache:
+		shader_cache.refresh()
 
 func set_inside(inside):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
@@ -88,12 +93,13 @@ func set_inside(inside):
 	environment.set("ambient_light_energy", 0.04 if inside else 0.4)
 
 func change_culling():
-	self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
+	if culling_rays:
+		self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
 
 func _process(delta):
 	# ----------------------------------
 	# Turning the flashlight on/off
-	if Input.is_action_just_pressed("flashlight"):
+	if flashlight and Input.is_action_just_pressed("flashlight"):
 		if flashlight.is_visible_in_tree():
 			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
@@ -102,20 +108,25 @@ func _process(delta):
 			flashlight.show()
 	# ----------------------------------
 	
-	var player = get_node("../../..")
-	use_point.highlight(player)
+	if use_point:
+		var player = get_node("../../..")
+		use_point.highlight(player)
 	change_culling()
 
 func _input(event):
 	if event.is_action_pressed("action"):
 		var player = get_node("../../..")
-		use_point.action(player)
+		if player:
+			use_point.action(player)
 
 func _unhandled_input(event):
 	var is_key = event is InputEventKey and event.is_pressed()
 	if not is_key:
 		return
-	var hud = get_node("../../..").get_hud()
+	var player = get_node("../../..")
+	if not player:
+		return
+	var hud = player.get_hud()
 	if hud.inventory.visible:
 		if event.scancode != KEY_Q:
 			return
