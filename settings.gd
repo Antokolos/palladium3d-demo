@@ -48,6 +48,36 @@ var music_volume = MUSIC_VOLUME_DEFAULT
 var sound_volume = SOUND_VOLUME_DEFAULT
 var speech_volume = SPEECH_VOLUME_DEFAULT
 
+var available_resolutions = [
+{
+	"resolution_height" : 576,
+	"default_font" : 14,
+	"text_separation" : 3,
+	"actorname_prev_font" : 10,
+	"conversation_prev_font" : 10,
+	"actorname_font" : 16,
+	"conversation_font" : 16
+},
+{
+	"resolution_height" : 720,
+	"default_font" : 18,
+	"text_separation" : 10,
+	"actorname_prev_font" : 14,
+	"conversation_prev_font" : 14,
+	"actorname_font" : 20,
+	"conversation_font" : 20
+},
+{
+	"resolution_height" : 1080,
+	"default_font" : 26,
+	"text_separation" : 30,
+	"actorname_prev_font" : 20,
+	"conversation_prev_font" : 20,
+	"actorname_font" : 30,
+	"conversation_font" : 30
+}
+]
+
 func load_settings():
 	var f = File.new()
 	var error = f.open("user://settings.json", File.READ)
@@ -142,9 +172,32 @@ func set_speech_volume(level):
 	speech_volume = level
 	set_volume(speech_bus_id, level)
 
+func set_vsync(vs):
+	OS.set_use_vsync(vs)
+	vsync = vs
+
+func set_fullscreen(fs):
+	OS.set_window_fullscreen(fs)
+	fullscreen = fs
+
+func set_resolution(ID):
+	var maxid = available_resolutions.size() - 1
+	if ID > maxid:
+		var ssize = OS.get_screen_size()
+		get_tree().get_root().set_size_override(true, ssize)
+		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, ssize)
+	else:
+		var minsize=Vector2( OS.window_size.x * available_resolutions[ID].resolution_height / OS.window_size.y, available_resolutions[ID].resolution_height)
+		get_tree().get_root().set_size_override(true, minsize)
+		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
+	resolution = ID
+
 func _ready():
 	load_settings()
 	set_master_volume(master_volume)
 	set_music_volume(music_volume)
 	set_sound_volume(sound_volume)
 	set_speech_volume(speech_volume)
+	set_vsync(vsync)
+	set_fullscreen(fullscreen)
+	set_resolution(resolution)

@@ -8,15 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "MenuItem",
+"language": "GDScript",
+"path": "res://menu_item.gd"
+} ]
 _global_script_class_icons={
-
+"MenuItem": ""
 }
 
 [application]
 
 config/name="palladium"
-run/main_scene="res://scene_loader.tscn"
+run/main_scene="res://main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="palladium"
 config/project_settings_override="user://settings.ini"

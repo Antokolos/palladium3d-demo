@@ -1,110 +1,180 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=33 format=2]
 
-[ext_resource path="res://scenes/menu_floor.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/menu_postament_flat.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/menu_vase_octopus_1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/menu_vase_octopus_2.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/our_games.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/our_games_rus.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/menu_postament_new_game.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/menu_statue.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/new_game.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/new_game_rus.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/menu_rat_exit.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/exit.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/exit_rus.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/menu_vase_credits.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/credits.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/credits_rus.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/menu_chest.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/load_rus.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/load_game.tscn" type="PackedScene" id=19]
-[ext_resource path="res://torch_full.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/settings.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/settings_rus.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/menu_spider.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/menu_spider.gd" type="Script" id=24]
-[ext_resource path="res://rat.tscn" type="PackedScene" id=25]
-[ext_resource path="res://camera.gd" type="Script" id=26]
+[ext_resource path="res://main_menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/menu_floor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/menu_postament_flat.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/menu_vase_octopus_1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/menu_vase_octopus_2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/our_games.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/our_games_rus.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/menu_postament_new_game.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/menu_statue.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/new_game.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/new_game_rus.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/menu_rat_exit.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/exit.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/exit_rus.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/menu_vase_credits.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/credits.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/credits_rus.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/menu_chest.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/load_rus.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/load_game.tscn" type="PackedScene" id=20]
+[ext_resource path="res://torch_full.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/settings.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/settings_rus.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/menu_spider.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/menu_spider.gd" type="Script" id=25]
+[ext_resource path="res://rat.tscn" type="PackedScene" id=26]
+[ext_resource path="res://camera.gd" type="Script" id=27]
+[ext_resource path="res://assets/fonts/Forum-Regular.ttf" type="DynamicFontData" id=28]
+[ext_resource path="res://default_theme.tres" type="Theme" id=29]
+[ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=30]
+
+[sub_resource type="DynamicFont" id=1]
+size = 92
+extra_spacing_bottom = -20
+font_data = ExtResource( 28 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+extra_spacing_char = 8
+font_data = ExtResource( 28 )
 
 [node name="main_menu" type="Spatial"]
+script = ExtResource( 1 )
 
-[node name="menu_floor" parent="." instance=ExtResource( 1 )]
+[node name="menu_floor" parent="." instance=ExtResource( 2 )]
 
-[node name="menu_postament_flat" parent="." instance=ExtResource( 2 )]
+[node name="menu_postament_flat" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36987, 1.40064, -2.6662 )
 
-[node name="menu_vase_octopus_1" parent="menu_postament_flat" instance=ExtResource( 3 )]
+[node name="menu_vase_octopus_1" parent="menu_postament_flat" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0656885, 0.0529861 )
+visible = false
 
-[node name="menu_vase_octopus_2" parent="menu_postament_flat" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0656885, 0.0529861 )
+[node name="menu_vase_octopus_2" parent="menu_postament_flat" instance=ExtResource( 5 )]
+transform = Transform( 0.999848, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 0.0656885, 0.0529861 )
 
-[node name="our_games" parent="menu_postament_flat" instance=ExtResource( 5 )]
+[node name="our_games" parent="menu_postament_flat" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0636023, 0 )
 
-[node name="our_games_rus" parent="menu_postament_flat" instance=ExtResource( 6 )]
+[node name="our_games_rus" parent="menu_postament_flat" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0571499, 0 )
 
-[node name="menu_postament_new_game" parent="." instance=ExtResource( 7 )]
+[node name="SpotLight" type="SpotLight" parent="menu_postament_flat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.624441, 1.21925 )
+visible = false
+light_color = Color( 1, 0.913725, 0.768627, 1 )
+spot_range = 1.46786
+spot_angle = 36.8701
+
+[node name="menu_postament_new_game" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9463, 1.14733, -0.789663 )
 
-[node name="menu_statue" parent="menu_postament_new_game" instance=ExtResource( 8 )]
+[node name="menu_statue" parent="menu_postament_new_game" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0205593, 1.19596, 0.551479 )
 
-[node name="new_game" parent="menu_postament_new_game" instance=ExtResource( 9 )]
+[node name="new_game" parent="menu_postament_new_game" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179145, 0.504949 )
 
-[node name="new_game_rus" parent="menu_postament_new_game" instance=ExtResource( 10 )]
+[node name="new_game_rus" parent="menu_postament_new_game" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.201352, 0.49617 )
 
-[node name="menu_rat_exit" parent="." instance=ExtResource( 11 )]
+[node name="SpotLight" type="SpotLight" parent="menu_postament_new_game"]
+transform = Transform( 1, 0, 0, 0, 0.210349, 0.977626, 0, -0.977626, 0.210349, -0.00861812, 2.83623, 0.856224 )
+visible = false
+light_color = Color( 1, 0.913725, 0.768627, 1 )
+light_energy = 0.7
+spot_range = 2.70743
+spot_angle = 18.9608
+
+[node name="menu_rat_exit" parent="." instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.534654, 1.17227, -8.62621 )
 
-[node name="exit" parent="menu_rat_exit" instance=ExtResource( 12 )]
+[node name="exit" parent="menu_rat_exit" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.211868, 0.94651, 4.11028 )
 
-[node name="exit_rus" parent="menu_rat_exit" instance=ExtResource( 13 )]
+[node name="exit_rus" parent="menu_rat_exit" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.287394, 0.953081, 4.10797 )
 
-[node name="menu_vase_credits" parent="." instance=ExtResource( 14 )]
+[node name="menu_vase_credits" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.748762, 1.17695, -0.823688 )
 
-[node name="credits" parent="menu_vase_credits" instance=ExtResource( 15 )]
+[node name="credits" parent="menu_vase_credits" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308621, 0 )
 
-[node name="credits_rus" parent="menu_vase_credits" instance=ExtResource( 16 )]
+[node name="credits_rus" parent="menu_vase_credits" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.302101, 0 )
 
-[node name="menu_chest" parent="." instance=ExtResource( 17 )]
+[node name="menu_chest" parent="." instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79263, 1.21059, -1.79258 )
 
-[node name="load_rus" parent="menu_chest" instance=ExtResource( 18 )]
+[node name="load_rus" parent="menu_chest" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573952, 0.576237, 0.574753 )
 
-[node name="load_game" parent="menu_chest" instance=ExtResource( 19 )]
+[node name="load_game" parent="menu_chest" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.587911, 0.569134, 0.766794 )
 
-[node name="torch_full" parent="." instance=ExtResource( 20 )]
+[node name="torch_full" parent="." instance=ExtResource( 21 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -1.09862, 2.83154, -4.66698 )
 
-[node name="torch_full2" parent="." instance=ExtResource( 20 )]
+[node name="torch_full2" parent="." instance=ExtResource( 21 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.24419, 2.83154, -4.66698 )
 
-[node name="settings" parent="." instance=ExtResource( 21 )]
+[node name="settings" parent="." instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39638, 2.75542, -4.55224 )
+sfx_player_over_path = "../SFXOver"
 
-[node name="settings_rus" parent="." instance=ExtResource( 22 )]
+[node name="settings_rus" parent="." instance=ExtResource( 23 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61211, 2.74432, -4.54793 )
+sfx_player_over_path = "../SFXOver"
 
-[node name="menu_spider" parent="." instance=ExtResource( 23 )]
+[node name="menu_spider" parent="." instance=ExtResource( 24 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0767672, -0.027156, -0.42101 )
-script = ExtResource( 24 )
+script = ExtResource( 25 )
 
-[node name="rat" parent="." instance=ExtResource( 25 )]
+[node name="rat" parent="." instance=ExtResource( 26 )]
 transform = Transform( -0.447965, 0, -0.894051, 0, 1, 0, 0.894051, 0, -0.447965, -0.5236, 1.35378, -4.94844 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.906308, -0.144544, 0.397131, 0, 0.939693, 0.34202, -0.422618, -0.309976, 0.851651, 0.174137, 4.26169, 4.0748 )
 fov = 33.0
-script = ExtResource( 26 )
+script = ExtResource( 27 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera"]
+margin_left = 10.0
+margin_right = 381.0
+margin_bottom = 89.0
+
+[node name="LabelGameName" type="Label" parent="Camera/VBoxContainer"]
+margin_right = 440.0
+margin_bottom = 82.0
+custom_fonts/font = SubResource( 1 )
+text = "PALLADIUM"
+
+[node name="LabelGameSubname" type="Label" parent="Camera/VBoxContainer"]
+margin_top = 86.0
+margin_right = 440.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 2 )
+text = "ADVENTURE IN GREECE"
+
+[node name="LabelVersion" type="Label" parent="Camera"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource( 29 )
+text = "v. 1.0"
+align = 2
+valign = 2
+
+[node name="SFXOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 30 )
+volume_db = -27.0
+bus = "Sound"

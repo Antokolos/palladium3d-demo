@@ -30,9 +30,9 @@ func _integrate_forces(state):
 	var l = dir.length()
 	state.set_linear_velocity(zero_dir)
 	if not retreating and l > SAFE_RANGE:
-		rat.rest()
+		rest()
 	elif not retreating and l > SNIFF_RANGE:
-		rat.rest_sniff()
+		rest_sniff()
 	elif not retreating and l > WARN_RANGE:
 		rat.sits_sniff()
 	elif retreating or l > RETREAT_RANGE:
@@ -53,6 +53,12 @@ func _integrate_forces(state):
 			queue_free()
 		state.set_linear_velocity(run_dir)
 	state.set_angular_velocity(zero_dir)
+
+func rest():
+	rat.rest()
+
+func rest_sniff():
+	rat.rest_sniff()
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

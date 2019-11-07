@@ -80,9 +80,10 @@ func add_music(music_file):
 	return music[music_file]
 
 func change_music_to(music_file_name):
-	current_music = music_file_name
-	$MusicPlayer.stream = music[music_file_name]
-	$MusicPlayer.play()
+	if current_music != music_file_name:
+		current_music = music_file_name
+		$MusicPlayer.stream = music[music_file_name]
+		$MusicPlayer.play()
 
 func stop_music():
 	$MusicPlayer.stop()

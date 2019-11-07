@@ -15,6 +15,14 @@ func enable(enable):
 		flames.restart()
 		smoke.restart()
 
+func decrease_flame():
+	flames.lifetime = 0.2
+	smoke.lifetime = 0.3
+
+func restore_flame():
+	flames.lifetime = 0.5
+	smoke.lifetime = 0.6
+
 func set_quality_normal():
 	flames.set_amount(8)
 	smoke.set_amount(4)

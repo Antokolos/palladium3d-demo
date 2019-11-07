@@ -3,6 +3,7 @@ extends Light
 var flicker = true
 var moving = true
 var prev_translate = null
+var max_light = 1.0
 
 var translate_step = 0
 const TRANSLATE_STEPS_MAX = 15
@@ -12,6 +13,14 @@ func _ready():
 
 func enable(enable):
 	visible = enable
+
+func decrease_light():
+	max_light = 0.5
+	light_energy = max_light
+
+func restore_light():
+	max_light = 1.0
+	light_energy = max_light
 
 func set_quality_normal():
 	set_shadow(false)
@@ -35,7 +44,7 @@ func set_quality_high():
 
 func _process(delta):
 	if flicker:
-		light_energy = rand_range(0.92, 1.0)
+		light_energy = rand_range(0.92 * max_light, max_light)
 	if moving:
 		if not prev_translate or translate_step >= TRANSLATE_STEPS_MAX:
 			if prev_translate:

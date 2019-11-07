@@ -7,7 +7,7 @@ input_count = 2
 input_0/name = "idle"
 input_0/auto_advance = false
 input_1/name = "run"
-input_1/auto_advance = false
+input_1/auto_advance = true
 
 [sub_resource type="AnimationNodeAnimation" id=2]
 animation = "spider_walk"
@@ -26,10 +26,10 @@ nodes/run/node = SubResource( 3 )
 nodes/run/position = Vector2( 71, 215.5 )
 node_connections = [ "output", 0, "Transition", "Transition", 0, "idle", "Transition", 1, "run" ]
 
-[node name="menu_spider" instance=ExtResource( 1 )]
+[node name="menu_spider" index="0" instance=ExtResource( 1 )]
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 4 )
 anim_player = NodePath("../speder_small_armature/AnimationPlayer")
 active = true
-parameters/Transition/current = 1
+parameters/Transition/current = 0
