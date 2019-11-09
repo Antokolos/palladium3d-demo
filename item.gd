@@ -1,5 +1,7 @@
 extends PanelContainer
 
+signal item_removed(item)
+
 const BORDER_COLOR = Color(0, 1, 1, 1)
 const TRANSPARENT_COLOR = Color(0, 1, 1, 0)
 
@@ -11,19 +13,27 @@ func _ready():
 	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
 	on_viewport_resize()
 
+func set_item_data(item_data):
+	self.nam = item_data.nam
+	self.item_image = item_data.item_image
+	self.model_path = item_data.model_path
+	var image_file = "res://assets/items/%s" % item_image
+	var image = load(image_file)
+	var texture = ImageTexture.new()
+	texture.create_from_image(image)
+	get_node("ItemBox/TextureRect").texture = texture
+	get_node("ItemBox/LabelDesc").text = tr(nam)
+
+func clear_item():
+	self.nam = null
+	self.item_image = null
+	self.model_path = null
+	get_node("ItemBox/TextureRect").texture = null
+	get_node("ItemBox/LabelDesc").text = ""
+
 func get_control_sizes(viewport_size):
 	var multiplier = viewport_size.y / 576.0
 	return [Vector2(125 * multiplier, 125 * multiplier), Vector2(69 * multiplier, 69 * multiplier)]
-#	match int(viewport_size.y):
-#		576:
-#			return [Vector2(121, 121), Vector2(69, 69)]
-#		720:
-#			return [Vector2(146, 146), Vector2(94, 94)]
-#		1080:
-#			return [Vector2(206, 206), Vector2(154, 154)]
-#		_:
-#			var multiplier = viewport_size.y / 576.0
-#			return [Vector2(121 * multiplier, 121 * multiplier), Vector2(69 * multiplier, 69 * multiplier)]
 
 func set_selected(selected):
 	var panel = get("custom_styles/panel")
@@ -55,4 +65,4 @@ func get_model_instance():
 
 func remove():
 	game_params.remove(nam)
-	self.queue_free()
+	emit_signal("item_removed", self)

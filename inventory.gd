@@ -23,6 +23,9 @@ func on_viewport_resize():
 	var arrow_size = get_arrow_size(get_viewport_rect().size)
 	get_node("HBoxContainer/ArrowLeft").set_custom_minimum_size(arrow_size)
 	get_node("HBoxContainer/ArrowRight").set_custom_minimum_size(arrow_size)
+	mark_restore()
+
+func mark_restore():
 	if not need_restore:
 		need_restore = visible
 		stage = 0

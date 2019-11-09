@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -8,116 +8,37 @@
 [ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
 [ext_resource path="res://inventory.gd" type="Script" id=7]
 [ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=8]
-[ext_resource path="res://item.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=10]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=11]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=12]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=13]
-[ext_resource path="res://Gun_label.gd" type="Script" id=14]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=10]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=11]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
+[ext_resource path="res://Gun_label.gd" type="Script" id=13]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=2]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=3]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=4]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=5]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=6]
-resource_local_to_scene = true
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 1, 0, 0, 0 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=7]
 corner_radius_bottom_right = 90
 corner_detail = 10
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.158587, 0.106689, 0.179688, 1 )
 border_color = Color( 0.277183, 0.201141, 0.304688, 1 )
 corner_radius_bottom_right = 80
 corner_detail = 10
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=3]
 corner_radius_top_left = 90
 corner_detail = 10
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.156863, 0.105882, 0.176471, 1 )
 corner_radius_top_left = 80
 corner_detail = 10
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
-font_data = ExtResource( 13 )
+font_data = ExtResource( 12 )
 
 [node name="hud" type="Control"]
 anchor_right = 1.0
@@ -298,7 +219,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 visible = false
 margin_right = 1920.0
 margin_bottom = 270.0
@@ -315,6 +235,7 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="ArrowLeft" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
+editor/display_folded = true
 margin_right = 180.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 180, 206 )
@@ -355,24 +276,6 @@ size_flags_vertical = 3
 custom_constants/separation = 8
 alignment = 1
 
-[node name="item1" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 1 )
-
-[node name="item2" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 2 )
-
-[node name="item3" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 3 )
-
-[node name="item4" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 4 )
-
-[node name="item5" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 5 )
-
-[node name="item6" parent="VBoxContainer/Inventory/HBoxContainer/InventoryContainer" instance=ExtResource( 9 )]
-custom_styles/panel = SubResource( 6 )
-
 [node name="ArrowRight" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_left = 1740.0
 margin_right = 1920.0
@@ -380,7 +283,7 @@ margin_bottom = 270.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 10 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 
@@ -427,7 +330,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -439,7 +342,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -452,7 +355,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -465,20 +368,20 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
 modulate = Color( 1, 1, 1, 0.705882 )
 margin_right = 190.0
 margin_bottom = 90.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="Stats_border" type="Panel" parent="Stats"]
 modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
 margin_right = 180.0
 margin_bottom = 80.0
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Indicators" type="Panel" parent="."]
 modulate = Color( 1, 1, 1, 0.705882 )
@@ -488,7 +391,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -190.0
 margin_top = -90.0
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="Indicators_border" type="Panel" parent="Indicators"]
 modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
@@ -498,7 +401,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -180.0
 margin_top = -80.0
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 4 )
 
 [node name="IndicatorCrouch" type="Panel" parent="Indicators/Indicators_border"]
 anchor_left = 1.0
@@ -509,17 +412,17 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 12 )
+custom_styles/panel = ExtResource( 11 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 14 )
+script = ExtResource( 13 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -527,7 +430,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 15 )]
+[node name="tablet" parent="." instance=ExtResource( 14 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]

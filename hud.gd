@@ -12,9 +12,9 @@ onready var indicator_crouch = get_node("Indicators/Indicators_border/IndicatorC
 onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
-const MAX_VISIBLE_ITEMS = 3
+const MAX_VISIBLE_ITEMS = 6
 
-var active_item_idx = -1
+var active_item_idx = 0
 var first_item_idx = 0
 
 func _ready():
@@ -55,20 +55,15 @@ func _process(delta):
 	# ----------------------------------
 	# Inventory on/off
 	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
-		active_item_idx = -1
 		if inventory.visible:
 			inventory.visible = false
 			hints.visible = true
 		else:
 			inventory.visible = true
 			hints.visible = false
-			var items = inventory_panel.get_children()
-			var idx = 0
-			for item in items:
-				if items[idx].nam:
-					items[idx].get_node("ItemBox/LabelKey").text = "F" + str(idx + 1)
-				idx = idx + 1
 	# ----------------------------------
+	
+	select_active_item()
 	
 	# ----------------------------------
 	# Capturing/Freeing the cursor
@@ -97,38 +92,41 @@ func set_crouch_indicator(crouch):
 	indicator_crouch.set("custom_styles/panel", tex_crouch_on if crouch else tex_crouch_off)
 
 func synchronize_items():
-	var idx = 0
 	var ui_items = inventory_panel.get_children()
 	for ui_item in ui_items:
-		var i = first_item_idx + idx
-		if i >= 0 and i < game_params.inventory.size():
-			var item = game_params.inventory[i]
-			set_item_data(ui_item, item.nam, item.item_image, item.model_path)
-		idx = idx + 1
+		ui_item.queue_free()
+	for pos in range(0, MAX_VISIBLE_ITEMS):
+		insert_ui_item(pos, false)
+	inventory.mark_restore()
 
-func set_item_data(ui_item, nam, item_image, model_path):
-	ui_item.nam = nam
-	ui_item.item_image = item_image
-	ui_item.model_path = model_path
-	var image_file = "res://assets/items/%s" % ui_item.item_image
-	var image = load(image_file)
-	var texture = ImageTexture.new()
-	texture.create_from_image(image)
-	ui_item.get_node("ItemBox/TextureRect").texture = texture
-	ui_item.get_node("ItemBox/LabelDesc").text = tr(nam)
+func insert_ui_item(pos, add_as_first):
+	var new_item = load("res://item.tscn").instance()
+	new_item.connect("item_removed", self, "remove_ui_item", [true])
+	var i = first_item_idx + pos
+	if i >= 0 and i < game_params.inventory.size():
+		new_item.set_item_data(game_params.inventory[i])
+	inventory_panel.add_child(new_item)
+	if add_as_first:
+		inventory_panel.move_child(new_item, 0)
+
+func remove_ui_item(ui_item, reset_idx):
+	ui_item.queue_free()
+	insert_ui_item(MAX_VISIBLE_ITEMS - 1, false)
+	if reset_idx:
+		active_item_idx = 0
 
 func shift_items_left():
 	if first_item_idx < game_params.inventory.size() - MAX_VISIBLE_ITEMS:
 		first_item_idx = first_item_idx + 1
-		synchronize_items()
+		remove_ui_item(inventory_panel.get_child(0), false)
 
 func shift_items_right():
 	if first_item_idx > 0:
 		first_item_idx = first_item_idx - 1
-		synchronize_items()
+		inventory_panel.get_child(MAX_VISIBLE_ITEMS - 1).queue_free()
+		insert_ui_item(0, true)
 
-func select_item(target_idx):
-	active_item_idx = -1
+func select_active_item():
 	var items = inventory_panel.get_children()
 	if items.empty():
 		return
@@ -136,17 +134,26 @@ func select_item(target_idx):
 	for item in items:
 		if items[idx].nam:
 			var label_key = items[idx].get_node("ItemBox/LabelKey")
-			if idx == target_idx:
+			label_key.text = "F" + str(idx + 1)
+			if idx == active_item_idx:
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
-				active_item_idx = idx
 			else:
 				items[idx].set_selected(false)
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
 		idx = idx + 1
 
+func is_valid_index(item_idx):
+	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
+
+func set_active_item(item_idx):
+	var valid = is_valid_index(item_idx)
+	if valid:
+		active_item_idx = item_idx
+	return valid
+
 func get_active_item():
-	return inventory_panel.get_child(active_item_idx) if active_item_idx >= 0 and active_item_idx < MAX_VISIBLE_ITEMS else null
+	return inventory_panel.get_child(active_item_idx) if is_valid_index(active_item_idx) else null
 
 func _on_QuitDialog_confirmed():
 	get_tree().quit()
@@ -161,17 +168,13 @@ func _on_QuitDialog_popup_hide():
 func _unhandled_input(event):
 	if inventory.is_visible_in_tree() and event is InputEventKey and event.is_pressed():
 		if event.scancode == KEY_Z:
-			if active_item_idx > 0:
-				select_item(active_item_idx - 1)
-			else:
+			if not set_active_item(active_item_idx - 1):
 				shift_items_right()
 			return
 		if event.scancode == KEY_X:
-			if active_item_idx < MAX_VISIBLE_ITEMS - 1:
-				select_item(active_item_idx + 1)
-			else:
+			if not set_active_item(active_item_idx + 1):
 				shift_items_left()
 			return
 		if event.scancode < KEY_F1 or event.scancode > KEY_F6:
 			return
-		select_item(event.scancode - KEY_F1)
+		set_active_item(event.scancode - KEY_F1)
