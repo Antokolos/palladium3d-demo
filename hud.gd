@@ -18,12 +18,38 @@ var active_item_idx = 0
 var first_item_idx = 0
 
 func _ready():
+	settings.connect("resolution_changed", self, "on_resolution_changed")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"
 	dialog.get_cancel().text = "No"
 	get_tree().set_auto_accept_quit(false)
 	synchronize_items()
+
+func on_resolution_changed(ID):
+	var hud = self
+	var default_font = hud.get_theme().get_default_font()
+	var conversation_root = hud.get_conversation_root()
+	var actorname_prev_font = hud.get_actorname_prev().get("custom_fonts/font")
+	var conversation_prev_font = hud.get_conversation_text_prev().get("custom_fonts/font")
+	var actorname_font = hud.get_actorname().get("custom_fonts/font")
+	var conversation_font = hud.get_conversation_text().get("custom_fonts/font")
+	var maxid = settings.available_resolutions.size() - 1
+	if ID > maxid:
+		# TODO: maybe upscale font size for native resolution?
+		default_font.set_size(settings.available_resolutions[maxid].default_font)
+		actorname_prev_font.set_size(settings.available_resolutions[maxid].actorname_prev_font)
+		conversation_prev_font.set_size(settings.available_resolutions[maxid].conversation_prev_font)
+		actorname_font.set_size(settings.available_resolutions[maxid].actorname_font)
+		conversation_font.set_size(settings.available_resolutions[maxid].conversation_font)
+		conversation_root.set("custom_constants/separation", settings.available_resolutions[maxid].text_separation)
+	else:
+		default_font.set_size(settings.available_resolutions[ID].default_font)
+		actorname_prev_font.set_size(settings.available_resolutions[ID].actorname_prev_font)
+		conversation_prev_font.set_size(settings.available_resolutions[ID].conversation_prev_font)
+		actorname_font.set_size(settings.available_resolutions[ID].actorname_font)
+		conversation_font.set_size(settings.available_resolutions[ID].conversation_font)
+		conversation_root.set("custom_constants/separation", settings.available_resolutions[ID].text_separation)
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.647159, 0.178701, 0.148413 )
 
-[node name="new_game" index="0" instance=ExtResource( 1 )]
+[node name="new_game" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]

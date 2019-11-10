@@ -274,9 +274,11 @@ func _ready():
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
 		var hud_container = get_hud_holder()
-		hud_container.add_child(load("res://hud.tscn").instance())
+		var hud = load("res://hud.tscn").instance()
+		hud_container.add_child(hud)
 		var camera_container = get_node("Rotation_Helper/Camera")
-		camera_container.add_child(load("res://camera.tscn").instance())
+		var camera = load("res://camera.tscn").instance()
+		camera_container.add_child(camera)
 		game_params.player_path = get_path()
 	if initial_companion:
 		game_params.companion_path = get_path()

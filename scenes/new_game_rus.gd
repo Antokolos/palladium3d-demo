@@ -6,7 +6,7 @@ func _ready():
 	visible = TranslationServer.get_locale() == "ru"
 
 func _on_StaticBody_input_event(camera, event, click_position, click_normal, shape_idx):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.pressed:
 		game_params.scene_path = "res://forest.tscn"
 		get_tree().change_scene("res://scene_loader.tscn")
 

@@ -1,5 +1,8 @@
 extends Node
 
+signal quality_changed(ID)
+signal resolution_changed(ID)
+
 const AA_8X = 3
 const AA_4X = 2
 const AA_2X = 1
@@ -180,6 +183,10 @@ func set_fullscreen(fs):
 	OS.set_window_fullscreen(fs)
 	fullscreen = fs
 
+func set_quality(ID):
+	quality = ID
+	emit_signal("quality_changed", ID)
+
 func set_resolution(ID):
 	var maxid = available_resolutions.size() - 1
 	if ID > maxid:
@@ -191,6 +198,7 @@ func set_resolution(ID):
 		get_tree().get_root().set_size_override(true, minsize)
 		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
 	resolution = ID
+	emit_signal("resolution_changed", ID)
 
 func _ready():
 	load_settings()

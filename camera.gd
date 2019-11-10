@@ -23,6 +23,7 @@ func _ready():
 	sky_inside.panorama = load("res://assets/ui/undersky5.png")
 	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	change_quality(settings.quality)
+	settings.connect("quality_changed", self, "change_quality")
 
 # Settings applied in the following way will be loaded after game restart
 # see https://github.com/godotengine/godot/issues/30087

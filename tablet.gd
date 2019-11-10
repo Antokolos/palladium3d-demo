@@ -24,7 +24,6 @@ onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVol
 onready var hud = get_parent()
 
 func _ready():
-	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
 
 	tablet_orientation.add_item("Vertical", settings.TABLET_VERTICAL)
 	tablet_orientation.add_item("Horizontal", settings.TABLET_HORIZONTAL)
@@ -117,13 +116,9 @@ func _ready():
 	sound_volume_node.value = settings.sound_volume
 	speech_volume_node.value = settings.speech_volume
 
-func on_viewport_resize():
-	# Uncomment the following line to look at the viewport size changes
-	#print("Resizing: ", get_viewport_rect().size) # or get_tree().get_root().size
-	pass
-
 func _unhandled_input(event):
 	if get_tree().paused and event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
 		hud.show_tablet(false)
 
 func _on_HomeButton_pressed():
@@ -157,7 +152,6 @@ func _on_LoadGameButton_pressed():
 	refresh_slot_captions(load_game_app)
 
 func _on_QuitGameButton_pressed():
-	var hud = get_parent() # Can also be accessed via player node
 	hud.ask_quit()
 
 func simulate_esc():
@@ -254,34 +248,9 @@ func _on_Fullscreen_pressed():
 	settings.set_fullscreen(fs)
 
 func _on_Quality_item_selected(ID):
-	var camera = get_node("../../..").get_cam()
-	if camera:
-		camera.change_quality(ID)
-	settings.quality = ID
+	settings.set_quality(ID)
 
 func _on_Resolution_item_selected(ID):
-	var default_font = hud.get_theme().get_default_font()
-	var conversation_root = hud.get_conversation_root()
-	var actorname_prev_font = hud.get_actorname_prev().get("custom_fonts/font")
-	var conversation_prev_font = hud.get_conversation_text_prev().get("custom_fonts/font")
-	var actorname_font = hud.get_actorname().get("custom_fonts/font")
-	var conversation_font = hud.get_conversation_text().get("custom_fonts/font")
-	var maxid = settings.available_resolutions.size() - 1
-	if ID > maxid:
-		# TODO: maybe upscale font size for native resolution?
-		default_font.set_size(settings.available_resolutions[maxid].default_font)
-		actorname_prev_font.set_size(settings.available_resolutions[maxid].actorname_prev_font)
-		conversation_prev_font.set_size(settings.available_resolutions[maxid].conversation_prev_font)
-		actorname_font.set_size(settings.available_resolutions[maxid].actorname_font)
-		conversation_font.set_size(settings.available_resolutions[maxid].conversation_font)
-		conversation_root.set("custom_constants/separation", settings.available_resolutions[maxid].text_separation)
-	else:
-		default_font.set_size(settings.available_resolutions[ID].default_font)
-		actorname_prev_font.set_size(settings.available_resolutions[ID].actorname_prev_font)
-		conversation_prev_font.set_size(settings.available_resolutions[ID].conversation_prev_font)
-		actorname_font.set_size(settings.available_resolutions[ID].actorname_font)
-		conversation_font.set_size(settings.available_resolutions[ID].conversation_font)
-		conversation_root.set("custom_constants/separation", settings.available_resolutions[ID].text_separation)
 	settings.set_resolution(ID)
 
 func _on_AA_item_selected(ID):
