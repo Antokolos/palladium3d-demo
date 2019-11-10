@@ -1,4 +1,5 @@
 extends Control
+class_name Tablet
 
 onready var tablet_panel = get_node("TabletPanel")
 onready var home_button = get_node("TabletPanel/HomeButton")
@@ -30,6 +31,8 @@ onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVol
 onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
 onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
+
+enum ActivationMode {DESKTOP, CHAT, CREDITS, MAP, DOCUMENTS, SETTINGS, SAVE, LOAD}
 
 onready var hud = get_parent()
 
@@ -143,30 +146,55 @@ func _ready():
 	sound_volume_node.value = settings.sound_volume
 	speech_volume_node.value = settings.speech_volume
 
+func activate(mode):
+	match mode:
+		ActivationMode.CHAT:
+			_on_ChatButton_pressed()
+		ActivationMode.CREDITS:
+			_on_CreditsButton_pressed()
+		ActivationMode.SETTINGS:
+			_on_SettingsButton_pressed()
+		ActivationMode.SAVE:
+			_on_SaveGameButton_pressed()
+		ActivationMode.LOAD:
+			_on_LoadGameButton_pressed()
+		ActivationMode.MAP:
+			continue
+		ActivationMode.DOCUMENTS:
+			continue
+		ActivationMode.DESKTOP:
+			continue
+		_:
+			_on_HomeButton_pressed()
+
 func _unhandled_input(event):
 	if get_tree().paused and event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
 		hud.show_tablet(false)
 
-func _on_HomeButton_pressed():
+func hide_everything():
 	for node in apps.get_children():
 		node.hide()
+	desktop.hide()
+
+func _on_HomeButton_pressed():
+	hide_everything()
 	desktop.show()
 
 func _on_CloseButton_pressed():
 	simulate_esc()
 
 func _on_ChatButton_pressed():
-	desktop.hide()
+	hide_everything()
 	chat.load_chat()
 	chat.show()
 
 func _on_CreditsButton_pressed():
-	desktop.hide()
+	hide_everything()
 	credits.activate()
 
 func _on_SettingsButton_pressed():
-	desktop.hide()
+	hide_everything()
 	settings_app.show()
 
 func refresh_slot_captions(base_node):
@@ -176,12 +204,12 @@ func refresh_slot_captions(base_node):
 		node.text = caption if caption.length() > 0 else tr("TABLET_EMPTY_SLOT")
 
 func _on_SaveGameButton_pressed():
-	desktop.hide()
+	hide_everything()
 	save_game_app.show()
 	refresh_slot_captions(save_game_app)
 
 func _on_LoadGameButton_pressed():
-	desktop.hide()
+	hide_everything()
 	load_game_app.show()
 	refresh_slot_captions(load_game_app)
 

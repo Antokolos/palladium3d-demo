@@ -7,7 +7,7 @@ func _ready():
 
 func _on_StaticBody_input_event(camera, event, click_position, click_normal, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
-		hud.show_tablet(true)
+		hud.show_tablet(true, Tablet.ActivationMode.SETTINGS)
 
 func _on_StaticBody_mouse_entered():
 	mouse_over()

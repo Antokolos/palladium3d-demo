@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MenuItem",
 "language": "GDScript",
 "path": "res://menu_item.gd"
+}, {
+"base": "Control",
+"class": "Tablet",
+"language": "GDScript",
+"path": "res://tablet.gd"
 } ]
 _global_script_class_icons={
-"MenuItem": ""
+"MenuItem": "",
+"Tablet": ""
 }
 
 [application]

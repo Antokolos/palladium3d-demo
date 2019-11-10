@@ -23,12 +23,12 @@ func ask_quit():
 	get_tree().paused = true
 	$QuitDialog.popup_centered()
 
-func show_tablet(is_show):
+func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
 	if is_show:
 		dimmer.visible = true
 		tablet.visible = true
 		get_tree().paused = true
-		tablet._on_HomeButton_pressed()
+		tablet.activate(activation_mode)
 	else:
 		get_tree().paused = false
 		tablet.visible = false
@@ -38,7 +38,7 @@ func show_tablet(is_show):
 func _unhandled_input(event):
 	if not get_tree().paused and event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
-		show_tablet(true)
+		show_tablet(true, Tablet.ActivationMode.DESKTOP)
 
 func _on_QuitDialog_confirmed():
 	get_tree().quit()
