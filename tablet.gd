@@ -3,8 +3,18 @@ extends Control
 onready var tablet_panel = get_node("TabletPanel")
 onready var home_button = get_node("TabletPanel/HomeButton")
 onready var desktop = get_node("TabletPanel/TabletScreen/desktop")
+onready var desktop_containers = desktop.get_node("GridContainer")
+onready var desktop_container_chat = desktop_containers.get_node("VChatContainer")
+onready var desktop_container_credits = desktop_containers.get_node("VCreditsContainer")
+onready var desktop_container_map = desktop_containers.get_node("VMapContainer")
+onready var desktop_container_documents = desktop_containers.get_node("VDocumentsContainer")
+onready var desktop_container_settings = desktop_containers.get_node("VSettingsContainer")
+onready var desktop_container_save = desktop_containers.get_node("VSaveGameContainer")
+onready var desktop_container_load = desktop_containers.get_node("VLoadGameContainer")
+onready var desktop_container_quit = desktop_containers.get_node("VQuitGameContainer")
 onready var apps = get_node("TabletPanel/TabletScreen/apps")
 onready var chat = apps.get_node("chat")
+onready var credits = apps.get_node("credits")
 onready var settings_app = apps.get_node("settings_app")
 onready var save_game_app = apps.get_node("save_game_app")
 onready var load_game_app = apps.get_node("load_game_app")
@@ -24,7 +34,24 @@ onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVol
 onready var hud = get_parent()
 
 func _ready():
-
+	if hud.is_menu_hud():
+		desktop_container_chat.visible = false
+		desktop_container_credits.visible = true
+		desktop_container_map.visible = false
+		desktop_container_documents.visible = false
+		desktop_container_settings.visible = true
+		desktop_container_save.visible = false
+		desktop_container_load.visible = true
+		desktop_container_quit.visible = true
+	else:
+		desktop_container_chat.visible = true
+		desktop_container_credits.visible = false
+		desktop_container_map.visible = false
+		desktop_container_documents.visible = false
+		desktop_container_settings.visible = true
+		desktop_container_save.visible = true
+		desktop_container_load.visible = true
+		desktop_container_quit.visible = true
 	tablet_orientation.add_item("Vertical", settings.TABLET_VERTICAL)
 	tablet_orientation.add_item("Horizontal", settings.TABLET_HORIZONTAL)
 	match (settings.tablet_orientation):
@@ -126,10 +153,17 @@ func _on_HomeButton_pressed():
 		node.hide()
 	desktop.show()
 
+func _on_CloseButton_pressed():
+	simulate_esc()
+
 func _on_ChatButton_pressed():
 	desktop.hide()
 	chat.load_chat()
 	chat.show()
+
+func _on_CreditsButton_pressed():
+	desktop.hide()
+	credits.activate()
 
 func _on_SettingsButton_pressed():
 	desktop.hide()
@@ -163,7 +197,8 @@ func simulate_esc():
 	ev.set_action("ui_cancel")
 	ev.set_pressed(true)
 	get_tree().input_event(ev)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if not hud.is_menu_hud():
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func save_to_slot(slot):
 	StoryNode.SaveAll(slot)

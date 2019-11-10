@@ -55,6 +55,9 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		ask_quit()
 
+func is_menu_hud():
+	return false
+
 func get_conversation_root():
 	return get_node("VBoxContainer/Conversation/VBox")
 

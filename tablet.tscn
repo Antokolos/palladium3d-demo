@@ -1,14 +1,15 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://tablet.gd" type="Script" id=1]
 [ext_resource path="res://chat.gd" type="Script" id=2]
 [ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/ui/lightblue_equirectangular.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/80-80_white.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/gear.png" type="Texture" id=6]
-[ext_resource path="res://assets/ui/home-button.png" type="Texture" id=7]
-[ext_resource path="res://assets/ui/home-button-pressed.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/home-button-hover.png" type="Texture" id=9]
+[ext_resource path="res://scenes/authors.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/lightblue_equirectangular.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/80-80_white.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/gear.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/home-button.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/home-button-pressed.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/home-button-hover.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
@@ -32,7 +33,7 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 2048, 1024 )
 
 [node name="tablet" type="Control"]
@@ -75,6 +76,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="chat" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -106,6 +108,7 @@ margin_right = 577.0
 margin_bottom = 944.0
 
 [node name="settings_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -506,6 +509,9 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
+[node name="credits" parent="TabletPanel/TabletScreen/apps" instance=ExtResource( 4 )]
+visible = false
+
 [node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
 margin_left = 7.0
 margin_top = 7.0
@@ -529,24 +535,51 @@ custom_constants/hseparation = 20
 columns = 3
 
 [node name="VChatContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_right = 133.0
+margin_right = 127.0
 margin_bottom = 98.0
 alignment = 1
 
 [node name="HChatContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
-margin_right = 133.0
+margin_right = 127.0
 margin_bottom = 80.0
 alignment = 1
 
 [node name="ChatButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer"]
+margin_left = 23.0
+margin_right = 103.0
+margin_bottom = 80.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 6 )
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
+margin_top = 84.0
+margin_right = 127.0
+margin_bottom = 98.0
+text = "Chat"
+align = 1
+valign = 2
+
+[node name="VCreditsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 147.0
+margin_right = 280.0
+margin_bottom = 98.0
+alignment = 1
+
+[node name="HCreditsContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VCreditsContainer"]
+margin_right = 133.0
+margin_bottom = 80.0
+alignment = 1
+
+[node name="CreditsButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VCreditsContainer/HCreditsContainer"]
 margin_left = 26.0
 margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VCreditsContainer"]
 margin_top = 84.0
 margin_right = 133.0
 margin_bottom = 98.0
@@ -569,7 +602,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer"]
@@ -595,7 +628,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer"]
@@ -606,35 +639,9 @@ text = "Documents"
 align = 1
 valign = 2
 
-[node name="VInventoryContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-visible = false
-margin_right = 80.0
-margin_bottom = 98.0
-alignment = 1
-
-[node name="HInventoryContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer"]
-margin_right = 80.0
-margin_bottom = 80.0
-alignment = 1
-
-[node name="InventoryButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer/HInventoryContainer"]
-margin_right = 80.0
-margin_bottom = 80.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VInventoryContainer"]
-margin_top = 84.0
-margin_right = 80.0
-margin_bottom = 98.0
-text = "Inventory"
-align = 1
-valign = 2
-
 [node name="VSettingsContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_left = 153.0
-margin_right = 282.0
+margin_left = 300.0
+margin_right = 429.0
 margin_bottom = 98.0
 alignment = 1
 
@@ -648,7 +655,7 @@ margin_left = 24.0
 margin_right = 104.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 6 )
+texture_normal = ExtResource( 7 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
@@ -660,9 +667,9 @@ align = 1
 valign = 2
 
 [node name="VSaveGameContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_left = 302.0
-margin_right = 429.0
-margin_bottom = 98.0
+margin_top = 118.0
+margin_right = 127.0
+margin_bottom = 216.0
 alignment = 1
 
 [node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer"]
@@ -675,7 +682,7 @@ margin_left = 23.0
 margin_right = 103.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer"]
@@ -686,26 +693,27 @@ text = "TABLET_SAVE_GAME"
 align = 1
 valign = 2
 
-[node name="VLoadGameContainer2" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+[node name="VLoadGameContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 147.0
 margin_top = 118.0
-margin_right = 133.0
+margin_right = 280.0
 margin_bottom = 216.0
 alignment = 1
 
-[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2"]
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer"]
 margin_right = 133.0
 margin_bottom = 80.0
 alignment = 1
 
-[node name="LoadGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2/HContainer"]
+[node name="LoadGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer/HContainer"]
 margin_left = 26.0
 margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer"]
 margin_top = 84.0
 margin_right = 133.0
 margin_bottom = 98.0
@@ -713,27 +721,27 @@ text = "TABLET_LOAD_GAME"
 align = 1
 valign = 2
 
-[node name="VQuitGameContainer3" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
-margin_left = 153.0
+[node name="VQuitGameContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer"]
+margin_left = 300.0
 margin_top = 118.0
-margin_right = 282.0
+margin_right = 429.0
 margin_bottom = 216.0
 alignment = 1
 
-[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3"]
+[node name="HContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer"]
 margin_right = 129.0
 margin_bottom = 80.0
 alignment = 1
 
-[node name="QuitGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3/HContainer"]
+[node name="QuitGameButton" type="TextureButton" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer/HContainer"]
 margin_left = 24.0
 margin_right = 104.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer"]
 margin_top = 84.0
 margin_right = 129.0
 margin_bottom = 98.0
@@ -750,9 +758,17 @@ margin_left = -20.0
 margin_top = -40.0
 margin_right = 20.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 8 )
-texture_hover = ExtResource( 9 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
+
+[node name="CloseButton" type="TextureButton" parent="TabletPanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
 [connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
@@ -777,8 +793,10 @@ texture_hover = ExtResource( 9 )
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot4/ButtonSlot4" to="." method="_on_ButtonLoadSlot4_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot5/ButtonSlot5" to="." method="_on_ButtonLoadSlot5_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer/HChatContainer/ChatButton" to="." method="_on_ChatButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VCreditsContainer/HCreditsContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer/HContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer/HContainer/SaveGameButton" to="." method="_on_SaveGameButton_pressed"]
-[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer2/HContainer/LoadGameButton" to="." method="_on_LoadGameButton_pressed"]
-[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer3/HContainer/QuitGameButton" to="." method="_on_QuitGameButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer/HContainer/LoadGameButton" to="." method="_on_LoadGameButton_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer/HContainer/QuitGameButton" to="." method="_on_QuitGameButton_pressed"]
 [connection signal="pressed" from="TabletPanel/HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="TabletPanel/CloseButton" to="." method="_on_CloseButton_pressed"]
