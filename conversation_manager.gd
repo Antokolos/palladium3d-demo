@@ -28,7 +28,7 @@ func stop_conversation(player):
 	conversation_name = null
 	var hud = player.get_hud()
 	hud.conversation.visible = false
-	hud.hints.visible = true
+	hud.main_hud.visible = true
 
 func conversation_is_finished(player, target, conversation_name):
 	return not conversation_is_not_finished(player, target, conversation_name)
@@ -80,7 +80,7 @@ func start_conversation(player, target, conversation_name):
 		return
 	self.conversation_name = conversation_name
 	conversation_target = target
-	player.get_hud().hints.visible = false
+	player.get_hud().main_hud.visible = false
 	player.get_hud().inventory.visible = false
 	var conversation = player.get_hud().conversation
 	conversation.visible = true

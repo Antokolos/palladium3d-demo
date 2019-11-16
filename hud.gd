@@ -1,6 +1,7 @@
 extends Control
 
-onready var hints = get_node("VBoxContainer/Hints")
+onready var main_hud = get_node("VBoxContainer/MainHUD")
+onready var quick_items_panel = main_hud.get_node("HBoxQuickItems")
 onready var alt_hint = get_node("ActionHintLabelAlt")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
@@ -86,10 +87,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
 		if inventory.visible:
 			inventory.visible = false
-			hints.visible = true
+			main_hud.visible = true
 		else:
 			inventory.visible = true
-			hints.visible = false
+			main_hud.visible = false
 	# ----------------------------------
 	
 	select_active_item()

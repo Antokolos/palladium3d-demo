@@ -56,41 +56,44 @@ align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-editor/display_folded = true
 anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
 alignment = 1
 
-[node name="Hints" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
+[node name="MainHUD" type="VBoxContainer" parent="VBoxContainer"]
 margin_right = 1920.0
 margin_bottom = 270.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.141176, 0.141176, 0.141176, 0 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Hints"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="HBoxHints" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
+editor/display_folded = true
+margin_right = 1920.0
+margin_bottom = 266.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HintLabel" type="Label" parent="VBoxContainer/Hints/HBoxContainer"]
-margin_top = 101.0
+[node name="HintLabel" type="Label" parent="VBoxContainer/MainHUD/HBoxHints"]
+margin_top = 99.0
 margin_right = 202.0
-margin_bottom = 168.0
+margin_bottom = 166.0
 text = "F -- фонарик
 Tab -- инвентарь"
 
-[node name="ActionHintLabel" type="Label" parent="VBoxContainer/Hints/HBoxContainer"]
+[node name="ActionHintLabel" type="Label" parent="VBoxContainer/MainHUD/HBoxHints"]
 margin_left = 206.0
-margin_top = 119.0
+margin_top = 117.0
 margin_right = 1920.0
-margin_bottom = 151.0
+margin_bottom = 149.0
 size_flags_horizontal = 3
 align = 1
 valign = 1
+
+[node name="HBoxQuickItems" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
+margin_top = 270.0
+margin_right = 1920.0
+margin_bottom = 270.0
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
