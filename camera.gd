@@ -17,8 +17,8 @@ var sky_inside
 
 func _ready():
 	sky_outside = PanoramaSky.new()
-	sky_outside.panorama = load("res://assets/spherical_hdr.hdr")
-	sky_outside.radiance_size = Sky.RADIANCE_SIZE_512
+	sky_outside.panorama = load("res://assets/cape_hill_4k.hdr")
+	sky_outside.radiance_size = Sky.RADIANCE_SIZE_32
 	sky_inside = PanoramaSky.new()
 	sky_inside.panorama = load("res://assets/ui/undersky5.png")
 	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32

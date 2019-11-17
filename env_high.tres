@@ -5,6 +5,7 @@
 [resource]
 background_mode = 2
 background_sky = ExtResource( 1 )
+background_sky_orientation = Basis( -0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939693 )
 background_energy = 0.4
 ambient_light_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 ambient_light_energy = 0.4
