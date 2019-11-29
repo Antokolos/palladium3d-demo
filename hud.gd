@@ -1,7 +1,7 @@
 extends Control
 
 onready var main_hud = get_node("VBoxContainer/MainHUD")
-onready var quick_items_panel = main_hud.get_node("HBoxQuickItems")
+onready var quick_items_panel = get_node("HBoxQuickItems")
 onready var alt_hint = get_node("ActionHintLabelAlt")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
@@ -14,12 +14,15 @@ onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
 const MAX_VISIBLE_ITEMS = 6
+const MAX_QUICK_ITEMS = 4
 
 var active_item_idx = 0
 var first_item_idx = 0
 
 func _ready():
 	settings.connect("resolution_changed", self, "on_resolution_changed")
+	game_params.connect("item_removed", self, "remove_ui_inventory_item", [true])
+	game_params.connect("item_removed", self, "remove_ui_quick_item", [true])
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"
@@ -51,6 +54,7 @@ func on_resolution_changed(ID):
 		actorname_font.set_size(settings.available_resolutions[ID].actorname_font)
 		conversation_font.set_size(settings.available_resolutions[ID].conversation_font)
 		conversation_root.set("custom_constants/separation", settings.available_resolutions[ID].text_separation)
+	quick_items_panel.mark_restore()
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -121,17 +125,23 @@ func show_tablet(is_show):
 func set_crouch_indicator(crouch):
 	indicator_crouch.set("custom_styles/panel", tex_crouch_on if crouch else tex_crouch_off)
 
-func synchronize_items():
-	var ui_items = inventory_panel.get_children()
+func cleanup_panel(panel):
+	var ui_items = panel.get_children()
 	for ui_item in ui_items:
 		ui_item.queue_free()
-	for pos in range(0, MAX_VISIBLE_ITEMS):
-		insert_ui_item(pos, false)
-	inventory.mark_restore()
 
-func insert_ui_item(pos, add_as_first):
+func synchronize_items():
+	cleanup_panel(inventory_panel)
+	for pos in range(0, MAX_VISIBLE_ITEMS):
+		insert_ui_inventory_item(pos, false)
+	cleanup_panel(quick_items_panel)
+	for pos in range(0, MAX_QUICK_ITEMS):
+		insert_ui_quick_item(pos, false)
+	inventory.mark_restore()
+	quick_items_panel.mark_restore()
+
+func insert_ui_inventory_item(pos, add_as_first):
 	var new_item = load("res://item.tscn").instance()
-	new_item.connect("item_removed", self, "remove_ui_item", [true])
 	var i = first_item_idx + pos
 	if i >= 0 and i < game_params.inventory.size():
 		new_item.set_item_data(game_params.inventory[i])
@@ -139,22 +149,45 @@ func insert_ui_item(pos, add_as_first):
 	if add_as_first:
 		inventory_panel.move_child(new_item, 0)
 
-func remove_ui_item(ui_item, reset_idx):
-	ui_item.queue_free()
-	insert_ui_item(MAX_VISIBLE_ITEMS - 1, false)
-	if reset_idx:
-		active_item_idx = 0
+func insert_ui_quick_item(pos, add_as_first):
+	var new_item = load("res://item.tscn").instance()
+	new_item.set_appearance(true, false)
+	var i = first_item_idx + pos
+	if i >= 0 and i < game_params.inventory.size():
+		new_item.set_item_data(game_params.inventory[i])
+	quick_items_panel.add_child(new_item)
+	if add_as_first:
+		quick_items_panel.move_child(new_item, 0)
+
+func remove_ui_inventory_item(nam, count, reset_idx):
+	var ui_items = inventory_panel.get_children()
+	for ui_item in ui_items:
+		if nam == ui_item.nam and count <= 0:
+			ui_item.queue_free()
+			insert_ui_inventory_item(MAX_VISIBLE_ITEMS - 1, false)
+			if reset_idx:
+				active_item_idx = 0
+
+func remove_ui_quick_item(nam, count, reset_idx):
+	var ui_items = quick_items_panel.get_children()
+	for ui_item in ui_items:
+		if nam == ui_item.nam and count <= 0:
+			ui_item.queue_free()
+			insert_ui_quick_item(MAX_QUICK_ITEMS - 1, false)
+			if reset_idx:
+				active_item_idx = 0
 
 func shift_items_left():
 	if first_item_idx < game_params.inventory.size() - MAX_VISIBLE_ITEMS:
 		first_item_idx = first_item_idx + 1
-		remove_ui_item(inventory_panel.get_child(0), false)
+		var ui_item = inventory_panel.get_child(0)
+		remove_ui_inventory_item(ui_item.nam, -1, false)
 
 func shift_items_right():
 	if first_item_idx > 0:
 		first_item_idx = first_item_idx - 1
 		inventory_panel.get_child(MAX_VISIBLE_ITEMS - 1).queue_free()
-		insert_ui_item(0, true)
+		insert_ui_inventory_item(0, true)
 
 func select_active_item():
 	var items = inventory_panel.get_children()

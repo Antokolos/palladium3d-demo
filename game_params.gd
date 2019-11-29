@@ -1,5 +1,7 @@
 extends Node
 
+signal item_removed(nam, count)
+
 var scene_path = "res://forest.tscn"
 var slot_to_load_from = -1
 var player_path = null
@@ -102,6 +104,7 @@ func remove(nam, count = 1):
 			item.count = item.count - count
 			if item.count <= 0:
 				inventory.remove(idx)
+			emit_signal("item_removed", item.nam, item.count)
 			return
 		idx = idx + 1
 

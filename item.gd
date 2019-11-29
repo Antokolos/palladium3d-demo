@@ -1,17 +1,31 @@
 extends PanelContainer
 
-signal item_removed(item)
-
 const BORDER_COLOR = Color(0, 1, 1, 1)
-const TRANSPARENT_COLOR = Color(0, 1, 1, 0)
+const DEFAULT_COLOR = Color("#7e7e7e")
+const ZERO_VEC = Vector2(0, 0)
 
 var nam = null
 var item_image = null
 var model_path = null
+var is_quick_item = false
 
 func _ready():
 	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
 	on_viewport_resize()
+
+func set_appearance(is_quick_item, selected):
+	var label_key = get_node("ItemBox/LabelKey")
+	var label_desc = get_node("ItemBox/LabelDesc")
+	self.is_quick_item = is_quick_item
+	if is_quick_item:
+		label_key.hide()
+	else:
+		label_key.show()
+	if is_quick_item:
+		label_desc.hide()
+	else:
+		label_desc.show()
+	set_selected(selected)
 
 func set_item_data(item_data):
 	self.nam = item_data.nam
@@ -33,16 +47,20 @@ func clear_item():
 
 func get_control_sizes(viewport_size):
 	var multiplier = viewport_size.y / 576.0
+	if is_quick_item:
+		multiplier = multiplier * 0.7
 	return [Vector2(125 * multiplier, 125 * multiplier), Vector2(69 * multiplier, 69 * multiplier)]
 
 func set_selected(selected):
 	var panel = get("custom_styles/panel")
-	panel.set_border_color(BORDER_COLOR if selected else TRANSPARENT_COLOR)
+	panel.set_border_color(BORDER_COLOR if selected else DEFAULT_COLOR)
 
 func on_viewport_resize():
 	var control_sizes = get_control_sizes(get_viewport_rect().size)
-	set_custom_minimum_size(control_sizes[0])
-	get_node("ItemBox").set_custom_minimum_size(control_sizes[0])
+	var label_key = get_node("ItemBox/LabelKey")
+	var label_desc = get_node("ItemBox/LabelDesc")
+	set_custom_minimum_size(ZERO_VEC if is_quick_item else control_sizes[0])
+	get_node("ItemBox").set_custom_minimum_size(ZERO_VEC if is_quick_item else control_sizes[0])
 	get_node("ItemBox/TextureRect").set_custom_minimum_size(control_sizes[1])
 
 func coord_mult(vec1, vec2):
@@ -65,4 +83,3 @@ func get_model_instance():
 
 func remove():
 	game_params.remove(nam)
-	emit_signal("item_removed", self)
