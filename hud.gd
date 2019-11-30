@@ -14,7 +14,7 @@ onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
 const MAX_VISIBLE_ITEMS = 6
-const MAX_QUICK_ITEMS = 4
+const MAX_QUICK_ITEMS = 6
 
 var active_item_idx = 0
 var first_item_idx = 0
@@ -241,3 +241,21 @@ func _unhandled_input(event):
 		if event.scancode < KEY_F1 or event.scancode > KEY_F6:
 			return
 		set_active_item(event.scancode - KEY_F1)
+
+func _on_Inventory_visibility_changed():
+	if inventory.visible:
+		quick_items_panel.anchor_top = 0.75
+		quick_items_panel.anchor_bottom = 0.75
+		quick_items_panel.margin_top = 0
+		quick_items_panel.margin_bottom = 0
+	else:
+		quick_items_panel.anchor_top = 1.0
+		quick_items_panel.anchor_bottom = 1.0
+		quick_items_panel.margin_top = 0
+		quick_items_panel.margin_bottom = 0
+
+func _on_Conversation_visibility_changed():
+	if conversation.visible:
+		quick_items_panel.hide()
+	else:
+		quick_items_panel.show()

@@ -45,6 +45,7 @@ func open_preview(item, hud, flashlight):
 				ch.text = act.action_hint
 				custom_actions_node.add_child(ch)
 		get_tree().paused = true
+		hud.quick_items_panel.hide()
 		$ActionsPanel.show()
 
 func _input(event):
@@ -57,6 +58,8 @@ func close_preview():
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
 	$ActionsPanel.hide()
+	if hud:
+		hud.quick_items_panel.show()
 	custom_actions.clear()
 	get_tree().paused = false
 	if not flashlight_visible:

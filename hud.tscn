@@ -449,5 +449,7 @@ margin_right = 274.0
 margin_bottom = 102.0
 popup_exclusive = true
 dialog_text = "Are you sure?"
+[connection signal="visibility_changed" from="VBoxContainer/Conversation" to="." method="_on_Conversation_visibility_changed"]
+[connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
 [connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]
