@@ -17,6 +17,7 @@ const MAX_VISIBLE_ITEMS = 6
 const MAX_QUICK_ITEMS = 6
 
 var active_item_idx = 0
+var active_quick_item_idx = 0
 var first_item_idx = 0
 
 func _ready():
@@ -98,6 +99,7 @@ func _process(delta):
 	# ----------------------------------
 	
 	select_active_item()
+	select_active_quick_item()
 	
 	# ----------------------------------
 	# Capturing/Freeing the cursor
@@ -175,7 +177,7 @@ func remove_ui_quick_item(nam, count, reset_idx):
 			ui_item.queue_free()
 			insert_ui_quick_item(MAX_QUICK_ITEMS - 1, false)
 			if reset_idx:
-				active_item_idx = 0
+				active_quick_item_idx = 0
 
 func shift_items_left():
 	if first_item_idx < game_params.inventory.size() - MAX_VISIBLE_ITEMS:
@@ -206,8 +208,20 @@ func select_active_item():
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
 		idx = idx + 1
 
+func select_active_quick_item():
+	var items = quick_items_panel.get_children()
+	if items.empty():
+		return
+	var idx = 0
+	for item in items:
+		items[idx].set_selected(idx == active_quick_item_idx)
+		idx = idx + 1
+
 func is_valid_index(item_idx):
 	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
+
+func is_valid_quick_index(item_idx):
+	return item_idx >= 0 and item_idx < MAX_QUICK_ITEMS
 
 func set_active_item(item_idx):
 	var valid = is_valid_index(item_idx)
@@ -215,8 +229,20 @@ func set_active_item(item_idx):
 		active_item_idx = item_idx
 	return valid
 
+func set_active_quick_item(item_idx):
+	var valid = is_valid_quick_index(item_idx)
+	if valid:
+		quick_items_panel.get_child(active_quick_item_idx).set_selected(false)
+		quick_items_panel.get_child(item_idx).set_selected(true)
+		active_quick_item_idx = item_idx
+	return valid
+
 func get_active_item():
-	return inventory_panel.get_child(active_item_idx) if is_valid_index(active_item_idx) else null
+	if inventory_panel.is_visible_in_tree() and is_valid_index(active_item_idx):
+		return inventory_panel.get_child(active_item_idx)
+	if is_valid_quick_index(active_quick_item_idx) and quick_items_panel.get_child(active_quick_item_idx).nam:
+		return quick_items_panel.get_child(active_quick_item_idx)
+	return null
 
 func _on_QuitDialog_confirmed():
 	get_tree().quit()
@@ -229,18 +255,23 @@ func _on_QuitDialog_popup_hide():
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
-	if inventory.is_visible_in_tree() and event is InputEventKey and event.is_pressed():
-		if event.scancode == KEY_Z:
-			if not set_active_item(active_item_idx - 1):
-				shift_items_right()
-			return
-		if event.scancode == KEY_X:
-			if not set_active_item(active_item_idx + 1):
-				shift_items_left()
-			return
-		if event.scancode < KEY_F1 or event.scancode > KEY_F6:
-			return
-		set_active_item(event.scancode - KEY_F1)
+	if event is InputEventKey and event.is_pressed():
+		if inventory.is_visible_in_tree():
+			if event.scancode == KEY_Z:
+				if not set_active_item(active_item_idx - 1):
+					shift_items_right()
+				return
+			if event.scancode == KEY_X:
+				if not set_active_item(active_item_idx + 1):
+					shift_items_left()
+				return
+			if event.scancode >= KEY_F1 and event.scancode <= KEY_F6:
+				set_active_item(event.scancode - KEY_F1)
+				return
+		elif not conversation.visible:
+			if event.scancode >= KEY_1 and event.scancode <= KEY_6:
+				set_active_quick_item(event.scancode - KEY_1)
+				return
 
 func _on_Inventory_visibility_changed():
 	if inventory.visible:

@@ -16,7 +16,7 @@ var story_vars = {
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
 var inventory = [
-	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1 }
+	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1, "quick_item_pos" : 0 }
 ]
 var music = {}
 var current_music = null
@@ -95,7 +95,8 @@ func take(nam, item_image, model_path):
 		if nam == item.nam:
 			item.count = item.count + 1
 			return
-	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1 })
+	# TODO: set quick_item_pos to >0 if there is enough room in quick item panel
+	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1, "quick_item_pos" : -1 })
 
 func remove(nam, count = 1):
 	var idx = 0

@@ -198,14 +198,14 @@ func use(player_node):
 	var hud = player_node.get_hud()
 	if conversation_manager.conversation_active():
 		conversation_manager.stop_conversation(player_node)
-	elif not hud.inventory.visible:
-		conversation_manager.start_conversation(player_node, self, "Conversation")
-	else: # hud.inventory.visible:
+	else:
 		var item = hud.get_active_item()
 		if item and item.nam == "saffron_bun":
 			hud.inventory.visible = false
 			item.remove()
 			conversation_manager.start_conversation(player_node, self, "Bun")
+		else:
+			conversation_manager.start_conversation(player_node, self, "Conversation")
 
 func get_model():
 	return get_node("Rotation_Helper/Model").get_child(0)
@@ -227,9 +227,15 @@ func _unhandled_input(event):
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	var inventory = player_node.get_hud().inventory
-	var conversation = player_node.get_hud().conversation
-	return "" if inventory.visible or conversation.visible else "E: Поговорить"
+	var hud = player_node.get_hud()
+	var inventory = hud.inventory
+	var conversation = hud.conversation
+	if conversation.visible:
+		return ""
+	var item = hud.get_active_item()
+	if item and item.nam == "saffron_bun":
+		return "E: Угостить булочкой"
+	return "E: Поговорить"
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

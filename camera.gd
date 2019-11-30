@@ -128,8 +128,9 @@ func _unhandled_input(event):
 	if not player:
 		return
 	var hud = player.get_hud()
-	if hud.inventory.visible:
+	if hud and not item_preview.is_opened():
 		if event.scancode != KEY_Q:
 			return
 		var item = hud.get_active_item()
-		item_preview.open_preview(item, hud, flashlight)
+		if item:
+			item_preview.open_preview(item, hud, flashlight)

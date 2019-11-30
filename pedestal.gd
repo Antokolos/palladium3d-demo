@@ -4,7 +4,7 @@ export var level_path = "../../.."
 
 func use(player_node):
 	var hud = player_node.get_hud()
-	if hud.inventory.visible:
+	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item and item.nam.begins_with("statue_"):
 			var level = get_node(level_path)
@@ -56,7 +56,7 @@ func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	var hud = player_node.get_hud()
-	if hud.inventory.visible:
+	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item and item.nam == "sphere_for_postament_body":
 			return "E: Поставить сферу на постамент"
