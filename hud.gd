@@ -30,6 +30,8 @@ func _ready():
 	dialog.get_cancel().text = "No"
 	get_tree().set_auto_accept_quit(false)
 	synchronize_items()
+	select_active_item()
+	select_active_quick_item()
 
 func on_resolution_changed(ID):
 	var hud = self
@@ -98,9 +100,6 @@ func _process(delta):
 			main_hud.visible = false
 	# ----------------------------------
 	
-	select_active_item()
-	select_active_quick_item()
-	
 	# ----------------------------------
 	# Capturing/Freeing the cursor
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -168,7 +167,7 @@ func remove_ui_inventory_item(nam, count, reset_idx):
 			ui_item.queue_free()
 			insert_ui_inventory_item(MAX_VISIBLE_ITEMS - 1, false)
 			if reset_idx:
-				active_item_idx = 0
+				set_active_item(0)
 
 func remove_ui_quick_item(nam, count, reset_idx):
 	var ui_items = quick_items_panel.get_children()
@@ -177,7 +176,7 @@ func remove_ui_quick_item(nam, count, reset_idx):
 			ui_item.queue_free()
 			insert_ui_quick_item(MAX_QUICK_ITEMS - 1, false)
 			if reset_idx:
-				active_quick_item_idx = 0
+				set_active_quick_item(0)
 
 func shift_items_left():
 	if first_item_idx < game_params.inventory.size() - MAX_VISIBLE_ITEMS:
@@ -190,6 +189,12 @@ func shift_items_right():
 		first_item_idx = first_item_idx - 1
 		inventory_panel.get_child(MAX_VISIBLE_ITEMS - 1).queue_free()
 		insert_ui_inventory_item(0, true)
+
+func is_valid_index(item_idx):
+	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
+
+func is_valid_quick_index(item_idx):
+	return item_idx >= 0 and item_idx < MAX_QUICK_ITEMS
 
 func select_active_item():
 	var items = inventory_panel.get_children()
@@ -208,6 +213,13 @@ func select_active_item():
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
 		idx = idx + 1
 
+func set_active_item(item_idx):
+	var valid = is_valid_index(item_idx)
+	if valid:
+		active_item_idx = item_idx
+		select_active_item()
+	return valid
+
 func select_active_quick_item():
 	var items = quick_items_panel.get_children()
 	if items.empty():
@@ -217,24 +229,13 @@ func select_active_quick_item():
 		items[idx].set_selected(idx == active_quick_item_idx)
 		idx = idx + 1
 
-func is_valid_index(item_idx):
-	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
-
-func is_valid_quick_index(item_idx):
-	return item_idx >= 0 and item_idx < MAX_QUICK_ITEMS
-
-func set_active_item(item_idx):
-	var valid = is_valid_index(item_idx)
-	if valid:
-		active_item_idx = item_idx
-	return valid
-
 func set_active_quick_item(item_idx):
 	var valid = is_valid_quick_index(item_idx)
 	if valid:
 		quick_items_panel.get_child(active_quick_item_idx).set_selected(false)
 		quick_items_panel.get_child(item_idx).set_selected(true)
 		active_quick_item_idx = item_idx
+		select_active_quick_item()
 	return valid
 
 func get_active_item():
