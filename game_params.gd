@@ -2,6 +2,8 @@ extends Node
 
 signal item_removed(nam, count)
 
+const MAX_QUICK_ITEMS = 3
+
 var scene_path = "res://forest.tscn"
 var slot_to_load_from = -1
 var player_path = null
@@ -16,7 +18,10 @@ var story_vars = {
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
 var inventory = [
-	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1, "quick_item_pos" : 0 }
+	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1 }
+]
+var quick_items = [
+	{ "nam" : "saffron_bun", "pos" : 0}
 ]
 var music = {}
 var current_music = null
@@ -95,8 +100,13 @@ func take(nam, item_image, model_path):
 		if nam == item.nam:
 			item.count = item.count + 1
 			return
-	# TODO: set quick_item_pos to >0 if there is enough room in quick item panel
-	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1, "quick_item_pos" : -1 })
+	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1 })
+	var maxpos = 0
+	for quick_item in quick_items:
+		if quick_item.pos > maxpos:
+			maxpos = quick_item.pos
+	if maxpos < MAX_QUICK_ITEMS - 1:
+		quick_items.append({ "nam" : nam, "pos" : maxpos + 1})
 
 func remove(nam, count = 1):
 	var idx = 0
@@ -105,9 +115,22 @@ func remove(nam, count = 1):
 			item.count = item.count - count
 			if item.count <= 0:
 				inventory.remove(idx)
+				var quick_idx = 0
+				for quick_item in quick_items:
+					if nam == quick_item.nam:
+						quick_items.remove(quick_idx)
+						break
+					quick_idx = quick_idx + 1
 			emit_signal("item_removed", item.nam, item.count)
 			return
 		idx = idx + 1
+
+func set_quick_item(pos, nam):
+	for quick_item in quick_items:
+		if pos == quick_item.pos:
+			quick_item.nam = nam
+			return
+	quick_items.append({ "nam" : nam, "pos" : pos})
 
 func load_params(slot):
 	var player = get_node(player_path)

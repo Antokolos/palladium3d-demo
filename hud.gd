@@ -14,7 +14,6 @@ onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
 const MAX_VISIBLE_ITEMS = 3
-const MAX_QUICK_ITEMS = 3
 
 var active_item_idx = 0
 var active_quick_item_idx = 0
@@ -136,7 +135,7 @@ func synchronize_items():
 	for pos in range(0, MAX_VISIBLE_ITEMS):
 		insert_ui_inventory_item(pos)
 	cleanup_panel(quick_items_panel)
-	for pos in range(0, MAX_QUICK_ITEMS):
+	for pos in range(0, game_params.MAX_QUICK_ITEMS):
 		insert_ui_quick_item(pos)
 	inventory.mark_restore()
 	quick_items_panel.mark_restore()
@@ -154,12 +153,26 @@ func insert_ui_inventory_item(pos):
 func insert_ui_quick_item(pos):
 	var new_item = load("res://item.tscn").instance()
 	new_item.set_appearance(true, false)
-	var i = first_item_idx + pos
-	if i >= 0 and i < game_params.inventory.size():
-		new_item.set_item_data(game_params.inventory[i])
+	for quick_item in game_params.quick_items:
+		if pos == quick_item.pos:
+			for item in game_params.inventory:
+				if quick_item.nam == item.nam:
+					new_item.set_item_data(item)
+					break
+			break
 	quick_items_panel.add_child(new_item)
 	if pos < quick_items_panel.get_child_count() - 1:
 		quick_items_panel.move_child(new_item, pos)
+	select_active_quick_item()
+
+func refresh_ui_quick_item(pos):
+	for quick_item in game_params.quick_items:
+		if pos == quick_item.pos:
+			for item in game_params.inventory:
+				if quick_item.nam == item.nam:
+					quick_items_panel.get_child(pos).set_item_data(item)
+					break
+			break
 	select_active_quick_item()
 
 func remove_ui_inventory_item(nam, count):
@@ -179,7 +192,7 @@ func remove_ui_quick_item(nam, count):
 		if nam == ui_item.nam and count <= 0:
 			quick_items_panel.remove_child(ui_item)
 			ui_item.queue_free()
-			insert_ui_quick_item(MAX_QUICK_ITEMS - 1)
+			insert_ui_quick_item(idx)
 			return
 		idx = idx + 1
 
@@ -199,7 +212,7 @@ func is_valid_index(item_idx):
 	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
 
 func is_valid_quick_index(item_idx):
-	return item_idx >= 0 and item_idx < MAX_QUICK_ITEMS
+	return item_idx >= 0 and item_idx < game_params.MAX_QUICK_ITEMS
 
 func select_active_item():
 	var items = inventory_panel.get_children()
@@ -263,13 +276,19 @@ func _on_QuitDialog_popup_hide():
 func _unhandled_input(event):
 	if event is InputEventKey and event.is_pressed():
 		if inventory.is_visible_in_tree():
-			if event.scancode == KEY_Z:
+			if event.scancode == KEY_B:
 				if not set_active_item(active_item_idx - 1):
 					shift_items_right()
 				return
-			if event.scancode == KEY_X:
+			if event.scancode == KEY_N:
 				if not set_active_item(active_item_idx + 1):
 					shift_items_left()
+				return
+			if event.scancode == KEY_T:
+				var item = get_active_item()
+				if item:
+					game_params.set_quick_item(active_quick_item_idx, item.nam)
+					refresh_ui_quick_item(active_quick_item_idx)
 				return
 			if event.scancode >= KEY_F1 and event.scancode <= KEY_F6:
 				set_active_item(event.scancode - KEY_F1)

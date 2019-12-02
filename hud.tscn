@@ -245,7 +245,6 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="ArrowLeft" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
-editor/display_folded = true
 margin_right = 180.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 180, 206 )
@@ -273,7 +272,7 @@ alignment = 1
 margin_right = 180.0
 margin_bottom = 270.0
 size_flags_horizontal = 3
-text = "Z"
+text = "B"
 align = 1
 valign = 1
 
@@ -315,7 +314,7 @@ alignment = 1
 margin_right = 180.0
 margin_bottom = 270.0
 size_flags_horizontal = 3
-text = "X"
+text = "N"
 align = 1
 valign = 1
 
