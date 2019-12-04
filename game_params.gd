@@ -119,8 +119,9 @@ func remove(nam, count = 1):
 				for quick_item in quick_items:
 					if nam == quick_item.nam:
 						quick_items.remove(quick_idx)
-						break
-					quick_idx = quick_idx + 1
+						# No break here, because we should remove all quick items with this name
+					else:
+						quick_idx = quick_idx + 1
 			emit_signal("item_removed", item.nam, item.count)
 			return
 		idx = idx + 1
@@ -189,6 +190,9 @@ func load_params(slot):
 	
 	if ("inventory" in d):
 		inventory = d.inventory
+	
+	if ("quick_items" in d):
+		quick_items = d.quick_items
 
 func save_params(slot):
 	var f = File.new()
@@ -219,7 +223,8 @@ func save_params(slot):
 			[companion_basis.z.x, companion_basis.z.y, companion_basis.z.z]
 		],
 		"story_vars" : story_vars,
-		"inventory" : inventory
+		"inventory" : inventory,
+		"quick_items" : quick_items
 	}
 	f.store_line( to_json(d) )
 

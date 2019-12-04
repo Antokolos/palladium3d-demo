@@ -38,6 +38,9 @@ func set_item_data(item_data):
 	get_node("ItemBox/TextureRect").texture = texture
 	get_node("ItemBox/LabelDesc").text = tr(nam)
 
+func is_empty():
+	return not nam
+
 func clear_item():
 	self.nam = null
 	self.item_image = null

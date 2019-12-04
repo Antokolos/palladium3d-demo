@@ -128,6 +128,7 @@ func set_crouch_indicator(crouch):
 func cleanup_panel(panel):
 	var ui_items = panel.get_children()
 	for ui_item in ui_items:
+		panel.remove_child(ui_item)
 		ui_item.queue_free()
 
 func synchronize_items():
@@ -183,7 +184,15 @@ func remove_ui_inventory_item(nam, count):
 			inventory_panel.remove_child(ui_item)
 			ui_item.queue_free()
 			insert_ui_inventory_item(MAX_VISIBLE_ITEMS - 1)
+			if idx == active_item_idx and active_item_idx > 0:
+				set_active_item(active_item_idx - 1)
 		idx = idx + 1
+	if inventory_panel.get_child(0).is_empty():
+		# If very first item is empty, than all following items are empty too
+		# Therefore we should try to shift visible items window to the left
+		first_item_idx = int(max(game_params.inventory.size() - MAX_VISIBLE_ITEMS, 0))
+		synchronize_items()
+		set_active_item(0)
 
 func remove_ui_quick_item(nam, count):
 	var ui_items = quick_items_panel.get_children()
