@@ -1,20 +1,19 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
-[ext_resource path="res://quick_items.gd" type="Script" id=3]
-[ext_resource path="res://styles/actorname_prev_font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=5]
-[ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=7]
-[ext_resource path="res://inventory.gd" type="Script" id=8]
-[ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=9]
-[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=10]
-[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=11]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=12]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=13]
-[ext_resource path="res://Gun_label.gd" type="Script" id=14]
-[ext_resource path="res://tablet.tscn" type="PackedScene" id=15]
+[ext_resource path="res://styles/actorname_prev_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://inventory.gd" type="Script" id=7]
+[ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=10]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=11]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
+[ext_resource path="res://Gun_label.gd" type="Script" id=13]
+[ext_resource path="res://tablet.tscn" type="PackedScene" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -39,7 +38,7 @@ corner_detail = 10
 [sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
-font_data = ExtResource( 13 )
+font_data = ExtResource( 12 )
 
 [node name="hud" type="Control"]
 anchor_right = 1.0
@@ -47,66 +46,50 @@ anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="ActionHintLabelAlt" type="Label" parent="."]
-anchor_top = 0.75
-anchor_right = 1.0
-anchor_bottom = 0.75
-grow_vertical = 0
-size_flags_horizontal = 3
-align = 1
-valign = 1
-
-[node name="HBoxQuickItems" type="HBoxContainer" parent="."]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-alignment = 1
-script = ExtResource( 3 )
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_top = 0.75
+anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
-alignment = 1
+alignment = 2
 
 [node name="MainHUD" type="VBoxContainer" parent="VBoxContainer"]
 margin_right = 1920.0
-margin_bottom = 270.0
+margin_bottom = 540.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 2
 
 [node name="HBoxHints" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
 editor/display_folded = true
+margin_top = 504.0
 margin_right = 1920.0
-margin_bottom = 270.0
+margin_bottom = 536.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="HintLabel" type="Label" parent="VBoxContainer/MainHUD/HBoxHints"]
-margin_top = 101.0
-margin_right = 202.0
-margin_bottom = 168.0
-text = "F -- фонарик
-Tab -- инвентарь"
+size_flags_vertical = 8
+alignment = 1
 
 [node name="ActionHintLabel" type="Label" parent="VBoxContainer/MainHUD/HBoxHints"]
-margin_left = 206.0
-margin_top = 119.0
 margin_right = 1920.0
-margin_bottom = 151.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 align = 1
 valign = 1
+
+[node name="HBoxQuickItems" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
+margin_left = 960.0
+margin_top = 540.0
+margin_right = 960.0
+margin_bottom = 540.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
 visible = false
-margin_top = 137.0
+margin_top = 272.0
 margin_right = 1920.0
-margin_bottom = 270.0
+margin_bottom = 540.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 0.501961 )
@@ -138,7 +121,7 @@ margin_right = 958.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
@@ -149,7 +132,7 @@ margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ConversationText"
 valign = 1
@@ -168,7 +151,7 @@ margin_right = 958.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
@@ -179,7 +162,7 @@ margin_right = 1920.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 6 )
 text = "ConversationText"
 valign = 1
 autowrap = true
@@ -229,13 +212,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
+editor/display_folded = true
 visible = false
+margin_top = 362.0
 margin_right = 1920.0
-margin_bottom = 270.0
+margin_bottom = 540.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
-script = ExtResource( 8 )
+script = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory"]
 anchor_right = 1.0
@@ -246,11 +231,11 @@ alignment = 1
 
 [node name="ArrowLeft" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_right = 180.0
-margin_bottom = 270.0
+margin_bottom = 206.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 9 )
+texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
 
@@ -262,15 +247,16 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowLeft/HBoxContainer"]
+margin_top = 87.0
 margin_right = 180.0
-margin_bottom = 270.0
+margin_bottom = 119.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/Inventory/HBoxContainer/ArrowLeft/HBoxContainer/VBoxContainer"]
 margin_right = 180.0
-margin_bottom = 270.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "B"
 align = 1
@@ -279,7 +265,7 @@ valign = 1
 [node name="InventoryContainer" type="HBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_left = 184.0
 margin_right = 1736.0
-margin_bottom = 270.0
+margin_bottom = 206.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 8
@@ -288,11 +274,11 @@ alignment = 1
 [node name="ArrowRight" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_left = 1740.0
 margin_right = 1920.0
-margin_bottom = 270.0
+margin_bottom = 206.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 10 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 
@@ -304,15 +290,16 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer/ArrowRight/HBoxContainer"]
+margin_top = 87.0
 margin_right = 180.0
-margin_bottom = 270.0
+margin_bottom = 119.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/Inventory/HBoxContainer/ArrowRight/HBoxContainer/VBoxContainer"]
 margin_right = 180.0
-margin_bottom = 270.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "N"
 align = 1
@@ -339,7 +326,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -351,7 +338,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -364,7 +351,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -377,7 +364,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Stats" type="Panel" parent="."]
@@ -421,7 +408,7 @@ margin_left = -72.0
 margin_top = -72.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/panel = ExtResource( 12 )
+custom_styles/panel = ExtResource( 11 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
@@ -431,7 +418,7 @@ grow_horizontal = 0
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
-script = ExtResource( 14 )
+script = ExtResource( 13 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -439,7 +426,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 15 )]
+[node name="tablet" parent="." instance=ExtResource( 14 )]
 visible = false
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="."]
@@ -448,7 +435,5 @@ margin_right = 274.0
 margin_bottom = 102.0
 popup_exclusive = true
 dialog_text = "Are you sure?"
-[connection signal="visibility_changed" from="VBoxContainer/Conversation" to="." method="_on_Conversation_visibility_changed"]
-[connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
 [connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]

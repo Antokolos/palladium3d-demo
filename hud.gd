@@ -1,8 +1,7 @@
 extends Control
 
 onready var main_hud = get_node("VBoxContainer/MainHUD")
-onready var quick_items_panel = get_node("HBoxQuickItems")
-onready var alt_hint = get_node("ActionHintLabelAlt")
+onready var quick_items_panel = main_hud.get_node("HBoxQuickItems")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
 onready var conversation = get_node("VBoxContainer/Conversation")
@@ -56,7 +55,6 @@ func on_resolution_changed(ID):
 		actorname_font.set_size(settings.available_resolutions[ID].actorname_font)
 		conversation_font.set_size(settings.available_resolutions[ID].conversation_font)
 		conversation_root.set("custom_constants/separation", settings.available_resolutions[ID].text_separation)
-	quick_items_panel.mark_restore()
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -93,10 +91,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
 		if inventory.visible:
 			inventory.visible = false
-			main_hud.visible = true
 		else:
 			inventory.visible = true
-			main_hud.visible = false
 	# ----------------------------------
 	
 	# ----------------------------------
@@ -138,8 +134,6 @@ func synchronize_items():
 	cleanup_panel(quick_items_panel)
 	for pos in range(0, game_params.MAX_QUICK_ITEMS):
 		insert_ui_quick_item(pos)
-	inventory.mark_restore()
-	quick_items_panel.mark_restore()
 
 func insert_ui_inventory_item(pos):
 	var new_item = load("res://item.tscn").instance()
@@ -306,21 +300,3 @@ func _unhandled_input(event):
 			if event.scancode >= KEY_1 and event.scancode <= KEY_6:
 				set_active_quick_item(event.scancode - KEY_1)
 				return
-
-func _on_Inventory_visibility_changed():
-	if inventory.visible:
-		quick_items_panel.anchor_top = 0.75
-		quick_items_panel.anchor_bottom = 0.75
-		quick_items_panel.margin_top = 0
-		quick_items_panel.margin_bottom = 0
-	else:
-		quick_items_panel.anchor_top = 1.0
-		quick_items_panel.anchor_bottom = 1.0
-		quick_items_panel.margin_top = 0
-		quick_items_panel.margin_bottom = 0
-
-func _on_Conversation_visibility_changed():
-	if conversation.visible:
-		quick_items_panel.hide()
-	else:
-		quick_items_panel.show()
