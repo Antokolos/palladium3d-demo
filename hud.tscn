@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -14,6 +14,13 @@
 [ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
 [ext_resource path="res://Gun_label.gd" type="Script" id=13]
 [ext_resource path="res://tablet.tscn" type="PackedScene" id=14]
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id=1]
 corner_radius_bottom_right = 90
@@ -61,9 +68,9 @@ alignment = 2
 
 [node name="HBoxHints" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
 editor/display_folded = true
-margin_top = 504.0
+margin_top = 468.0
 margin_right = 1920.0
-margin_bottom = 536.0
+margin_bottom = 500.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 alignment = 1
@@ -75,14 +82,36 @@ size_flags_horizontal = 3
 align = 1
 valign = 1
 
-[node name="HBoxQuickItems" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
+[node name="QuickItemsDimmer" type="PanelContainer" parent="VBoxContainer/MainHUD"]
 margin_left = 960.0
-margin_top = 540.0
+margin_top = 504.0
 margin_right = 960.0
-margin_bottom = 540.0
+margin_bottom = 504.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+custom_styles/panel = SubResource( 6 )
+
+[node name="HBoxQuickItems" type="HBoxContainer" parent="VBoxContainer/MainHUD/QuickItemsDimmer"]
+show_behind_parent = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 alignment = 1
+
+[node name="HBoxInfo" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
+editor/display_folded = true
+margin_top = 508.0
+margin_right = 1920.0
+margin_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+alignment = 1
+
+[node name="InfoLabel" type="Label" parent="VBoxContainer/MainHUD/HBoxInfo"]
+margin_right = 1920.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+align = 1
+valign = 1
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
@@ -435,5 +464,6 @@ margin_right = 274.0
 margin_bottom = 102.0
 popup_exclusive = true
 dialog_text = "Are you sure?"
+[connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
 [connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]

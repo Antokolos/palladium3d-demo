@@ -470,8 +470,8 @@ func set_sound_walk(mode):
 	stream.data = bytes
 	spl.stream = stream
 
-func take(nam, item_image, model_path):
-	game_params.take(nam, item_image, model_path)
+func take(nam):
+	game_params.take(nam)
 	var hud = get_hud()
 	if hud:
 		hud.synchronize_items()

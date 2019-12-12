@@ -9,6 +9,9 @@ extents = Vector3( 0.523002, 3.12578, 2.26724 )
 [node name="door_0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
+[node name="door_4001" parent="door_4_armature001" index="1"]
+transform = Transform( 0.62598, 0, 0, 0, -2.73626e-008, -0.62598, 0, 0.62598, -2.73626e-008, 0.388386, 0.68638, -0.375589 )
+
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]

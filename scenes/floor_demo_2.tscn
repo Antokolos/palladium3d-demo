@@ -38,7 +38,7 @@ extents = Vector3( 2.12705, 3.30995, 1.46975 )
 [sub_resource type="BoxShape" id=12]
 extents = Vector3( 1, 0.794213, 14.281 )
 
-[node name="floor_demo_2" index="0" instance=ExtResource( 1 )]
+[node name="floor_demo_2" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="912"]
 collision_layer = 3

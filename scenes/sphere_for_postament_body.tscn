@@ -10,7 +10,6 @@ radius = 0.0683383
 mode = 1
 script = ExtResource( 1 )
 item_name = "sphere_for_postament_body"
-model_path = "res://scenes/sphere_for_postament_body.tscn"
 level_path = "../.."
 item_in_parent = false
 

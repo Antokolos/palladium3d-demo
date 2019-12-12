@@ -13,7 +13,6 @@ pause_mode = 2
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 script = ExtResource( 2 )
 item_name = "statue_clio"
-model_path = "res://scenes/statue_2.tscn"
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0211213, 0 )

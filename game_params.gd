@@ -17,11 +17,19 @@ var story_vars = {
 "hope_on_pedestal" : false,
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
+var items = {
+	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
+	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://scenes/statue_4.tscn" },
+	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://scenes/statue_2.tscn" },
+	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://scenes/statue_3.tscn" },
+	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://scenes/statue_1.tscn" },
+	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hermes.tscn" },
+	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/sphere_for_postament_body.tscn" },
+}
 var inventory = [
-	{ "nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn", "count" : 1 }
 ]
 var quick_items = [
-	{ "nam" : "saffron_bun", "pos" : 0}
+	{ "nam" : "saffron_bun", "count" : 1 }
 ]
 var music = {}
 var current_music = null
@@ -95,18 +103,30 @@ func change_music_to(music_file_name):
 func stop_music():
 	$MusicPlayer.stop()
 
-func take(nam, item_image, model_path):
+func take(nam):
+	if not items.has(nam):
+		print("WARN: Unknown item name: " + nam)
+		return
+	var item_image = items[nam].item_image
+	var model_path = items[nam].model_path
+	var maxpos = 0
+	for quick_item in quick_items:
+		if not quick_item.nam:
+			quick_item.nam = nam
+			quick_item.count = 1
+			return
+		if nam == quick_item.nam:
+			quick_item.count = quick_item.count + 1
+			return
+		maxpos = maxpos + 1
+	if maxpos < MAX_QUICK_ITEMS:
+		quick_items.append({ "nam" : nam, "count" : 1 })
+		return
 	for item in inventory:
 		if nam == item.nam:
 			item.count = item.count + 1
 			return
-	inventory.append({ "nam" : nam, "item_image" : item_image, "model_path" : model_path, "count" : 1 })
-	var maxpos = 0
-	for quick_item in quick_items:
-		if quick_item.pos > maxpos:
-			maxpos = quick_item.pos
-	if maxpos < MAX_QUICK_ITEMS - 1:
-		quick_items.append({ "nam" : nam, "pos" : maxpos + 1})
+	inventory.append({ "nam" : nam, "count" : 1 })
 
 func remove(nam, count = 1):
 	var idx = 0
@@ -115,23 +135,42 @@ func remove(nam, count = 1):
 			item.count = item.count - count
 			if item.count <= 0:
 				inventory.remove(idx)
-				var quick_idx = 0
-				for quick_item in quick_items:
-					if nam == quick_item.nam:
-						quick_items.remove(quick_idx)
-						# No break here, because we should remove all quick items with this name
-					else:
-						quick_idx = quick_idx + 1
-			emit_signal("item_removed", item.nam, item.count)
+			emit_signal("item_removed", nam, item.count)
 			return
 		idx = idx + 1
+	for quick_item in quick_items:
+		if nam == quick_item.nam:
+			quick_item.count = quick_item.count - count
+			if quick_item.count <= 0:
+				quick_item.nam = null
+			emit_signal("item_removed", nam, quick_item.count)
+			return
 
 func set_quick_item(pos, nam):
+	if pos >= MAX_QUICK_ITEMS:
+		return
+	for i in range(quick_items.size(), pos + 1):
+		quick_items.append({ "nam" : null, "count" : 0 })
+	var existing_quick_item = quick_items[pos]
 	for quick_item in quick_items:
-		if pos == quick_item.pos:
-			quick_item.nam = nam
+		if nam == quick_item.nam:
+			var new_item = { "nam" : nam, "count" : quick_item.count }
+			quick_item.nam = existing_quick_item.nam
+			quick_item.count = existing_quick_item.count
+			quick_items[pos] = new_item
 			return
-	quick_items.append({ "nam" : nam, "pos" : pos})
+	var idx = 0
+	for item in inventory:
+		if nam == item.nam:
+			var new_item = { "nam" : nam, "count" : item.count }
+			if existing_quick_item.nam:
+				item.nam = existing_quick_item.nam
+				item.count = existing_quick_item.count
+			else:
+				inventory.remove(idx)
+			quick_items[pos] = new_item
+			return
+		idx = idx + 1
 
 func load_params(slot):
 	var player = get_node(player_path)

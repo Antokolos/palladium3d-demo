@@ -11,7 +11,6 @@ extents = Vector3( 0.1355, 0.431247, 0.178762 )
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 script = ExtResource( 2 )
 item_name = "statue_hermes"
-model_path = "res://scenes/statue_hermes.tscn"
 level_path = "../../.."
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]

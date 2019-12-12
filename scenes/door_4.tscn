@@ -6,8 +6,11 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.523002, 3.12578, 2.26724 )
 
-[node name="door_4" instance=ExtResource( 1 )]
+[node name="door_4" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="door_4001" parent="door_4_armature001" index="1"]
+transform = Transform( 0.62598, 0, 0, 0, -2.73626e-008, -0.62598, 0, 0.62598, -2.73626e-008, 0.380966, 0.66118, -0.36919 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 

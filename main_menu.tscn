@@ -98,7 +98,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308621, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.302101, 0 )
 
 [node name="menu_chest" parent="." instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79263, 1.21059, -1.79258 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79263, 1.18172, -1.79258 )
 
 [node name="load_rus" parent="menu_chest" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573952, 0.576237, 0.574753 )

@@ -1,7 +1,13 @@
 extends Control
 
+const MAX_VISIBLE_ITEMS = 3
+const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
+const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
+
 onready var main_hud = get_node("VBoxContainer/MainHUD")
-onready var quick_items_panel = main_hud.get_node("HBoxQuickItems")
+onready var quick_items_dimmer = main_hud.get_node("QuickItemsDimmer")
+onready var quick_items_panel = main_hud.get_node("QuickItemsDimmer/HBoxQuickItems")
+onready var info_label = main_hud.get_node("HBoxInfo/InfoLabel")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
 onready var conversation = get_node("VBoxContainer/Conversation")
@@ -11,8 +17,6 @@ onready var tablet = get_node("tablet")
 onready var indicator_crouch = get_node("Indicators/Indicators_border/IndicatorCrouch")
 onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
-
-const MAX_VISIBLE_ITEMS = 3
 
 var active_item_idx = 0
 var active_quick_item_idx = 0
@@ -85,14 +89,20 @@ func ask_quit():
 	get_tree().paused = true
 	$QuitDialog.popup_centered()
 
+func set_quick_items_dimmed(dimmed):
+	var panel_style = quick_items_dimmer.get("custom_styles/panel")
+	panel_style.set("bg_color", COLOR_DIMMED if dimmed else COLOR_TRANSPARENT)
+
 func _process(delta):
 	# ----------------------------------
 	# Inventory on/off
 	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
 		if inventory.visible:
 			inventory.visible = false
+			select_active_quick_item()
 		else:
 			inventory.visible = true
+			select_active_item()
 	# ----------------------------------
 	
 	# ----------------------------------
@@ -139,7 +149,7 @@ func insert_ui_inventory_item(pos):
 	var new_item = load("res://item.tscn").instance()
 	var i = first_item_idx + pos
 	if i >= 0 and i < game_params.inventory.size():
-		new_item.set_item_data(game_params.inventory[i])
+		new_item.set_item_data(game_params.inventory[i].nam)
 	inventory_panel.add_child(new_item)
 	if pos < inventory_panel.get_child_count() - 1:
 		inventory_panel.move_child(new_item, pos)
@@ -148,26 +158,13 @@ func insert_ui_inventory_item(pos):
 func insert_ui_quick_item(pos):
 	var new_item = load("res://item.tscn").instance()
 	new_item.set_appearance(true, false)
-	for quick_item in game_params.quick_items:
-		if pos == quick_item.pos:
-			for item in game_params.inventory:
-				if quick_item.nam == item.nam:
-					new_item.set_item_data(item)
-					break
-			break
+	if pos < game_params.quick_items.size():
+		var quick_item = game_params.quick_items[pos]
+		if quick_item.nam:
+			new_item.set_item_data(quick_item.nam)
 	quick_items_panel.add_child(new_item)
 	if pos < quick_items_panel.get_child_count() - 1:
 		quick_items_panel.move_child(new_item, pos)
-	select_active_quick_item()
-
-func refresh_ui_quick_item(pos):
-	for quick_item in game_params.quick_items:
-		if pos == quick_item.pos:
-			for item in game_params.inventory:
-				if quick_item.nam == item.nam:
-					quick_items_panel.get_child(pos).set_item_data(item)
-					break
-			break
 	select_active_quick_item()
 
 func remove_ui_inventory_item(nam, count):
@@ -229,6 +226,8 @@ func select_active_item():
 			if idx == active_item_idx:
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
+				if inventory.is_visible_in_tree():
+					info_label.text = "T: Сменить быстрый предмет"
 			else:
 				items[idx].set_selected(false)
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
@@ -247,7 +246,10 @@ func select_active_quick_item():
 		return
 	var idx = 0
 	for item in items:
-		items[idx].set_selected(idx == active_quick_item_idx)
+		var is_active = idx == active_quick_item_idx
+		items[idx].set_selected(is_active)
+		if is_active and not inventory.is_visible_in_tree():
+			info_label.text = tr(items[idx].nam) if items[idx].nam else ""
 		idx = idx + 1
 
 func set_active_quick_item(item_idx):
@@ -265,6 +267,9 @@ func get_active_item():
 	if is_valid_quick_index(active_quick_item_idx) and quick_items_panel.get_child(active_quick_item_idx).nam:
 		return quick_items_panel.get_child(active_quick_item_idx)
 	return null
+
+func _on_Inventory_visibility_changed():
+	set_quick_items_dimmed(inventory.is_visible_in_tree())
 
 func _on_QuitDialog_confirmed():
 	get_tree().quit()
@@ -291,7 +296,7 @@ func _unhandled_input(event):
 				var item = get_active_item()
 				if item:
 					game_params.set_quick_item(active_quick_item_idx, item.nam)
-					refresh_ui_quick_item(active_quick_item_idx)
+					synchronize_items()
 				return
 			if event.scancode >= KEY_F1 and event.scancode <= KEY_F6:
 				set_active_item(event.scancode - KEY_F1)

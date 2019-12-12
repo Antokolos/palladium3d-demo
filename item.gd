@@ -27,8 +27,12 @@ func set_appearance(is_quick_item, selected):
 		label_desc.show()
 	set_selected(selected)
 
-func set_item_data(item_data):
-	self.nam = item_data.nam
+func set_item_data(nam):
+	if not game_params.items.has(nam):
+		print("WARN: Unknown item name in set_item_data: " + nam)
+		return
+	var item_data = game_params.items[nam]
+	self.nam = nam
 	self.item_image = item_data.item_image
 	self.model_path = item_data.model_path
 	var image_file = "res://assets/items/%s" % item_image
