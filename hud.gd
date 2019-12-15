@@ -149,7 +149,7 @@ func insert_ui_inventory_item(pos):
 	var new_item = load("res://item.tscn").instance()
 	var i = first_item_idx + pos
 	if i >= 0 and i < game_params.inventory.size():
-		new_item.set_item_data(game_params.inventory[i].nam)
+		new_item.set_item_data(game_params.inventory[i].nam, game_params.inventory[i].count)
 	inventory_panel.add_child(new_item)
 	if pos < inventory_panel.get_child_count() - 1:
 		inventory_panel.move_child(new_item, pos)
@@ -161,7 +161,7 @@ func insert_ui_quick_item(pos):
 	if pos < game_params.quick_items.size():
 		var quick_item = game_params.quick_items[pos]
 		if quick_item.nam:
-			new_item.set_item_data(quick_item.nam)
+			new_item.set_item_data(quick_item.nam, quick_item.count)
 	quick_items_panel.add_child(new_item)
 	if pos < quick_items_panel.get_child_count() - 1:
 		quick_items_panel.move_child(new_item, pos)

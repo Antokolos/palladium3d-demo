@@ -52,6 +52,20 @@ size_flags_vertical = 4
 expand = true
 stretch_mode = 7
 
+[node name="LabelCount" type="Label" parent="ItemBox/TextureRect"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "1"
+align = 2
+valign = 2
+
 [node name="LabelDesc" type="Label" parent="ItemBox"]
 margin_top = 186.0
 margin_right = 216.0

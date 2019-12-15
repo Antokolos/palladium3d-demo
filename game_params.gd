@@ -1,5 +1,6 @@
 extends Node
 
+signal item_taken(nam, count)
 signal item_removed(nam, count)
 
 const MAX_QUICK_ITEMS = 3
@@ -114,19 +115,24 @@ func take(nam):
 		if not quick_item.nam:
 			quick_item.nam = nam
 			quick_item.count = 1
+			emit_signal("item_taken", nam, quick_item.count)
 			return
 		if nam == quick_item.nam:
 			quick_item.count = quick_item.count + 1
+			emit_signal("item_taken", nam, quick_item.count)
 			return
 		maxpos = maxpos + 1
 	if maxpos < MAX_QUICK_ITEMS:
 		quick_items.append({ "nam" : nam, "count" : 1 })
+		emit_signal("item_taken", nam, 1)
 		return
 	for item in inventory:
 		if nam == item.nam:
 			item.count = item.count + 1
+			emit_signal("item_taken", nam, item.count)
 			return
 	inventory.append({ "nam" : nam, "count" : 1 })
+	emit_signal("item_taken", nam, 1)
 
 func remove(nam, count = 1):
 	var idx = 0
