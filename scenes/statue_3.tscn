@@ -7,10 +7,12 @@
 radius = 0.164987
 height = 0.795663
 
-[node name="statue_3" index="0" instance=ExtResource( 1 )]
+[node name="statue_3" instance=ExtResource( 1 )]
 pause_mode = 2
 
-[node name="StaticBody" type="StaticBody" parent="." index="1"]
+[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+"restorable_state",
+]]
 script = ExtResource( 2 )
 item_name = "statue_melpomene"
 

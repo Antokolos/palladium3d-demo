@@ -8,7 +8,9 @@ extents = Vector3( 0.1355, 0.431247, 0.178762 )
 
 [node name="statue_hermes" instance=ExtResource( 1 )]
 
-[node name="StaticBody" type="StaticBody" parent="." index="1"]
+[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+"restorable_state",
+]]
 script = ExtResource( 2 )
 item_name = "statue_hermes"
 level_path = "../../.."

@@ -268,6 +268,9 @@ func get_active_item():
 		return quick_items_panel.get_child(active_quick_item_idx)
 	return null
 
+func restore_state():
+	synchronize_items()
+
 func _on_Inventory_visibility_changed():
 	set_quick_items_dimmed(inventory.is_visible_in_tree())
 

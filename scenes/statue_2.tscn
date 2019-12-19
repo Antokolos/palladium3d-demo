@@ -10,7 +10,9 @@ height = 0.777792
 [node name="statue_2" instance=ExtResource( 1 )]
 pause_mode = 2
 
-[node name="StaticBody" type="StaticBody" parent="." index="1"]
+[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+"restorable_state",
+]]
 script = ExtResource( 2 )
 item_name = "statue_clio"
 

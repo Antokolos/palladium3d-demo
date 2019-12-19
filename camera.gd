@@ -97,6 +97,10 @@ func change_culling():
 	if culling_rays:
 		self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
 
+func restore_state():
+	if game_params.story_vars.flashlight_on:
+		flashlight.show()
+
 func _process(delta):
 	# ----------------------------------
 	# Turning the flashlight on/off
@@ -104,9 +108,11 @@ func _process(delta):
 		if flashlight.is_visible_in_tree():
 			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
+			game_params.story_vars.flashlight_on = false
 		else:
 			$AudioStreamFlashlightOn.play()
 			flashlight.show()
+			game_params.story_vars.flashlight_on = true
 	# ----------------------------------
 	
 	if use_point:

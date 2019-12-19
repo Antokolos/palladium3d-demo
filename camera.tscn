@@ -14,7 +14,9 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.24, 0.36, 0.2 )
 
-[node name="camera" type="Camera"]
+[node name="camera" type="Camera" groups=[
+"restorable_state",
+]]
 environment = ExtResource( 1 )
 current = true
 fov = 55.0

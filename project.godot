@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Spatial",
+"class": "Door",
+"language": "GDScript",
+"path": "res://door.gd"
+}, {
+"base": "Spatial",
 "class": "MenuItem",
 "language": "GDScript",
 "path": "res://menu_item.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://tablet.gd"
 } ]
 _global_script_class_icons={
+"Door": "",
 "MenuItem": "",
 "Tablet": ""
 }

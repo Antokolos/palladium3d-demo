@@ -1,6 +1,8 @@
 extends StaticBody
 
 export var level_path = "../../.."
+enum PedestalIds { NONE = 0, APATA = 1 }
+export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
 func use(player_node):
 	var hud = player_node.get_hud()
@@ -41,7 +43,7 @@ func use(player_node):
 			for child in pedestal_history.get_children():
 				if "statue_name" in child and child.statue_name != "statue_clio":
 					return
-			level.get_door("door_4").activate()
+			level.get_door("door_4").open()
 			game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
 			level.get_node("ceiling_moving_1").deactivate()
 			level.get_node("door_3").close()
@@ -51,6 +53,11 @@ func use(player_node):
 			var inst = item.get_model_instance()
 			get_parent().add_child(inst)
 			game_params.story_vars.hope_on_pedestal = true
+
+func restore_state():
+	if pedestal_id == PedestalIds.APATA and game_params.story_vars.hope_on_pedestal:
+		var inst = load("res://scenes/sphere_for_postament_body.tscn").instance()
+		get_parent().add_child(inst)
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)

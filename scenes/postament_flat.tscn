@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.299333, 0.445118, 0.287234 )
 
-[node name="postament_flat" index="0" instance=ExtResource( 1 )]
+[node name="postament_flat" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 

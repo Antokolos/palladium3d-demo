@@ -12,6 +12,7 @@ var companion_path = null
 enum ApataTrapStages { ARMED = 0, GOING_DOWN = 1, PAUSED = 2, DISABLED = 3 }
 var story_vars = {
 "is_game_start" : true,
+"flashlight_on" : false,
 "apata_chest_rigid" : 0,
 "relationship_female" : 0,
 "relationship_bandit" : 0,
@@ -32,6 +33,13 @@ var inventory = [
 var quick_items = [
 	{ "nam" : "saffron_bun", "count" : 1 }
 ]
+var doors = {
+	str(Door.DoorIds.NONE) : false,
+	str(Door.DoorIds.APATA_TRAP_INNER) : true,
+	str(Door.DoorIds.APATA_SAVE_INNER) : false,
+	str(Door.DoorIds.APATA_SAVE_OUTER) : false,
+	str(Door.DoorIds.ERIDA_TRAP_INNER) : false
+}
 var music = {}
 var current_music = null
 var is_loop = {
@@ -103,6 +111,17 @@ func change_music_to(music_file_name):
 
 func stop_music():
 	$MusicPlayer.stop()
+
+func has_item(nam):
+	if not nam:
+		return false
+	for quick_item in quick_items:
+		if nam == quick_item.nam:
+			return true
+	for item in inventory:
+		if nam == item.nam:
+			return true
+	return false
 
 func take(nam):
 	if not items.has(nam):
@@ -178,6 +197,12 @@ func set_quick_item(pos, nam):
 			return
 		idx = idx + 1
 
+func is_door_opened(door_id):
+	return doors.has(str(door_id)) and doors[str(door_id)]
+
+func set_door_opened(door_id, opened):
+	doors[str(door_id)] = opened
+
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
@@ -238,6 +263,11 @@ func load_params(slot):
 	
 	if ("quick_items" in d):
 		quick_items = d.quick_items
+	
+	if ("doors" in d):
+		doors = d.doors
+	
+	get_tree().call_group("restorable_state", "restore_state")
 
 func save_params(slot):
 	var f = File.new()
@@ -269,7 +299,8 @@ func save_params(slot):
 		],
 		"story_vars" : story_vars,
 		"inventory" : inventory,
-		"quick_items" : quick_items
+		"quick_items" : quick_items,
+		"doors" : doors
 	}
 	f.store_line( to_json(d) )
 

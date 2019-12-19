@@ -19,11 +19,14 @@ func use(player_node):
 				return
 	elif item_name == "statue_hermes":
 		var level = get_node(level_path)
-		level.get_door("door_5").activate()
-		level.get_door("door_8").activate()
+		level.get_door("door_5").open()
+		level.get_door("door_8").open()
 	
 	player_node.take(item_name)
 	
+	free_item()
+
+func free_item():
 	if item_in_parent:
 		get_parent().queue_free()
 	else:
@@ -44,3 +47,9 @@ func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
 	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
 	pass
+
+func restore_state():
+	if game_params.has_item(item_name):
+		free_item()
+	if item_name == "sphere_for_postament_body" and game_params.story_vars.hope_on_pedestal:
+		free_item()

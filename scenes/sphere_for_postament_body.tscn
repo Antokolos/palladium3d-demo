@@ -6,7 +6,9 @@
 [sub_resource type="SphereShape" id=1]
 radius = 0.0683383
 
-[node name="sphere_for_postament_body" type="RigidBody"]
+[node name="sphere_for_postament_body" type="RigidBody" groups=[
+"restorable_state",
+]]
 mode = 1
 script = ExtResource( 1 )
 item_name = "sphere_for_postament_body"

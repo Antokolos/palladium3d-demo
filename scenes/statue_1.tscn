@@ -10,7 +10,9 @@ height = 0.741434
 [node name="statue_1" instance=ExtResource( 1 )]
 pause_mode = 2
 
-[node name="StaticBody" type="StaticBody" parent="." index="1"]
+[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+"restorable_state",
+]]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]

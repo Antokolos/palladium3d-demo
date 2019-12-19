@@ -47,7 +47,9 @@ size = 42
 use_filter = true
 font_data = ExtResource( 12 )
 
-[node name="hud" type="Control"]
+[node name="hud" type="Control" groups=[
+"restorable_state",
+]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )

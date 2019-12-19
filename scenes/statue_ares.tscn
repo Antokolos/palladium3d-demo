@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.146272, 0.488243, 0.102511 )
 
-[node name="statue_ares" index="0" instance=ExtResource( 1 )]
+[node name="statue_ares" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 

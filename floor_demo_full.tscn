@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=2]
@@ -57,8 +57,14 @@
 [ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=55]
 [ext_resource path="res://scenes/scales.tscn" type="PackedScene" id=56]
 [ext_resource path="res://scenes/hermes_bench.tscn" type="PackedScene" id=57]
-[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=58]
-[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=59]
+[ext_resource path="res://scenes/coin_pile_small.tscn" type="PackedScene" id=58]
+[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=59]
+[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=60]
+[ext_resource path="res://scenes/labyrinth_skeleton_2.tscn" type="PackedScene" id=61]
+[ext_resource path="res://scenes/halberd.tscn" type="PackedScene" id=62]
+[ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=63]
+[ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=64]
+[ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=65]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
@@ -379,7 +385,7 @@ transform = Transform( 0.703002, 0, 0.711188, 0, 1, 0, -0.711188, 0, 0.703002, -
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4693, 1.20149, 31.1517 )
 
 [node name="postament_flat" parent="." instance=ExtResource( 34 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0957, 1.198, 20.4014 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0957, 1.198, 21.0621 )
 
 [node name="statue_erida" parent="postament_flat" instance=ExtResource( 35 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48142, -0.0213776 )
@@ -427,9 +433,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 1.19212, 26.8606 )
 [node name="pedestal_apata" type="Spatial" parent="postament_sphere"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0 )
 
-[node name="StaticBody2" type="StaticBody" parent="postament_sphere/pedestal_apata"]
+[node name="StaticBody2" type="StaticBody" parent="postament_sphere/pedestal_apata" groups=[
+"restorable_state",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0664639, 0 )
 script = ExtResource( 6 )
+pedestal_id = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="postament_sphere/pedestal_apata/StaticBody2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.317817, 0 )
@@ -507,11 +516,32 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.492124, 0.800344, 0.354343 
 [node name="vase_8" parent="hermes_bench" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10435, 0.847464, -0.251385 )
 
-[node name="hermes_mosaic" parent="." instance=ExtResource( 58 )]
+[node name="coin_pile_small" parent="hermes_bench/vase_8" instance=ExtResource( 58 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.0761054, 0.00997353 )
+
+[node name="hermes_mosaic" parent="." instance=ExtResource( 59 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 11.1219, 4.19836, 17.7641 )
 
-[node name="hermes_mosaic_2" parent="." instance=ExtResource( 59 )]
+[node name="hermes_mosaic_2" parent="." instance=ExtResource( 60 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2328, 1.23007, 25.0973 )
+
+[node name="labyrinth_skeleton_2" parent="." instance=ExtResource( 61 )]
+transform = Transform( 0.414061, 0, 0.910249, 0, 1, 0, -0.910249, 0, 0.414061, -17.4571, 1.17933, 35.5966 )
+
+[node name="halberd" parent="labyrinth_skeleton_2" instance=ExtResource( 62 )]
+transform = Transform( 0.659541, -0.751053, 0.0304505, -0.0340106, 0.0106518, 0.999365, -0.7509, -0.660158, -0.018518, 0.252914, 0.0681618, -1.91863 )
+
+[node name="labyrinth_skeleton_3" parent="." instance=ExtResource( 63 )]
+transform = Transform( 0.751161, 0, 0.660119, 0, 1, 0, -0.660119, 0, 0.751161, -23.2384, 1.31181, 32.7502 )
+
+[node name="musket" parent="labyrinth_skeleton_3" instance=ExtResource( 64 )]
+transform = Transform( 0.132498, 0.990297, 0.0418944, -0.00522408, 0.0429642, -0.999063, -0.99117, 0.132156, 0.0108662, -1.30611, -0.103672, -1.14781 )
+
+[node name="labyrinth_skeleton_4" parent="." instance=ExtResource( 65 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7646, 1.29492, 36.9828 )
+
+[node name="halberd2" parent="labyrinth_skeleton_4" instance=ExtResource( 62 )]
+transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.999365, 0.251888, -0.967573, 0.0188852, 0.868708, -0.0912944, -0.0180588 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
