@@ -40,6 +40,13 @@ var doors = {
 	str(Door.DoorIds.APATA_SAVE_OUTER) : false,
 	str(Door.DoorIds.ERIDA_TRAP_INNER) : false
 }
+enum LightState {
+	DEFAULT = 0,
+	ON = 1,
+	OFF = 2
+}
+var lights = {
+}
 var music = {}
 var current_music = null
 var is_loop = {
@@ -201,7 +208,18 @@ func is_door_opened(door_id):
 	return doors.has(str(door_id)) and doors[str(door_id)]
 
 func set_door_opened(door_id, opened):
+	if door_id == Door.DoorIds.NONE:
+		return
 	doors[str(door_id)] = opened
+
+func get_light_state(light_path):
+	var id = scene_path + ":" + light_path
+	if not lights.has(id):
+		return LightState.DEFAULT
+	return LightState.ON if lights[id] else LightState.OFF
+
+func set_light_state(light_path, state):
+	lights[scene_path + ":" + light_path] = state
 
 func load_params(slot):
 	var player = get_node(player_path)
@@ -267,6 +285,9 @@ func load_params(slot):
 	if ("doors" in d):
 		doors = d.doors
 	
+	if ("lights" in d):
+		lights = d.lights
+	
 	get_tree().call_group("restorable_state", "restore_state")
 
 func save_params(slot):
@@ -300,7 +321,8 @@ func save_params(slot):
 		"story_vars" : story_vars,
 		"inventory" : inventory,
 		"quick_items" : quick_items,
-		"doors" : doors
+		"doors" : doors,
+		"lights" : lights
 	}
 	f.store_line( to_json(d) )
 

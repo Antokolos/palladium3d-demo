@@ -19,12 +19,21 @@ func use(player_node):
 		$AudioStreamBurning.stop()
 	torch_fire.enable(burning)
 	torch_light.enable(burning)
+	game_params.set_light_state(get_path(), burning)
 
 func add_highlight(player_node):
 	return ("E: Потушить факел" if burning else "E: Зажечь факел")
 
 func remove_highlight(player_node):
 	pass
+
+func restore_state():
+	var light_state = game_params.get_light_state(get_path())
+	if light_state == game_params.LightState.DEFAULT:
+		return
+	burning = (light_state == game_params.LightState.ON)
+	torch_fire.enable(burning)
+	torch_light.enable(burning)
 
 func _on_AudioStreamLighter_finished():
 	$AudioStreamBurning.play()
