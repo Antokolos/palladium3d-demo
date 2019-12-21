@@ -33,17 +33,17 @@ var inventory = [
 var quick_items = [
 	{ "nam" : "saffron_bun", "count" : 1 }
 ]
-var doors = {
-	str(Door.DoorIds.NONE) : false,
-	str(Door.DoorIds.APATA_TRAP_INNER) : true,
-	str(Door.DoorIds.APATA_SAVE_INNER) : false,
-	str(Door.DoorIds.APATA_SAVE_OUTER) : false,
-	str(Door.DoorIds.ERIDA_TRAP_INNER) : false
+enum DoorState {
+	DEFAULT = 0,
+	OPENED = 1,
+	CLOSED = 2
 }
 enum LightState {
 	DEFAULT = 0,
 	ON = 1,
 	OFF = 2
+}
+var doors = {
 }
 var lights = {
 }
@@ -204,13 +204,14 @@ func set_quick_item(pos, nam):
 			return
 		idx = idx + 1
 
-func is_door_opened(door_id):
-	return doors.has(str(door_id)) and doors[str(door_id)]
+func get_door_state(door_path):
+	var id = scene_path + ":" + door_path
+	if not doors.has(id):
+		return DoorState.DEFAULT
+	return DoorState.OPENED if doors[id] else DoorState.CLOSED
 
-func set_door_opened(door_id, opened):
-	if door_id == Door.DoorIds.NONE:
-		return
-	doors[str(door_id)] = opened
+func set_door_state(door_path, opened):
+	doors[scene_path + ":" + door_path] = opened
 
 func get_light_state(light_path):
 	var id = scene_path + ":" + light_path
@@ -218,8 +219,8 @@ func get_light_state(light_path):
 		return LightState.DEFAULT
 	return LightState.ON if lights[id] else LightState.OFF
 
-func set_light_state(light_path, state):
-	lights[scene_path + ":" + light_path] = state
+func set_light_state(light_path, active):
+	lights[scene_path + ":" + light_path] = active
 
 func load_params(slot):
 	var player = get_node(player_path)

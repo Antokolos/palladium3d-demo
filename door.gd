@@ -9,6 +9,7 @@ enum DoorIds {
 	ERIDA_TRAP_INNER = 40
 }
 export(DoorIds) var door_id = DoorIds.NONE
+export var initially_opened = false
 
 func _ready():
 	restore_state()
@@ -16,15 +17,20 @@ func _ready():
 func open():
 	get_node("door_4_armature001/AnimationPlayer").play("door_4_armatureAction.001")
 	get_node("StaticBody/CollisionShape").disabled = true
-	game_params.set_door_opened(door_id, true)
+	game_params.set_door_state(get_path(), true)
 
 func close():
 	get_node("door_4_armature001/AnimationPlayer").play_backwards("door_4_armatureAction.001")
 	get_node("StaticBody/CollisionShape").disabled = false
-	game_params.set_door_opened(door_id, false)
+	game_params.set_door_state(get_path(), false)
 
 func restore_state():
-	if game_params.is_door_opened(door_id):
+	var state = game_params.get_door_state(get_path())
+	if state == game_params.DoorState.DEFAULT:
+		if initially_opened:
+			open()
+		return
+	if state == game_params.DoorState.OPENED:
 		open()
 	else:
 		close()
