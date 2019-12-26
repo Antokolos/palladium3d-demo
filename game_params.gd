@@ -43,9 +43,23 @@ enum LightState {
 	ON = 1,
 	OFF = 2
 }
+enum ContainerState {
+	DEFAULT = 0,
+	OPENED = 1,
+	CLOSED = 2
+}
+enum TakableState {
+	DEFAULT = 0,
+	PRESENT = 1,
+	TAKEN = 2
+}
 var doors = {
 }
 var lights = {
+}
+var containers = {
+}
+var takables = {
 }
 var music = {}
 var current_music = null
@@ -222,6 +236,24 @@ func get_light_state(light_path):
 func set_light_state(light_path, active):
 	lights[scene_path + ":" + light_path] = active
 
+func get_container_state(container_path):
+	var id = scene_path + ":" + container_path
+	if not containers.has(id):
+		return ContainerState.DEFAULT
+	return ContainerState.OPENED if containers[id] else ContainerState.CLOSED
+
+func set_container_state(container_path, opened):
+	containers[scene_path + ":" + container_path] = opened
+
+func get_takable_state(takable_path):
+	var id = scene_path + ":" + takable_path
+	if not takables.has(id):
+		return TakableState.DEFAULT
+	return TakableState.TAKEN if takables[id] else TakableState.PRESENT
+
+func set_takable_state(takable_path, taken):
+	takables[scene_path + ":" + takable_path] = taken
+
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
@@ -289,6 +321,12 @@ func load_params(slot):
 	if ("lights" in d):
 		lights = d.lights
 	
+	if ("containers" in d):
+		containers = d.containers
+	
+	if ("takables" in d):
+		takables = d.takables
+	
 	get_tree().call_group("restorable_state", "restore_state")
 
 func save_params(slot):
@@ -323,7 +361,9 @@ func save_params(slot):
 		"inventory" : inventory,
 		"quick_items" : quick_items,
 		"doors" : doors,
-		"lights" : lights
+		"lights" : lights,
+		"containers" : containers,
+		"takables" : takables
 	}
 	f.store_line( to_json(d) )
 

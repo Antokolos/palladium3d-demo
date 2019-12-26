@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/apata_chest.gd" type="Script" id=1]
+[ext_resource path="res://item_container.gd" type="Script" id=1]
 [ext_resource path="res://scenes/apatha_chest.tscn" type="PackedScene" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -22,7 +22,9 @@ extents = Vector3( 0.900902, 0.524562, 0.0612238 )
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.816781, 0.0795784, 0.493305 )
 
-[node name="apata_chest" type="RigidBody"]
+[node name="apata_chest" type="RigidBody" groups=[
+"restorable_state",
+]]
 mode = 1
 mass = 500.0
 physics_material_override = SubResource( 1 )
