@@ -470,11 +470,5 @@ func set_sound_walk(mode):
 	stream.data = bytes
 	spl.stream = stream
 
-func take(nam):
-	game_params.take(nam)
-	var hud = get_hud()
-	if hud:
-		hud.synchronize_items()
-
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

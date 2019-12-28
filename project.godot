@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Tablet",
 "language": "GDScript",
 "path": "res://tablet.gd"
+}, {
+"base": "PhysicsBody",
+"class": "Takable",
+"language": "GDScript",
+"path": "res://takable.gd"
 } ]
 _global_script_class_icons={
 "Door": "",
 "ItemContainer": "",
 "LightSource": "",
 "MenuItem": "",
-"Tablet": ""
+"Tablet": "",
+"Takable": ""
 }
 
 [application]

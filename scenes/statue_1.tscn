@@ -1,20 +1,21 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/statue_1.escn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/takable.gd" type="Script" id=2]
+[ext_resource path="res://takable.gd" type="Script" id=1]
+[ext_resource path="res://assets/statue_1.escn" type="PackedScene" id=2]
+
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.138866
 height = 0.741434
 
-[node name="statue_1" instance=ExtResource( 1 )]
-pause_mode = 2
-
-[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+[node name="statue_1" type="StaticBody" groups=[
 "restorable_state",
 ]]
-script = ExtResource( 2 )
+script = ExtResource( 1 )
+takable_id = 20
 
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0104329, 0 )
 shape = SubResource( 1 )
+
+[node name="statue_1" parent="CollisionShape" instance=ExtResource( 2 )]

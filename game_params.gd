@@ -27,6 +27,14 @@ var items = {
 	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://scenes/statue_1.tscn" },
 	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hermes.tscn" },
 	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/sphere_for_postament_body.tscn" },
+	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_ares.tscn" },
+	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_erida.tscn" },
+	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_artemida.tscn" },
+	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_aphrodite.tscn" },
+	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hebe.tscn" },
+	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/hera_statue.tscn" },
+	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_apollo.tscn" },
+	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_athena.tscn" },
 }
 var inventory = [
 ]
@@ -51,7 +59,7 @@ enum ContainerState {
 enum TakableState {
 	DEFAULT = 0,
 	PRESENT = 1,
-	TAKEN = 2
+	ABSENT = 2
 }
 var doors = {
 }
@@ -249,10 +257,10 @@ func get_takable_state(takable_path):
 	var id = scene_path + ":" + takable_path
 	if not takables.has(id):
 		return TakableState.DEFAULT
-	return TakableState.TAKEN if takables[id] else TakableState.PRESENT
+	return TakableState.ABSENT if takables[id] else TakableState.PRESENT
 
-func set_takable_state(takable_path, taken):
-	takables[scene_path + ":" + takable_path] = taken
+func set_takable_state(takable_path, absent):
+	takables[scene_path + ":" + takable_path] = absent
 
 func load_params(slot):
 	var player = get_node(player_path)
