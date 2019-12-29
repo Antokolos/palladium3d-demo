@@ -95,6 +95,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.480825, 0.891173, 0.238459 )
 [node name="pedestal_theatre" parent="granite_base_1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.135, 0 )
 level_path = "../.."
+pedestal_id = 20
 
 [node name="statue_1" parent="granite_base_1/pedestal_theatre" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.349937, 0 )
@@ -102,21 +103,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.349937, 0 )
 [node name="statue_2" parent="granite_base_1/pedestal_theatre" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.388873, 0 )
 visible = false
-initially_present = false
 
 [node name="statue_3" parent="granite_base_1/pedestal_theatre" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.471928, 0 )
 visible = false
-initially_present = false
 
 [node name="pedestal_astronomy" parent="granite_base_1" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.104, 1.133, 0 )
 level_path = "../.."
+pedestal_id = 20
 
 [node name="statue_1" parent="granite_base_1/pedestal_astronomy" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.351914, 0 )
 visible = false
-initially_present = false
 
 [node name="statue_2" parent="granite_base_1/pedestal_astronomy" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383149, 0 )
@@ -124,21 +123,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383149, 0 )
 [node name="statue_3" parent="granite_base_1/pedestal_astronomy" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.473887, 0 )
 visible = false
-initially_present = false
 
 [node name="pedestal_history" parent="granite_base_1" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.165, 1.132, 0 )
 level_path = "../.."
+pedestal_id = 20
 
 [node name="statue_1" parent="granite_base_1/pedestal_history" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.361193, 0 )
 visible = false
-initially_present = false
 
 [node name="statue_2" parent="granite_base_1/pedestal_history" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38015, 0 )
 visible = false
-initially_present = false
 
 [node name="statue_3" parent="granite_base_1/pedestal_history" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000478745, 0.443215, 0 )
@@ -412,7 +409,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15181, 1.21748, 20.6024 )
 [node name="statue_hermes" parent="postament_1" instance=ExtResource( 39 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
 visible = false
-initially_present = false
 
 [node name="postament_4" parent="." instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5163, 1.19309, 20.7609 )
@@ -420,15 +416,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5163, 1.19309, 20.7609 )
 [node name="statue_ares" parent="postament_4" instance=ExtResource( 38 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39803, 0 )
 visible = false
-initially_present = false
 
 [node name="postament_1_1" parent="." instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
+pedestal_id = 30
 
 [node name="statue_hermes" parent="postament_1_1" instance=ExtResource( 39 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
-initially_present = false
 
 [node name="door_debris" parent="." instance=ExtResource( 44 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83106, 1.759, 33.1479 )
@@ -443,6 +438,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.602235, 0 )
 
 [node name="pedestal_apata" parent="." instance=ExtResource( 48 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 2.02566, 26.8606 )
+pedestal_id = 10
 
 [node name="statue_4" parent="pedestal_apata" instance=ExtResource( 49 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.484857, 0 )
@@ -451,7 +447,6 @@ exclusive = false
 [node name="sphere_for_postament_body" parent="pedestal_apata" instance=ExtResource( 47 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017519, 0 )
 visible = false
-initially_present = false
 exclusive = false
 
 [node name="chest_2" parent="." instance=ExtResource( 50 )]

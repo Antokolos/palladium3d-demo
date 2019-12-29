@@ -16,7 +16,6 @@ var story_vars = {
 "apata_chest_rigid" : 0,
 "relationship_female" : 0,
 "relationship_bandit" : 0,
-"hope_on_pedestal" : false,
 "apata_trap_stage" : ApataTrapStages.ARMED
 }
 var items = {

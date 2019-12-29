@@ -1,6 +1,8 @@
 extends PhysicsBody
 class_name Takable
 
+signal use_takable(player_node, takable, parent)
+
 enum TakableIds {
 	NONE = 0,
 	APATA = 10,
@@ -19,13 +21,15 @@ enum TakableIds {
 	SPHERE_FOR_POSTAMENT = 140
 }
 export(TakableIds) var takable_id = TakableIds.NONE
-export var initially_present = true
 export var level_path = "../../.."
-
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
 
+onready var initially_present = visible
+
 func _ready():
+	var level = get_node(level_path)
+	connect("use_takable", level, "use_takable")
 	restore_state()
 
 func get_item_name():
@@ -64,23 +68,7 @@ func get_item_name():
 			return null
 
 func use(player_node):
-	if takable_id == TakableIds.APATA:
-		match game_params.story_vars.apata_trap_stage:
-			game_params.ApataTrapStages.ARMED:
-				var level = get_node(level_path)
-				level.get_door("door_0").close()
-				level.get_node("ceiling_moving_1").activate()
-				conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
-				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
-			game_params.ApataTrapStages.GOING_DOWN:
-				pass
-			_:
-				return
-	elif takable_id == TakableIds.HERMES:
-		var level = get_node(level_path)
-		level.get_door("door_5").open()
-		level.get_door("door_8").open()
-	
+	emit_signal("use_takable", player_node, self, get_parent())
 	take(player_node)
 
 func take(player_node):
