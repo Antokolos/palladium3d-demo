@@ -154,7 +154,7 @@ transform = Transform( 0.266005, 0, 0.963972, 0, 1, 0, -0.963972, 0, 0.266005, -
 transform = Transform( -0.83682, 0, 0.547477, 0, 1, 0, -0.547477, 0, -0.83682, 0.06427, 0.614901, 0.188084 )
 
 [node name="vase_8" parent="." instance=ExtResource( 15 )]
-transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 1.09024, 1.63741, 19.4636 )
+transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 4.31345, 1.19006, 19.7316 )
 
 [node name="vase_4" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2369, 1.20497, 30.471 )
@@ -393,10 +393,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26774, 1.19072, 23.0791 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00500202, 1.52472, 0.00882149 )
 
 [node name="postament_flat4" parent="." instance=ExtResource( 36 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2357, 1.19401, 25.0063 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2357, 1.30194, 25.0063 )
 
 [node name="statue_hermes" parent="postament_flat4" instance=ExtResource( 39 )]
-transform = Transform( 0.411541, 0, 0.911391, 0, 1, 0, -0.911391, 0, 0.411541, 0.0152569, 1.52897, 0.0140724 )
+transform = Transform( 0.411541, 0, 0.911391, 0, 1, 0, -0.911391, 0, 0.411541, -0.0030508, 1.44556, 0.0140724 )
 
 [node name="door_demo" parent="." instance=ExtResource( 40 )]
 transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579, -1.22734, 4.90979, 17.5185 )
@@ -404,7 +404,7 @@ transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579,
 [node name="vabtablack_demo" parent="." instance=ExtResource( 41 )]
 
 [node name="postament_1" parent="." instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15181, 1.21748, 20.6024 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21168, 1.21748, 20.6024 )
 
 [node name="statue_hermes" parent="postament_1" instance=ExtResource( 39 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
