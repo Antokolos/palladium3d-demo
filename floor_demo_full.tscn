@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=2]
@@ -39,34 +39,33 @@
 [ext_resource path="res://scenes/statue_erida.tscn" type="PackedScene" id=37]
 [ext_resource path="res://scenes/statue_ares.tscn" type="PackedScene" id=38]
 [ext_resource path="res://scenes/statue_hermes.tscn" type="PackedScene" id=39]
-[ext_resource path="res://scenes/door_demo.tscn" type="PackedScene" id=40]
-[ext_resource path="res://scenes/vabtablack_demo.tscn" type="PackedScene" id=41]
-[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=42]
-[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=43]
-[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=44]
-[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=45]
-[ext_resource path="res://scenes/apata_chest.tscn" type="PackedScene" id=46]
-[ext_resource path="res://scenes/sphere_for_postament_body.tscn" type="PackedScene" id=47]
-[ext_resource path="res://scenes/pedestal_apata.tscn" type="PackedScene" id=48]
-[ext_resource path="res://scenes/statue_4.tscn" type="PackedScene" id=49]
-[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=50]
-[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=51]
-[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=52]
-[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=53]
-[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=54]
-[ext_resource path="res://scenes/granite_base_2.tscn" type="PackedScene" id=55]
-[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=56]
-[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=57]
-[ext_resource path="res://scenes/scales.tscn" type="PackedScene" id=58]
-[ext_resource path="res://scenes/hermes_bench.tscn" type="PackedScene" id=59]
-[ext_resource path="res://scenes/coin_pile_small.tscn" type="PackedScene" id=60]
-[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=61]
-[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=62]
-[ext_resource path="res://scenes/labyrinth_skeleton_2.tscn" type="PackedScene" id=63]
-[ext_resource path="res://scenes/halberd.tscn" type="PackedScene" id=64]
-[ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=65]
-[ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=66]
-[ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=67]
+[ext_resource path="res://scenes/vabtablack_demo.tscn" type="PackedScene" id=40]
+[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=41]
+[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=42]
+[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=43]
+[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=44]
+[ext_resource path="res://scenes/apata_chest.tscn" type="PackedScene" id=45]
+[ext_resource path="res://scenes/sphere_for_postament_body.tscn" type="PackedScene" id=46]
+[ext_resource path="res://scenes/pedestal_apata.tscn" type="PackedScene" id=47]
+[ext_resource path="res://scenes/statue_4.tscn" type="PackedScene" id=48]
+[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=49]
+[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=50]
+[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=51]
+[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=52]
+[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=53]
+[ext_resource path="res://scenes/granite_base_2.tscn" type="PackedScene" id=54]
+[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=55]
+[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=56]
+[ext_resource path="res://scenes/scales.tscn" type="PackedScene" id=57]
+[ext_resource path="res://scenes/hermes_bench.tscn" type="PackedScene" id=58]
+[ext_resource path="res://scenes/coin_pile_small.tscn" type="PackedScene" id=59]
+[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=60]
+[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=61]
+[ext_resource path="res://scenes/labyrinth_skeleton_2.tscn" type="PackedScene" id=62]
+[ext_resource path="res://scenes/halberd.tscn" type="PackedScene" id=63]
+[ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=64]
+[ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=65]
+[ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=66]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -398,26 +397,29 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2357, 1.30194, 25.0063 )
 [node name="statue_hermes" parent="postament_flat4" instance=ExtResource( 39 )]
 transform = Transform( 0.411541, 0, 0.911391, 0, 1, 0, -0.911391, 0, 0.411541, -0.0030508, 1.44556, 0.0140724 )
 
-[node name="door_demo" parent="." instance=ExtResource( 40 )]
-transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579, -1.22734, 4.90979, 17.5185 )
+[node name="vabtablack_demo" parent="." instance=ExtResource( 40 )]
 
-[node name="vabtablack_demo" parent="." instance=ExtResource( 41 )]
-
-[node name="postament_1" parent="." instance=ExtResource( 42 )]
+[node name="postament_1" parent="." instance=ExtResource( 41 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21168, 1.21748, 20.6024 )
+pedestal_id = 40
 
-[node name="statue_hermes" parent="postament_1" instance=ExtResource( 39 )]
+[node name="statue_hermes" parent="postament_1" groups=[
+"demo_finish_statues",
+] instance=ExtResource( 39 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
 visible = false
 
-[node name="postament_4" parent="." instance=ExtResource( 43 )]
+[node name="postament_4" parent="." instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5163, 1.19309, 20.7609 )
+pedestal_id = 50
 
-[node name="statue_ares" parent="postament_4" instance=ExtResource( 38 )]
+[node name="statue_ares" parent="postament_4" groups=[
+"demo_finish_statues",
+] instance=ExtResource( 38 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39803, 0 )
 visible = false
 
-[node name="postament_1_1" parent="." instance=ExtResource( 42 )]
+[node name="postament_1_1" parent="." instance=ExtResource( 41 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 pedestal_id = 30
 
@@ -425,73 +427,73 @@ pedestal_id = 30
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
 
-[node name="door_debris" parent="." instance=ExtResource( 44 )]
+[node name="door_debris" parent="." instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83106, 1.759, 33.1479 )
 
-[node name="demo_ceiling" parent="." instance=ExtResource( 45 )]
+[node name="demo_ceiling" parent="." instance=ExtResource( 44 )]
 
-[node name="apata_chest" parent="." instance=ExtResource( 46 )]
+[node name="apata_chest" parent="." instance=ExtResource( 45 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7154, 2.40612, 31.8226 )
 
-[node name="sphere_for_postament_body" parent="apata_chest" instance=ExtResource( 47 )]
+[node name="sphere_for_postament_body" parent="apata_chest" instance=ExtResource( 46 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.602235, 0 )
 
-[node name="pedestal_apata" parent="." instance=ExtResource( 48 )]
+[node name="pedestal_apata" parent="." instance=ExtResource( 47 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 2.02566, 26.8606 )
 pedestal_id = 10
 
-[node name="statue_4" parent="pedestal_apata" instance=ExtResource( 49 )]
+[node name="statue_4" parent="pedestal_apata" instance=ExtResource( 48 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.484857, 0 )
 exclusive = false
 
-[node name="sphere_for_postament_body" parent="pedestal_apata" instance=ExtResource( 47 )]
+[node name="sphere_for_postament_body" parent="pedestal_apata" instance=ExtResource( 46 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017519, 0 )
 visible = false
 exclusive = false
 
-[node name="chest_2" parent="." instance=ExtResource( 50 )]
+[node name="chest_2" parent="." instance=ExtResource( 49 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.89875, 1.18648, 18.3013 )
 
-[node name="greek_armor_boxed" parent="chest_2" instance=ExtResource( 51 )]
+[node name="greek_armor_boxed" parent="chest_2" instance=ExtResource( 50 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0515965, 0 )
 
-[node name="ares_shield_1" parent="." instance=ExtResource( 52 )]
+[node name="ares_shield_1" parent="." instance=ExtResource( 51 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1175, 0, 32.4291 )
 
-[node name="ares_shield_2" parent="." instance=ExtResource( 53 )]
+[node name="ares_shield_2" parent="." instance=ExtResource( 52 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.20933, 0, 17.9124 )
 
-[node name="spear" parent="." instance=ExtResource( 54 )]
+[node name="spear" parent="." instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.6198 )
 
-[node name="spear2" parent="." instance=ExtResource( 54 )]
+[node name="spear2" parent="." instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.0765 )
 
-[node name="spear3" parent="." instance=ExtResource( 54 )]
+[node name="spear3" parent="." instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.5613 )
 
-[node name="spear4" parent="." instance=ExtResource( 54 )]
+[node name="spear4" parent="." instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.0346 )
 
-[node name="granite_base_3" parent="." instance=ExtResource( 55 )]
+[node name="granite_base_3" parent="." instance=ExtResource( 54 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.25038 )
 
 [node name="granite_base_6" parent="." instance=ExtResource( 11 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -5.29208, 1.20675, 21.447 )
 
-[node name="sword" parent="granite_base_6" instance=ExtResource( 56 )]
+[node name="sword" parent="granite_base_6" instance=ExtResource( 55 )]
 transform = Transform( -0.0433195, 0.0240685, 0.998771, 0.00104294, 0.99971, -0.0240459, -0.999061, 1.05207e-009, -0.043332, -0.294041, 0.654566, -4.76837e-007 )
 
-[node name="bow" parent="." instance=ExtResource( 57 )]
+[node name="bow" parent="." instance=ExtResource( 56 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.76091, 3.97121, 29.9481 )
 
-[node name="bow2" parent="." instance=ExtResource( 57 )]
+[node name="bow2" parent="." instance=ExtResource( 56 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -14.902, 3.97121, 29.9481 )
 
-[node name="scales" parent="." instance=ExtResource( 58 )]
+[node name="scales" parent="." instance=ExtResource( 57 )]
 transform = Transform( -0.9992, 0, -0.0399936, 0, 1, 0, 0.0399936, 0, -0.9992, 11.1863, 1.24674, 18.8513 )
 
-[node name="hermes_bench" parent="." instance=ExtResource( 59 )]
+[node name="hermes_bench" parent="." instance=ExtResource( 58 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8107, 1.26769, 31.9952 )
 
 [node name="vase_1" parent="hermes_bench" instance=ExtResource( 19 )]
@@ -518,31 +520,31 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.492124, 0.800344, 0.354343 
 [node name="vase_8" parent="hermes_bench" instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10435, 0.847464, -0.251385 )
 
-[node name="coin_pile_small" parent="hermes_bench/vase_8" instance=ExtResource( 60 )]
+[node name="coin_pile_small" parent="hermes_bench/vase_8" instance=ExtResource( 59 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.0761054, 0.00997353 )
 
-[node name="hermes_mosaic" parent="." instance=ExtResource( 61 )]
+[node name="hermes_mosaic" parent="." instance=ExtResource( 60 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 11.1219, 4.19836, 17.7641 )
 
-[node name="hermes_mosaic_2" parent="." instance=ExtResource( 62 )]
+[node name="hermes_mosaic_2" parent="." instance=ExtResource( 61 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2328, 1.23007, 25.0973 )
 
-[node name="labyrinth_skeleton_2" parent="." instance=ExtResource( 63 )]
+[node name="labyrinth_skeleton_2" parent="." instance=ExtResource( 62 )]
 transform = Transform( 0.414061, 0, 0.910249, 0, 1, 0, -0.910249, 0, 0.414061, -17.4571, 1.17933, 35.5966 )
 
-[node name="halberd" parent="labyrinth_skeleton_2" instance=ExtResource( 64 )]
+[node name="halberd" parent="labyrinth_skeleton_2" instance=ExtResource( 63 )]
 transform = Transform( 0.659541, -0.751053, 0.0304505, -0.0340106, 0.0106518, 0.999365, -0.7509, -0.660158, -0.018518, 0.252914, 0.0681618, -1.91863 )
 
-[node name="labyrinth_skeleton_3" parent="." instance=ExtResource( 65 )]
+[node name="labyrinth_skeleton_3" parent="." instance=ExtResource( 64 )]
 transform = Transform( 0.751161, 0, 0.660119, 0, 1, 0, -0.660119, 0, 0.751161, -23.2384, 1.31181, 32.7502 )
 
-[node name="musket" parent="labyrinth_skeleton_3" instance=ExtResource( 66 )]
+[node name="musket" parent="labyrinth_skeleton_3" instance=ExtResource( 65 )]
 transform = Transform( 0.132498, 0.990297, 0.0418944, -0.00522408, 0.0429642, -0.999063, -0.99117, 0.132156, 0.0108662, -1.30611, -0.103672, -1.14781 )
 
-[node name="labyrinth_skeleton_4" parent="." instance=ExtResource( 67 )]
+[node name="labyrinth_skeleton_4" parent="." instance=ExtResource( 66 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7646, 1.29492, 36.9828 )
 
-[node name="halberd2" parent="labyrinth_skeleton_4" instance=ExtResource( 64 )]
+[node name="halberd2" parent="labyrinth_skeleton_4" instance=ExtResource( 63 )]
 transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.999365, 0.251888, -0.967573, 0.0188852, 0.868708, -0.0912944, -0.0180588 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]

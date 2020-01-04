@@ -1,18 +1,29 @@
 extends Spatial
 
-var origin
+export(int) var correct_state = 0
 
 func _ready():
-	origin = get_global_transform().origin
-	$AnimationTree.active = true
+	restore_state()
 
 func use(player_node):
 	var state = $AnimationTree.get("parameters/Transition/current")
-	$AnimationTree.set("parameters/Transition/current", state + 1 if state < 3 else 1)
-	get_global_transform().origin = origin
+	var new_state = state + 1 if state < 3 else 1
+	$AnimationTree.set("parameters/Transition/current", new_state)
+	game_params.set_multistate_state(get_path(), new_state)
+
+func is_state_correct():
+	var state = $AnimationTree.get("parameters/Transition/current")
+	if state == 0:
+		state = 3
+	return state == correct_state
 
 func add_highlight(player_node):
 	return "E: Повернуть"
 
 func remove_highlight(player_node):
 	pass
+
+func restore_state():
+	$AnimationTree.active = true
+	var state = game_params.get_multistate_state(get_path())
+	$AnimationTree.set("parameters/Transition/current", state)

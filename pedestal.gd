@@ -8,7 +8,9 @@ enum PedestalIds {
 	NONE = 0,
 	APATA = 10,
 	MUSES = 20,
-	ERIDA_LOCK = 30
+	ERIDA_LOCK = 30,
+	DEMO_HERMES = 40,
+	DEMO_ARES = 50
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
@@ -26,6 +28,13 @@ func use(player_node):
 		item.remove()
 		make_present(item)
 		emit_signal("use_pedestal", player_node, self, item.nam)
+
+func is_present(item_nam):
+	for ch in get_children():
+		if ch is Takable:
+			if ch.get_item_name() == item_nam and ch.is_present():
+				return true
+	return false
 
 func make_present(item):
 	for ch in get_children():

@@ -10,16 +10,11 @@ func use_takable(player_node, takable, parent):
 	var takable_id = takable.takable_id
 	match takable_id:
 		Takable.TakableIds.APATA:
-			match game_params.story_vars.apata_trap_stage:
-				game_params.ApataTrapStages.ARMED:
-					get_door("door_0").close()
-					get_node("ceiling_moving_1").activate()
-					conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
-					game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
-				game_params.ApataTrapStages.GOING_DOWN:
-					pass
-				_:
-					return
+			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+				get_door("door_0").close()
+				get_node("ceiling_moving_1").activate()
+				conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
+				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 		Takable.TakableIds.HERMES:
 			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 			match pedestal_id:
@@ -27,6 +22,19 @@ func use_takable(player_node, takable, parent):
 					get_door("door_8").close()
 				_:
 					get_door("door_5").open()
+		Takable.TakableIds.ERIDA:
+			if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ARMED:
+				get_door("door_8").close()
+				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.ACTIVE
+		Takable.TakableIds.ARES:
+			get_door("door_6").open()
+
+func check_demo_finish():
+	var statues = get_tree().get_nodes_in_group("demo_finish_statues")
+	for statue in statues:
+		if not statue.is_present():
+			return
+	get_door("door_demo").open()
 
 func use_pedestal(player_node, pedestal, item_nam):
 	var pedestal_id = pedestal.pedestal_id
@@ -46,6 +54,22 @@ func use_pedestal(player_node, pedestal, item_nam):
 			get_node("door_3").close()
 		Pedestal.PedestalIds.ERIDA_LOCK:
 			get_door("door_8").open()
+		Pedestal.PedestalIds.DEMO_ARES:
+			pass
+		Pedestal.PedestalIds.DEMO_HERMES:
+			check_demo_finish()
+
+func use_button_activator(player_node, button_activator):
+	var activator_id = button_activator.activator_id
+	match activator_id:
+		ButtonActivator.ButtonActivatorIds.ERIDA:
+			if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:
+				var postaments = get_tree().get_nodes_in_group("erida_postaments")
+				for postament in postaments:
+					if not postament.is_state_correct():
+						return
+				get_door("door_7").open()
+				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.DISABLED
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():

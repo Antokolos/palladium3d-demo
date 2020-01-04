@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "StaticBody",
+"class": "ButtonActivator",
+"language": "GDScript",
+"path": "res://button_activator.gd"
+}, {
 "base": "Spatial",
 "class": "Door",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://takable.gd"
 } ]
 _global_script_class_icons={
+"ButtonActivator": "",
 "Door": "",
 "ItemContainer": "",
 "LightSource": "",

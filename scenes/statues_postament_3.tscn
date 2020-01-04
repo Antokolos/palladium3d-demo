@@ -90,6 +90,7 @@ input_3/name = "state 3"
 input_3/auto_advance = false
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
+graph_offset = Vector2( 0, 90 )
 nodes/Rotate0/node = SubResource( 6 )
 nodes/Rotate0/position = Vector2( 160, 20 )
 nodes/Rotate1/node = SubResource( 7 )
@@ -103,8 +104,12 @@ nodes/Transition/position = Vector2( 420, 100 )
 nodes/output/position = Vector2( 640, 100 )
 node_connections = [ "output", 0, "Transition", "Transition", 0, "Rotate0", "Transition", 1, "Rotate1", "Transition", 2, "Rotate2", "Transition", 3, "Rotate3" ]
 
-[node name="statues_postament_3" type="StaticBody"]
+[node name="statues_postament_3" type="StaticBody" groups=[
+"restorable_state",
+"erida_postaments",
+]]
 script = ExtResource( 1 )
+correct_state = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.24851, 0 )

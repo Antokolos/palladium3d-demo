@@ -90,7 +90,7 @@ input_3/name = "state 3"
 input_3/auto_advance = false
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
-graph_offset = Vector2( 0, 100.75 )
+graph_offset = Vector2( 0, 209.262 )
 nodes/Rotate0/node = SubResource( 6 )
 nodes/Rotate0/position = Vector2( 240, 40 )
 nodes/Rotate1/node = SubResource( 7 )
@@ -104,15 +104,18 @@ nodes/Transition/position = Vector2( 520, 180 )
 nodes/output/position = Vector2( 740, 180 )
 node_connections = [ "output", 0, "Transition", "Transition", 0, "Rotate0", "Transition", 1, "Rotate1", "Transition", 2, "Rotate2", "Transition", 3, "Rotate3" ]
 
-[node name="statues_postament_2" type="StaticBody"]
+[node name="statues_postament_2" type="StaticBody" groups=[
+"restorable_state",
+"erida_postaments",
+]]
 script = ExtResource( 1 )
+correct_state = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.0150173, 0.999887, 0, -0.999887, -0.0150173, 0, 1.28961, 0.0468107 )
 shape = SubResource( 1 )
 
 [node name="statues_postament_2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Rotate0 = SubResource( 2 )

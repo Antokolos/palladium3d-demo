@@ -9,14 +9,16 @@ var scene_path = "res://forest.tscn"
 var slot_to_load_from = -1
 var player_path = null
 var companion_path = null
-enum ApataTrapStages { ARMED = 0, GOING_DOWN = 1, PAUSED = 2, DISABLED = 3 }
+enum ApataTrapStages { ARMED = 0, DISABLED = 1, GOING_DOWN = 2, PAUSED = 3 }
+enum EridaTrapStages { ARMED = 0, DISABLED = 1, ACTIVE = 2 }
 var story_vars = {
 "is_game_start" : true,
 "flashlight_on" : false,
 "apata_chest_rigid" : 0,
 "relationship_female" : 0,
 "relationship_bandit" : 0,
-"apata_trap_stage" : ApataTrapStages.ARMED
+"apata_trap_stage" : ApataTrapStages.ARMED,
+"erida_trap_stage" : EridaTrapStages.ARMED
 }
 var items = {
 	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
@@ -67,6 +69,8 @@ var lights = {
 var containers = {
 }
 var takables = {
+}
+var multistates = {
 }
 var music = {}
 var current_music = null
@@ -261,6 +265,13 @@ func get_takable_state(takable_path):
 func set_takable_state(takable_path, absent):
 	takables[scene_path + ":" + takable_path] = absent
 
+func get_multistate_state(multistate_path):
+	var id = scene_path + ":" + multistate_path
+	return multistates[id] if multistates.has(id) else 0
+
+func set_multistate_state(multistate_path, state):
+	multistates[scene_path + ":" + multistate_path] = state
+
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
@@ -334,6 +345,9 @@ func load_params(slot):
 	if ("takables" in d):
 		takables = d.takables
 	
+	if ("multistates" in d):
+		multistates = d.multistates
+	
 	get_tree().call_group("restorable_state", "restore_state")
 
 func save_params(slot):
@@ -370,7 +384,8 @@ func save_params(slot):
 		"doors" : doors,
 		"lights" : lights,
 		"containers" : containers,
-		"takables" : takables
+		"takables" : takables,
+		"multistates" : multistates
 	}
 	f.store_line( to_json(d) )
 
