@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/demo_floor_corridor.tscn" type="PackedScene" id=1]
+
+[node name="floor_demo_corridor" type="Spatial"]
+
+[node name="demo_floor_corridor" parent="." instance=ExtResource( 1 )]
