@@ -44,7 +44,7 @@ func _on_AudioStreamLighter_finished():
 	$AudioStreamBurning.play()
 
 func _physics_process(delta):
-	if not torch_light.visible:
+	if not torch_light.visible or persistent:
 		return
 	var player = game_params.get_player()
 	if player:
@@ -58,7 +58,11 @@ func _physics_process(delta):
 				torch_fire.enable(true)
 
 func _on_VisibilityNotifier_screen_entered():
+	if persistent:
+		return
 	raycast.enabled = true
 
 func _on_VisibilityNotifier_screen_exited():
+	if persistent:
+		return
 	raycast.enabled = false

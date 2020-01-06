@@ -1,5 +1,6 @@
 extends Node
 
+signal language_changed(ID)
 signal quality_changed(ID)
 signal resolution_changed(ID)
 
@@ -149,6 +150,15 @@ func save_settings():
 		"speech_volume" : speech_volume
 	}
 	f.store_line( to_json(d) )
+
+func set_language(lang_id):
+	language = lang_id
+	match lang_id:
+		settings.LANGUAGE_RU:
+			TranslationServer.set_locale("ru")
+		_:
+			TranslationServer.set_locale("en")
+	emit_signal("language_changed", lang_id)
 
 func set_volume(bus_id, level):
 	# level in [0, 100] => volume from -30 dB to 0 dB

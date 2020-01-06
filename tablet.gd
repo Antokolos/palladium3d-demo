@@ -328,12 +328,7 @@ func _on_AA_item_selected(ID):
 	settings.aa_quality = ID
 
 func _on_Language_item_selected(ID):
-	settings.language = ID
-	match ID:
-		settings.LANGUAGE_RU:
-			TranslationServer.set_locale("ru")
-		_:
-			TranslationServer.set_locale("en")
+	settings.set_language(ID)
 
 func _on_VLanguage_item_selected(ID):
 	settings.vlanguage = ID
