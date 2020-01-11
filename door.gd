@@ -31,13 +31,12 @@ func close():
 	door_collision.disabled = false
 	game_params.set_door_state(get_path(), false)
 
-func restore_state():
+func is_opened():
 	var state = game_params.get_door_state(get_path())
-	if state == game_params.DoorState.DEFAULT:
-		if initially_opened:
-			open()
-		return
-	if state == game_params.DoorState.OPENED:
+	return (state == game_params.DoorState.OPENED) or (state == game_params.DoorState.DEFAULT and initially_opened)
+
+func restore_state():
+	if is_opened():
 		open()
 	else:
 		close()

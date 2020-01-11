@@ -2,46 +2,10 @@ extends Node
 
 signal item_taken(nam, count)
 signal item_removed(nam, count)
+signal health_changed(name_hint, health_current, health_max)
 
-const MAX_QUICK_ITEMS = 3
-
-var scene_path = "res://forest.tscn"
-var slot_to_load_from = -1
-var player_path = null
-var companion_path = null
 enum ApataTrapStages { ARMED = 0, DISABLED = 1, GOING_DOWN = 2, PAUSED = 3 }
 enum EridaTrapStages { ARMED = 0, DISABLED = 1, ACTIVE = 2 }
-var story_vars = {
-"is_game_start" : true,
-"flashlight_on" : false,
-"apata_chest_rigid" : 0,
-"relationship_female" : 0,
-"relationship_bandit" : 0,
-"apata_trap_stage" : ApataTrapStages.ARMED,
-"erida_trap_stage" : EridaTrapStages.ARMED
-}
-var items = {
-	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
-	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://scenes/statue_4.tscn" },
-	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://scenes/statue_2.tscn" },
-	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://scenes/statue_3.tscn" },
-	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://scenes/statue_1.tscn" },
-	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hermes.tscn" },
-	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/sphere_for_postament_body.tscn" },
-	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_ares.tscn" },
-	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_erida.tscn" },
-	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_artemida.tscn" },
-	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_aphrodite.tscn" },
-	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hebe.tscn" },
-	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/hera_statue.tscn" },
-	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_apollo.tscn" },
-	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_athena.tscn" },
-}
-var inventory = [
-]
-var quick_items = [
-	{ "nam" : "saffron_bun", "count" : 1 }
-]
 enum DoorState {
 	DEFAULT = 0,
 	OPENED = 1,
@@ -62,23 +26,71 @@ enum TakableState {
 	PRESENT = 1,
 	ABSENT = 2
 }
-var doors = {
+
+const MAX_QUICK_ITEMS = 3
+const SCENE_PATH_DEFAULT = "res://forest.tscn"
+const PLAYER_PATH_DEFAULT = null
+const PLAYER_HEALTH_CURRENT_DEFAULT = 100
+const PLAYER_HEALTH_MAX_DEFAULT = 100
+const COMPANION_PATH_DEFAULT = null
+const STORY_VARS_DEFAULT = {
+	"is_game_start" : true,
+	"flashlight_on" : false,
+	"apata_chest_rigid" : 0,
+	"relationship_female" : 0,
+	"relationship_bandit" : 0,
+	"apata_trap_stage" : ApataTrapStages.ARMED,
+	"erida_trap_stage" : EridaTrapStages.ARMED
 }
-var lights = {
+const ITEMS = {
+	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
+	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://scenes/statue_4.tscn" },
+	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://scenes/statue_2.tscn" },
+	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://scenes/statue_3.tscn" },
+	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://scenes/statue_1.tscn" },
+	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hermes.tscn" },
+	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/sphere_for_postament_body.tscn" },
+	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_ares.tscn" },
+	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_erida.tscn" },
+	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_artemida.tscn" },
+	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_aphrodite.tscn" },
+	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hebe.tscn" },
+	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/hera_statue.tscn" },
+	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_apollo.tscn" },
+	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_athena.tscn" },
 }
-var containers = {
-}
-var takables = {
-}
-var multistates = {
-}
-var music = {}
-var current_music = null
-var is_loop = {
+const INVENTORY_DEFAULT = []
+const QUICK_ITEMS_DEFAULT = [
+	{ "nam" : "saffron_bun", "count" : 1 }
+]
+const DOORS_DEFAULT = {}
+const LIGHTS_DEFAULT = {}
+const CONTAINERS_DEFAULT = {}
+const TAKABLES_DEFAULT = {}
+const MULTISTATES_DEFAULT = {}
+const MUSIC_IS_LOOP = {
 	"loading.ogg" : true,
 	"underwater.ogg" : true,
 	"sinkingisland.ogg" : true
 }
+
+var slot_to_load_from = -1
+var scene_path = SCENE_PATH_DEFAULT
+var player_path = PLAYER_PATH_DEFAULT
+var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
+var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
+var companion_path = COMPANION_PATH_DEFAULT
+var story_vars = STORY_VARS_DEFAULT
+var inventory = INVENTORY_DEFAULT
+var quick_items = QUICK_ITEMS_DEFAULT
+var doors = DOORS_DEFAULT
+var lights = LIGHTS_DEFAULT
+var containers = CONTAINERS_DEFAULT
+var takables = TAKABLES_DEFAULT
+var multistates = MULTISTATES_DEFAULT
+
+var music = {}
+var current_music = null
 
 func _ready():
 	add_music("loading.ogg")
@@ -113,7 +125,7 @@ func initiate_load(slot):
 	get_tree().change_scene("res://scene_loader.tscn")
 
 func finish_load():
-	if slot_to_load_from > 0:
+	if slot_to_load_from >= 0:
 		load_params(slot_to_load_from)
 		slot_to_load_from = -1
 		return true
@@ -144,6 +156,12 @@ func change_music_to(music_file_name):
 func stop_music():
 	$MusicPlayer.stop()
 
+func is_item_registered(nam):
+	return ITEMS.has(nam)
+
+func get_registered_item_data(nam):
+	return ITEMS[nam] if ITEMS.has(nam) else null
+
 func has_item(nam):
 	if not nam:
 		return false
@@ -156,11 +174,11 @@ func has_item(nam):
 	return false
 
 func take(nam):
-	if not items.has(nam):
+	if not is_item_registered(nam):
 		print("WARN: Unknown item name: " + nam)
 		return
-	var item_image = items[nam].item_image
-	var model_path = items[nam].model_path
+	var item_image = ITEMS[nam].item_image
+	var model_path = ITEMS[nam].model_path
 	var maxpos = 0
 	for quick_item in quick_items:
 		if not quick_item.nam:
@@ -229,6 +247,15 @@ func set_quick_item(pos, nam):
 			return
 		idx = idx + 1
 
+func set_health(name_hint, health_current, health_max):
+	# TODO: use name_hint to set health for different characters
+	if health_current <= 0:
+		get_tree().change_scene("res://game_over.tscn")
+		return
+	player_health_current = health_current
+	player_health_max = health_max
+	emit_signal("health_changed", name_hint, health_current, health_max)
+
 func get_door_state(door_path):
 	var id = scene_path + ":" + door_path
 	if not doors.has(id):
@@ -272,6 +299,10 @@ func get_multistate_state(multistate_path):
 func set_multistate_state(multistate_path, state):
 	multistates[scene_path + ":" + multistate_path] = state
 
+func save_slot_exists(slot):
+	var f = File.new()
+	return f.file_exists("user://saves/slot_%d/params.json" % slot)
+
 func load_params(slot):
 	var player = get_node(player_path)
 	var hud = player.get_hud()
@@ -288,17 +319,19 @@ func load_params(slot):
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
 
-	if ("scene_path" in d):
-		scene_path = d.scene_path
+	scene_path = d.scene_path if ("scene_path" in d) else SCENE_PATH_DEFAULT
 
 	var companion = get_node(companion_path)
 	var player_basis = player.get_transform().basis
 	var player_origin = player.get_transform().origin
 	var companion_basis = companion.get_transform().basis
 	var companion_origin = companion.get_transform().origin
+	
+	player_path = d.player_path if ("player_path" in d) else PLAYER_PATH_DEFAULT
+	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
+	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else PLAYER_HEALTH_MAX_DEFAULT
 
-	if ("player_path" in d):
-		player_path = d.player_path
+	emit_signal("health_changed", PalladiumCharacter.PLAYER_NAME_HINT, player_health_current, player_health_max)
 
 	if ("player_basis" in d and (typeof(d.player_basis) == TYPE_ARRAY)):
 		var bx = Vector3(d.player_basis[0][0], d.player_basis[0][1], d.player_basis[0][2])
@@ -309,8 +342,7 @@ func load_params(slot):
 	if ("player_origin" in d and (typeof(d.player_origin) == TYPE_ARRAY)):
 		player_origin = Vector3(d.player_origin[0], d.player_origin[1], d.player_origin[2])
 
-	if ("companion_path" in d):
-		companion_path = d.companion_path
+	companion_path = d.companion_path if ("companion_path" in d) else COMPANION_PATH_DEFAULT
 
 	if ("companion_basis" in d and (typeof(d.companion_basis) == TYPE_ARRAY)):
 		var bx = Vector3(d.companion_basis[0][0], d.companion_basis[0][1], d.companion_basis[0][2])
@@ -324,36 +356,29 @@ func load_params(slot):
 	player.set_transform(Transform(player_basis, player_origin))
 	companion.set_transform(Transform(companion_basis, companion_origin))
 
-	if ("story_vars" in d):
-		story_vars = d.story_vars
-	
-	if ("inventory" in d):
-		inventory = d.inventory
-	
-	if ("quick_items" in d):
-		quick_items = d.quick_items
-	
-	if ("doors" in d):
-		doors = d.doors
-	
-	if ("lights" in d):
-		lights = d.lights
-	
-	if ("containers" in d):
-		containers = d.containers
-	
-	if ("takables" in d):
-		takables = d.takables
-	
-	if ("multistates" in d):
-		multistates = d.multistates
+	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT
+	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT
+	quick_items = d.quick_items if ("quick_items" in d) else QUICK_ITEMS_DEFAULT
+	doors = d.doors if ("doors" in d) else DOORS_DEFAULT
+	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT
+	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT
+	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT
+	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT
 	
 	get_tree().call_group("restorable_state", "restore_state")
+
+func autosave_create():
+	return save_params(0)
+
+func autosave_restore():
+	return initiate_load(0)
 
 func save_params(slot):
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/params.json" % slot, File.WRITE)
 	assert( not error )
+	
+	StoryNode.SaveAll(slot)
 	
 	var player = get_node(player_path)
 	var companion = get_node(companion_path)
@@ -365,6 +390,8 @@ func save_params(slot):
 	var d = {
 		"scene_path" : scene_path,
 		"player_path" : player_path,
+		"player_health_current" : player_health_current,
+		"player_health_max" : player_health_max,
 		"player_origin" : [player_origin.x, player_origin.y, player_origin.z],
 		"player_basis" : [
 			[player_basis.x.x, player_basis.x.y, player_basis.x.z],
@@ -390,6 +417,6 @@ func save_params(slot):
 	f.store_line( to_json(d) )
 
 func _on_MusicPlayer_finished():
-	if current_music and is_loop[current_music]:
+	if current_music and MUSIC_IS_LOOP[current_music]:
 		# Make the loop programmatically, because loop in ogg import parameters doesn't work if the track is assigned programmatically
 		$MusicPlayer.play()

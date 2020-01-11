@@ -1,8 +1,11 @@
 extends KinematicBody
+class_name PalladiumCharacter
+
+const PLAYER_NAME_HINT = "player"
 
 export var initial_player = true
 export var initial_companion = false
-export var name_hint = "player"
+export var name_hint = PLAYER_NAME_HINT
 export var model_path = "res://scenes/female.tscn"
 
 const SOUND_WALK_NONE = 0

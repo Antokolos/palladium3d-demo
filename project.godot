@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://menu_item.gd"
 }, {
+"base": "KinematicBody",
+"class": "PalladiumCharacter",
+"language": "GDScript",
+"path": "res://player.gd"
+}, {
 "base": "StaticBody",
 "class": "Pedestal",
 "language": "GDScript",
@@ -55,6 +60,7 @@ _global_script_class_icons={
 "ItemContainer": "",
 "LightSource": "",
 "MenuItem": "",
+"PalladiumCharacter": "",
 "Pedestal": "",
 "Tablet": "",
 "Takable": ""

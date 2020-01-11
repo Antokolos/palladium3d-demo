@@ -77,7 +77,9 @@ extents = Vector3( 2.22422, 1, 0.925723 )
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.10586, 1, 3.64931 )
 
-[node name="floor_demo_full" type="Spatial"]
+[node name="floor_demo_full" type="Spatial" groups=[
+"restorable_state",
+]]
 script = ExtResource( 1 )
 
 [node name="door_3" parent="." instance=ExtResource( 2 )]
@@ -538,7 +540,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7646, 1.29492, 36.9828 )
 
 [node name="halberd2" parent="labyrinth_skeleton_4" instance=ExtResource( 61 )]
 transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.999365, 0.251888, -0.967573, 0.0188852, 0.868708, -0.0912944, -0.0180588 )
+
+[node name="EridaTrapTimer" type="Timer" parent="."]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
 [connection signal="body_entered" from="AreaApataDone" to="." method="_on_AreaApataDone_body_entered"]
+[connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]

@@ -197,21 +197,26 @@ func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
 
-func refresh_slot_captions(base_node):
-	for i in range(1, 6):
+func refresh_slot_captions(starting_slot, base_node):
+	for i in range(starting_slot, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
 		var caption = StoryNode.GetSlotCaption(i)
-		node.text = caption if caption.length() > 0 else tr("TABLET_EMPTY_SLOT")
+		var exists = game_params.save_slot_exists(i)
+		node.set_disabled(not exists)
+		if i > 0:
+			node.text = caption if exists else tr("TABLET_EMPTY_SLOT")
+		else: # i == 0
+			node.text = tr("TABLET_AUTOSAVE_SLOT") + (": " + caption if exists else "")
 
 func _on_SaveGameButton_pressed():
 	hide_everything()
 	save_game_app.show()
-	refresh_slot_captions(save_game_app)
+	refresh_slot_captions(1, save_game_app)
 
 func _on_LoadGameButton_pressed():
 	hide_everything()
 	load_game_app.show()
-	refresh_slot_captions(load_game_app)
+	refresh_slot_captions(0, load_game_app)
 
 func _on_QuitGameButton_pressed():
 	hud.ask_quit()
@@ -229,7 +234,6 @@ func simulate_esc():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func save_to_slot(slot):
-	StoryNode.SaveAll(slot)
 	game_params.save_params(slot)
 	simulate_esc()
 
@@ -251,6 +255,10 @@ func _on_ButtonSaveSlot4_pressed():
 
 func _on_ButtonSaveSlot5_pressed():
 	save_to_slot(5)
+
+func _on_ButtonSlot0_pressed():
+	game_params.autosave_restore()
+	simulate_esc()
 
 func _on_ButtonLoadSlot1_pressed():
 	load_from_slot(1)

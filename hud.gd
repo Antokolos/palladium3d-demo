@@ -14,9 +14,13 @@ onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
-onready var indicator_crouch = get_node("Indicators/Indicators_border/IndicatorCrouch")
+onready var indicator_crouch = get_node("Indicators/IndicatorCrouchPanel/IndicatorCrouch")
 onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
+
+onready var health_bar = get_node("Info/MainPlayer/Stats/HealthBar")
+onready var health_label = health_bar.get_node("HealthLabel")
+onready var health_progress = health_bar.get_node("HealthProgress")
 
 var active_item_idx = 0
 var active_quick_item_idx = 0
@@ -26,6 +30,8 @@ func _ready():
 	settings.connect("resolution_changed", self, "on_resolution_changed")
 	game_params.connect("item_removed", self, "remove_ui_inventory_item")
 	game_params.connect("item_removed", self, "remove_ui_quick_item")
+	game_params.connect("health_changed", self, "on_health_changed")
+	on_health_changed(PalladiumCharacter.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"
@@ -34,6 +40,11 @@ func _ready():
 	synchronize_items()
 	select_active_item()
 	select_active_quick_item()
+
+func on_health_changed(name_hint, health_current, health_max):
+	health_label.text = "%d/%d" % [health_current, health_max]
+	health_progress.value = health_current
+	health_progress.max_value = health_max
 
 func on_resolution_changed(ID):
 	var hud = self
@@ -129,7 +140,7 @@ func show_tablet(is_show):
 		settings.save_settings()
 
 func set_crouch_indicator(crouch):
-	indicator_crouch.set("custom_styles/panel", tex_crouch_on if crouch else tex_crouch_off)
+	indicator_crouch.set("texture", tex_crouch_on if crouch else tex_crouch_off)
 
 func cleanup_panel(panel):
 	var ui_items = panel.get_children()

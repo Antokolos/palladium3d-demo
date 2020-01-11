@@ -2,6 +2,10 @@ extends Spatial
 
 export var doors_path = "../../doors/floor_demo_full"
 onready var doors = get_node(doors_path)
+var gas_injury_rate = 1
+
+func _ready():
+	restore_state()
 
 func get_door(door_path):
 	return doors.get_node(door_path)
@@ -21,13 +25,22 @@ func use_takable(player_node, takable, parent):
 				Pedestal.PedestalIds.ERIDA_LOCK:
 					get_door("door_8").close()
 				_:
-					get_door("door_5").open()
+					var door = get_door("door_5")
+					var was_opened = door.is_opened()
+					door.open()
+					if not was_opened:
+						game_params.autosave_create()
 		Takable.TakableIds.ERIDA:
 			if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ARMED:
 				get_door("door_8").close()
 				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.ACTIVE
+				$EridaTrapTimer.start()
 		Takable.TakableIds.ARES:
-			get_door("door_6").open()
+			var door = get_door("door_6")
+			var was_opened = door.is_opened()
+			door.open()
+			if not was_opened:
+				game_params.autosave_create()
 
 func check_demo_finish():
 	var statues = get_tree().get_nodes_in_group("demo_finish_statues")
@@ -70,6 +83,7 @@ func use_button_activator(player_node, button_activator):
 						return
 				get_door("door_7").open()
 				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.DISABLED
+				$EridaTrapTimer.stop()
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():
@@ -122,3 +136,12 @@ func _on_AreaApataDone_body_entered(body):
 	var target = game_params.get_companion()
 	if conversation_manager.conversation_is_finished(player, target, "ApataStatue") and body.is_in_group("party") and body.is_player() and conversation_manager.conversation_is_not_finished(player, target, "ApataDone"):
 		conversation_manager.start_conversation(player, target, "ApataDone")
+
+func _on_EridaTrapTimer_timeout():
+	game_params.set_health(PalladiumCharacter.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
+
+func restore_state():
+	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:
+		$EridaTrapTimer.start()
+	else:
+		$EridaTrapTimer.stop()

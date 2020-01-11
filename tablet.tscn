@@ -415,7 +415,6 @@ rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="load_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -432,79 +431,92 @@ margin_bottom = -10.0
 alignment = 1
 
 [node name="Caption" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 414.0
-margin_right = 577.0
-margin_bottom = 434.0
+margin_top = 375.0
+margin_right = 602.0
+margin_bottom = 425.0
 alignment = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Caption"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_right = 602.0
+margin_bottom = 50.0
 custom_fonts/font = ExtResource( 3 )
 text = "TABLET_LOAD_GAME_CAPTION"
 align = 1
 
+[node name="Slot0" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
+margin_top = 429.0
+margin_right = 602.0
+margin_bottom = 449.0
+alignment = 1
+
+[node name="ButtonSlot0" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot0"]
+margin_left = 136.0
+margin_right = 466.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 330, 0 )
+text = "AUTOSAVE_SLOT"
+
 [node name="Slot1" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 414.0
-margin_right = 577.0
-margin_bottom = 434.0
+margin_top = 453.0
+margin_right = 602.0
+margin_bottom = 473.0
 alignment = 1
 
 [node name="ButtonSlot1" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot1"]
-margin_left = 243.0
-margin_right = 334.0
+margin_left = 136.0
+margin_right = 466.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="Slot2" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 438.0
-margin_right = 577.0
-margin_bottom = 458.0
+margin_top = 477.0
+margin_right = 602.0
+margin_bottom = 497.0
 alignment = 1
 
 [node name="ButtonSlot2" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot2"]
-margin_left = 243.0
-margin_right = 334.0
+margin_left = 136.0
+margin_right = 466.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="Slot3" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 462.0
-margin_right = 577.0
-margin_bottom = 482.0
+margin_top = 501.0
+margin_right = 602.0
+margin_bottom = 521.0
 alignment = 1
 
 [node name="ButtonSlot3" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot3"]
-margin_left = 243.0
-margin_right = 334.0
+margin_left = 136.0
+margin_right = 466.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="Slot4" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 486.0
-margin_right = 577.0
-margin_bottom = 506.0
+margin_top = 525.0
+margin_right = 602.0
+margin_bottom = 545.0
 alignment = 1
 
 [node name="ButtonSlot4" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot4"]
-margin_left = 243.0
-margin_right = 334.0
+margin_left = 136.0
+margin_right = 466.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
 [node name="Slot5" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer"]
-margin_top = 510.0
-margin_right = 577.0
-margin_bottom = 530.0
+margin_top = 549.0
+margin_right = 602.0
+margin_bottom = 569.0
 alignment = 1
 
 [node name="ButtonSlot5" type="Button" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot5"]
-margin_left = 243.0
-margin_right = 334.0
+margin_left = 136.0
+margin_right = 466.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
@@ -787,6 +799,7 @@ texture_hover = ExtResource( 10 )
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSaveSlot3_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot4/ButtonSlot4" to="." method="_on_ButtonSaveSlot4_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot5/ButtonSlot5" to="." method="_on_ButtonSaveSlot5_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot0/ButtonSlot0" to="." method="_on_ButtonSlot0_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonLoadSlot1_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonLoadSlot2_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonLoadSlot3_pressed"]

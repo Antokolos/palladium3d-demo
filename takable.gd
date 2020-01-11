@@ -68,8 +68,8 @@ func get_item_name():
 			return null
 
 func use(player_node):
-	emit_signal("use_takable", player_node, self, get_parent())
 	take(player_node)
+	emit_signal("use_takable", player_node, self, get_parent())
 
 func take(player_node):
 	game_params.take(get_item_name())

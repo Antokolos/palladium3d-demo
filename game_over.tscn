@@ -48,13 +48,13 @@ text = "GAME OVER"
 align = 1
 valign = 1
 
-[node name="RestartButton" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer"]
-margin_left = 796.0
+[node name="TryAgainButton" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer"]
+margin_left = 752.0
 margin_top = 557.0
-margin_right = 1123.0
+margin_right = 1167.0
 margin_bottom = 677.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
-text = "Restart"
-[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
+text = "Try again"
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]

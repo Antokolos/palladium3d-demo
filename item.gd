@@ -29,10 +29,10 @@ func set_appearance(is_quick_item, selected):
 	set_selected(selected)
 
 func set_item_data(nam, item_count):
-	if not game_params.items.has(nam):
+	if not game_params.is_item_registered(nam):
 		print("WARN: Unknown item name in set_item_data: " + nam)
 		return
-	var item_data = game_params.items[nam]
+	var item_data = game_params.get_registered_item_data(nam)
 	self.nam = nam
 	self.item_count = item_count
 	self.item_image = item_data.item_image

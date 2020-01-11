@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=9]
 [ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=10]
-[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="StyleBox" id=11]
+[ext_resource path="res://assets/ui/tex_crouch_off.tres" type="Texture" id=11]
 [ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
 [ext_resource path="res://Gun_label.gd" type="Script" id=13]
 [ext_resource path="res://tablet.tscn" type="PackedScene" id=14]
@@ -23,26 +23,9 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id=2]
-corner_radius_bottom_right = 90
-corner_detail = 10
+bg_color = Color( 1, 0.447059, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.158587, 0.106689, 0.179688, 1 )
-border_color = Color( 0.277183, 0.201141, 0.304688, 1 )
-corner_radius_bottom_right = 80
-corner_detail = 10
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id=4]
-corner_radius_top_left = 90
-corner_detail = 10
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.156863, 0.105882, 0.176471, 1 )
-corner_radius_top_left = 80
-corner_detail = 10
-
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=3]
 size = 42
 use_filter = true
 font_data = ExtResource( 12 )
@@ -398,57 +381,80 @@ rect_rotation = 90.0
 texture = ExtResource( 10 )
 expand = true
 
-[node name="Stats" type="Panel" parent="."]
-modulate = Color( 1, 1, 1, 0.705882 )
-margin_right = 190.0
-margin_bottom = 90.0
-custom_styles/panel = SubResource( 2 )
+[node name="Info" type="VBoxContainer" parent="."]
+anchor_right = 0.2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Stats_border" type="Panel" parent="Stats"]
-modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
-margin_right = 180.0
-margin_bottom = 80.0
-custom_styles/panel = SubResource( 3 )
+[node name="MainPlayer" type="HBoxContainer" parent="Info"]
+margin_right = 384.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Indicators" type="Panel" parent="."]
-modulate = Color( 1, 1, 1, 0.705882 )
+[node name="Stats" type="VBoxContainer" parent="Info/MainPlayer"]
+margin_right = 384.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HealthBar" type="HBoxContainer" parent="Info/MainPlayer/Stats"]
+margin_right = 384.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HealthLabel" type="Label" parent="Info/MainPlayer/Stats/HealthBar"]
+margin_right = 82.0
+margin_bottom = 32.0
+text = "50/100"
+
+[node name="HealthProgress" type="ProgressBar" parent="Info/MainPlayer/Stats/HealthBar"]
+margin_left = 86.0
+margin_top = 6.0
+margin_right = 384.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_styles/fg = SubResource( 2 )
+value = 50.0
+percent_visible = false
+
+[node name="Indicators" type="HBoxContainer" parent="."]
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -190.0
-margin_top = -90.0
-custom_styles/panel = SubResource( 4 )
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
 
-[node name="Indicators_border" type="Panel" parent="Indicators"]
-modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -180.0
-margin_top = -80.0
-custom_styles/panel = SubResource( 5 )
+[node name="IndicatorCrouchPanel" type="PanelContainer" parent="Indicators"]
+margin_right = 78.0
+margin_bottom = 78.0
 
-[node name="IndicatorCrouch" type="Panel" parent="Indicators/Indicators_border"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -72.0
-margin_top = -72.0
-margin_right = -8.0
-margin_bottom = -8.0
-custom_styles/panel = ExtResource( 11 )
+[node name="IndicatorCrouch" type="TextureRect" parent="Indicators/IndicatorCrouchPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 71.0
+margin_bottom = 71.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource( 11 )
 
 [node name="Stats_label" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 6 )
+grow_vertical = 0
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "FPS: ???"
+align = 2
+valign = 2
 script = ExtResource( 13 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
