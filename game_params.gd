@@ -104,7 +104,7 @@ func get_companion():
 	return get_node(companion_path) if companion_path else null
 
 func is_inside():
-	return scene_path == "res://palladium.tscn"
+	return scene_path != "res://forest.tscn"
 
 func initiate_load(slot):
 	var f = File.new()
