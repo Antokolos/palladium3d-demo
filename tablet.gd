@@ -197,12 +197,13 @@ func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
 
-func refresh_slot_captions(starting_slot, base_node):
+func refresh_slot_captions(is_load, base_node):
+	var starting_slot = 0 if is_load else 1
 	for i in range(starting_slot, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
 		var caption = StoryNode.GetSlotCaption(i)
 		var exists = game_params.save_slot_exists(i)
-		node.set_disabled(not exists)
+		node.set_disabled(is_load and not exists)
 		if i > 0:
 			node.text = caption if exists else tr("TABLET_EMPTY_SLOT")
 		else: # i == 0
@@ -211,12 +212,12 @@ func refresh_slot_captions(starting_slot, base_node):
 func _on_SaveGameButton_pressed():
 	hide_everything()
 	save_game_app.show()
-	refresh_slot_captions(1, save_game_app)
+	refresh_slot_captions(false, save_game_app)
 
 func _on_LoadGameButton_pressed():
 	hide_everything()
 	load_game_app.show()
-	refresh_slot_captions(0, load_game_app)
+	refresh_slot_captions(true, load_game_app)
 
 func _on_QuitGameButton_pressed():
 	hud.ask_quit()
