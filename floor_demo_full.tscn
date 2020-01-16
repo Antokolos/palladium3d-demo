@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=2]
@@ -64,6 +64,7 @@
 [ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=62]
 [ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=63]
 [ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=64]
+[ext_resource path="res://scenes/statue_erida_big.tscn" type="PackedScene" id=65]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -365,19 +366,19 @@ shape = SubResource( 4 )
 [node name="ceiling_moving_1" parent="." instance=ExtResource( 30 )]
 
 [node name="statues_postament_1" parent="." instance=ExtResource( 31 )]
-transform = Transform( -0.532055, 0, 0.84671, 0, 1, 0, -0.84671, 0, -0.532055, -22.5014, 1.19997, 27.3537 )
+transform = Transform( -0.532055, 0, 0.84671, 0, 1, 0, -0.84671, 0, -0.532055, -22.5014, 1.19997, 25.4013 )
 
 [node name="statues_postament_2" parent="." instance=ExtResource( 32 )]
-transform = Transform( -0.962213, 0, -0.272297, 0, 1, 0, 0.272297, 0, -0.962213, -19.6244, 1.1829, 29.1794 )
+transform = Transform( -0.962213, 0, -0.272297, 0, 1, 0, 0.272297, 0, -0.962213, -19.6244, 1.1829, 27.227 )
 
 [node name="statues_postament_3" parent="." instance=ExtResource( 33 )]
-transform = Transform( 0.703002, 0, 0.711188, 0, 1, 0, -0.711188, 0, 0.703002, -25.2106, 1.1549, 29.0618 )
+transform = Transform( 0.703002, 0, 0.711188, 0, 1, 0, -0.711188, 0, 0.703002, -25.2106, 1.1549, 27.1094 )
 
 [node name="apple_postament" parent="." instance=ExtResource( 34 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4693, 1.20149, 31.1517 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5252, 1.20149, 28.9826 )
 
 [node name="postament_flat" parent="." instance=ExtResource( 35 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0957, 1.198, 21.0621 )
+transform = Transform( 0.0923095, 0, 0.99573, 0, 1, 0, -0.99573, 0, 0.0923095, -26.6657, 1.198, 36.3554 )
 
 [node name="statue_erida" parent="postament_flat" instance=ExtResource( 36 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48142, -0.0213776 )
@@ -536,12 +537,15 @@ transform = Transform( 0.751161, 0, 0.660119, 0, 1, 0, -0.660119, 0, 0.751161, -
 transform = Transform( 0.132498, 0.990297, 0.0418944, -0.00522408, 0.0429642, -0.999063, -0.99117, 0.132156, 0.0108662, -1.30611, -0.103672, -1.14781 )
 
 [node name="labyrinth_skeleton_4" parent="." instance=ExtResource( 64 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7646, 1.29492, 36.9828 )
+transform = Transform( 0.536479, 0, 0.843914, 0, 1, 0, -0.843914, 0, 0.536479, -24.7998, 1.29492, 39.1931 )
 
 [node name="halberd2" parent="labyrinth_skeleton_4" instance=ExtResource( 61 )]
 transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.999365, 0.251888, -0.967573, 0.0188852, 0.868708, -0.0912944, -0.0180588 )
 
 [node name="EridaTrapTimer" type="Timer" parent="."]
+
+[node name="statue_erida_big" parent="." instance=ExtResource( 65 )]
+transform = Transform( 0.999046, 0, 0.0436803, 0, 1, 0, -0.0436803, 0, 0.999046, -22.1767, 1.18002, 19.0506 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
