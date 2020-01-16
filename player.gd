@@ -44,7 +44,7 @@ var KEY_LOOK_SPEED_FACTOR = 30
 
 #####
 
-export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo_floor_2/StaticBodyFloor"
+export var floor_path = "../StaticBodyFloor"
 export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
