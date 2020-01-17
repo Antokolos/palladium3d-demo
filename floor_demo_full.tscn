@@ -441,7 +441,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 2.02566, 26.8606 )
 pedestal_id = 10
 
 [node name="statue_4" parent="pedestal_apata" instance=ExtResource( 47 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.484857, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.484857, -0.0269833 )
 exclusive = false
 
 [node name="sphere_for_postament_body" parent="pedestal_apata" instance=ExtResource( 45 )]
