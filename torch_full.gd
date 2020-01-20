@@ -48,14 +48,18 @@ func _physics_process(delta):
 		return
 	var player = game_params.get_player()
 	if player:
-		raycast.cast_to = raycast.to_local(player.get_global_transform().origin)
+		var camera = player.get_cam()
+		var origin = camera.get_global_transform().origin
+		raycast.cast_to = raycast.to_local(origin)
 		self.visible = persistent or raycast.cast_to.x < 0
 		if torch_fire.visible:
 			if not raycast.enabled or raycast.is_colliding():
 				torch_fire.enable(false)
+				torch_light.enable_shadow_if_needed(false)
 		else:
 			if raycast.enabled and not raycast.is_colliding():
 				torch_fire.enable(true)
+				torch_light.enable_shadow_if_needed(true)
 
 func _on_VisibilityNotifier_screen_entered():
 	if persistent:

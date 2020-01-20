@@ -1,5 +1,6 @@
 extends Light
 
+var shadow = true
 var flicker = true
 var moving = true
 var prev_translate = null
@@ -14,6 +15,9 @@ func _ready():
 func enable(enable):
 	visible = enable
 
+func enable_shadow_if_needed(enable):
+	set_shadow(shadow and enable)
+
 func decrease_light():
 	max_light = 0.5
 	light_energy = max_light
@@ -23,22 +27,26 @@ func restore_light():
 	light_energy = max_light
 
 func set_quality_normal():
-	set_shadow(false)
+	shadow = false
+	set_shadow(shadow)
 	flicker = false
 	moving = false
 
 func set_quality_optimal():
-	set_shadow(true)
-	flicker = true
+	shadow = true
+	set_shadow(shadow)
+	flicker = false
 	moving = false
 
 func set_quality_good():
-	set_shadow(true)
+	shadow = true
+	set_shadow(shadow)
 	flicker = true
-	moving = true
+	moving = false
 
 func set_quality_high():
-	set_shadow(true)
+	shadow = true
+	set_shadow(shadow)
 	flicker = true
 	moving = true
 
