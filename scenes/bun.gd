@@ -8,4 +8,4 @@ func execute_action(key_code, item):
 		KEY_R:
 			item.remove()
 			var player = game_params.get_player()
-			conversation_manager.start_conversation(player, player, "BunEaten")
+			conversation_manager.start_conversation(player, game_params.get_companion(), "BunEaten")

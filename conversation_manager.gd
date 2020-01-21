@@ -25,6 +25,8 @@ func change_stretch_ratio(conversation):
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
 func stop_conversation(player):
+	if conversation_target:
+		conversation_target.set_speak_mode(false)
 	conversation_name = null
 	var hud = player.get_hud()
 	hud.conversation.visible = false
@@ -78,6 +80,7 @@ func conversation_active():
 func start_conversation(player, target, conversation_name):
 	if self.conversation_name == conversation_name:
 		return
+	target.set_speak_mode(true)
 	self.conversation_name = conversation_name
 	conversation_target = target
 	player.get_hud().quick_items_panel.visible = false

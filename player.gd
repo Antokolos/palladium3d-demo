@@ -1,5 +1,5 @@
 extends KinematicBody
-class_name PalladiumCharacter
+class_name PalladiumPlayer
 
 const PLAYER_NAME_HINT = "player"
 
@@ -112,7 +112,7 @@ func follow(current_transform, target_position):
 #	if is_attacking:
 #		return
 	
-	var model = get_node("Rotation_Helper/Model").get_child(0)
+	var model = get_model()
 	if not path.empty():
 		companion_state = COMPANION_STATE.WALK
 		model.walk(rotation_angle_to_player_deg)
@@ -140,6 +140,15 @@ func follow(current_transform, target_position):
 		model.look(rotation_angle_to_player_deg)
 #		state.set_angular_velocity(zero_dir)
 		dir = Vector3()
+
+func set_speak_mode(enable):
+	get_model().set_speak_mode(enable)
+
+func sit_down():
+	get_model().sit_down()
+
+func stand_up():
+	get_model().stand_up()
 
 func get_navpath(pstart, pend):
 	var p1 = pyramid.get_closest_point(pstart)
@@ -206,9 +215,9 @@ func use(player_node):
 		if item and item.nam == "saffron_bun":
 			hud.inventory.visible = false
 			item.remove()
-			conversation_manager.start_conversation(player_node, self, "Bun")
+			conversation_manager.start_conversation(player_node, game_params.get_companion(), "Bun")
 		else:
-			conversation_manager.start_conversation(player_node, self, "Conversation")
+			conversation_manager.start_conversation(player_node, game_params.get_companion(), "Conversation")
 
 func get_model():
 	return get_node("Rotation_Helper/Model").get_child(0)
@@ -405,8 +414,10 @@ func toggle_crouch():
 		return
 	if is_crouching:
 		$AnimationPlayer.play_backwards("crouch")
+		game_params.get_companion().stand_up()
 	else:
 		$AnimationPlayer.play("crouch")
+		game_params.get_companion().sit_down()
 	is_crouching = not is_crouching
 	var hud = get_hud()
 	if hud:

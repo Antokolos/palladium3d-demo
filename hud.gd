@@ -31,7 +31,7 @@ func _ready():
 	game_params.connect("item_removed", self, "remove_ui_inventory_item")
 	game_params.connect("item_removed", self, "remove_ui_quick_item")
 	game_params.connect("health_changed", self, "on_health_changed")
-	on_health_changed(PalladiumCharacter.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
+	on_health_changed(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
 	dialog.get_ok().text = "Yes"

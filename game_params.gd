@@ -331,7 +331,7 @@ func load_params(slot):
 	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else PLAYER_HEALTH_MAX_DEFAULT
 
-	emit_signal("health_changed", PalladiumCharacter.PLAYER_NAME_HINT, player_health_current, player_health_max)
+	emit_signal("health_changed", PalladiumPlayer.PLAYER_NAME_HINT, player_health_current, player_health_max)
 
 	if ("player_basis" in d and (typeof(d.player_basis) == TYPE_ARRAY)):
 		var bx = Vector3(d.player_basis[0][0], d.player_basis[0][1], d.player_basis[0][2])

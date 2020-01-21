@@ -138,7 +138,7 @@ func _on_AreaApataDone_body_entered(body):
 		conversation_manager.start_conversation(player, target, "ApataDone")
 
 func _on_EridaTrapTimer_timeout():
-	game_params.set_health(PalladiumCharacter.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
+	game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
 
 func restore_state():
 	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:

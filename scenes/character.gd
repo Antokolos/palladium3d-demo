@@ -1,4 +1,8 @@
 extends Spatial
+class_name PalladiumCharacter
+
+const REST_POSE_CHANGE_TIME_S = 7
+const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
 export var look_anim_name = "female_rest_99"
 export var walk_anim_name = "female_walk_2"
@@ -29,11 +33,42 @@ onready var speech_timer = get_node("SpeechTimer")
 var speech_states = []
 var speech_idx = 0
 
+func _ready():
+	randomize()
+
 func set_simple_mode(sm):
 	simple_mode = sm
 	$AnimationTree.active = not simple_mode
 	if simple_mode:
 		look(0)
+
+func do_rest_shot(shot_idx):
+	var look_state = $AnimationTree.get("parameters/LookStateTransition/current")
+	var is_active = $AnimationTree.get("parameters/LookShot/active")
+	if not is_active and look_state == 0:
+		$AnimationTree.set("parameters/RestTransition/current", shot_idx)
+		$AnimationTree.set("parameters/LookShot/active", true)
+
+func set_speak_mode(enable):
+	$AnimationTree.set("parameters/LookStateTransition/current", 1 if enable else 0)
+
+func do_speak_shot(shot_idx):
+	var look_state = $AnimationTree.get("parameters/LookStateTransition/current")
+	var is_active = $AnimationTree.get("parameters/LookShot/active")
+	if not is_active and look_state == 1:
+		$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
+		$AnimationTree.set("parameters/LookShot/active", true)
+
+func stand_up():
+	if $AnimationTree.get("parameters/LookTransition/current") != 1:
+		$AnimationTree.set("parameters/TimeScaleStandUp/scale", -1)
+		$AnimationTree.set("parameters/LookTransition/current", 0)
+	$AnimationTree.set("parameters/WalkTransition/current", 0)
+
+func sit_down():
+	if $AnimationTree.get("parameters/LookTransition/current") != 3:
+		$AnimationTree.set("parameters/LookTransition/current", 2)
+	$AnimationTree.set("parameters/WalkTransition/current", 1)
 
 func normalize_angle(look_angle_deg):
 	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)
@@ -152,16 +187,21 @@ func look(look_angle_deg):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
 	set_transition(0)
+	if $RestTimer.is_stopped():
+		$RestTimer.start(REST_POSE_CHANGE_TIME_S)
 
 func walk(look_angle_deg):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
 	set_transition(1)
+	$RestTimer.stop()
 
 func speak(states):
 	speech_states = states
 	speech_idx = 0
 	set_transition_lips(0)
+	if speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD:
+		do_speak_shot(0 if randf() > 0.5 else 1)
 	speech_timer.start()
 
 func speak_text(phonetic, audio_length):
@@ -223,3 +263,7 @@ func _on_SpeechTimer_timeout():
 		speech_states.clear()
 		speech_idx = 0
 		set_transition_lips(0)
+
+func _on_RestTimer_timeout():
+	do_rest_shot(0 if randf() > 0.5 else 1)
+	$RestTimer.start(REST_POSE_CHANGE_TIME_S)
