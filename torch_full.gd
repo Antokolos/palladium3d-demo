@@ -1,6 +1,8 @@
 extends StaticBody
 class_name LightSource
 
+const DISTANCE_TO_CAMERA_MAX = 36
+
 enum LightIds {
 	NONE = 0
 }
@@ -51,15 +53,16 @@ func _physics_process(delta):
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin
 		raycast.cast_to = raycast.to_local(origin)
+		var is_far_away = raycast.cast_to.length() > DISTANCE_TO_CAMERA_MAX
 		self.visible = persistent or raycast.cast_to.x < 0
-		if torch_fire.visible:
-			if not raycast.enabled or raycast.is_colliding():
-				torch_fire.enable(false)
-				torch_light.enable_shadow_if_needed(false)
-		else:
-			if raycast.enabled and not raycast.is_colliding():
-				torch_fire.enable(true)
+		if torch_fire.is_simple_mode():
+			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
+				torch_fire.set_simple_mode(false)
 				torch_light.enable_shadow_if_needed(true)
+		else:
+			if not raycast.enabled or raycast.is_colliding() or is_far_away:
+				torch_fire.set_simple_mode(true)
+				torch_light.enable_shadow_if_needed(false)
 
 func _on_VisibilityNotifier_screen_entered():
 	if persistent:

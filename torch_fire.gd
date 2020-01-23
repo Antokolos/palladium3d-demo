@@ -2,8 +2,20 @@ extends Spatial
 
 onready var flames = $flames
 onready var smoke = $smoke
+onready var simple_fire = $simple_fire
+
+func is_simple_mode():
+	return simple_fire.visible
+
+func set_simple_mode(enable):
+	simple_fire.visible = enable
+	flames.visible = not enable
+	smoke.visible = not enable
 
 func enable(enable):
+	if is_simple_mode():
+		visible = enable
+		return
 	flames.emitting = enable
 	smoke.emitting = enable
 	if not enable:
