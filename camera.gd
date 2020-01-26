@@ -57,7 +57,7 @@ func change_quality(quality):
 			get_tree().call_group("trees", "wind_effect_enable", false)
 			if flashlight:
 				flashlight.set("shadow_enabled", false)
-			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
+			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_GOOD:
 			self.environment = env_good
 			#get_tree().call_group("lightmaps", "enable", false)

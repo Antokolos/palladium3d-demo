@@ -8,6 +8,7 @@ extents = Vector3( 6.84653, 0.305916, 9.95657 )
 [node name="menu_floor" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="74"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0267782, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.764866, 1.0711, -2.08213 )

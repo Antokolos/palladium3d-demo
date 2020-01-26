@@ -129,3 +129,5 @@ func _process(delta):
 func refresh():
 	if SHADER_CACHE_ENABLED:
 		stage = 1
+	else:
+		label_container.visible = false

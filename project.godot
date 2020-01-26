@@ -1231,13 +1231,15 @@ common/physics_jitter_fix=0.25
 
 [rendering]
 
+quality/filters/anisotropic_filter_level=2
 vram_compression/import_etc=true
-quality/shadow_atlas/size=8192
-quality/shadow_atlas/size.mobile=4096
 quality/reflections/texture_array_reflections=false
 quality/reflections/high_quality_ggx=false
+quality/shading/force_lambert_over_burley=true
+quality/shading/force_blinn_over_ggx=true
 quality/filters/use_nearest_mipmap_filter=true
 limits/buffers/immediate_buffer_size_kb=4096
+quality/voxel_cone_tracing/high_quality=false
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

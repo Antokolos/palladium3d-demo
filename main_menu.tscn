@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://main_menu.gd" type="Script" id=1]
 [ext_resource path="res://scenes/menu_floor.tscn" type="PackedScene" id=2]
@@ -26,10 +26,14 @@
 [ext_resource path="res://scenes/menu_spider.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/menu_spider.gd" type="Script" id=25]
 [ext_resource path="res://rat.tscn" type="PackedScene" id=26]
-[ext_resource path="res://camera.gd" type="Script" id=27]
-[ext_resource path="res://menu_hud.tscn" type="PackedScene" id=28]
-[ext_resource path="res://default_theme.tres" type="Theme" id=29]
-[ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=30]
+[ext_resource path="res://assets/vabtablack.material" type="Material" id=27]
+[ext_resource path="res://camera.gd" type="Script" id=28]
+[ext_resource path="res://menu_hud.tscn" type="PackedScene" id=29]
+[ext_resource path="res://default_theme.tres" type="Theme" id=30]
+[ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=31]
+
+[sub_resource type="QuadMesh" id=1]
+size = Vector2( 7, 2 )
 
 [node name="main_menu" type="Spatial"]
 script = ExtResource( 1 )
@@ -127,15 +131,30 @@ script = ExtResource( 25 )
 [node name="rat" parent="." instance=ExtResource( 26 )]
 transform = Transform( -0.447965, 0, -0.894051, 0, 1, 0, 0.894051, 0, -0.447965, -0.5236, 1.35378, -4.94844 )
 
+[node name="rat_cover" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, -0.000220925, -0.000188879, 0.51852, -0.855067, 0.000114462, 0.855067, 0.518523, -0.483793, 1.5287, -5.49916 )
+cast_shadow = 2
+mesh = SubResource( 1 )
+material/0 = ExtResource( 27 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 1.85973e-008, -0.000220866, 0.000139976, -0.773586, 0.633692, -0.000170847, -0.633692, -0.773586, -0.483795, 2.06734, -5.98628 )
+light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
+shadow_enabled = true
+shadow_bias = 0.01
+shadow_contact = 0.1
+spot_range = 3.23097
+spot_angle = 20.6364
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.906308, -0.144544, 0.397131, 0, 0.939693, 0.34202, -0.422618, -0.309976, 0.851651, 0.174137, 4.26169, 4.0748 )
 fov = 33.0
-script = ExtResource( 27 )
+script = ExtResource( 28 )
 
-[node name="menu_hud" parent="." instance=ExtResource( 28 )]
-theme = ExtResource( 29 )
+[node name="menu_hud" parent="." instance=ExtResource( 29 )]
+theme = ExtResource( 30 )
 
 [node name="SFXOver" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 30 )
+stream = ExtResource( 31 )
 volume_db = -27.0
 bus = "Sound"
