@@ -1,7 +1,9 @@
 extends Spatial
+class_name ShaderCache
 
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
+const PROCESS_ROOM_ENABLERS = true
 const STEP = 0.0004
 const HALFROW = 40
 
@@ -14,11 +16,10 @@ func _ready():
 	#refresh() -- will be called on settings ready
 	pass
 
-func get_cacheable_items(scn):
+func get_cacheable_items(scn, ignore_skeletons):
 	var result = []
 	if scn is MeshInstance:
-		var sk_path = scn.get_skeleton_path()
-		var sk = scn.get_node(sk_path)
+		var sk = null if ignore_skeletons else scn.get_node(scn.get_skeleton_path())
 		# Adding materials from MeshInstance's surfaces, if any
 		var sc = scn.get_surface_material_count()
 		for i in range(0, sc):
@@ -43,9 +44,13 @@ func get_cacheable_items(scn):
 				var mat = mesh.surface_get_material(j)
 				if mat:
 					result.append({"material": mat, "skeleton": null, "particles_material": pmat})
+	elif PROCESS_ROOM_ENABLERS and scn is RoomEnabler and scn.REMOVE_FROM_TREE:
+		var items = get_cacheable_items(scn.room_node, true)
+		for item in items:
+			result.append(item)
 
 	for ch in scn.get_children():
-		var items = get_cacheable_items(ch)
+		var items = get_cacheable_items(ch, ignore_skeletons)
 		for item in items:
 			result.append(item)
 	return result
@@ -86,7 +91,7 @@ func make_particles(pos, particles_material, material):
 func add_material_meshes(pos, scn):
 	pos.x = pos.x + STEP / 2.0
 	pos.y = pos.y + STEP / 2.0
-	var items = get_cacheable_items(scn)
+	var items = get_cacheable_items(scn, false)
 	var rids = {}
 	for item in items:
 		var material = item["material"]

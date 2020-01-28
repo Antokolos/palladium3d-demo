@@ -49,6 +49,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://pedestal.gd"
 }, {
+"base": "Spatial",
+"class": "RoomEnabler",
+"language": "GDScript",
+"path": "res://room_enabler.gd"
+}, {
+"base": "Spatial",
+"class": "ShaderCache",
+"language": "GDScript",
+"path": "res://shader_cache.gd"
+}, {
 "base": "Control",
 "class": "Tablet",
 "language": "GDScript",
@@ -68,6 +78,8 @@ _global_script_class_icons={
 "PalladiumCharacter": "",
 "PalladiumPlayer": "",
 "Pedestal": "",
+"RoomEnabler": "",
+"ShaderCache": "",
 "Tablet": "",
 "Takable": ""
 }
