@@ -59,7 +59,7 @@ door_id = 10
 initially_opened = true
 
 [node name="door_demo" parent="doors/floor_demo_full" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579, -1.22734, 4.90979, 17.5185 )
+transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579, 0.702675, 0.995517, 17.5185 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="."]
 navmesh = SubResource( 1 )
