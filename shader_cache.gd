@@ -3,7 +3,6 @@ class_name ShaderCache
 
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
-const PROCESS_ROOM_ENABLERS = true
 const STEP = 0.0004
 const HALFROW = 40
 
@@ -44,10 +43,6 @@ func get_cacheable_items(scn, ignore_skeletons):
 				var mat = mesh.surface_get_material(j)
 				if mat:
 					result.append({"material": mat, "skeleton": null, "particles_material": pmat})
-	elif PROCESS_ROOM_ENABLERS and scn is RoomEnabler and scn.REMOVE_FROM_TREE:
-		var items = get_cacheable_items(scn.room_node, true)
-		for item in items:
-			result.append(item)
 
 	for ch in scn.get_children():
 		var items = get_cacheable_items(ch, ignore_skeletons)

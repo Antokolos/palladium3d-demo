@@ -1,46 +1,43 @@
-extends Spatial
+extends VisibilityNotifier
 class_name RoomEnabler
 
-const REMOVE_FROM_TREE = false
-
-onready var visibility_notifier = $VisibilityEnabler
-onready var raycast = $RayCast
-onready var room_node = visibility_notifier.get_child(0)
+export var room_path = "../room"
+onready var room_node = get_node(room_path)
+var screen_entered = false
 
 func _ready():
-	visibility_notifier.connect("screen_entered", self, "_on_VisibilityEnabler_screen_entered")
-	visibility_notifier.connect("screen_exited", self, "_on_VisibilityEnabler_screen_exited")
+	connect("screen_entered", self, "_on_VisibilityEnabler_screen_entered")
+	connect("screen_exited", self, "_on_VisibilityEnabler_screen_exited")
 
 func _on_VisibilityEnabler_screen_entered():
-	raycast.enabled = true
+	for raycast in get_children():
+		raycast.enabled = true
+	screen_entered = true
 
 func _on_VisibilityEnabler_screen_exited():
-	raycast.enabled = false
+	for raycast in get_children():
+		raycast.enabled = false
+	screen_entered = false
 
-func add_room():
-	if REMOVE_FROM_TREE:
-		if visibility_notifier.get_child_count() == 0:
-			visibility_notifier.add_child(room_node)
-	else:
-		room_node.visible = true
+func enable_room():
+	room_node.visible = true
 
-func remove_room():
-	if REMOVE_FROM_TREE:
-		if visibility_notifier.get_child_count() > 0:
-			visibility_notifier.remove_child(room_node)
-	else:
-		room_node.visible = false
+func disable_room():
+	room_node.visible = false
 
 func _physics_process(delta):
-	if not raycast.enabled:
-		remove_room()
+	if not screen_entered:
+		disable_room()
 		return
 	var player = game_params.get_player()
 	if player:
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin
-		raycast.cast_to = raycast.to_local(origin)
-		if raycast.is_colliding():
-			remove_room()
+		var outside = not get_aabb().has_point(to_local(origin))
+		for raycast in get_children():
+			raycast.cast_to = raycast.to_local(origin)
+			outside = outside and raycast.is_colliding()
+		if outside:
+			disable_room()
 		else:
-			add_room()
+			enable_room()
