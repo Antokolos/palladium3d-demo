@@ -27,7 +27,7 @@ enum TakableState {
 	ABSENT = 2
 }
 
-const MAX_QUICK_ITEMS = 3
+const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = "res://forest.tscn"
 const PLAYER_PATH_DEFAULT = null
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100

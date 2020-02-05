@@ -130,7 +130,7 @@ shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 spot_range = 18.0
 spot_attenuation = 1.7411
-spot_angle = 42.0
+spot_angle = 49.0
 spot_angle_attenuation = 2.07053
 
 [node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]

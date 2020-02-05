@@ -1,6 +1,6 @@
 extends Control
 
-const MAX_VISIBLE_ITEMS = 3
+const MAX_VISIBLE_ITEMS = 6
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
 const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
 
