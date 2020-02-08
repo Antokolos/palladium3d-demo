@@ -48,10 +48,16 @@ nodes/look/position = Vector2( 260, 20 )
 nodes/output/position = Vector2( 1380, 60 )
 nodes/walk/node = SubResource( 7 )
 nodes/walk/position = Vector2( 266, 158.361 )
-node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
+node_connections = [ "output", 0, "Blend2_Head", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition", 0, "look", "Transition", 1, "walk" ]
 
 [node name="male" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="Male_palladium" parent="." index="0"]
+bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
+
+[node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
+transform = Transform( 1, 6.61239e-008, 8.56817e-008, -5.58794e-008, -0.289161, -0.957281, 9.77889e-009, 0.957281, -0.28916, 0.0399998, 15.2113, -0.53402 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 8 )
