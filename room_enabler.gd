@@ -33,11 +33,11 @@ func _physics_process(delta):
 	if player:
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin
-		var outside = not get_aabb().has_point(to_local(origin))
+		var need_enable = get_aabb().has_point(to_local(origin))
 		for raycast in get_children():
 			raycast.cast_to = raycast.to_local(origin)
-			outside = outside and raycast.is_colliding()
-		if outside:
-			disable_room()
-		else:
+			need_enable = need_enable or not raycast.is_colliding()
+		if need_enable:
 			enable_room()
+		else:
+			disable_room()
