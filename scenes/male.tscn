@@ -26,13 +26,13 @@ animation = "female_headturn_left"
 animation = "female_headturn_right"
 
 [sub_resource type="AnimationNodeAnimation" id=6]
-animation = "female_rest_99"
+animation = "male_rest"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
-animation = "female_walk_2"
+animation = "male_walks"
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( 0, 97.5 )
+graph_offset = Vector2( 109.835, 2.1565 )
 nodes/Blend2_Aux/node = SubResource( 1 )
 nodes/Blend2_Aux/position = Vector2( 788.137, 26.7061 )
 nodes/Blend2_Head/node = SubResource( 2 )
@@ -48,10 +48,12 @@ nodes/look/position = Vector2( 260, 20 )
 nodes/output/position = Vector2( 1380, 60 )
 nodes/walk/node = SubResource( 7 )
 nodes/walk/position = Vector2( 266, 158.361 )
-node_connections = [ "output", 0, "Blend2_Head", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Transition", 0, "look", "Transition", 1, "walk" ]
+node_connections = [ "output", 0, "Blend2_Head", "Transition", 0, "look", "Transition", 1, "walk", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
 
 [node name="male" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+look_anim_name = "male_rest"
+walk_anim_name = "male_walks"
 
 [node name="Male_palladium" parent="." index="0"]
 bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
@@ -61,7 +63,8 @@ transform = Transform( 1, 6.61239e-008, 8.56817e-008, -5.58794e-008, -0.289161, 
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 8 )
-anim_player = NodePath("../Female_palladium/AnimationPlayer")
+anim_player = NodePath("../Male_palladium/AnimationPlayer")
+active = true
 parameters/Blend2_Aux/blend_amount = 1.0
 parameters/Blend2_Head/blend_amount = 1.0
 parameters/Transition/current = 0
