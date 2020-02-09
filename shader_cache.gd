@@ -52,6 +52,9 @@ func get_cacheable_items(scn, ignore_skeletons):
 
 func make_asset(pos, material, skeleton_path):
 	var asset = MeshInstance.new()
+	var mname = material.get_name()
+	if not mname.empty():
+		asset.set_name(mname)
 	if skeleton_path:
 		asset.set_skeleton_path(skeleton_path)
 	asset.mesh = SphereMesh.new()
@@ -68,6 +71,7 @@ func make_asset(pos, material, skeleton_path):
 
 func make_particles(pos, particles_material, material):
 	var particles = Particles.new()
+	particles.set_name(particles_material.get_name() + "_" + material.get_name())
 	particles.draw_pass_1 = SphereMesh.new()
 	particles.draw_pass_1.radius = STEP / 4.0
 	particles.draw_pass_1.height = STEP / 2.0
@@ -115,6 +119,7 @@ func _process(delta):
 			label_container.visible = true
 			for node in holder.get_children():
 				node.queue_free()
+			get_tree().call_group("room_enablers", "set_active", false)
 		2:
 			stage = stage + 1
 			var pos = Vector2(-STEP * HALFROW, 0)
@@ -124,6 +129,7 @@ func _process(delta):
 				for node in holder.get_children():
 					node.visible = false
 				label_container.visible = false
+			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0
 
 func refresh():
@@ -131,3 +137,4 @@ func refresh():
 		stage = 1
 	else:
 		label_container.visible = false
+		get_tree().call_group("room_enablers", "set_active", true)
