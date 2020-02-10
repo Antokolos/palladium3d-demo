@@ -3,6 +3,7 @@ class_name ShaderCache
 
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
+const SHADER_CACHE_IGNORE_SKELETONS = false
 const STEP = 0.0004
 const HALFROW = 40
 
@@ -90,7 +91,7 @@ func make_particles(pos, particles_material, material):
 func add_material_meshes(pos, scn):
 	pos.x = pos.x + STEP / 2.0
 	pos.y = pos.y + STEP / 2.0
-	var items = get_cacheable_items(scn, false)
+	var items = get_cacheable_items(scn, SHADER_CACHE_IGNORE_SKELETONS)
 	var rids = {}
 	for item in items:
 		var material = item["material"]

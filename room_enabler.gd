@@ -1,7 +1,7 @@
 extends VisibilityNotifier
 class_name RoomEnabler
 
-const REMOVE_FROM_TREE = true
+const REMOVE_FROM_TREE = false
 
 export var room_path = "../room"
 var room_children = []
