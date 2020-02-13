@@ -3,17 +3,16 @@
 [ext_resource path="res://takable.gd" type="Script" id=1]
 [ext_resource path="res://assets/statue_3.escn" type="PackedScene" id=2]
 
-
 [sub_resource type="CylinderShape" id=1]
 radius = 0.164987
 height = 0.795663
 
 [node name="statue_3" type="StaticBody" groups=[
 "restorable_state",
+"takables",
 ]]
 script = ExtResource( 1 )
 takable_id = 40
-item_name = "statue_melpomene"
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0366513, 0 )

@@ -6,9 +6,11 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.289869, 0.480039, 0.255138 )
 
-[node name="apple_postament" instance=ExtResource( 1 )]
+[node name="apple_postament" index="0" instance=ExtResource( 1 )]
 
-[node name="apple_activator" type="StaticBody" parent="." index="2"]
+[node name="apple_activator" type="StaticBody" parent="." index="2" groups=[
+"button_activators",
+]]
 script = ExtResource( 2 )
 activator_id = 10
 

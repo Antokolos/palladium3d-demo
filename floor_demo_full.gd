@@ -6,6 +6,9 @@ var gas_injury_rate = 1
 
 func _ready():
 	restore_state()
+	get_tree().call_group("takables", "connect_signals", self)
+	get_tree().call_group("pedestals", "connect_signals", self)
+	get_tree().call_group("button_activators", "connect_signals", self)
 
 func get_door(door_path):
 	return doors.get_node(door_path)
@@ -16,7 +19,7 @@ func use_takable(player_node, takable, parent):
 		Takable.TakableIds.APATA:
 			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 				get_door("door_0").close()
-				get_node("ceiling_moving_1").activate()
+				get_node("Apata_room/ceiling_moving_1").activate()
 				conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
 				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 		Takable.TakableIds.HERMES:
@@ -55,16 +58,16 @@ func use_pedestal(player_node, pedestal, item_nam):
 		Pedestal.PedestalIds.APATA:
 			var hope = hope_on_apata_pedestal(pedestal)
 			if item_nam == "statue_apata" and hope:
-				get_node("door_3").open()
-				get_node("ceiling_moving_1").pause()
+				get_node("Apata_room/door_3").open()
+				get_node("Apata_room/ceiling_moving_1").pause()
 				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.PAUSED
 		Pedestal.PedestalIds.MUSES:
 			if not check_muses_correct(pedestal.get_parent()):
 				return
 			get_door("door_4").open()
 			game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
-			get_node("ceiling_moving_1").deactivate()
-			get_node("door_3").close()
+			get_node("Apata_room/ceiling_moving_1").deactivate()
+			get_node("Apata_room/door_3").close()
 		Pedestal.PedestalIds.ERIDA_LOCK:
 			get_door("door_8").open()
 		Pedestal.PedestalIds.DEMO_ARES:

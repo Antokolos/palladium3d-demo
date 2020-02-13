@@ -6,7 +6,9 @@
 radius = 0.265842
 height = 0.353636
 
-[node name="pedestal_history" type="StaticBody"]
+[node name="pedestal_history" type="StaticBody" groups=[
+"pedestals",
+]]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

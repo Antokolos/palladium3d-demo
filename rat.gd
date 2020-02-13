@@ -1,6 +1,6 @@
 extends RigidBody
 
-export var floor_path = "../NavigationMeshInstance/floor_demo_full/floor_demo_floor_2/StaticBodyFloor"
+export var floor_path = "../StaticBodyFloor"
 onready var exclusions = [get_node(floor_path), self]
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
 

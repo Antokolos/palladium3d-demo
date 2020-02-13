@@ -21,16 +21,16 @@ enum TakableIds {
 	SPHERE_FOR_POSTAMENT = 140
 }
 export(TakableIds) var takable_id = TakableIds.NONE
-export var level_path = "../../.."
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
 
 onready var initially_present = visible
 
 func _ready():
-	var level = get_node(level_path)
-	connect("use_takable", level, "use_takable")
 	restore_state()
+
+func connect_signals(level):
+	connect("use_takable", level, "use_takable")
 
 func get_item_name():
 	match takable_id:

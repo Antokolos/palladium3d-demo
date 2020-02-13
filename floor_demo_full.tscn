@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://room_enabler.tscn" type="PackedScene" id=2]
@@ -66,6 +66,10 @@
 [ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=64]
 [ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=65]
 [ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=66]
+[ext_resource path="res://scenes/tablet_Ares.tscn" type="PackedScene" id=67]
+[ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=68]
+[ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=69]
+[ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=70]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -99,7 +103,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -109,11 +112,10 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.3185, 0.881814, 20.9858 )
 
 [node name="text_2" parent="Apata_room/granite_base_1" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.480825, 0.891173, 0.238459 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0542, 0.891173, 0.168636 )
 
 [node name="pedestal_theatre" parent="Apata_room/granite_base_1" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.135, 0 )
-level_path = "../.."
 pedestal_id = 20
 
 [node name="statue_1" parent="Apata_room/granite_base_1/pedestal_theatre" instance=ExtResource( 7 )]
@@ -129,7 +131,6 @@ visible = false
 
 [node name="pedestal_astronomy" parent="Apata_room/granite_base_1" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.104, 1.133, 0 )
-level_path = "../.."
 pedestal_id = 20
 
 [node name="statue_1" parent="Apata_room/granite_base_1/pedestal_astronomy" instance=ExtResource( 7 )]
@@ -145,7 +146,6 @@ visible = false
 
 [node name="pedestal_history" parent="Apata_room/granite_base_1" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.165, 1.132, 0 )
-level_path = "../.."
 pedestal_id = 20
 
 [node name="statue_1" parent="Apata_room/granite_base_1/pedestal_history" instance=ExtResource( 7 )]
@@ -199,7 +199,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.50551, 0.61902, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0359497, 0.62297, -0.197407 )
 
 [node name="text_1" parent="Apata_room" instance=ExtResource( 21 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.6155, 2.85138, 19.805 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0059, 2.85138, 19.8031 )
 
 [node name="torch_full2" parent="Apata_room" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5236, 2.66402, 33.9859 )
@@ -634,6 +634,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83106, 1.759, 33.1479 )
 [node name="demo_ceiling" parent="." instance=ExtResource( 66 )]
 
 [node name="EridaTrapTimer" type="Timer" parent="."]
+
+[node name="tablet_Ares" parent="." instance=ExtResource( 67 )]
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.60744, 7.28487, 26.5618 )
+
+[node name="tablet_Hermes" parent="." instance=ExtResource( 68 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02011, 7.30213, 26.2661 )
+
+[node name="text_5" parent="." instance=ExtResource( 69 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72163, 4.78111, 33.6938 )
+
+[node name="text_6" parent="." instance=ExtResource( 70 )]
+transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999993, 14.7988, 4.78241, 40.3261 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]

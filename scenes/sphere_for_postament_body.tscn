@@ -8,11 +8,11 @@ radius = 0.0683383
 
 [node name="sphere_for_postament_body" type="RigidBody" groups=[
 "restorable_state",
+"takables",
 ]]
 mode = 1
 script = ExtResource( 1 )
 takable_id = 140
-level_path = "../.."
 
 [node name="sphere_for_postament" parent="." instance=ExtResource( 2 )]
 

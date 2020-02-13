@@ -6,11 +6,12 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.324713, 0.472462, 0.309723 )
 
-[node name="postament_1" type="StaticBody"]
+[node name="postament_1" type="StaticBody" groups=[
+"pedestals",
+]]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489559, 0 )
 shape = SubResource( 1 )
 

@@ -6,7 +6,9 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.25823, 0.406644, 0.27641 )
 
-[node name="pedestal_apata" type="StaticBody"]
+[node name="pedestal_apata" type="StaticBody" groups=[
+"pedestals",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0664639, 0 )
 script = ExtResource( 1 )
 pedestal_id = 1

@@ -3,18 +3,16 @@
 [ext_resource path="res://takable.gd" type="Script" id=1]
 [ext_resource path="res://assets/statue_4.escn" type="PackedScene" id=2]
 
-
 [sub_resource type="CylinderShape" id=1]
 radius = 0.167647
 height = 0.793229
 
 [node name="statue_4" type="StaticBody" groups=[
 "restorable_state",
+"takables",
 ]]
 script = ExtResource( 1 )
 takable_id = 10
-item_name = "statue_apata"
-level_path = "../.."
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00919968, 0 )

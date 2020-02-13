@@ -3,7 +3,6 @@ class_name Pedestal
 
 signal use_pedestal(player_node, pedestal, item_nam)
 
-export var level_path = ".."
 enum PedestalIds {
 	NONE = 0,
 	APATA = 10,
@@ -14,8 +13,7 @@ enum PedestalIds {
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
-func _ready():
-	var level = get_node(level_path)
+func connect_signals(level):
 	connect("use_pedestal", level, "use_pedestal")
 
 func use(player_node):

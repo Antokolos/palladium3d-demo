@@ -8,6 +8,7 @@ extents = Vector3( 0.115543, 0.435312, 0.0897023 )
 
 [node name="statue_artemida" type="StaticBody" groups=[
 "restorable_state",
+"takables",
 ]]
 script = ExtResource( 1 )
 takable_id = 80
