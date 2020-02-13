@@ -16,47 +16,47 @@
 [ext_resource path="res://scenes/vase_5.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/vase_3.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/vase_4.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/spider_small.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/vase_7.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/vase_1.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/vase_2.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/text_1.tscn" type="PackedScene" id=21]
-[ext_resource path="res://torch_full.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/apatha_add_1.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/ceiling_moving_1.tscn" type="PackedScene" id=24]
-[ext_resource path="res://scenes/apata_chest.tscn" type="PackedScene" id=25]
-[ext_resource path="res://scenes/sphere_for_postament_body.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/pedestal_apata.tscn" type="PackedScene" id=27]
-[ext_resource path="res://scenes/statue_4.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=29]
-[ext_resource path="res://scenes/postament_flat.tscn" type="PackedScene" id=30]
-[ext_resource path="res://scenes/statue_hermes.tscn" type="PackedScene" id=31]
-[ext_resource path="res://scenes/scales.tscn" type="PackedScene" id=32]
-[ext_resource path="res://scenes/hermes_bench.tscn" type="PackedScene" id=33]
-[ext_resource path="res://scenes/vase_8.tscn" type="PackedScene" id=34]
-[ext_resource path="res://scenes/coin_pile_small.tscn" type="PackedScene" id=35]
-[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=36]
-[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=37]
-[ext_resource path="res://scenes/statues_postament_1.tscn" type="PackedScene" id=38]
-[ext_resource path="res://scenes/statues_postament_2.tscn" type="PackedScene" id=39]
-[ext_resource path="res://scenes/statues_postament_3.tscn" type="PackedScene" id=40]
-[ext_resource path="res://scenes/apple_postament.tscn" type="PackedScene" id=41]
-[ext_resource path="res://scenes/statue_erida.tscn" type="PackedScene" id=42]
-[ext_resource path="res://scenes/labyrinth_skeleton_2.tscn" type="PackedScene" id=43]
-[ext_resource path="res://scenes/halberd.tscn" type="PackedScene" id=44]
-[ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=45]
-[ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=46]
-[ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=47]
-[ext_resource path="res://scenes/statue_erida_big.tscn" type="PackedScene" id=48]
-[ext_resource path="res://scenes/statue_ares.tscn" type="PackedScene" id=49]
-[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=50]
-[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=51]
-[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=52]
-[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=53]
-[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=54]
-[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=55]
-[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=56]
-[ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=57]
+[ext_resource path="res://scenes/vase_7.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/vase_1.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/vase_2.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/text_1.tscn" type="PackedScene" id=20]
+[ext_resource path="res://torch_full.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/apatha_add_1.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/ceiling_moving_1.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/apata_chest.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/sphere_for_postament_body.tscn" type="PackedScene" id=25]
+[ext_resource path="res://scenes/pedestal_apata.tscn" type="PackedScene" id=26]
+[ext_resource path="res://scenes/statue_4.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/column_3.tscn" type="PackedScene" id=28]
+[ext_resource path="res://scenes/postament_flat.tscn" type="PackedScene" id=29]
+[ext_resource path="res://scenes/statue_hermes.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/scales.tscn" type="PackedScene" id=31]
+[ext_resource path="res://scenes/hermes_bench.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scenes/vase_8.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scenes/coin_pile_small.tscn" type="PackedScene" id=34]
+[ext_resource path="res://scenes/hermes_mosaic.tscn" type="PackedScene" id=35]
+[ext_resource path="res://scenes/hermes_mosaic_2.tscn" type="PackedScene" id=36]
+[ext_resource path="res://scenes/statues_postament_1.tscn" type="PackedScene" id=37]
+[ext_resource path="res://scenes/statues_postament_2.tscn" type="PackedScene" id=38]
+[ext_resource path="res://scenes/statues_postament_3.tscn" type="PackedScene" id=39]
+[ext_resource path="res://scenes/apple_postament.tscn" type="PackedScene" id=40]
+[ext_resource path="res://scenes/statue_erida.tscn" type="PackedScene" id=41]
+[ext_resource path="res://scenes/labyrinth_skeleton_2.tscn" type="PackedScene" id=42]
+[ext_resource path="res://scenes/halberd.tscn" type="PackedScene" id=43]
+[ext_resource path="res://scenes/labyrinth_skeleton_3.tscn" type="PackedScene" id=44]
+[ext_resource path="res://scenes/musket.tscn" type="PackedScene" id=45]
+[ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=46]
+[ext_resource path="res://scenes/statue_erida_big.tscn" type="PackedScene" id=47]
+[ext_resource path="res://scenes/statue_ares.tscn" type="PackedScene" id=48]
+[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=49]
+[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=50]
+[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=51]
+[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=52]
+[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=53]
+[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=54]
+[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=55]
+[ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=56]
+[ext_resource path="res://scenes/spider_small.tscn" type="PackedScene" id=57]
 [ext_resource path="res://scenes/spider_web_2.tscn" type="PackedScene" id=58]
 [ext_resource path="res://scenes/floor_demo_2.tscn" type="PackedScene" id=59]
 [ext_resource path="res://scenes/floor_demo_floor_2.tscn" type="PackedScene" id=60]
@@ -103,6 +103,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -178,59 +179,52 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2369, 1.20497, 30.471 )
 [node name="vase_9" parent="Apata_room" instance=ExtResource( 16 )]
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 18.2236, 1.20919, 31.5064 )
 
-[node name="vase_52" parent="Apata_room" instance=ExtResource( 14 )]
-editor/display_folded = true
-transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 35.2237, 1.34907, 23.2499 )
-
-[node name="spider_small" parent="Apata_room/vase_52" instance=ExtResource( 17 )]
-transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
-
 [node name="granite_base_5" parent="Apata_room" instance=ExtResource( 12 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4014, 1.2132, 23.0821 )
 
-[node name="vase_7" parent="Apata_room/granite_base_5" instance=ExtResource( 18 )]
+[node name="vase_7" parent="Apata_room/granite_base_5" instance=ExtResource( 17 )]
 transform = Transform( -0.689322, 0, -0.724455, 0, 1, 0, 0.724455, 0, -0.689322, 0.27154, 0.613208, 0.145529 )
 
-[node name="vase_1" parent="Apata_room/granite_base_5" instance=ExtResource( 19 )]
+[node name="vase_1" parent="Apata_room/granite_base_5" instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.50551, 0.61902, 0 )
 
-[node name="vase_2" parent="Apata_room/granite_base_5" instance=ExtResource( 20 )]
+[node name="vase_2" parent="Apata_room/granite_base_5" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0359497, 0.62297, -0.197407 )
 
-[node name="text_1" parent="Apata_room" instance=ExtResource( 21 )]
+[node name="text_1" parent="Apata_room" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0059, 2.85138, 19.8031 )
 
-[node name="torch_full2" parent="Apata_room" instance=ExtResource( 22 )]
+[node name="torch_full2" parent="Apata_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5236, 2.66402, 33.9859 )
 
-[node name="torch_full3" parent="Apata_room" instance=ExtResource( 22 )]
+[node name="torch_full3" parent="Apata_room" instance=ExtResource( 21 )]
 transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 23.809, 2.66526, 40.8915 )
 
-[node name="torch_full5" parent="Apata_room" instance=ExtResource( 22 )]
+[node name="torch_full5" parent="Apata_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5262, 2.66656, 26.8437 )
 
-[node name="apatha_add_1" parent="Apata_room" instance=ExtResource( 23 )]
+[node name="apatha_add_1" parent="Apata_room" instance=ExtResource( 22 )]
 
-[node name="ceiling_moving_1" parent="Apata_room" instance=ExtResource( 24 )]
+[node name="ceiling_moving_1" parent="Apata_room" instance=ExtResource( 23 )]
 
-[node name="apata_chest" parent="Apata_room" instance=ExtResource( 25 )]
+[node name="apata_chest" parent="Apata_room" instance=ExtResource( 24 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7154, 2.40612, 31.8226 )
 
-[node name="sphere_for_postament_body" parent="Apata_room/apata_chest" instance=ExtResource( 26 )]
+[node name="sphere_for_postament_body" parent="Apata_room/apata_chest" instance=ExtResource( 25 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.602235, 0 )
 
-[node name="pedestal_apata" parent="Apata_room" instance=ExtResource( 27 )]
+[node name="pedestal_apata" parent="Apata_room" instance=ExtResource( 26 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 2.02566, 26.8606 )
 pedestal_id = 10
 
-[node name="statue_4" parent="Apata_room/pedestal_apata" instance=ExtResource( 28 )]
+[node name="statue_4" parent="Apata_room/pedestal_apata" instance=ExtResource( 27 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.484857, -0.0269833 )
 exclusive = false
 
-[node name="sphere_for_postament_body" parent="Apata_room/pedestal_apata" instance=ExtResource( 26 )]
+[node name="sphere_for_postament_body" parent="Apata_room/pedestal_apata" instance=ExtResource( 25 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017519, 0 )
 visible = false
 exclusive = false
@@ -252,39 +246,39 @@ collision_mask = 2
 [node name="Hermes_room" type="Spatial" parent="."]
 editor/display_folded = true
 
-[node name="torch_full11" parent="Hermes_room" instance=ExtResource( 22 )]
+[node name="torch_full11" parent="Hermes_room" instance=ExtResource( 21 )]
 transform = Transform( -0.999908, 0, 0.0135483, 0, 1, 0, -0.0135483, 0, -0.999908, 6.06551, 3.66712, 22.6969 )
 
-[node name="column_28" parent="Hermes_room" instance=ExtResource( 29 )]
+[node name="column_28" parent="Hermes_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 15.3912, 1.49648, 19.1959 )
 
-[node name="column_30" parent="Hermes_room" instance=ExtResource( 29 )]
+[node name="column_30" parent="Hermes_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 15.5415, 1.49648, 31.3841 )
 
-[node name="column_29" parent="Hermes_room" instance=ExtResource( 29 )]
+[node name="column_29" parent="Hermes_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 7.23274, 1.49648, 19.1959 )
 
-[node name="column_31" parent="Hermes_room" instance=ExtResource( 29 )]
+[node name="column_31" parent="Hermes_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 7.17041, 1.49648, 31.3841 )
 
-[node name="postament_flat4" parent="Hermes_room" instance=ExtResource( 30 )]
+[node name="postament_flat4" parent="Hermes_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2357, 1.30194, 25.0063 )
 
-[node name="statue_hermes" parent="Hermes_room/postament_flat4" instance=ExtResource( 31 )]
+[node name="statue_hermes" parent="Hermes_room/postament_flat4" instance=ExtResource( 30 )]
 transform = Transform( 0.411541, 0, 0.911391, 0, 1, 0, -0.911391, 0, 0.411541, -0.0030508, 1.44556, 0.0140724 )
 
-[node name="scales" parent="Hermes_room" instance=ExtResource( 32 )]
+[node name="scales" parent="Hermes_room" instance=ExtResource( 31 )]
 transform = Transform( -0.9992, 0, -0.0399936, 0, 1, 0, 0.0399936, 0, -0.9992, 11.1863, 1.24674, 18.8513 )
 
-[node name="hermes_bench" parent="Hermes_room" instance=ExtResource( 33 )]
+[node name="hermes_bench" parent="Hermes_room" instance=ExtResource( 32 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8107, 1.26769, 31.9952 )
 
-[node name="vase_1" parent="Hermes_room/hermes_bench" instance=ExtResource( 19 )]
+[node name="vase_1" parent="Hermes_room/hermes_bench" instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75488, 0.813705, 0.138992 )
 
-[node name="vase_2" parent="Hermes_room/hermes_bench" instance=ExtResource( 20 )]
+[node name="vase_2" parent="Hermes_room/hermes_bench" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.909572, 0.804039, 0.382786 )
 
 [node name="vase_3" parent="Hermes_room/hermes_bench" instance=ExtResource( 15 )]
@@ -299,22 +293,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8803, 0.00787187, -1.83598 )
 [node name="vase_6" parent="Hermes_room/hermes_bench" instance=ExtResource( 13 )]
 transform = Transform( 0.157105, 0.914963, -0.371699, 0, 0.376373, 0.926468, 0.987582, -0.145553, 0.0591303, 3.17446, 0.0436769, -1.32217 )
 
-[node name="vase_7" parent="Hermes_room/hermes_bench" instance=ExtResource( 18 )]
+[node name="vase_7" parent="Hermes_room/hermes_bench" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.492124, 0.800344, 0.354343 )
 
-[node name="vase_8" parent="Hermes_room/hermes_bench" instance=ExtResource( 34 )]
+[node name="vase_8" parent="Hermes_room/hermes_bench" instance=ExtResource( 33 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10435, 0.847464, -0.251385 )
 
-[node name="coin_pile_small" parent="Hermes_room/hermes_bench/vase_8" instance=ExtResource( 35 )]
+[node name="coin_pile_small" parent="Hermes_room/hermes_bench/vase_8" instance=ExtResource( 34 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.0761054, 0.00997353 )
 
-[node name="hermes_mosaic" parent="Hermes_room" instance=ExtResource( 36 )]
+[node name="hermes_mosaic" parent="Hermes_room" instance=ExtResource( 35 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 11.1219, 4.19836, 17.7641 )
 
-[node name="hermes_mosaic_2" parent="Hermes_room" instance=ExtResource( 37 )]
+[node name="hermes_mosaic_2" parent="Hermes_room" instance=ExtResource( 36 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2328, 1.23007, 25.0973 )
 
 [node name="Erida_room_enabler" parent="." instance=ExtResource( 2 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.197, 4.66016, 29.4148 )
 aabb = AABB( -6.53067, -4.05388, -11.8878, 13.0613, 8.10776, 23.7755 )
 room_path = "../Erida_room"
@@ -330,80 +325,81 @@ collision_mask = 2
 [node name="Erida_room" type="Spatial" parent="."]
 editor/display_folded = true
 
-[node name="torch_full6" parent="Erida_room" instance=ExtResource( 22 )]
+[node name="torch_full6" parent="Erida_room" instance=ExtResource( 21 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1137, 3.964, 36.4844 )
 
-[node name="torch_full8" parent="Erida_room" instance=ExtResource( 22 )]
+[node name="torch_full8" parent="Erida_room" instance=ExtResource( 21 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1137, 3.964, 29.107 )
 
-[node name="torch_full7" parent="Erida_room" instance=ExtResource( 22 )]
+[node name="torch_full7" parent="Erida_room" instance=ExtResource( 21 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1132, 3.964, 21.628 )
 
-[node name="column_18" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_18" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2, 1.47912, 39.2085 )
 
-[node name="column_21" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_21" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -16.9348, 1.49184, 39.2085 )
 
-[node name="column_19" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_19" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2544, 1.41242, 25.4323 )
 
-[node name="column_32" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_32" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2544, 1.41242, 33.0753 )
 
-[node name="column_20" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_20" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -27.2399, 1.44865, 18.8926 )
 
-[node name="column_23" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_23" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -16.9747, 1.46137, 19.1959 )
 
-[node name="statues_postament_1" parent="Erida_room" instance=ExtResource( 38 )]
+[node name="statues_postament_1" parent="Erida_room" instance=ExtResource( 37 )]
 transform = Transform( -0.532055, 0, 0.84671, 0, 1, 0, -0.84671, 0, -0.532055, -22.5014, 1.19997, 25.4013 )
 
-[node name="statues_postament_2" parent="Erida_room" instance=ExtResource( 39 )]
+[node name="statues_postament_2" parent="Erida_room" instance=ExtResource( 38 )]
 transform = Transform( -0.962213, 0, -0.272297, 0, 1, 0, 0.272297, 0, -0.962213, -19.6244, 1.1829, 27.227 )
 
-[node name="statues_postament_3" parent="Erida_room" instance=ExtResource( 40 )]
+[node name="statues_postament_3" parent="Erida_room" instance=ExtResource( 39 )]
 transform = Transform( 0.703002, 0, 0.711188, 0, 1, 0, -0.711188, 0, 0.703002, -25.2106, 1.1549, 27.1094 )
 
-[node name="apple_postament" parent="Erida_room" instance=ExtResource( 41 )]
+[node name="apple_postament" parent="Erida_room" instance=ExtResource( 40 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5252, 1.20149, 28.9826 )
 
-[node name="postament_flat" parent="Erida_room" instance=ExtResource( 30 )]
+[node name="postament_flat" parent="Erida_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 0.0923095, 0, 0.99573, 0, 1, 0, -0.99573, 0, 0.0923095, -26.6657, 1.198, 36.3554 )
 
-[node name="statue_erida" parent="Erida_room/postament_flat" instance=ExtResource( 42 )]
+[node name="statue_erida" parent="Erida_room/postament_flat" instance=ExtResource( 41 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48142, -0.0213776 )
 
-[node name="labyrinth_skeleton_2" parent="Erida_room" instance=ExtResource( 43 )]
+[node name="labyrinth_skeleton_2" parent="Erida_room" instance=ExtResource( 42 )]
 editor/display_folded = true
 transform = Transform( 0.414061, 0, 0.910249, 0, 1, 0, -0.910249, 0, 0.414061, -17.4571, 1.17933, 35.5966 )
 
-[node name="halberd" parent="Erida_room/labyrinth_skeleton_2" instance=ExtResource( 44 )]
+[node name="halberd" parent="Erida_room/labyrinth_skeleton_2" instance=ExtResource( 43 )]
 transform = Transform( 0.659541, -0.751053, 0.0304505, -0.0340106, 0.0106518, 0.999365, -0.7509, -0.660158, -0.018518, 0.252914, 0.0681618, -1.91863 )
 
-[node name="labyrinth_skeleton_3" parent="Erida_room" instance=ExtResource( 45 )]
+[node name="labyrinth_skeleton_3" parent="Erida_room" instance=ExtResource( 44 )]
 editor/display_folded = true
 transform = Transform( 0.751161, 0, 0.660119, 0, 1, 0, -0.660119, 0, 0.751161, -23.2384, 1.31181, 32.7502 )
 
-[node name="musket" parent="Erida_room/labyrinth_skeleton_3" instance=ExtResource( 46 )]
+[node name="musket" parent="Erida_room/labyrinth_skeleton_3" instance=ExtResource( 45 )]
 transform = Transform( 0.132498, 0.990297, 0.0418944, -0.00522408, 0.0429642, -0.999063, -0.99117, 0.132156, 0.0108662, -1.30611, -0.103672, -1.14781 )
 
-[node name="labyrinth_skeleton_4" parent="Erida_room" instance=ExtResource( 47 )]
+[node name="labyrinth_skeleton_4" parent="Erida_room" instance=ExtResource( 46 )]
 editor/display_folded = true
 transform = Transform( 0.536479, 0, 0.843914, 0, 1, 0, -0.843914, 0, 0.536479, -24.7998, 1.29492, 39.1931 )
 
-[node name="halberd2" parent="Erida_room/labyrinth_skeleton_4" instance=ExtResource( 44 )]
+[node name="halberd2" parent="Erida_room/labyrinth_skeleton_4" instance=ExtResource( 43 )]
 transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.999365, 0.251888, -0.967573, 0.0188852, 0.868708, -0.0912944, -0.0180588 )
 
-[node name="statue_erida_big" parent="Erida_room" instance=ExtResource( 48 )]
+[node name="statue_erida_big" parent="Erida_room" instance=ExtResource( 47 )]
 transform = Transform( 0.999046, 0, 0.0436803, 0, 1, 0, -0.0436803, 0, 0.999046, -22.1767, 1.18002, 19.0506 )
 
-[node name="column_22" parent="Erida_room" instance=ExtResource( 29 )]
+[node name="column_22" parent="Erida_room" instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -16.9892, 1.42514, 31.3499 )
 
 [node name="Ares_room_enabler" parent="." instance=ExtResource( 2 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91577, 4.83816, 25.2311 )
 aabb = AABB( -5.61708, -4.18341, -8.02243, 11.2342, 8.36682, 16.0449 )
 room_path = "../Ares_room"
@@ -419,147 +415,147 @@ collision_mask = 2
 [node name="Ares_room" type="Spatial" parent="."]
 editor/display_folded = true
 
-[node name="torch_full10" parent="Ares_room" instance=ExtResource( 22 )]
+[node name="torch_full10" parent="Ares_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64801, 3.66712, 22.1418 )
 
-[node name="column_24" parent="Ares_room" instance=ExtResource( 29 )]
+[node name="column_24" parent="Ares_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -5.98095, 1.44795, 19.1959 )
 
-[node name="column_26" parent="Ares_room" instance=ExtResource( 29 )]
+[node name="column_26" parent="Ares_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -5.98095, 1.43932, 31.2623 )
 
-[node name="column_25" parent="Ares_room" instance=ExtResource( 29 )]
+[node name="column_25" parent="Ares_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -13.8673, 1.44795, 19.1959 )
 
-[node name="column_27" parent="Ares_room" instance=ExtResource( 29 )]
+[node name="column_27" parent="Ares_room" instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -13.8673, 1.43932, 31.2623 )
 
-[node name="postament_flat2" parent="Ares_room" instance=ExtResource( 30 )]
+[node name="postament_flat2" parent="Ares_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26774, 1.19072, 23.0791 )
 
-[node name="statue_ares" parent="Ares_room/postament_flat2" instance=ExtResource( 49 )]
+[node name="statue_ares" parent="Ares_room/postament_flat2" instance=ExtResource( 48 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00500202, 1.52472, 0.00882149 )
 
-[node name="chest_2" parent="Ares_room" instance=ExtResource( 50 )]
+[node name="chest_2" parent="Ares_room" instance=ExtResource( 49 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.89875, 1.18648, 18.3013 )
 
-[node name="greek_armor_boxed" parent="Ares_room/chest_2" instance=ExtResource( 51 )]
+[node name="greek_armor_boxed" parent="Ares_room/chest_2" instance=ExtResource( 50 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0515965, 0 )
 
-[node name="ares_shield_1" parent="Ares_room" instance=ExtResource( 52 )]
+[node name="ares_shield_1" parent="Ares_room" instance=ExtResource( 51 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1175, 0, 32.4291 )
 
-[node name="ares_shield_2" parent="Ares_room" instance=ExtResource( 53 )]
+[node name="ares_shield_2" parent="Ares_room" instance=ExtResource( 52 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.20933, 0, 17.9124 )
 
-[node name="spear" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear" parent="Ares_room" instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.6198 )
 
-[node name="spear2" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear2" parent="Ares_room" instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.0765 )
 
-[node name="spear3" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear3" parent="Ares_room" instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.5613 )
 
-[node name="spear4" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear4" parent="Ares_room" instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.0346 )
 
 [node name="granite_base_6" parent="Ares_room" instance=ExtResource( 12 )]
 editor/display_folded = true
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -5.29208, 1.20675, 21.447 )
 
-[node name="sword" parent="Ares_room/granite_base_6" instance=ExtResource( 55 )]
+[node name="sword" parent="Ares_room/granite_base_6" instance=ExtResource( 54 )]
 transform = Transform( -0.0433195, 0.0240685, 0.998771, 0.00104294, 0.99971, -0.0240459, -0.999061, 1.05207e-009, -0.043332, -0.294041, 0.654566, -4.76837e-007 )
 
-[node name="bow" parent="Ares_room" instance=ExtResource( 56 )]
+[node name="bow" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.76091, 3.97121, 29.9481 )
 
-[node name="bow2" parent="Ares_room" instance=ExtResource( 56 )]
+[node name="bow2" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -14.902, 3.97121, 29.9481 )
 
-[node name="vase_8" parent="." instance=ExtResource( 34 )]
+[node name="vase_8" parent="." instance=ExtResource( 33 )]
 transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 4.31345, 1.19006, 19.7316 )
 
-[node name="torch_full" parent="." instance=ExtResource( 22 )]
+[node name="torch_full" parent="." instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94061, 3.964, 21.6072 )
 
-[node name="torch_full4" parent="." instance=ExtResource( 22 )]
+[node name="torch_full4" parent="." instance=ExtResource( 21 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.55781, 3.964, 31.4475 )
 
-[node name="torch_full9" parent="." instance=ExtResource( 22 )]
+[node name="torch_full9" parent="." instance=ExtResource( 21 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -34.7238, 3.964, 34.1097 )
 
-[node name="column_3" parent="." instance=ExtResource( 29 )]
+[node name="column_3" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75205, 1.42885, 46.6765 )
 
-[node name="column_35" parent="." instance=ExtResource( 29 )]
+[node name="column_35" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.91065, 1.4724, 39.3336 )
 
-[node name="column_8" parent="." instance=ExtResource( 29 )]
+[node name="column_8" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.1028, 1.38926, 46.6765 )
 
-[node name="column_12" parent="." instance=ExtResource( 29 )]
+[node name="column_12" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 35.2486, 1.47313, 38.5063 )
 
-[node name="column_15" parent="." instance=ExtResource( 29 )]
+[node name="column_15" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -33.8392, 1.4724, 38.7145 )
 
-[node name="column_13" parent="." instance=ExtResource( 29 )]
+[node name="column_13" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 35.2486, 1.47313, 29.2148 )
 
-[node name="column_16" parent="." instance=ExtResource( 29 )]
+[node name="column_16" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -33.8392, 1.4724, 29.423 )
 
-[node name="column_14" parent="." instance=ExtResource( 29 )]
+[node name="column_14" parent="." instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 35.2486, 1.47313, 18.6844 )
 
-[node name="column_17" parent="." instance=ExtResource( 29 )]
+[node name="column_17" parent="." instance=ExtResource( 28 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -33.8392, 1.4724, 18.8926 )
 
-[node name="column_4" parent="." instance=ExtResource( 29 )]
+[node name="column_4" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9663, 1.52234, 46.7339 )
 
-[node name="column_36" parent="." instance=ExtResource( 29 )]
+[node name="column_36" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9526, 1.56589, 39.391 )
 
-[node name="column_9" parent="." instance=ExtResource( 29 )]
+[node name="column_9" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7726, 1.48275, 46.7339 )
 
-[node name="column_33" parent="." instance=ExtResource( 29 )]
+[node name="column_33" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.4999, 1.56589, 39.3587 )
 
-[node name="column_11" parent="." instance=ExtResource( 29 )]
+[node name="column_11" parent="." instance=ExtResource( 28 )]
 transform = Transform( 0.000626878, 0, 1, 0, 1, 0, -1, 0, 0.000626878, 26.8828, 1.48275, 46.7338 )
 
-[node name="column_5" parent="." instance=ExtResource( 29 )]
+[node name="column_5" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7625, 1.47047, 46.4043 )
 
-[node name="column_10" parent="." instance=ExtResource( 29 )]
+[node name="column_10" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88818, 1.43088, 46.4043 )
 
-[node name="column_6" parent="." instance=ExtResource( 29 )]
+[node name="column_6" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -23.9187, 1.47047, 46.7765 )
 
-[node name="column_7" parent="." instance=ExtResource( 29 )]
+[node name="column_7" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 10.8918, 1.43088, 46.7765 )
 
-[node name="column_34" parent="." instance=ExtResource( 29 )]
+[node name="column_34" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.06699, 1.51402, 39.4013 )
 
-[node name="spider_web_1" parent="." instance=ExtResource( 57 )]
+[node name="spider_web_1" parent="." instance=ExtResource( 56 )]
 editor/display_folded = true
 transform = Transform( 0.464381, -0.5748, 0.673762, -0.816933, 0.015773, 0.576517, -0.342009, -0.818142, -0.462248, 33.9657, 6.35285, 46.8701 )
 
-[node name="spider_small" parent="spider_web_1" instance=ExtResource( 17 )]
+[node name="spider_small" parent="spider_web_1" instance=ExtResource( 57 )]
 transform = Transform( 0.997327, -0.0728641, -0.00542351, 0.0724906, 0.996043, -0.0514135, 0.00914835, 0.0508827, 0.998663, 0, 0, 0 )
 
 [node name="spider_web_2" parent="." instance=ExtResource( 58 )]
 editor/display_folded = true
 transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134, 0.999996, -0.00252308, 0.00131254, 35.7145, 6.18291, 33.8711 )
 
-[node name="spider_small" parent="spider_web_2" instance=ExtResource( 17 )]
+[node name="spider_small" parent="spider_web_2" instance=ExtResource( 57 )]
 
 [node name="AreaDeadEnd" type="Area" parent="."]
 editor/display_folded = true
@@ -604,7 +600,7 @@ pedestal_id = 40
 
 [node name="statue_hermes" parent="postament_1" groups=[
 "demo_finish_statues",
-] instance=ExtResource( 31 )]
+] instance=ExtResource( 30 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
 visible = false
 
@@ -615,7 +611,7 @@ pedestal_id = 50
 
 [node name="statue_ares" parent="postament_4" groups=[
 "demo_finish_statues",
-] instance=ExtResource( 49 )]
+] instance=ExtResource( 48 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39803, 0 )
 visible = false
 
@@ -624,7 +620,7 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 pedestal_id = 30
 
-[node name="statue_hermes" parent="postament_1_1" instance=ExtResource( 31 )]
+[node name="statue_hermes" parent="postament_1_1" instance=ExtResource( 30 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
 
@@ -646,6 +642,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72163, 4.78111, 33.6938 )
 
 [node name="text_6" parent="." instance=ExtResource( 70 )]
 transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999993, 14.7988, 4.78241, 40.3261 )
+
+[node name="vase_52" parent="." instance=ExtResource( 14 )]
+editor/display_folded = true
+transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 35.2237, 1.34907, 23.2499 )
+
+[node name="spider_small" parent="vase_52" instance=ExtResource( 57 )]
+transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
