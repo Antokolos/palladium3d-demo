@@ -1,0 +1,1 @@
+﻿{"inkVersion":19,"root":[["^We did it again! Do you have the statue?\t",{"#":"actor:bandit"},"\n","^Yes. Quickly, to the safe room.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

@@ -1,0 +1,1 @@
+﻿{"inkVersion":19,"root":[[["ev","str","^...","/str","/ev",{"*":".^.c-0","flg":4},{"c-0":["\n","^...\t",{"#":"actor:player"},{"#":"finalizer"},"\n",{"->":"0.g-0"},null],"#n":"conversation"}],{"g-0":[{"->":"0.conversation"},["done",{"#n":"g-1"}],null]}],"done",null],"listDefs":{}}

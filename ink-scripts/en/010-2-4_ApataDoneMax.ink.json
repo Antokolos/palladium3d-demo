@@ -1,0 +1,1 @@
+﻿{"inkVersion":19,"root":[["^Oh, look, the door is opening!\t",{"#":"actor:bandit"},"\n","^It leads to another room, not back to corridor. But at least we have a way out.\t",{"#":"actor:player"},"\n","^Andreas, if we don't need anything else here, maybe we should leave.\t",{"#":"actor:female"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

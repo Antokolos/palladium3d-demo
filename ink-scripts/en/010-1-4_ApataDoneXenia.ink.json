@@ -1,0 +1,1 @@
+﻿{"inkVersion":19,"root":[["^Hurrah, Andreas, we did it! The door has opened!\t",{"#":"actor:female"},"\n","^Right, but it leads to another room, not back to the corridor. What if this is another trap?\t",{"#":"actor:bandit"},"\n","^We don't have much of a choice now. Let's go, quickly.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
