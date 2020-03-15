@@ -62,3 +62,7 @@ func rest_sniff():
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
+
+func _on_RatArea_body_entered(body):
+	if not retreating and body.is_in_group("party"):
+		conversation_manager.start_area_cutscene("007_Rat")

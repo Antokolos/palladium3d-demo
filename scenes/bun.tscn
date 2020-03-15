@@ -3,6 +3,6 @@
 [ext_resource path="res://assets/bun.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bun.gd" type="Script" id=2]
 
-[node name="bun" index="0" instance=ExtResource( 1 )]
+[node name="bun" instance=ExtResource( 1 )]
 pause_mode = 2
 script = ExtResource( 2 )

@@ -1,30 +1,25 @@
 extends StaticBody
 
-var opened = false
+const STATE_OPENED = 1
+
 onready var anim_player = get_parent().get_node("forest_door_armature001/AnimationPlayer")
+onready var barn_lock_node = get_parent().get_node("barn_lock")
 
 func use(player_node):
-#	var hud = player_node.get_hud()
-#	if hud.inventory.visible:
-#		var item = hud.get_active_item()
-#		if item and item.nam.begins_with("statue_"):
-#			pass
-	if anim_player.is_playing() or opened:
+	if anim_player.is_playing() \
+		or game_params.get_multistate_state(get_path()) == STATE_OPENED \
+		or game_params.get_multistate_state(barn_lock_node.get_path()) != BarnLock.STATE_OPENED:
 		return
 	get_node("closed_door").disabled = true
 	get_node("opened_door").disabled = false
 	anim_player.play("ArmatureAction.001")
 	$AudioStreamPlayer.play()
-	opened = true
+	game_params.set_multistate_state(get_path(), STATE_OPENED)
 
 func add_highlight(player_node):
-#	var hud = player_node.get_hud()
-#	if hud.inventory.visible:
-#		var item = hud.get_active_item()
-#		if item and item.nam == "statue_apata":
-#			return "E: Положить статуэтку в ларец"
-#	return ""
-	return "" if opened else "E: Открыть"
+	if game_params.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
+		return "E: Открыть"
+	return ""
 
 func remove_highlight(player_node):
 	pass

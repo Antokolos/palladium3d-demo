@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "BarnLock",
+"language": "GDScript",
+"path": "res://scenes/barn_lock.gd"
+}, {
 "base": "StaticBody",
 "class": "ButtonActivator",
 "language": "GDScript",
@@ -18,6 +23,11 @@ _global_script_classes=[ {
 "class": "Door",
 "language": "GDScript",
 "path": "res://door.gd"
+}, {
+"base": "Node",
+"class": "GameParams",
+"language": "GDScript",
+"path": "res://game_params.gd"
 }, {
 "base": "RigidBody",
 "class": "ItemContainer",
@@ -70,8 +80,10 @@ _global_script_classes=[ {
 "path": "res://takable.gd"
 } ]
 _global_script_class_icons={
+"BarnLock": "",
 "ButtonActivator": "",
 "Door": "",
+"GameParams": "",
 "ItemContainer": "",
 "LightSource": "",
 "MenuItem": "",

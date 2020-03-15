@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://room_enabler.tscn" type="PackedScene" id=2]
@@ -83,6 +83,15 @@ extents = Vector3( 2.22422, 1, 0.925723 )
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.10586, 1, 3.64931 )
 
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 4.68733, 2.1167, 3.3958 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 3.78506, 1.90136, 3.14294 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 2.24065, 2.73226, 2.60671 )
+
 [node name="floor_demo_full" type="Spatial" groups=[
 "restorable_state",
 ]]
@@ -103,7 +112,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -216,7 +224,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7154, 2.40612, 31.8226 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.602235, 0 )
 
 [node name="pedestal_apata" parent="Apata_room" instance=ExtResource( 26 )]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.7234, 2.02566, 26.8606 )
 pedestal_id = 10
 
@@ -557,34 +564,6 @@ transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134
 
 [node name="spider_small" parent="spider_web_2" instance=ExtResource( 57 )]
 
-[node name="AreaDeadEnd" type="Area" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0261, 4.169, 22.8255 )
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd"]
-shape = SubResource( 1 )
-
-[node name="AreaApata" type="Area" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6681, 2.34447, 26.7986 )
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaApata"]
-shape = SubResource( 2 )
-
-[node name="AreaMuses" type="Area" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3267, 2.493, 22.7039 )
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaMuses"]
-shape = SubResource( 3 )
-
-[node name="AreaApataDone" type="Area" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2812, 3.332, 27.1113 )
-
-[node name="CollisionShape" type="CollisionShape" parent="AreaApataDone"]
-shape = SubResource( 4 )
-
 [node name="floor_demo_2" parent="." instance=ExtResource( 59 )]
 
 [node name="floor_demo_floor_2" parent="." instance=ExtResource( 60 )]
@@ -649,8 +628,88 @@ transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 
 
 [node name="spider_small" parent="vase_52" instance=ExtResource( 57 )]
 transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
+
+[node name="AreaDeadEnd" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0261, 4.169, 22.8255 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd"]
+shape = SubResource( 1 )
+
+[node name="AreaDeadEnd2" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8705, 4.169, 22.8255 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaDeadEnd2"]
+shape = SubResource( 1 )
+
+[node name="AreaApata" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6681, 2.34447, 26.7986 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaApata"]
+shape = SubResource( 2 )
+
+[node name="AreaMuses" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3267, 2.493, 22.7039 )
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaMuses"]
+shape = SubResource( 3 )
+
+[node name="AreaApataDone" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2812, 3.332, 27.1113 )
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaApataDone"]
+shape = SubResource( 4 )
+
+[node name="IgnitionArea" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.342, 44.201 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="IgnitionArea"]
+shape = SubResource( 5 )
+
+[node name="RatsArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.765, 3.11, 44.712 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="RatsArea"]
+shape = SubResource( 6 )
+
+[node name="InscriptionsPosition" type="Position3D" parent="."]
+transform = Transform( 0.160453, -0.231, 0.959632, 1.59957e-008, 0.972229, 0.234032, -0.987043, -0.0375511, 0.155997, 16.078, 3.87822, 36.244 )
+
+[node name="BanditPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01078, 42.9798 )
+
+[node name="InscriptionsArea" type="Area" parent="."]
+editor/display_folded = true
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="InscriptionsArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4392, 3.96025, 36.244 )
+shape = SubResource( 7 )
+
+[node name="ApataCutscenePosition" type="Position3D" parent="."]
+transform = Transform( 0.224162, 0.37579, -0.899185, -0.0239097, 0.924508, 0.380412, 0.974259, -0.0637749, 0.216225, 19.0464, 4.23708, 31.3501 )
+[connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
+[connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
 [connection signal="body_entered" from="AreaApataDone" to="." method="_on_AreaApataDone_body_entered"]
-[connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
+[connection signal="body_entered" from="IgnitionArea" to="." method="_on_IgnitionArea_body_entered"]
+[connection signal="body_entered" from="RatsArea" to="." method="_on_RatsArea_body_entered"]
+[connection signal="body_entered" from="InscriptionsArea" to="." method="_on_InscriptionsArea_body_entered"]

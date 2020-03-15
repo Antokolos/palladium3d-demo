@@ -159,23 +159,47 @@ public class StoryNode : Node
 		}
 	}
 
-	public void InitVariables(Godot.Collections.Dictionary<String, object> storyVars)
+	public void InitVariables(Godot.Node gameParams, Godot.Collections.Dictionary<String, object> storyVars, Godot.Collections.Dictionary<String, bool> party)
 	{
 		var keys = storyVars.Keys;
+		var party_keys = party.Keys;
 		foreach (var locale in AvailableLocales)
 		{
 			PalladiumStory palladiumStory;
 			if (_inkStory.TryGetValue(locale, out palladiumStory))
 			{
+				Story story = palladiumStory.InkStory;
 				foreach (var key in keys)
 				{
 					try
 					{
-						Story story = palladiumStory.InkStory;
 						story.variablesState[key] = storyVars[key];
 						story.RemoveVariableObserver(null, key);
 						story.ObserveVariable(key, (string varName, object newValue) => {
 							storyVars[key] = newValue;
+						});
+					} catch (StoryException ignore)
+					{}
+				}
+				foreach (var party_key in party_keys)
+				{
+					try
+					{
+						var story_key = "party_" + party_key;
+						story.variablesState[story_key] = party[party_key];
+						story.RemoveVariableObserver(null, story_key);
+						story.ObserveVariable(story_key, (string varName, object newValue) => {
+							bool v = (int) newValue > 0;
+							String[] args = new String[1];
+							args[0] = party_key;
+							if (v && !party[party_key])
+							{
+								gameParams.Call("join_party", args);
+							}
+							else if (!v && party[party_key])
+							{
+								gameParams.Call("leave_party", args);
+							}
 						});
 					} catch (StoryException ignore)
 					{}
@@ -313,27 +337,7 @@ public class StoryNode : Node
 		palladiumStory.StoryLog.Add(locale, fullLog);
 	}
 
-	public String Continue(String locale, bool choiceResponse)
-	{
-		String result = "";
-		foreach (var loc in AvailableLocales)
-		{
-			PalladiumStory palladiumStory;
-			if (_inkStory.TryGetValue(loc, out palladiumStory))
-			{
-				Story story = palladiumStory.InkStory;
-				String text = story.Continue();
-				UpdateLog(palladiumStory, loc, text, choiceResponse);
-				if (loc == locale)
-				{
-					result = text;
-				}
-			}
-		}
-		return result;
-	}
-
-	public Godot.Collections.Dictionary<String, String> ContinueWhileYouCan()
+	public Godot.Collections.Dictionary<String, String> Continue(bool choiceResponse)
 	{
 		Godot.Collections.Dictionary<String, String> result = new Godot.Collections.Dictionary<String, String>();
 		foreach (var loc in AvailableLocales)
@@ -342,13 +346,9 @@ public class StoryNode : Node
 			if (_inkStory.TryGetValue(loc, out palladiumStory))
 			{
 				Story story = palladiumStory.InkStory;
-				String text = "";
-				while (story.canContinue)
-				{
-					text = text + " " + story.Continue();
-				}
-				UpdateLog(palladiumStory, loc, text, false);
+				String text = story.Continue();
 				result.Add(loc, text);
+				UpdateLog(palladiumStory, loc, text, choiceResponse);
 			}
 		}
 		return result;

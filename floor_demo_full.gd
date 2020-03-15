@@ -6,6 +6,7 @@ var gas_injury_rate = 1
 
 func _ready():
 	restore_state()
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
@@ -13,14 +14,13 @@ func _ready():
 func get_door(door_path):
 	return doors.get_node(door_path)
 
-func use_takable(player_node, takable, parent):
+func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
 		Takable.TakableIds.APATA:
 			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 				get_door("door_0").close()
 				get_node("Apata_room/ceiling_moving_1").activate()
-				conversation_manager.start_conversation(player_node, game_params.get_companion(), "ApataTrap")
 				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 		Takable.TakableIds.HERMES:
 			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
@@ -116,32 +116,55 @@ func check_muses_correct(base):
 	var pedestal_history = base.get_node("pedestal_history")
 	return check_pedestal(pedestal_history, Takable.TakableIds.CLIO)
 
-func _on_AreaDeadEnd_body_entered(body):
-	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if body.is_in_group("party") and conversation_manager.conversation_is_not_finished(player, target, "DeadEnd"):
-		conversation_manager.start_conversation(player, target, "DeadEnd")
-
 func _on_AreaApata_body_entered(body):
-	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and body.is_in_group("party") and conversation_manager.conversation_is_not_finished(player, target, "ApataStatue"):
-		conversation_manager.start_conversation(player, target, "ApataStatue")
+	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and body.is_in_group("party"):
+		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_AreaMuses_body_entered(body):
-	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED and body.is_in_group("party") and body.is_player() and conversation_manager.conversation_is_not_finished(player, target, "Muses"):
-		conversation_manager.start_conversation(player, target, "Muses")
+	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED and body.is_in_group("party") and body.is_player():
+		conversation_manager.start_area_conversation("010-1-1_Statuettes")
 
 func _on_AreaApataDone_body_entered(body):
-	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if conversation_manager.conversation_is_finished(player, target, "ApataStatue") and body.is_in_group("party") and body.is_player() and conversation_manager.conversation_is_not_finished(player, target, "ApataDone"):
-		conversation_manager.start_conversation(player, target, "ApataDone")
+	if body.is_in_group("party") and body.is_player():
+		conversation_manager.start_area_conversation("011_Hermes")
 
 func _on_EridaTrapTimer_timeout():
 	game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
+
+func _on_IgnitionArea_body_entered(body):
+	var player = game_params.get_player()
+	var target = game_params.get_companion()
+	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, target, "004_TorchesIgnition"):
+		get_tree().call_group("torches", "enable", true, false)
+		conversation_manager.start_conversation(player, target, "004_TorchesIgnition")
+
+func _on_RatsArea_body_entered(body):
+	if body.is_in_group("party"):
+		conversation_manager.start_area_conversation("006_Rats")
+
+func _on_AreaDeadEnd_body_entered(body):
+	if body.is_in_group("party"):
+		conversation_manager.start_area_conversation("023_DemoDeadEnd")
+
+func _on_AreaDeadEnd2_body_entered(body):
+	if body.is_in_group("party"):
+		conversation_manager.start_area_conversation("023_DemoDeadEnd")
+
+func _on_InscriptionsArea_body_entered(body):
+	if body.is_in_group("party"):
+		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
+
+func _on_conversation_finished(player, target, conversation_name, is_cutscene):
+	match conversation_name:
+		"005_ApataInscriptions":
+			var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+			bandit.join_party()
+			bandit.set_target_node(get_node("BanditPosition"))
+			bandit.teleport()
+			conversation_manager.start_area_cutscene("008_MeetingMax", get_node("InscriptionsPosition"))
+		"009_ApataTrap":
+			var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
+			apata_statue.use(player)
 
 func restore_state():
 	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:

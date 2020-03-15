@@ -21,15 +21,19 @@ func is_active():
 	var ls = game_params.get_light_state(get_path())
 	return (ls == game_params.LightState.DEFAULT and initially_active) or (ls == game_params.LightState.ON)
 
+func enable(active, update):
+	torch_fire.enable(active)
+	torch_light.enable(active)
+	if update:
+		game_params.set_light_state(get_path(), active)
+
 func use(player_node):
 	var active = not is_active()
 	if active:
 		$AudioStreamLighter.play()
 	else:
 		$AudioStreamBurning.stop()
-	torch_fire.enable(active)
-	torch_light.enable(active)
-	game_params.set_light_state(get_path(), active)
+	enable(active, true)
 
 func add_highlight(player_node):
 	return ("E: Потушить факел" if is_active() else "E: Зажечь факел")
@@ -39,8 +43,7 @@ func remove_highlight(player_node):
 
 func restore_state():
 	var active = is_active()
-	torch_fire.enable(active)
-	torch_light.enable(active)
+	enable(active, false)
 
 func _on_AudioStreamLighter_finished():
 	$AudioStreamBurning.play()

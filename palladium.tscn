@@ -32,6 +32,7 @@ script = ExtResource( 1 )
 [node name="path_holder" type="Spatial" parent="."]
 
 [node name="doors" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="floor_demo_full" type="Spatial" parent="doors"]
 
@@ -62,6 +63,7 @@ initially_opened = true
 transform = Transform( 1, 0, 0, 0, 0.998579, 0.0532947, 0, -0.0532947, 0.998579, 0.702675, 0.995517, 17.5185 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="."]
+editor/display_folded = true
 navmesh = SubResource( 1 )
 
 [node name="floor_demo_full" parent="NavigationMeshInstance" instance=ExtResource( 5 )]
@@ -75,6 +77,12 @@ transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.276
 initial_player = false
 initial_companion = true
 name_hint = "female"
+
+[node name="player_bandit" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7614, 2.2922, 0 )
+initial_player = false
+name_hint = "bandit"
+model_path = "res://scenes/bandit.tscn"
 
 [node name="rat" parent="." groups=[
 "moving",

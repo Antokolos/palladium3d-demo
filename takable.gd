@@ -1,7 +1,7 @@
 extends PhysicsBody
 class_name Takable
 
-signal use_takable(player_node, takable, parent)
+signal use_takable(player_node, takable, parent, was_taken)
 
 enum TakableIds {
 	NONE = 0,
@@ -18,7 +18,9 @@ enum TakableIds {
 	HERA = 110,
 	APOLLO = 120,
 	ATHENA = 130,
-	SPHERE_FOR_POSTAMENT = 140
+	SPHERE_FOR_POSTAMENT = 140,
+	ENVELOPE = 150,
+	BARN_LOCK_KEY = 160
 }
 export(TakableIds) var takable_id = TakableIds.NONE
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
@@ -28,6 +30,8 @@ onready var initially_present = visible
 
 func _ready():
 	restore_state()
+	game_params.connect("item_taken", self, "on_item_taken")
+	game_params.connect("item_removed", self, "on_item_removed")
 
 func connect_signals(level):
 	connect("use_takable", level, "use_takable")
@@ -62,21 +66,27 @@ func get_item_name():
 			return "statue_athena"
 		TakableIds.SPHERE_FOR_POSTAMENT:
 			return "sphere_for_postament_body"
+		TakableIds.ENVELOPE:
+			return "envelope"
+		TakableIds.BARN_LOCK_KEY:
+			return "barn_lock_key"
 		TakableIds.NONE:
 			continue
 		_:
 			return null
 
 func use(player_node):
-	take(player_node)
-	emit_signal("use_takable", player_node, self, get_parent())
-
-func take(player_node):
+	var was_taken = is_present()
 	game_params.take(get_item_name())
-	make_absent()
-	var hud = player_node.get_hud()
-	if hud:
-		hud.synchronize_items()
+	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
+
+func on_item_taken(nam, cnt):
+	if nam == get_item_name():
+		make_absent()
+
+func on_item_removed(nam, cnt):
+	# TODO: make present??? Likely it is handled in containers...
+	pass
 
 func has_id(tid):
 	return takable_id == tid

@@ -23,6 +23,7 @@ func use(player_node):
 		if not item_match(item):
 			return
 		hud.inventory.visible = false
+		item.used(player_node, self)
 		item.remove()
 		make_present(item)
 		emit_signal("use_pedestal", player_node, self, item.nam)

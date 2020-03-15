@@ -7,8 +7,8 @@ var in_choice = false
 var max_choice = 0
 
 func _ready():
-	StoryNode.LoadStory("ink-scripts", "Monsieur.ink.json", true)
-	StoryNode.InitVariables(game_params.story_vars)
+	StoryNode.LoadStory("ink-scripts", "Chat.ink.json", true)
+	StoryNode.InitVariables(game_params, game_params.story_vars, game_params.party)
 
 func load_chat():
 	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
@@ -44,7 +44,7 @@ func _unhandled_input(event):
 			story_choose(8)
 
 func story_proceed(choice_response):
-	StoryNode.Continue(TranslationServer.get_locale(), choice_response)
+	StoryNode.Continue(choice_response)
 	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
 	info_label.text = "...typing..." if StoryNode.CanContinue() else ""
 	in_choice = false

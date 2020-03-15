@@ -1,6 +1,8 @@
 extends KinematicBody
 class_name PalladiumPlayer
 
+signal arrived_to(target_node)
+
 const PLAYER_NAME_HINT = "player"
 
 export var initial_player = true
@@ -25,7 +27,7 @@ const SPRINT_ACCEL = 4.5
 var dir = Vector3()
 
 const DEACCEL= 16
-const MAX_SLOPE_ANGLE = 40
+const MAX_SLOPE_ANGLE = 60
 
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
@@ -66,6 +68,7 @@ var exclusions = []
 
 enum COMPANION_STATE {REST, WALK, RUN}
 var companion_state = COMPANION_STATE.REST
+var target_node = null
 
 func get_rotation_angle(cur_dir, target_dir, force_forward = true):
 	var c = cur_dir.normalized()
@@ -140,6 +143,8 @@ func follow(current_transform, target_position):
 		model.look(rotation_angle_to_player_deg)
 #		state.set_angular_velocity(zero_dir)
 		dir = Vector3()
+		if not is_in_party():
+			emit_signal("arrived_to", target_node)
 
 func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
@@ -156,11 +161,10 @@ func get_navpath(pstart, pend):
 	var p = pyramid.get_simple_path(p1, p2, true)
 	return Array(p) # Vector3array too complex to use, convert to regular array
 
-func build_path():
+func build_path(target_position):
 	var current_transform = get_global_transform()
 	var current_position = current_transform.origin
-	var player_position = game_params.get_player().get_global_transform().origin
-	var mov_vec = player_position - current_position
+	var mov_vec = target_position - current_position
 	mov_vec.y = 0
 	if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
 		clear_path()
@@ -168,13 +172,13 @@ func build_path():
 	# filter out points of the path, distance to which is greater than distance to player
 	while not path.empty():
 		var pt = path.back()
-		var mov_pt = player_position - pt
+		var mov_pt = target_position - pt
 		if mov_pt.length() <= mov_vec.length():
 			break
 		path.pop_back()
 	if is_on_wall() and path.empty(): # should check possible stuck
 		#clear_path()
-		path = get_navpath(get_global_transform().origin, game_params.get_player().get_global_transform().origin)
+		path = get_navpath(get_global_transform().origin, target_position)
 		#draw_path()
 
 func draw_path():
@@ -204,20 +208,12 @@ func get_hud():
 	return get_hud_holder().get_node("hud")
 
 func get_cam():
-	return get_cam_holder().get_node("camera")
+	var cutscene_cam = conversation_manager.get_cam()
+	return cutscene_cam if cutscene_cam else get_cam_holder().get_node("camera")
 
 func use(player_node):
-	var hud = player_node.get_hud()
-	if conversation_manager.conversation_active():
-		conversation_manager.stop_conversation(player_node)
-	else:
-		var item = hud.get_active_item()
-		if item and item.nam == "saffron_bun":
-			hud.inventory.visible = false
-			item.remove()
-			conversation_manager.start_conversation(player_node, game_params.get_companion(), "Bun")
-		else:
-			conversation_manager.start_conversation(player_node, game_params.get_companion(), "Conversation")
+	if not conversation_manager.conversation_active():
+		game_params.handle_conversation(player_node, self)
 
 func get_model():
 	return get_node("Rotation_Helper/Model").get_child(0)
@@ -244,10 +240,7 @@ func add_highlight(player_node):
 	var conversation = hud.conversation
 	if conversation.visible:
 		return ""
-	var item = hud.get_active_item()
-	if item and item.nam == "saffron_bun":
-		return "E: Угостить булочкой"
-	return "E: Поговорить"
+	return game_params.handle_player_highlight(player_node, self)
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)
@@ -282,12 +275,12 @@ func become_player():
 	var model = model_container.get_child(0)
 	model.set_simple_mode(true)
 	player_rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
-	game_params.companion_path = game_params.player_path
-	game_params.player_path = get_path()
+	game_params.set_player_name_hint(name_hint)
 
 func _ready():
 	exclusions.append(self)
-	exclusions.append(get_node(floor_path))
+	var floor_node = get_node(floor_path)
+	exclusions.append(floor_node)
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
@@ -297,29 +290,71 @@ func _ready():
 		var camera_container = get_node("Rotation_Helper/Camera")
 		var camera = load("res://camera.tscn").instance()
 		camera_container.add_child(camera)
-		game_params.player_path = get_path()
-	if initial_companion:
-		game_params.companion_path = get_path()
+		game_params.set_player_name_hint(name_hint)
 	var model_container = get_node("Rotation_Helper/Model")
 	var placeholder = get_node("Rotation_Helper/placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
 	model.set_simple_mode(initial_player)
 	model_container.add_child(model)
+	game_params.register_player(self)
+	game_params.connect("item_taken", self, "on_item_taken")
+	game_params.connect("item_removed", self, "on_item_removed")
+
+func on_item_taken(nam, cnt):
+	if not is_player():
+		return
+	var hud = get_hud()
+	if hud:
+		hud.synchronize_items()
+
+func on_item_removed(nam, cnt):
+	if not is_player():
+		return
+	var hud = get_hud()
+	if hud:
+		hud.synchronize_items()
+
+func join_party():
+	game_params.join_party(name_hint)
+	get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP, false)
+
+func leave_party():
+	game_params.leave_party(name_hint)
+
+func is_in_party():
+	return game_params.is_in_party(name_hint)
+
+func is_cutscene():
+	return get_model().is_cutscene()
+
+func set_target_node(node):
+	target_node = node
+
+func get_target_position():
+	var t = game_params.get_player() if is_in_party() else target_node
+	return t.get_global_transform().origin if t else null
+
+func teleport():
+	if target_node:
+		set_global_transform(target_node.get_global_transform())
 
 func _physics_process(delta):
 	if is_player():
+		if conversation_manager.conversation_is_cutscene():
+			$SoundWalking.stop()
+			return
 		process_input(delta)
 	else:
-		var player = game_params.get_player()
-		if not player:
+		if get_model().is_cutscene():
+			return
+		var target_position = get_target_position()
+		if not target_position:
 			return
 		var current_transform = get_global_transform()
 		var current_position = current_transform.origin
-		var player_position = player.get_global_transform().origin
-		build_path()
-		var target_position = path.front() if path.size() > 0 else player_position
-		follow(current_transform, target_position)
+		build_path(target_position)
+		follow(current_transform, path.front() if path.size() > 0 else target_position)
 	
 	process_movement(delta)
 	if rot_x != 0:
@@ -328,7 +363,7 @@ func _physics_process(delta):
 		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
 
 func _input(event):
-	if is_player():
+	if is_player() and not conversation_manager.conversation_is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
@@ -412,12 +447,15 @@ func process_input(delta):
 func toggle_crouch():
 	if $AnimationPlayer.is_playing():
 		return
+	var companion = game_params.get_companion()
 	if is_crouching:
 		$AnimationPlayer.play_backwards("crouch")
-		game_params.get_companion().stand_up()
+		if companion:
+			companion.stand_up()
 	else:
 		$AnimationPlayer.play("crouch")
-		game_params.get_companion().sit_down()
+		if companion:
+			companion.sit_down()
 	is_crouching = not is_crouching
 	var hud = get_hud()
 	if hud:
@@ -456,7 +494,7 @@ func process_movement(delta):
 		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
 	else:
 		$SoundWalking.stop()
-	vel = move_and_slide(vel,Vector3(0,1,0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = move_and_slide(vel,Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func set_sound_walk(mode):
 	var spl = $SoundWalking

@@ -1,5 +1,8 @@
 extends Node
 
+signal conversation_started(player, target, conversation_name, is_cutscene)
+signal conversation_finished(player, target, conversation_name, is_cutscene)
+
 const VOWELS = ["А", "Е", "Ё", "И", "О", "У", "Ы", "Э", "Ю", "Я"]
 const CONSONANTS =           ["Б", "В", "Г", "Д", "Ж", "З", "К", "Л", "М", "Н", "П", "Р", "С", "Т", "Ф", "Х", "Ц", "Ч", "Ш", "Щ"]
 const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "Н",      "Р",      "Т",      "Х"]
@@ -9,13 +12,19 @@ const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
 var conversation_name
 var conversation_target
+var is_cutscene
+var cutscene_node
 var in_choice
 var max_choice = 0
+
+var story_state_cache = {}
 
 func _ready():
 	conversation_name = null
 	conversation_target = null
+	is_cutscene = false
 	in_choice = false
+	story_state_cache.clear()
 
 func change_stretch_ratio(conversation):
 	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
@@ -24,30 +33,84 @@ func change_stretch_ratio(conversation):
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
+func borrow_camera(cutscene_node):
+	self.cutscene_node = cutscene_node
+	if not cutscene_node:
+		return
+	var player = game_params.get_player()
+	var player_camera_holder = player.get_cam_holder()
+	var camera = player_camera_holder.get_child(0)
+	player_camera_holder.remove_child(camera)
+	cutscene_node.add_child(camera)
+
+func restore_camera():
+	if not cutscene_node:
+		return
+	var player = game_params.get_player()
+	var camera = cutscene_node.get_child(0)
+	var player_camera_holder = player.get_cam_holder()
+	cutscene_node.remove_child(camera)
+	player_camera_holder.add_child(camera)
+	cutscene_node = null
+
+func get_cam():
+	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
+
+func start_area_cutscene(conversation_name, cutscene_node = null):
+	var player = game_params.get_player()
+	var target = game_params.get_companion()
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, target, conversation_name):
+		conversation_manager.start_conversation(player, target, conversation_name, true, cutscene_node)
+
+func start_area_conversation(conversation_name):
+	var player = game_params.get_player()
+	var target = game_params.get_companion()
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, target, conversation_name):
+		conversation_manager.start_conversation(player, target, conversation_name)
+
 func stop_conversation(player):
 	if conversation_target:
 		conversation_target.set_speak_mode(false)
+	var conversation_name_prev = conversation_name
+	var is_cutscene_prev = is_cutscene
 	conversation_name = null
+	is_cutscene = false
+	restore_camera()
 	var hud = player.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
+	emit_signal("conversation_finished", player, conversation_target, conversation_name_prev, is_cutscene_prev)
+
+func conversation_is_in_progress(conversation_name = null):
+	if not conversation_name:
+		# Will return true if ANY conversation is in progress
+		return self.conversation_name != null
+	return self.conversation_name == conversation_name
+
+func conversation_is_cutscene():
+	return conversation_is_in_progress() and is_cutscene
 
 func conversation_is_finished(player, target, conversation_name):
 	return not conversation_is_not_finished(player, target, conversation_name)
 
 func conversation_is_not_finished(player, target, conversation_name):
-	var conversation = player.get_hud().conversation
-	return check_story_not_finished(player, conversation, conversation_name)
+	return check_story_not_finished(player, conversation_name)
 
-func check_story_not_finished(player, conversation, conversation_name):
-	var locale = TranslationServer.get_locale()
+func check_story_not_finished(player, conversation_name):
 	var story = StoryNode
-	var f = File.new()
 	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
-	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
-	var cp = "%s.ink.json" % conversation_name
-	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-	return story.CheckStoryNotFinished("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"))
+	var cp_story
+	if story_state_cache.has(cp_player):
+		cp_story = story_state_cache.get(cp_player)
+	else:
+		var locale = TranslationServer.get_locale()
+		var f = File.new()
+		var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
+		var cp = "%s.ink.json" % conversation_name
+		var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
+		cp_story = cp_player if exists_cp_player else (cp if exists_cp else "Default.ink.json")
+		story_state_cache[cp_player] = cp_story
+	return story.CheckStoryNotFinished("ink-scripts", cp_story)
 
 func init_story(player, conversation, conversation_name):
 	var locale = TranslationServer.get_locale()
@@ -57,8 +120,8 @@ func init_story(player, conversation, conversation_name):
 	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
 	var cp = "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Monsieur.ink.json"), false)
-	story.InitVariables(game_params.story_vars)
+	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Default.ink.json"), false)
+	story.InitVariables(game_params, game_params.story_vars, game_params.party)
 	return story
 
 func get_conversation_sound_path(player, conversation_name):
@@ -77,11 +140,14 @@ func get_conversation_sound_path(player, conversation_name):
 func conversation_active():
 	return conversation_name and conversation_name.length() > 0
 
-func start_conversation(player, target, conversation_name):
+func start_conversation(player, target, conversation_name, is_cutscene = false, cutscene_node = null):
 	if self.conversation_name == conversation_name:
 		return
+	emit_signal("conversation_started", player, target, conversation_name, is_cutscene)
 	target.set_speak_mode(true)
 	self.conversation_name = conversation_name
+	self.is_cutscene = is_cutscene
+	borrow_camera(cutscene_node)
 	conversation_target = target
 	player.get_hud().quick_items_panel.visible = false
 	player.get_hud().inventory.visible = false
@@ -135,7 +201,8 @@ func story_choose(player, idx):
 		clear_choices(story, conversation)
 		story.Choose(idx)
 		if story.CanContinue():
-			conversation_text.text = story.Continue(TranslationServer.get_locale(), true).strip_edges()
+			var texts = story.Continue(true)
+			conversation_text.text = texts[TranslationServer.get_locale()].strip_edges()
 			var tags_dict = story.GetCurrentTags()
 			var tags = tags_dict[TranslationServer.get_locale()]
 			var finalizer = tags and tags.has("finalizer")
@@ -151,6 +218,8 @@ func story_choose(player, idx):
 			change_stretch_ratio(conversation)
 		if not has_sound:
 			story_proceed(player)
+	elif story.CanContinue():
+		story_proceed(player)
 
 func proceed_story_immediately(player):
 	if $AudioStreamPlayer.is_playing():
@@ -228,7 +297,7 @@ func story_proceed(player):
 	if story.CanContinue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 		move_current_text_to_prev(conversation)
-		var texts = story.ContinueWhileYouCan()
+		var texts = story.Continue(false)
 		conversation_text.text = texts[TranslationServer.get_locale()].strip_edges()
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 		var tags_dict = story.GetCurrentTags()
@@ -240,7 +309,8 @@ func story_proceed(player):
 			var text = get_vvalue(texts)
 			play_sound_and_start_lipsync(player, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
 		change_stretch_ratio(conversation)
-	display_choices(story, conversation, story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else [tr("end_conversation")])
+	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("continue_conversation")] if story.CanContinue() else [tr("end_conversation")])
+	display_choices(story, conversation, choices)
 
 func clear_choices(story, conversation):
 	var ch = story.GetChoices(TranslationServer.get_locale())

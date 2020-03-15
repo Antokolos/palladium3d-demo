@@ -1,17 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://rat.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rat_grey.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sound/environment/472399__joseagudelo__16-raton-chillando.wav" type="AudioStream" id=3]
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.198305, 0.0804571, 0.0747947 )
 
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 2.6, 2, 2.6 )
+
 [node name="rat" type="RigidBody"]
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 can_sleep = false
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -32,3 +35,11 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 stream = ExtResource( 3 )
 bus = "Sound"
+
+[node name="RatArea" type="Area" parent="."]
+input_ray_pickable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="RatArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="RatArea" to="." method="_on_RatArea_body_entered"]

@@ -158,6 +158,7 @@ func synchronize_items():
 
 func insert_ui_inventory_item(pos):
 	var new_item = load("res://item.tscn").instance()
+	new_item.connect("used", game_params, "item_used")
 	var i = first_item_idx + pos
 	if i >= 0 and i < game_params.inventory.size():
 		new_item.set_item_data(game_params.inventory[i].nam, game_params.inventory[i].count)
@@ -168,6 +169,7 @@ func insert_ui_inventory_item(pos):
 
 func insert_ui_quick_item(pos):
 	var new_item = load("res://item.tscn").instance()
+	new_item.connect("used", game_params, "item_used")
 	new_item.set_appearance(true, false)
 	if pos < game_params.quick_items.size():
 		var quick_item = game_params.quick_items[pos]
@@ -184,6 +186,7 @@ func remove_ui_inventory_item(nam, count):
 	for ui_item in ui_items:
 		if nam == ui_item.nam and count <= 0:
 			inventory_panel.remove_child(ui_item)
+			ui_item.disconnect("used", game_params, "item_used")
 			ui_item.queue_free()
 			insert_ui_inventory_item(MAX_VISIBLE_ITEMS - 1)
 			if idx == active_item_idx and active_item_idx > 0:
@@ -202,6 +205,7 @@ func remove_ui_quick_item(nam, count):
 	for ui_item in ui_items:
 		if nam == ui_item.nam and count <= 0:
 			quick_items_panel.remove_child(ui_item)
+			ui_item.disconnect("used", game_params, "item_used")
 			ui_item.queue_free()
 			insert_ui_quick_item(idx)
 			return

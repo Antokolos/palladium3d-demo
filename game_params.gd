@@ -1,7 +1,9 @@
 extends Node
+class_name GameParams
 
 signal item_taken(nam, count)
 signal item_removed(nam, count)
+signal item_used(player_node, target, item_nam)
 signal health_changed(name_hint, health_current, health_max)
 
 enum ApataTrapStages { ARMED = 0, DISABLED = 1, GOING_DOWN = 2, PAUSED = 3 }
@@ -29,10 +31,17 @@ enum TakableState {
 
 const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = "res://forest.tscn"
-const PLAYER_PATH_DEFAULT = null
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
 const PLAYER_HEALTH_MAX_DEFAULT = 100
-const COMPANION_PATH_DEFAULT = null
+const PLAYER_NAME_HINT = "player"
+const FEMALE_NAME_HINT = "female"
+const BANDIT_NAME_HINT = "bandit"
+const PARTY_DEFAULT = {
+	PLAYER_NAME_HINT : true,
+	FEMALE_NAME_HINT : false,
+	BANDIT_NAME_HINT : false
+}
+const PLAYER_PATHS_DEFAULT = {}
 const STORY_VARS_DEFAULT = {
 	"is_game_start" : true,
 	"flashlight_on" : false,
@@ -44,6 +53,8 @@ const STORY_VARS_DEFAULT = {
 }
 const ITEMS = {
 	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
+	"envelope" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/envelope_model.tscn" },
+	"barn_lock_key" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/barn_lock_key.tscn" },
 	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://scenes/statue_4.tscn" },
 	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://scenes/statue_2.tscn" },
 	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://scenes/statue_3.tscn" },
@@ -76,10 +87,11 @@ const MUSIC_IS_LOOP = {
 
 var slot_to_load_from = -1
 var scene_path = SCENE_PATH_DEFAULT
-var player_path = PLAYER_PATH_DEFAULT
+var player_name_hint = PLAYER_NAME_HINT
 var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
-var companion_path = COMPANION_PATH_DEFAULT
+var party = PARTY_DEFAULT
+var player_paths = PLAYER_PATHS_DEFAULT
 var story_vars = STORY_VARS_DEFAULT
 var inventory = INVENTORY_DEFAULT
 var quick_items = QUICK_ITEMS_DEFAULT
@@ -98,13 +110,46 @@ func _ready():
 	add_music("sinkingisland.ogg")
 
 func get_player():
-	return get_node(player_path) if player_path else null
+	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
 
 func get_companion():
-	return get_node(companion_path) if companion_path else null
+	var companion_name_hint = null
+	for name_hint in party:
+		if party[name_hint] and name_hint != player_name_hint:
+			companion_name_hint = name_hint
+	return get_node(player_paths[companion_name_hint]) if companion_name_hint and player_paths.has(companion_name_hint) else null
+
+func get_character(name_hint):
+	return get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
 
 func is_inside():
 	return scene_path != "res://forest.tscn"
+
+func handle_conversation(player, target):
+	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, target, "002_MeetingAndreas")
+	if meetingAndreasNotFinished and not target.is_in_party():
+		target.join_party()
+		conversation_manager.start_conversation(player, target, "001_MeetingXenia")
+		return
+	var hud = player.get_hud()
+	var item = hud.get_active_item()
+	if item and item.nam == "saffron_bun":
+		hud.inventory.visible = false
+		item.used(player, target)
+		item.remove()
+		conversation_manager.start_conversation(player, target, "Bun")
+	else:
+		conversation_manager.start_conversation(player, target, "Conversation")
+
+func handle_player_highlight(player, target):
+	var hud = player.get_hud()
+	var item = hud.get_active_item()
+	if item and item.nam == "saffron_bun":
+		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, target, "001_MeetingXenia")
+		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, target, "002_MeetingAndreas")
+		if meetingXeniaFinished or meetingAndreasFinished:
+			return "E: Угостить булочкой"
+	return "E: Поговорить"
 
 func initiate_load(slot):
 	var f = File.new()
@@ -221,6 +266,9 @@ func remove(nam, count = 1):
 			emit_signal("item_removed", nam, quick_item.count)
 			return
 
+func item_used(player_node, target, item_nam):
+	emit_signal("item_used", player_node, target, item_nam)
+
 func set_quick_item(pos, nam):
 	if pos >= MAX_QUICK_ITEMS:
 		return
@@ -246,6 +294,9 @@ func set_quick_item(pos, nam):
 			quick_items[pos] = new_item
 			return
 		idx = idx + 1
+
+func set_player_name_hint(name_hint):
+	player_name_hint = name_hint
 
 func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters
@@ -299,12 +350,33 @@ func get_multistate_state(multistate_path):
 func set_multistate_state(multistate_path, state):
 	multistates[scene_path + ":" + multistate_path] = state
 
+func is_in_party(name_hint):
+	return party[name_hint] if party.has(name_hint) else false
+
+func join_party(name_hint):
+	party[name_hint] = true
+
+func leave_party(name_hint):
+	party[name_hint] = false
+
+func register_player(player):
+	player_paths[player.name_hint] = player.get_path()
+	if player.name_hint == FEMALE_NAME_HINT:
+		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), player, "001_MeetingXenia")
+		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), player, "002_MeetingAndreas")
+		if meetingXeniaFinished:
+			player.join_party()
+		elif meetingAndreasFinished:
+			pass
+		else:
+			player.get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP, true)
+
 func save_slot_exists(slot):
 	var f = File.new()
 	return f.file_exists("user://saves/slot_%d/params.json" % slot)
 
 func load_params(slot):
-	var player = get_node(player_path)
+	var player = get_player()
 	var hud = player.get_hud()
 	StoryNode.ReloadAllSaves(slot)
 	
@@ -321,13 +393,13 @@ func load_params(slot):
 
 	scene_path = d.scene_path if ("scene_path" in d) else SCENE_PATH_DEFAULT
 
-	var companion = get_node(companion_path)
+	var companion = get_companion()
 	var player_basis = player.get_transform().basis
 	var player_origin = player.get_transform().origin
 	var companion_basis = companion.get_transform().basis
 	var companion_origin = companion.get_transform().origin
 	
-	player_path = d.player_path if ("player_path" in d) else PLAYER_PATH_DEFAULT
+	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else PLAYER_NAME_HINT
 	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else PLAYER_HEALTH_MAX_DEFAULT
 
@@ -342,7 +414,8 @@ func load_params(slot):
 	if ("player_origin" in d and (typeof(d.player_origin) == TYPE_ARRAY)):
 		player_origin = Vector3(d.player_origin[0], d.player_origin[1], d.player_origin[2])
 
-	companion_path = d.companion_path if ("companion_path" in d) else COMPANION_PATH_DEFAULT
+	party = d.party if ("party" in d) else PARTY_DEFAULT
+	player_paths = d.player_paths if ("player_paths" in d) else PLAYER_PATHS_DEFAULT
 
 	if ("companion_basis" in d and (typeof(d.companion_basis) == TYPE_ARRAY)):
 		var bx = Vector3(d.companion_basis[0][0], d.companion_basis[0][1], d.companion_basis[0][2])
@@ -380,16 +453,16 @@ func save_params(slot):
 	
 	StoryNode.SaveAll(slot)
 	
-	var player = get_node(player_path)
-	var companion = get_node(companion_path)
+	var player = get_player()
+	var companion = get_companion()
 	var player_basis = player.get_transform().basis
 	var player_origin = player.get_transform().origin
-	var companion_basis = companion.get_transform().basis
-	var companion_origin = companion.get_transform().origin
+	var companion_basis = companion.get_transform().basis if companion else null
+	var companion_origin = companion.get_transform().origin if companion else null
 
 	var d = {
 		"scene_path" : scene_path,
-		"player_path" : player_path,
+		"player_name_hint" : player_name_hint,
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,
 		"player_origin" : [player_origin.x, player_origin.y, player_origin.z],
@@ -398,13 +471,14 @@ func save_params(slot):
 			[player_basis.y.x, player_basis.y.y, player_basis.y.z],
 			[player_basis.z.x, player_basis.z.y, player_basis.z.z]
 		],
-		"companion_path" : companion_path,
-		"companion_origin" : [companion_origin.x, companion_origin.y, companion_origin.z],
+		"party" : party,
+		"player_paths" : player_paths,
+		"companion_origin" : [companion_origin.x, companion_origin.y, companion_origin.z] if companion_origin else null,
 		"companion_basis" : [
 			[companion_basis.x.x, companion_basis.x.y, companion_basis.x.z],
 			[companion_basis.y.x, companion_basis.y.y, companion_basis.y.z],
 			[companion_basis.z.x, companion_basis.z.y, companion_basis.z.z]
-		],
+		] if companion_basis else null,
 		"story_vars" : story_vars,
 		"inventory" : inventory,
 		"quick_items" : quick_items,

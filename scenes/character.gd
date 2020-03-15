@@ -1,6 +1,9 @@
 extends Spatial
 class_name PalladiumCharacter
 
+const FEMALE_CUTSCENE_SITTING_STUMP = 0
+const FEMALE_CUTSCENE_STAND_UP_STUMP = 1
+
 const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
@@ -59,13 +62,27 @@ func do_speak_shot(shot_idx):
 		$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
 		$AnimationTree.set("parameters/LookShot/active", true)
 
+func play_cutscene(cutscene_id, is_loop):
+	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
+	$AnimationTree.set("parameters/CutsceneShot/active", true)
+
+func stop_cutscene():
+	$AnimationTree.set("parameters/CutsceneShot/active", false)
+
+func is_cutscene():
+	return $AnimationTree.get("parameters/CutsceneShot/active")
+
 func stand_up():
+	if is_cutscene():
+		return
 	if $AnimationTree.get("parameters/LookTransition/current") != 1:
 		$AnimationTree.set("parameters/TimeScaleStandUp/scale", -1)
 		$AnimationTree.set("parameters/LookTransition/current", 0)
 	$AnimationTree.set("parameters/WalkTransition/current", 0)
 
 func sit_down():
+	if is_cutscene():
+		return
 	if $AnimationTree.get("parameters/LookTransition/current") != 3:
 		$AnimationTree.set("parameters/LookTransition/current", 2)
 	$AnimationTree.set("parameters/WalkTransition/current", 1)

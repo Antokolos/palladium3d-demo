@@ -25,7 +25,7 @@ func switch_highlight(player_node, body):
 	if body and body.has_method("add_highlight"):
 		var hint_message = body.add_highlight(player_node)
 		var main_hud = player_node.get_hud().main_hud
-		main_hud.get_node("HBoxHints/ActionHintLabel").text = hint_message
+		main_hud.get_node("HBoxHints/ActionHintLabel").text = hint_message if hint_message else ""
 	action_body = weakref(body) if body else null
 
 func highlight(player_node):

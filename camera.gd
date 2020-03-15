@@ -116,13 +116,13 @@ func _process(delta):
 	# ----------------------------------
 	
 	if use_point:
-		var player = get_node("../../..")
+		var player = game_params.get_player()
 		use_point.highlight(player)
 	change_culling()
 
 func _input(event):
 	if event.is_action_pressed("action"):
-		var player = get_node("../../..")
+		var player = game_params.get_player()
 		if player:
 			use_point.action(player)
 
@@ -130,7 +130,7 @@ func _unhandled_input(event):
 	var is_key = event is InputEventKey and event.is_pressed()
 	if not is_key:
 		return
-	var player = get_node("../../..")
+	var player = game_params.get_player()
 	if not player:
 		return
 	var hud = player.get_hud()
