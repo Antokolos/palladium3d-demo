@@ -28,6 +28,13 @@ func use(player_node):
 		make_present(item)
 		emit_signal("use_pedestal", player_node, self, item.nam)
 
+func is_empty():
+	for ch in get_children():
+		if ch is Takable:
+			if ch.is_present():
+				return false
+	return true
+
 func is_present(item_nam):
 	for ch in get_children():
 		if ch is Takable:

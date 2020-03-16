@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://room_enabler.tscn" type="PackedScene" id=2]
@@ -92,6 +92,9 @@ extents = Vector3( 3.78506, 1.90136, 3.14294 )
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 2.24065, 2.73226, 2.60671 )
 
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 4.90392, 3.14005, 3.72118 )
+
 [node name="floor_demo_full" type="Spatial" groups=[
 "restorable_state",
 ]]
@@ -112,6 +115,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -704,6 +708,21 @@ shape = SubResource( 7 )
 
 [node name="ApataCutscenePosition" type="Position3D" parent="."]
 transform = Transform( 0.224162, 0.37579, -0.899185, -0.0239097, 0.924508, 0.380412, 0.974259, -0.0637749, 0.216225, 19.0464, 4.23708, 31.3501 )
+
+[node name="ChooseCompanionArea" type="Area" parent="."]
+editor/display_folded = true
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="ChooseCompanionArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494145, 4.38104, 25.6263 )
+shape = SubResource( 8 )
+
+[node name="ChooseCompanionPosition" type="Position3D" parent="."]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -2.53633, 4.26971, 26.6246 )
+
+[node name="OutPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200223, 11.3091, 74.2697 )
 [connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
@@ -713,3 +732,4 @@ transform = Transform( 0.224162, 0.37579, -0.899185, -0.0239097, 0.924508, 0.380
 [connection signal="body_entered" from="IgnitionArea" to="." method="_on_IgnitionArea_body_entered"]
 [connection signal="body_entered" from="RatsArea" to="." method="_on_RatsArea_body_entered"]
 [connection signal="body_entered" from="InscriptionsArea" to="." method="_on_InscriptionsArea_body_entered"]
+[connection signal="body_entered" from="ChooseCompanionArea" to="." method="_on_ChooseCompanionArea_body_entered"]

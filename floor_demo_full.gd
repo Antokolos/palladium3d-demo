@@ -62,8 +62,12 @@ func use_pedestal(player_node, pedestal, item_nam):
 				get_node("Apata_room/ceiling_moving_1").pause()
 				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.PAUSED
 		Pedestal.PedestalIds.MUSES:
-			if not check_muses_correct(pedestal.get_parent()):
+			if has_empty_muses_pedestal(pedestal.get_parent()):
 				return
+			if not check_muses_correct(pedestal.get_parent()):
+				conversation_manager.start_area_conversation("010-1-3_ApataMusesError")
+				return
+			conversation_manager.start_area_conversation("010-1-4_ApataDoneXenia")
 			get_door("door_4").open()
 			game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
 			get_node("Apata_room/ceiling_moving_1").deactivate()
@@ -105,6 +109,12 @@ func check_pedestal(pedestal, takable_id):
 			else:
 				return false
 	return correct
+
+func has_empty_muses_pedestal(base):
+	var pedestal_theatre = base.get_node("pedestal_theatre")
+	var pedestal_astronomy = base.get_node("pedestal_astronomy")
+	var pedestal_history = base.get_node("pedestal_history")
+	return pedestal_theatre.is_empty() or pedestal_astronomy.is_empty() or pedestal_history.is_empty()
 
 func check_muses_correct(base):
 	var pedestal_theatre = base.get_node("pedestal_theatre")
@@ -153,6 +163,14 @@ func _on_AreaDeadEnd2_body_entered(body):
 func _on_InscriptionsArea_body_entered(body):
 	if body.is_in_group("party"):
 		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
+
+func _on_ChooseCompanionArea_body_entered(body):
+	if body.is_in_group("party") and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.DISABLED:
+		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+		female.set_target_node(get_node("OutPosition"))
+		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+		bandit.set_target_node(get_node("OutPosition"))
+		conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
 
 func _on_conversation_finished(player, target, conversation_name, is_cutscene):
 	match conversation_name:
