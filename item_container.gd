@@ -2,7 +2,8 @@ extends RigidBody
 class_name ItemContainer
 
 enum ContainerIds {
-	NONE = 0
+	NONE = 0,
+	APATA_CHEST = 10
 }
 export(ContainerIds) var container_id = ContainerIds.NONE
 export var initially_opened = false

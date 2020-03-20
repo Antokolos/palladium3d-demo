@@ -1,3 +1,4 @@
+VAR apata_chest_rigid = 0
 Andreas, this is Apate, a goddess…	# actor:female
 Don't touch it! Everybody out!	# actor:player
 The ceiling is moving.	# actor:female
@@ -16,3 +17,4 @@ Yeah, now’s a great time for stories! Andreas, I noticed something on the ceil
 	What if it doesn't work? We need to solve the riddle and find the exit.	# actor:female
 	Removing the casket is quicker. Andreas, give me a hand; the casket is heavy.	# actor:bandit
 	Ok. On the count three we push.	# actor:player
+	~ apata_chest_rigid = 1

@@ -33,6 +33,7 @@ axis_lock_angular_z = true
 linear_damp = 10.0
 angular_damp = 10.0
 script = ExtResource( 1 )
+container_id = 10
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028387, -0.575521, 0.477434 )

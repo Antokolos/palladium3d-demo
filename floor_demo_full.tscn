@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://room_enabler.tscn" type="PackedScene" id=2]
@@ -95,6 +95,18 @@ extents = Vector3( 2.24065, 2.73226, 2.60671 )
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 4.90392, 3.14005, 3.72118 )
 
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 4.57794, 2.32469, 3.38208 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 2.46396, 1, 3.07291 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 4.97818, 2.86632, 5.99325 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 2.04657, 1, 2.31505 )
+
 [node name="floor_demo_full" type="Spatial" groups=[
 "restorable_state",
 ]]
@@ -115,7 +127,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -710,7 +721,6 @@ shape = SubResource( 7 )
 transform = Transform( 0.224162, 0.37579, -0.899185, -0.0239097, 0.924508, 0.380412, 0.974259, -0.0637749, 0.216225, 19.0464, 4.23708, 31.3501 )
 
 [node name="ChooseCompanionArea" type="Area" parent="."]
-editor/display_folded = true
 input_ray_pickable = false
 monitorable = false
 
@@ -723,6 +733,47 @@ transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -2.53
 
 [node name="OutPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200223, 11.3091, 74.2697 )
+
+[node name="BeforeEridaArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.92702, 2.202, 37.4223 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="BeforeEridaArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.20436, -0.394379 )
+shape = SubResource( 9 )
+
+[node name="BeginEridaArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6224, 2.21311, 36.1646 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="BeginEridaArea"]
+shape = SubResource( 10 )
+
+[node name="AresRoomArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.86563, 2.2516, 24.6634 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="AresRoomArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89452, 0 )
+shape = SubResource( 11 )
+
+[node name="ChestArea" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6476, 2.23402, 31.6522 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="ChestArea"]
+shape = SubResource( 12 )
+
+[node name="BanditSavePosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.7222, 2.87088, 33.2542 )
+
+[node name="FemaleSavePosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6476, 2.58054, 33.469 )
 [connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
@@ -733,3 +784,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200223, 11.3091, 74.2697 )
 [connection signal="body_entered" from="RatsArea" to="." method="_on_RatsArea_body_entered"]
 [connection signal="body_entered" from="InscriptionsArea" to="." method="_on_InscriptionsArea_body_entered"]
 [connection signal="body_entered" from="ChooseCompanionArea" to="." method="_on_ChooseCompanionArea_body_entered"]
+[connection signal="body_entered" from="BeforeEridaArea" to="." method="_on_BeforeEridaArea_body_entered"]
+[connection signal="body_entered" from="BeginEridaArea" to="." method="_on_BeginEridaArea_body_entered"]
+[connection signal="body_entered" from="AresRoomArea" to="." method="_on_AresRoomArea_body_entered"]
+[connection signal="body_exited" from="ChestArea" to="." method="_on_ChestArea_body_exited"]
