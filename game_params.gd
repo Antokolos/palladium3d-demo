@@ -126,7 +126,7 @@ func is_inside():
 	return scene_path != "res://forest.tscn"
 
 func handle_conversation(player, target):
-	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, target, "002_MeetingAndreas")
+	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not target.is_in_party():
 		target.join_party()
 		conversation_manager.start_conversation(player, target, "001_MeetingXenia")
@@ -141,12 +141,12 @@ func handle_conversation(player, target):
 	else:
 		conversation_manager.start_conversation(player, target, "Conversation")
 
-func handle_player_highlight(player, target):
+func handle_player_highlight(player):
 	var hud = player.get_hud()
 	var item = hud.get_active_item()
 	if item and item.nam == "saffron_bun":
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, target, "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, target, "002_MeetingAndreas")
+		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
+		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
 		if meetingXeniaFinished or meetingAndreasFinished:
 			return "E: Угостить булочкой"
 	return "E: Поговорить"
@@ -362,8 +362,8 @@ func leave_party(name_hint):
 func register_player(player):
 	player_paths[player.name_hint] = player.get_path()
 	if player.name_hint == FEMALE_NAME_HINT:
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), player, "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), player, "002_MeetingAndreas")
+		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "001_MeetingXenia")
+		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "002_MeetingAndreas")
 		if meetingXeniaFinished:
 			player.join_party()
 		elif meetingAndreasFinished:

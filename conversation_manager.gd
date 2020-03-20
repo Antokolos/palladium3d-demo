@@ -56,17 +56,15 @@ func restore_camera():
 func get_cam():
 	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
 
-func start_area_cutscene(conversation_name, cutscene_node = null):
+func start_area_cutscene(conversation_name, cutscene_node = null, target = null):
 	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, target, conversation_name):
-		conversation_manager.start_conversation(player, target, conversation_name, true, cutscene_node)
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
+		conversation_manager.start_conversation(player, target if target else game_params.get_companion(), conversation_name, true, cutscene_node)
 
-func start_area_conversation(conversation_name):
+func start_area_conversation(conversation_name, target = null):
 	var player = game_params.get_player()
-	var target = game_params.get_companion()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, target, conversation_name):
-		conversation_manager.start_conversation(player, target, conversation_name)
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
+		conversation_manager.start_conversation(player, target if target else game_params.get_companion(), conversation_name)
 
 func stop_conversation(player):
 	if conversation_target:
@@ -90,10 +88,10 @@ func conversation_is_in_progress(conversation_name = null):
 func conversation_is_cutscene():
 	return conversation_is_in_progress() and is_cutscene
 
-func conversation_is_finished(player, target, conversation_name):
-	return not conversation_is_not_finished(player, target, conversation_name)
+func conversation_is_finished(player, conversation_name):
+	return not conversation_is_not_finished(player, conversation_name)
 
-func conversation_is_not_finished(player, target, conversation_name):
+func conversation_is_not_finished(player, conversation_name):
 	return check_story_not_finished(player, conversation_name)
 
 func check_story_not_finished(player, conversation_name):

@@ -7,6 +7,7 @@ var gas_injury_rate = 1
 func _ready():
 	restore_state()
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
+	conversation_manager.connect("conversation_started", self, "_on_conversation_started")
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
@@ -21,7 +22,6 @@ func use_takable(player_node, takable, parent, was_taken):
 			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 				get_door("door_0").close()
 				get_node("Apata_room/ceiling_moving_1").activate()
-				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 		Takable.TakableIds.HERMES:
 			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 			match pedestal_id:
@@ -58,11 +58,12 @@ func use_pedestal(player_node, pedestal, item_nam):
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
 		Pedestal.PedestalIds.APATA:
+			if game_params.story_vars.apata_trap_stage != GameParams.ApataTrapStages.GOING_DOWN:
+				return
 			var hope = hope_on_apata_pedestal(pedestal)
 			if item_nam == "statue_apata" and hope:
 				get_node("Apata_room/door_3").open()
 				get_node("Apata_room/ceiling_moving_1").pause()
-				game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.PAUSED
 		Pedestal.PedestalIds.MUSES:
 			if has_empty_muses_pedestal(pedestal.get_parent()):
 				return
@@ -71,7 +72,6 @@ func use_pedestal(player_node, pedestal, item_nam):
 				return
 			conversation_manager.start_area_conversation("010-1-4_ApataDoneXenia")
 			get_door("door_4").open()
-			game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
 			get_node("Apata_room/ceiling_moving_1").deactivate()
 			get_node("Apata_room/door_3").close()
 		Pedestal.PedestalIds.ERIDA_LOCK:
@@ -148,7 +148,7 @@ func _on_EridaTrapTimer_timeout():
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
 	var target = game_params.get_companion()
-	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, target, "004_TorchesIgnition"):
+	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, "004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", true, false)
 		conversation_manager.start_conversation(player, target, "004_TorchesIgnition")
 
@@ -204,6 +204,12 @@ func _on_ChestArea_body_exited(body):
 		female.set_target_node(get_node("FemaleSavePosition"))
 		bandit.leave_party()
 		female.leave_party()
+
+func _on_conversation_started(player, target, conversation_name, is_cutscene):
+	match conversation_name:
+		"010-2-4_ApataDoneMax":
+			get_door("door_4").open()
+			get_node("Apata_room/door_3").close()
 
 func _on_conversation_finished(player, target, conversation_name, is_cutscene):
 	match conversation_name:

@@ -5,8 +5,8 @@ func _ready():
 	restore_state()
 
 func restore_state():
-	var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), game_params.get_companion(), "001_MeetingXenia")
-	var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), game_params.get_companion(), "002_MeetingAndreas")
+	var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "001_MeetingXenia")
+	var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "002_MeetingAndreas")
 	if meetingXeniaFinished or meetingAndreasFinished:
 		queue_free()
 

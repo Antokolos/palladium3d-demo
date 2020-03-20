@@ -43,11 +43,11 @@ func on_item_used(player_node, target, item_nam):
 		if was_in_party:
 			conversation_manager.start_conversation(player, player_female, "001_Door")
 		else:
-			var boatFinished = conversation_manager.conversation_is_finished(player, player_female, "001_Boat")
+			var boatFinished = conversation_manager.conversation_is_finished(player, "001_Boat")
 			if boatFinished:
 				conversation_manager.start_conversation(player, player_female, "001_Door3")
 			else:
-				var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, player_female, "001_MeetingXenia")
+				var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
 				conversation_manager.start_conversation(player, player_female, "001_Door2" if meetingXeniaFinished else "003_Door")
 
 func _on_AreaGrass_body_entered(body):
@@ -63,12 +63,12 @@ func _on_AreaGrass_body_exited(body):
 		player_female.set_sound_walk(player_female.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
-	var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, player_female, "001_MeetingXenia")
+	var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
 	if meetingXeniaFinished:
 		return
 	if conversation_manager.conversation_is_in_progress("001_MeetingXenia"):
 		return
-	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, player_female, "002_MeetingAndreas")
+	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not player_female.is_in_party():
 		player_female.join_party()
 		conversation_manager.start_conversation(player, player_female, "002_MeetingAndreas")
@@ -80,9 +80,9 @@ func _on_RockArea_body_exited(body):
 func _on_BoatArea_body_entered(body):
 	if player_female.companion_state != PalladiumPlayer.COMPANION_STATE.REST:
 		return
-	var boatFinished = conversation_manager.conversation_is_finished(player, player_female, "001_Boat")
+	var boatFinished = conversation_manager.conversation_is_finished(player, "001_Boat")
 	if not boatFinished:
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, player_female, "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, player_female, "002_MeetingAndreas")
+		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
+		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
 		if meetingXeniaFinished or meetingAndreasFinished:
 			conversation_manager.start_conversation(player, player_female, "001_Boat")

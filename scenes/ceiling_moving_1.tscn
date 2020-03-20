@@ -3,7 +3,12 @@
 [ext_resource path="res://assets/ceiling_moving_1.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ceiling_moving_1.gd" type="Script" id=2]
 
-[node name="ceiling_moving_1" groups=[
+[node name="ceiling_moving_1" index="0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="DeactivationTimer" type="Timer" parent="." index="1"]
+one_shot = true
+[connection signal="animation_finished" from="ceiling_armat000/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="DeactivationTimer" to="." method="_on_DeactivationTimer_timeout"]
