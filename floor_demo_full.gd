@@ -222,6 +222,10 @@ func _on_conversation_finished(player, target, conversation_name, is_cutscene):
 		"009_ApataTrap":
 			var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
 			apata_statue.use(player)
+			if game_params.story_vars.apata_chest_rigid > 0:
+				var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+				bandit.set_target_node(get_node("Apata_room/apata_chest"))
+				bandit.leave_party()
 
 func restore_state():
 	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:

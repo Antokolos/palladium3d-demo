@@ -132,7 +132,7 @@ func follow(current_transform, target_position):
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK:
+	elif companion_state == COMPANION_STATE.WALK and (distance > CLOSEUP_RANGE or (distance > ALIGNMENT_RANGE and not is_in_party())):
 		model.walk(rotation_angle_to_player_deg)
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
@@ -317,7 +317,10 @@ func on_item_removed(nam, cnt):
 
 func join_party():
 	game_params.join_party(name_hint)
-	get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP, false)
+	play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP, false)
+
+func play_cutscene(cutscene_id, is_loop):
+	get_model().play_cutscene(cutscene_id, is_loop)
 
 func leave_party():
 	game_params.leave_party(name_hint)
@@ -494,7 +497,7 @@ func process_movement(delta):
 		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
 	else:
 		$SoundWalking.stop()
-	vel = move_and_slide(vel,Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
 
 func set_sound_walk(mode):
 	var spl = $SoundWalking
