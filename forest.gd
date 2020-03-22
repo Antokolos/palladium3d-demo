@@ -71,6 +71,7 @@ func _on_StumpArea_body_exited(body):
 	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not player_female.is_in_party():
 		player_female.join_party()
+		player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, player_female, "002_MeetingAndreas")
 
 func _on_RockArea_body_exited(body):

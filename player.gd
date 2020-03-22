@@ -1,7 +1,8 @@
 extends KinematicBody
 class_name PalladiumPlayer
 
-signal arrived_to(target_node)
+signal arrived_to(player_node, target_node)
+signal arrived_to_vicinity(player_node, distance)
 
 const PLAYER_NAME_HINT = "player"
 
@@ -56,6 +57,7 @@ const ANGLE_TOLERANCE = 0.01
 const CONVERSATION_RANGE = 7
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
+const VICINITY_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
 
 var cur_animation = null
@@ -116,6 +118,7 @@ func follow(current_transform, target_position):
 #		return
 	
 	var model = get_model()
+	var in_party = is_in_party()
 	if not path.empty():
 		companion_state = COMPANION_STATE.WALK
 		model.walk(rotation_angle_to_player_deg)
@@ -132,19 +135,21 @@ func follow(current_transform, target_position):
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif companion_state == COMPANION_STATE.WALK and (distance > CLOSEUP_RANGE or (distance > ALIGNMENT_RANGE and not is_in_party())):
+	elif companion_state == COMPANION_STATE.WALK and (distance > CLOSEUP_RANGE or (distance > ALIGNMENT_RANGE and not in_party)):
 		model.walk(rotation_angle_to_player_deg)
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
+		if not in_party and distance < VICINITY_RANGE:
+			emit_signal("arrived_to_vicinity", self,  target_node, distance)
 	else:
 #		aggression_level = 0
 		companion_state = COMPANION_STATE.REST
 		model.look(rotation_angle_to_player_deg)
 #		state.set_angular_velocity(zero_dir)
 		dir = Vector3()
-		if not is_in_party():
-			emit_signal("arrived_to", target_node)
+		if not in_party:
+			emit_signal("arrived_to", self, target_node)
 
 func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
@@ -317,10 +322,9 @@ func on_item_removed(nam, cnt):
 
 func join_party():
 	game_params.join_party(name_hint)
-	play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP, false)
 
-func play_cutscene(cutscene_id, is_loop):
-	get_model().play_cutscene(cutscene_id, is_loop)
+func play_cutscene(cutscene_id):
+	get_model().play_cutscene(cutscene_id)
 
 func leave_party():
 	game_params.leave_party(name_hint)

@@ -129,6 +129,7 @@ func handle_conversation(player, target):
 	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not target.is_in_party():
 		target.join_party()
+		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, target, "001_MeetingXenia")
 		return
 	var hud = player.get_hud()
@@ -369,7 +370,7 @@ func register_player(player):
 		elif meetingAndreasFinished:
 			pass
 		else:
-			player.get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP, true)
+			player.get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP)
 
 func save_slot_exists(slot):
 	var f = File.new()

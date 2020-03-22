@@ -224,8 +224,13 @@ func _on_conversation_finished(player, target, conversation_name, is_cutscene):
 			apata_statue.use(player)
 			if game_params.story_vars.apata_chest_rigid > 0:
 				var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+				bandit.connect("arrived_to_vicinity", self, "_on_arrived_to_chest_vicinity")
 				bandit.set_target_node(get_node("Apata_room/apata_chest"))
 				bandit.leave_party()
+
+func _on_arrived_to_chest_vicinity(player_node, target_node, distance):
+	player_node.disconnect("arrived_to_vicinity", self, "_on_arrived_to_chest_vicinity")
+	player_node.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START)
 
 func restore_state():
 	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:

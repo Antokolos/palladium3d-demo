@@ -4,6 +4,10 @@ class_name PalladiumCharacter
 const FEMALE_CUTSCENE_SITTING_STUMP = 0
 const FEMALE_CUTSCENE_STAND_UP_STUMP = 1
 
+const BANDIT_CUTSCENE_EMPTY = 0
+const BANDIT_CUTSCENE_PUSHES_CHEST_START = 1
+const BANDIT_CUTSCENE_PUSHES_CHEST = 2
+
 const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
@@ -62,7 +66,7 @@ func do_speak_shot(shot_idx):
 		$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
 		$AnimationTree.set("parameters/LookShot/active", true)
 
-func play_cutscene(cutscene_id, is_loop):
+func play_cutscene(cutscene_id):
 	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
 	$AnimationTree.set("parameters/CutsceneShot/active", true)
 
