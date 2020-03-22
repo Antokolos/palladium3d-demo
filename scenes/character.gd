@@ -1,12 +1,16 @@
 extends Spatial
 class_name PalladiumCharacter
 
-const FEMALE_CUTSCENE_SITTING_STUMP = 0
-const FEMALE_CUTSCENE_STAND_UP_STUMP = 1
+signal cutscene_finished(cutscene_id)
 
-const BANDIT_CUTSCENE_EMPTY = 0
+const CUTSCENE_EMPTY = 0
+
+const FEMALE_CUTSCENE_SITTING_STUMP = 1
+const FEMALE_CUTSCENE_STAND_UP_STUMP = 2
+
 const BANDIT_CUTSCENE_PUSHES_CHEST_START = 1
-const BANDIT_CUTSCENE_PUSHES_CHEST = 2
+const BANDIT_CUTSCENE_PUSHES_CHEST_REST = 2
+const BANDIT_CUTSCENE_PUSHES_CHEST = 3
 
 const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
@@ -71,6 +75,7 @@ func play_cutscene(cutscene_id):
 	$AnimationTree.set("parameters/CutsceneShot/active", true)
 
 func stop_cutscene():
+	$AnimationTree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
 	$AnimationTree.set("parameters/CutsceneShot/active", false)
 
 func is_cutscene():
@@ -268,6 +273,11 @@ func speak_text(phonetic, audio_length):
 
 func _process(delta):
 	if not simple_mode:
+		if not is_cutscene():
+			var cutscene_id = $AnimationTree.get("parameters/CutsceneTransition/current")
+			if cutscene_id > CUTSCENE_EMPTY:
+				var player = get_node("../../..")
+				emit_signal("cutscene_finished", player, cutscene_id)
 		return
 	var player = get_node("../../..")
 	if player.is_walking:

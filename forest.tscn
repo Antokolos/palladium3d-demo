@@ -337,6 +337,7 @@ initial_companion = true
 name_hint = "female"
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="."]
+editor/display_folded = true
 navmesh = SubResource( 1 )
 
 [node name="tree_1" parent="NavigationMeshInstance" instance=ExtResource( 3 )]
@@ -796,6 +797,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03814, 2.07756, -7.68391 )
 shape = SubResource( 32 )
 
 [node name="PositionBoat" type="Position3D" parent="."]
+editor/display_folded = true
 transform = Transform( -0.11827, -0.0989229, -0.988042, -0.363898, 0.930119, -0.0495644, 0.9239, 0.353684, -0.146003, -27.1287, -11.1017, 108.535 )
 
 [node name="BoatArea" type="Area" parent="PositionBoat"]

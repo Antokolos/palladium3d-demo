@@ -12,9 +12,6 @@ func _ready():
 		player.set_transform(Transform(player_basis, player_origin))
 		player_female.set_transform(Transform(companion_basis, companion_origin))
 	game_params.story_vars.is_game_start = false
-	game_params.register_player(player)
-	game_params.register_player(player_female)
-	player_female.set_target_node(get_node("PositionBoat"))
 	get_tree().call_group("takables", "connect_signals", self)
 	game_params.connect("item_used", self, "on_item_used")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
@@ -71,6 +68,7 @@ func _on_StumpArea_body_exited(body):
 	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not player_female.is_in_party():
 		player_female.join_party()
+		player_female.set_target_node(get_node("PositionBoat"))
 		player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, player_female, "002_MeetingAndreas")
 

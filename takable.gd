@@ -30,8 +30,8 @@ onready var initially_present = visible
 
 func _ready():
 	restore_state()
-	game_params.connect("item_taken", self, "on_item_taken")
-	game_params.connect("item_removed", self, "on_item_removed")
+	game_params.connect("item_taken", self, "_on_item_taken")
+	game_params.connect("item_removed", self, "_on_item_removed")
 
 func connect_signals(level):
 	connect("use_takable", level, "use_takable")
@@ -80,11 +80,11 @@ func use(player_node):
 	game_params.take(get_item_name())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 
-func on_item_taken(nam, cnt):
+func _on_item_taken(nam, cnt):
 	if nam == get_item_name():
 		make_absent()
 
-func on_item_removed(nam, cnt):
+func _on_item_removed(nam, cnt):
 	# TODO: make present??? Likely it is handled in containers...
 	pass
 

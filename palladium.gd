@@ -8,9 +8,6 @@ var player_toggle_enable = true
 func _ready():
 	var is_loaded = game_params.finish_load()
 	game_params.stop_music()
-	game_params.register_player(player)
-	game_params.register_player(player_female)
-	game_params.register_player(player_bandit)
 	player.set_sound_walk($player.SOUND_WALK_CONCRETE)
 	player_female.set_sound_walk($player_female.SOUND_WALK_CONCRETE)
 	player_bandit.set_sound_walk($player_female.SOUND_WALK_CONCRETE)

@@ -125,10 +125,26 @@ func get_character(name_hint):
 func is_inside():
 	return scene_path != "res://forest.tscn"
 
+func _on_cutscene_finished(player, cutscene_id):
+	match player.name_hint:
+		BANDIT_NAME_HINT:
+			match cutscene_id:
+				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START:
+					player.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_REST)
+					return
+				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_REST:
+					return
+		FEMALE_NAME_HINT:
+			match cutscene_id:
+				PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP:
+					return
+	player.stop_cutscene()
+
 func handle_conversation(player, target):
 	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not target.is_in_party():
 		target.join_party()
+		target.set_target_node(target.get_node("../PositionBoat"))
 		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, target, "001_MeetingXenia")
 		return
@@ -362,6 +378,9 @@ func leave_party(name_hint):
 
 func register_player(player):
 	player_paths[player.name_hint] = player.get_path()
+	connect("item_taken", player, "_on_item_taken")
+	connect("item_removed", player, "_on_item_removed")
+	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	if player.name_hint == FEMALE_NAME_HINT:
 		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "001_MeetingXenia")
 		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "002_MeetingAndreas")

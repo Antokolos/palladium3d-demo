@@ -2,7 +2,7 @@ extends KinematicBody
 class_name PalladiumPlayer
 
 signal arrived_to(player_node, target_node)
-signal arrived_to_vicinity(player_node, distance)
+signal arrived_to_boundary(player_node, target_node)
 
 const PLAYER_NAME_HINT = "player"
 
@@ -57,7 +57,6 @@ const ANGLE_TOLERANCE = 0.01
 const CONVERSATION_RANGE = 7
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
-const VICINITY_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
 
 var cur_animation = null
@@ -140,8 +139,10 @@ func follow(current_transform, target_position):
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-		if not in_party and distance < VICINITY_RANGE:
-			emit_signal("arrived_to_vicinity", self,  target_node, distance)
+		if not in_party and get_slide_count() > 0:
+			var collision = get_slide_collision(0)
+			if collision.collider == target_node:
+				emit_signal("arrived_to_boundary", self, target_node)
 	else:
 #		aggression_level = 0
 		companion_state = COMPANION_STATE.REST
@@ -303,17 +304,15 @@ func _ready():
 	model.set_simple_mode(initial_player)
 	model_container.add_child(model)
 	game_params.register_player(self)
-	game_params.connect("item_taken", self, "on_item_taken")
-	game_params.connect("item_removed", self, "on_item_removed")
 
-func on_item_taken(nam, cnt):
+func _on_item_taken(nam, cnt):
 	if not is_player():
 		return
 	var hud = get_hud()
 	if hud:
 		hud.synchronize_items()
 
-func on_item_removed(nam, cnt):
+func _on_item_removed(nam, cnt):
 	if not is_player():
 		return
 	var hud = get_hud()
@@ -325,6 +324,9 @@ func join_party():
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
+
+func stop_cutscene():
+	get_model().stop_cutscene()
 
 func leave_party():
 	game_params.leave_party(name_hint)
@@ -353,7 +355,7 @@ func _physics_process(delta):
 			return
 		process_input(delta)
 	else:
-		if get_model().is_cutscene():
+		if is_cutscene() and is_in_party():
 			return
 		var target_position = get_target_position()
 		if not target_position:
