@@ -33,24 +33,27 @@ func change_stretch_ratio(conversation):
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
-func borrow_camera(cutscene_node):
+func borrow_camera(player, cutscene_node):
+	var player_camera_holder = player.get_cam_holder()
+	var camera = player_camera_holder.get_child(0)
+	camera.enable_use(false)
 	self.cutscene_node = cutscene_node
 	if not cutscene_node:
 		return
-	var player = game_params.get_player()
-	var player_camera_holder = player.get_cam_holder()
-	var camera = player_camera_holder.get_child(0)
 	player_camera_holder.remove_child(camera)
 	cutscene_node.add_child(camera)
 
 func restore_camera():
-	if not cutscene_node:
-		return
 	var player = game_params.get_player()
-	var camera = cutscene_node.get_child(0)
 	var player_camera_holder = player.get_cam_holder()
+	if not cutscene_node:
+		var camera = player_camera_holder.get_child(0)
+		camera.enable_use(true)
+		return
+	var camera = cutscene_node.get_child(0)
 	cutscene_node.remove_child(camera)
 	player_camera_holder.add_child(camera)
+	camera.enable_use(true)
 	cutscene_node = null
 
 func get_cam():
@@ -145,7 +148,7 @@ func start_conversation(player, target, conversation_name, is_cutscene = false, 
 	target.set_speak_mode(true)
 	self.conversation_name = conversation_name
 	self.is_cutscene = is_cutscene
-	borrow_camera(cutscene_node)
+	borrow_camera(player, cutscene_node)
 	conversation_target = target
 	player.get_hud().quick_items_panel.visible = false
 	player.get_hud().inventory.visible = false

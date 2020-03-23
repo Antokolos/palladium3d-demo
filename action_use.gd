@@ -3,9 +3,14 @@ extends Spatial
 onready var ray = $Ray_Cast
 var action_body = null
 
+func enable(enable):
+	ray.enabled = enable
+
 func action(player_node):
-	ray.force_raycast_update()
+	if not ray.enabled:
+		return
 	
+	ray.force_raycast_update()
 	if ray.is_colliding():
 		var body = ray.get_collider()
 		if body == player_node:

@@ -25,6 +25,9 @@ func _ready():
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
 
+func enable_use(enable):
+	use_point.enable(enable)
+
 # Settings applied in the following way will be loaded after game restart
 # see https://github.com/godotengine/godot/issues/30087
 #func apply_advanced_settings(force_vertex_shading):
