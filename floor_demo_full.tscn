@@ -127,6 +127,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -706,26 +707,26 @@ shape = SubResource( 6 )
 transform = Transform( 0.160453, -0.231, 0.959632, 1.59957e-008, 0.972229, 0.234032, -0.987043, -0.0375511, 0.155997, 16.078, 3.87822, 36.244 )
 
 [node name="BanditPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01078, 42.9798 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21631, 4.01078, 41.6056 )
 
 [node name="InscriptionsArea" type="Area" parent="."]
-editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.439, 3.96, 36.244 )
 input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="InscriptionsArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4392, 3.96025, 36.244 )
 shape = SubResource( 7 )
 
 [node name="ApataCutscenePosition" type="Position3D" parent="."]
 transform = Transform( 0.224162, 0.37579, -0.899185, -0.0239097, 0.924508, 0.380412, 0.974259, -0.0637749, 0.216225, 19.0464, 4.23708, 31.3501 )
 
 [node name="ChooseCompanionArea" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.626 )
 input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="ChooseCompanionArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494145, 4.38104, 25.6263 )
 shape = SubResource( 8 )
 
 [node name="ChooseCompanionPosition" type="Position3D" parent="."]

@@ -213,7 +213,8 @@ func look(look_angle_deg):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
 	set_transition(0)
-	if $RestTimer.is_stopped():
+	var is_rest_active = $AnimationTree.get("parameters/LookShot/active")
+	if not is_rest_active and $RestTimer.is_stopped():
 		$RestTimer.start(REST_POSE_CHANGE_TIME_S)
 
 func walk(look_angle_deg):
@@ -297,4 +298,3 @@ func _on_SpeechTimer_timeout():
 
 func _on_RestTimer_timeout():
 	do_rest_shot(0 if randf() > 0.5 else 1)
-	$RestTimer.start(REST_POSE_CHANGE_TIME_S)

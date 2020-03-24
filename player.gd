@@ -280,8 +280,13 @@ func become_player():
 	player_model.set_simple_mode(false)
 	var model = model_container.get_child(0)
 	model.set_simple_mode(true)
-	player_rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	player.reset_rotation()
 	game_params.set_player_name_hint(name_hint)
+
+func reset_rotation():
+	var rotation_helper = get_node("Rotation_Helper")
+	if rotation_helper:
+		rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
 
 func _ready():
 	exclusions.append(self)
@@ -321,6 +326,9 @@ func _on_item_removed(nam, cnt):
 
 func join_party():
 	game_params.join_party(name_hint)
+
+func set_simple_mode(enable):
+	get_model().set_simple_mode(enable)
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
@@ -456,14 +464,14 @@ func process_input(delta):
 func toggle_crouch():
 	if $AnimationPlayer.is_playing():
 		return
-	var companion = game_params.get_companion()
+	var companions = game_params.get_companions()
 	if is_crouching:
 		$AnimationPlayer.play_backwards("crouch")
-		if companion:
+		for companion in companions:
 			companion.stand_up()
 	else:
 		$AnimationPlayer.play("crouch")
-		if companion:
+		for companion in companions:
 			companion.sit_down()
 	is_crouching = not is_crouching
 	var hud = get_hud()

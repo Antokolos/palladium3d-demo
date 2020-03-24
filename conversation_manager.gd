@@ -40,6 +40,8 @@ func borrow_camera(player, cutscene_node):
 	self.cutscene_node = cutscene_node
 	if not cutscene_node:
 		return
+	player.reset_rotation()
+	player.set_simple_mode(false)
 	player_camera_holder.remove_child(camera)
 	cutscene_node.add_child(camera)
 
@@ -50,6 +52,7 @@ func restore_camera():
 		var camera = player_camera_holder.get_child(0)
 		camera.enable_use(true)
 		return
+	player.set_simple_mode(true)
 	var camera = cutscene_node.get_child(0)
 	cutscene_node.remove_child(camera)
 	player_camera_holder.add_child(camera)

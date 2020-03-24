@@ -153,15 +153,15 @@ func _on_IgnitionArea_body_entered(body):
 		conversation_manager.start_conversation(player, target, "004_TorchesIgnition")
 
 func _on_RatsArea_body_entered(body):
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("006_Rats")
 
 func _on_AreaDeadEnd_body_entered(body):
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_AreaDeadEnd2_body_entered(body):
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_InscriptionsArea_body_entered(body):
@@ -191,7 +191,7 @@ func _on_BeginEridaArea_body_entered(body):
 		conversation_manager.start_area_conversation("015_BeginErida" if game_params.party[game_params.FEMALE_NAME_HINT] else "021_BeginEridaMax")
 
 func _on_AresRoomArea_body_entered(body):
-	if body.is_in_group("party") and game_params.party[game_params.FEMALE_NAME_HINT]:
+	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):

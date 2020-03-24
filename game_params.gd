@@ -112,12 +112,19 @@ func _ready():
 func get_player():
 	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
 
+# Get first available companion
 func get_companion():
-	var companion_name_hint = null
+	var companions = get_companions()
+	return companions[0] if companions.size() > 0 else null
+
+func get_companions():
+	var result = []
 	for name_hint in party:
 		if party[name_hint] and name_hint != player_name_hint:
-			companion_name_hint = name_hint
-	return get_node(player_paths[companion_name_hint]) if companion_name_hint and player_paths.has(companion_name_hint) else null
+			var companion_node = get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+			if companion_node:
+				result.append(companion_node)
+	return result
 
 func get_character(name_hint):
 	return get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
