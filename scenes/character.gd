@@ -60,6 +60,9 @@ func do_rest_shot(shot_idx):
 		$AnimationTree.set("parameters/RestTransition/current", shot_idx)
 		$AnimationTree.set("parameters/LookShot/active", true)
 
+func is_in_speak_mode():
+	return $AnimationTree.get("parameters/LookStateTransition/current") == 1
+
 func set_speak_mode(enable):
 	$AnimationTree.set("parameters/LookStateTransition/current", 1 if enable else 0)
 

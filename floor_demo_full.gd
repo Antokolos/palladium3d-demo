@@ -132,6 +132,12 @@ func check_muses_correct(base):
 
 func _on_AreaApata_body_entered(body):
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and body.is_in_group("party"):
+		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+		female.set_target_node(get_node("Apata_room/pedestal_apata"))
+		female.leave_party()
+		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+		bandit.set_target_node(get_node("BanditSavePosition"))
+		bandit.leave_party()
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_AreaMuses_body_entered(body):
@@ -147,10 +153,9 @@ func _on_EridaTrapTimer_timeout():
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
-	var target = game_params.get_companion()
 	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, "004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", true, false)
-		conversation_manager.start_conversation(player, target, "004_TorchesIgnition")
+		conversation_manager.start_conversation(player, "004_TorchesIgnition")
 
 func _on_RatsArea_body_entered(body):
 	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
@@ -203,16 +208,14 @@ func _on_ChestArea_body_exited(body):
 		bandit.stop_cutscene()
 		bandit.set_target_node(get_node("BanditSavePosition"))
 		female.set_target_node(get_node("FemaleSavePosition"))
-		bandit.leave_party()
-		female.leave_party()
 
-func _on_conversation_started(player, target, conversation_name, is_cutscene):
+func _on_conversation_started(player, conversation_name, is_cutscene):
 	match conversation_name:
 		"010-2-4_ApataDoneMax":
 			get_door("door_4").open()
 			get_node("Apata_room/door_3").close()
 
-func _on_conversation_finished(player, target, conversation_name, is_cutscene):
+func _on_conversation_finished(player, conversation_name, is_cutscene):
 	match conversation_name:
 		"005_ApataInscriptions":
 			var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
@@ -227,7 +230,6 @@ func _on_conversation_finished(player, target, conversation_name, is_cutscene):
 				var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 				bandit.connect("arrived_to_boundary", self, "_on_arrived_to_chest_boundary")
 				bandit.set_target_node(get_node("Apata_room/apata_chest"))
-				bandit.leave_party()
 
 func _on_arrived_to_chest_boundary(player_node, target_node):
 	player_node.disconnect("arrived_to_boundary", self, "_on_arrived_to_chest_boundary")

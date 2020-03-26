@@ -1,7 +1,7 @@
 extends Node
 
-signal conversation_started(player, target, conversation_name, is_cutscene)
-signal conversation_finished(player, target, conversation_name, is_cutscene)
+signal conversation_started(player, conversation_name, is_cutscene)
+signal conversation_finished(player, conversation_name, is_cutscene)
 
 const VOWELS = ["А", "Е", "Ё", "И", "О", "У", "Ы", "Э", "Ю", "Я"]
 const CONSONANTS =           ["Б", "В", "Г", "Д", "Ж", "З", "К", "Л", "М", "Н", "П", "Р", "С", "Т", "Ф", "Х", "Ц", "Ч", "Ш", "Щ"]
@@ -11,7 +11,6 @@ const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
 var conversation_name
-var conversation_target
 var is_cutscene
 var cutscene_node
 var in_choice
@@ -21,7 +20,6 @@ var story_state_cache = {}
 
 func _ready():
 	conversation_name = null
-	conversation_target = null
 	is_cutscene = false
 	in_choice = false
 	story_state_cache.clear()
@@ -62,19 +60,19 @@ func restore_camera():
 func get_cam():
 	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
 
-func start_area_cutscene(conversation_name, cutscene_node = null, target = null):
+func start_area_cutscene(conversation_name, cutscene_node = null):
 	var player = game_params.get_player()
 	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
-		conversation_manager.start_conversation(player, target if target else game_params.get_companion(), conversation_name, true, cutscene_node)
+		conversation_manager.start_conversation(player, conversation_name, true, cutscene_node)
 
-func start_area_conversation(conversation_name, target = null):
+func start_area_conversation(conversation_name):
 	var player = game_params.get_player()
 	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
-		conversation_manager.start_conversation(player, target if target else game_params.get_companion(), conversation_name)
+		conversation_manager.start_conversation(player, conversation_name)
 
 func stop_conversation(player):
-	if conversation_target:
-		conversation_target.set_speak_mode(false)
+	for companion in game_params.get_companions():
+		companion.set_speak_mode(false)
 	var conversation_name_prev = conversation_name
 	var is_cutscene_prev = is_cutscene
 	conversation_name = null
@@ -83,7 +81,7 @@ func stop_conversation(player):
 	var hud = player.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
-	emit_signal("conversation_finished", player, conversation_target, conversation_name_prev, is_cutscene_prev)
+	emit_signal("conversation_finished", player, conversation_name_prev, is_cutscene_prev)
 
 func conversation_is_in_progress(conversation_name = null):
 	if not conversation_name:
@@ -144,15 +142,13 @@ func get_conversation_sound_path(player, conversation_name):
 func conversation_active():
 	return conversation_name and conversation_name.length() > 0
 
-func start_conversation(player, target, conversation_name, is_cutscene = false, cutscene_node = null):
+func start_conversation(player, conversation_name, is_cutscene = false, cutscene_node = null):
 	if self.conversation_name == conversation_name:
 		return
-	emit_signal("conversation_started", player, target, conversation_name, is_cutscene)
-	target.set_speak_mode(true)
+	emit_signal("conversation_started", player, conversation_name, is_cutscene)
 	self.conversation_name = conversation_name
 	self.is_cutscene = is_cutscene
 	borrow_camera(player, cutscene_node)
-	conversation_target = target
 	player.get_hud().quick_items_panel.visible = false
 	player.get_hud().inventory.visible = false
 	var conversation = player.get_hud().conversation
@@ -217,7 +213,9 @@ func story_choose(player, idx):
 			conversation_actor.text = tr(actor_name) + ": "
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
-				has_sound = play_sound_and_start_lipsync(player, vtags["voiceover"], null) # no lipsync for choices
+				var conversation_target = game_params.get_companion(actor_name)
+				conversation_target.set_speak_mode(true)
+				has_sound = play_sound_and_start_lipsync(player, conversation_target, vtags["voiceover"], null) # no lipsync for choices
 				in_choice = true
 			change_stretch_ratio(conversation)
 		if not has_sound:
@@ -230,7 +228,7 @@ func proceed_story_immediately(player):
 		$AudioStreamPlayer.stop()
 		story_proceed(player)
 
-func play_sound_and_start_lipsync(player, file_name, phonetic):
+func play_sound_and_start_lipsync(player, conversation_target, file_name, phonetic):
 	var conversation_sound_path = get_conversation_sound_path(player, conversation_name)
 	if not conversation_sound_path:
 		return false
@@ -306,12 +304,14 @@ func story_proceed(player):
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 		var tags_dict = story.GetCurrentTags()
 		var tags = tags_dict[TranslationServer.get_locale()]
-		var actor_name = tags["actor"] if tags and tags.has("actor") else (conversation_target.name_hint if conversation_target else null)
+		var actor_name = tags["actor"] if tags and tags.has("actor") else null
 		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
 		if vtags and vtags.has("voiceover"):
 			var text = get_vvalue(texts)
-			play_sound_and_start_lipsync(player, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
+			var conversation_target = game_params.get_companion(actor_name)
+			conversation_target.set_speak_mode(true)
+			play_sound_and_start_lipsync(player, conversation_target, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
 		change_stretch_ratio(conversation)
 	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("continue_conversation")] if story.CanContinue() else [tr("end_conversation")])
 	display_choices(story, conversation, choices)

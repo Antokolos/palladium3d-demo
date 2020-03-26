@@ -127,7 +127,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )

@@ -152,6 +152,9 @@ func follow(current_transform, target_position):
 		if not in_party:
 			emit_signal("arrived_to", self, target_node)
 
+func is_in_speak_mode():
+	return get_model().is_in_speak_mode()
+
 func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
 

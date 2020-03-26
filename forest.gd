@@ -27,7 +27,7 @@ func use_takable(player_node, takable, parent, was_taken):
 	match takable_id:
 		Takable.TakableIds.ENVELOPE:
 			if player_female.is_in_party():
-				conversation_manager.start_conversation(player, player_female, "001_Oak")
+				conversation_manager.start_conversation(player, "001_Oak")
 
 func on_item_used(player_node, target, item_nam):
 	if item_nam == "barn_lock_key" and target is BarnLock:
@@ -38,14 +38,14 @@ func on_item_used(player_node, target, item_nam):
 			player_female.teleport()
 		
 		if was_in_party:
-			conversation_manager.start_conversation(player, player_female, "001_Door")
+			conversation_manager.start_conversation(player, "001_Door")
 		else:
 			var boatFinished = conversation_manager.conversation_is_finished(player, "001_Boat")
 			if boatFinished:
-				conversation_manager.start_conversation(player, player_female, "001_Door3")
+				conversation_manager.start_conversation(player, "001_Door3")
 			else:
 				var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
-				conversation_manager.start_conversation(player, player_female, "001_Door2" if meetingXeniaFinished else "003_Door")
+				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
 
 func _on_AreaGrass_body_entered(body):
 	if body == player:
@@ -70,7 +70,7 @@ func _on_StumpArea_body_exited(body):
 		player_female.join_party()
 		player_female.set_target_node(get_node("PositionBoat"))
 		player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
-		conversation_manager.start_conversation(player, player_female, "002_MeetingAndreas")
+		conversation_manager.start_conversation(player, "002_MeetingAndreas")
 
 func _on_RockArea_body_exited(body):
 	if game_params.has_item("envelope") or game_params.has_item("barn_lock_key"):
@@ -84,4 +84,4 @@ func _on_BoatArea_body_entered(body):
 		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
 		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
 		if meetingXeniaFinished or meetingAndreasFinished:
-			conversation_manager.start_conversation(player, player_female, "001_Boat")
+			conversation_manager.start_conversation(player, "001_Boat")

@@ -112,10 +112,11 @@ func _ready():
 func get_player():
 	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
 
-# Get first available companion
-func get_companion():
-	var companions = get_companions()
-	return companions[0] if companions.size() > 0 else null
+func get_companion(name_hint = null):
+	if not name_hint:
+		var companions = get_companions()
+		return companions[0] if companions.size() > 0 else null
+	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
 
 func get_companions():
 	var result = []
@@ -153,7 +154,7 @@ func handle_conversation(player, target):
 		target.join_party()
 		target.set_target_node(target.get_node("../PositionBoat"))
 		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
-		conversation_manager.start_conversation(player, target, "001_MeetingXenia")
+		conversation_manager.start_conversation(player, "001_MeetingXenia")
 		return
 	var hud = player.get_hud()
 	var item = hud.get_active_item()
@@ -161,9 +162,9 @@ func handle_conversation(player, target):
 		hud.inventory.visible = false
 		item.used(player, target)
 		item.remove()
-		conversation_manager.start_conversation(player, target, "Bun")
+		conversation_manager.start_conversation(player, "Bun")
 	else:
-		conversation_manager.start_conversation(player, target, "Conversation")
+		conversation_manager.start_conversation(player, "Conversation")
 
 func handle_player_highlight(player):
 	var hud = player.get_hud()

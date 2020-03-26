@@ -10,7 +10,7 @@ func restore_state():
 	if meetingXeniaFinished or meetingAndreasFinished:
 		queue_free()
 
-func _on_conversation_finished(player, target, conversation_name, is_cutscene):
+func _on_conversation_finished(player, conversation_name, is_cutscene):
 	if conversation_name == "001_MeetingXenia" or conversation_name == "002_MeetingAndreas":
 		print("DEBUG: Boat disappears")
 		queue_free()

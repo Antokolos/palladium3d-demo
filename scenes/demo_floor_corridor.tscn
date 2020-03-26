@@ -7,10 +7,10 @@ extents = Vector3( 4.52325, 4.07427, 0.59155 )
 
 [node name="demo_floor_corridor" index="0" instance=ExtResource( 1 )]
 
-[node name="rooms_ceiling002" parent="." index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65793, 8.38767, 14.4935 )
+[node name="rock_48733" parent="." index="0"]
+transform = Transform( 1.44244e-006, 4.15246e-006, 1, 1, -5.98966e-012, -1.44244e-006, 0, 1, -4.15246e-006, -8.87751, 2.82399, -1.87418 )
 
-[node name="StaticBody" type="StaticBody" parent="." index="215"]
+[node name="StaticBody" type="StaticBody" parent="." index="2"]
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.739666, 4.64155, 15.8385 )
