@@ -14,14 +14,15 @@ func _ready():
 	connect("screen_exited", self, "_on_VisibilityEnabler_screen_exited")
 
 func _on_VisibilityEnabler_screen_entered():
-	for raycast in get_children():
-		raycast.enabled = true
 	screen_entered = true
 
 func _on_VisibilityEnabler_screen_exited():
-	for raycast in get_children():
-		raycast.enabled = false
 	screen_entered = false
+	enable_raycasts(false)
+
+func enable_raycasts(enable):
+	for raycast in get_children():
+		raycast.enabled = enable
 
 func get_room_node():
 	return get_node(room_path)
@@ -55,6 +56,7 @@ func set_active(active):
 
 func _physics_process(delta):
 	if not active:
+		enable_raycasts(false)
 		enable_room()
 		return
 	if not screen_entered:
@@ -67,7 +69,10 @@ func _physics_process(delta):
 		var need_enable = get_aabb().has_point(to_local(origin))
 		for raycast in get_children():
 			raycast.cast_to = raycast.to_local(origin)
-			need_enable = need_enable or not raycast.is_colliding()
+			var is_outside_camera = raycast.cast_to.length() > camera.far
+			if raycast.enabled:
+				need_enable = need_enable or not raycast.is_colliding()
+			raycast.enabled = not is_outside_camera
 		if need_enable:
 			enable_room()
 		else:

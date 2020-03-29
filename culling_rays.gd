@@ -1,7 +1,7 @@
 extends Spatial
 
 const CAMERA_FOV_DEGREES = 55
-const STEPS = 3
+const STEPS = 2
 const ANGLE_COEFF = 0.5
 
 const MIN_DIFF = 0.2
@@ -31,7 +31,7 @@ func init():
 	var xstep = float(width_limit) / float(STEPS)
 	var x = xstep
 	add_raycast(0, 0, z)
-	while x <= width_limit + xstep:
+	while x < width_limit + xstep + MIN_DIFF:
 		add_raycast(x, 0, z)
 		add_raycast(-x, 0, z)
 		add_raycast(x, x, z)
@@ -51,7 +51,7 @@ func init():
 	
 	var ystep = float(height_limit) / float(STEPS)
 	var y = ystep
-	while y <= height_limit + ystep:
+	while y < height_limit + ystep + MIN_DIFF:
 		add_raycast(0, y, z)
 		add_raycast(0, -y, z)
 		y = y + ystep

@@ -13,6 +13,7 @@ export var persistent = false
 onready var torch_fire = get_node("torch_wall/torch_fire")
 onready var torch_light = get_node("torch_wall/torch_light")
 onready var raycast = get_node("RayCast")
+var screen_entered = false
 
 func _ready():
 	restore_state()
@@ -49,15 +50,19 @@ func _on_AudioStreamLighter_finished():
 	$AudioStreamBurning.play()
 
 func _physics_process(delta):
-	if not torch_light.visible or persistent:
+	if not screen_entered or not torch_light.visible or persistent:
+		raycast.enabled = false
 		return
 	var player = game_params.get_player()
 	if player:
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin
 		raycast.cast_to = raycast.to_local(origin)
-		var is_far_away = raycast.cast_to.length() > DISTANCE_TO_CAMERA_MAX
+		var rl = raycast.cast_to.length()
+		var is_far_away = rl > DISTANCE_TO_CAMERA_MAX
+		var is_outside_camera = rl > camera.far
 		self.visible = persistent or raycast.cast_to.x < 0
+		raycast.enabled = screen_entered and not is_outside_camera
 		if torch_fire.is_simple_mode():
 			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
 				torch_fire.set_simple_mode(false)
@@ -70,9 +75,9 @@ func _physics_process(delta):
 func _on_VisibilityNotifier_screen_entered():
 	if persistent:
 		return
-	raycast.enabled = true
+	screen_entered = true
 
 func _on_VisibilityNotifier_screen_exited():
 	if persistent:
 		return
-	raycast.enabled = false
+	screen_entered = false
