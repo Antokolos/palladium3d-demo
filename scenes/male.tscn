@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://assets/male.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/character.gd" type="Script" id=2]
@@ -20,9 +20,11 @@ fadein_time = 0.0
 fadeout_time = 0.0
 
 [sub_resource type="AnimationNodeTransition" id=5]
-input_count = 1
+input_count = 2
 input_0/name = "empty"
 input_0/auto_advance = false
+input_1/name = "player_pushes_chest"
+input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeOneShot" id=6]
 
@@ -193,22 +195,25 @@ animation = "male_headturn_right"
 animation = "male_rest"
 
 [sub_resource type="AnimationNodeAnimation" id=40]
-animation = "male_squats"
+animation = "male_pushes_chest"
 
 [sub_resource type="AnimationNodeAnimation" id=41]
-animation = "female_squat_rest"
+animation = "male_squats"
 
 [sub_resource type="AnimationNodeAnimation" id=42]
-animation = "male_squats_reversed"
+animation = "female_squat_rest"
 
 [sub_resource type="AnimationNodeAnimation" id=43]
-animation = "male_walks"
+animation = "male_squats_reversed"
 
 [sub_resource type="AnimationNodeAnimation" id=44]
+animation = "male_walks"
+
+[sub_resource type="AnimationNodeAnimation" id=45]
 animation = "female_crouches_squatted"
 
-[sub_resource type="AnimationNodeBlendTree" id=45]
-graph_offset = Vector2( -1263.6, -717.987 )
+[sub_resource type="AnimationNodeBlendTree" id=46]
+graph_offset = Vector2( 704.559, 354.513 )
 nodes/Blend2_Aux/node = SubResource( 1 )
 nodes/Blend2_Aux/position = Vector2( 780, -60 )
 nodes/Blend2_Head/node = SubResource( 2 )
@@ -288,17 +293,19 @@ nodes/headturn_right/position = Vector2( 260, 140 )
 nodes/look/node = SubResource( 39 )
 nodes/look/position = Vector2( -560, -820 )
 nodes/output/position = Vector2( 1880, 620 )
-nodes/sit_down/node = SubResource( 40 )
+nodes/player_pushes_chest/node = SubResource( 40 )
+nodes/player_pushes_chest/position = Vector2( 780, 460 )
+nodes/sit_down/node = SubResource( 41 )
 nodes/sit_down/position = Vector2( -200, -460 )
-nodes/squat_rest/node = SubResource( 41 )
+nodes/squat_rest/node = SubResource( 42 )
 nodes/squat_rest/position = Vector2( -220, -340 )
-nodes/stand_up/node = SubResource( 42 )
+nodes/stand_up/node = SubResource( 43 )
 nodes/stand_up/position = Vector2( -160, -760 )
-nodes/walk/node = SubResource( 43 )
+nodes/walk/node = SubResource( 44 )
 nodes/walk/position = Vector2( -120, -160 )
-nodes/walk_squat/node = SubResource( 44 )
+nodes/walk_squat/node = SubResource( 45 )
 nodes/walk_squat/position = Vector2( -180, -40 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "WalkTransition", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "CutsceneTransition", 0, "empty", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "WalkTransition", 0, "walk", "WalkTransition", 1, "walk_squat", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "WalkTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "WalkTransition", 0, "walk", "WalkTransition", 1, "walk_squat", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2" ]
 
 [node name="male" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -309,7 +316,7 @@ walk_anim_name = "male_walks"
 transform = Transform( 1, 6.61239e-008, 8.56817e-008, -5.58794e-008, -0.289161, -0.957281, 9.77889e-009, 0.957281, -0.28916, 0.0399998, 15.2113, -0.53402 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 45 )
+tree_root = SubResource( 46 )
 anim_player = NodePath("../Male_palladium/AnimationPlayer")
 parameters/Blend2_Aux/blend_amount = 1.0
 parameters/Blend2_Head/blend_amount = 0.5

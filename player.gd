@@ -360,13 +360,14 @@ func teleport():
 		set_global_transform(target_node.get_global_transform())
 
 func _physics_process(delta):
-	if is_player():
+	var in_party = is_in_party()
+	if is_player() and in_party:
 		if conversation_manager.conversation_is_cutscene():
 			$SoundWalking.stop()
 			return
 		process_input(delta)
 	else:
-		if is_cutscene() and is_in_party():
+		if is_cutscene() and in_party:
 			return
 		var target_position = get_target_position()
 		if not target_position:
@@ -383,7 +384,7 @@ func _physics_process(delta):
 		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
 
 func _input(event):
-	if is_player() and not conversation_manager.conversation_is_cutscene():
+	if is_player() and is_in_party() and not conversation_manager.conversation_is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))

@@ -138,7 +138,9 @@ func _on_cutscene_finished(player, cutscene_id):
 		BANDIT_NAME_HINT:
 			match cutscene_id:
 				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START:
-					player.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_REST)
+					var main_player = game_params.get_player()
+					main_player.join_party()
+					conversation_manager.restore_camera(main_player)
 					return
 				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_REST:
 					return

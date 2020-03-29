@@ -8,8 +8,8 @@ radius = 0.167647
 height = 0.793229
 
 [node name="statue_4" type="StaticBody" groups=[
-"restorable_state",
 "takables",
+"restorable_state",
 ]]
 script = ExtResource( 1 )
 takable_id = 10

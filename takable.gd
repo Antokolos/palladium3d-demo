@@ -76,6 +76,9 @@ func get_item_name():
 			return null
 
 func use(player_node):
+	if takable_id == TakableIds.APATA and player_node.is_player() and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+		# Cannot be taken by the main player if Apata's trap has not been activated yet
+		return
 	var was_taken = is_present()
 	game_params.take(get_item_name())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
@@ -117,11 +120,7 @@ func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	if takable_id == TakableIds.APATA:
-		match game_params.story_vars.apata_trap_stage:
-			game_params.ApataTrapStages.PAUSED:
-				continue
-			game_params.ApataTrapStages.DISABLED:
-				return ""
+		return ""
 	return "E: Взять" if is_present() else ""
 
 func remove_highlight(player_node):

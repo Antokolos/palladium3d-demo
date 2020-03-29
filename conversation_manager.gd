@@ -33,6 +33,9 @@ func change_stretch_ratio(conversation):
 
 func borrow_camera(player, cutscene_node):
 	var player_camera_holder = player.get_cam_holder()
+	if player_camera_holder.get_child_count() == 0:
+		# Do nothing if player has no camera. It looks like we are in cutscene already.
+		return
 	var camera = player_camera_holder.get_child(0)
 	camera.enable_use(false)
 	self.cutscene_node = cutscene_node
@@ -43,8 +46,7 @@ func borrow_camera(player, cutscene_node):
 	player_camera_holder.remove_child(camera)
 	cutscene_node.add_child(camera)
 
-func restore_camera():
-	var player = game_params.get_player()
+func restore_camera(player):
 	var player_camera_holder = player.get_cam_holder()
 	if not cutscene_node:
 		var camera = player_camera_holder.get_child(0)
@@ -77,7 +79,7 @@ func stop_conversation(player):
 	var is_cutscene_prev = is_cutscene
 	conversation_name = null
 	is_cutscene = false
-	restore_camera()
+	restore_camera(player)
 	var hud = player.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
