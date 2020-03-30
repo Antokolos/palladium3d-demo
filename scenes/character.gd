@@ -82,18 +82,19 @@ func stop_cutscene():
 	$AnimationTree.set("parameters/CutsceneShot/active", false)
 
 func is_cutscene():
-	return $AnimationTree.get("parameters/CutsceneShot/active")
+	var cutscene_empty = $AnimationTree.get("parameters/CutsceneTransition/current") == CUTSCENE_EMPTY
+	return not cutscene_empty and $AnimationTree.get("parameters/CutsceneShot/active")
 
-func stand_up():
-	if is_cutscene():
+func stand_up(force = false):
+	if not force and is_cutscene():
 		return
 	if $AnimationTree.get("parameters/LookTransition/current") != 1:
 		$AnimationTree.set("parameters/TimeScaleStandUp/scale", -1)
 		$AnimationTree.set("parameters/LookTransition/current", 0)
 	$AnimationTree.set("parameters/WalkTransition/current", 0)
 
-func sit_down():
-	if is_cutscene():
+func sit_down(force = false):
+	if not force and is_cutscene():
 		return
 	if $AnimationTree.get("parameters/LookTransition/current") != 3:
 		$AnimationTree.set("parameters/LookTransition/current", 2)

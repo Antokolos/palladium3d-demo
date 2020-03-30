@@ -150,6 +150,16 @@ func follow(current_transform, target_position):
 #		state.set_angular_velocity(zero_dir)
 		dir = Vector3()
 		if not in_party:
+			var preferred_target = get_preferred_target()
+			if preferred_target:
+				var target_z = preferred_target.get_global_transform().basis.xform(z_dir)
+				var c = cur_dir.normalized()
+				var t = target_z.normalized()
+				var cross = c.cross(t)
+				if cross.y > 0.1:
+					rot_y = -1
+				elif cross.y < -0.1:
+					rot_y = 1
 			emit_signal("arrived_to", self, target_node)
 
 func is_in_speak_mode():
@@ -158,17 +168,26 @@ func is_in_speak_mode():
 func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
 
-func sit_down():
-	get_model().sit_down()
+func sit_down(force = false):
+	get_model().sit_down(force)
 
-func stand_up():
-	get_model().stand_up()
+func stand_up(force = false):
+	get_model().stand_up(false)
 
 func get_navpath(pstart, pend):
 	var p1 = pyramid.get_closest_point(pstart)
 	var p2 = pyramid.get_closest_point(pend)
 	var p = pyramid.get_simple_path(p1, p2, true)
 	return Array(p) # Vector3array too complex to use, convert to regular array
+
+func has_collisions():
+	var sc = get_slide_count()
+	var floor_node = get_node(floor_path)
+	for i in range(0, sc):
+		var collision = get_slide_collision(i)
+		if collision.collider != floor_node:
+			return true
+	return false
 
 func build_path(target_position):
 	var current_transform = get_global_transform()
@@ -185,7 +204,7 @@ func build_path(target_position):
 		if mov_pt.length() <= mov_vec.length():
 			break
 		path.pop_back()
-	if is_on_wall() and path.empty(): # should check possible stuck
+	if has_collisions() and path.empty(): # should check possible stuck
 		#clear_path()
 		path = get_navpath(get_global_transform().origin, target_position)
 		#draw_path()
@@ -351,8 +370,11 @@ func is_cutscene():
 func set_target_node(node):
 	target_node = node
 
+func get_preferred_target():
+	return game_params.get_player() if is_in_party() else target_node
+
 func get_target_position():
-	var t = game_params.get_player() if is_in_party() else target_node
+	var t = get_preferred_target()
 	return t.get_global_transform().origin if t else null
 
 func teleport():
