@@ -34,8 +34,7 @@ func on_item_used(player_node, target, item_nam):
 		var was_in_party = player_female.is_in_party()
 		if not was_in_party:
 			player_female.join_party()
-			player_female.set_target_node(get_node("PositionCompanion"))
-			player_female.teleport()
+			player_female.teleport(get_node("PositionCompanion"))
 		
 		if was_in_party:
 			conversation_manager.start_conversation(player, "001_Door")

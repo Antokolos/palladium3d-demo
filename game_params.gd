@@ -138,10 +138,14 @@ func _on_cutscene_finished(player, cutscene_id):
 		BANDIT_NAME_HINT:
 			match cutscene_id:
 				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START:
+					conversation_manager.restore_camera(game_params.get_player())
 					return
 		FEMALE_NAME_HINT:
 			match cutscene_id:
 				PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP:
+					return
+				PalladiumCharacter.FEMALE_TAKES_APATA:
+					player.remove_item_from_hand()
 					return
 	player.stop_cutscene()
 

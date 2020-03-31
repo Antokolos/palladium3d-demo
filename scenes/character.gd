@@ -7,6 +7,7 @@ const CUTSCENE_EMPTY = 0
 
 const FEMALE_CUTSCENE_SITTING_STUMP = 1
 const FEMALE_CUTSCENE_STAND_UP_STUMP = 2
+const FEMALE_TAKES_APATA = 3
 
 const BANDIT_CUTSCENE_PUSHES_CHEST_START = 1
 
@@ -46,6 +47,21 @@ var speech_idx = 0
 
 func _ready():
 	randomize()
+	game_params.connect("item_taken", self, "_on_item_taken")
+
+func _on_item_taken(nam, count):
+	if look_anim_name == "female_rest_99": # Apply only to female model
+		if nam == "statue_apata":
+			var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")
+			var item = load("res://assets/statue_4.escn").instance() #load(game_params.ITEMS[nam].model_path).instance()
+			item.set_scale(Vector3(8, 8, 8))
+			att.add_child(item)
+
+func remove_item_from_hand():
+	var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")
+	for ch in att.get_children():
+		att.remove_child(ch)
+		ch.queue_free()
 
 func set_simple_mode(sm):
 	simple_mode = sm

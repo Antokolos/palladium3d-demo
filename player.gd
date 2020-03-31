@@ -128,21 +128,26 @@ func follow(current_transform, target_position):
 			dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif distance > FOLLOW_RANGE:
+	elif in_party and distance > FOLLOW_RANGE:
 		companion_state = COMPANION_STATE.WALK
 		model.walk(rotation_angle_to_player_deg)
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif companion_state == COMPANION_STATE.WALK and (distance > CLOSEUP_RANGE or (distance > ALIGNMENT_RANGE and not in_party)):
-		model.walk(rotation_angle_to_player_deg)
-		dir = target_dir.normalized()
-		if not $SoundWalking.is_playing():
-			$SoundWalking.play()
+	elif (in_party and distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK) or (not in_party and distance > ALIGNMENT_RANGE):
+		companion_state = COMPANION_STATE.WALK
 		if not in_party and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider == target_node:
 				emit_signal("arrived_to_boundary", self, target_node)
+				companion_state = COMPANION_STATE.REST
+				model.look(rotation_angle_to_player_deg)
+				dir = Vector3()
+				return
+		model.walk(rotation_angle_to_player_deg)
+		dir = target_dir.normalized()
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
 	else:
 #		aggression_level = 0
 		companion_state = COMPANION_STATE.REST
@@ -160,7 +165,8 @@ func follow(current_transform, target_position):
 					rot_y = -1
 				elif cross.y < -0.1:
 					rot_y = 1
-			emit_signal("arrived_to", self, target_node)
+			if target_node and current_position.distance_to(target_node.get_global_transform().origin) <= ALIGNMENT_RANGE:
+				emit_signal("arrived_to", self, target_node)
 
 func is_in_speak_mode():
 	return get_model().is_in_speak_mode()
@@ -346,6 +352,9 @@ func _on_item_removed(nam, cnt):
 	if hud:
 		hud.synchronize_items()
 
+func remove_item_from_hand():
+	get_model().remove_item_from_hand()
+
 func join_party():
 	game_params.join_party(name_hint)
 
@@ -377,9 +386,9 @@ func get_target_position():
 	var t = get_preferred_target()
 	return t.get_global_transform().origin if t else null
 
-func teleport():
-	if target_node:
-		set_global_transform(target_node.get_global_transform())
+func teleport(node_to):
+	if node_to:
+		set_global_transform(node_to.get_global_transform())
 
 func _physics_process(delta):
 	var in_party = is_in_party()

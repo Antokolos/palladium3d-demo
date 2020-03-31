@@ -133,10 +133,15 @@ func check_muses_correct(base):
 func _on_AreaApata_body_entered(body):
 	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and body.is_in_group("party") and body.is_player():
-		var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
-		apata_statue.use(female)
-		female.set_target_node(get_node("FemaleSavePosition"))
+		body.teleport(get_node("PlayerTeleportPosition"))
+		get_node("ApataTakeTimer").start()
+		female.play_cutscene(PalladiumCharacter.FEMALE_TAKES_APATA)
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
+
+func _on_ApataTakeTimer_timeout():
+	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+	var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
+	apata_statue.use(female)
 
 func _on_AreaMuses_body_entered(body):
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED and body.is_in_group("party") and body.is_player():
@@ -206,7 +211,6 @@ func _on_ChestArea_body_exited(body):
 		player.stop_cutscene()
 		bandit.stop_cutscene()
 		player.join_party()
-		conversation_manager.restore_camera(player)
 		conversation_manager.start_area_conversation("010-2-1_ChestMoved")
 		bandit.set_target_node(get_node("BanditSavePosition"))
 		female.set_target_node(get_node("FemaleSavePosition"))
@@ -223,36 +227,32 @@ func _on_conversation_finished(player, conversation_name, is_cutscene):
 	match conversation_name:
 		"005_ApataInscriptions":
 			bandit.join_party()
-			bandit.set_target_node(get_node("BanditPosition"))
-			bandit.teleport()
+			bandit.teleport(get_node("BanditPosition"))
 			conversation_manager.start_area_cutscene("008_MeetingMax", get_node("InscriptionsPosition"))
 		"008_MeetingMax":
 			bandit.set_target_node(get_node("BanditSavePosition"))
 			bandit.leave_party()
-			female.connect("arrived_to_boundary", self, "_on_arrived_to_apata_boundary")
-			female.set_target_node(get_node("Apata_room/pedestal_apata"))
+			female.set_target_node(get_node("PositionApata"))
 			female.leave_party()
 		"009_ApataTrap":
 			if game_params.story_vars.apata_chest_rigid > 0:
+				female.set_target_node(get_node("FemaleSavePosition"))
 				player.connect("arrived_to", self, "_on_arrived_to_chest_push_position")
 				player.set_target_node(get_node("PlayerSavePosition"))
-				conversation_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
 				player.leave_party()
+				conversation_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
 		"010-2-1_ChestMoved":
 			bandit.sit_down(true)
 			female.sit_down(true)
 
-func _on_arrived_to_apata_boundary(player_node, target_node):
-	player_node.disconnect("arrived_to_boundary", self, "_on_arrived_to_apata_boundary")
-	pass
-
 func _on_arrived_to_chest_push_position(player_node, target_node):
-	player_node.disconnect("arrived_to", self, "_on_arrived_to_chest_push_position")
-	var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
-	bandit.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START)
-	player_node.play_cutscene(PalladiumCharacter.PLAYER_CUTSCENE_PUSHES_CHEST)
-	var chest = get_node("Apata_room/apata_chest")
-	chest.do_push()
+	if target_node == get_node("PlayerSavePosition"):
+		player_node.disconnect("arrived_to", self, "_on_arrived_to_chest_push_position")
+		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+		bandit.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START)
+		player_node.play_cutscene(PalladiumCharacter.PLAYER_CUTSCENE_PUSHES_CHEST)
+		var chest = get_node("Apata_room/apata_chest")
+		chest.do_push()
 
 func restore_state():
 	if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ACTIVE:
