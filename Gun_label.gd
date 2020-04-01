@@ -1,7 +1,7 @@
 extends Label
 
 func _physics_process(delta):
-	var camera = get_node("../../..").get_cam()
+	var camera = game_params.get_player().get_cam()
 	var stats = [
 	"FPS: %d" % Performance.get_monitor(Performance.TIME_FPS),
 	"\nRender objects: %d" % Performance.get_monitor(Performance.RENDER_OBJECTS_IN_FRAME),

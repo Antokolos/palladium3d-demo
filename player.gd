@@ -195,21 +195,22 @@ func has_collisions():
 			return true
 	return false
 
-func build_path(target_position):
+func build_path(target_position, in_party):
 	var current_transform = get_global_transform()
 	var current_position = current_transform.origin
 	var mov_vec = target_position - current_position
 	mov_vec.y = 0
-	if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
-		clear_path()
-		return
-	# filter out points of the path, distance to which is greater than distance to player
-	while not path.empty():
-		var pt = path.back()
-		var mov_pt = target_position - pt
-		if mov_pt.length() <= mov_vec.length():
-			break
-		path.pop_back()
+	if in_party:
+		if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
+			clear_path()
+			return
+		# filter out points of the path, distance to which is greater than distance to player
+		while not path.empty():
+			var pt = path.back()
+			var mov_pt = target_position - pt
+			if mov_pt.length() <= mov_vec.length():
+				break
+			path.pop_back()
 	if has_collisions() and path.empty(): # should check possible stuck
 		#clear_path()
 		path = get_navpath(get_global_transform().origin, target_position)
@@ -361,6 +362,9 @@ func join_party():
 func set_simple_mode(enable):
 	get_model().set_simple_mode(enable)
 
+func rest():
+	get_model().look(0)
+
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
 
@@ -405,7 +409,7 @@ func _physics_process(delta):
 			return
 		var current_transform = get_global_transform()
 		var current_position = current_transform.origin
-		build_path(target_position)
+		build_path(target_position, in_party)
 		follow(current_transform, path.front() if path.size() > 0 else target_position)
 	
 	process_movement(delta)

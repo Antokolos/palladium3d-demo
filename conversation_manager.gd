@@ -65,6 +65,7 @@ func get_cam():
 func start_area_cutscene(conversation_name, cutscene_node = null):
 	var player = game_params.get_player()
 	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
+		player.rest()
 		conversation_manager.start_conversation(player, conversation_name, true, cutscene_node)
 
 func start_area_conversation(conversation_name):

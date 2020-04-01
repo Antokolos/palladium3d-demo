@@ -64,6 +64,10 @@ func use_pedestal(player_node, pedestal, item_nam):
 			if item_nam == "statue_apata" and hope:
 				get_node("Apata_room/door_3").open()
 				get_node("Apata_room/ceiling_moving_1").pause()
+				var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+				female.join_party()
+				var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+				bandit.join_party()
 		Pedestal.PedestalIds.MUSES:
 			if has_empty_muses_pedestal(pedestal.get_parent()):
 				return
@@ -206,6 +210,7 @@ func _on_ChestArea_body_exited(body):
 	if game_params.story_vars.apata_chest_rigid > 0 and body is ItemContainer and body.container_id == ItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
 		game_params.story_vars.apata_chest_rigid = 0
 		var player = game_params.get_player()
+		conversation_manager.restore_camera(player)
 		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 		player.stop_cutscene()
