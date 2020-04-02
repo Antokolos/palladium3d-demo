@@ -53,10 +53,14 @@ func make_present(item):
 func item_match(item):
 	if not item:
 		return false
+	var result = false
 	for ch in get_children():
-		if (ch is Takable) and ch.get_item_name() == item.nam:
-			return true
-	return false
+		if ch is Takable:
+			if ch.is_present() and ch.is_exclusive():
+				# If some exclusive item is already present, return false even if the name matches
+				return false
+			result = result or (not ch.is_present() and ch.get_item_name() == item.nam)
+	return result
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)

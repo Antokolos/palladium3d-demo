@@ -68,9 +68,10 @@ func _physics_process(delta):
 		var origin = camera.get_global_transform().origin
 		var need_enable = get_aabb().has_point(to_local(origin))
 		for raycast in get_children():
-			raycast.cast_to = raycast.to_local(origin)
-			var is_outside_camera = raycast.cast_to.length() > camera.far
+			var ray_vec = raycast.to_local(origin)
+			var is_outside_camera = ray_vec.length() > camera.far
 			if raycast.enabled:
+				raycast.cast_to = ray_vec
 				need_enable = need_enable or not raycast.is_colliding()
 			raycast.enabled = not is_outside_camera
 		if need_enable:

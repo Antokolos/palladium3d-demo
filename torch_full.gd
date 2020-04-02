@@ -57,12 +57,14 @@ func _physics_process(delta):
 	if player:
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin
-		raycast.cast_to = raycast.to_local(origin)
-		var rl = raycast.cast_to.length()
+		var ray_vec = raycast.to_local(origin)
+		var rl = ray_vec.length()
 		var is_far_away = rl > DISTANCE_TO_CAMERA_MAX
 		var is_outside_camera = rl > camera.far
-		self.visible = persistent or raycast.cast_to.x < 0
+		self.visible = persistent or ray_vec.x < 0
 		raycast.enabled = screen_entered and not is_outside_camera
+		if raycast.enabled:
+			raycast.cast_to = ray_vec
 		if torch_fire.is_simple_mode():
 			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
 				torch_fire.set_simple_mode(false)

@@ -136,10 +136,11 @@ func follow(current_transform, target_position):
 			$SoundWalking.play()
 	elif (in_party and distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK) or (not in_party and distance > ALIGNMENT_RANGE):
 		companion_state = COMPANION_STATE.WALK
-		if not in_party and get_slide_count() > 0:
+		if not in_party and target_node and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider == target_node:
 				emit_signal("arrived_to_boundary", self, target_node)
+				target_node = null
 				companion_state = COMPANION_STATE.REST
 				model.look(rotation_angle_to_player_deg)
 				dir = Vector3()
@@ -167,6 +168,7 @@ func follow(current_transform, target_position):
 					rot_y = 1
 			if target_node and current_position.distance_to(target_node.get_global_transform().origin) <= ALIGNMENT_RANGE:
 				emit_signal("arrived_to", self, target_node)
+				target_node = null
 
 func is_in_speak_mode():
 	return get_model().is_in_speak_mode()
