@@ -128,11 +128,7 @@ func _process(delta):
 		_:
 			if SHADER_CACHE_HIDING_ENABLED:
 				for node in holder.get_children():
-					var sk = node.get_node(node.get_skeleton_path()) if not SHADER_CACHE_IGNORE_SKELETONS and node is MeshInstance else null
-					if sk is Skeleton:
-						node.queue_free()
-					else:
-						node.visible = false
+					node.visible = false
 				label_container.visible = false
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0

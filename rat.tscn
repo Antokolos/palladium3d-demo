@@ -38,6 +38,7 @@ bus = "Sound"
 
 [node name="RatArea" type="Area" parent="."]
 input_ray_pickable = false
+monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="RatArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
