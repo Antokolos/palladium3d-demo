@@ -8,6 +8,8 @@ func _ready():
 	restore_state()
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("conversation_started", self, "_on_conversation_started")
+	var chest = get_node("Apata_room/apata_chest")
+	chest.connect("was_translated", self, "_on_ChestArea_body_exited")
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
@@ -208,7 +210,7 @@ func _on_AresRoomArea_body_entered(body):
 
 func _on_ChestArea_body_exited(body):
 	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == ItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
-		game_params.story_vars.apata_chest_rigid = 0
+		game_params.story_vars.apata_chest_rigid = -1
 		var player = game_params.get_player()
 		conversation_manager.restore_camera(player)
 		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)

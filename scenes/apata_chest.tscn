@@ -59,4 +59,4 @@ transform = Transform( 1, 0, 0, 0, 1, -0.000288066, 0, 0.000288066, 1, -0.019615
 shape = SubResource( 5 )
 
 [node name="apatha_chest" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0294083, -0.964687, 0 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -0.0294083, -1.23231, 0 )
