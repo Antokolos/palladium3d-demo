@@ -361,6 +361,8 @@ func remove_item_from_hand():
 func join_party():
 	game_params.join_party(name_hint)
 	dir = Vector3()
+	rot_x = 0
+	rot_y = 0
 
 func set_simple_mode(enable):
 	get_model().set_simple_mode(enable)

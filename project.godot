@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "ItemContainer",
+"class": "ApataChest",
+"language": "GDScript",
+"path": "res://scenes/apata_chest.gd"
+}, {
 "base": "Spatial",
 "class": "BarnLock",
 "language": "GDScript",
@@ -80,6 +85,7 @@ _global_script_classes=[ {
 "path": "res://takable.gd"
 } ]
 _global_script_class_icons={
+"ApataChest": "",
 "BarnLock": "",
 "ButtonActivator": "",
 "Door": "",

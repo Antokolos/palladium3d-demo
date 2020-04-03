@@ -207,7 +207,7 @@ func _on_AresRoomArea_body_entered(body):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
-	if game_params.story_vars.apata_chest_rigid > 0 and body is ItemContainer and body.container_id == ItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
+	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == ItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
 		game_params.story_vars.apata_chest_rigid = 0
 		var player = game_params.get_player()
 		conversation_manager.restore_camera(player)
