@@ -7,14 +7,17 @@ func _ready():
 func activate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000")
+	get_node("AnimationPlayer").play("CollisionAnim")
 
 func pause():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.PAUSED
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
+	get_node("AnimationPlayer").stop(false)
 
 func deactivate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
 	get_node("ceiling_armat000/AnimationPlayer").play_backwards("ceiling_action.000")
+	get_node("AnimationPlayer").play_backwards("CollisionAnim")
 
 func restore_state():
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
@@ -22,6 +25,7 @@ func restore_state():
 	elif game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED:
 		activate()
 		get_node("ceiling_armat000/AnimationPlayer").seek(20, true)
+		get_node("AnimationPlayer").seek(20, true)
 		pause()
 
 func _on_AnimationPlayer_animation_finished(anim_name):

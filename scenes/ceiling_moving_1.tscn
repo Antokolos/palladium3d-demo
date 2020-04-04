@@ -1,7 +1,26 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ceiling_moving_1.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ceiling_moving_1.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 5.60531, 0.295407, 9.07613 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "CollisionAnim"
+length = 83.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("StaticBody:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 67, 83.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 23.2133, 7.75219, 31.327 ), Vector3( 23.213, 2.194, 31.327 ), Vector3( 23.2133, 2.19379, 31.327 ) ]
+}
 
 [node name="ceiling_moving_1" index="0" groups=[
 "restorable_state",
@@ -12,6 +31,16 @@ script = ExtResource( 2 )
 extra_cull_margin = 10.0
 
 [node name="DeactivationTimer" type="Timer" parent="." index="1"]
+wait_time = 3.0
 one_shot = true
+
+[node name="StaticBody" type="StaticBody" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2133, 7.75219, 31.327 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+anims/CollisionAnim = SubResource( 2 )
 [connection signal="animation_finished" from="ceiling_armat000/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="DeactivationTimer" to="." method="_on_DeactivationTimer_timeout"]
