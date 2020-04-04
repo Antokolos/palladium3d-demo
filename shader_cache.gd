@@ -7,7 +7,8 @@ const SHADER_CACHE_IGNORE_SKELETONS = false
 const STEP = 0.0004
 const HALFROW = 40
 
-onready var holder = get_node("shader_cache_holder")
+onready var holder1 = get_node("shader_cache_holder1")
+onready var holder2 = get_node("shader_cache_holder2")
 onready var label_container = get_node("HBoxContainer")
 
 var stage = 0
@@ -61,7 +62,7 @@ func make_asset(pos, material, skeleton_path):
 	asset.mesh = SphereMesh.new()
 	asset.mesh.radius = STEP / 4.0
 	asset.mesh.height = STEP / 2.0
-	holder.add_child(asset)
+	holder1.add_child(asset)
 	asset.translate(Vector3(pos.x, pos.y, 0))
 	pos.x = pos.x + STEP
 	if pos.x > STEP * HALFROW:
@@ -76,7 +77,7 @@ func make_particles(pos, particles_material, material):
 	particles.draw_pass_1 = SphereMesh.new()
 	particles.draw_pass_1.radius = STEP / 4.0
 	particles.draw_pass_1.height = STEP / 2.0
-	holder.add_child(particles)
+	holder1.add_child(particles)
 	particles.translate(Vector3(pos.x, pos.y, 0))
 	pos.x = pos.x + STEP
 	if pos.x > STEP * HALFROW:
@@ -114,22 +115,40 @@ func add_material_meshes(pos, scn):
 func _process(delta):
 	match stage:
 		0:
-			pass
+			if SHADER_CACHE_ENABLED and SHADER_CACHE_HIDING_ENABLED:
+				var has_children = holder1.get_child_count() > 0
+				var source = holder1 if has_children else holder2
+				var receiver = holder2 if has_children else holder1
+				var ch = source.get_child(0)
+				ch.visible = true
+				source.remove_child(ch)
+				var last_node = null
+				for node in receiver.get_children():
+					node.visible = false
+					last_node = node
+				if last_node:
+					last_node.visible = true
+				receiver.add_child(ch)
 		1:
 			stage = stage + 1
 			label_container.visible = true
-			for node in holder.get_children():
+			for node in holder1.get_children():
+				node.queue_free()
+			for node in holder2.get_children():
 				node.queue_free()
 			get_tree().call_group("room_enablers", "set_active", false)
 		2:
 			stage = stage + 1
 			var pos = Vector2(-STEP * HALFROW, 0)
 			pos = add_material_meshes(pos, get_node("/root"))
+		3:
+			stage = stage + 1
+			# Show all items for one frame
 		_:
 			if SHADER_CACHE_HIDING_ENABLED:
-				for node in holder.get_children():
+				for node in holder1.get_children():
 					node.visible = false
-				label_container.visible = false
+			label_container.visible = false
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0
 
