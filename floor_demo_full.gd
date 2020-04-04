@@ -242,8 +242,8 @@ func _on_conversation_finished(player, conversation_name, is_cutscene):
 			female.set_target_node(get_node("PositionApata"))
 			female.leave_party()
 		"009_ApataTrap":
+			female.set_target_node(get_node("FemaleSavePosition"))
 			if game_params.story_vars.apata_chest_rigid > 0:
-				female.set_target_node(get_node("FemaleSavePosition"))
 				player.connect("arrived_to", self, "_on_arrived_to_chest_push_position")
 				player.set_target_node(get_node("PlayerSavePosition"))
 				player.leave_party()

@@ -1,5 +1,11 @@
 extends Spatial
 
+onready var damage_area = $DamageArea
+onready var chest_shape = $DamageArea/ChestShape
+
+var spikes_injury_rate = 2
+var does_damage = false
+
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	restore_state()
@@ -50,3 +56,15 @@ func _on_conversation_finished(player, conversation_name, is_cutscene):
 func _on_DeactivationTimer_timeout():
 	deactivate()
 	conversation_manager.start_area_conversation("010-2-3_CeilingUp")
+
+func _physics_process(delta):
+	chest_shape.disabled = game_params.story_vars.apata_chest_rigid != 0
+	for body in damage_area.get_overlapping_bodies():
+		if body.is_in_group("party"):
+			does_damage = true
+			return
+	does_damage = false
+
+func _on_DamageTimer_timeout():
+	if does_damage:
+		game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current - spikes_injury_rate, game_params.player_health_max)

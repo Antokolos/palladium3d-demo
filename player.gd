@@ -33,6 +33,7 @@ const MAX_SLOPE_ANGLE = 60
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
 onready var model = rotation_helper.get_node("Model")
+onready var standing_area = $StandingArea
 
 var is_walking = false
 var is_crouching = false
@@ -401,6 +402,8 @@ func teleport(node_to):
 
 func _physics_process(delta):
 	var in_party = is_in_party()
+	if is_low_ceiling() and not is_crouching and is_on_floor():
+		toggle_crouch()
 	if is_player() and in_party:
 		if conversation_manager.conversation_is_cutscene():
 			$SoundWalking.stop()
@@ -505,26 +508,35 @@ func process_input(delta):
 		rot_y = 0
 	# ----------------------------------
 
+func is_low_ceiling():
+	# Make sure you've set proper collision layer bit for ceiling
+	return standing_area.get_overlapping_bodies().size() > 0
+
 func toggle_crouch():
 	if $AnimationPlayer.is_playing():
 		return
+	var is_player = is_player()
 	var companions = game_params.get_companions()
 	if is_crouching:
-		if $StandingArea.get_overlapping_bodies().size() > 1:
+		if is_low_ceiling():
 			# I.e. if the player is crouching and something is above the head, do not allow to stand up.
-			# Comparing with 1, because the player itself count too.
 			return
+		stand_up()
 		$AnimationPlayer.play_backwards("crouch")
-		for companion in companions:
-			companion.stand_up()
+		if is_player:
+			for companion in companions:
+				companion.stand_up()
 	else:
+		sit_down()
 		$AnimationPlayer.play("crouch")
-		for companion in companions:
-			companion.sit_down()
+		if is_player:
+			for companion in companions:
+				companion.sit_down()
 	is_crouching = not is_crouching
-	var hud = get_hud()
-	if hud:
-		hud.set_crouch_indicator(is_crouching)
+	if is_player:
+		var hud = get_hud()
+		if hud:
+			hud.set_crouch_indicator(is_crouching)
 
 func process_movement(delta):
 	dir.y = 0

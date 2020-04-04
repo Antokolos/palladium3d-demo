@@ -66,11 +66,11 @@ tracks/3/keys = {
 }
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.301718, 1, 0.304715 )
+extents = Vector3( 0.161138, 1, 0.146487 )
 
 [node name="player" type="KinematicBody" groups=[
-"party",
 "moving",
+"party",
 ]]
 script = ExtResource( 1 )
 
@@ -114,6 +114,8 @@ bus = "Sound"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20699, 0 )
 input_ray_pickable = false
 monitorable = false
+collision_layer = 1024
+collision_mask = 1024
 
 [node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
 shape = SubResource( 5 )
