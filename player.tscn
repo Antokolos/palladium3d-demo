@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
@@ -65,6 +65,9 @@ tracks/3/keys = {
 "values": [ 1.6, 0.6 ]
 }
 
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.301718, 1, 0.304715 )
+
 [node name="player" type="KinematicBody" groups=[
 "party",
 "moving",
@@ -106,3 +109,11 @@ bus = "Sound"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 stream = ExtResource( 2 )
 bus = "Sound"
+
+[node name="StandingArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20699, 0 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
+shape = SubResource( 5 )

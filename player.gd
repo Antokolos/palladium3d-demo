@@ -510,6 +510,10 @@ func toggle_crouch():
 		return
 	var companions = game_params.get_companions()
 	if is_crouching:
+		if $StandingArea.get_overlapping_bodies().size() > 1:
+			# I.e. if the player is crouching and something is above the head, do not allow to stand up.
+			# Comparing with 1, because the player itself count too.
+			return
 		$AnimationPlayer.play_backwards("crouch")
 		for companion in companions:
 			companion.stand_up()
