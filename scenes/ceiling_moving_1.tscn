@@ -8,6 +8,9 @@
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
+[node name="ceiling_moving001" parent="ceiling_armat000" index="1"]
+extra_cull_margin = 10.0
+
 [node name="DeactivationTimer" type="Timer" parent="." index="1"]
 one_shot = true
 [connection signal="animation_finished" from="ceiling_armat000/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

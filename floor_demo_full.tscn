@@ -230,6 +230,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5262, 2.66656, 26.8437 )
 [node name="apatha_add_1" parent="Apata_room" instance=ExtResource( 22 )]
 
 [node name="ceiling_moving_1" parent="Apata_room" instance=ExtResource( 23 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01794, 0 )
 
 [node name="apata_chest" parent="Apata_room" instance=ExtResource( 24 )]
 editor/display_folded = true
