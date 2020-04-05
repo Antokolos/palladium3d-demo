@@ -64,7 +64,7 @@ func make_asset(pos, material, skeleton_path):
 		skeleton.set_scale(Vector3(STEP / (2 * size.x), STEP / (2 * size.y), STEP / (2 * size.z)))
 		holder1.add_child(skeleton)
 		skeleton.global_translate(Vector3(pos.x, pos.y, 0))
-		skeleton.physical_bones_start_simulation()
+		skeleton.add_bone("shader_cache_bone")
 	else:
 		var asset = MeshInstance.new()
 		var mname = material.get_name()
