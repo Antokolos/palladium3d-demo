@@ -4,7 +4,7 @@ class_name ShaderCache
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
 const SHADER_CACHE_IGNORE_SKELETONS = false
-const STEP = 0.03
+const STEP = 0.02
 const HALFROW = 10
 
 onready var holder1 = get_node("shader_cache_holder1")
@@ -64,7 +64,11 @@ func make_asset(pos, material, skeleton_path):
 		skeleton.set_scale(Vector3(STEP / (2 * size.x), STEP / (2 * size.y), STEP / (2 * size.z)))
 		holder1.add_child(skeleton)
 		skeleton.global_translate(Vector3(pos.x, pos.y, 0))
-		skeleton.add_bone("shader_cache_bone")
+		for ch in skeleton.get_children():
+			if ch is AnimationPlayer:
+				var anim_list = ch.get_animation_list()
+				for anim in anim_list:
+					ch.play(anim)
 	else:
 		var asset = MeshInstance.new()
 		var mname = material.get_name()
