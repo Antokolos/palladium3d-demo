@@ -4,8 +4,8 @@ class_name ShaderCache
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
 const SHADER_CACHE_IGNORE_SKELETONS = false
-const STEP = 0.0004
-const HALFROW = 40
+const STEP = 0.03
+const HALFROW = 10
 
 onready var holder1 = get_node("shader_cache_holder1")
 onready var holder2 = get_node("shader_cache_holder2")
@@ -53,22 +53,33 @@ func get_cacheable_items(scn, ignore_skeletons):
 	return result
 
 func make_asset(pos, material, skeleton_path):
-	var asset = MeshInstance.new()
-	var mname = material.get_name()
-	if not mname.empty():
-		asset.set_name(mname)
-	if skeleton_path:
-		asset.set_skeleton_path(skeleton_path)
-	asset.mesh = SphereMesh.new()
-	asset.mesh.radius = STEP / 4.0
-	asset.mesh.height = STEP / 2.0
-	holder1.add_child(asset)
-	asset.translate(Vector3(pos.x, pos.y, 0))
+	var skeleton = get_node(skeleton_path).duplicate(Node.DUPLICATE_USE_INSTANCING) if skeleton_path else null
+	if skeleton:
+		skeleton.set_transform(Transform())
+		var aabb = AABB(Vector3(0, 0, 0), Vector3(STEP, STEP, STEP))
+		for skeleton_child in skeleton.get_children():
+			if skeleton_child is VisualInstance:
+				aabb = aabb.merge(skeleton_child.get_aabb())
+		var size = aabb.size
+		skeleton.set_scale(Vector3(STEP / (2 * size.x), STEP / (2 * size.y), STEP / (2 * size.z)))
+		holder1.add_child(skeleton)
+		skeleton.global_translate(Vector3(pos.x, pos.y, 0))
+		skeleton.physical_bones_start_simulation()
+	else:
+		var asset = MeshInstance.new()
+		var mname = material.get_name()
+		if not mname.empty():
+			asset.set_name(mname)
+		asset.mesh = SphereMesh.new()
+		asset.mesh.radius = STEP / 4.0
+		asset.mesh.height = STEP / 2.0
+		asset.mesh.set_material(material)
+		holder1.add_child(asset)
+		asset.translate(Vector3(pos.x, pos.y, 0))
 	pos.x = pos.x + STEP
 	if pos.x > STEP * HALFROW:
 		pos.x = -STEP * HALFROW
 		pos.y = pos.y + STEP
-	asset.mesh.set_material(material)
 	return pos
 
 func make_particles(pos, particles_material, material):
@@ -94,6 +105,7 @@ func add_material_meshes(pos, scn):
 	pos.y = pos.y + STEP / 2.0
 	var items = get_cacheable_items(scn, SHADER_CACHE_IGNORE_SKELETONS)
 	var rids = {}
+	var skeleton_paths = {}
 	for item in items:
 		var material = item["material"]
 		var skeleton = item["skeleton"]
@@ -104,7 +116,9 @@ func add_material_meshes(pos, scn):
 			pos = make_asset(pos, material, null)
 		if skeleton:
 			var skeleton_path = skeleton.get_path()
-			pos = make_asset(pos, material, skeleton_path)
+			if not skeleton_paths.has(skeleton_path):
+				skeleton_paths[skeleton_path] = true
+				pos = make_asset(pos, material, skeleton_path)
 		if particles_material:
 			var pid = particles_material.get_rid().get_id()
 			if not rids.has(pid):
@@ -115,20 +129,7 @@ func add_material_meshes(pos, scn):
 func _process(delta):
 	match stage:
 		0:
-			if SHADER_CACHE_ENABLED and SHADER_CACHE_HIDING_ENABLED:
-				var has_children = holder1.get_child_count() > 0
-				var source = holder1 if has_children else holder2
-				var receiver = holder2 if has_children else holder1
-				var ch = source.get_child(0)
-				ch.visible = true
-				source.remove_child(ch)
-				var last_node = null
-				for node in receiver.get_children():
-					node.visible = false
-					last_node = node
-				if last_node:
-					last_node.visible = true
-				receiver.add_child(ch)
+			pass
 		1:
 			stage = stage + 1
 			label_container.visible = true
@@ -147,7 +148,8 @@ func _process(delta):
 		_:
 			if SHADER_CACHE_HIDING_ENABLED:
 				for node in holder1.get_children():
-					node.visible = false
+					holder1.remove_child(node)
+					holder2.add_child(node)
 			label_container.visible = false
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0

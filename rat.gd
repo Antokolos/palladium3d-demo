@@ -50,17 +50,9 @@ func _integrate_forces(state):
 		param.margin = 0.001 # When almost collided
 		var motion = space_state.cast_motion(param, run_dir.normalized())
 		if not can_move_without_collision(motion):
-			remove()
+			queue_free()
 		state.set_linear_velocity(run_dir)
 	state.set_angular_velocity(zero_dir)
-
-func remove():
-	# We can use queue_free() and it is more efficient, but this can cause errors with shader cache
-	# (the skeleton of the rat will be used in cache and will cause errors when the camera will be moved,
-	# for example, to the cutscene node and back to the player)
-	$CollisionShape.disabled = true
-	visible = false
-	$RatArea.monitoring = false
 
 func rest():
 	rat.rest()

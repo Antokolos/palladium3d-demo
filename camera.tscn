@@ -66,6 +66,7 @@ script = ExtResource( 5 )
 [node name="shader_cache_holder1" type="Spatial" parent="viewpoint/shader_cache"]
 
 [node name="shader_cache_holder2" type="Spatial" parent="viewpoint/shader_cache"]
+visible = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="viewpoint/shader_cache"]
 anchor_top = 0.4
