@@ -45,17 +45,29 @@ func open_preview(item, hud, flashlight):
 			custom_actions = inst.get_custom_actions()
 			for act in custom_actions:
 				var ch = label_close_node.duplicate(0)
-				ch.text = act.action_hint
+				ch.text = get_action_key(act) + act.action_hint
 				custom_actions_node.add_child(ch)
 		get_tree().paused = true
 		hud.quick_items_panel.hide()
 		$ActionsPanel.show()
+
+func get_action_key(act):
+	var list = InputMap.get_action_list(act.action_event)
+	for action in list:
+		if action is InputEventKey:
+			return action.as_text() + ": "
+	return ""
 
 func _input(event):
 	if item_holder_node.get_child_count() > 0:
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			item_holder_node.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 			item_holder_node.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
+		elif event.is_action_pressed("item_preview_toggle"):
+			close_preview()
+		elif inst.has_method("execute_action"):
+			if inst.execute_action(event, item):
+				close_preview()
 
 func close_preview():
 	for ch in item_holder_node.get_children():
@@ -67,17 +79,3 @@ func close_preview():
 	get_tree().paused = false
 	if not flashlight_visible:
 		flashlight.hide()
-
-func _unhandled_input(event):
-	if item_holder_node.get_child_count() > 0:
-		var is_key = event is InputEventKey and event.is_pressed()
-		if not is_key:
-			return
-		var is_action = event.scancode == KEY_Q
-		for act in custom_actions:
-			is_action = is_action or (event.scancode == act.key_code)
-		if not is_action:
-			return
-		close_preview()
-		if inst.has_method("execute_action"):
-			inst.execute_action(event.scancode, item)

@@ -7,7 +7,7 @@ func _ready():
 	restore_state()
 
 func use(player_node):
-	var hud = player_node.get_hud()
+	var hud = game_params.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if not item_match(item):
@@ -26,7 +26,7 @@ func item_match(item):
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	var hud = player_node.get_hud()
+	var hud = game_params.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):

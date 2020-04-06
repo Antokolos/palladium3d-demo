@@ -15,33 +15,23 @@ func load_chat():
 	if StoryNode.ChatDriven() and StoryNode.CanChoose():
 		display_choices()
 
-func _unhandled_input(event):
-	if self.is_visible_in_tree() and event is InputEventKey:
+func _input(event):
+	if self.is_visible_in_tree():
 		if not StoryNode.ChatDriven():
 			return
 		
-		if StoryNode.CanContinue() and event.is_pressed() and event.scancode == KEY_SPACE:
+		if StoryNode.CanContinue() and event.is_action_pressed("dialogue_next"):
 			story_proceed(false)
 			if StoryNode.CanChoose():
 				display_choices()
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_1:
+		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_1"):
 			story_choose(0)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_2:
+		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_2"):
 			story_choose(1)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_3:
+		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_3"):
 			story_choose(2)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_4:
+		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_4"):
 			story_choose(3)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_5:
-			story_choose(4)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_6:
-			story_choose(5)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_7:
-			story_choose(6)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_8:
-			story_choose(7)
-		elif StoryNode.CanChoose() and event.is_pressed() and event.scancode == KEY_9:
-			story_choose(8)
 
 func story_proceed(choice_response):
 	StoryNode.Continue(choice_response)

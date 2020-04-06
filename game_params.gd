@@ -109,6 +109,12 @@ func _ready():
 	add_music("underwater.ogg")
 	add_music("sinkingisland.ogg")
 
+func get_hud():
+	return get_node("/root/HUD/hud")
+
+func get_viewport():
+	return get_node("/root/HUD/ViewportContainer/Viewport")
+
 func get_player():
 	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
 
@@ -156,7 +162,7 @@ func handle_conversation(player, target):
 		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, "001_MeetingXenia")
 		return
-	var hud = player.get_hud()
+	var hud = get_hud()
 	var item = hud.get_active_item()
 	if item and item.nam == "saffron_bun":
 		hud.inventory.visible = false
@@ -167,7 +173,7 @@ func handle_conversation(player, target):
 		conversation_manager.start_conversation(player, "Conversation")
 
 func handle_player_highlight(player):
-	var hud = player.get_hud()
+	var hud = get_hud()
 	var item = hud.get_active_item()
 	if item and item.nam == "saffron_bun":
 		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
@@ -405,7 +411,7 @@ func save_slot_exists(slot):
 
 func load_params(slot):
 	var player = get_player()
-	var hud = player.get_hud()
+	var hud = get_hud()
 	StoryNode.ReloadAllSaves(slot)
 	
 	var f = File.new()

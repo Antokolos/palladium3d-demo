@@ -1,11 +1,19 @@
 extends Spatial
 
 func get_custom_actions():
-	return [{"key_code" : KEY_R, "action_hint" : "R -- съесть"}]
+	return [{"action_event" : "item_preview_action_1", "action_hint" : "Съесть"}]
 
-func execute_action(key_code, item):
-	match key_code:
-		KEY_R:
-			item.remove()
-			var player = game_params.get_player()
-			conversation_manager.start_conversation(player, "BunEaten")
+func execute_action(event, item):
+	if event.is_action_pressed("item_preview_action_1"):
+		item.remove()
+		var player = game_params.get_player()
+		conversation_manager.start_conversation(player, "BunEaten")
+	elif event.is_action_pressed("item_preview_action_2"):
+		pass
+	elif event.is_action_pressed("item_preview_action_3"):
+		pass
+	elif event.is_action_pressed("item_preview_action_4"):
+		pass
+	else:
+		return false
+	return true

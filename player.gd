@@ -236,14 +236,8 @@ func clear_path():
 		pyramid.get_node("path_holder").remove_child(ch)
 	path.clear()
 
-func get_hud_holder():
-	return get_node("HUD")
-
 func get_cam_holder():
 	return get_node("Rotation_Helper/Camera")
-
-func get_hud():
-	return get_hud_holder().get_node("hud")
 
 func get_cam():
 	var cutscene_cam = conversation_manager.get_cam()
@@ -256,24 +250,34 @@ func use(player_node):
 func get_model():
 	return get_node("Rotation_Helper/Model").get_child(0)
 
-func _unhandled_input(event):
+func _input(event):
 	if not is_player():
 		return
-	var is_key = event is InputEventKey and event.is_pressed()
-	if not is_key:
-		return
-	var hud = get_hud()
+	var hud = game_params.get_hud()
 	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
-		if conversation_manager.in_choice and event.scancode == KEY_1:
+		if conversation_manager.in_choice and event.is_action_pressed("dialogue_next"):
 			conversation_manager.proceed_story_immediately(self)
-		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
-			conversation_manager.story_choose(self, event.scancode - KEY_1)
+		elif event.is_action_pressed("dialogue_option_1"):
+			conversation_manager.story_choose(self, 0)
+		elif event.is_action_pressed("dialogue_option_2"):
+			conversation_manager.story_choose(self, 1)
+		elif event.is_action_pressed("dialogue_option_3"):
+			conversation_manager.story_choose(self, 2)
+		elif event.is_action_pressed("dialogue_option_4"):
+			conversation_manager.story_choose(self, 3)
+	if is_in_party() and not conversation_manager.conversation_is_cutscene():
+		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
+			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
+			var camera_rot = rotation_helper.rotation_degrees
+			camera_rot.x = clamp(camera_rot.x, -70, 70)
+			rotation_helper.rotation_degrees = camera_rot
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	var hud = player_node.get_hud()
+	var hud = game_params.get_hud()
 	var inventory = hud.inventory
 	var conversation = hud.conversation
 	if conversation.visible:
@@ -294,11 +298,6 @@ func become_player():
 	if is_player():
 		return
 	var player = game_params.get_player()
-	var hud_container = get_hud_holder()
-	var player_hud_container = player.get_hud_holder()
-	var hud = player_hud_container.get_child(0)
-	player_hud_container.remove_child(hud)
-	hud_container.add_child(hud)
 	var rotation_helper = get_node("Rotation_Helper")
 	var camera_container = rotation_helper.get_node("Camera")
 	var player_rotation_helper = player.get_node("Rotation_Helper")
@@ -327,9 +326,6 @@ func _ready():
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
-		var hud_container = get_hud_holder()
-		var hud = load("res://hud.tscn").instance()
-		hud_container.add_child(hud)
 		var camera_container = get_node("Rotation_Helper/Camera")
 		var camera = load("res://camera.tscn").instance()
 		camera_container.add_child(camera)
@@ -345,14 +341,14 @@ func _ready():
 func _on_item_taken(nam, cnt):
 	if not is_player():
 		return
-	var hud = get_hud()
+	var hud = game_params.get_hud()
 	if hud:
 		hud.synchronize_items()
 
 func _on_item_removed(nam, cnt):
 	if not is_player():
 		return
-	var hud = get_hud()
+	var hud = game_params.get_hud()
 	if hud:
 		hud.synchronize_items()
 
@@ -425,15 +421,6 @@ func _physics_process(delta):
 		rotation_helper.rotate_x(deg2rad(rot_x * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY))
 	if rot_y != 0:
 		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
-
-func _input(event):
-	if is_player() and is_in_party() and not conversation_manager.conversation_is_cutscene():
-		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
-			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
-			var camera_rot = rotation_helper.rotation_degrees
-			camera_rot.x = clamp(camera_rot.x, -70, 70)
-			rotation_helper.rotation_degrees = camera_rot
 
 func process_input(delta):
 
@@ -534,7 +521,7 @@ func toggle_crouch():
 				companion.sit_down()
 	is_crouching = not is_crouching
 	if is_player:
-		var hud = get_hud()
+		var hud = game_params.get_hud()
 		if hud:
 			hud.set_crouch_indicator(is_crouching)
 

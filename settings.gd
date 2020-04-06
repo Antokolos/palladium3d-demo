@@ -201,12 +201,14 @@ func set_resolution(ID):
 	var maxid = available_resolutions.size() - 1
 	if ID > maxid:
 		var ssize = OS.get_screen_size()
-		get_tree().get_root().set_size_override(true, ssize)
-		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, ssize)
+		game_params.get_viewport().size = ssize
+		#get_tree().get_root().set_size_override(true, ssize)
+		#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, ssize)
 	else:
 		var minsize=Vector2( OS.window_size.x * available_resolutions[ID].resolution_height / OS.window_size.y, available_resolutions[ID].resolution_height)
-		get_tree().get_root().set_size_override(true, minsize)
-		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
+		game_params.get_viewport().size = minsize
+		#get_tree().get_root().set_size_override(true, minsize)
+		#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
 	resolution = ID
 	emit_signal("resolution_changed", ID)
 

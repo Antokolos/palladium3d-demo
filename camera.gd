@@ -128,18 +128,9 @@ func _input(event):
 		var player = game_params.get_player()
 		if player:
 			use_point.action(player)
-
-func _unhandled_input(event):
-	var is_key = event is InputEventKey and event.is_pressed()
-	if not is_key:
-		return
-	var player = game_params.get_player()
-	if not player:
-		return
-	var hud = player.get_hud()
-	if hud and not item_preview.is_opened():
-		if event.scancode != KEY_Q:
-			return
-		var item = hud.get_active_item()
-		if item:
-			item_preview.open_preview(item, hud, flashlight)
+	elif event.is_action_pressed("item_preview_toggle"):
+		var hud = game_params.get_hud()
+		if hud and not item_preview.is_opened():
+			var item = hud.get_active_item()
+			if item:
+				item_preview.open_preview(item, hud, flashlight)

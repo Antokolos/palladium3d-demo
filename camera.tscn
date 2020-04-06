@@ -61,6 +61,7 @@ cast_to = Vector3( 0, 0, 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
 
 [node name="shader_cache" type="Spatial" parent="viewpoint"]
+editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="shader_cache_holder1" type="Spatial" parent="viewpoint/shader_cache"]
@@ -111,7 +112,7 @@ alignment = 1
 [node name="HintLabelClose" type="Label" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
 margin_right = 1920.0
 margin_bottom = 32.0
-text = "Q -- закрыть"
+text = "Q: закрыть"
 align = 1
 valign = 1
 

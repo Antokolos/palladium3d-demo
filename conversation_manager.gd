@@ -81,7 +81,7 @@ func stop_conversation(player):
 	conversation_name = null
 	is_cutscene = false
 	restore_camera(player)
-	var hud = player.get_hud()
+	var hud = game_params.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
 	emit_signal("conversation_finished", player, conversation_name_prev, is_cutscene_prev)
@@ -152,9 +152,10 @@ func start_conversation(player, conversation_name, is_cutscene = false, cutscene
 	self.conversation_name = conversation_name
 	self.is_cutscene = is_cutscene
 	borrow_camera(player, cutscene_node)
-	player.get_hud().quick_items_panel.visible = false
-	player.get_hud().inventory.visible = false
-	var conversation = player.get_hud().conversation
+	var hud = game_params.get_hud()
+	hud.quick_items_panel.visible = false
+	hud.inventory.visible = false
+	var conversation = hud.conversation
 	conversation.visible = true
 	max_choice = 0
 	var story = init_story(player, conversation, conversation_name)
@@ -193,7 +194,7 @@ func get_vvalue(dict):
 
 func story_choose(player, idx):
 	var has_sound = false
-	var conversation = player.get_hud().conversation
+	var conversation = game_params.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var story = StoryNode
@@ -297,7 +298,7 @@ func text_to_phonetic(text):
 
 func story_proceed(player):
 	in_choice = false
-	var conversation = player.get_hud().conversation
+	var conversation = game_params.get_hud().conversation
 	var story = StoryNode
 	if story.CanContinue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")

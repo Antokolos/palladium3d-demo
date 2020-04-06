@@ -299,27 +299,45 @@ func _on_QuitDialog_popup_hide():
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _unhandled_input(event):
-	if event is InputEventKey and event.is_pressed():
-		if inventory.is_visible_in_tree():
-			if event.scancode == KEY_B:
-				if not set_active_item(active_item_idx - 1):
-					shift_items_right()
-				return
-			if event.scancode == KEY_N:
-				if not set_active_item(active_item_idx + 1):
-					shift_items_left()
-				return
-			if event.scancode == KEY_T:
-				var item = get_active_item()
-				if item:
-					game_params.set_quick_item(active_quick_item_idx, item.nam)
-					synchronize_items()
-				return
-			if event.scancode >= KEY_F1 and event.scancode <= KEY_F6:
-				set_active_item(event.scancode - KEY_F1)
-				return
-		elif not conversation.visible:
-			if event.scancode >= KEY_1 and event.scancode <= KEY_6:
-				set_active_quick_item(event.scancode - KEY_1)
-				return
+func _input(event):
+	if inventory.is_visible_in_tree():
+		if event.is_action_pressed("active_item_back"):
+			if not set_active_item(active_item_idx - 1):
+				shift_items_right()
+		elif event.is_action_pressed("active_item_next"):
+			if not set_active_item(active_item_idx + 1):
+				shift_items_left()
+		elif event.is_action_pressed("active_item_toggle"):
+			var item = get_active_item()
+			if item:
+				game_params.set_quick_item(active_quick_item_idx, item.nam)
+				synchronize_items()
+		elif event.is_action_pressed("active_item_1"):
+			set_active_item(0)
+		elif event.is_action_pressed("active_item_2"):
+			set_active_item(1)
+		elif event.is_action_pressed("active_item_3"):
+			set_active_item(2)
+		elif event.is_action_pressed("active_item_4"):
+			set_active_item(3)
+		elif event.is_action_pressed("active_item_5"):
+			set_active_item(4)
+		elif event.is_action_pressed("active_item_6"):
+			set_active_item(5)
+	elif not conversation.visible:
+		if event.is_action_pressed("active_item_back"):
+			set_active_quick_item(active_quick_item_idx - 1)
+		elif event.is_action_pressed("active_item_next"):
+			set_active_quick_item(active_quick_item_idx + 1)
+		if event.is_action_pressed("active_item_1"):
+			set_active_quick_item(0)
+		elif event.is_action_pressed("active_item_2"):
+			set_active_quick_item(1)
+		elif event.is_action_pressed("active_item_3"):
+			set_active_quick_item(2)
+		elif event.is_action_pressed("active_item_4"):
+			set_active_quick_item(3)
+		elif event.is_action_pressed("active_item_5"):
+			set_active_quick_item(4)
+		elif event.is_action_pressed("active_item_6"):
+			set_active_quick_item(5)
