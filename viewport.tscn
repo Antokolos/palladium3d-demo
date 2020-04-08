@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://viewport.gd" type="Script" id=1]
+
+[node name="Viewport" type="Viewport"]
+pause_mode = 1
+handle_input_locally = false
+render_target_clear_mode = 1
+render_target_update_mode = 3
+shadow_atlas_size = 4096
+shadow_atlas_quad_0 = 1
+script = ExtResource( 1 )

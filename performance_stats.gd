@@ -1,7 +1,16 @@
 extends Label
 
+const PERFORMANCE_STATS_ENABLED = true
+
+func _ready():
+	visible = PERFORMANCE_STATS_ENABLED
+
 func _physics_process(delta):
+	if not PERFORMANCE_STATS_ENABLED:
+		return
 	var camera = game_params.get_player().get_cam()
+	var viewport = game_params.get_viewport()
+	var viewport_size = viewport.size if viewport else Vector2(0, 0)
 	var stats = [
 	"FPS: %d" % Performance.get_monitor(Performance.TIME_FPS),
 	"\nRender objects: %d" % Performance.get_monitor(Performance.RENDER_OBJECTS_IN_FRAME),
@@ -9,9 +18,9 @@ func _physics_process(delta):
 	"\nShader changes: %d" % Performance.get_monitor(Performance.RENDER_SHADER_CHANGES_IN_FRAME),
 	"\nSurface changes: %d" % Performance.get_monitor(Performance.RENDER_SURFACE_CHANGES_IN_FRAME),
 	"\nDrawcalls: %d" % Performance.get_monitor(Performance.RENDER_DRAW_CALLS_IN_FRAME),
-	"\nCamera Far: %f" % camera.far if camera else ""
+	"\nCamera Far: %f" % camera.far if camera else "",
+	"\nViewport size: %dx%d" % [viewport_size.x, viewport_size.y]
 	]
 	text = ""
 	for stat in stats:
 		text = text + stat
-
