@@ -395,22 +395,22 @@ func register_player(player):
 	connect("item_taken", player, "_on_item_taken")
 	connect("item_removed", player, "_on_item_removed")
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
+	play_initial_cutscene(player)
+
+func play_initial_cutscene(player):
 	if player.name_hint == FEMALE_NAME_HINT:
 		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "001_MeetingXenia")
 		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "002_MeetingAndreas")
-		if meetingXeniaFinished:
-			player.join_party()
-		elif meetingAndreasFinished:
-			pass
+		if meetingXeniaFinished or meetingAndreasFinished:
+			player.stop_cutscene()
 		else:
-			player.get_model().play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP)
+			player.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP)
 
 func save_slot_exists(slot):
 	var f = File.new()
 	return f.file_exists("user://saves/slot_%d/params.json" % slot)
 
 func load_params(slot):
-	var player = get_player()
 	var hud = get_hud()
 	StoryNode.ReloadAllSaves(slot)
 	
@@ -426,12 +426,6 @@ func load_params(slot):
 		return
 
 	scene_path = d.scene_path if ("scene_path" in d) else SCENE_PATH_DEFAULT
-
-	var companion = get_companion()
-	var player_basis = player.get_transform().basis
-	var player_origin = player.get_transform().origin
-	var companion_basis = companion.get_transform().basis
-	var companion_origin = companion.get_transform().origin
 	
 	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else PLAYER_NAME_HINT
 	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
@@ -439,29 +433,28 @@ func load_params(slot):
 
 	emit_signal("health_changed", PalladiumPlayer.PLAYER_NAME_HINT, player_health_current, player_health_max)
 
-	if ("player_basis" in d and (typeof(d.player_basis) == TYPE_ARRAY)):
-		var bx = Vector3(d.player_basis[0][0], d.player_basis[0][1], d.player_basis[0][2])
-		var by = Vector3(d.player_basis[1][0], d.player_basis[1][1], d.player_basis[1][2])
-		var bz = Vector3(d.player_basis[2][0], d.player_basis[2][1], d.player_basis[2][2])
-		player_basis = Basis(bx, by, bz)
-
-	if ("player_origin" in d and (typeof(d.player_origin) == TYPE_ARRAY)):
-		player_origin = Vector3(d.player_origin[0], d.player_origin[1], d.player_origin[2])
-
 	party = d.party if ("party" in d) else PARTY_DEFAULT
 	player_paths = d.player_paths if ("player_paths" in d) else PLAYER_PATHS_DEFAULT
-
-	if ("companion_basis" in d and (typeof(d.companion_basis) == TYPE_ARRAY)):
-		var bx = Vector3(d.companion_basis[0][0], d.companion_basis[0][1], d.companion_basis[0][2])
-		var by = Vector3(d.companion_basis[1][0], d.companion_basis[1][1], d.companion_basis[1][2])
-		var bz = Vector3(d.companion_basis[2][0], d.companion_basis[2][1], d.companion_basis[2][2])
-		companion_basis = Basis(bx, by, bz)
-
-	if ("companion_origin" in d and (typeof(d.companion_origin) == TYPE_ARRAY)):
-		companion_origin = Vector3(d.companion_origin[0], d.companion_origin[1], d.companion_origin[2])
-
-	player.set_transform(Transform(player_basis, player_origin))
-	companion.set_transform(Transform(companion_basis, companion_origin))
+	
+	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
+		for name_hint in d.characters.keys():
+			var dd = d.characters[name_hint]
+			var character = get_character(name_hint)
+			var character_coords = {
+				"basis" : character.get_transform().basis,
+				"origin" : character.get_transform().origin
+			}
+			if ("basis" in dd and (typeof(dd.basis) == TYPE_ARRAY)):
+				var bx = Vector3(dd.basis[0][0], dd.basis[0][1], dd.basis[0][2])
+				var by = Vector3(dd.basis[1][0], dd.basis[1][1], dd.basis[1][2])
+				var bz = Vector3(dd.basis[2][0], dd.basis[2][1], dd.basis[2][2])
+				character_coords.basis = Basis(bx, by, bz)
+			
+			if ("origin" in dd and (typeof(dd.origin) == TYPE_ARRAY)):
+				character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
+			
+			character.set_transform(Transform(character_coords.basis, character_coords.origin))
+			play_initial_cutscene(character)
 
 	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT
 	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT
@@ -487,32 +480,29 @@ func save_params(slot):
 	
 	StoryNode.SaveAll(slot)
 	
-	var player = get_player()
-	var companion = get_companion()
-	var player_basis = player.get_transform().basis
-	var player_origin = player.get_transform().origin
-	var companion_basis = companion.get_transform().basis if companion else null
-	var companion_origin = companion.get_transform().origin if companion else null
-
+	var characters = {}
+	for name_hint in party.keys():
+		var character = get_character(name_hint)
+		if character:
+			var b = character.get_transform().basis
+			var o = character.get_transform().origin
+			characters[name_hint] = {
+				"basis" : [
+					[b.x.x, b.x.y, b.x.z],
+					[b.y.x, b.y.y, b.y.z],
+					[b.z.x, b.z.y, b.z.z]
+				] ,
+				"origin" : [o.x, o.y, o.z]
+			}
+	
 	var d = {
 		"scene_path" : scene_path,
 		"player_name_hint" : player_name_hint,
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,
-		"player_origin" : [player_origin.x, player_origin.y, player_origin.z],
-		"player_basis" : [
-			[player_basis.x.x, player_basis.x.y, player_basis.x.z],
-			[player_basis.y.x, player_basis.y.y, player_basis.y.z],
-			[player_basis.z.x, player_basis.z.y, player_basis.z.z]
-		],
 		"party" : party,
 		"player_paths" : player_paths,
-		"companion_origin" : [companion_origin.x, companion_origin.y, companion_origin.z] if companion_origin else null,
-		"companion_basis" : [
-			[companion_basis.x.x, companion_basis.x.y, companion_basis.x.z],
-			[companion_basis.y.x, companion_basis.y.y, companion_basis.y.z],
-			[companion_basis.z.x, companion_basis.z.y, companion_basis.z.z]
-		] if companion_basis else null,
+		"characters" : characters,
 		"story_vars" : story_vars,
 		"inventory" : inventory,
 		"quick_items" : quick_items,
