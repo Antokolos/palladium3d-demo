@@ -40,7 +40,7 @@ func change_quality(quality):
 		settings.QUALITY_NORM:
 			self.environment = env_norm
 			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 2048
+			#game_params.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_normal")
 			get_tree().call_group("light_sources", "set_quality_normal")
 			get_tree().call_group("grass", "set_quality_normal")
@@ -52,7 +52,7 @@ func change_quality(quality):
 		settings.QUALITY_OPT:
 			self.environment = env_opt
 			#get_tree().call_group("lightmaps", "enable", true)
-			#get_viewport().shadow_atlas_size = 2048
+			#game_params.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_optimal")
 			get_tree().call_group("light_sources", "set_quality_optimal")
 			get_tree().call_group("grass", "set_quality_optimal")
@@ -64,7 +64,7 @@ func change_quality(quality):
 		settings.QUALITY_GOOD:
 			self.environment = env_good
 			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 4096
+			#game_params.get_viewport().shadow_atlas_size = 4096
 			get_tree().call_group("fire_sources", "set_quality_good")
 			get_tree().call_group("light_sources", "set_quality_good")
 			get_tree().call_group("grass", "set_quality_good")
@@ -76,7 +76,7 @@ func change_quality(quality):
 		settings.QUALITY_HIGH:
 			self.environment = env_high
 			#get_tree().call_group("lightmaps", "enable", false)
-			#get_viewport().shadow_atlas_size = 8192
+			#game_params.get_viewport().shadow_atlas_size = 8192
 			get_tree().call_group("fire_sources", "set_quality_high")
 			get_tree().call_group("light_sources", "set_quality_high")
 			get_tree().call_group("grass", "set_quality_high")

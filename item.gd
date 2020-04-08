@@ -13,7 +13,7 @@ var model_path = null
 var is_quick_item = false
 
 func _ready():
-	get_tree().get_root().connect("size_changed", self, "on_viewport_resize")
+	get_viewport().connect("size_changed", self, "on_viewport_resize")
 	on_viewport_resize()
 
 func set_appearance(is_quick_item, selected):

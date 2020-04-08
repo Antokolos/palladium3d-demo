@@ -9,7 +9,6 @@ const HALFROW = 10
 
 onready var holder1 = get_node("shader_cache_holder1")
 onready var holder2 = get_node("shader_cache_holder2")
-onready var label_container = get_node("HBoxContainer")
 
 var stage = 0
 
@@ -136,7 +135,7 @@ func _process(delta):
 			pass
 		1:
 			stage = stage + 1
-			label_container.visible = true
+			game_params.get_hud().set_message("Please wait...")
 			for node in holder1.get_children():
 				node.queue_free()
 			for node in holder2.get_children():
@@ -145,7 +144,7 @@ func _process(delta):
 		2:
 			stage = stage + 1
 			var pos = Vector2(-STEP * HALFROW, 0)
-			pos = add_material_meshes(pos, get_node("/root"))
+			pos = add_material_meshes(pos, game_params.get_viewport())
 		3:
 			stage = stage + 1
 			# Show all items for one frame
@@ -154,7 +153,7 @@ func _process(delta):
 				for node in holder1.get_children():
 					holder1.remove_child(node)
 					holder2.add_child(node)
-			label_container.visible = false
+			game_params.get_hud().clear_message()
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0
 
@@ -162,5 +161,5 @@ func refresh():
 	if SHADER_CACHE_ENABLED:
 		stage = 1
 	else:
-		label_container.visible = false
+		game_params.get_hud().clear_message()
 		get_tree().call_group("room_enablers", "set_active", true)

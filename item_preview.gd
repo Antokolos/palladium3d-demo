@@ -3,8 +3,6 @@ extends Spatial
 const MAX_SIZE = Vector3(1.0, 1.0, 1.0)
 var MOUSE_SENSITIVITY = 0.1
 onready var item_holder_node = get_node("item_holder")
-onready var label_close_node = get_node("ActionsPanel/ActionsContainer/HintLabelClose")
-onready var custom_actions_node = get_node("ActionsPanel/ActionsContainer/CustomActions")
 
 var hud
 var flashlight
@@ -39,6 +37,8 @@ func open_preview(item, hud, flashlight):
 		#hud.dimmer.visible = true
 		flashlight_visible = flashlight.is_visible_in_tree()
 		flashlight.show()
+		var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
+		var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
 		for ch in custom_actions_node.get_children():
 			ch.queue_free()
 		if inst.has_method("get_custom_actions"):
@@ -49,7 +49,7 @@ func open_preview(item, hud, flashlight):
 				custom_actions_node.add_child(ch)
 		get_tree().paused = true
 		hud.quick_items_panel.hide()
-		$ActionsPanel.show()
+		hud.actions_panel.show()
 
 func get_action_key(act):
 	var list = InputMap.get_action_list(act.action_event)
@@ -72,8 +72,8 @@ func _input(event):
 func close_preview():
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
-	$ActionsPanel.hide()
 	if hud:
+		hud.actions_panel.hide()
 		hud.quick_items_panel.show()
 	custom_actions.clear()
 	get_tree().paused = false

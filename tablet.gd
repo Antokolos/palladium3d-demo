@@ -87,8 +87,8 @@ func _ready():
 
 	var i = 0
 	var ssize = OS.get_screen_size()
-	for r in settings.available_resolutions:
-		resolution.add_item("%d x %d" % [ssize.x * settings.available_resolutions[i].resolution_height / ssize.y, settings.available_resolutions[i].resolution_height], i)
+	for r in settings.resolutions:
+		resolution.add_item("%d x %d" % [ssize.x * settings.resolutions[i].height / ssize.y, settings.resolutions[i].height], i)
 		i = i + 1
 	resolution.add_item("Native (%d x %d)" % [ssize.x, ssize.y], i)
 	match (settings.resolution):
@@ -326,14 +326,15 @@ func _on_Resolution_item_selected(ID):
 	settings.set_resolution(ID)
 
 func _on_AA_item_selected(ID):
+	var viewport = game_params.get_viewport()
 	if (ID == settings.AA_8X):
-		get_node("/root").msaa = Viewport.MSAA_8X
+		viewport.msaa = Viewport.MSAA_8X
 	elif (ID == settings.AA_4X):
-		get_node("/root").msaa = Viewport.MSAA_4X
+		viewport.msaa = Viewport.MSAA_4X
 	elif (ID == settings.AA_2X):
-		get_node("/root").msaa = Viewport.MSAA_2X
+		viewport.msaa = Viewport.MSAA_2X
 	else:
-		get_node("/root").msaa = Viewport.MSAA_DISABLED
+		viewport.msaa = Viewport.MSAA_DISABLED
 	settings.aa_quality = ID
 
 func _on_Language_item_selected(ID):

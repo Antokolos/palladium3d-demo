@@ -10,6 +10,8 @@ onready var quick_items_panel = main_hud.get_node("QuickItemsDimmer/HBoxQuickIte
 onready var info_label = main_hud.get_node("HBoxInfo/InfoLabel")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
+onready var actions_panel = get_node("VBoxContainer/ActionsPanel")
+onready var message_label = get_node("HBoxMessages/VBoxContainer/Label")
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
@@ -27,7 +29,6 @@ var active_quick_item_idx = 0
 var first_item_idx = 0
 
 func _ready():
-	settings.connect("resolution_changed", self, "on_resolution_changed")
 	game_params.connect("item_removed", self, "remove_ui_inventory_item")
 	game_params.connect("item_removed", self, "remove_ui_quick_item")
 	game_params.connect("health_changed", self, "on_health_changed")
@@ -41,35 +42,16 @@ func _ready():
 	select_active_item()
 	select_active_quick_item()
 
+func set_message(text):
+	message_label.text = text
+
+func clear_message():
+	set_message("")
+
 func on_health_changed(name_hint, health_current, health_max):
 	health_label.text = "%d/%d" % [health_current, health_max]
 	health_progress.value = health_current
 	health_progress.max_value = health_max
-
-func on_resolution_changed(ID):
-	var hud = self
-	var default_font = hud.get_theme().get_default_font()
-	var conversation_root = hud.get_conversation_root()
-	var actorname_prev_font = hud.get_actorname_prev().get("custom_fonts/font")
-	var conversation_prev_font = hud.get_conversation_text_prev().get("custom_fonts/font")
-	var actorname_font = hud.get_actorname().get("custom_fonts/font")
-	var conversation_font = hud.get_conversation_text().get("custom_fonts/font")
-	var maxid = settings.available_resolutions.size() - 1
-	if ID > maxid:
-		# TODO: maybe upscale font size for native resolution?
-		default_font.set_size(settings.available_resolutions[maxid].default_font)
-		actorname_prev_font.set_size(settings.available_resolutions[maxid].actorname_prev_font)
-		conversation_prev_font.set_size(settings.available_resolutions[maxid].conversation_prev_font)
-		actorname_font.set_size(settings.available_resolutions[maxid].actorname_font)
-		conversation_font.set_size(settings.available_resolutions[maxid].conversation_font)
-		conversation_root.set("custom_constants/separation", settings.available_resolutions[maxid].text_separation)
-	else:
-		default_font.set_size(settings.available_resolutions[ID].default_font)
-		actorname_prev_font.set_size(settings.available_resolutions[ID].actorname_prev_font)
-		conversation_prev_font.set_size(settings.available_resolutions[ID].conversation_prev_font)
-		actorname_font.set_size(settings.available_resolutions[ID].actorname_font)
-		conversation_font.set_size(settings.available_resolutions[ID].conversation_font)
-		conversation_root.set("custom_constants/separation", settings.available_resolutions[ID].text_separation)
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -77,21 +59,6 @@ func _notification(what):
 
 func is_menu_hud():
 	return false
-
-func get_conversation_root():
-	return get_node("VBoxContainer/Conversation/VBox")
-
-func get_actorname_prev():
-	return get_conversation_root().get_node("VBoxText/HBoxTextPrev/ActorName")
-
-func get_conversation_text_prev():
-	return get_conversation_root().get_node("VBoxText/HBoxTextPrev/ConversationText")
-
-func get_actorname():
-	return get_conversation_root().get_node("VBoxText/HBoxText/ActorName")
-
-func get_conversation_text():
-	return get_conversation_root().get_node("VBoxText/HBoxText/ConversationText")
 
 func ask_quit():
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:

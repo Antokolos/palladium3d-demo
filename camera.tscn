@@ -1,15 +1,13 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://camera.gd" type="Script" id=2]
 [ext_resource path="res://culling_rays.gd" type="Script" id=3]
 [ext_resource path="res://action_use.gd" type="Script" id=4]
 [ext_resource path="res://shader_cache.gd" type="Script" id=5]
-[ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://item_preview.gd" type="Script" id=7]
-[ext_resource path="res://default_theme.tres" type="Theme" id=8]
-[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=9]
-[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=10]
+[ext_resource path="res://item_preview.gd" type="Script" id=6]
+[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=7]
+[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=8]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.24, 0.36, 0.2 )
@@ -61,68 +59,18 @@ cast_to = Vector3( 0, 0, 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
 
 [node name="shader_cache" type="Spatial" parent="viewpoint"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="shader_cache_holder1" type="Spatial" parent="viewpoint/shader_cache"]
 
 [node name="shader_cache_holder2" type="Spatial" parent="viewpoint/shader_cache"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="viewpoint/shader_cache"]
-anchor_top = 0.4
-anchor_right = 1.0
-anchor_bottom = 0.6
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="viewpoint/shader_cache/HBoxContainer"]
-margin_right = 1920.0
-margin_bottom = 216.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="viewpoint/shader_cache/HBoxContainer/VBoxContainer"]
-margin_right = 1920.0
-margin_bottom = 50.0
-custom_fonts/font = ExtResource( 6 )
-text = "Please wait..."
-align = 1
+visible = false
 
 [node name="item_preview" type="Spatial" parent="viewpoint"]
 pause_mode = 2
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 
 [node name="item_holder" type="Spatial" parent="viewpoint/item_preview"]
-
-[node name="ActionsPanel" type="ColorRect" parent="viewpoint/item_preview"]
-visible = false
-anchor_top = 0.75
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme = ExtResource( 8 )
-color = Color( 0, 0, 0, 0.141176 )
-
-[node name="ActionsContainer" type="VBoxContainer" parent="viewpoint/item_preview/ActionsPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="HintLabelClose" type="Label" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
-margin_right = 1920.0
-margin_bottom = 32.0
-text = "Q: закрыть"
-align = 1
-valign = 1
-
-[node name="CustomActions" type="VBoxContainer" parent="viewpoint/item_preview/ActionsPanel/ActionsContainer"]
-margin_top = 36.0
-margin_right = 1920.0
-margin_bottom = 270.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
 
 [node name="Flashlight" type="SpotLight" parent="."]
 transform = Transform( -1, 8.74228e-008, 0, -8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.3 )
@@ -137,9 +85,9 @@ spot_angle = 49.0
 spot_angle_attenuation = 2.07053
 
 [node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
+stream = ExtResource( 7 )
 bus = "Sound"
 
 [node name="AudioStreamFlashlightOff" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
+stream = ExtResource( 8 )
 bus = "Sound"

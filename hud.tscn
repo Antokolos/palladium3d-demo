@@ -6,9 +6,9 @@
 [ext_resource path="res://styles/conversation_prev_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://styles/actorname_font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://styles/conversation_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://inventory.gd" type="Script" id=7]
-[ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/arrow_left.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/arrow_right.png" type="Texture" id=8]
+[ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=9]
 [ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=10]
 [ext_resource path="res://assets/ui/tex_crouch_off.tres" type="Texture" id=11]
 [ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=12]
@@ -45,6 +45,7 @@ anchor_bottom = 1.0
 alignment = 2
 
 [node name="MainHUD" type="VBoxContainer" parent="VBoxContainer"]
+editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 540.0
 size_flags_horizontal = 3
@@ -228,13 +229,12 @@ size_flags_vertical = 3
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
 editor/display_folded = true
 visible = false
-margin_top = 362.0
+margin_top = 272.0
 margin_right = 1920.0
 margin_bottom = 540.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
-script = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Inventory"]
 anchor_right = 1.0
@@ -244,12 +244,13 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="ArrowLeft" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
+margin_top = 31.0
 margin_right = 180.0
-margin_bottom = 206.0
+margin_bottom = 237.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
@@ -279,7 +280,7 @@ valign = 1
 [node name="InventoryContainer" type="HBoxContainer" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_left = 184.0
 margin_right = 1736.0
-margin_bottom = 206.0
+margin_bottom = 268.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 8
@@ -287,12 +288,13 @@ alignment = 1
 
 [node name="ArrowRight" type="TextureRect" parent="VBoxContainer/Inventory/HBoxContainer"]
 margin_left = 1740.0
+margin_top = 31.0
 margin_right = 1920.0
-margin_bottom = 206.0
+margin_bottom = 237.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 9 )
+texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
 
@@ -318,6 +320,58 @@ size_flags_horizontal = 3
 text = "N"
 align = 1
 valign = 1
+
+[node name="ActionsPanel" type="ColorRect" parent="VBoxContainer"]
+editor/display_folded = true
+visible = false
+margin_top = 272.0
+margin_right = 1920.0
+margin_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+color = Color( 0, 0, 0, 0.141176 )
+
+[node name="ActionsContainer" type="VBoxContainer" parent="VBoxContainer/ActionsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HintLabelClose" type="Label" parent="VBoxContainer/ActionsPanel/ActionsContainer"]
+margin_right = 1920.0
+margin_bottom = 32.0
+text = "Q: закрыть"
+align = 1
+valign = 1
+
+[node name="CustomActions" type="VBoxContainer" parent="VBoxContainer/ActionsPanel/ActionsContainer"]
+margin_top = 36.0
+margin_right = 1920.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HBoxMessages" type="HBoxContainer" parent="."]
+anchor_top = 0.4
+anchor_right = 1.0
+anchor_bottom = 0.6
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxMessages"]
+margin_right = 1920.0
+margin_bottom = 216.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxMessages/VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 9 )
+text = "Please wait..."
+align = 1
 
 [node name="Crosshair" type="Control" parent="."]
 editor/display_folded = true

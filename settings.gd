@@ -52,33 +52,15 @@ var music_volume = MUSIC_VOLUME_DEFAULT
 var sound_volume = SOUND_VOLUME_DEFAULT
 var speech_volume = SPEECH_VOLUME_DEFAULT
 
-var available_resolutions = [
+var resolutions = [
 {
-	"resolution_height" : 576,
-	"default_font" : 14,
-	"text_separation" : 3,
-	"actorname_prev_font" : 10,
-	"conversation_prev_font" : 10,
-	"actorname_font" : 16,
-	"conversation_font" : 16
+	"height" : 576
 },
 {
-	"resolution_height" : 720,
-	"default_font" : 18,
-	"text_separation" : 10,
-	"actorname_prev_font" : 14,
-	"conversation_prev_font" : 14,
-	"actorname_font" : 20,
-	"conversation_font" : 20
+	"height" : 720
 },
 {
-	"resolution_height" : 1080,
-	"default_font" : 26,
-	"text_separation" : 30,
-	"actorname_prev_font" : 20,
-	"conversation_prev_font" : 20,
-	"actorname_font" : 30,
-	"conversation_font" : 30
+	"height" : 1080
 }
 ]
 
@@ -197,18 +179,12 @@ func set_quality(ID):
 	quality = ID
 	emit_signal("quality_changed", ID)
 
+func get_resolution_size(ID):
+	var maxid = resolutions.size() - 1
+	return OS.get_screen_size() if ID > maxid else \
+				Vector2( OS.window_size.x * resolutions[ID].height / OS.window_size.y, resolutions[ID].height)
+
 func set_resolution(ID):
-	var maxid = available_resolutions.size() - 1
-	if ID > maxid:
-		var ssize = OS.get_screen_size()
-		game_params.get_viewport().size = ssize
-		#get_tree().get_root().set_size_override(true, ssize)
-		#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, ssize)
-	else:
-		var minsize=Vector2( OS.window_size.x * available_resolutions[ID].resolution_height / OS.window_size.y, available_resolutions[ID].resolution_height)
-		game_params.get_viewport().size = minsize
-		#get_tree().get_root().set_size_override(true, minsize)
-		#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP_HEIGHT, minsize)
 	resolution = ID
 	emit_signal("resolution_changed", ID)
 
