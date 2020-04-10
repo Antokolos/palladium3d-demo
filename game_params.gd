@@ -126,7 +126,7 @@ func get_companion(name_hint = null):
 
 func get_companions():
 	var result = []
-	for name_hint in party:
+	for name_hint in party.keys():
 		if party[name_hint] and name_hint != player_name_hint:
 			var companion_node = get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
 			if companion_node:
@@ -135,6 +135,14 @@ func get_companions():
 
 func get_character(name_hint):
 	return get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+
+func get_characters():
+	var result = []
+	for name_hint in party.keys():
+		var character_node = get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+		if character_node:
+			result.append(character_node)
+	return result
 
 func is_inside():
 	return scene_path != "res://forest.tscn"

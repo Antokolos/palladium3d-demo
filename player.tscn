@@ -69,8 +69,8 @@ tracks/3/keys = {
 extents = Vector3( 0.161138, 1, 0.146487 )
 
 [node name="player" type="KinematicBody" groups=[
-"moving",
 "party",
+"moving",
 ]]
 script = ExtResource( 1 )
 

@@ -84,3 +84,11 @@ func _on_BoatArea_body_entered(body):
 		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
 		if meetingXeniaFinished or meetingAndreasFinished:
 			conversation_manager.start_conversation(player, "001_Boat")
+
+func _on_TunnelArea_body_entered(body):
+	if body.is_in_group("party"):
+		body.set_pathfinding_enabled(false)
+
+func _on_TunnelArea_body_exited(body):
+	if body.is_in_group("party"):
+		body.set_pathfinding_enabled(true)

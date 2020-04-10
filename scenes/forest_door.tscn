@@ -34,4 +34,4 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35106, 1.6739, -0.0583292 )
 
 [node name="barn_lock" parent="." index="3" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37766, 1.33291, -0.289776 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35867, 1.33291, -0.289776 )

@@ -13,7 +13,7 @@ func action(player_node):
 	ray.force_raycast_update()
 	if ray.is_colliding():
 		var body = ray.get_collider()
-		if body == player_node:
+		if body.get_instance_id() == player_node.get_instance_id():
 			pass
 		elif body.has_method("use"):
 			body.use(player_node)
@@ -37,7 +37,7 @@ func highlight(player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
 	if ray.is_colliding():
 		var body = ray.get_collider()
-		if body == player_node:
+		if body.get_instance_id() == player_node.get_instance_id():
 			switch_highlight(player_node, null)
 		else:
 			switch_highlight(player_node, body)

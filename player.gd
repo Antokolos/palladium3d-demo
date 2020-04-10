@@ -53,6 +53,7 @@ export var rotation_speed = 0.03
 export var linear_speed = 2.8
 
 onready var pyramid = get_parent()
+onready var floor_node = get_node(floor_path)
 const ANGLE_TOLERANCE = 0.01
 
 const CONVERSATION_RANGE = 7
@@ -61,9 +62,10 @@ const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 
 var cur_animation = null
-var up_dir = Vector3(0, 1, 0)
-var z_dir = Vector3(0, 0, 1)
-var zero_dir = Vector3(0, 0, 0)
+var UP_DIR = Vector3(0, 1, 0)
+var Z_DIR = Vector3(0, 0, 1)
+var ZERO_DIR = Vector3(0, 0, 0)
+var PUSH_STRENGTH = 10
 
 var path = []
 var exclusions = []
@@ -71,6 +73,10 @@ var exclusions = []
 enum COMPANION_STATE {REST, WALK, RUN}
 var companion_state = COMPANION_STATE.REST
 var target_node = null
+var pathfinding_enabled = true
+
+func set_pathfinding_enabled(enabled):
+	pathfinding_enabled = enabled
 
 func get_rotation_angle(cur_dir, target_dir, force_forward = true):
 	var c = cur_dir.normalized()
@@ -90,7 +96,7 @@ func get_rotation_angle(cur_dir, target_dir, force_forward = true):
 	return asin(clen) if cross.y > 0 else -asin(clen)
 
 func follow(current_transform, target_position):
-	var cur_dir = current_transform.basis.xform(z_dir)
+	var cur_dir = current_transform.basis.xform(Z_DIR)
 	cur_dir.y = 0
 	var target_dir = target_position - current_transform.origin
 	target_dir.y = 0
@@ -139,7 +145,7 @@ func follow(current_transform, target_position):
 		companion_state = COMPANION_STATE.WALK
 		if not in_party and target_node and rot_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
-			if collision.collider == target_node:
+			if collision.collider_id == target_node.get_instance_id():
 				emit_signal("arrived_to_boundary", self, target_node)
 				target_node = null
 				companion_state = COMPANION_STATE.REST
@@ -159,7 +165,7 @@ func follow(current_transform, target_position):
 		if not in_party:
 			var preferred_target = get_preferred_target()
 			if preferred_target:
-				var target_z = preferred_target.get_global_transform().basis.xform(z_dir)
+				var target_z = preferred_target.get_global_transform().basis.xform(Z_DIR)
 				var c = cur_dir.normalized()
 				var t = target_z.normalized()
 				var cross = c.cross(t)
@@ -184,6 +190,8 @@ func stand_up(force = false):
 	get_model().stand_up(false)
 
 func get_navpath(pstart, pend):
+	if not pathfinding_enabled:
+		return []
 	var p1 = pyramid.get_closest_point(pstart)
 	var p2 = pyramid.get_closest_point(pend)
 	var p = pyramid.get_simple_path(p1, p2, true)
@@ -191,16 +199,14 @@ func get_navpath(pstart, pend):
 
 func has_collisions():
 	var sc = get_slide_count()
-	var floor_node = get_node(floor_path)
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
-		if collision.collider != floor_node:
+		if collision.collider_id != floor_node.get_instance_id():
 			return true
 	return false
 
 func build_path(target_position, in_party):
-	var current_transform = get_global_transform()
-	var current_position = current_transform.origin
+	var current_position = get_global_transform().origin
 	var mov_vec = target_position - current_position
 	mov_vec.y = 0
 	if in_party:
@@ -216,7 +222,7 @@ func build_path(target_position, in_party):
 			path.pop_back()
 	if has_collisions() and path.empty(): # should check possible stuck
 		#clear_path()
-		path = get_navpath(get_global_transform().origin, target_position)
+		path = get_navpath(current_position, target_position)
 		#draw_path()
 
 func draw_path():
@@ -321,7 +327,6 @@ func reset_rotation():
 
 func _ready():
 	exclusions.append(self)
-	var floor_node = get_node(floor_path)
 	exclusions.append(floor_node)
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
@@ -558,7 +563,41 @@ func process_movement(delta):
 		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
 	else:
 		$SoundWalking.stop()
-	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+
+	vel = move_and_slide_with_snap(vel, ZERO_DIR if is_in_jump else UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+
+	var character_collisions = []
+	var nonchar_collision = null
+	var sc = get_slide_count()
+	var characters = game_params.get_characters()
+	for i in range(0, sc):
+		var collision = get_slide_collision(i)
+		var has_char_collision = false
+		for character in characters:
+			if collision.collider_id == character.get_instance_id():
+				has_char_collision = true
+				character_collisions.append(collision)
+				break
+		if not has_char_collision and collision.collider_id != floor_node.get_instance_id():
+			nonchar_collision = collision
+	for collision in character_collisions:
+		var character = collision.collider
+		if not character.is_cutscene() and not character.is_player_controlled():
+			character.vel = -collision.normal * PUSH_STRENGTH
+			character.vel.y = 0
+
+	if is_player_controlled():
+		return
+	elif nonchar_collision and pathfinding_enabled:
+		vel = nonchar_collision.normal * PUSH_STRENGTH
+		vel.y = 0
+		clear_path()
+		var current_position = get_global_transform().origin
+		var target_position = get_target_position()
+		path = get_navpath(current_position, target_position)
+
+func is_player_controlled():
+	return is_in_party() and is_player()
 
 func set_sound_walk(mode):
 	var spl = $SoundWalking
