@@ -297,10 +297,10 @@ func _process(delta):
 		if not is_cutscene():
 			var cutscene_id = $AnimationTree.get("parameters/CutsceneTransition/current")
 			if cutscene_id > CUTSCENE_EMPTY:
-				var player = get_node("../../..")
+				var player = get_node("../..")
 				emit_signal("cutscene_finished", player, cutscene_id)
 		return
-	var player = get_node("../../..")
+	var player = get_node("../..")
 	if player.is_walking:
 		walk(0)
 	else:

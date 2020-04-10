@@ -32,7 +32,6 @@ const MAX_SLOPE_ANGLE = 60
 
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
-onready var model = rotation_helper.get_node("Model")
 onready var standing_area = $StandingArea
 
 var is_walking = false
@@ -253,8 +252,11 @@ func use(player_node):
 	if not conversation_manager.conversation_active():
 		game_params.handle_conversation(player_node, self)
 
+func get_model_holder():
+	return get_node("Model")
+
 func get_model():
-	return get_node("Rotation_Helper/Model").get_child(0)
+	return get_model_holder().get_child(0)
 
 func _input(event):
 	if not is_player():
@@ -274,11 +276,16 @@ func _input(event):
 			conversation_manager.story_choose(self, 3)
 	if is_in_party() and not conversation_manager.conversation_is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
+			var angle_rad = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
+			rotation_helper.rotate_x(angle_rad)
+			get_model_holder().rotate_x(angle_rad)
 			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 			var camera_rot = rotation_helper.rotation_degrees
-			camera_rot.x = clamp(camera_rot.x, -70, 70)
+			var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
+			camera_rot.x = clamp(camera_rot.x, -88, 88)
 			rotation_helper.rotation_degrees = camera_rot
+			model_rot.x = clamp(model_rot.x, -88, 0)
+			get_model_holder().rotation_degrees = model_rot
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
@@ -311,11 +318,9 @@ func become_player():
 	var camera = player_camera_container.get_child(0)
 	player_camera_container.remove_child(camera)
 	camera_container.add_child(camera)
-	var player_model_container = player_rotation_helper.get_node("Model")
-	var model_container = rotation_helper.get_node("Model")
-	var player_model = player_model_container.get_child(0)
+	var player_model = player.get_model()
 	player_model.set_simple_mode(false)
-	var model = model_container.get_child(0)
+	var model = get_model()
 	model.set_simple_mode(true)
 	player.reset_rotation()
 	game_params.set_player_name_hint(name_hint)
@@ -324,6 +329,9 @@ func reset_rotation():
 	var rotation_helper = get_node("Rotation_Helper")
 	if rotation_helper:
 		rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	var model_holder = get_model_holder()
+	if model_holder:
+		model_holder.set_rotation_degrees(Vector3(0, 0, 0))
 
 func _ready():
 	exclusions.append(self)
@@ -331,12 +339,11 @@ func _ready():
 	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
-		var camera_container = get_node("Rotation_Helper/Camera")
 		var camera = load("res://camera.tscn").instance()
-		camera_container.add_child(camera)
+		get_cam_holder().add_child(camera)
 		game_params.set_player_name_hint(name_hint)
-	var model_container = get_node("Rotation_Helper/Model")
-	var placeholder = get_node("Rotation_Helper/placeholder")
+	var model_container = get_node("Model")
+	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
 	model.set_simple_mode(initial_player)
@@ -423,7 +430,9 @@ func _physics_process(delta):
 	
 	process_movement(delta)
 	if rot_x != 0:
-		rotation_helper.rotate_x(deg2rad(rot_x * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY))
+		var angle_rad = deg2rad(rot_x * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+		rotation_helper.rotate_x(angle_rad)
+		get_model_holder().rotate_x(angle_rad)
 	if rot_y != 0:
 		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
 
@@ -432,7 +441,7 @@ func process_input(delta):
 	# ----------------------------------
 	# Walking
 	dir = Vector3()
-	var camera = $Rotation_Helper/Camera/camera
+	var camera = get_cam_holder().get_node("camera")
 	var cam_xform = camera.get_global_transform()
 
 	var input_movement_vector = Vector2()
