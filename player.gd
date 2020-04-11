@@ -39,8 +39,8 @@ var is_crouching = false
 var is_sprinting = false
 var is_in_jump = false
 
-var rot_x = 0
-var rot_y = 0
+var angle_rad_x = 0
+var angle_rad_y = 0
 
 var MOUSE_SENSITIVITY = 0.1 #0.05
 var KEY_LOOK_SPEED_FACTOR = 30
@@ -112,12 +112,12 @@ func follow(current_transform, target_position):
 	mov_vec.y = 0
 	var rotation_angle_to_player_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
 
-	rot_y = 0
+	angle_rad_y = 0
 	if companion_state == COMPANION_STATE.WALK:
 		if rotation_angle > 0.1:
-			rot_y = -1
+			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
 		elif rotation_angle < -0.1:
-			rot_y = 1
+			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 	
 #	if is_attacking:
 #		return
@@ -142,7 +142,7 @@ func follow(current_transform, target_position):
 			$SoundWalking.play()
 	elif (in_party and distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK) or (not in_party and distance > ALIGNMENT_RANGE):
 		companion_state = COMPANION_STATE.WALK
-		if not in_party and target_node and rot_y == 0 and get_slide_count() > 0:
+		if not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
 				emit_signal("arrived_to_boundary", self, target_node)
@@ -169,10 +169,10 @@ func follow(current_transform, target_position):
 				var t = target_z.normalized()
 				var cross = c.cross(t)
 				if cross.y > 0.1:
-					rot_y = -1
+					angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
 				elif cross.y < -0.1:
-					rot_y = 1
-			if target_node and rot_y == 0 and current_position.distance_to(target_node.get_global_transform().origin) <= ALIGNMENT_RANGE:
+					angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+			if target_node and angle_rad_y == 0 and current_position.distance_to(target_node.get_global_transform().origin) <= ALIGNMENT_RANGE:
 				emit_signal("arrived_to", self, target_node)
 				target_node = null
 
@@ -183,10 +183,39 @@ func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
 
 func sit_down(force = false):
+	if $AnimationPlayer.is_playing():
+		return
 	get_model().sit_down(force)
+	$AnimationPlayer.play("crouch")
+	var is_player = is_player()
+	if is_player:
+		var companions = game_params.get_companions()
+		for companion in companions:
+			companion.sit_down(force)
+	is_crouching = true
+	if is_player:
+		var hud = game_params.get_hud()
+		if hud:
+			hud.set_crouch_indicator(true)
 
 func stand_up(force = false):
-	get_model().stand_up(false)
+	if $AnimationPlayer.is_playing():
+		return
+	if is_low_ceiling():
+		# I.e. if the player is crouching and something is above the head, do not allow to stand up.
+		return
+	get_model().stand_up(force)
+	$AnimationPlayer.play_backwards("crouch")
+	var is_player = is_player()
+	if is_player:
+		var companions = game_params.get_companions()
+		for companion in companions:
+			companion.stand_up(force)
+	is_crouching = false
+	if is_player:
+		var hud = game_params.get_hud()
+		if hud:
+			hud.set_crouch_indicator(false)
 
 func get_navpath(pstart, pend):
 	if not pathfinding_enabled:
@@ -276,16 +305,36 @@ func _input(event):
 			conversation_manager.story_choose(self, 3)
 	if is_in_party() and not conversation_manager.conversation_is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			var angle_rad = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
-			rotation_helper.rotate_x(angle_rad)
-			get_model_holder().rotate_x(angle_rad)
-			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
-			var camera_rot = rotation_helper.rotation_degrees
-			var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
-			camera_rot.x = clamp(camera_rot.x, -88, 88)
-			rotation_helper.rotation_degrees = camera_rot
-			model_rot.x = clamp(model_rot.x, -88, 0)
-			get_model_holder().rotation_degrees = model_rot
+			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
+			angle_rad_y = deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1)
+			process_rotation()
+			angle_rad_x = 0
+			angle_rad_y = 0
+		else:
+			if event.is_action_pressed("ui_up"):
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+			elif event.is_action_pressed("ui_down"):
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+			elif event.is_action_released("ui_up") or event.is_action_released("ui_down"):
+				angle_rad_x = 0
+			
+			if event.is_action_pressed("ui_left"):
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+			elif event.is_action_pressed("ui_right"):
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+			elif event.is_action_released("ui_left") or event.is_action_released("ui_right"):
+				angle_rad_y = 0
+
+func process_rotation():
+	rotation_helper.rotate_x(angle_rad_x)
+	get_model_holder().rotate_x(angle_rad_x)
+	self.rotate_y(angle_rad_y)
+	var camera_rot = rotation_helper.rotation_degrees
+	var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
+	camera_rot.x = clamp(camera_rot.x, -88, 88)
+	rotation_helper.rotation_degrees = camera_rot
+	model_rot.x = clamp(model_rot.x, -88, 0)
+	get_model_holder().rotation_degrees = model_rot
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
@@ -370,8 +419,8 @@ func remove_item_from_hand():
 func join_party():
 	game_params.join_party(name_hint)
 	dir = Vector3()
-	rot_x = 0
-	rot_y = 0
+	angle_rad_x = 0
+	angle_rad_y = 0
 
 func set_simple_mode(enable):
 	get_model().set_simple_mode(enable)
@@ -429,12 +478,7 @@ func _physics_process(delta):
 		follow(current_transform, path.front() if path.size() > 0 else target_position)
 	
 	process_movement(delta)
-	if rot_x != 0:
-		var angle_rad = deg2rad(rot_x * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
-		rotation_helper.rotate_x(angle_rad)
-		get_model_holder().rotate_x(angle_rad)
-	if rot_y != 0:
-		self.rotate_y(deg2rad(rot_y * KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1))
+	process_rotation()
 
 func process_input(delta):
 
@@ -487,57 +531,13 @@ func process_input(delta):
 	if Input.is_action_just_pressed("crouch"):
 		toggle_crouch()
 	# ----------------------------------
-	
-	# ----------------------------------
-	# Rotation via keyboard
-	if Input.is_action_pressed("ui_up"):
-		rot_x = -1
-	elif Input.is_action_pressed("ui_down"):
-		rot_x = 1
-	elif Input.is_action_just_released("ui_up"):
-		rot_x = 0
-	elif Input.is_action_just_released("ui_down"):
-		rot_x = 0
-
-	if Input.is_action_pressed("ui_left"):
-		rot_y = -1
-	elif Input.is_action_pressed("ui_right"):
-		rot_y = 1
-	elif Input.is_action_just_released("ui_right"):
-		rot_y = 0
-	elif Input.is_action_just_released("ui_left"):
-		rot_y = 0
-	# ----------------------------------
 
 func is_low_ceiling():
 	# Make sure you've set proper collision layer bit for ceiling
 	return standing_area.get_overlapping_bodies().size() > 0
 
 func toggle_crouch():
-	if $AnimationPlayer.is_playing():
-		return
-	var is_player = is_player()
-	var companions = game_params.get_companions()
-	if is_crouching:
-		if is_low_ceiling():
-			# I.e. if the player is crouching and something is above the head, do not allow to stand up.
-			return
-		stand_up()
-		$AnimationPlayer.play_backwards("crouch")
-		if is_player:
-			for companion in companions:
-				companion.stand_up()
-	else:
-		sit_down()
-		$AnimationPlayer.play("crouch")
-		if is_player:
-			for companion in companions:
-				companion.sit_down()
-	is_crouching = not is_crouching
-	if is_player:
-		var hud = game_params.get_hud()
-		if hud:
-			hud.set_crouch_indicator(is_crouching)
+	stand_up() if is_crouching else sit_down()
 
 func process_movement(delta):
 	dir.y = 0
