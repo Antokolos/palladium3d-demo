@@ -1,6 +1,9 @@
 extends Control
 
+const ALPHA_THRESHOLD = 0.01
+const ALPHA_DECREASE_FACTOR = 0.9
 const MAX_VISIBLE_ITEMS = 6
+const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
 const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
 
@@ -50,6 +53,10 @@ func clear_message():
 
 func on_health_changed(name_hint, health_current, health_max):
 	health_label.text = "%d/%d" % [health_current, health_max]
+	if health_current < health_progress.value and $BloodSplatTimer.is_stopped():
+		$BloodSplat.visible = true
+		$BloodSplat.set_modulate(COLOR_BLOOD)
+		$BloodSplatTimer.start()
 	health_progress.value = health_current
 	health_progress.max_value = health_max
 
@@ -308,3 +315,12 @@ func _input(event):
 			set_active_quick_item(4)
 		elif event.is_action_pressed("active_item_6"):
 			set_active_quick_item(5)
+
+func _on_BloodSplatTimer_timeout():
+	var m = $BloodSplat.get_modulate()
+	if m.a > ALPHA_THRESHOLD:
+		m.a = m.a * ALPHA_DECREASE_FACTOR
+	else:
+		$BloodSplat.visible = false
+		$BloodSplatTimer.stop()
+	$BloodSplat.set_modulate(m)

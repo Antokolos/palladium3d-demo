@@ -492,8 +492,10 @@ func save_params(slot):
 	for name_hint in party.keys():
 		var character = get_character(name_hint)
 		if character:
-			var b = character.get_transform().basis
-			var o = character.get_transform().origin
+			var t = character.get_preferred_target()
+			var p = is_in_party(name_hint)
+			var b = t.get_transform().basis if t and not p else character.get_transform().basis
+			var o = t.get_transform().origin if t and not p else character.get_transform().origin
 			characters[name_hint] = {
 				"basis" : [
 					[b.x.x, b.x.y, b.x.z],

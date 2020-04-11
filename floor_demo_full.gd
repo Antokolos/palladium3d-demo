@@ -241,6 +241,7 @@ func _on_conversation_finished(player, conversation_name, is_cutscene):
 			bandit.leave_party()
 			female.set_target_node(get_node("PositionApata"))
 			female.leave_party()
+			game_params.autosave_create()
 		"009_ApataTrap":
 			female.set_target_node(get_node("FemaleSavePosition"))
 			if game_params.story_vars.apata_chest_rigid > 0:
