@@ -7,7 +7,7 @@ func use(player_node):
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	return "E: Выйти наружу"
+	return "E: " + tr("ACTION_GO_OUTSIDE")
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

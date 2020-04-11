@@ -52,23 +52,23 @@ const STORY_VARS_DEFAULT = {
 	"erida_trap_stage" : EridaTrapStages.ARMED
 }
 const ITEMS = {
-	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/bun.tscn" },
-	"envelope" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/envelope_model.tscn" },
-	"barn_lock_key" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/barn_lock_key.tscn" },
-	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://scenes/statue_4.tscn" },
-	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://scenes/statue_2.tscn" },
-	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://scenes/statue_3.tscn" },
-	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://scenes/statue_1.tscn" },
-	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hermes.tscn" },
-	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/sphere_for_postament_body.tscn" },
-	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_ares.tscn" },
-	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_erida.tscn" },
-	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_artemida.tscn" },
-	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_aphrodite.tscn" },
-	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_hebe.tscn" },
-	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/hera_statue.tscn" },
-	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_apollo.tscn" },
-	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://scenes/statue_athena.tscn" },
+	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
+	"envelope" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	"barn_lock_key" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/barn_lock_key.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://assets/statue_4.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://assets/statue_2.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://assets/statue_3.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_hermes.escn", "can_give" : false, "custom_actions" : [] },
+	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/sphere_for_postament_body.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_erida.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_artemida.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_aphrodite.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_hebe.escn", "can_give" : false, "custom_actions" : [] },
+	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/hera_statue.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
@@ -162,6 +162,32 @@ func _on_cutscene_finished(player, cutscene_id):
 					return
 	player.stop_cutscene()
 
+func get_custom_actions(item):
+	var item_record = ITEMS[item.nam] if ITEMS.has(item.nam) else null
+	return item_record.custom_actions.duplicate() if item_record else []
+
+func execute_custom_action(event, item):
+	if event.is_action_pressed("item_preview_action_1"):
+		match item.nam:
+			"saffron_bun":
+				item.remove()
+				var player = game_params.get_player()
+				conversation_manager.start_conversation(player, "BunEaten")
+			"envelope":
+				item.remove()
+				game_params.take("barn_lock_key")
+			_:
+				return false
+	elif event.is_action_pressed("item_preview_action_2"):
+		pass
+	elif event.is_action_pressed("item_preview_action_3"):
+		pass
+	elif event.is_action_pressed("item_preview_action_4"):
+		pass
+	else:
+		return false
+	return true
+
 func handle_conversation(player, target):
 	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
 	if meetingAndreasNotFinished and not target.is_in_party():
@@ -169,6 +195,8 @@ func handle_conversation(player, target):
 		target.set_target_node(target.get_node("../PositionBoat"))
 		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 		conversation_manager.start_conversation(player, "001_MeetingXenia")
+		return
+	if not target.is_in_party():
 		return
 	var hud = get_hud()
 	var item = hud.get_active_item()
@@ -180,15 +208,18 @@ func handle_conversation(player, target):
 	else:
 		conversation_manager.start_conversation(player, "Conversation")
 
-func handle_player_highlight(player):
+func can_be_given(item):
+	return item and ITEMS[item.nam] and ITEMS[item.nam].can_give
+
+func handle_player_highlight(initiator, target):
+	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(initiator, "002_MeetingAndreas")
+	if meetingAndreasNotFinished and not target.is_in_party():
+		return "E: " + tr("ACTION_TALK")
+	if not target.is_in_party():
+		return ""
 	var hud = get_hud()
 	var item = hud.get_active_item()
-	if item and item.nam == "saffron_bun":
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
-		if meetingXeniaFinished or meetingAndreasFinished:
-			return "E: Угостить булочкой"
-	return "E: Поговорить"
+	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
 func initiate_load(slot):
 	var f = File.new()

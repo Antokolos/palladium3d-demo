@@ -38,21 +38,21 @@ func open_preview(item, hud, flashlight):
 		flashlight_visible = flashlight.is_visible_in_tree()
 		flashlight.show()
 		var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
+		label_close_node.text = get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
 		var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
 		for ch in custom_actions_node.get_children():
 			ch.queue_free()
-		if inst.has_method("get_custom_actions"):
-			custom_actions = inst.get_custom_actions()
-			for act in custom_actions:
-				var ch = label_close_node.duplicate(0)
-				ch.text = get_action_key(act) + act.action_hint
-				custom_actions_node.add_child(ch)
+		custom_actions = game_params.get_custom_actions(item)
+		for act in custom_actions:
+			var ch = label_close_node.duplicate(0)
+			ch.text = get_action_key(act) + tr(item.nam + "_" + act)
+			custom_actions_node.add_child(ch)
 		get_tree().paused = true
 		hud.quick_items_panel.hide()
 		hud.actions_panel.show()
 
 func get_action_key(act):
-	var list = InputMap.get_action_list(act.action_event)
+	var list = InputMap.get_action_list(act)
 	for action in list:
 		if action is InputEventKey:
 			return action.as_text() + ": "
@@ -65,9 +65,8 @@ func _input(event):
 			item_holder_node.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
 		elif event.is_action_pressed("item_preview_toggle"):
 			close_preview()
-		elif inst.has_method("execute_action"):
-			if inst.execute_action(event, item):
-				close_preview()
+		elif game_params.execute_custom_action(event, item):
+			close_preview()
 
 func close_preview():
 	for ch in item_holder_node.get_children():

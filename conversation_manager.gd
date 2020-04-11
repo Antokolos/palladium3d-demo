@@ -317,7 +317,7 @@ func story_proceed(player):
 			conversation_target.set_speak_mode(true)
 			play_sound_and_start_lipsync(player, conversation_target, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
 		change_stretch_ratio(conversation)
-	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("continue_conversation")] if story.CanContinue() else [tr("end_conversation")])
+	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("CONVERSATION_CONTINUE")] if story.CanContinue() else [tr("CONVERSATION_END")])
 	display_choices(story, conversation, choices)
 
 func clear_choices(story, conversation):

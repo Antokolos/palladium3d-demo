@@ -334,7 +334,6 @@ align = 1
 valign = 1
 
 [node name="ActionsPanel" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 visible = false
 margin_top = 272.0
 margin_right = 1920.0
@@ -354,7 +353,6 @@ alignment = 1
 [node name="HintLabelClose" type="Label" parent="VBoxContainer/ActionsPanel/ActionsContainer"]
 margin_right = 1920.0
 margin_bottom = 32.0
-text = "Q: закрыть"
 align = 1
 valign = 1
 

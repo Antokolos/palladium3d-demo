@@ -344,7 +344,7 @@ func add_highlight(player_node):
 	var conversation = hud.conversation
 	if conversation.visible:
 		return ""
-	return game_params.handle_player_highlight(player_node)
+	return game_params.handle_player_highlight(player_node, self)
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

@@ -779,7 +779,7 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.33
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
 
 [node name="PositionApata" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 2.02566, 27.5823 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 1.21485, 27.5823 )
 
 [node name="ApataTakeTimer" type="Timer" parent="."]
 one_shot = true

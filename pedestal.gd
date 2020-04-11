@@ -69,7 +69,7 @@ func add_highlight(player_node):
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):
-			return "E: Поставить на постамент"
+			return "E: " + tr("ACTION_PUT_1")
 	return ""
 
 func remove_highlight(player_node):

@@ -23,7 +23,7 @@ func use(player_node):
 	emit_signal("use_button_activator", player_node, self)
 
 func add_highlight(player_node):
-	return "E: Нажать"
+	return "E: " + tr("ACTION_PUSH")
 
 func remove_highlight(player_node):
 	pass

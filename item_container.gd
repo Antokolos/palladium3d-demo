@@ -54,7 +54,6 @@ func close():
 func use(player_node):
 	if animation_player.is_playing():
 		return
-	
 	var opened = is_opened()
 	if opened:
 		close()
@@ -64,7 +63,7 @@ func use(player_node):
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	return "E: Закрыть" if is_opened() else "E: Открыть"
+	return "E: " + tr("ACTION_CLOSE") if is_opened() else "E: " + tr("ACTION_OPEN")
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

@@ -37,7 +37,7 @@ func use(player_node):
 	enable(active, true)
 
 func add_highlight(player_node):
-	return ("E: Потушить факел" if is_active() else "E: Зажечь факел")
+	return ("E: " + tr("ACTION_EXTINGUISH") if is_active() else "E: " + tr("ACTION_IGNITE"))
 
 func remove_highlight(player_node):
 	pass

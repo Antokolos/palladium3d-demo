@@ -121,7 +121,7 @@ func add_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	if takable_id == TakableIds.APATA:
 		return ""
-	return "E: Взять" if is_present() else ""
+	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 
 func remove_highlight(player_node):
 #	door_mesh.set_surface_material(surface_idx_door, null)

@@ -18,7 +18,7 @@ func use(player_node):
 
 func add_highlight(player_node):
 	if game_params.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
-		return "E: Открыть"
+		return "E: " + tr("ACTION_OPEN")
 	return ""
 
 func remove_highlight(player_node):

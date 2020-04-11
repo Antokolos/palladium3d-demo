@@ -18,7 +18,7 @@ func is_state_correct():
 	return state == correct_state
 
 func add_highlight(player_node):
-	return "E: Повернуть"
+	return "E: " + tr("ACTION_TURN")
 
 func remove_highlight(player_node):
 	pass

@@ -30,7 +30,7 @@ func add_highlight(player_node):
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):
-			return "E: Открыть замок"
+			return "E: " + tr("ACTION_OPEN")
 
 func remove_highlight(player_node):
 	pass
