@@ -24,6 +24,7 @@
 "ACTION_GO_INSIDE","Go inside","Зайти внутрь"
 "ACTION_GO_OUTSIDE","Go outside","Выйти наружу"
 "ACTION_CLOSE_PREVIEW","Close preview","Закрыть просмотр"
+"ACTION_TOGGLE_QUICK_ITEM","Toggle quick item","Сменить быстрый предмет"
 "CONVERSATION_CONTINUE","[CONTINUE CONVERSATION]","[ПРОДОЛЖИТЬ РАЗГОВОР]"
 "CONVERSATION_END","[END CONVERSATION]","[ЗАВЕРШИТЬ РАЗГОВОР]"
 "player","Andreas","Андреас"

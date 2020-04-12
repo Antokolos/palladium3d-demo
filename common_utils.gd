@@ -6,3 +6,10 @@ func shadow_casting_enable(root, enable):
 		if ch is GeometryInstance:
 			ch.set_cast_shadows_setting(s)
 		shadow_casting_enable(ch, enable)
+
+func get_action_key(act):
+	var list = InputMap.get_action_list(act)
+	for action in list:
+		if action is InputEventKey:
+			return action.as_text() + ": "
+	return ""

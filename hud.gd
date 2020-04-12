@@ -35,6 +35,7 @@ func _ready():
 	game_params.connect("item_removed", self, "remove_ui_inventory_item")
 	game_params.connect("item_removed", self, "remove_ui_quick_item")
 	game_params.connect("health_changed", self, "on_health_changed")
+	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var dialog = $QuitDialog
@@ -59,6 +60,10 @@ func on_health_changed(name_hint, health_current, health_max):
 		$BloodSplatTimer.start()
 	health_progress.value = health_current
 	health_progress.max_value = health_max
+
+func on_language_changed(ID):
+	select_active_item()
+	select_active_quick_item()
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -216,7 +221,7 @@ func select_active_item():
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
 				if inventory.is_visible_in_tree():
-					info_label.text = "T: Сменить быстрый предмет"
+					info_label.text = common_utils.get_action_key("active_item_toggle") + tr("ACTION_TOGGLE_QUICK_ITEM")
 			else:
 				items[idx].set_selected(false)
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
@@ -237,7 +242,7 @@ func select_active_quick_item():
 	for item in items:
 		var is_active = idx == active_quick_item_idx
 		items[idx].set_selected(is_active)
-		if is_active and not inventory.is_visible_in_tree():
+		if is_active and (not inventory.is_visible_in_tree() or not is_valid_index(active_item_idx)):
 			info_label.text = tr(items[idx].nam) if items[idx].nam else ""
 		idx = idx + 1
 

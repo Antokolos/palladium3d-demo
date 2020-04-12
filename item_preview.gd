@@ -38,25 +38,18 @@ func open_preview(item, hud, flashlight):
 		flashlight_visible = flashlight.is_visible_in_tree()
 		flashlight.show()
 		var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
-		label_close_node.text = get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
+		label_close_node.text = common_utils.get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
 		var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
 		for ch in custom_actions_node.get_children():
 			ch.queue_free()
 		custom_actions = game_params.get_custom_actions(item)
 		for act in custom_actions:
 			var ch = label_close_node.duplicate(0)
-			ch.text = get_action_key(act) + tr(item.nam + "_" + act)
+			ch.text = common_utils.get_action_key(act) + tr(item.nam + "_" + act)
 			custom_actions_node.add_child(ch)
 		get_tree().paused = true
 		hud.quick_items_panel.hide()
 		hud.actions_panel.show()
-
-func get_action_key(act):
-	var list = InputMap.get_action_list(act)
-	for action in list:
-		if action is InputEventKey:
-			return action.as_text() + ": "
-	return ""
 
 func _input(event):
 	if item_holder_node.get_child_count() > 0:
