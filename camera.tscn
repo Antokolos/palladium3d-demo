@@ -61,11 +61,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
 [node name="shader_cache" type="Spatial" parent="viewpoint"]
 script = ExtResource( 5 )
 
-[node name="shader_cache_holder1" type="Spatial" parent="viewpoint/shader_cache"]
-
-[node name="shader_cache_holder2" type="Spatial" parent="viewpoint/shader_cache"]
-visible = false
-
 [node name="item_preview" type="Spatial" parent="viewpoint"]
 pause_mode = 2
 script = ExtResource( 6 )
