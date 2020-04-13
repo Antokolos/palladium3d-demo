@@ -5,8 +5,8 @@ Oh! You scared me.	# actor:female
 Is everything alright? Are you lost?	# actor:player
 Yes — well, I mean no. I was admiring the beauty of this place and missed the ferry, and the next one doesn’t come for two days.	# actor:female
 How long have you been here?	# actor:player
-Уже несколько часов.	# actor:female
-A few hours.	# actor:player
+A few hours.	# actor:female
+Are you a tourist?	# actor:player
 Yep, I came from…	# actor:female
 Can't you just phone your hotel?	# actor:player
 My cell phone provider has no coverage here. What is your name?	# actor:female
