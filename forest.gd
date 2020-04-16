@@ -14,6 +14,7 @@ func _ready():
 	game_params.story_vars.is_game_start = false
 	get_tree().call_group("takables", "connect_signals", self)
 	game_params.connect("item_used", self, "on_item_used")
+	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
 	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)
@@ -39,12 +40,16 @@ func on_item_used(player_node, target, item_nam):
 		if was_in_party:
 			conversation_manager.start_conversation(player, "001_Door")
 		else:
-			var boatFinished = conversation_manager.conversation_is_finished(player, "001_Boat")
+			var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
 			if boatFinished:
 				conversation_manager.start_conversation(player, "001_Door3")
 			else:
-				var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
+				var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT)
 				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
+
+func _on_meeting_started(player, target, initiator):
+	player_female.set_target_node(get_node("PositionBoat"))
+	player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 
 func _on_AreaGrass_body_entered(body):
 	if body == player:
@@ -59,17 +64,7 @@ func _on_AreaGrass_body_exited(body):
 		player_female.set_sound_walk(player_female.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
-	var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
-	if meetingXeniaFinished:
-		return
-	if conversation_manager.conversation_is_in_progress("001_MeetingXenia"):
-		return
-	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
-	if meetingAndreasNotFinished and not player_female.is_in_party():
-		player_female.join_party()
-		player_female.set_target_node(get_node("PositionBoat"))
-		player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
-		conversation_manager.start_conversation(player, "002_MeetingAndreas")
+	conversation_manager.arrange_meeting(player, player, player_female)
 
 func _on_RockArea_body_exited(body):
 	if game_params.has_item("envelope") or game_params.has_item("barn_lock_key"):
@@ -78,11 +73,9 @@ func _on_RockArea_body_exited(body):
 func _on_BoatArea_body_entered(body):
 	if player_female.companion_state != PalladiumPlayer.COMPANION_STATE.REST:
 		return
-	var boatFinished = conversation_manager.conversation_is_finished(player, "001_Boat")
+	var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
 	if not boatFinished:
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(player, "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(player, "002_MeetingAndreas")
-		if meetingXeniaFinished or meetingAndreasFinished:
+		if conversation_manager.meeting_is_finished(game_params.FEMALE_NAME_HINT, game_params.PLAYER_NAME_HINT):
 			conversation_manager.start_conversation(player, "001_Boat")
 
 func _on_TunnelArea_body_entered(body):

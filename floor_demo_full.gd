@@ -7,6 +7,7 @@ var gas_injury_rate = 1
 func _ready():
 	restore_state()
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
+	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
 	conversation_manager.connect("conversation_started", self, "_on_conversation_started")
 	var chest = get_node("Apata_room/apata_chest")
 	chest.connect("was_translated", self, "_on_ChestArea_body_exited")
@@ -162,7 +163,7 @@ func _on_EridaTrapTimer_timeout():
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
-	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, "004_TorchesIgnition"):
+	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", true, false)
 		conversation_manager.start_conversation(player, "004_TorchesIgnition")
 
@@ -212,7 +213,7 @@ func _on_ChestArea_body_exited(body):
 	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == ItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
 		game_params.story_vars.apata_chest_rigid = -1
 		var player = game_params.get_player()
-		conversation_manager.restore_camera(player)
+		cutscene_manager.restore_camera(player)
 		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 		player.stop_cutscene()
@@ -222,37 +223,39 @@ func _on_ChestArea_body_exited(body):
 		bandit.set_target_node(get_node("BanditSavePosition"))
 		female.set_target_node(get_node("FemaleSavePosition"))
 
-func _on_conversation_started(player, conversation_name, is_cutscene):
+func _on_conversation_started(player, conversation_name, target, initiator):
 	match conversation_name:
 		"010-2-4_ApataDoneMax":
 			get_door("door_4").open()
 			get_node("Apata_room/door_3").close()
 
-func _on_conversation_finished(player, conversation_name, is_cutscene):
+func _on_conversation_finished(player, conversation_name, target, initiator):
 	var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 	match conversation_name:
 		"005_ApataInscriptions":
-			bandit.join_party()
 			bandit.teleport(get_node("BanditPosition"))
-			conversation_manager.start_area_cutscene("008_MeetingMax", get_node("InscriptionsPosition"))
-		"008_MeetingMax":
-			bandit.set_target_node(get_node("BanditSavePosition"))
-			bandit.leave_party()
-			female.set_target_node(get_node("PositionApata"))
-			female.leave_party()
-			game_params.autosave_create()
+			conversation_manager.arrange_meeting(player, player, bandit, true, get_node("InscriptionsPosition"))
 		"009_ApataTrap":
 			female.set_target_node(get_node("FemaleSavePosition"))
 			if game_params.story_vars.apata_chest_rigid > 0:
 				player.connect("arrived_to", self, "_on_arrived_to_chest_push_position")
 				player.set_target_node(get_node("PlayerSavePosition"))
 				player.leave_party()
-				conversation_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
+				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
 		"010-2-1_ChestMoved":
 			bandit.sit_down(true)
 			female.sit_down(true)
 
+func _on_meeting_finished(player, target, initiator):
+	if initiator and initiator.name_hint == game_params.BANDIT_NAME_HINT:
+		initiator.set_target_node(get_node("BanditSavePosition"))
+		initiator.leave_party()
+		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+		female.set_target_node(get_node("PositionApata"))
+		female.leave_party()
+		game_params.autosave_create()
+	
 func _on_arrived_to_chest_push_position(player_node, target_node):
 	if target_node == get_node("PlayerSavePosition"):
 		player_node.disconnect("arrived_to", self, "_on_arrived_to_chest_push_position")

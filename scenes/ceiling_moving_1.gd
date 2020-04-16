@@ -35,7 +35,7 @@ func restore_state():
 		pause()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.GOING_DOWN and conversation_manager.conversation_is_finished(game_params.get_player(), "010-2-1_ChestMoved"):
+	if game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.GOING_DOWN and conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
 		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 		bandit.join_party()
@@ -43,12 +43,12 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		conversation_manager.start_area_conversation("010-2-2_CeilingStopped")
 	elif game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.DISABLED \
 		and ( \
-			conversation_manager.conversation_is_finished(game_params.get_player(), "010-2-3_CeilingUp") \
+			conversation_manager.conversation_is_finished("010-2-3_CeilingUp") \
 			or conversation_manager.conversation_is_in_progress("010-2-3_CeilingUp")
 		):
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
 
-func _on_conversation_finished(player, conversation_name, is_cutscene):
+func _on_conversation_finished(player, conversation_name, target, initiator):
 	match conversation_name:
 		"010-2-2_CeilingStopped":
 			$DeactivationTimer.start()

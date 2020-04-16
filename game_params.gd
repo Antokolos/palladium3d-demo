@@ -122,7 +122,7 @@ func get_companion(name_hint = null):
 	if not name_hint:
 		var companions = get_companions()
 		return companions[0] if companions.size() > 0 else null
-	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
+	return get_node(player_paths[name_hint]) if player_paths.has(name_hint) else null
 
 func get_companions():
 	var result = []
@@ -188,13 +188,8 @@ func execute_custom_action(event, item):
 		return false
 	return true
 
-func handle_conversation(player, target):
-	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(player, "002_MeetingAndreas")
-	if meetingAndreasNotFinished and not target.is_in_party():
-		target.join_party()
-		target.set_target_node(target.get_node("../PositionBoat"))
-		target.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
-		conversation_manager.start_conversation(player, "001_MeetingXenia")
+func handle_conversation(player, target, initiator):
+	if conversation_manager.arrange_meeting(player, target, initiator):
 		return
 	if not target.is_in_party():
 		return
@@ -204,19 +199,16 @@ func handle_conversation(player, target):
 		hud.inventory.visible = false
 		item.used(player, target)
 		item.remove()
-		conversation_manager.start_conversation(player, "Bun")
+		conversation_manager.start_conversation(player, "Bun", target)
 	else:
-		conversation_manager.start_conversation(player, "Conversation")
+		conversation_manager.start_conversation(player, "Conversation", target)
 
 func can_be_given(item):
 	return item and ITEMS[item.nam] and ITEMS[item.nam].can_give
 
 func handle_player_highlight(initiator, target):
-	var meetingAndreasNotFinished = conversation_manager.conversation_is_not_finished(initiator, "002_MeetingAndreas")
-	if meetingAndreasNotFinished and not target.is_in_party():
-		return "E: " + tr("ACTION_TALK")
 	if not target.is_in_party():
-		return ""
+		return "E: " + tr("ACTION_TALK") if conversation_manager.meeting_is_not_finished(target.name_hint, initiator.name_hint) else ""
 	var hud = get_hud()
 	var item = hud.get_active_item()
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
@@ -438,9 +430,7 @@ func register_player(player):
 
 func play_initial_cutscene(player):
 	if player.name_hint == FEMALE_NAME_HINT:
-		var meetingXeniaFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "001_MeetingXenia")
-		var meetingAndreasFinished = conversation_manager.conversation_is_finished(game_params.get_player(), "002_MeetingAndreas")
-		if meetingXeniaFinished or meetingAndreasFinished:
+		if conversation_manager.meeting_is_finished(FEMALE_NAME_HINT, PLAYER_NAME_HINT):
 			player.stop_cutscene()
 		else:
 			player.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP)

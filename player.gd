@@ -274,12 +274,12 @@ func get_cam_holder():
 	return get_node("Rotation_Helper/Camera")
 
 func get_cam():
-	var cutscene_cam = conversation_manager.get_cam()
+	var cutscene_cam = cutscene_manager.get_cam()
 	return cutscene_cam if cutscene_cam else get_cam_holder().get_node("camera")
 
 func use(player_node):
 	if not conversation_manager.conversation_active():
-		game_params.handle_conversation(player_node, self)
+		game_params.handle_conversation(player_node, self, player_node)
 
 func get_model_holder():
 	return get_node("Model")
@@ -303,7 +303,7 @@ func _input(event):
 			conversation_manager.story_choose(self, 2)
 		elif event.is_action_pressed("dialogue_option_4"):
 			conversation_manager.story_choose(self, 3)
-	if is_in_party() and not conversation_manager.conversation_is_cutscene():
+	if is_in_party() and not cutscene_manager.is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
 			angle_rad_y = deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1)
@@ -462,7 +462,7 @@ func _physics_process(delta):
 	if is_low_ceiling() and not is_crouching and is_on_floor():
 		toggle_crouch()
 	if is_player() and in_party:
-		if conversation_manager.conversation_is_cutscene():
+		if cutscene_manager.is_cutscene():
 			$SoundWalking.stop()
 			return
 		process_input(delta)

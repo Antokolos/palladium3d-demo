@@ -1,18 +1,17 @@
 extends Node
+class_name ConversationManager
 
-signal conversation_started(player, conversation_name, is_cutscene)
-signal conversation_finished(player, conversation_name, is_cutscene)
+const MEETING_CONVERSATION_PREFIX = "Meeting_"
+const MEETING_CONVERSATION_TEMPLATE = "%s%%s" % MEETING_CONVERSATION_PREFIX
 
-const VOWELS = ["А", "Е", "Ё", "И", "О", "У", "Ы", "Э", "Ю", "Я"]
-const CONSONANTS =           ["Б", "В", "Г", "Д", "Ж", "З", "К", "Л", "М", "Н", "П", "Р", "С", "Т", "Ф", "Х", "Ц", "Ч", "Ш", "Щ"]
-const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "Н",      "Р",      "Т",      "Х"]
-const SPECIALS = ["Ь", "Ъ", "Й"]
-const STOPS = [".", "!", "?", ";", ":"]
-const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
+signal meeting_started(player, target, initiator)
+signal conversation_started(player, conversation_name, target, initiator)
+signal meeting_finished(player, target, initiator)
+signal conversation_finished(player, conversation_name, target, initiator)
 
 var conversation_name
-var is_cutscene
-var cutscene_node
+var target
+var initiator
 var in_choice
 var max_choice = 0
 
@@ -20,7 +19,8 @@ var story_state_cache = {}
 
 func _ready():
 	conversation_name = null
-	is_cutscene = false
+	target = null
+	initiator = null
 	in_choice = false
 	story_state_cache.clear()
 
@@ -31,134 +31,124 @@ func change_stretch_ratio(conversation):
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
-func borrow_camera(player, cutscene_node):
-	var player_camera_holder = player.get_cam_holder()
-	if player_camera_holder.get_child_count() == 0:
-		# Do nothing if player has no camera. It looks like we are in cutscene already.
-		return
-	var camera = player_camera_holder.get_child(0)
-	camera.enable_use(false)
-	self.cutscene_node = cutscene_node
-	if not cutscene_node:
-		return
-	player.reset_rotation()
-	player.set_simple_mode(false)
-	player_camera_holder.remove_child(camera)
-	cutscene_node.add_child(camera)
-
-func restore_camera(player):
-	var player_camera_holder = player.get_cam_holder()
-	if not cutscene_node:
-		var camera = player_camera_holder.get_child(0)
-		camera.enable_use(true)
-		return
-	player.set_simple_mode(true)
-	var camera = cutscene_node.get_child(0)
-	cutscene_node.remove_child(camera)
-	player_camera_holder.add_child(camera)
-	camera.enable_use(true)
-	cutscene_node = null
-
-func get_cam():
-	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
-
 func start_area_cutscene(conversation_name, cutscene_node = null):
 	var player = game_params.get_player()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(conversation_name):
 		player.rest()
-		conversation_manager.start_conversation(player, conversation_name, true, cutscene_node)
+		conversation_manager.start_conversation(player, conversation_name, null, null, true, cutscene_node)
 
 func start_area_conversation(conversation_name):
 	var player = game_params.get_player()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(player, conversation_name):
+	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(conversation_name):
 		conversation_manager.start_conversation(player, conversation_name)
 
 func stop_conversation(player):
 	for companion in game_params.get_companions():
 		companion.set_speak_mode(false)
 	var conversation_name_prev = conversation_name
-	var is_cutscene_prev = is_cutscene
+	var target_prev = target
+	var initiator_prev = initiator
 	conversation_name = null
-	is_cutscene = false
-	restore_camera(player)
+	target = null
+	initiator = null
 	var hud = game_params.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
-	emit_signal("conversation_finished", player, conversation_name_prev, is_cutscene_prev)
+	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
+		emit_signal("meeting_finished", player, target_prev, initiator_prev)
+	player.get_cam().enable_use(true)
+	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev)
 
-func conversation_is_in_progress(conversation_name = null):
+func conversation_is_in_progress(conversation_name = null, target_name_hint = null):
 	if not conversation_name:
 		# Will return true if ANY conversation is in progress
 		return self.conversation_name != null
-	return self.conversation_name == conversation_name
+	if not target_name_hint or not target:
+		return self.conversation_name == conversation_name
+	return self.conversation_name == conversation_name and self.target.name_hint == target_name_hint
 
-func conversation_is_cutscene():
-	return conversation_is_in_progress() and is_cutscene
+func meeting_is_in_progress(character1_name_hint, character2_name_hint):
+	var conversation_name_1 = MEETING_CONVERSATION_TEMPLATE % character1_name_hint
+	var conversation_name_2 = MEETING_CONVERSATION_TEMPLATE % character2_name_hint
+	return conversation_is_in_progress(conversation_name_1, character2_name_hint) or conversation_is_in_progress(conversation_name_2, character1_name_hint)
 
-func conversation_is_finished(player, conversation_name):
-	return not conversation_is_not_finished(player, conversation_name)
 
-func conversation_is_not_finished(player, conversation_name):
-	return check_story_not_finished(player, conversation_name)
+func meeting_is_finished_exact(initiator_name_hint, target_name_hint):
+	return conversation_is_finished(MEETING_CONVERSATION_TEMPLATE % initiator_name_hint, target_name_hint)
 
-func check_story_not_finished(player, conversation_name):
+func meeting_is_finished(character1_name_hint, character2_name_hint):
+	var conversation_name_1 = MEETING_CONVERSATION_TEMPLATE % character1_name_hint
+	var conversation_name_2 = MEETING_CONVERSATION_TEMPLATE % character2_name_hint
+	return conversation_is_finished(conversation_name_1, character2_name_hint) or conversation_is_finished(conversation_name_2, character1_name_hint)
+
+func meeting_is_not_finished(character1_name_hint, character2_name_hint):
+	return not meeting_is_finished(character1_name_hint, character2_name_hint)
+
+func conversation_is_finished(conversation_name, target_name_hint = null):
+	return not conversation_is_not_finished(conversation_name, target_name_hint)
+
+func conversation_is_not_finished(conversation_name, target_name_hint = null):
+	return check_story_not_finished(conversation_name, target_name_hint)
+
+func check_story_not_finished(conversation_name, target_name_hint = null):
 	var story = StoryNode
-	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
+	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var cp_story
-	if story_state_cache.has(cp_player):
-		cp_story = story_state_cache.get(cp_player)
+	if story_state_cache.has(cp):
+		cp_story = story_state_cache.get(cp)
 	else:
 		var locale = TranslationServer.get_locale()
 		var f = File.new()
-		var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
-		var cp = "%s.ink.json" % conversation_name
 		var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-		cp_story = cp_player if exists_cp_player else (cp if exists_cp else "Default.ink.json")
-		story_state_cache[cp_player] = cp_story
+		cp_story = cp if exists_cp else "Default.ink.json"
+		story_state_cache[cp] = cp_story
 	return story.CheckStoryNotFinished("ink-scripts", cp_story)
 
-func init_story(player, conversation, conversation_name):
+func init_story(conversation_name, target_name_hint = null):
 	var locale = TranslationServer.get_locale()
 	var story = StoryNode
 	var f = File.new()
-	var cp_player = "%s/%s.ink.json" % [player.name_hint, conversation_name]
-	var exists_cp_player = f.file_exists("ink-scripts/%s/%s" % [locale, cp_player])
-	var cp = "%s.ink.json" % conversation_name
+	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-	story.LoadStory("ink-scripts", cp_player if exists_cp_player else (cp if exists_cp else "Default.ink.json"), false)
+	story.LoadStory("ink-scripts", cp if exists_cp else "Default.ink.json", false)
 	story.InitVariables(game_params, game_params.story_vars, game_params.party)
 	return story
-
-func get_conversation_sound_path(player, conversation_name):
-	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
-	if not locale:
-		return null
-	var csp_player = "sound/dialogues/%s/%s/%s/" % [locale, player.name_hint, conversation_name]
-	var dir = Directory.new()
-	if dir.dir_exists(csp_player):
-		return csp_player
-	var csp = "sound/dialogues/%s/root/%s/" % [locale, conversation_name]
-	if dir.dir_exists(csp):
-		return csp
-	return null
 
 func conversation_active():
 	return conversation_name and conversation_name.length() > 0
 
-func start_conversation(player, conversation_name, is_cutscene = false, cutscene_node = null):
+func arrange_meeting(player, target, initiator, is_cutscene = false, cutscene_node = null):
+	if meeting_is_in_progress(target.name_hint, initiator.name_hint):
+		return false
+	if meeting_is_not_finished(target.name_hint, initiator.name_hint):
+		if not initiator.is_in_party():
+			initiator.join_party()
+		if not target.is_in_party():
+			target.join_party()
+		var conversation_name = MEETING_CONVERSATION_TEMPLATE % initiator.name_hint
+		emit_signal("meeting_started", player, target, initiator)
+		start_conversation(player, conversation_name, target, initiator, is_cutscene, cutscene_node)
+		return true
+	return false
+
+func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null):
 	if self.conversation_name == conversation_name:
 		return
-	emit_signal("conversation_started", player, conversation_name, is_cutscene)
+	if is_cutscene:
+		cutscene_manager.start_cutscene(player, cutscene_node, conversation_name, target)
+	else:
+		player.get_cam().enable_use(false)
+	emit_signal("conversation_started", player, conversation_name, target, initiator)
+	self.target = target
+	self.initiator = initiator
 	self.conversation_name = conversation_name
-	self.is_cutscene = is_cutscene
-	borrow_camera(player, cutscene_node)
 	var hud = game_params.get_hud()
 	hud.quick_items_panel.visible = false
 	hud.inventory.visible = false
 	var conversation = hud.conversation
 	conversation.visible = true
 	max_choice = 0
-	var story = init_story(player, conversation, conversation_name)
+	var story = init_story(conversation_name, target.name_hint if target else null)
 	clear_actors_and_texts(player, story, conversation)
 	story_proceed(player)
 
@@ -214,12 +204,12 @@ func story_choose(player, idx):
 				stop_conversation(player)
 				return
 			var actor_name = tags["actor"] if not finalizer and tags and tags.has("actor") else player.name_hint
-			conversation_actor.text = tr(actor_name) + ": "
+			conversation_actor.text = tr(actor_name) + ": " if actor_name else ""
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
-				var conversation_target = game_params.get_companion(actor_name)
-				conversation_target.set_speak_mode(true)
-				has_sound = play_sound_and_start_lipsync(player, conversation_target, vtags["voiceover"], null) # no lipsync for choices
+				var character = game_params.get_character(actor_name)
+				character.set_speak_mode(true)
+				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
 				in_choice = true
 			change_stretch_ratio(conversation)
 		if not has_sound:
@@ -231,70 +221,6 @@ func proceed_story_immediately(player):
 	if $AudioStreamPlayer.is_playing():
 		$AudioStreamPlayer.stop()
 		story_proceed(player)
-
-func play_sound_and_start_lipsync(player, conversation_target, file_name, phonetic):
-	var conversation_sound_path = get_conversation_sound_path(player, conversation_name)
-	if not conversation_sound_path:
-		return false
-	var ogg_file = File.new()
-	ogg_file.open(conversation_sound_path + file_name, File.READ)
-	var bytes = ogg_file.get_buffer(ogg_file.get_len())
-	var stream = AudioStreamOGGVorbis.new()
-	stream.data = bytes
-	var length = stream.get_length()
-	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
-	$AudioStreamPlayer.stream = stream
-	$AudioStreamPlayer.play()
-	if phonetic:
-		#print(phonetic)
-		conversation_target.get_model().speak_text(phonetic, length)
-	return true
-
-func letter_vowel(letter):
-	return VOWELS.has(letter.to_upper())
-
-func letter_consonant(letter):
-	return CONSONANTS.has(letter.to_upper())
-
-func letter_stop(letter):
-	return STOPS.has(letter)
-
-func letter_skip(letter, use_exclusions):
-	var l = letter.to_upper()
-	return SPECIALS.has(l) or (use_exclusions and CONSONANTS_EXCLUSIONS.has(l)) or not (VOWELS.has(l) or CONSONANTS.has(l))
-
-func letter_to_phonetic(letter, use_exclusions):
-	var l = letter.to_upper()
-	if letter_stop(l):
-		return "..."
-	if letter_skip(l, use_exclusions):
-		return ""
-	match l:
-		"Е":
-			return "Э"
-		"Ё":
-			return "О"
-		"Ю":
-			return "У"
-		"Я":
-			return "А"
-		_:
-			return letter
-
-func text_to_phonetic(text):
-	var result = ""
-	var words = text.split(" ", false)
-	for word in words:
-		var i = 0
-		var wl = word.length()
-		var use_exclusions = false
-		while i < wl:
-			var letter = word[i]
-			result = result + letter_to_phonetic(letter, use_exclusions)
-			use_exclusions = true
-			i = i + 1
-		result = result + " "
-	return result
 
 func story_proceed(player):
 	in_choice = false
@@ -308,14 +234,14 @@ func story_proceed(player):
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 		var tags_dict = story.GetCurrentTags()
 		var tags = tags_dict[TranslationServer.get_locale()]
-		var actor_name = tags["actor"] if tags and tags.has("actor") else null
+		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
 		if vtags and vtags.has("voiceover"):
 			var text = get_vvalue(texts)
-			var conversation_target = game_params.get_companion(actor_name)
-			conversation_target.set_speak_mode(true)
-			play_sound_and_start_lipsync(player, conversation_target, vtags["voiceover"], vtags["transcription"] if vtags.has("transcription") else (text_to_phonetic(text.strip_edges()) if text else null))
+			var character = game_params.get_companion(actor_name)
+			character.set_speak_mode(true)
+			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
 	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("CONVERSATION_CONTINUE")] if story.CanContinue() else [tr("CONVERSATION_END")])
 	display_choices(story, conversation, choices)
@@ -335,16 +261,3 @@ func display_choices(story, conversation, choices):
 		c.text = str(i) + ". " + choices[i - 1] if i <= choices.size() else ""
 		i += 1
 	max_choice = choices.size()
-
-func _on_AudioStreamPlayer_finished():
-	var player = game_params.get_player()
-	if in_choice:
-		story_proceed(player)
-	elif StoryNode.CanChoose():
-		var ch = StoryNode.GetChoices(TranslationServer.get_locale())
-		if ch.size() == 1:
-			$ShortPhraseTimer.start()
-
-func _on_ShortPhraseTimer_timeout():
-	var player = game_params.get_player()
-	story_choose(player, 0)
