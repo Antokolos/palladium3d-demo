@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/apata_chest.gd" type="Script" id=1]
 [ext_resource path="res://scenes/apatha_chest.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sound/environment/Apatha_1_chest_open.ogg" type="AudioStream" id=3]
+[ext_resource path="res://sound/environment/Apatha_1_chest_close.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sound/environment/Apatha_chest_drag.ogg" type="AudioStream" id=5]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.855053, 0.408947, 0.0641045 )
@@ -60,3 +63,15 @@ shape = SubResource( 5 )
 
 [node name="apatha_chest" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -0.0294083, -1.23231, 0 )
+
+[node name="SoundChestOpen" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+bus = "Sound"
+
+[node name="SoundChestClose" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+bus = "Sound"
+
+[node name="SoundChestMove" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+bus = "Sound"

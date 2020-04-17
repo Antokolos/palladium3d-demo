@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/ceiling_moving_1.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ceiling_moving_1.gd" type="Script" id=2]
+[ext_resource path="res://sound/environment/Apatha_2_ceiling.ogg" type="AudioStream" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 5.60531, 0.295407, 9.07613 )
@@ -67,6 +68,25 @@ collision_mask = 1025
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 shape = SubResource( 1 )
+
+[node name="CeilingSound1" type="AudioStreamPlayer3D" parent="StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.06773, 0, -8.74895 )
+stream = ExtResource( 3 )
+
+[node name="CeilingSound2" type="AudioStreamPlayer3D" parent="StaticBody" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25895, 0, -8.70114 )
+stream = ExtResource( 3 )
+
+[node name="CeilingSound3" type="AudioStreamPlayer3D" parent="StaticBody" index="3"]
+stream = ExtResource( 3 )
+
+[node name="CeilingSound4" type="AudioStreamPlayer3D" parent="StaticBody" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.16329, 0, 9.27475 )
+stream = ExtResource( 3 )
+
+[node name="CeilingSound5" type="AudioStreamPlayer3D" parent="StaticBody" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11551, 0, 9.27475 )
+stream = ExtResource( 3 )
 
 [node name="DamageArea" type="Area" parent="." index="3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.213, 8.67389, 31.327 )

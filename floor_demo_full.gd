@@ -2,6 +2,10 @@ extends Spatial
 
 export var doors_path = "../../doors/floor_demo_full"
 onready var doors = get_node(doors_path)
+onready var erida_trap_sound_1 = get_node("Erida_room/EridaTrapSound1")
+onready var erida_trap_sound_2 = get_node("Erida_room/EridaTrapSound2")
+onready var erida_trap_sound_3 = get_node("Erida_room/EridaTrapSound3")
+onready var erida_trap_sound_4 = get_node("Erida_room/EridaTrapSound4")
 var gas_injury_rate = 1
 
 func _ready():
@@ -42,12 +46,35 @@ func use_takable(player_node, takable, parent, was_taken):
 				conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[game_params.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
 				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.ACTIVE
 				$EridaTrapTimer.start()
+				erida_trap_play_sound()
 		Takable.TakableIds.ARES:
 			var door = get_door("door_6")
 			var was_opened = door.is_opened()
 			door.open()
 			if not was_opened:
 				game_params.autosave_create()
+
+func erida_trap_play_sound():
+	erida_trap_sound_1.play()
+	erida_trap_sound_2.play()
+	erida_trap_sound_3.play()
+	erida_trap_sound_4.play()
+
+func erida_trap_increase_sound_volume():
+	var v1 = erida_trap_sound_1.get_unit_db()
+	erida_trap_sound_1.set_unit_db(v1 / 2)
+	var v2 = erida_trap_sound_2.get_unit_db()
+	erida_trap_sound_2.set_unit_db(v2 / 2)
+	var v3 = erida_trap_sound_3.get_unit_db()
+	erida_trap_sound_3.set_unit_db(v3 / 2)
+	var v4 = erida_trap_sound_4.get_unit_db()
+	erida_trap_sound_4.set_unit_db(v4 / 2)
+
+func erida_trap_stop_sound():
+	erida_trap_sound_1.stop()
+	erida_trap_sound_2.stop()
+	erida_trap_sound_3.stop()
+	erida_trap_sound_4.stop()
 
 func check_demo_finish():
 	var statues = get_tree().get_nodes_in_group("demo_finish_statues")
@@ -97,11 +124,15 @@ func use_button_activator(player_node, button_activator):
 				for postament in postaments:
 					if not postament.is_state_correct():
 						conversation_manager.start_area_conversation("015-2_EridaError" if game_params.party[game_params.FEMALE_NAME_HINT] else "021-2_EridaErrorMax")
+						erida_trap_increase_sound_volume()
+						$EridaButtonWrong.play()
 						return
+				$EridaButtonCorrect.play()
 				get_door("door_7").open()
 				conversation_manager.start_area_conversation("016_EridaDone" if game_params.party[game_params.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
 				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.DISABLED
 				$EridaTrapTimer.stop()
+				erida_trap_stop_sound()
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():
@@ -164,6 +195,7 @@ func _on_EridaTrapTimer_timeout():
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
 	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):
+		$SoundIgnitionClick.play()
 		get_tree().call_group("torches", "enable", true, false)
 		conversation_manager.start_conversation(player, "004_TorchesIgnition")
 

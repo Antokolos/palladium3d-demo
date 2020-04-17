@@ -89,7 +89,8 @@ func _on_item_taken(nam, cnt):
 
 func _on_item_removed(nam, cnt):
 	# TODO: make present??? Likely it is handled in containers...
-	pass
+	if has_node("SoundPut"):
+		$SoundPut.play()
 
 func has_id(tid):
 	return takable_id == tid

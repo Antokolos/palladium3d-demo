@@ -7,6 +7,7 @@ pause_mode = 1
 handle_input_locally = false
 render_target_clear_mode = 1
 render_target_update_mode = 3
+audio_listener_enable_3d = true
 shadow_atlas_size = 4096
 shadow_atlas_quad_0 = 1
 script = ExtResource( 1 )

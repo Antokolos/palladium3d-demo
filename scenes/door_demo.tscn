@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/door_demo.escn" type="PackedScene" id=1]
 [ext_resource path="res://door.gd" type="Script" id=2]
+[ext_resource path="res://sound/environment/243699__ertfelda__hidden-wall-opening.wav" type="AudioStream" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 4.21977, 3.31324, 0.529293 )
 
-[node name="door_demo" index="0" groups=[
+[node name="door_demo" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -19,3 +20,7 @@ anim_name_open = "demo_door_ArmatureAction.002"
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00352108, 3.47375, 0 )
 shape = SubResource( 1 )
+
+[node name="SoundMove" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = ExtResource( 3 )
+bus = "Sound"

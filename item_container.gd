@@ -37,15 +37,18 @@ func is_opened():
 	var cs = game_params.get_container_state(get_path())
 	return (cs == game_params.ContainerState.DEFAULT and initially_opened) or (cs == game_params.ContainerState.OPENED)
 
-func open():
+func open(speed_scale = 1.0):
+	AnimationPlayer
 	if blocker_node and blocker_node.opened:
 		return
+	animation_player.set_speed_scale(speed_scale)
 	animation_player.play(anim_name)
 	collision_closed.disabled = true
 	collision_opened.disabled = false
 	game_params.set_container_state(get_path(), true)
 
-func close():
+func close(speed_scale = 1.0):
+	animation_player.set_speed_scale(speed_scale)
 	animation_player.play_backwards(anim_name)
 	collision_closed.disabled = false
 	collision_opened.disabled = true

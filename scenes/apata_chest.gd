@@ -10,9 +10,18 @@ const CHEST_PLAYER_PATH = "apatha_chest/apatha_chest_armature_base/AnimationPlay
 func _ready():
 	restore_state()
 
+func open(speed_scale = 0.4):
+	.open(speed_scale)
+	$SoundChestOpen.play()
+
+func close(speed_scale = 0.4):
+	.close(speed_scale)
+	$SoundChestClose.play()
+
 func _on_animation_finished(anim_name):
 	get_node(CHEST_PLAYER_PATH).disconnect("animation_finished", self, "_on_animation_finished")
 	if anim_name == "chest_push":
+		$SoundChestMove.stop()
 		do_translate()
 
 func do_push():
@@ -20,6 +29,7 @@ func do_push():
 	var chest_player = get_node(CHEST_PLAYER_PATH)
 	lid_player.play("chest_lid_push")
 	chest_player.play("chest_push")
+	$SoundChestMove.play()
 
 func do_translate():
 	var lid_player = get_node(LID_PLAYER_PATH)

@@ -10,6 +10,7 @@ func use(player_node):
 	var new_state = state + 1 if state < 3 else 1
 	$AnimationTree.set("parameters/Transition/current", new_state)
 	game_params.set_multistate_state(get_path(), new_state)
+	$SoundRotation.play()
 
 func is_state_correct():
 	var state = $AnimationTree.get("parameters/Transition/current")
@@ -27,3 +28,9 @@ func restore_state():
 	$AnimationTree.active = true
 	var state = game_params.get_multistate_state(get_path())
 	$AnimationTree.set("parameters/Transition/current", state)
+
+func _on_SoundRotation_finished():
+	if is_state_correct():
+		$SoundCorrectPos.play()
+	else:
+		$SoundIncorrectPos.play()

@@ -1,13 +1,17 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/statues_postament.gd" type="Script" id=1]
 [ext_resource path="res://assets/statues_postament_1.escn" type="PackedScene" id=2]
+[ext_resource path="res://sound/environment/Erida_blevotron.ogg" type="AudioStream" id=3]
+[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.20587
 
 [sub_resource type="Animation" id=2]
 resource_name = "Rotate0"
+length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("statues_postament_1:transform")
 tracks/0/interp = 1
@@ -15,7 +19,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 2.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ), Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ) ]
@@ -23,6 +27,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Rotate1"
+length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("statues_postament_1:transform")
 tracks/0/interp = 1
@@ -30,7 +35,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 2.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ), Transform( -0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0 ) ]
@@ -38,6 +43,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "Rotate2"
+length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("statues_postament_1:transform")
 tracks/0/interp = 1
@@ -45,7 +51,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 2.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Transform( -0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0 ), Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0 ) ]
@@ -53,6 +59,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "Rotate3"
+length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("statues_postament_1:transform")
 tracks/0/interp = 1
@@ -60,7 +67,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 2.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0 ), Transform( 1, 0, -1.74846e-007, 0, 1, 0, 1.74846e-007, 0, 1, 0, 0, 0 ) ]
@@ -128,3 +135,15 @@ tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Transition/current = 0
+
+[node name="SoundRotation" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+bus = "Sound"
+
+[node name="SoundCorrectPos" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+bus = "Sound"
+
+[node name="SoundIncorrectPos" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+[connection signal="finished" from="SoundRotation" to="." method="_on_SoundRotation_finished"]

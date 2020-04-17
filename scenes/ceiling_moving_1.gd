@@ -2,6 +2,11 @@ extends Spatial
 
 onready var damage_area = $DamageArea
 onready var chest_shape = $DamageArea/ChestShape
+onready var ceiling_sound_1 = $StaticBody/CeilingSound1
+onready var ceiling_sound_2 = $StaticBody/CeilingSound2
+onready var ceiling_sound_3 = $StaticBody/CeilingSound3
+onready var ceiling_sound_4 = $StaticBody/CeilingSound4
+onready var ceiling_sound_5 = $StaticBody/CeilingSound5
 
 var spikes_injury_rate = 2
 var does_damage = false
@@ -10,20 +15,37 @@ func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	restore_state()
 
+func ceiling_sound_play():
+	ceiling_sound_1.play()
+	ceiling_sound_2.play()
+	ceiling_sound_3.play()
+	ceiling_sound_4.play()
+	ceiling_sound_5.play()
+
+func ceiling_sound_stop():
+	ceiling_sound_1.stop()
+	ceiling_sound_2.stop()
+	ceiling_sound_3.stop()
+	ceiling_sound_4.stop()
+	ceiling_sound_5.stop()
+
 func activate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000")
 	get_node("AnimationPlayer").play("CollisionAnim")
+	ceiling_sound_play()
 
 func pause():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.PAUSED
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
+	ceiling_sound_stop()
 
 func deactivate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
 	get_node("ceiling_armat000/AnimationPlayer").play_backwards("ceiling_action.000")
 	get_node("AnimationPlayer").play_backwards("CollisionAnim")
+	ceiling_sound_play()
 
 func restore_state():
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
@@ -40,12 +62,14 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 		bandit.join_party()
 		female.join_party()
+		ceiling_sound_stop()
 		conversation_manager.start_area_conversation("010-2-2_CeilingStopped")
 	elif game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.DISABLED \
 		and ( \
 			conversation_manager.conversation_is_finished("010-2-3_CeilingUp") \
 			or conversation_manager.conversation_is_in_progress("010-2-3_CeilingUp")
 		):
+			ceiling_sound_stop()
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
 
 func _on_conversation_finished(player, conversation_name, target, initiator):

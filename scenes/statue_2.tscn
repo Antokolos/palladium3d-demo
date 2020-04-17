@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://takable.gd" type="Script" id=1]
 [ext_resource path="res://assets/statue_2.escn" type="PackedScene" id=2]
+[ext_resource path="res://sound/environment/labyrinth_6_statue.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.14952
 height = 0.777792
 
 [node name="statue_2" type="StaticBody" groups=[
-"restorable_state",
 "takables",
+"restorable_state",
 ]]
 script = ExtResource( 1 )
 takable_id = 30
@@ -19,3 +20,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0211213, 0 )
 shape = SubResource( 1 )
 
 [node name="statue_2" parent="CollisionShape" instance=ExtResource( 2 )]
+
+[node name="SoundPut" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+bus = "Sound"
