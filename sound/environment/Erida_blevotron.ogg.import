@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Erida_blevotron.ogg-68c6b7721e818d2a2e23c4b1fcfe3e3b.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Erida_blevotron.ogg"
+dest_files=[ "res://.import/Erida_blevotron.ogg-68c6b7721e818d2a2e23c4b1fcfe3e3b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

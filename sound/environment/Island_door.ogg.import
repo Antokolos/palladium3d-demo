@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Island_door.ogg-561921e7e0e4a180f71cbac05f83c67f.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Island_door.ogg"
+dest_files=[ "res://.import/Island_door.ogg-561921e7e0e4a180f71cbac05f83c67f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

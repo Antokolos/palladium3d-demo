@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Erida_gas_room.ogg-bdd6872b61ea937cf1674edc6295038d.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Erida_gas_room.ogg"
+dest_files=[ "res://.import/Erida_gas_room.ogg-bdd6872b61ea937cf1674edc6295038d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

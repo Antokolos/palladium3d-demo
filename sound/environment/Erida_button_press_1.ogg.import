@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Erida_button_press_1.ogg-614f1ec2c4f7473da16a8409fcfa790d.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Erida_button_press_1.ogg"
+dest_files=[ "res://.import/Erida_button_press_1.ogg-614f1ec2c4f7473da16a8409fcfa790d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

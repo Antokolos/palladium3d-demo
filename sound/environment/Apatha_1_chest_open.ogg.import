@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Apatha_1_chest_open.ogg-801b56e41d46aca1aca0b73aa28d4ec5.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Apatha_1_chest_open.ogg"
+dest_files=[ "res://.import/Apatha_1_chest_open.ogg-801b56e41d46aca1aca0b73aa28d4ec5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
