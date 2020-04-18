@@ -30,6 +30,7 @@ var dir = Vector3()
 const DEACCEL= 16
 const MAX_SLOPE_ANGLE = 60
 
+onready var upper_body_shape = $UpperBody_CollisionShape
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
 onready var standing_area = $StandingArea
@@ -59,6 +60,13 @@ const CONVERSATION_RANGE = 7
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
+
+const CAMERA_ROT_MIN_DEG = -88
+const CAMERA_ROT_MAX_DEG = 88
+const MODEL_ROT_MIN_DEG = -88
+const MODEL_ROT_MAX_DEG = 0
+const SHAPE_ROT_MIN_DEG = -90-88
+const SHAPE_ROT_MAX_DEG = -90+88
 
 var cur_animation = null
 var UP_DIR = Vector3(0, 1, 0)
@@ -126,7 +134,7 @@ func follow(current_transform, target_position):
 	var in_party = is_in_party()
 	if not path.empty():
 		companion_state = COMPANION_STATE.WALK
-		model.walk(rotation_angle_to_player_deg)
+		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
 		if distance <= ALIGNMENT_RANGE:
 			path.pop_front()
 			dir = Vector3()
@@ -136,7 +144,7 @@ func follow(current_transform, target_position):
 			$SoundWalking.play()
 	elif in_party and distance > FOLLOW_RANGE:
 		companion_state = COMPANION_STATE.WALK
-		model.walk(rotation_angle_to_player_deg)
+		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
@@ -151,7 +159,7 @@ func follow(current_transform, target_position):
 				model.look(rotation_angle_to_player_deg)
 				dir = Vector3()
 				return
-		model.walk(rotation_angle_to_player_deg)
+		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
 		dir = target_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
@@ -328,13 +336,17 @@ func _input(event):
 func process_rotation():
 	rotation_helper.rotate_x(angle_rad_x)
 	get_model_holder().rotate_x(angle_rad_x)
+	upper_body_shape.rotate_x(angle_rad_x)
 	self.rotate_y(angle_rad_y)
 	var camera_rot = rotation_helper.rotation_degrees
 	var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
-	camera_rot.x = clamp(camera_rot.x, -88, 88)
+	var shape_rot = upper_body_shape.rotation_degrees
+	camera_rot.x = clamp(camera_rot.x, CAMERA_ROT_MIN_DEG, CAMERA_ROT_MAX_DEG)
 	rotation_helper.rotation_degrees = camera_rot
-	model_rot.x = clamp(model_rot.x, -88, 0)
+	model_rot.x = clamp(model_rot.x, MODEL_ROT_MIN_DEG, MODEL_ROT_MAX_DEG)
 	get_model_holder().rotation_degrees = model_rot
+	shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
+	upper_body_shape.rotation_degrees = shape_rot
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
@@ -385,7 +397,8 @@ func reset_rotation():
 func _ready():
 	exclusions.append(self)
 	exclusions.append(floor_node)
-	exclusions.append($Body_CollisionShape)  # looks like it is not included, but to be sure...
+	exclusions.append($UpperBody_CollisionShape)  # looks like it is not included, but to be sure...
+	exclusions.append($Body_CollisionShape)
 	exclusions.append($Feet_CollisionShape)
 	if initial_player:
 		var camera = load("res://camera.tscn").instance()
@@ -521,9 +534,9 @@ func process_input(delta):
 	# ----------------------------------
 	# Sprinting
 	if Input.is_action_pressed("movement_sprint"):
-		is_sprinting = true
+		set_sprinting(true)
 	else:
-		is_sprinting = false
+		set_sprinting(false)
 	# ----------------------------------
 	
 	# ----------------------------------
@@ -531,6 +544,14 @@ func process_input(delta):
 	if Input.is_action_just_pressed("crouch"):
 		toggle_crouch()
 	# ----------------------------------
+
+func set_sprinting(enable):
+	is_sprinting = enable
+	var is_player = is_player()
+	if is_player:
+		var companions = game_params.get_companions()
+		for companion in companions:
+			companion.set_sprinting(enable)
 
 func is_low_ceiling():
 	# Make sure you've set proper collision layer bit for ceiling

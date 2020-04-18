@@ -18,7 +18,7 @@ extents = Vector3( 0.24, 0.36, 0.2 )
 environment = ExtResource( 1 )
 current = true
 fov = 55.0
-near = 0.01
+near = 0.23
 far = 23.0
 script = ExtResource( 2 )
 

@@ -1,5 +1,8 @@
 extends Camera
 
+const CAMERA_NEAR_NORMAL = 0.46
+const CAMERA_NEAR_DETAILED = 0.23
+
 onready var flashlight = get_node("Flashlight")
 onready var use_point = get_node("Gun_Fire_Points/Use_Point")
 
@@ -95,6 +98,10 @@ func set_inside(inside):
 	environment.set("background_sky", sky_inside if inside else sky_outside)
 	environment.set("background_energy", 0.04 if inside else 0.4)
 	environment.set("ambient_light_energy", 0.04 if inside else 0.4)
+
+func set_detailed_mode(enable):
+	# Set to CAMERA_NEAR_NORMAL in order to prevent player's inner parts from getting into camera view
+	self.near = CAMERA_NEAR_DETAILED if enable else CAMERA_NEAR_NORMAL
 
 func change_culling():
 	if culling_rays:

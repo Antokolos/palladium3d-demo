@@ -13,11 +13,23 @@ const BANDIT_CUTSCENE_PUSHES_CHEST_START = 1
 
 const PLAYER_CUTSCENE_PUSHES_CHEST = 1
 
+const LOOK_TRANSITION_STAND_UP = 0
+const LOOK_TRANSITION_STANDING = 1
+const LOOK_TRANSITION_SIT_DOWN = 2
+const LOOK_TRANSITION_SQUATTING = 3
+
+const TRANSITION_LOOK = 0
+const TRANSITION_WALK = 1
+const TRANSITION_RUN = 2
+const TRANSITION_CROUCH = 3
+
 const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
 export var look_anim_name = "female_rest_99"
 export var walk_anim_name = "female_walk_2"
+export var run_anim_name = "female_runs"
+export var crouch_anim_name = "female_crouches_squatted"
 
 export var b0_anim_name = "b0"
 export var b1_anim_name = "b1"
@@ -41,6 +53,7 @@ export var b17_anim_name = "b17"
 var simple_mode = true
 
 onready var speech_timer = get_node("SpeechTimer")
+onready var detail_timer = get_node("DetailTimer")
 
 var speech_states = []
 var speech_idx = 0
@@ -104,17 +117,14 @@ func is_cutscene():
 func stand_up(force = false):
 	if not force and is_cutscene():
 		return
-	if $AnimationTree.get("parameters/LookTransition/current") != 1:
-		$AnimationTree.set("parameters/TimeScaleStandUp/scale", -1)
-		$AnimationTree.set("parameters/LookTransition/current", 0)
-	$AnimationTree.set("parameters/WalkTransition/current", 0)
+	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_STANDING:
+		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
 
 func sit_down(force = false):
 	if not force and is_cutscene():
 		return
-	if $AnimationTree.get("parameters/LookTransition/current") != 3:
-		$AnimationTree.set("parameters/LookTransition/current", 2)
-	$AnimationTree.set("parameters/WalkTransition/current", 1)
+	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_SQUATTING:
+		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
 
 func normalize_angle(look_angle_deg):
 	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)
@@ -139,10 +149,14 @@ func get_anim_player():
 
 func get_anim_name_by_transition(t):
 	match t:
-		0:
+		TRANSITION_LOOK:
 			return look_anim_name
-		1:
+		TRANSITION_WALK:
 			return walk_anim_name
+		TRANSITION_RUN:
+			return run_anim_name
+		TRANSITION_CROUCH:
+			return crouch_anim_name
 		_:
 			return look_anim_name
 
@@ -232,15 +246,15 @@ func get_lips_transition_by_phoneme(phoneme):
 func look(look_angle_deg):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
-	set_transition(0)
+	set_transition(TRANSITION_LOOK)
 	var is_rest_active = $AnimationTree.get("parameters/LookShot/active")
 	if not is_rest_active and $RestTimer.is_stopped():
 		$RestTimer.start(REST_POSE_CHANGE_TIME_S)
 
-func walk(look_angle_deg):
+func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	if not simple_mode:
 		rotate_head(look_angle_deg)
-	set_transition(1)
+	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK))
 	$RestTimer.stop()
 
 func speak(states):
@@ -302,9 +316,14 @@ func _process(delta):
 		return
 	var player = get_node("../..")
 	if player.is_walking:
-		walk(0)
+		walk(0, player.is_crouching, player.is_sprinting)
+		if player.is_player():
+			detail_timer.stop()
+			player.get_cam().set_detailed_mode(false)
 	else:
 		look(0)
+		if player.is_player() and detail_timer.is_stopped():
+			detail_timer.start()
 
 func _on_SpeechTimer_timeout():
 	if speech_idx < speech_states.size():
@@ -318,3 +337,8 @@ func _on_SpeechTimer_timeout():
 
 func _on_RestTimer_timeout():
 	do_rest_shot(0 if randf() > 0.5 else 1)
+
+func _on_DetailTimer_timeout():
+	var player = get_node("../..")
+	if player.is_player():
+		player.get_cam().set_detailed_mode(true)
