@@ -370,6 +370,7 @@ func is_player():
 
 func become_player():
 	if is_player():
+		get_cam().rebuild_exceptions(self)
 		return
 	var player = game_params.get_player()
 	var rotation_helper = get_node("Rotation_Helper")
@@ -385,14 +386,12 @@ func become_player():
 	model.set_simple_mode(true)
 	player.reset_rotation()
 	game_params.set_player_name_hint(name_hint)
+	camera.rebuild_exceptions(self)
 
 func reset_rotation():
-	var rotation_helper = get_node("Rotation_Helper")
-	if rotation_helper:
-		rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
-	var model_holder = get_model_holder()
-	if model_holder:
-		model_holder.set_rotation_degrees(Vector3(0, 0, 0))
+	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
+	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
 
 func _ready():
 	exclusions.append(self)
@@ -403,6 +402,7 @@ func _ready():
 	if initial_player:
 		var camera = load("res://camera.tscn").instance()
 		get_cam_holder().add_child(camera)
+		camera.rebuild_exceptions(self)
 		game_params.set_player_name_hint(name_hint)
 	var model_container = get_node("Model")
 	var placeholder = get_node("placeholder")

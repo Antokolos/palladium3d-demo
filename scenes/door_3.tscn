@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1.85132, 1.06088, 0.255858 )
 
-[node name="door_3" groups=[
+[node name="door_3" index="0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )

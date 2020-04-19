@@ -3,6 +3,10 @@ extends Spatial
 onready var ray = $Ray_Cast
 var action_body = null
 
+func rebuild_exceptions(player_node):
+	ray.clear_exceptions()
+	ray.add_exception(player_node)
+
 func enable(enable):
 	ray.enabled = enable
 

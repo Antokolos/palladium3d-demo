@@ -28,6 +28,9 @@ func _ready():
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
 
+func rebuild_exceptions(player_node):
+	use_point.rebuild_exceptions(player_node)
+
 func enable_use(enable):
 	use_point.enable(enable)
 

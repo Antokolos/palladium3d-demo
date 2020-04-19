@@ -7,20 +7,20 @@
 radius = 0.3
 mid_height = 1.6
 
-[sub_resource type="CapsuleShape" id=6]
+[sub_resource type="CapsuleShape" id=2]
 margin = 0.06
 radius = 0.3
-height = 0.8
+height = 0.793343
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=3]
 margin = 0.06
 radius = 0.3
 height = 1.6
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.16, 0.04, 0.16 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Rotation_Helper:translation")
 tracks/0/interp = 1
@@ -57,8 +57,32 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 1.6, 0.6 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("UpperBody_CollisionShape:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 1.5, 0 ), Vector3( 0, 0.75, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("UpperBody_CollisionShape:shape:height")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.0134519, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.8, 0.3 ]
+}
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.161138, 1, 0.146487 )
 
 [node name="player" type="KinematicBody" groups=[
@@ -69,6 +93,7 @@ script = ExtResource( 1 )
 
 [node name="placeholder" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
+visible = false
 mesh = SubResource( 1 )
 material/0 = null
 
@@ -76,15 +101,15 @@ material/0 = null
 
 [node name="UpperBody_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.5, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Feet_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Rotation_Helper" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52, 0 )
@@ -95,7 +120,7 @@ transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0.
 [node name="HUD" type="Spatial" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/crouch = SubResource( 4 )
+anims/crouch = SubResource( 5 )
 
 [node name="SoundWalking" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
@@ -114,4 +139,4 @@ collision_layer = 1024
 collision_mask = 1024
 
 [node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
