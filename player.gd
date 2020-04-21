@@ -55,6 +55,7 @@ export var linear_speed = 2.8
 onready var pyramid = get_parent()
 onready var floor_node = get_node(floor_path)
 const ANGLE_TOLERANCE = 0.01
+const MIN_MOVEMENT = 0.01
 
 const CONVERSATION_RANGE = 7
 const FOLLOW_RANGE = 3
@@ -85,104 +86,89 @@ var pathfinding_enabled = true
 func set_pathfinding_enabled(enabled):
 	pathfinding_enabled = enabled
 
-func get_rotation_angle(cur_dir, target_dir, force_forward = true):
+func get_rotation_angle(cur_dir, target_dir):
 	var c = cur_dir.normalized()
 	var t = target_dir.normalized()
 	var cross = c.cross(t)
-#	var dot1 = cur_dir.dot(target_dir)
-#	var dot2 = (-cur_dir).dot(target_dir)
-#	if dot1 > 0 or force_forward:
-#		return acos(dot1) if cross.y > 0 else -acos(dot1)
-#	else:
-#		return acos(dot2) if cross.y < 0 else -acos(dot2)
 	var clen = cross.length()
 	if clen > 1.0:
 		clen = 1.0
-	elif clen < -1.0:
-		clen = -1.0
 	return asin(clen) if cross.y > 0 else -asin(clen)
 
-func follow(current_transform, target_position):
+func follow(current_transform, next_position):
+	var current_position = current_transform.origin
+	var player_node = game_params.get_player()
+	var in_party = is_in_party()
+	var was_moving = companion_state != COMPANION_STATE.REST
 	var cur_dir = current_transform.basis.xform(Z_DIR)
 	cur_dir.y = 0
-	var target_dir = target_position - current_transform.origin
-	target_dir.y = 0
-	var distance = target_dir.length()
-	var rotation_angle = get_rotation_angle(cur_dir, target_dir)
-#	var step = state.get_step()
-#	if step > 0.01 or step < -0.01: # To prevent division by zero
-#		state.set_angular_velocity(up_dir * (rotation_angle / step) * rotation_speed)
-
-	# Angle to player
-	var current_position = current_transform.origin
-	var player_position = game_params.get_player().get_global_transform().origin
-	var mov_vec = player_position - current_position
-	mov_vec.y = 0
-	var rotation_angle_to_player_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
-
+	var next_dir = next_position - current_position
+	next_dir.y = 0
+	var distance = next_dir.length()
+	
+	var rotation_angle = 0
+	var rotation_angle_to_target_deg = 0
+	var preferred_target = player_node if in_party else target_node
+	if preferred_target:
+		var t = preferred_target.get_global_transform()
+		var target_position = t.origin
+		var player_position = player_node.get_global_transform().origin
+		var mov_vec = target_position - current_position if was_moving else player_position - current_position
+		mov_vec.y = 0
+		rotation_angle = get_rotation_angle(cur_dir, next_dir) \
+							if in_party or distance > ALIGNMENT_RANGE \
+							else get_rotation_angle(cur_dir, t.basis.xform(Z_DIR))
+		rotation_angle_to_target_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
+	
 	angle_rad_y = 0
-	if companion_state == COMPANION_STATE.WALK:
+	if not in_party or companion_state == COMPANION_STATE.WALK:
 		if rotation_angle > 0.1:
 			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
 		elif rotation_angle < -0.1:
 			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 	
-#	if is_attacking:
-#		return
-	
 	var model = get_model()
-	var in_party = is_in_party()
 	if not path.empty():
 		companion_state = COMPANION_STATE.WALK
-		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
+		model.walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
 		if distance <= ALIGNMENT_RANGE:
 			path.pop_front()
 			dir = Vector3()
 		else:
-			dir = target_dir.normalized()
+			dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	elif in_party and distance > FOLLOW_RANGE:
 		companion_state = COMPANION_STATE.WALK
-		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
-		dir = target_dir.normalized()
+		model.walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
+		dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	elif (in_party and distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK) or (not in_party and distance > ALIGNMENT_RANGE):
-		companion_state = COMPANION_STATE.WALK
-		if not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
+		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
 				emit_signal("arrived_to_boundary", self, target_node)
-				target_node = null
+				print("emit_signal(\"arrived_to_boundary\", self, target_node)")
 				companion_state = COMPANION_STATE.REST
-				model.look(rotation_angle_to_player_deg)
+				model.look(rotation_angle_to_target_deg)
 				dir = Vector3()
 				return
-		model.walk(rotation_angle_to_player_deg, is_crouching, is_sprinting)
-		dir = target_dir.normalized()
+		companion_state = COMPANION_STATE.WALK
+		model.walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
+		dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	else:
-#		aggression_level = 0
-		companion_state = COMPANION_STATE.REST
-		model.look(rotation_angle_to_player_deg)
-#		state.set_angular_velocity(zero_dir)
+		model.look(rotation_angle_to_target_deg)
 		dir = Vector3()
-		if not in_party:
-			var preferred_target = get_preferred_target()
-			if preferred_target:
-				var target_z = preferred_target.get_global_transform().basis.xform(Z_DIR)
-				var c = cur_dir.normalized()
-				var t = target_z.normalized()
-				var cross = c.cross(t)
-				if cross.y > 0.1:
-					angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
-				elif cross.y < -0.1:
-					angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
-			if target_node and angle_rad_y == 0 and current_position.distance_to(target_node.get_global_transform().origin) <= ALIGNMENT_RANGE:
+		if in_party:
+			companion_state = COMPANION_STATE.REST
+		else:
+			if was_moving and target_node and angle_rad_y == 0 and distance <= ALIGNMENT_RANGE:
 				emit_signal("arrived_to", self, target_node)
-				target_node = null
+				print("emit_signal(\"arrived_to\", self, target_node)")
+				companion_state = COMPANION_STATE.REST
 
 func is_in_speak_mode():
 	return get_model().is_in_speak_mode()
@@ -366,7 +352,7 @@ func remove_highlight(player_node):
 #####
 
 func is_player():
-	return game_params.get_player() == self
+	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
 func become_player():
 	if is_player():
@@ -587,18 +573,22 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel*delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
-	if vel.x > 0.001 or vel.x < -0.001 or vel.z > 0.001 or vel.z < -0.001:
-		if not $SoundWalking.is_playing():
-			$SoundWalking.play()
-		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
-	else:
+	var is_moving = is_in_jump or vel.x > MIN_MOVEMENT or vel.x < -MIN_MOVEMENT or vel.z > MIN_MOVEMENT or vel.z < -MIN_MOVEMENT
+	if not is_moving:
 		$SoundWalking.stop()
+		return
+	
+	if not $SoundWalking.is_playing():
+		$SoundWalking.play()
+	$SoundWalking.pitch_scale = 2 if is_sprinting else 1
 
 	vel = move_and_slide_with_snap(vel, ZERO_DIR if is_in_jump else UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
 
+	var sc = get_slide_count()
+	if sc == 0:
+		return
 	var character_collisions = []
 	var nonchar_collision = null
-	var sc = get_slide_count()
 	var characters = game_params.get_characters()
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
