@@ -1,7 +1,7 @@
 extends VisibilityNotifier
 class_name RoomEnabler
 
-const REMOVE_FROM_TREE = false
+const REMOVE_FROM_TREE = true
 
 export var room_path = "../room"
 var room_children = []
@@ -33,6 +33,7 @@ func enable_room():
 		if room_node.get_child_count() == 0:
 			for ch in room_children:
 				room_node.add_child(ch)
+			room_children.clear()
 	else:
 		room_node.visible = true
 
@@ -42,9 +43,9 @@ func disable_room():
 		if room_node.get_child_count() > 0:
 			var room_children_was_empty = room_children.empty()
 			for ch in room_node.get_children():
+				room_node.remove_child(ch)
 				if room_children_was_empty:
 					room_children.append(ch)
-				room_node.remove_child(ch)
 	else:
 		room_node.visible = false
 
@@ -55,26 +56,22 @@ func set_active(active):
 		enable_room()
 
 func _physics_process(delta):
-	if not active:
+	var player = game_params.get_player()
+	var camera = player.get_cam()
+	var origin = camera.get_global_transform().origin
+	var need_enable = get_aabb().has_point(to_local(origin))
+	if not active or not player or need_enable:
 		enable_raycasts(false)
 		enable_room()
 		return
 	if not screen_entered:
 		disable_room()
 		return
-	var player = game_params.get_player()
-	if player:
-		var camera = player.get_cam()
-		var origin = camera.get_global_transform().origin
-		var need_enable = get_aabb().has_point(to_local(origin))
-		for raycast in get_children():
-			var ray_vec = raycast.to_local(origin)
-			var is_outside_camera = ray_vec.length() > camera.far
-			if raycast.enabled:
-				raycast.cast_to = ray_vec
-				need_enable = need_enable or not raycast.is_colliding()
-			raycast.enabled = not is_outside_camera
-		if need_enable:
-			enable_room()
-		else:
-			disable_room()
+	for raycast in get_children():
+		var ray_vec = raycast.to_local(origin)
+		var is_outside_camera = ray_vec.length() > camera.far
+		if raycast.enabled:
+			raycast.cast_to = ray_vec
+			need_enable = need_enable or not raycast.is_colliding()
+		raycast.enabled = not is_outside_camera
+	enable_room() if need_enable else disable_room()

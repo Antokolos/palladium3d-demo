@@ -149,7 +149,6 @@ func follow(current_transform, next_position):
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
 				emit_signal("arrived_to_boundary", self, target_node)
-				print("emit_signal(\"arrived_to_boundary\", self, target_node)")
 				companion_state = COMPANION_STATE.REST
 				model.look(rotation_angle_to_target_deg)
 				dir = Vector3()
@@ -167,7 +166,6 @@ func follow(current_transform, next_position):
 		else:
 			if was_moving and target_node and angle_rad_y == 0 and distance <= ALIGNMENT_RANGE:
 				emit_signal("arrived_to", self, target_node)
-				print("emit_signal(\"arrived_to\", self, target_node)")
 				companion_state = COMPANION_STATE.REST
 
 func is_in_speak_mode():

@@ -23,8 +23,10 @@ func is_active():
 	return (ls == game_params.LightState.DEFAULT and initially_active) or (ls == game_params.LightState.ON)
 
 func enable(active, update):
-	torch_fire.enable(active)
-	torch_light.enable(active)
+	if torch_fire:
+		torch_fire.enable(active)
+	if torch_light:
+		torch_light.enable(active)
 	if update:
 		game_params.set_light_state(get_path(), active)
 
@@ -83,3 +85,6 @@ func _on_VisibilityNotifier_screen_exited():
 	if persistent:
 		return
 	screen_entered = false
+
+func _on_torch_full_tree_entered():
+	restore_state()

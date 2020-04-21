@@ -25,15 +25,15 @@ func open():
 	anim_player.play(anim_name_open)
 	door_collision.disabled = true
 	game_params.set_door_state(get_path(), true)
-	if has_node("SoundMove"):
-		get_node("SoundMove").play()
+	if has_node("door_sound"):
+		get_node("door_sound").play()
 
 func close():
 	anim_player.play_backwards(anim_name_open)
 	door_collision.disabled = false
 	game_params.set_door_state(get_path(), false)
-	if has_node("SoundMove"):
-		get_node("SoundMove").play()
+	if has_node("door_sound"):
+		get_node("door_sound").play()
 
 func is_opened():
 	var state = game_params.get_door_state(get_path())

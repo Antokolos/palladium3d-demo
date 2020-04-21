@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sound/environment/243699__ertfelda__hidden-wall-opening.wav" type="AudioStream" id=1]
+
+[node name="door_sound" type="AudioStreamPlayer3D"]
+stream = ExtResource( 1 )
+max_distance = 6.0
+out_of_range_mode = 1
+bus = "Sound"

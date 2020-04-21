@@ -9,11 +9,11 @@ extents = Vector3( 2.32343, 0.207886, 13.4675 )
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.417777, 2.1127, 12.7001 )
 
-[sub_resource type="CapsuleShape" id=4]
+[sub_resource type="CapsuleShape" id=3]
 radius = 2.26336
 height = 0.979776
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 1.42514, 1.62945, 1 )
 
 [node name="forest_door_tunnel" instance=ExtResource( 1 )]
@@ -38,11 +38,11 @@ shape = SubResource( 2 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="StaticBody" index="4"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -29.8307, 0.55899, -41.6668 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="transition_palladium" type="StaticBody" parent="." index="7"]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="transition_palladium" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.8049, -3.07782, -19.403 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )

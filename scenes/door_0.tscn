@@ -2,12 +2,12 @@
 
 [ext_resource path="res://assets/door_4.escn" type="PackedScene" id=1]
 [ext_resource path="res://door.gd" type="Script" id=2]
-[ext_resource path="res://sound/environment/243699__ertfelda__hidden-wall-opening.wav" type="AudioStream" id=3]
+[ext_resource path="res://door_sound.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.523002, 3.12578, 2.26724 )
 
-[node name="door_0" index="0" groups=[
+[node name="door_0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -25,6 +25,4 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.395788 )
 shape = SubResource( 1 )
 
-[node name="SoundMove" type="AudioStreamPlayer3D" parent="." index="2"]
-stream = ExtResource( 3 )
-bus = "Sound"
+[node name="door_sound" parent="." index="2" instance=ExtResource( 3 )]
