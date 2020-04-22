@@ -1,4 +1,4 @@
-extends Spatial
+extends PalladiumLevel
 
-func _ready():
+func do_init(is_loaded):
 	game_params.change_music_to("loading.ogg")

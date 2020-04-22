@@ -1,9 +1,6 @@
-extends Spatial
-onready var player = get_node("player")
-onready var player_female = get_node("player_female")
+extends PalladiumLevel
 
-func _ready():
-	var is_loaded = game_params.finish_load()
+func do_init(is_loaded):
 	if not game_params.story_vars.is_game_start and not is_loaded:
 		var player_basis = $PositionPlayer.get_transform().basis
 		var player_origin = $PositionPlayer.get_transform().origin
@@ -20,8 +17,6 @@ func _ready():
 	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)
 	game_params.change_music_to("underwater.ogg")
 	player_female.set_sound_walk(player_female.SOUND_WALK_GRASS if female_in_grass else player_female.SOUND_WALK_SAND)
-	if not is_loaded:
-		game_params.autosave_create()
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id

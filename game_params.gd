@@ -145,7 +145,8 @@ func get_characters():
 	return result
 
 func is_inside():
-	return scene_path != "res://forest.tscn"
+	var viewport = get_viewport()
+	return viewport.get_child(0).is_inside() if viewport.get_child_count() > 0 else true
 
 func _on_cutscene_finished(player, cutscene_id):
 	match player.name_hint:

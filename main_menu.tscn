@@ -43,7 +43,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -56,9 +55,9 @@ pause_mode = 0
 size = Vector2( 1920, 1080 )
 physics_object_picking = true
 
-[node name="main_menu" type="Spatial" parent="ViewportContainer/Viewport"]
-editor/display_folded = true
+[node name="main_menu" type="Navigation" parent="ViewportContainer/Viewport"]
 script = ExtResource( 3 )
+is_loadable = false
 
 [node name="menu_floor" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 4 )]
 

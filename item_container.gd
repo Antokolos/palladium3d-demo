@@ -11,11 +11,13 @@ export var path_blocker = ""
 export var path_collision_closed = "closed_door"
 export var path_collision_opened = "opened_door"
 export var path_animation_player = "apatha_chest/apatha_chest_armature_lid/AnimationPlayer"
+export var path_animation_player_base = "apatha_chest/apatha_chest_armature_base/AnimationPlayer"
 export var path_door_mesh = ""
 export var surface_idx_door = 0
 export var anim_name = "Armature.010Action.003"
 
 onready var animation_player = get_node(path_animation_player)
+onready var animation_player_base = get_node(path_animation_player_base) if has_node(path_animation_player_base) else null
 var blocker_node
 var collision_closed
 var collision_opened
@@ -25,6 +27,9 @@ var outline_material
 var outlined_material
 
 func _ready():
+	animation_player.connect("animation_finished", self, "_on_animation_finished")
+	if animation_player_base:
+		animation_player_base.connect("animation_finished", self, "_on_base_animation_finished")
 	blocker_node = get_node(path_blocker) if path_blocker != "" else null
 	collision_closed = get_node(path_collision_closed)
 	collision_opened = get_node(path_collision_opened)
@@ -33,12 +38,17 @@ func _ready():
 #	outlined_material = material.duplicate()
 #	outlined_material.next_pass = outline_material
 
+func _on_animation_finished(anim_name):
+	animation_player.set_speed_scale(1.0)
+
+func _on_base_animation_finished(anim_name):
+	animation_player_base.set_speed_scale(1.0)
+
 func is_opened():
 	var cs = game_params.get_container_state(get_path())
 	return (cs == game_params.ContainerState.DEFAULT and initially_opened) or (cs == game_params.ContainerState.OPENED)
 
 func open(speed_scale = 1.0):
-	AnimationPlayer
 	if blocker_node and blocker_node.opened:
 		return
 	animation_player.set_speed_scale(speed_scale)
