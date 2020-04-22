@@ -1,6 +1,7 @@
 extends Navigation
 class_name PalladiumLevel
 
+export var is_bright = false
 export var is_inside = true
 export var is_loadable = true
 export var player_path = "player"
@@ -23,6 +24,9 @@ func _ready():
 func do_init(is_loaded):
 	# Override in children instead of _ready()
 	pass
+
+func is_bright():
+	return is_bright
 
 func is_inside():
 	return is_inside

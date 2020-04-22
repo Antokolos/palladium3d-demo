@@ -57,6 +57,7 @@ physics_object_picking = true
 
 [node name="main_menu" type="Navigation" parent="ViewportContainer/Viewport"]
 script = ExtResource( 3 )
+is_bright = true
 is_loadable = false
 
 [node name="menu_floor" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 4 )]
@@ -125,6 +126,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308621, 0 )
 [node name="credits_rus" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.302101, 0 )
 activation_lang_id = 1
+
+[node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits"]
+transform = Transform( 1, 0, 0, 0, 0.988471, 0.151411, 0, -0.151411, 0.988471, 0.0116526, 1.07231, 1.52835 )
+visible = false
+light_color = Color( 1, 0.913725, 0.768627, 1 )
+spot_range = 1.46786
+spot_angle = 36.8701
 
 [node name="menu_chest" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79263, 1.18172, -1.79258 )

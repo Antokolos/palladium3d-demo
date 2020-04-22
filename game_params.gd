@@ -144,9 +144,17 @@ func get_characters():
 			result.append(character_node)
 	return result
 
-func is_inside():
+func get_level():
 	var viewport = get_viewport()
-	return viewport.get_child(0).is_inside() if viewport.get_child_count() > 0 else true
+	return viewport.get_child(0) if viewport.get_child_count() > 0 else null
+
+func is_inside():
+	var level = get_level()
+	return level.is_inside() if level else true
+
+func is_bright():
+	var level = get_level()
+	return level.is_bright() if level else false
 
 func _on_cutscene_finished(player, cutscene_id):
 	match player.name_hint:

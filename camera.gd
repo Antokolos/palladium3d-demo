@@ -91,16 +91,16 @@ func change_quality(quality):
 			if flashlight:
 				flashlight.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
-	set_inside(game_params.is_inside())
+	set_inside(game_params.is_inside(), game_params.is_bright())
 	if shader_cache:
 		shader_cache.refresh()
 
-func set_inside(inside):
+func set_inside(inside, bright):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
-	environment.set_bg_color(Color(0, 0, 0))
+	environment.set_bg_color(Color(1, 1, 1) if bright else Color(0, 0, 0))
 	environment.set("background_sky", sky_inside if inside else sky_outside)
-	environment.set("background_energy", 0.04 if inside else 0.4)
-	environment.set("ambient_light_energy", 0.04 if inside else 0.4)
+	environment.set("background_energy", 0.3 if bright else (0.04 if inside else 0.4))
+	environment.set("ambient_light_energy", 0.3 if bright else (0.04 if inside else 0.4))
 
 func set_detailed_mode(enable):
 	# Set to CAMERA_NEAR_NORMAL in order to prevent player's inner parts from getting into camera view
