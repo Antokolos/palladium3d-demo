@@ -35,7 +35,7 @@ const RESOLUTION_480 = 0
 const TABLET_HORIZONTAL = 1
 const TABLET_VERTICAL = 0
 
-var tablet_orientation = TABLET_VERTICAL
+var tablet_orientation = TABLET_HORIZONTAL
 var vsync = true
 var fullscreen = false
 var quality = QUALITY_OPT

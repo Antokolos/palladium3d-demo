@@ -17,6 +17,7 @@ onready var apps = get_node("TabletPanel/TabletScreen/apps")
 onready var chat = apps.get_node("chat")
 onready var credits = apps.get_node("credits")
 onready var settings_app = apps.get_node("settings_app")
+onready var controls_app = apps.get_node("controls_app")
 onready var save_game_app = apps.get_node("save_game_app")
 onready var load_game_app = apps.get_node("load_game_app")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
@@ -196,6 +197,11 @@ func _on_CreditsButton_pressed():
 func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
+
+func _on_ControlsButton_pressed():
+	hide_everything()
+	controls_app.show()
+	controls_app.refresh()
 
 func refresh_slot_captions(is_load, base_node):
 	var starting_slot = 0 if is_load else 1

@@ -86,7 +86,7 @@ func set_quick_items_dimmed(dimmed):
 func _process(delta):
 	# ----------------------------------
 	# Inventory on/off
-	if Input.is_action_just_pressed("ui_focus_next") and not conversation_manager.conversation_active():
+	if Input.is_action_just_pressed("inventory_toggle") and not conversation_manager.conversation_active():
 		if inventory.visible:
 			inventory.visible = false
 			select_active_quick_item()
