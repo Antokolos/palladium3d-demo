@@ -187,15 +187,14 @@ func execute_custom_action(event, item):
 				game_params.take("barn_lock_key")
 			_:
 				return false
+		return true
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
 		pass
 	elif event.is_action_pressed("item_preview_action_4"):
 		pass
-	else:
-		return false
-	return true
+	return false
 
 func handle_conversation(player, target, initiator):
 	if conversation_manager.arrange_meeting(player, target, initiator):

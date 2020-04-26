@@ -32,6 +32,7 @@ use_filter = true
 font_data = ExtResource( 13 )
 
 [node name="hud" type="Control" groups=[
+"hud",
 "restorable_state",
 ]]
 anchor_right = 1.0
@@ -540,6 +541,7 @@ dialog_text = "Are you sure?"
 [node name="BloodSplatTimer" type="Timer" parent="."]
 wait_time = 0.05
 [connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
+[connection signal="about_to_show" from="QuitDialog" to="." method="_on_QuitDialog_about_to_show"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
 [connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]
 [connection signal="timeout" from="BloodSplatTimer" to="." method="_on_BloodSplatTimer_timeout"]

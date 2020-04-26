@@ -169,7 +169,7 @@ func activate(mode):
 			_on_HomeButton_pressed()
 
 func _unhandled_input(event):
-	if get_tree().paused and event.is_action_pressed("ui_cancel"):
+	if get_tree().paused and event.is_action_pressed("ui_tablet_toggle"):
 		get_tree().set_input_as_handled()
 		hud.show_tablet(false)
 
@@ -234,7 +234,7 @@ func simulate_esc():
 	# Well, I tried, but I failed, for some reason it didn't work for me and I don't know why.
 	# If you'll simplify this code, please tell me, what am I doing wrong :(
 	var ev = InputEventAction.new()
-	ev.set_action("ui_cancel")
+	ev.set_action("ui_tablet_toggle")
 	ev.set_pressed(true)
 	get_tree().input_event(ev)
 	if not hud.is_menu_hud():

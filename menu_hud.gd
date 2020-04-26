@@ -19,8 +19,7 @@ func is_menu_hud():
 func ask_quit():
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		dimmer.visible = true
-	get_tree().paused = true
+	dimmer.visible = true
 	$QuitDialog.popup_centered()
 
 func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
@@ -36,7 +35,7 @@ func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
 		settings.save_settings()
 
 func _unhandled_input(event):
-	if not get_tree().paused and event.is_action_pressed("ui_cancel"):
+	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle"):
 		get_tree().set_input_as_handled()
 		show_tablet(true, Tablet.ActivationMode.DESKTOP)
 
@@ -47,3 +46,6 @@ func _on_QuitDialog_popup_hide():
 	if not tablet.visible:
 		get_tree().paused = false
 		dimmer.visible = false
+
+func _on_QuitDialog_about_to_show():
+	get_tree().paused = true

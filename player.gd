@@ -43,6 +43,7 @@ var is_in_jump = false
 var angle_rad_x = 0
 var angle_rad_y = 0
 
+const AXIS_VALUE_THRESHOLD = 0.15
 var MOUSE_SENSITIVITY = 0.1 #0.05
 var KEY_LOOK_SPEED_FACTOR = 30
 
@@ -302,19 +303,26 @@ func _input(event):
 			process_rotation()
 			angle_rad_x = 0
 			angle_rad_y = 0
+		elif event is InputEventJoypadMotion:
+			var v = event.get_axis_value()
+			var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD
+			if event.get_axis() == JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -v) if nonzero else 0
+			if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v) if nonzero else 0
 		else:
-			if event.is_action_pressed("ui_up"):
+			if event.is_action_pressed("cam_up"):
 				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
-			elif event.is_action_pressed("ui_down"):
+			elif event.is_action_pressed("cam_down"):
 				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
-			elif event.is_action_released("ui_up") or event.is_action_released("ui_down"):
+			elif event.is_action_released("cam_up") or event.is_action_released("cam_down"):
 				angle_rad_x = 0
 			
-			if event.is_action_pressed("ui_left"):
+			if event.is_action_pressed("cam_left"):
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
-			elif event.is_action_pressed("ui_right"):
+			elif event.is_action_pressed("cam_right"):
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
-			elif event.is_action_released("ui_left") or event.is_action_released("ui_right"):
+			elif event.is_action_released("cam_left") or event.is_action_released("cam_right"):
 				angle_rad_y = 0
 
 func process_rotation():

@@ -134,6 +134,8 @@ func _process(delta):
 	change_culling()
 
 func _input(event):
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		return
 	if event.is_action_pressed("action"):
 		var player = game_params.get_player()
 		if player:

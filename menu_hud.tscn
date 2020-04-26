@@ -15,7 +15,9 @@ size = 30
 extra_spacing_char = 8
 font_data = ExtResource( 2 )
 
-[node name="menu_hud" type="Control"]
+[node name="menu_hud" type="Control" groups=[
+"hud",
+]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -68,5 +70,6 @@ margin_right = 274.0
 margin_bottom = 102.0
 popup_exclusive = true
 dialog_text = "Are you sure?"
+[connection signal="about_to_show" from="QuitDialog" to="." method="_on_QuitDialog_about_to_show"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
 [connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]

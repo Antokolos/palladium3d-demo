@@ -75,8 +75,7 @@ func is_menu_hud():
 func ask_quit():
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		dimmer.visible = true
-	get_tree().paused = true
+	dimmer.visible = true
 	$QuitDialog.popup_centered()
 
 func set_quick_items_dimmed(dimmed):
@@ -97,7 +96,7 @@ func _process(delta):
 	
 	# ----------------------------------
 	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_tablet_toggle"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			show_tablet(false)
@@ -277,6 +276,9 @@ func _on_QuitDialog_popup_hide():
 		dimmer.visible = false
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _on_QuitDialog_about_to_show():
+	get_tree().paused = true
 
 func _input(event):
 	if inventory.is_visible_in_tree():
