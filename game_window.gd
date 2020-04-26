@@ -8,6 +8,8 @@ onready var rel_pos = Vector2(0, 0)
 onready var viewport = get_viewport()
 
 func _input(event):
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		return
 	if event is InputEventJoypadMotion:
 		var v = event.get_axis_value()
 		var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD
@@ -19,6 +21,8 @@ func _input(event):
 		click_the_left_mouse_button()
 
 func _process(delta):
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		return
 	var mouse_pos = viewport.get_mouse_position()
 	mouse_pos = mouse_pos + rel_pos
 	viewport.warp_mouse(mouse_pos)

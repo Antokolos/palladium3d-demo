@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://quit_dialog.gd" type="Script" id=1]
+
+[node name="quit_dialog" type="WindowDialog" groups=[
+"quit_dialog",
+]]
+pause_mode = 2
+anchor_left = 0.45
+anchor_top = 0.45
+anchor_right = 0.55
+anchor_bottom = 0.55
+window_title = "Are you sure?"
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 30
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 22.0
+margin_right = 192.0
+margin_bottom = 36.0
+text = "Are you sure?"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 66.0
+margin_right = 192.0
+margin_bottom = 86.0
+custom_constants/separation = 30
+alignment = 1
+
+[node name="YesButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 49.0
+margin_right = 83.0
+margin_bottom = 20.0
+focus_neighbour_left = NodePath("../NoButton")
+focus_neighbour_top = NodePath("../NoButton")
+focus_neighbour_right = NodePath("../NoButton")
+focus_neighbour_bottom = NodePath("../NoButton")
+focus_next = NodePath("../NoButton")
+focus_previous = NodePath("../NoButton")
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 113.0
+margin_right = 143.0
+margin_bottom = 20.0
+focus_neighbour_left = NodePath("../YesButton")
+focus_neighbour_top = NodePath("../YesButton")
+focus_neighbour_right = NodePath("../YesButton")
+focus_neighbour_bottom = NodePath("../YesButton")
+focus_next = NodePath("../YesButton")
+focus_previous = NodePath("../YesButton")
+text = "No"
+[connection signal="about_to_show" from="." to="." method="_on_quit_dialog_about_to_show"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/YesButton" to="." method="_on_YesButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/NoButton" to="." method="_on_NoButton_pressed"]

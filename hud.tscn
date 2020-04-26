@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://hud.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=13]
 [ext_resource path="res://performance_stats.gd" type="Script" id=14]
 [ext_resource path="res://tablet.tscn" type="PackedScene" id=15]
+[ext_resource path="res://quit_dialog.tscn" type="PackedScene" id=16]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0 )
@@ -32,7 +33,6 @@ use_filter = true
 font_data = ExtResource( 13 )
 
 [node name="hud" type="Control" groups=[
-"hud",
 "restorable_state",
 ]]
 anchor_right = 1.0
@@ -531,17 +531,10 @@ color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 [node name="tablet" parent="." instance=ExtResource( 15 )]
 visible = false
 
-[node name="QuitDialog" type="ConfirmationDialog" parent="."]
-pause_mode = 2
-margin_right = 274.0
-margin_bottom = 102.0
-popup_exclusive = true
-dialog_text = "Are you sure?"
+[node name="quit_dialog" parent="." instance=ExtResource( 16 )]
+margin_right = 11.0
 
 [node name="BloodSplatTimer" type="Timer" parent="."]
 wait_time = 0.05
 [connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
-[connection signal="about_to_show" from="QuitDialog" to="." method="_on_QuitDialog_about_to_show"]
-[connection signal="confirmed" from="QuitDialog" to="." method="_on_QuitDialog_confirmed"]
-[connection signal="popup_hide" from="QuitDialog" to="." method="_on_QuitDialog_popup_hide"]
 [connection signal="timeout" from="BloodSplatTimer" to="." method="_on_BloodSplatTimer_timeout"]

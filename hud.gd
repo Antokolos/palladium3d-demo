@@ -38,10 +38,6 @@ func _ready():
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	var dialog = $QuitDialog
-	dialog.get_ok().text = "Yes"
-	dialog.get_cancel().text = "No"
-	get_tree().set_auto_accept_quit(false)
 	synchronize_items()
 	select_active_item()
 	select_active_quick_item()
@@ -65,18 +61,15 @@ func on_language_changed(ID):
 	select_active_item()
 	select_active_quick_item()
 
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		ask_quit()
-
 func is_menu_hud():
 	return false
 
-func ask_quit():
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	dimmer.visible = true
-	$QuitDialog.popup_centered()
+func is_tablet_visible():
+	return tablet.visible
+
+func pause_game(enable):
+	dimmer.visible = enable
+	get_tree().paused = enable
 
 func set_quick_items_dimmed(dimmed):
 	var panel_style = quick_items_dimmer.get("custom_styles/panel")
@@ -107,14 +100,12 @@ func _process(delta):
 
 func show_tablet(is_show):
 	if is_show:
-		dimmer.visible = true
+		pause_game(true)
 		tablet.visible = true
-		get_tree().paused = true
 		tablet._on_HomeButton_pressed()
 	else:
-		get_tree().paused = false
 		tablet.visible = false
-		dimmer.visible = false
+		pause_game(false)
 		settings.save_settings()
 
 func set_crouch_indicator(crouch):
@@ -266,19 +257,6 @@ func restore_state():
 
 func _on_Inventory_visibility_changed():
 	set_quick_items_dimmed(inventory.is_visible_in_tree())
-
-func _on_QuitDialog_confirmed():
-	get_tree().quit()
-
-func _on_QuitDialog_popup_hide():
-	if not tablet.visible:
-		get_tree().paused = false
-		dimmer.visible = false
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-func _on_QuitDialog_about_to_show():
-	get_tree().paused = true
 
 func _input(event):
 	if inventory.is_visible_in_tree():

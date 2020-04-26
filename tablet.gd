@@ -226,7 +226,7 @@ func _on_LoadGameButton_pressed():
 	refresh_slot_captions(true, load_game_app)
 
 func _on_QuitGameButton_pressed():
-	hud.ask_quit()
+	get_tree().notify_group("quit_dialog", MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
 
 func simulate_esc():
 	# Why we need such workarounds?
