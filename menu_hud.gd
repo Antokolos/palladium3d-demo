@@ -3,6 +3,17 @@ extends Control
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
+func _ready():
+	$LabelJoyHint.visible = has_joypads()
+	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
+
+# Returns true if connected joypads are present, false otherwise
+func has_joypads():
+	return Input.get_connected_joypads().size() > 0
+
+func _on_joy_connection_changed(device_id, is_connected):
+	$LabelJoyHint.visible = has_joypads()
+
 func is_menu_hud():
 	return true
 

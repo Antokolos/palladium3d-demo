@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://viewport_hack.gd" type="Script" id=1]
 [ext_resource path="res://viewport.tscn" type="PackedScene" id=2]
@@ -31,7 +31,6 @@
 [ext_resource path="res://camera.gd" type="Script" id=29]
 [ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=30]
 [ext_resource path="res://menu_hud.tscn" type="PackedScene" id=31]
-[ext_resource path="res://default_theme.tres" type="Theme" id=32]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 7, 2 )
@@ -192,4 +191,3 @@ volume_db = -27.0
 bus = "Sound"
 
 [node name="hud" parent="." instance=ExtResource( 31 )]
-theme = ExtResource( 32 )

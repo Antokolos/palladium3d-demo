@@ -116,6 +116,7 @@ margin_right = 577.0
 margin_bottom = 944.0
 
 [node name="settings_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -292,6 +293,7 @@ margin_left = 94.0
 margin_right = 344.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 250, 0 )
+ticks_on_borders = true
 
 [node name="HSoundVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 220.0
@@ -326,6 +328,7 @@ margin_left = 91.0
 margin_right = 341.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 250, 0 )
+ticks_on_borders = true
 
 [node name="controls_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
 visible = false
@@ -384,20 +387,19 @@ text = "TABLET_CONTROLS_KEY"
 align = 1
 valign = 1
 
-[node name="LabelJoyButton" type="PanelContainer" parent="TabletPanel/TabletScreen/apps/controls_app/VBoxContainer/GridContainer"]
-editor/display_folded = true
+[node name="LabelJoy" type="PanelContainer" parent="TabletPanel/TabletScreen/apps/controls_app/VBoxContainer/GridContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/controls_app/VBoxContainer/GridContainer/LabelJoyButton"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/controls_app/VBoxContainer/GridContainer/LabelJoy"]
 margin_top = 3.0
 margin_right = 208.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
-text = "TABLET_CONTROLS_JOY_BUTTON"
+text = "TABLET_CONTROLS_JOY"
 align = 1
 valign = 1
 

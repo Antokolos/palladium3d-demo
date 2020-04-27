@@ -17,7 +17,9 @@ func _input(event):
 			rel_pos.x = MOUSE_SENSITIVITY * v if nonzero else 0
 		if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
 			rel_pos.y = MOUSE_SENSITIVITY * v if nonzero else 0
-	if not event is InputEventMouseButton and event.is_action_pressed("action"):
+	if not event is InputEventMouseButton \
+		and event.is_action_pressed("action") \
+		and (not get_tree().paused or game_params.get_hud().is_tablet_visible()):
 		click_the_left_mouse_button()
 
 func _process(delta):

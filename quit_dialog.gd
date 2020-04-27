@@ -1,6 +1,6 @@
 extends WindowDialog
 
-onready var yes_button = get_node("VBoxContainer/HBoxContainer/YesButton")
+onready var no_button = get_node("VBoxContainer/HBoxContainer/NoButton")
 
 func _ready():
 	get_tree().set_auto_accept_quit(false)
@@ -14,14 +14,13 @@ func _notification(what):
 				ev.set_action("ui_tablet_toggle")
 				ev.set_pressed(true)
 				get_tree().input_event(ev)
-			popup_centered()
+			popup_centered_ratio(0.3)
 		NOTIFICATION_POST_POPUP:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			yes_button.grab_focus()
-			yes_button.grab_click_focus()
+			no_button.grab_focus()
 
 func _input(event):
-	if visible and event.is_action_pressed("ui_cancel"):
+	if visible and event.is_action_pressed("ui_tablet_toggle") or event.is_action_pressed("ui_cancel"):
 		_on_NoButton_pressed()
 
 func _on_YesButton_pressed():
