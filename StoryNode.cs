@@ -29,7 +29,7 @@ public class StoryNode : Node
 		MakeSaveSlotDirs(3);
 		MakeSaveSlotDirs(4);
 		MakeSaveSlotDirs(5);
-		BuildStoriesCache("ink-scripts");
+		BuildStoriesCache("res://ink-scripts");
 	}
 
 	private void MakeSaveSlotDirs(int i)
@@ -93,7 +93,14 @@ public class StoryNode : Node
 
 	private Story LoadStoryFromFile(String path)
 	{
-		String text = System.IO.File.ReadAllText(path);
+		String text = "";
+		File file = new File();
+		if (file.FileExists(path))
+		{
+			file.Open(path, 1); // File.ModeFlags.READ
+			text = file.GetAsText();
+			file.Close();
+		}
 		return new Story(text);
 	}
 

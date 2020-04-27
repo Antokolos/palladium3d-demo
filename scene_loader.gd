@@ -5,6 +5,7 @@ onready var label = get_node("VBoxContainer/HBoxContainer/VBoxContainer/Progress
 var loader = null
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	game_params.change_music_to("loading.ogg")
 	loader = ResourceLoader.load_interactive(game_params.scene_path)
 

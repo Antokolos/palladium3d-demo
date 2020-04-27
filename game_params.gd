@@ -246,16 +246,11 @@ func finish_load():
 		return true
 	return false
 
-func abspath(relpath):
-	var dir = Directory.new()
-	dir.open(".")
-	return dir.get_current_dir() + "/" + relpath
-
 func add_music(music_file):
 	if music.has(music_file):
 		return music[music_file]
 	var ogg_file = File.new()
-	ogg_file.open(abspath("music/" + music_file), File.READ)
+	ogg_file.open("res://music/" + music_file, File.READ)
 	var bytes = ogg_file.get_buffer(ogg_file.get_len())
 	var stream = AudioStreamOGGVorbis.new()
 	stream.data = bytes
