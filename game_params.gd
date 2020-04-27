@@ -249,12 +249,7 @@ func finish_load():
 func add_music(music_file):
 	if music.has(music_file):
 		return music[music_file]
-	var ogg_file = File.new()
-	ogg_file.open("res://music/" + music_file, File.READ)
-	var bytes = ogg_file.get_buffer(ogg_file.get_len())
-	var stream = AudioStreamOGGVorbis.new()
-	stream.data = bytes
-	music[music_file] = stream
+	music[music_file] = load("res://music/" + music_file)
 	return music[music_file]
 
 func change_music_to(music_file_name):
