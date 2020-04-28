@@ -1,8 +1,13 @@
 extends Control
+class_name PalladiumHUD
 
+const MESSAGE_ITEM_TIMEOUT_S = 0.01
 const ALPHA_THRESHOLD = 0.01
+const ALPHA_THRESHOLD_POPUP = 0.1
 const ALPHA_DECREASE_FACTOR = 0.9
+const ALPHA_DECREASE_FACTOR_POPUP = 0.96
 const MAX_VISIBLE_ITEMS = 6
+const COLOR_WHITE = Color(1.0, 1.0, 1.0, 1.0)
 const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
 const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
@@ -30,10 +35,12 @@ onready var health_progress = health_bar.get_node("HealthProgress")
 var active_item_idx = 0
 var active_quick_item_idx = 0
 var first_item_idx = 0
+var popup_message_queue = []
 
 func _ready():
-	game_params.connect("item_removed", self, "remove_ui_inventory_item")
-	game_params.connect("item_removed", self, "remove_ui_quick_item")
+	game_params.connect("shader_cache_processed", self, "_on_shader_cache_processed")
+	game_params.connect("item_taken", self, "_on_item_taken")
+	game_params.connect("item_removed", self, "_on_item_removed")
 	game_params.connect("health_changed", self, "on_health_changed")
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
@@ -42,11 +49,25 @@ func _ready():
 	select_active_item()
 	select_active_quick_item()
 
+func queue_popup_message(template, args = [], timeout = 0.1):
+	if game_params.get_message_state(template):
+		game_params.set_message_state(template, false)
+		popup_message_queue.push_back({"template" : template, "args" : args, "timeout" : timeout})
+
+func set_popup_message(template, args = [], timeout = 0.01):
+	if $MessagePopupTimer.is_stopped():
+		message_label.set_modulate(COLOR_WHITE)
+		$MessagePopupTimer.start(timeout)
+		set_message(tr(template) % args)
+
 func set_message(text):
+	message_label.set_modulate(COLOR_WHITE)
+	message_label.visible = true
 	message_label.text = text
 
 func clear_message():
 	set_message("")
+	message_label.visible = false
 
 func on_health_changed(name_hint, health_current, health_max):
 	health_label.text = "%d/%d" % [health_current, health_max]
@@ -97,6 +118,10 @@ func _process(delta):
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			show_tablet(true)
 	# ----------------------------------
+	
+	if not popup_message_queue.empty() and $MessagePopupTimer.is_stopped() and message_label.text.empty():
+		var m = popup_message_queue.pop_front()
+		set_popup_message(m.template, m.args, m.timeout)
 
 func show_tablet(is_show):
 	if is_show:
@@ -148,6 +173,22 @@ func insert_ui_quick_item(pos):
 	if pos < quick_items_panel.get_child_count() - 1:
 		quick_items_panel.move_child(new_item, pos)
 	select_active_quick_item()
+
+func _on_shader_cache_processed():
+	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
+
+func _on_item_taken(nam, cnt):
+	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], MESSAGE_ITEM_TIMEOUT_S)
+	if game_params.get_total_items_count() > 1:
+		queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
+	elif game_params.get_total_items_count() > 0:
+		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
+	synchronize_items()
+
+func _on_item_removed(nam, cnt):
+	remove_ui_inventory_item(nam, cnt)
+	remove_ui_quick_item(nam, cnt)
+	synchronize_items()
 
 func remove_ui_inventory_item(nam, count):
 	var ui_items = inventory_panel.get_children()
@@ -309,3 +350,12 @@ func _on_BloodSplatTimer_timeout():
 		$BloodSplat.visible = false
 		$BloodSplatTimer.stop()
 	$BloodSplat.set_modulate(m)
+
+func _on_MessagePopupTimer_timeout():
+	var m = message_label.get_modulate()
+	if m.a > ALPHA_THRESHOLD_POPUP:
+		m.a = m.a * ALPHA_DECREASE_FACTOR_POPUP
+	else:
+		clear_message()
+		$MessagePopupTimer.stop()
+	message_label.set_modulate(m)

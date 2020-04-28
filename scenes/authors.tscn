@@ -24,11 +24,11 @@ margin_bottom = 50.0
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxHeader"]
-margin_left = 779.0
-margin_right = 1141.0
+margin_left = 794.0
+margin_right = 1126.0
 margin_bottom = 50.0
 custom_fonts/font = ExtResource( 2 )
-text = "AUTHORS_HEADER"
+text = "TABLET_CREDITS"
 
 [node name="HBoxAuthors" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 54.0

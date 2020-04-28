@@ -9,6 +9,7 @@ func do_init(is_loaded):
 	player_bandit.set_sound_walk(PalladiumPlayer.SOUND_WALK_CONCRETE)
 	if not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished(player, "004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", false, false)
+	game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_FLASHLIGHT", ["F"])
 
 func _unhandled_input(event):
 	if not player_toggle_enable:

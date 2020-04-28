@@ -1,6 +1,7 @@
 extends Node
 class_name GameParams
 
+signal shader_cache_processed()
 signal item_taken(nam, count)
 signal item_removed(nam, count)
 signal item_used(player_node, target, item_nam)
@@ -71,14 +72,20 @@ const ITEMS = {
 	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
 }
 const INVENTORY_DEFAULT = []
-const QUICK_ITEMS_DEFAULT = [
-	{ "nam" : "saffron_bun", "count" : 1 }
-]
+const QUICK_ITEMS_DEFAULT = []
 const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
 const TAKABLES_DEFAULT = {}
 const MULTISTATES_DEFAULT = {}
+const MESSAGES_DEFAULT = {
+	"MESSAGE_CONTROLS_MOVE" : true,
+	"MESSAGE_CONTROLS_ITEMS" : true,
+	"MESSAGE_CONTROLS_INVENTORY" : true,
+	"MESSAGE_CONTROLS_EXAMINE" : true,
+	"MESSAGE_CONTROLS_FLASHLIGHT" : true,
+	"MESSAGE_CONTROLS_CROUCH" : true
+}
 const MUSIC_IS_LOOP = {
 	"loading.ogg" : true,
 	"underwater.ogg" : true,
@@ -100,6 +107,7 @@ var lights = LIGHTS_DEFAULT
 var containers = CONTAINERS_DEFAULT
 var takables = TAKABLES_DEFAULT
 var multistates = MULTISTATES_DEFAULT
+var messages = MESSAGES_DEFAULT
 
 var music = {}
 var current_music = null
@@ -181,7 +189,8 @@ func execute_custom_action(event, item):
 			"saffron_bun":
 				item.remove()
 				var player = game_params.get_player()
-				conversation_manager.start_conversation(player, "BunEaten")
+				if is_in_party(FEMALE_NAME_HINT):
+					conversation_manager.start_conversation(player, "BunEaten")
 			"envelope":
 				item.remove()
 				game_params.take("barn_lock_key")
@@ -195,6 +204,12 @@ func execute_custom_action(event, item):
 	elif event.is_action_pressed("item_preview_action_4"):
 		pass
 	return false
+
+func shader_cache_processed():
+	if story_vars.is_game_start:
+		take("saffron_bun")
+		story_vars.is_game_start = false
+	emit_signal("shader_cache_processed")
 
 func handle_conversation(player, target, initiator):
 	if conversation_manager.arrange_meeting(player, target, initiator):
@@ -277,6 +292,13 @@ func has_item(nam):
 		if nam == item.nam:
 			return true
 	return false
+
+func get_total_items_count():
+	var result = 0
+	for quick_item in quick_items:
+		if quick_item.nam:
+			result = result + 1
+	return result + inventory.size()
 
 func take(nam):
 	if not is_item_registered(nam):
@@ -410,6 +432,14 @@ func get_multistate_state(multistate_path):
 func set_multistate_state(multistate_path, state):
 	multistates[scene_path + ":" + multistate_path] = state
 
+func get_message_state(message_key):
+	return messages[message_key] if messages.has(message_key) else true
+
+func set_message_state(message_key, state):
+	# You can set state only for messages that are registered from the very start of the game
+	if messages.has(message_key):
+		messages[message_key] = state
+
 func is_in_party(name_hint):
 	return party[name_hint] if party.has(name_hint) else false
 
@@ -421,8 +451,6 @@ func leave_party(name_hint):
 
 func register_player(player):
 	player_paths[player.name_hint] = player.get_path()
-	connect("item_taken", player, "_on_item_taken")
-	connect("item_removed", player, "_on_item_removed")
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	play_initial_cutscene(player)
 
@@ -491,6 +519,7 @@ func load_params(slot):
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT
 	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT
+	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT
 	
 	get_tree().call_group("restorable_state", "restore_state")
 
@@ -539,7 +568,8 @@ func save_params(slot):
 		"lights" : lights,
 		"containers" : containers,
 		"takables" : takables,
-		"multistates" : multistates
+		"multistates" : multistates,
+		"messages" : messages
 	}
 	f.store_line( to_json(d) )
 

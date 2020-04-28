@@ -8,8 +8,8 @@ func do_init(is_loaded):
 		var companion_origin = $PositionCompanion.get_transform().origin
 		player.set_transform(Transform(player_basis, player_origin))
 		player_female.set_transform(Transform(companion_basis, companion_origin))
-	game_params.story_vars.is_game_start = false
 	get_tree().call_group("takables", "connect_signals", self)
+	game_params.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	game_params.connect("item_used", self, "on_item_used")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)

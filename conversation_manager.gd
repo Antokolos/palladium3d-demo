@@ -27,7 +27,7 @@ func _ready():
 func change_stretch_ratio(conversation):
 	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
-	var stretch_ratio = 7
+	var stretch_ratio = 10
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 

@@ -1,4 +1,5 @@
 extends Camera
+class_name PalladiumCamera
 
 const CAMERA_NEAR_NORMAL = 0.46
 const CAMERA_NEAR_DETAILED = 0.23

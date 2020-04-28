@@ -404,20 +404,6 @@ func _ready():
 	model_container.add_child(model)
 	game_params.register_player(self)
 
-func _on_item_taken(nam, cnt):
-	if not is_player():
-		return
-	var hud = game_params.get_hud()
-	if hud:
-		hud.synchronize_items()
-
-func _on_item_removed(nam, cnt):
-	if not is_player():
-		return
-	var hud = game_params.get_hud()
-	if hud:
-		hud.synchronize_items()
-
 func remove_item_from_hand():
 	get_model().remove_item_from_hand()
 

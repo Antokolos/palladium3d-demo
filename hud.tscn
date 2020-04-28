@@ -113,7 +113,6 @@ align = 1
 valign = 1
 
 [node name="Conversation" type="ColorRect" parent="VBoxContainer"]
-editor/display_folded = true
 visible = false
 margin_top = 272.0
 margin_right = 1920.0
@@ -536,5 +535,9 @@ margin_right = 11.0
 
 [node name="BloodSplatTimer" type="Timer" parent="."]
 wait_time = 0.05
+
+[node name="MessagePopupTimer" type="Timer" parent="."]
+wait_time = 0.01
 [connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
 [connection signal="timeout" from="BloodSplatTimer" to="." method="_on_BloodSplatTimer_timeout"]
+[connection signal="timeout" from="MessagePopupTimer" to="." method="_on_MessagePopupTimer_timeout"]
