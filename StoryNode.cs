@@ -44,6 +44,7 @@ public class StoryNode : Node
 			dir.MakeDir(string.Format("{0}/ink-scripts/{1}", basePath, locale));
 			dir.MakeDir(string.Format("{0}/ink-scripts/{1}/player", basePath, locale));
 			dir.MakeDir(string.Format("{0}/ink-scripts/{1}/female", basePath, locale));
+			dir.MakeDir(string.Format("{0}/ink-scripts/{1}/bandit", basePath, locale));
 		}
 	}
 

@@ -7,7 +7,7 @@ var in_choice = false
 var max_choice = 0
 
 func _ready():
-	StoryNode.LoadStory("ink-scripts", "Chat.ink.json", true)
+	StoryNode.LoadStory("res://ink-scripts", "Chat.ink.json", true)
 	StoryNode.InitVariables(game_params, game_params.story_vars, game_params.party)
 
 func load_chat():

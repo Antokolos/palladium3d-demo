@@ -99,18 +99,18 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 	else:
 		var locale = TranslationServer.get_locale()
 		var f = File.new()
-		var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
+		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
 		cp_story = cp if exists_cp else "Default.ink.json"
 		story_state_cache[cp] = cp_story
-	return story.CheckStoryNotFinished("ink-scripts", cp_story)
+	return story.CheckStoryNotFinished("res://ink-scripts", cp_story)
 
 func init_story(conversation_name, target_name_hint = null):
 	var locale = TranslationServer.get_locale()
 	var story = StoryNode
 	var f = File.new()
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
-	var exists_cp = f.file_exists("ink-scripts/%s/%s" % [locale, cp])
-	story.LoadStory("ink-scripts", cp if exists_cp else "Default.ink.json", false)
+	var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
+	story.LoadStory("res://ink-scripts", cp if exists_cp else "Default.ink.json", false)
 	story.InitVariables(game_params, game_params.story_vars, game_params.party)
 	return story
 
