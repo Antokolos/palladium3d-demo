@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/pocket_book.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/pocket_book.gd" type="Script" id=2]
+
+[node name="pocket_book" instance=ExtResource( 1 )]
+script = ExtResource( 2 )

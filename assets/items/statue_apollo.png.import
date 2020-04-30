@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_apollo.png-97dbd62b91264968918ebd1235d31440.image"
+
+[deps]
+
+source_file="res://assets/items/statue_apollo.png"
+dest_files=[ "res://.import/statue_apollo.png-97dbd62b91264968918ebd1235d31440.image" ]
+
+[params]
+

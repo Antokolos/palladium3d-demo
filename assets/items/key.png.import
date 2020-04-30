@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/key.png-1bfd358a1a64b1ad3be7c0129b9d143c.image"
+
+[deps]
+
+source_file="res://assets/items/key.png"
+dest_files=[ "res://.import/key.png-1bfd358a1a64b1ad3be7c0129b9d143c.image" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/envelope.png-c9d182c40adfb8732a16db576d5516f8.image"
+
+[deps]
+
+source_file="res://assets/items/envelope.png"
+dest_files=[ "res://.import/envelope.png-c9d182c40adfb8732a16db576d5516f8.image" ]
+
+[params]
+

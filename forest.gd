@@ -1,5 +1,7 @@
 extends PalladiumLevel
 
+onready var pocket_book = get_node("pocket_book")
+
 func do_init(is_loaded):
 	if not game_params.story_vars.is_game_start and not is_loaded:
 		var player_basis = $PositionPlayer.get_transform().basis
@@ -8,6 +10,8 @@ func do_init(is_loaded):
 		var companion_origin = $PositionCompanion.get_transform().origin
 		player.set_transform(Transform(player_basis, player_origin))
 		player_female.set_transform(Transform(companion_basis, companion_origin))
+	if conversation_manager.meeting_is_finished(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT):
+		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)
 	game_params.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	game_params.connect("item_used", self, "on_item_used")
@@ -17,6 +21,11 @@ func do_init(is_loaded):
 	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)
 	game_params.change_music_to("underwater.ogg")
 	player_female.set_sound_walk(player_female.SOUND_WALK_GRASS if female_in_grass else player_female.SOUND_WALK_SAND)
+
+func remove_pocket_book():
+	if pocket_book:
+		pocket_book.queue_free()
+		pocket_book = null
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
@@ -43,6 +52,7 @@ func on_item_used(player_node, target, item_nam):
 				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
 
 func _on_meeting_started(player, target, initiator):
+	remove_pocket_book()
 	player_female.set_target_node(get_node("PositionBoat"))
 	player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 

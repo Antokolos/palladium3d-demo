@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_hebe.png-21cfebf1118cae4fccca1c5101b7cd70.image"
+
+[deps]
+
+source_file="res://assets/items/statue_hebe.png"
+dest_files=[ "res://.import/statue_hebe.png-21cfebf1118cae4fccca1c5101b7cd70.image" ]
+
+[params]
+

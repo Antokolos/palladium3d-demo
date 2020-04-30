@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_hera.png-f507b11739b9d28115616dc3ac239ac8.image"
+
+[deps]
+
+source_file="res://assets/items/statue_hera.png"
+dest_files=[ "res://.import/statue_hera.png-f507b11739b9d28115616dc3ac239ac8.image" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_hermes.png-3332b3687b5d93cc8c51a640da32650d.image"
+
+[deps]
+
+source_file="res://assets/items/statue_hermes.png"
+dest_files=[ "res://.import/statue_hermes.png-3332b3687b5d93cc8c51a640da32650d.image" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_aphrodite.png-1e71b3b3f72b17f36049d9c948ce103e.image"
+
+[deps]
+
+source_file="res://assets/items/statue_aphrodite.png"
+dest_files=[ "res://.import/statue_aphrodite.png-1e71b3b3f72b17f36049d9c948ce103e.image" ]
+
+[params]
+

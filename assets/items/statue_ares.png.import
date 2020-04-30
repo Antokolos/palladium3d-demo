@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_ares.png-6dc33703fc5c3fe79664d040e03ab854.image"
+
+[deps]
+
+source_file="res://assets/items/statue_ares.png"
+dest_files=[ "res://.import/statue_ares.png-6dc33703fc5c3fe79664d040e03ab854.image" ]
+
+[params]
+

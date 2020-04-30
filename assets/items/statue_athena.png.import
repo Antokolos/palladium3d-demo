@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/statue_athena.png-1fdde7894543c32725881d94d1b3f902.image"
+
+[deps]
+
+source_file="res://assets/items/statue_athena.png"
+dest_files=[ "res://.import/statue_athena.png-1fdde7894543c32725881d94d1b3f902.image" ]
+
+[params]
+

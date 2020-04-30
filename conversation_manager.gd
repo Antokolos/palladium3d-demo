@@ -72,7 +72,6 @@ func meeting_is_in_progress(character1_name_hint, character2_name_hint):
 	var conversation_name_2 = MEETING_CONVERSATION_TEMPLATE % character2_name_hint
 	return conversation_is_in_progress(conversation_name_1, character2_name_hint) or conversation_is_in_progress(conversation_name_2, character1_name_hint)
 
-
 func meeting_is_finished_exact(initiator_name_hint, target_name_hint):
 	return conversation_is_finished(MEETING_CONVERSATION_TEMPLATE % initiator_name_hint, target_name_hint)
 
