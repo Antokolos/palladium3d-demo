@@ -33,16 +33,18 @@ func change_stretch_ratio(conversation):
 
 func start_area_cutscene(conversation_name, cutscene_node = null):
 	var player = game_params.get_player()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(conversation_name):
+	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
 		player.rest()
-		conversation_manager.start_conversation(player, conversation_name, null, null, true, cutscene_node)
+		start_conversation(player, conversation_name, null, null, true, cutscene_node)
 
 func start_area_conversation(conversation_name):
 	var player = game_params.get_player()
-	if not conversation_manager.conversation_is_in_progress() and conversation_manager.conversation_is_not_finished(conversation_name):
-		conversation_manager.start_conversation(player, conversation_name)
+	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
+		start_conversation(player, conversation_name)
 
 func stop_conversation(player):
+	if not $AutocloseTimer.is_stopped():
+		$AutocloseTimer.stop()
 	for companion in game_params.get_companions():
 		companion.set_speak_mode(false)
 	var conversation_name_prev = conversation_name
@@ -244,7 +246,11 @@ func story_proceed(player):
 			character.set_speak_mode(true)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
-	var choices = story.GetChoices(TranslationServer.get_locale()) if story.CanChoose() else ([tr("CONVERSATION_CONTINUE")] if story.CanContinue() else [tr("CONVERSATION_END")])
+	var can_continue = story.CanContinue()
+	var can_choose = story.CanChoose()
+	var choices = story.GetChoices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
+	if not can_continue and not can_choose:
+		$AutocloseTimer.start()
 	display_choices(story, conversation, choices)
 
 func clear_choices(story, conversation):
@@ -262,3 +268,7 @@ func display_choices(story, conversation, choices):
 		c.text = str(i) + ". " + choices[i - 1] if i <= choices.size() else ""
 		i += 1
 	max_choice = choices.size()
+
+func _on_AutocloseTimer_timeout():
+	var player = game_params.get_player()
+	stop_conversation(player)
