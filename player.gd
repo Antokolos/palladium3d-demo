@@ -91,36 +91,53 @@ func get_rotation_angle(cur_dir, target_dir):
 	var c = cur_dir.normalized()
 	var t = target_dir.normalized()
 	var cross = c.cross(t)
-	var clen = cross.length()
-	if clen > 1.0:
-		clen = 1.0
-	return asin(clen) if cross.y > 0 else -asin(clen)
+	var sgn = 1 if cross.y > 0 else -1
+	var dot = c.dot(t)
+	if dot > 1.0:
+		return 0
+	elif dot < -1.0:
+		return PI
+	else:
+		return sgn * acos(dot)
 
-func follow(current_transform, next_position):
-	var current_position = current_transform.origin
-	var player_node = game_params.get_player()
-	var in_party = is_in_party()
+func get_follow_parameters(node_to_follow_pos, current_transform, next_position):
 	var was_moving = companion_state != COMPANION_STATE.REST
+	var current_position = current_transform.origin
+	var in_party = is_in_party()
 	var cur_dir = current_transform.basis.xform(Z_DIR)
 	cur_dir.y = 0
 	var next_dir = next_position - current_position
 	next_dir.y = 0
-	var distance = next_dir.length()
 	
 	var rotation_angle = 0
 	var rotation_angle_to_target_deg = 0
-	var preferred_target = player_node if in_party else target_node
+	var preferred_target = get_preferred_target()
 	if preferred_target:
 		var t = preferred_target.get_global_transform()
 		var target_position = t.origin
-		var player_position = player_node.get_global_transform().origin
-		var mov_vec = target_position - current_position if was_moving else player_position - current_position
+		var mov_vec = target_position - current_position if was_moving else node_to_follow_pos - current_position
 		mov_vec.y = 0
 		rotation_angle = get_rotation_angle(cur_dir, next_dir) \
-							if in_party or distance > ALIGNMENT_RANGE \
+							if in_party or next_dir.length() > ALIGNMENT_RANGE \
 							else get_rotation_angle(cur_dir, t.basis.xform(Z_DIR))
 		rotation_angle_to_target_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
 	
+	return {
+		"was_moving" : was_moving,
+		"next_dir" : next_dir,
+		"rotation_angle" : rotation_angle,
+		"rotation_angle_to_target_deg" : rotation_angle_to_target_deg
+	}
+
+func follow(current_transform, next_position):
+	var p = get_follow_parameters(game_params.get_player().get_global_transform().origin, current_transform, next_position)
+	var was_moving = p.was_moving
+	var next_dir = p.next_dir
+	var distance = next_dir.length()
+	var rotation_angle = p.rotation_angle
+	var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
+	
+	var in_party = is_in_party()
 	angle_rad_y = 0
 	if not in_party or companion_state == COMPANION_STATE.WALK:
 		if rotation_angle > 0.1:
@@ -438,7 +455,7 @@ func set_target_node(node):
 	target_node = node
 
 func get_preferred_target():
-	return game_params.get_player() if is_in_party() else target_node
+	return target_node if not is_in_party() else (game_params.get_companion() if is_player() else game_params.get_player())
 
 func get_target_position():
 	var t = get_preferred_target()
@@ -454,9 +471,27 @@ func _physics_process(delta):
 		toggle_crouch()
 	if is_player() and in_party:
 		if cutscene_manager.is_cutscene():
+			dir = Vector3()
 			$SoundWalking.stop()
-			return
-		process_input(delta)
+			var target_position = get_target_position()
+			if not target_position:
+				return
+			var p = get_follow_parameters(target_position, get_global_transform(), target_position)
+			var rotation_angle = p.rotation_angle
+			var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
+			angle_rad_y = 0
+			if rotation_angle > 0.1:
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+			elif rotation_angle < -0.1:
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+			if angle_rad_y == 0:
+				companion_state = COMPANION_STATE.REST
+				get_model().look(rotation_angle_to_target_deg)
+			else:
+				companion_state = COMPANION_STATE.WALK
+				get_model().walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
+		else:
+			process_input(delta)
 	else:
 		if is_cutscene() and in_party:
 			return

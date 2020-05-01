@@ -94,7 +94,7 @@ extents = Vector3( 4.68733, 2.29441, 1.21978 )
 extents = Vector3( 3.78506, 1.90136, 3.14294 )
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 2.24065, 2.73226, 2.60671 )
+extents = Vector3( 2.24065, 2.73226, 3.72146 )
 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 4.90392, 3.14005, 3.72118 )
@@ -735,13 +735,13 @@ monitorable = false
 shape = SubResource( 6 )
 
 [node name="InscriptionsPosition" type="Position3D" parent="."]
-transform = Transform( 0.160453, -0.231, 0.959632, 1.59957e-008, 0.972229, 0.234032, -0.987043, -0.0375511, 0.155997, 16.078, 3.87822, 36.244 )
+transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 14.4634, 3.87822, 39.6227 )
 
 [node name="BanditPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.48208, 1.2, 39.9036 )
 
 [node name="InscriptionsArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.439, 3.96, 36.244 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.439, 3.96, 36.6947 )
 input_ray_pickable = false
 monitorable = false
 
@@ -760,7 +760,7 @@ monitorable = false
 shape = SubResource( 8 )
 
 [node name="ChooseCompanionPosition" type="Position3D" parent="."]
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -2.53633, 4.26971, 26.6246 )
+transform = Transform( -4.35223e-008, 0.0929206, -0.995674, 4.06169e-009, 0.995674, 0.0929206, 1, 0, -4.37114e-008, 1.8185, 3.71403, 26.5125 )
 
 [node name="OutPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200223, 9.89932, 73.3017 )

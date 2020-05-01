@@ -448,9 +448,11 @@ func is_in_party(name_hint):
 	return party[name_hint] if party.has(name_hint) else false
 
 func join_party(name_hint):
+	get_character(name_hint).clear_path()
 	party[name_hint] = true
 
 func leave_party(name_hint):
+	get_character(name_hint).clear_path()
 	party[name_hint] = false
 
 func register_player(player):
