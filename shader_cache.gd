@@ -158,7 +158,7 @@ func _process(delta):
 			pass
 		1:
 			stage = stage + 1
-			game_params.get_hud().set_message(tr("MESSAGE_PLEASE_WAIT"))
+			game_params.get_hud().set_popup_message(tr("MESSAGE_PLEASE_WAIT"))
 			rids.clear()
 			skeleton_paths.clear()
 			character_skeleton_paths.clear()
@@ -188,7 +188,7 @@ func _process(delta):
 					var scale = character_sk.get_scale()
 					character_sk.set_transform(Transform())
 					character_sk.set_scale(scale)
-			game_params.get_hud().clear_message()
+			game_params.get_hud().clear_popup_message()
 			game_params.shader_cache_processed()
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0
@@ -197,6 +197,6 @@ func refresh():
 	if SHADER_CACHE_ENABLED:
 		stage = 1
 	else:
-		game_params.get_hud().clear_message()
+		game_params.get_hud().clear_popup_message()
 		game_params.shader_cache_processed()
 		get_tree().call_group("room_enablers", "set_active", true)

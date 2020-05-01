@@ -1,11 +1,10 @@
 extends Control
 class_name PalladiumHUD
 
-const MESSAGE_ITEM_TIMEOUT_S = 0.01
+const MESSAGE_TIMEOUT_ITEM_S = 2
+const MESSAGE_TIMEOUT_MAX_S = 5
 const ALPHA_THRESHOLD = 0.01
-const ALPHA_THRESHOLD_POPUP = 0.1
 const ALPHA_DECREASE_FACTOR = 0.9
-const ALPHA_DECREASE_FACTOR_POPUP = 0.96
 const MAX_VISIBLE_ITEMS = 6
 const COLOR_WHITE = Color(1.0, 1.0, 1.0, 1.0)
 const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
@@ -19,7 +18,11 @@ onready var info_label = main_hud.get_node("HBoxInfo/InfoLabel")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
 onready var actions_panel = get_node("VBoxContainer/ActionsPanel")
-onready var message_label = get_node("HBoxMessages/VBoxContainer/Label")
+onready var message_labels = [
+	get_node("HBoxMessages/VBoxContainer/Label"),
+	get_node("HBoxMessages/VBoxContainer/Label2"),
+	get_node("HBoxMessages/VBoxContainer/Label3")
+]
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
@@ -49,25 +52,60 @@ func _ready():
 	select_active_item()
 	select_active_quick_item()
 
-func queue_popup_message(template, args = [], timeout = 0.1):
+func queue_popup_message(template, args = [], fade = false, timeout_max = MESSAGE_TIMEOUT_MAX_S):
 	if game_params.get_message_state(template):
 		game_params.set_message_state(template, false)
-		popup_message_queue.push_back({"template" : template, "args" : args, "timeout" : timeout})
+		popup_message_queue.push_back({
+			"template" : template,
+			"args" : args,
+			"fade" : fade,
+			"timeout_max" : timeout_max,
+			"timeout" : timeout_max,
+			"label_idx" : -1
+		})
 
-func set_popup_message(template, args = [], timeout = 0.01):
-	if $MessagePopupTimer.is_stopped():
-		message_label.set_modulate(COLOR_WHITE)
-		$MessagePopupTimer.start(timeout)
-		set_message(tr(template) % args)
+func process_popup_messages(delta):
+	if popup_message_queue.empty():
+		return
+	for i in range(0, popup_message_queue.size()):
+		var message = popup_message_queue[i]
+		if message.label_idx < 0:
+			var idx = set_popup_message(message.template, message.args)
+			if idx >= 0:
+				message.label_idx = idx
+	var message = popup_message_queue.front()
+	if message.timeout > 0:
+		if message.fade:
+			var m = message_labels[0].get_modulate()
+			m.a = message.timeout / message.timeout_max
+			message_labels[0].set_modulate(m)
+		message.timeout = message.timeout - delta
+	else:
+		clear_popup_message()
+		message_labels[0].set_modulate(COLOR_WHITE)
 
-func set_message(text):
-	message_label.set_modulate(COLOR_WHITE)
-	message_label.visible = true
-	message_label.text = text
+func set_popup_message(template, args = []):
+	var i = 0
+	for label in message_labels:
+		if not label.visible:
+			label.visible = true
+			label.set_modulate(COLOR_WHITE)
+			label.text = tr(template) % args
+			return i
+		i = i + 1
+	return -1
 
-func clear_message():
-	set_message("")
-	message_label.visible = false
+func clear_popup_message():
+	message_labels[0].set_modulate(COLOR_WHITE)
+	message_labels[0].text = message_labels[1].text if message_labels[1].visible else ""
+	message_labels[0].visible = message_labels[1].visible
+	message_labels[1].text = message_labels[2].text if message_labels[2].visible else ""
+	message_labels[1].visible = message_labels[2].visible
+	message_labels[2].text = ""
+	message_labels[2].visible = false
+	if not popup_message_queue.empty():
+		popup_message_queue.pop_front()
+	return not message_labels[0].visible
 
 func on_health_changed(name_hint, health_current, health_max):
 	health_label.text = "%d/%d" % [health_current, health_max]
@@ -119,9 +157,7 @@ func _process(delta):
 			show_tablet(true)
 	# ----------------------------------
 	
-	if not popup_message_queue.empty() and $MessagePopupTimer.is_stopped() and message_label.text.empty():
-		var m = popup_message_queue.pop_front()
-		set_popup_message(m.template, m.args, m.timeout)
+	process_popup_messages(delta)
 
 func show_tablet(is_show):
 	if is_show:
@@ -178,10 +214,8 @@ func _on_shader_cache_processed():
 	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
 
 func _on_item_taken(nam, cnt):
-	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], MESSAGE_ITEM_TIMEOUT_S)
-	if game_params.get_total_items_count() > 1:
-		queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
-	elif game_params.get_total_items_count() > 0:
+	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], true, MESSAGE_TIMEOUT_ITEM_S)
+	if game_params.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 	synchronize_items()
 
@@ -247,7 +281,7 @@ func select_active_item():
 	for item in items:
 		if items[idx].nam:
 			var label_key = items[idx].get_node("ItemBox/LabelKey")
-			label_key.text = "F" + str(idx + 1)
+			label_key.text = str(idx + 1)
 			if idx == active_item_idx:
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
@@ -273,6 +307,8 @@ func select_active_quick_item():
 	for item in items:
 		var is_active = idx == active_quick_item_idx
 		items[idx].set_selected(is_active)
+		if is_active and idx > 0 and not items[idx].nam:
+			queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 		if is_active and (not inventory.is_visible_in_tree() or not is_valid_index(active_item_idx)):
 			info_label.text = tr(items[idx].nam) if items[idx].nam else ""
 		idx = idx + 1
@@ -350,12 +386,3 @@ func _on_BloodSplatTimer_timeout():
 		$BloodSplat.visible = false
 		$BloodSplatTimer.stop()
 	$BloodSplat.set_modulate(m)
-
-func _on_MessagePopupTimer_timeout():
-	var m = message_label.get_modulate()
-	if m.a > ALPHA_THRESHOLD_POPUP:
-		m.a = m.a * ALPHA_DECREASE_FACTOR_POPUP
-	else:
-		clear_message()
-		$MessagePopupTimer.stop()
-	message_label.set_modulate(m)

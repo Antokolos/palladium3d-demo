@@ -77,6 +77,7 @@
 "MESSAGE_ITEM_TAKEN","You have taken the item: %s","Вы взяли предмет: %s"
 "MESSAGE_CONTROLS_MOVE","Use %s to move, use %s to run","Используйте %s для движения, %s для бега"
 "MESSAGE_CONTROLS_ITEMS","Use %s to switch to the next item, %s to switch to the previous item","Используйте %s, чтобы сделать активным следующий предмет, %s – предыдущий"
+"MESSAGE_CONTROLS_ITEMS_KEYS","You can also use %s-%s keys to quickly switch between items","Вы можете также использовать клавиши %s-%s для быстрого переключения между предметами"
 "MESSAGE_CONTROLS_INVENTORY","Use %s to open full inventory","Используйте %s, чтобы открыть весь инвентарь"
 "MESSAGE_CONTROLS_EXAMINE","Use %s to examine current active item in your inventory","Используйте %s для изучения текущего активного предмета в вашем инвентаре"
 "MESSAGE_CONTROLS_FLASHLIGHT","Use %s to toggle flashlight on and off","Используйте %s, чтобы включить и выключить фонарик"

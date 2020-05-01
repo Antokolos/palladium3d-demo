@@ -54,24 +54,26 @@ const STORY_VARS_DEFAULT = {
 }
 const ITEMS = {
 	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
-	"envelope" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
-	"barn_lock_key" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/barn_lock_key.escn", "can_give" : false, "custom_actions" : [] },
+	"envelope" : { "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	"barn_lock_key" : { "item_image" : "key.png", "model_path" : "res://assets/barn_lock_key.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://assets/statue_4.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://assets/statue_2.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://assets/statue_3.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_hermes" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_hermes.escn", "can_give" : false, "custom_actions" : [] },
-	"sphere_for_postament_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/sphere_for_postament_body.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_ares" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_erida" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_erida.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_artemida" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_artemida.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_aphrodite" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_aphrodite.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_hebe" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_hebe.escn", "can_give" : false, "custom_actions" : [] },
-	"hera_statue" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/hera_statue.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_apollo" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
-	"statue_athena" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_hermes" : { "item_image" : "statue_hermes.png", "model_path" : "res://assets/statue_hermes.escn", "can_give" : false, "custom_actions" : [] },
+	"sphere_for_postament_body" : { "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament_body.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_ares" : { "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_erida" : { "item_image" : "statue_erida.png", "model_path" : "res://assets/statue_erida.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_artemida" : { "item_image" : "statue_artemis.png", "model_path" : "res://assets/statue_artemida.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_aphrodite" : { "item_image" : "statue_aphrodite.png", "model_path" : "res://assets/statue_aphrodite.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_hebe" : { "item_image" : "statue_hebe.png", "model_path" : "res://assets/statue_hebe.escn", "can_give" : false, "custom_actions" : [] },
+	"hera_statue" : { "item_image" : "statue_hera.png", "model_path" : "res://assets/hera_statue.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_apollo" : { "item_image" : "statue_apollo.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
+	"statue_athena" : { "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
 }
-const INVENTORY_DEFAULT = []
+const INVENTORY_DEFAULT = [
+	{ "nam" : "saffron_bun", "count" : 1 }
+]
 const QUICK_ITEMS_DEFAULT = []
 const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
@@ -194,6 +196,9 @@ func execute_custom_action(event, item):
 			"envelope":
 				item.remove()
 				game_params.take("barn_lock_key")
+				var hud = get_hud()
+				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
+				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
 			_:
 				return false
 		return true
@@ -207,7 +212,6 @@ func execute_custom_action(event, item):
 
 func shader_cache_processed():
 	if story_vars.is_game_start:
-		take("saffron_bun")
 		story_vars.is_game_start = false
 	emit_signal("shader_cache_processed")
 
@@ -293,12 +297,12 @@ func has_item(nam):
 			return true
 	return false
 
-func get_total_items_count():
+func get_quick_items_count():
 	var result = 0
 	for quick_item in quick_items:
 		if quick_item.nam:
 			result = result + 1
-	return result + inventory.size()
+	return result
 
 func take(nam):
 	if not is_item_registered(nam):
