@@ -212,11 +212,11 @@ func insert_ui_quick_item(pos):
 
 func _on_shader_cache_processed():
 	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
+	if game_params.get_quick_items_count() > 0:
+		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 
 func _on_item_taken(nam, cnt):
 	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], true, MESSAGE_TIMEOUT_ITEM_S)
-	if game_params.get_quick_items_count() > 0:
-		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 	synchronize_items()
 
 func _on_item_removed(nam, cnt):

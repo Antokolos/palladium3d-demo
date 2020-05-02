@@ -647,7 +647,7 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.
 visible = false
 
 [node name="door_debris" parent="." instance=ExtResource( 66 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83106, 1.759, 33.1479 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19466, 1.72087, 32.9329 )
 
 [node name="demo_ceiling" parent="." instance=ExtResource( 67 )]
 

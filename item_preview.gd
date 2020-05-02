@@ -100,6 +100,9 @@ func close_preview():
 	if hud:
 		hud.actions_panel.hide()
 		hud.quick_items_panel.show()
+		if game_params.get_quick_items_count() > 1:
+			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
+			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
 	custom_actions.clear()
 	get_tree().paused = false
 	if not flashlight_visible:

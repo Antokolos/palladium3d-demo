@@ -158,6 +158,7 @@ func _process(delta):
 			pass
 		1:
 			stage = stage + 1
+			game_params.get_hud().clear_popup_message()
 			game_params.get_hud().set_popup_message(tr("MESSAGE_PLEASE_WAIT"))
 			rids.clear()
 			skeleton_paths.clear()

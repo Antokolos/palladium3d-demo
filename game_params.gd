@@ -54,7 +54,9 @@ const STORY_VARS_DEFAULT = {
 }
 const ITEMS = {
 	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
+	"island_map" : { "item_image" : "island_child.png", "model_path" : "res://assets/island_map.escn", "can_give" : false, "custom_actions" : [] },
 	"envelope" : { "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	"island_map_2" : { "item_image" : "island_father.png", "model_path" : "res://assets/island_map_2.escn", "can_give" : false, "custom_actions" : [] },
 	"barn_lock_key" : { "item_image" : "key.png", "model_path" : "res://assets/barn_lock_key.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_apata" : { "item_image" : "statue_apata.png", "model_path" : "res://assets/statue_4.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_clio" : { "item_image" : "statue_clio.png", "model_path" : "res://assets/statue_2.escn", "can_give" : false, "custom_actions" : [] },
@@ -71,10 +73,11 @@ const ITEMS = {
 	"statue_apollo" : { "item_image" : "statue_apollo.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_athena" : { "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
 }
-const INVENTORY_DEFAULT = [
+const INVENTORY_DEFAULT = []
+const QUICK_ITEMS_DEFAULT = [
+	{ "nam" : "island_map", "count" : 1 },
 	{ "nam" : "saffron_bun", "count" : 1 }
 ]
-const QUICK_ITEMS_DEFAULT = []
 const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
@@ -83,6 +86,7 @@ const MULTISTATES_DEFAULT = {}
 const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_MOVE" : true,
 	"MESSAGE_CONTROLS_ITEMS" : true,
+	"MESSAGE_CONTROLS_ITEMS_KEYS" : true,
 	"MESSAGE_CONTROLS_INVENTORY" : true,
 	"MESSAGE_CONTROLS_EXAMINE" : true,
 	"MESSAGE_CONTROLS_FLASHLIGHT" : true,
@@ -186,29 +190,29 @@ func get_custom_actions(item):
 	return item_record.custom_actions.duplicate() if item_record else []
 
 func execute_custom_action(event, item):
+	var result = false
 	if event.is_action_pressed("item_preview_action_1"):
 		match item.nam:
 			"saffron_bun":
+				result = true
 				item.remove()
 				var player = game_params.get_player()
 				if is_in_party(FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
 			"envelope":
+				result = true
 				item.remove()
-				game_params.take("barn_lock_key")
-				var hud = get_hud()
-				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
-				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
-			_:
-				return false
-		return true
+				take("barn_lock_key")
+				take("island_map_2")
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
 		pass
 	elif event.is_action_pressed("item_preview_action_4"):
 		pass
-	return false
+	else:
+		return false
+	return result
 
 func shader_cache_processed():
 	if story_vars.is_game_start:

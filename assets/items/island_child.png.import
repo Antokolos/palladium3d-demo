@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/island_child.png-b1a6b5e21f93ce7f221454886f9a3426.image"
+
+[deps]
+
+source_file="res://assets/items/island_child.png"
+dest_files=[ "res://.import/island_child.png-b1a6b5e21f93ce7f221454886f9a3426.image" ]
+
+[params]
+
