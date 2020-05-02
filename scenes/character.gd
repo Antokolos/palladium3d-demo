@@ -31,6 +31,9 @@ export var walk_anim_name = "female_walk_2"
 export var run_anim_name = "female_runs"
 export var crouch_anim_name = "female_crouches_squatted"
 
+export var rest_shots_max = 2
+export var speak_shots_max = 2
+
 export var b0_anim_name = "b0"
 export var b1_anim_name = "b1"
 export var b2_anim_name = "b2"
@@ -262,7 +265,7 @@ func speak(states):
 	speech_idx = 0
 	set_transition_lips(0)
 	if speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD:
-		do_speak_shot(0 if randf() > 0.5 else 1)
+		do_speak_shot(get_shot_idx(speak_shots_max))
 	speech_timer.start()
 
 func speak_text(phonetic, audio_length):
@@ -335,8 +338,15 @@ func _on_SpeechTimer_timeout():
 		speech_idx = 0
 		set_transition_lips(0)
 
+func get_shot_idx(shots_max):
+	var shot_span = 1.0 / shots_max
+	var shot_idx = int(floor(randf() / shot_span))
+	if shot_idx == shots_max:
+		shot_idx = shot_idx - 1
+	return shot_idx
+
 func _on_RestTimer_timeout():
-	do_rest_shot(0 if randf() > 0.5 else 1)
+	do_rest_shot(get_shot_idx(rest_shots_max))
 
 func _on_DetailTimer_timeout():
 	var player = get_node("../..")

@@ -69,6 +69,7 @@ const MODEL_ROT_MIN_DEG = -88
 const MODEL_ROT_MAX_DEG = 0
 const SHAPE_ROT_MIN_DEG = -90-88
 const SHAPE_ROT_MAX_DEG = -90+88
+const NONCHAR_COLLISION_RANGE_MAX = 5.9
 
 var cur_animation = null
 var UP_DIR = Vector3(0, 1, 0)
@@ -82,6 +83,7 @@ var exclusions = []
 enum COMPANION_STATE {REST, WALK, RUN}
 var companion_state = COMPANION_STATE.REST
 var target_node = null
+const DRAW_PATH = false
 var pathfinding_enabled = true
 
 func set_pathfinding_enabled(enabled):
@@ -227,6 +229,11 @@ func stand_up(force = false):
 		if hud:
 			hud.set_crouch_indicator(false)
 
+func update_navpath(pstart, pend):
+	path = get_navpath(pstart, pend)
+	if DRAW_PATH:
+		draw_path()
+
 func get_navpath(pstart, pend):
 	if not pathfinding_enabled:
 		return []
@@ -260,8 +267,7 @@ func build_path(target_position, in_party):
 			path.pop_back()
 	if has_collisions() and path.empty(): # should check possible stuck
 		#clear_path()
-		path = get_navpath(current_position, target_position)
-		#draw_path()
+		update_navpath(current_position, target_position)
 
 func draw_path():
 	for ch in pyramid.get_node("path_holder").get_children():
@@ -636,12 +642,15 @@ func process_movement(delta):
 	if is_player_controlled():
 		return
 	elif nonchar_collision and pathfinding_enabled:
-		vel = nonchar_collision.normal * PUSH_STRENGTH
-		vel.y = 0
+		var n = nonchar_collision.normal
+		n.y = 0
+		var cross = UP_DIR.cross(n)
+		var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
+		vel = (n + coeff * cross) * PUSH_STRENGTH
 		clear_path()
 		var current_position = get_global_transform().origin
 		var target_position = get_target_position()
-		path = get_navpath(current_position, target_position)
+		update_navpath(current_position, target_position)
 
 func is_player_controlled():
 	return is_in_party() and is_player()

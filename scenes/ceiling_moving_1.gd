@@ -1,5 +1,7 @@
 extends Spatial
 
+const SPEED_DOWN = 0.6
+
 onready var damage_area = $DamageArea
 onready var chest_shape = $DamageArea/ChestShape
 onready var ceiling_sound_1 = $StaticBody/CeilingSound1
@@ -31,8 +33,8 @@ func ceiling_sound_stop():
 
 func activate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
-	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000")
-	get_node("AnimationPlayer").play("CollisionAnim")
+	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, SPEED_DOWN)
+	get_node("AnimationPlayer").play("CollisionAnim", -1, SPEED_DOWN)
 	ceiling_sound_play()
 
 func pause():
