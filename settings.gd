@@ -188,6 +188,10 @@ func set_resolution(ID):
 	resolution = ID
 	emit_signal("resolution_changed", ID)
 
+func set_reverb(enable):
+	AudioServer.set_bus_effect_enabled(sound_bus_id, 0, enable)
+	AudioServer.set_bus_effect_enabled(speech_bus_id, 0, enable)
+
 func _ready():
 	load_settings()
 	set_master_volume(master_volume)

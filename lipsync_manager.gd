@@ -83,12 +83,12 @@ func text_to_phonetic(text):
 
 func _on_AudioStreamPlayer_finished():
 	var player = game_params.get_player()
-	if conversation_manager.in_choice:
-		conversation_manager.story_proceed(player)
-	elif StoryNode.CanChoose():
+	if StoryNode.CanChoose():
 		var ch = StoryNode.GetChoices(TranslationServer.get_locale())
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
+	elif StoryNode.CanContinue():
+		conversation_manager.story_proceed(player)
 
 func _on_ShortPhraseTimer_timeout():
 	var player = game_params.get_player()

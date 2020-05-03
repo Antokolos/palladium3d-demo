@@ -16,6 +16,7 @@ func _ready():
 	if not is_loadable:
 		do_init(false)
 		return
+	settings.set_reverb(is_inside)
 	var is_loaded = game_params.finish_load()
 	do_init(is_loaded)
 	if not is_loaded:

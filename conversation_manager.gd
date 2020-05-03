@@ -12,7 +12,6 @@ signal conversation_finished(player, conversation_name, target, initiator)
 var conversation_name
 var target
 var initiator
-var in_choice
 var max_choice = 0
 
 var story_state_cache = {}
@@ -21,7 +20,6 @@ func _ready():
 	conversation_name = null
 	target = null
 	initiator = null
-	in_choice = false
 	story_state_cache.clear()
 
 func change_stretch_ratio(conversation):
@@ -213,7 +211,6 @@ func story_choose(player, idx):
 				var character = game_params.get_character(actor_name)
 				character.set_speak_mode(true)
 				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
-				in_choice = true
 			change_stretch_ratio(conversation)
 		if not has_sound:
 			story_proceed(player)
@@ -226,7 +223,6 @@ func proceed_story_immediately(player):
 		story_proceed(player)
 
 func story_proceed(player):
-	in_choice = false
 	var conversation = game_params.get_hud().conversation
 	var story = StoryNode
 	if story.CanContinue():

@@ -309,7 +309,7 @@ func _input(event):
 	var hud = game_params.get_hud()
 	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
-		if conversation_manager.in_choice and event.is_action_pressed("dialogue_next"):
+		if event.is_action_pressed("dialogue_next"):
 			conversation_manager.proceed_story_immediately(self)
 		elif event.is_action_pressed("dialogue_option_1"):
 			conversation_manager.story_choose(self, 0)
