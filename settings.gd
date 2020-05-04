@@ -36,6 +36,7 @@ const TABLET_HORIZONTAL = 1
 const TABLET_VERTICAL = 0
 
 var tablet_orientation = TABLET_HORIZONTAL
+var performance_stats = false
 var vsync = true
 var fullscreen = false
 var quality = QUALITY_OPT
@@ -79,6 +80,9 @@ func load_settings():
 	if ("tablet_orientation" in d):
 		tablet_orientation = int(d.tablet_orientation)
 
+	if ("performance_stats" in d):
+		performance_stats = bool(d.performance_stats)
+
 	if ("vsync" in d):
 		vsync = bool(d.vsync)
 
@@ -119,6 +123,7 @@ func save_settings():
 	
 	var d = {
 		"tablet_orientation" : tablet_orientation,
+		"performance_stats" : performance_stats,
 		"vsync" : vsync,
 		"fullscreen" : fullscreen,
 		"quality" : quality,

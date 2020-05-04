@@ -1,13 +1,10 @@
 extends Label
 
-const PERFORMANCE_STATS_ENABLED = true
-
-func _ready():
-	visible = PERFORMANCE_STATS_ENABLED
-
 func _physics_process(delta):
-	if not PERFORMANCE_STATS_ENABLED:
+	if not settings.performance_stats:
+		visible = false
 		return
+	visible = true
 	var camera = game_params.get_player().get_cam()
 	var viewport = game_params.get_viewport()
 	var viewport_size = viewport.size if viewport else Vector2(0, 0)
