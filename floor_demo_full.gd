@@ -279,6 +279,9 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			bandit.sit_down(true)
 			female.sit_down(true)
 			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_CROUCH", ["C"])
+		"010-1-1_Statuettes", "015-1_EridaTrap", "021-1_EridaTrapMax":
+			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_1")
+			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_2")
 
 func _on_meeting_finished(player, target, initiator):
 	if initiator and initiator.name_hint == game_params.BANDIT_NAME_HINT:

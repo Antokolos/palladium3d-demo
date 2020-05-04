@@ -90,7 +90,9 @@ const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_INVENTORY" : true,
 	"MESSAGE_CONTROLS_EXAMINE" : true,
 	"MESSAGE_CONTROLS_FLASHLIGHT" : true,
-	"MESSAGE_CONTROLS_CROUCH" : true
+	"MESSAGE_CONTROLS_CROUCH" : true,
+	"MESSAGE_CONTROLS_DIALOGUE_1" : true,
+	"MESSAGE_CONTROLS_DIALOGUE_2" : true
 }
 const MUSIC_IS_LOOP = {
 	"loading.ogg" : true,
@@ -122,6 +124,24 @@ func _ready():
 	add_music("loading.ogg")
 	add_music("underwater.ogg")
 	add_music("sinkingisland.ogg")
+	reset_variables()
+
+func reset_variables():
+	scene_path = SCENE_PATH_DEFAULT
+	player_name_hint = PLAYER_NAME_HINT
+	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
+	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
+	party = PARTY_DEFAULT
+	player_paths = PLAYER_PATHS_DEFAULT
+	story_vars = STORY_VARS_DEFAULT
+	inventory = INVENTORY_DEFAULT
+	quick_items = QUICK_ITEMS_DEFAULT
+	doors = DOORS_DEFAULT
+	lights = LIGHTS_DEFAULT
+	containers = CONTAINERS_DEFAULT
+	takables = TAKABLES_DEFAULT
+	multistates = MULTISTATES_DEFAULT
+	messages = MESSAGES_DEFAULT
 
 func get_hud():
 	return get_node("/root/HUD/hud")
@@ -256,6 +276,8 @@ func initiate_load(slot):
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
 
+	reset_variables()
+	
 	if ("scene_path" in d):
 		scene_path = d.scene_path
 	slot_to_load_from = slot
@@ -283,6 +305,7 @@ func change_music_to(music_file_name):
 
 func stop_music():
 	$MusicPlayer.stop()
+	current_music = null
 
 func is_item_registered(nam):
 	return ITEMS.has(nam)
@@ -337,6 +360,7 @@ func take(nam):
 			return
 	inventory.append({ "nam" : nam, "count" : 1 })
 	emit_signal("item_taken", nam, 1)
+	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 
 func remove(nam, count = 1):
 	var idx = 0

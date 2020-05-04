@@ -307,8 +307,6 @@ func select_active_quick_item():
 	for item in items:
 		var is_active = idx == active_quick_item_idx
 		items[idx].set_selected(is_active)
-		if is_active and idx > 0 and not items[idx].nam:
-			queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 		if is_active and (not inventory.is_visible_in_tree() or not is_valid_index(active_item_idx)):
 			info_label.text = tr(items[idx].nam) if items[idx].nam else ""
 		idx = idx + 1
