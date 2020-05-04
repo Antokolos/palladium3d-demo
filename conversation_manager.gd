@@ -12,6 +12,7 @@ signal conversation_finished(player, conversation_name, target, initiator)
 var conversation_name
 var target
 var initiator
+var is_finalizing
 var max_choice = 0
 
 var story_state_cache = {}
@@ -20,6 +21,7 @@ func _ready():
 	conversation_name = null
 	target = null
 	initiator = null
+	is_finalizing = false
 	story_state_cache.clear()
 
 func change_stretch_ratio(conversation):
@@ -51,6 +53,7 @@ func stop_conversation(player):
 	conversation_name = null
 	target = null
 	initiator = null
+	is_finalizing = false
 	var hud = game_params.get_hud()
 	hud.conversation.visible = false
 	hud.quick_items_panel.visible = true
@@ -141,6 +144,7 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	emit_signal("conversation_started", player, conversation_name, target, initiator)
 	self.target = target
 	self.initiator = initiator
+	self.is_finalizing = false
 	self.conversation_name = conversation_name
 	var hud = game_params.get_hud()
 	hud.quick_items_panel.visible = false
@@ -189,7 +193,7 @@ func story_choose(player, idx):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var story = StoryNode
-	if not story.CanChoose() and not story.CanContinue() and idx == 0:
+	if is_finalizing or (not story.CanChoose() and not story.CanContinue() and idx == 0):
 		stop_conversation(player)
 	elif story.CanChoose() and max_choice > 0 and idx < max_choice:
 		move_current_text_to_prev(conversation)
@@ -200,11 +204,11 @@ func story_choose(player, idx):
 			conversation_text.text = texts[TranslationServer.get_locale()].strip_edges()
 			var tags_dict = story.GetCurrentTags()
 			var tags = tags_dict[TranslationServer.get_locale()]
-			var finalizer = tags and tags.has("finalizer")
-			if finalizer:
+			is_finalizing = tags and tags.has("finalizer")
+			if is_finalizing:
 				stop_conversation(player)
 				return
-			var actor_name = tags["actor"] if not finalizer and tags and tags.has("actor") else player.name_hint
+			var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 			conversation_actor.text = tr(actor_name) + ": " if actor_name else ""
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
@@ -225,6 +229,7 @@ func proceed_story_immediately(player):
 func story_proceed(player):
 	var conversation = game_params.get_hud().conversation
 	var story = StoryNode
+	var has_voiceover = false
 	if story.CanContinue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 		move_current_text_to_prev(conversation)
@@ -233,19 +238,21 @@ func story_proceed(player):
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 		var tags_dict = story.GetCurrentTags()
 		var tags = tags_dict[TranslationServer.get_locale()]
+		is_finalizing = tags and tags.has("finalizer")
 		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
-		if vtags and vtags.has("voiceover"):
+		has_voiceover = vtags and vtags.has("voiceover")
+		if has_voiceover:
 			var text = get_vvalue(texts)
 			var character = game_params.get_companion(actor_name)
 			character.set_speak_mode(true)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
-	var can_continue = story.CanContinue()
-	var can_choose = story.CanChoose()
+	var can_continue = not is_finalizing and story.CanContinue()
+	var can_choose = not is_finalizing and story.CanChoose()
 	var choices = story.GetChoices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
-	if not can_continue and not can_choose:
+	if not can_continue and not can_choose and not has_voiceover:
 		$AutocloseTimer.start()
 	display_choices(story, conversation, choices)
 
