@@ -139,3 +139,8 @@ collision_mask = 1024
 
 [node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
 shape = SubResource( 6 )
+
+[node name="DetailTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="DetailTimer" to="." method="_on_DetailTimer_timeout"]

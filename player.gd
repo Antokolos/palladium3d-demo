@@ -34,6 +34,7 @@ onready var upper_body_shape = $UpperBody_CollisionShape
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
 onready var standing_area = $StandingArea
+onready var detail_timer = $DetailTimer
 
 var is_walking = false
 var is_crouching = false
@@ -532,7 +533,6 @@ func process_input(delta):
 		input_movement_vector.x += 1
 
 	input_movement_vector = input_movement_vector.normalized()
-	is_walking = input_movement_vector.length() > 0
 
 	dir += -cam_xform.basis.z.normalized() * input_movement_vector.y
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
@@ -609,6 +609,11 @@ func process_movement(delta):
 	var is_moving = is_in_jump or vel.x > MIN_MOVEMENT or vel.x < -MIN_MOVEMENT or vel.z > MIN_MOVEMENT or vel.z < -MIN_MOVEMENT
 	if not is_moving:
 		$SoundWalking.stop()
+		is_walking = false
+		if is_player_controlled():
+			if detail_timer.is_stopped():
+				detail_timer.start()
+		get_model().look(0)
 		return
 	
 	if not $SoundWalking.is_playing():
@@ -616,13 +621,12 @@ func process_movement(delta):
 	$SoundWalking.pitch_scale = 2 if is_sprinting else 1
 
 	vel = move_and_slide_with_snap(vel, ZERO_DIR if is_in_jump else UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
-
+	is_walking = vel.length() > MIN_MOVEMENT
+	
 	var sc = get_slide_count()
-	if sc == 0:
-		return
 	var character_collisions = []
 	var nonchar_collision = null
-	var characters = game_params.get_characters()
+	var characters = [] if sc == 0 else game_params.get_characters()
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
 		var has_char_collision = false
@@ -639,6 +643,17 @@ func process_movement(delta):
 			character.vel = -collision.normal * PUSH_STRENGTH
 			character.vel.y = 0
 
+	if is_walking:
+		if is_player_controlled() and character_collisions.empty() and not nonchar_collision:
+			detail_timer.stop()
+			get_cam().set_detailed_mode(false)
+		get_model().walk(0, is_crouching, is_sprinting)
+	else:
+		if is_player_controlled():
+			if detail_timer.is_stopped():
+				detail_timer.start()
+		get_model().look(0)
+
 	if is_player_controlled():
 		return
 	elif nonchar_collision and pathfinding_enabled:
@@ -651,6 +666,10 @@ func process_movement(delta):
 		var current_position = get_global_transform().origin
 		var target_position = get_target_position()
 		update_navpath(current_position, target_position)
+
+func _on_DetailTimer_timeout():
+	if is_player_controlled():
+		get_cam().set_detailed_mode(true)
 
 func is_player_controlled():
 	return is_in_party() and is_player()

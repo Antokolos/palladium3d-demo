@@ -305,20 +305,17 @@ nodes/walk/node = SubResource( 44 )
 nodes/walk/position = Vector2( 200, -260 )
 nodes/walk_squat/node = SubResource( 45 )
 nodes/walk_squat/position = Vector2( 100, -20 )
-node_connections = [ "output", 0, "Blend2_Lips", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
 
-[node name="male" index="0" instance=ExtResource( 1 )]
+[node name="male" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 look_anim_name = "male_rest"
 walk_anim_name = "male_walks"
 run_anim_name = "male_runs"
 crouch_anim_name = "male_crouches_squatted"
 
-[node name="Male_palladium" parent="." index="0"]
-bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
-
 [node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
-transform = Transform( 1, -0.000611801, 0.000206344, -1.75089e-006, -0.321919, -0.946767, 0.000645703, 0.946767, -0.321918, 0.0401898, 15.1635, -0.460868 )
+transform = Transform( 1, -5.34682e-005, 1.71829e-005, 6.55651e-007, -0.29203, -0.956409, 5.62039e-005, 0.956409, -0.292029, 0.040018, 15.1739, -0.529552 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 46 )
@@ -343,10 +340,5 @@ one_shot = true
 [node name="RestTimer" type="Timer" parent="." index="3"]
 wait_time = 7.0
 one_shot = true
-
-[node name="DetailTimer" type="Timer" parent="." index="4"]
-wait_time = 0.5
-one_shot = true
 [connection signal="timeout" from="SpeechTimer" to="." method="_on_SpeechTimer_timeout"]
 [connection signal="timeout" from="RestTimer" to="." method="_on_RestTimer_timeout"]
-[connection signal="timeout" from="DetailTimer" to="." method="_on_DetailTimer_timeout"]

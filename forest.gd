@@ -13,7 +13,6 @@ func do_init(is_loaded):
 	if conversation_manager.meeting_is_finished(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)
-	game_params.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	game_params.connect("item_used", self, "on_item_used")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)

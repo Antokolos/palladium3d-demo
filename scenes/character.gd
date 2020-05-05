@@ -56,7 +56,6 @@ export var b17_anim_name = "b17"
 var simple_mode = true
 
 onready var speech_timer = get_node("SpeechTimer")
-onready var detail_timer = get_node("DetailTimer")
 
 var speech_states = []
 var speech_idx = 0
@@ -317,16 +316,6 @@ func _process(delta):
 				var player = get_node("../..")
 				emit_signal("cutscene_finished", player, cutscene_id)
 		return
-	var player = get_node("../..")
-	if player.is_walking:
-		walk(0, player.is_crouching, player.is_sprinting)
-		if player.is_player():
-			detail_timer.stop()
-			player.get_cam().set_detailed_mode(false)
-	else:
-		look(0)
-		if player.is_player() and detail_timer.is_stopped():
-			detail_timer.start()
 
 func _on_SpeechTimer_timeout():
 	if speech_idx < speech_states.size():
@@ -347,8 +336,3 @@ func get_shot_idx(shots_max):
 
 func _on_RestTimer_timeout():
 	do_rest_shot(get_shot_idx(rest_shots_max))
-
-func _on_DetailTimer_timeout():
-	var player = get_node("../..")
-	if player.is_player():
-		player.get_cam().set_detailed_mode(true)

@@ -13,6 +13,8 @@ extents = Vector3( 1.85132, 1.06088, 0.255858 )
 script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0235745, 2.67837, 0 )

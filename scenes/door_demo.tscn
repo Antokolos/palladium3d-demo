@@ -16,6 +16,8 @@ anim_player_path = "demo_door_Armature002/AnimationPlayer"
 anim_name_open = "demo_door_ArmatureAction.002"
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00352108, 3.47375, 0 )

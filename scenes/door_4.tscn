@@ -16,6 +16,8 @@ script = ExtResource( 2 )
 transform = Transform( 0.62598, 0, 0, 0, -2.73626e-008, -0.62598, 0, 0.62598, -2.73626e-008, 0.380966, 0.66118, -0.36919 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.395788 )
