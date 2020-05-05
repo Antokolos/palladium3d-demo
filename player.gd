@@ -613,7 +613,7 @@ func process_movement(delta):
 		if is_player_controlled():
 			if detail_timer.is_stopped():
 				detail_timer.start()
-		get_model().look(0)
+			get_model().look(0)
 		return
 	
 	if not $SoundWalking.is_playing():
@@ -643,19 +643,16 @@ func process_movement(delta):
 			character.vel = -collision.normal * PUSH_STRENGTH
 			character.vel.y = 0
 
-	if is_walking:
-		if is_player_controlled() and character_collisions.empty() and not nonchar_collision:
-			detail_timer.stop()
-			get_cam().set_detailed_mode(false)
-		get_model().walk(0, is_crouching, is_sprinting)
-	else:
-		if is_player_controlled():
+	if is_player_controlled():
+		if is_walking:
+			if character_collisions.empty() and not nonchar_collision:
+				detail_timer.stop()
+				get_cam().set_detailed_mode(false)
+			get_model().walk(0, is_crouching, is_sprinting)
+		else:
 			if detail_timer.is_stopped():
 				detail_timer.start()
-		get_model().look(0)
-
-	if is_player_controlled():
-		return
+			get_model().look(0)
 	elif nonchar_collision and pathfinding_enabled:
 		var n = nonchar_collision.normal
 		n.y = 0
