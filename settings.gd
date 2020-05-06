@@ -37,6 +37,7 @@ const TABLET_VERTICAL = 0
 
 var tablet_orientation = TABLET_HORIZONTAL
 var performance_stats = false
+var cutoff_enabled = true
 var vsync = true
 var fullscreen = false
 var quality = QUALITY_OPT
@@ -83,6 +84,9 @@ func load_settings():
 	if ("performance_stats" in d):
 		performance_stats = bool(d.performance_stats)
 
+	if ("cutoff_enabled" in d):
+		cutoff_enabled = bool(d.cutoff_enabled)
+
 	if ("vsync" in d):
 		vsync = bool(d.vsync)
 
@@ -124,6 +128,7 @@ func save_settings():
 	var d = {
 		"tablet_orientation" : tablet_orientation,
 		"performance_stats" : performance_stats,
+		"cutoff_enabled" : cutoff_enabled,
 		"vsync" : vsync,
 		"fullscreen" : fullscreen,
 		"quality" : quality,

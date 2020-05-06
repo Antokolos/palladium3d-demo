@@ -3,13 +3,13 @@ extends Spatial
 const CAMERA_FOV_DEGREES = 55
 const STEPS = 2
 const ANGLE_COEFF = 0.5
+const DISTANCE_COEFF = 0.2
 
 const MIN_DIFF = 0.2
-const CUTOFF_ENABLE = true
 
 func create_raycast(x, y, z):
 	var r = RayCast.new()
-	r.enabled = true
+	r.enabled = settings.cutoff_enabled
 	r.set_collision_mask_bit(0, false)
 	r.set_collision_mask_bit(1, true)
 	r.cast_to = Vector3(x, y, z)
@@ -25,6 +25,8 @@ func get_length_limit():
 	return get_camera_limit()
 
 func init():
+	if not settings.cutoff_enabled:
+		return
 	var z = -get_length_limit()
 	var width_limit = get_length_limit() * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
 	var height_limit = width_limit
@@ -61,14 +63,15 @@ func get_camera_limit():
 
 func get_max_distance(camera_origin):
 	var dsup = get_camera_limit()
-	if not CUTOFF_ENABLE:
+	if not settings.cutoff_enabled:
 		return dsup
+	var dlim = dsup * DISTANCE_COEFF
 	var distances = []
 	for view_raycast in get_children():
 		if view_raycast.is_colliding():
 			var cp = view_raycast.get_collision_point()
 			var d = camera_origin.distance_to(cp)
-			if d < dsup - MIN_DIFF:
+			if d < dlim - MIN_DIFF:
 				distances.append(d)
 			else:
 				return dsup
@@ -91,4 +94,4 @@ func get_max_distance(camera_origin):
 
 	var result = dmax + diff_max
 	
-	return result if result <= dsup and result > 0 else dsup
+	return result if result <= dlim and result > 0 else dsup

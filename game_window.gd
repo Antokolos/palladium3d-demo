@@ -7,6 +7,8 @@ const MOUSE_SENSITIVITY = 30
 onready var rel_pos = Vector2(0, 0)
 onready var viewport = get_viewport()
 
+var in_focus = true
+
 func _input(event):
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		return
@@ -22,7 +24,18 @@ func _input(event):
 		and (not get_tree().paused or game_params.get_hud().is_tablet_visible()):
 		click_the_left_mouse_button()
 
+func _notification(what):
+	match what:
+		MainLoop.NOTIFICATION_WM_FOCUS_IN:
+		# the game window just received focus from the operating system
+			in_focus = true
+		MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+		# the game window just lost focus from the operating system
+			in_focus = false
+
 func _process(delta):
+	if not in_focus:
+		return
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		return
 	var mouse_pos = viewport.get_mouse_position()

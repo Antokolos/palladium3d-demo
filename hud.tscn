@@ -531,7 +531,6 @@ grow_horizontal = 0
 grow_vertical = 0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "FPS: ???"
 align = 2
 valign = 2
 script = ExtResource( 14 )
