@@ -6,7 +6,6 @@
 [ext_resource path="res://scenes/forest_door_add.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/barn_lock.tscn" type="PackedScene" id=5]
 
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1.474, 1.9108, 0.260739 )
 
@@ -15,7 +14,9 @@ extents = Vector3( 0.441273, 2.17439, 1.44147 )
 
 [node name="forest_door" instance=ExtResource( 1 )]
 
-[node name="StaticBody" type="StaticBody" parent="." index="1"]
+[node name="StaticBody" type="StaticBody" parent="." index="1" groups=[
+"restorable_state",
+]]
 script = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StaticBody" index="0"]

@@ -94,11 +94,6 @@ const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_DIALOGUE_1" : true,
 	"MESSAGE_CONTROLS_DIALOGUE_2" : true
 }
-const MUSIC_IS_LOOP = {
-	"loading.ogg" : true,
-	"underwater.ogg" : true,
-	"sinkingisland.ogg" : true
-}
 
 var slot_to_load_from = -1
 var scene_path = SCENE_PATH_DEFAULT
@@ -117,13 +112,18 @@ var takables = TAKABLES_DEFAULT
 var multistates = MULTISTATES_DEFAULT
 var messages = MESSAGES_DEFAULT
 
-var music = {}
+enum MusicId {LOADING, OUTSIDE, EXPLORE, MINOTAUR}
+const MUSIC_PATH_TEMPLATE = "res://music/%s"
+onready var music = {
+	MusicId.LOADING : load(MUSIC_PATH_TEMPLATE % "loading.ogg"),
+	MusicId.OUTSIDE : load(MUSIC_PATH_TEMPLATE % "underwater.ogg"),
+	MusicId.EXPLORE : null,
+	MusicId.MINOTAUR : load(MUSIC_PATH_TEMPLATE % "sinkingisland.ogg")
+}
+
 var current_music = null
 
 func _ready():
-	add_music("loading.ogg")
-	add_music("underwater.ogg")
-	add_music("sinkingisland.ogg")
 	reset_variables()
 
 func reset_variables():
@@ -284,23 +284,20 @@ func initiate_load(slot):
 	
 	get_tree().change_scene("res://scene_loader.tscn")
 
+func is_loading():
+	return slot_to_load_from >= 0
+
 func finish_load():
-	if slot_to_load_from >= 0:
+	if is_loading():
 		load_params(slot_to_load_from)
 		slot_to_load_from = -1
 		return true
 	return false
 
-func add_music(music_file):
-	if music.has(music_file):
-		return music[music_file]
-	music[music_file] = load("res://music/" + music_file)
-	return music[music_file]
-
-func change_music_to(music_file_name):
-	if current_music != music_file_name:
-		current_music = music_file_name
-		$MusicPlayer.stream = music[music_file_name]
+func change_music_to(music_id):
+	if current_music != music_id:
+		current_music = music_id
+		$MusicPlayer.stream = music[music_id]
 		$MusicPlayer.play()
 
 func stop_music():
@@ -606,8 +603,3 @@ func save_params(slot):
 		"messages" : messages
 	}
 	f.store_line( to_json(d) )
-
-func _on_MusicPlayer_finished():
-	if current_music and MUSIC_IS_LOOP[current_music]:
-		# Make the loop programmatically, because loop in ogg import parameters doesn't work if the track is assigned programmatically
-		$MusicPlayer.play()

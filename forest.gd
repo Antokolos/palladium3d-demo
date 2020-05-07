@@ -17,9 +17,12 @@ func do_init(is_loaded):
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
-	player.set_sound_walk(player.SOUND_WALK_GRASS if player_in_grass else player.SOUND_WALK_SAND)
-	game_params.change_music_to("underwater.ogg")
-	player_female.set_sound_walk(player_female.SOUND_WALK_GRASS if female_in_grass else player_female.SOUND_WALK_SAND)
+	player.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_GRASS if player_in_grass else PalladiumPlayer.SoundId.SOUND_WALK_SAND)
+	game_params.change_music_to(game_params.MusicId.OUTSIDE)
+	player_female.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_GRASS if female_in_grass else PalladiumPlayer.SoundId.SOUND_WALK_SAND)
+	var boat_area = get_node("BoatArea")
+	if boat_area and boat_area.overlaps_body(player) and boat_area.overlaps_body(player_female):
+		_on_BoatArea_body_entered(player)
 
 func remove_pocket_book():
 	if pocket_book:
@@ -56,16 +59,13 @@ func _on_meeting_started(player, target, initiator):
 	player_female.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_STAND_UP_STUMP)
 
 func _on_AreaGrass_body_entered(body):
-	if body == player:
-		player.set_sound_walk(player.SOUND_WALK_GRASS)
-	if body == player_female:
-		player_female.set_sound_walk(player_female.SOUND_WALK_GRASS)
+	if body.is_in_group("party"):
+		if not $TunnelArea.overlaps_body(body):
+			body.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_GRASS)
 
 func _on_AreaGrass_body_exited(body):
-	if body == player:
-		player.set_sound_walk(player.SOUND_WALK_SAND)
-	if body == player_female:
-		player_female.set_sound_walk(player_female.SOUND_WALK_SAND)
+	if body.is_in_group("party"):
+		body.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
 	conversation_manager.arrange_meeting(player, player, player_female)
@@ -75,7 +75,12 @@ func _on_RockArea_body_exited(body):
 		_on_StumpArea_body_exited(body)
 
 func _on_BoatArea_body_entered(body):
-	if player_female.companion_state != PalladiumPlayer.COMPANION_STATE.REST:
+	if not body is PalladiumPlayer \
+		or game_params.is_loading() \
+		or player_female.companion_state != PalladiumPlayer.COMPANION_STATE.REST:
+		return
+	var boat_area = get_node("BoatArea")
+	if not boat_area or not boat_area.overlaps_body(player) or not boat_area.overlaps_body(player_female):
 		return
 	var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
 	if not boatFinished:
@@ -84,8 +89,10 @@ func _on_BoatArea_body_entered(body):
 
 func _on_TunnelArea_body_entered(body):
 	if body.is_in_group("party"):
+		body.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_CONCRETE)
 		body.set_pathfinding_enabled(false)
 
 func _on_TunnelArea_body_exited(body):
 	if body.is_in_group("party"):
+		body.set_sound_walk(PalladiumPlayer.SoundId.SOUND_WALK_GRASS)
 		body.set_pathfinding_enabled(true)

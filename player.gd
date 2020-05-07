@@ -11,11 +11,6 @@ export var initial_companion = false
 export var name_hint = PLAYER_NAME_HINT
 export var model_path = "res://scenes/female.tscn"
 
-const SOUND_WALK_NONE = 0
-const SOUND_WALK_SAND = 1
-const SOUND_WALK_GRASS = 2
-const SOUND_WALK_CONCRETE = 3
-
 const GRAVITY = -6.2
 var vel = Vector3()
 const MAX_SPEED = 5
@@ -86,6 +81,15 @@ var companion_state = COMPANION_STATE.REST
 var target_node = null
 const DRAW_PATH = false
 var pathfinding_enabled = true
+
+enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE}
+const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
+onready var sound = {
+	SoundId.SOUND_WALK_NONE : null,
+	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
+	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
+	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg")
+}
 
 func set_pathfinding_enabled(enabled):
 	pathfinding_enabled = enabled
@@ -247,7 +251,7 @@ func has_collisions():
 	var sc = get_slide_count()
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
-		if collision.collider_id != floor_node.get_instance_id():
+		if not collision.collider.get_collision_mask_bit(2):
 			return true
 	return false
 
@@ -635,7 +639,7 @@ func process_movement(delta):
 				has_char_collision = true
 				character_collisions.append(collision)
 				break
-		if not has_char_collision and collision.collider_id != floor_node.get_instance_id():
+		if not has_char_collision and not collision.collider.get_collision_mask_bit(2):
 			nonchar_collision = collision
 	for collision in character_collisions:
 		var character = collision.collider
@@ -674,28 +678,8 @@ func is_player_controlled():
 func set_sound_walk(mode):
 	var spl = $SoundWalking
 	spl.stop()
-	if mode == SOUND_WALK_NONE:
-		spl.stream = null
-		spl.set_unit_db(0)
-		return
-	var sound_file = File.new()
-	match mode:
-		SOUND_WALK_SAND:
-			sound_file.open("res://sound/environment/161815__dasdeer__sand-walk.ogg", File.READ)
-			spl.set_unit_db(0)
-		SOUND_WALK_GRASS:
-			sound_file.open("res://sound/environment/400123__harrietniamh__footsteps-on-grass.ogg", File.READ)
-			spl.set_unit_db(0)
-		SOUND_WALK_CONCRETE:
-			sound_file.open("res://sound/environment/336598__inspectorj__footsteps-concrete-a.ogg", File.READ)
-			spl.set_unit_db(0)
-		_:
-			sound_file.open("res://sound/environment/336598__inspectorj__footsteps-concrete-a.ogg", File.READ)
-			spl.set_unit_db(0)
-	var bytes = sound_file.get_buffer(sound_file.get_len())
-	var stream = AudioStreamOGGVorbis.new()
-	stream.data = bytes
-	spl.stream = stream
+	spl.stream = sound[mode] if sound.has(mode) else null
+	spl.set_unit_db(0)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

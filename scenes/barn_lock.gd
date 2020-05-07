@@ -16,6 +16,7 @@ func use(player_node):
 		item.used(player_node, self)
 		item.remove()
 		game_params.set_multistate_state(get_path(), STATE_OPENED)
+		$AudioStreamPlayer.play()
 		visible = false
 
 func item_match(item):

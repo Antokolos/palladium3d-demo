@@ -6,7 +6,7 @@ var loader = null
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	game_params.change_music_to("loading.ogg")
+	game_params.change_music_to(game_params.MusicId.LOADING)
 	loader = ResourceLoader.load_interactive(game_params.scene_path)
 
 func _process(delta):
