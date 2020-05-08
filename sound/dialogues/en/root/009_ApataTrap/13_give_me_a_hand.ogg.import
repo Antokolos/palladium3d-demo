@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/13_give_me_a_hand.ogg-9be4026ddf942050aa46793038f83c31.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/13_give_me_a_hand.ogg"
+dest_files=[ "res://.import/13_give_me_a_hand.ogg-9be4026ddf942050aa46793038f83c31.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/16_nu_vot_ya_zhe_govoril.ogg-29aacbdb99ceb0a11ffa49f0c68ced61.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-3_CeilingUp/16_nu_vot_ya_zhe_govoril.ogg"
+dest_files=[ "res://.import/16_nu_vot_ya_zhe_govoril.ogg-29aacbdb99ceb0a11ffa49f0c68ced61.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

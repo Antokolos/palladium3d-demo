@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^My gold is somewhere out there. I mean, it will be mine soon.\t",{"#":"actor:bandit"},"\n","^And I will get the Palladium.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^My gold is somewhere out there. I mean, it will be mine soon.\t",{"#":"actor:bandit"},{"#":"voiceover:41_my_gold_is_out_there.ogg"},"\n","^And I will get the Palladium.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/19_nado_prosto_vzyat_statuetku.ogg-d8fb2e2aa0abdb787424e0f09a43a420.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/19_nado_prosto_vzyat_statuetku.ogg"
+dest_files=[ "res://.import/19_nado_prosto_vzyat_statuetku.ogg-d8fb2e2aa0abdb787424e0f09a43a420.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

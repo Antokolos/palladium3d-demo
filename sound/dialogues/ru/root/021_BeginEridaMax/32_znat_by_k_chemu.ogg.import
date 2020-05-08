@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/32_znat_by_k_chemu.ogg-2e8b03e6d72917b005b63622a1d58582.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021_BeginEridaMax/32_znat_by_k_chemu.ogg"
+dest_files=[ "res://.import/32_znat_by_k_chemu.ogg-2e8b03e6d72917b005b63622a1d58582.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

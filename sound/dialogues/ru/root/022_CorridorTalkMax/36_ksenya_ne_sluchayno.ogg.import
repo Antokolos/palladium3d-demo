@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/36_ksenya_ne_sluchayno.ogg-80c4dbcb681b76bfa8d7aec11f35cd78.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/36_ksenya_ne_sluchayno.ogg"
+dest_files=[ "res://.import/36_ksenya_ne_sluchayno.ogg-80c4dbcb681b76bfa8d7aec11f35cd78.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

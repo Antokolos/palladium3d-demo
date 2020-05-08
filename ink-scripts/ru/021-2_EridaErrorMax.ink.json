@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Вот чёрт, шипение усилилось, значит мы что-то сделали не так.\t",{"#":"actor:bandit"},"\n","^Ошибки здесь дорого обходятся.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Вот чёрт, шипение усилилось, значит мы что-то сделали не так.\t",{"#":"actor:bandit"},{"#":"voiceover:34_shypenye_usililos.ogg"},"\n","^Ошибки здесь дорого обходятся.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

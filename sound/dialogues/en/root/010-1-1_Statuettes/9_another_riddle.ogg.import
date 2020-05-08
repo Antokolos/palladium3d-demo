@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/9_another_riddle.ogg-296ae1a03240ac0dcebee8493088d21d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-1_Statuettes/9_another_riddle.ogg"
+dest_files=[ "res://.import/9_another_riddle.ogg-296ae1a03240ac0dcebee8493088d21d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

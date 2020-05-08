@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/4_sama_pridumala.ogg-f72536da99d9996c8104f46395b0f374.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/4_sama_pridumala.ogg"
+dest_files=[ "res://.import/4_sama_pridumala.ogg-f72536da99d9996c8104f46395b0f374.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

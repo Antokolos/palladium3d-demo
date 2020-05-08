@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/34_hissing_sound_became_louder.ogg-3b2ab2579837f326a494fbd55896354e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021-2_EridaErrorMax/34_hissing_sound_became_louder.ogg"
+dest_files=[ "res://.import/34_hissing_sound_became_louder.ogg-3b2ab2579837f326a494fbd55896354e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

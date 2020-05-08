@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/36_xenia_didn't_came_here_by_accident.ogg-15f322310d3c19ee69ebb134e8f0eaf1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/36_xenia_didn't_came_here_by_accident.ogg"
+dest_files=[ "res://.import/36_xenia_didn't_came_here_by_accident.ogg-15f322310d3c19ee69ebb134e8f0eaf1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

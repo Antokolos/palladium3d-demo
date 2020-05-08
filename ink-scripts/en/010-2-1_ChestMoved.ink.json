@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Quickly, stand on the spot where the casket stood. Now squat down and move closer to each other.\t",{"#":"actor:bandit"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Quickly, stand on the spot where the casket stood. Now squat down and move closer to each other.\t",{"#":"actor:bandit"},{"#":"voiceover:14_stand_on_the_spot.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

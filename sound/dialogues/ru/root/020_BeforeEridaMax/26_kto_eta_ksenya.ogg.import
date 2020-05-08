@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/26_kto_eta_ksenya.ogg-8ad44b0b37ecf3d7313426f4ba728b0e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/26_kto_eta_ksenya.ogg"
+dest_files=[ "res://.import/26_kto_eta_ksenya.ogg-8ad44b0b37ecf3d7313426f4ba728b0e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

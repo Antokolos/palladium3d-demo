@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/31_predvkushaya_dobychu.ogg-a57ec53ccb634819dfd9baed38d4224f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021_BeginEridaMax/31_predvkushaya_dobychu.ogg"
+dest_files=[ "res://.import/31_predvkushaya_dobychu.ogg-a57ec53ccb634819dfd9baed38d4224f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/20_ya_poydu_dalshe.ogg-9276ea90c0c8bb6c1168751d7fda78da.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/20_ya_poydu_dalshe.ogg"
+dest_files=[ "res://.import/20_ya_poydu_dalshe.ogg-9276ea90c0c8bb6c1168751d7fda78da.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

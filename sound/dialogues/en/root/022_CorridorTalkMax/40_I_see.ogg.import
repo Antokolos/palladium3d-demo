@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/40_I_see.ogg-e14c272e3ac73db6e050016a60c7903d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/40_I_see.ogg"
+dest_files=[ "res://.import/40_I_see.ogg-e14c272e3ac73db6e050016a60c7903d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

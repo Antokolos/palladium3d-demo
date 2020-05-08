@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/12_right_above_the_casket.ogg-0414a313a3f44dd2e78d346f9c87f534.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/12_right_above_the_casket.ogg"
+dest_files=[ "res://.import/12_right_above_the_casket.ogg-0414a313a3f44dd2e78d346f9c87f534.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

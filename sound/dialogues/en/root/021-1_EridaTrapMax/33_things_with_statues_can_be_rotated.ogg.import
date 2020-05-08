@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/33_things_with_statues_can_be_rotated.ogg-5d3414ec40d3ec4d549f0821657f2a96.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021-1_EridaTrapMax/33_things_with_statues_can_be_rotated.ogg"
+dest_files=[ "res://.import/33_things_with_statues_can_be_rotated.ogg-5d3414ec40d3ec4d549f0821657f2a96.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

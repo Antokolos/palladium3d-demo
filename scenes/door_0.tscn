@@ -7,13 +7,10 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.523002, 3.12578, 2.26724 )
 
-[node name="door_0" groups=[
+[node name="door_0" index="0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-
-[node name="door_4_armature001" parent="." index="0"]
-editor/display_folded = true
 
 [node name="door_4001" parent="door_4_armature001" index="1"]
 transform = Transform( 0.62598, 0, 0, 0, -2.73626e-008, -0.62598, 0, 0.62598, -2.73626e-008, 0.388386, 0.68638, -0.375589 )
@@ -27,3 +24,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.395788 
 shape = SubResource( 1 )
 
 [node name="door_sound" parent="." index="2" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.749046, -0.464924 )

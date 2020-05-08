@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/37_vspomnil.ogg-41884534df27943c93807d6ca98ee67c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/37_vspomnil.ogg"
+dest_files=[ "res://.import/37_vspomnil.ogg-41884534df27943c93807d6ca98ee67c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/7_lovushka_vsyo_taki.ogg-506c7509f0e76868cf1e03376571c9c5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/7_lovushka_vsyo_taki.ogg"
+dest_files=[ "res://.import/7_lovushka_vsyo_taki.ogg-506c7509f0e76868cf1e03376571c9c5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

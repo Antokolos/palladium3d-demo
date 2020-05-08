@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/41_my_gold_is_out_there.ogg-b110ca3cf3b1bd35ce77373b90e2cf8d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022-1_DemoFinishedMax/41_my_gold_is_out_there.ogg"
+dest_files=[ "res://.import/41_my_gold_is_out_there.ogg-b110ca3cf3b1bd35ce77373b90e2cf8d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

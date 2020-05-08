@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/29_ne_ispugaemsya.ogg-d555f2a2658bd60b18b1f992f0b2f246.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/29_ne_ispugaemsya.ogg"
+dest_files=[ "res://.import/29_ne_ispugaemsya.ogg-d555f2a2658bd60b18b1f992f0b2f246.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/10_but_at_least_to_another_room.ogg-5d4283d81925aa8caf179bc54d73f4f4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-4_ApataDoneXenia/10_but_at_least_to_another_room.ogg"
+dest_files=[ "res://.import/10_but_at_least_to_another_room.ogg-5d4283d81925aa8caf179bc54d73f4f4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

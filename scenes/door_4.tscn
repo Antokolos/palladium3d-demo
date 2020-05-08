@@ -24,3 +24,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061952, 0.875389, -0.395788 
 shape = SubResource( 1 )
 
 [node name="door_sound" parent="." index="2" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.442655, -0.331994 )

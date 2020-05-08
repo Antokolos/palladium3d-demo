@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/4_did_you_come_up.ogg-2f35ea58e80926d1bae590036baed854.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/4_did_you_come_up.ogg"
+dest_files=[ "res://.import/4_did_you_come_up.ogg-2f35ea58e80926d1bae590036baed854.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/39_you're_after_glory.ogg-52f41be8d31604b3ce62b7ab8ce6e827.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/39_you're_after_glory.ogg"
+dest_files=[ "res://.import/39_you're_after_glory.ogg-52f41be8d31604b3ce62b7ab8ce6e827.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

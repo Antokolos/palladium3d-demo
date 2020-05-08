@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/29_not_so_easily_scared.ogg-633bb34bc9b36e796795c470efd171bc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/020_BeforeEridaMax/29_not_so_easily_scared.ogg"
+dest_files=[ "res://.import/29_not_so_easily_scared.ogg-633bb34bc9b36e796795c470efd171bc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

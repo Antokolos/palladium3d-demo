@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/27_who_is_this_xenia.ogg-6c3c14651aa67f0b0a9f758c6e47a6ad.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/020_BeforeEridaMax/27_who_is_this_xenia.ogg"
+dest_files=[ "res://.import/27_who_is_this_xenia.ogg-6c3c14651aa67f0b0a9f758c6e47a6ad.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/30_ogo_sketety.ogg-c09bf32279ff3d11b6005fa56485e5f7.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021_BeginEridaMax/30_ogo_sketety.ogg"
+dest_files=[ "res://.import/30_ogo_sketety.ogg-c09bf32279ff3d11b6005fa56485e5f7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

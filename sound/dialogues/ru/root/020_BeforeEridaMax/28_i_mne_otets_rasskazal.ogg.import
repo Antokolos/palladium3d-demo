@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/28_i_mne_otets_rasskazal.ogg-2ec62c93775efddb9bfbbc51518e6e4b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/28_i_mne_otets_rasskazal.ogg"
+dest_files=[ "res://.import/28_i_mne_otets_rasskazal.ogg-2ec62c93775efddb9bfbbc51518e6e4b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

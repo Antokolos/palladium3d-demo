@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/11_poprobuy_pereborom.ogg-61ab4a3252c9887ed5db0aa417b272b8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-3_ApataMusesError/11_poprobuy_pereborom.ogg"
+dest_files=[ "res://.import/11_poprobuy_pereborom.ogg-61ab4a3252c9887ed5db0aa417b272b8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

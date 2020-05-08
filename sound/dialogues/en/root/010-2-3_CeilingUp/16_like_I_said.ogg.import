@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/16_like_I_said.ogg-3a08529b4ec355ecd4c13e483d93dea7.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-2-3_CeilingUp/16_like_I_said.ogg"
+dest_files=[ "res://.import/16_like_I_said.ogg-3a08529b4ec355ecd4c13e483d93dea7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

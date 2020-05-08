@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2_nu_konechno.ogg-c60dbf2fd6580fe1210ee3114b170881.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/2_nu_konechno.ogg"
+dest_files=[ "res://.import/2_nu_konechno.ogg-c60dbf2fd6580fe1210ee3114b170881.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

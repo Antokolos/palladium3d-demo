@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/41_gde_to_tam_zoloto.ogg-0f0fcb0b27b3546b1cdd5fe6083c0e2b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022-1_DemoFinishedMax/41_gde_to_tam_zoloto.ogg"
+dest_files=[ "res://.import/41_gde_to_tam_zoloto.ogg-0f0fcb0b27b3546b1cdd5fe6083c0e2b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

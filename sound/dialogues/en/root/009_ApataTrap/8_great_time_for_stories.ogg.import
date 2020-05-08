@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/8_great_time_for_stories.ogg-25004c518bc840b68631b09580a17d39.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/8_great_time_for_stories.ogg"
+dest_files=[ "res://.import/8_great_time_for_stories.ogg-25004c518bc840b68631b09580a17d39.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

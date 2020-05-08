@@ -8,13 +8,15 @@ const TRANSLATE_OFFSET = Vector3(0, 0, -2)
 func _ready():
 	restore_state()
 
-func open(speed_scale = 0.4):
-	.open(speed_scale)
-	$SoundChestOpen.play()
+func open(with_sound = true, speed_scale = 0.4):
+	.open(with_sound, speed_scale)
+	if with_sound:
+		$SoundChestOpen.play()
 
-func close(speed_scale = 0.4):
-	.close(speed_scale)
-	$SoundChestClose.play()
+func close(with_sound = true, speed_scale = 0.4):
+	.close(with_sound, speed_scale)
+	if with_sound:
+		$SoundChestClose.play()
 
 func _on_base_animation_finished(anim_name):
 	if anim_name == "chest_push":

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/38_it_doesn't_matter.ogg-ad63211bdd138def30d18cce1fa91bc2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/38_it_doesn't_matter.ogg"
+dest_files=[ "res://.import/38_it_doesn't_matter.ogg-ad63211bdd138def30d18cce1fa91bc2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

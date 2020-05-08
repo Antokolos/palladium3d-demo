@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/20_I'll_keep_on_going.ogg-90b046e3b80dc00bedb1ce22bf7ad648.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/20_I'll_keep_on_going.ogg"
+dest_files=[ "res://.import/20_I'll_keep_on_going.ogg-90b046e3b80dc00bedb1ce22bf7ad648.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

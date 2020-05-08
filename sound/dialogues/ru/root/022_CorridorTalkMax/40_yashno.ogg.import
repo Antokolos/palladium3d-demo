@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/40_yashno.ogg-6d72170dcec56204856fbfa42d5ce1a3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/40_yashno.ogg"
+dest_files=[ "res://.import/40_yashno.ogg-6d72170dcec56204856fbfa42d5ce1a3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/21_three_times_more_dangerous.ogg-abfca60fa4f9b0ad017936e0c87eff17.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/21_three_times_more_dangerous.ogg"
+dest_files=[ "res://.import/21_three_times_more_dangerous.ogg-abfca60fa4f9b0ad017936e0c87eff17.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

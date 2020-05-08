@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/38_ne_vazhno.ogg-5742682b5553afd001f894532a8ef02a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/38_ne_vazhno.ogg"
+dest_files=[ "res://.import/38_ne_vazhno.ogg-5742682b5553afd001f894532a8ef02a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/31_anticepating_great_loot.ogg-47169b18522620269f588982c7fe4966.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021_BeginEridaMax/31_anticepating_great_loot.ogg"
+dest_files=[ "res://.import/31_anticepating_great_loot.ogg-47169b18522620269f588982c7fe4966.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

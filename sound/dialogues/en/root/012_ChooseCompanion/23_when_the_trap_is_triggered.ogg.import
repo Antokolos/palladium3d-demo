@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/23_when_the_trap_is_triggered.ogg-4a122498554626eb1016db631b9d9cd9.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/23_when_the_trap_is_triggered.ogg"
+dest_files=[ "res://.import/23_when_the_trap_is_triggered.ogg-4a122498554626eb1016db631b9d9cd9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

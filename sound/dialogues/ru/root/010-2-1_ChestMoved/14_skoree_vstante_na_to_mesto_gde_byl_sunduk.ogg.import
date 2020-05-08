@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/14_skoree_vstante_na_to_mesto_gde_byl_sunduk.ogg-c33430d647364bb89c2a494d37e00e6f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-1_ChestMoved/14_skoree_vstante_na_to_mesto_gde_byl_sunduk.ogg"
+dest_files=[ "res://.import/14_skoree_vstante_na_to_mesto_gde_byl_sunduk.ogg-c33430d647364bb89c2a494d37e00e6f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

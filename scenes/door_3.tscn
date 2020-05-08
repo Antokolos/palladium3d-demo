@@ -13,6 +13,7 @@ extents = Vector3( 1.85132, 1.06088, 0.255858 )
 script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.63823, 0 )
 collision_layer = 3
 collision_mask = 3
 
@@ -21,3 +22,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0235745, 2.67837, 0 )
 shape = SubResource( 1 )
 
 [node name="door_sound" parent="." index="2" instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0, 1.01693, 0 )

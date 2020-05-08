@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^We did it again! Do you have the statue?\t",{"#":"actor:bandit"},"\n","^Yes. Quickly, to the safe room.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^We did it again! Do you have the statue?\t",{"#":"actor:bandit"},{"#":"voiceover:35_we_did_it_again.ogg"},"\n","^Yes. Quickly, to the safe room.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

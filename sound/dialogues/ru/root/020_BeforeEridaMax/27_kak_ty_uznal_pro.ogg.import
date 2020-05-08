@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/27_kak_ty_uznal_pro.ogg-8cb1de3ac85189d813b02aa67f607494.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/27_kak_ty_uznal_pro.ogg"
+dest_files=[ "res://.import/27_kak_ty_uznal_pro.ogg-8cb1de3ac85189d813b02aa67f607494.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

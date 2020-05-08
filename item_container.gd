@@ -48,7 +48,7 @@ func is_opened():
 	var cs = game_params.get_container_state(get_path())
 	return (cs == game_params.ContainerState.DEFAULT and initially_opened) or (cs == game_params.ContainerState.OPENED)
 
-func open(speed_scale = 1.0):
+func open(with_sound = true, speed_scale = 1.0):
 	if blocker_node and blocker_node.opened:
 		return
 	animation_player.set_speed_scale(speed_scale)
@@ -57,7 +57,7 @@ func open(speed_scale = 1.0):
 	collision_opened.disabled = false
 	game_params.set_container_state(get_path(), true)
 
-func close(speed_scale = 1.0):
+func close(with_sound = true, speed_scale = 1.0):
 	animation_player.set_speed_scale(speed_scale)
 	animation_player.play_backwards(anim_name)
 	collision_closed.disabled = false
@@ -87,9 +87,9 @@ func restore_state():
 	var state = game_params.get_container_state(get_path())
 	if state == game_params.ContainerState.DEFAULT:
 		if initially_opened:
-			open()
+			open(false)
 		return
 	if state == game_params.ContainerState.OPENED:
-		open()
+		open(false)
 	else:
-		close()
+		close(false)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/33_shtuki_so_skulpturami.ogg-b39f9c4ce322ab44a0f7b68bf930ba47.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-1_EridaTrapMax/33_shtuki_so_skulpturami.ogg"
+dest_files=[ "res://.import/33_shtuki_so_skulpturami.ogg-b39f9c4ce322ab44a0f7b68bf930ba47.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

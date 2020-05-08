@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/3_na_schyot_tebya_Andr.ogg-ba0a658b2688673a6011b7638768b363.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/3_na_schyot_tebya_Andr.ogg"
+dest_files=[ "res://.import/3_na_schyot_tebya_Andr.ogg-ba0a658b2688673a6011b7638768b363.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/17_eto_uzhe_sledushaya_problema.ogg-9733b9875390743e155af47e5099a6ee.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-3_CeilingUp/17_eto_uzhe_sledushaya_problema.ogg"
+dest_files=[ "res://.import/17_eto_uzhe_sledushaya_problema.ogg-9733b9875390743e155af47e5099a6ee.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

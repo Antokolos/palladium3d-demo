@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Где-то там моё золото. То есть оно будет моим.\t",{"#":"actor:bandit"},"\n","^А я добуду Палладиум.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Где-то там моё золото. То есть оно будет моим.\t",{"#":"actor:bandit"},{"#":"voiceover:41_gde_to_tam_zoloto.ogg"},"\n","^А я добуду Палладиум.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

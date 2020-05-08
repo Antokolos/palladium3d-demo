@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/21_vtroyne_opasney.ogg-79182ba22612f80a4605184f0d8e3488.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/21_vtroyne_opasney.ogg"
+dest_files=[ "res://.import/21_vtroyne_opasney.ogg-79182ba22612f80a4605184f0d8e3488.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

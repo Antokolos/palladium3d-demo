@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/13_luchshe_ubrat_sunduk.ogg-7dd24f5a6028f072aea5ce07ec59bda1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/13_luchshe_ubrat_sunduk.ogg"
+dest_files=[ "res://.import/13_luchshe_ubrat_sunduk.ogg-7dd24f5a6028f072aea5ce07ec59bda1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

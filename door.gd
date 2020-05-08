@@ -1,6 +1,8 @@
 extends Spatial
 class_name Door
 
+const ANIM_SPEED_SCALE = 0.725
+
 enum DoorIds {
 	NONE = 0,
 	APATA_TRAP_INNER = 10,
@@ -21,19 +23,19 @@ onready var door_collision = get_node(door_collision_path)
 func _ready():
 	restore_state()
 
-func open():
-	anim_player.play(anim_name_open)
+func open(with_sound = true):
+	anim_player.play(anim_name_open, -1, ANIM_SPEED_SCALE)
 	door_collision.disabled = true
 	game_params.set_door_state(get_path(), true)
-	if has_node("door_sound"):
-		get_node("door_sound").play()
+	if with_sound and has_node("door_sound"):
+		get_node("door_sound").play(false)
 
-func close():
-	anim_player.play_backwards(anim_name_open)
-	door_collision.disabled = false
+func close(with_sound = true):
+	if with_sound and has_node("door_sound"):
+		get_node("door_sound").play(true)
+	anim_player.play(anim_name_open, -1, -ANIM_SPEED_SCALE, true)
 	game_params.set_door_state(get_path(), false)
-	if has_node("door_sound"):
-		get_node("door_sound").play()
+	door_collision.disabled = false
 
 func is_opened():
 	var state = game_params.get_door_state(get_path())
@@ -41,6 +43,6 @@ func is_opened():
 
 func restore_state():
 	if is_opened():
-		open()
+		open(false)
 	else:
-		close()
+		close(false)

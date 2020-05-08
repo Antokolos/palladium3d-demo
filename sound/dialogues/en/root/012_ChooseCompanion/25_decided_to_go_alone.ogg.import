@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/25_decided_to_go_alone.ogg-d2317a86a2b6e5e7eb2a3b3b7c81a8b6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/25_decided_to_go_alone.ogg"
+dest_files=[ "res://.import/25_decided_to_go_alone.ogg-d2317a86a2b6e5e7eb2a3b3b7c81a8b6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

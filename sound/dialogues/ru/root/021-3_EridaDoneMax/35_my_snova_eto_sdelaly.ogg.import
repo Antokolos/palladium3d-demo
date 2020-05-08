@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/35_my_snova_eto_sdelaly.ogg-89ca41838f8235990cdfa9036cb4ff12.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-3_EridaDoneMax/35_my_snova_eto_sdelaly.ogg"
+dest_files=[ "res://.import/35_my_snova_eto_sdelaly.ogg-89ca41838f8235990cdfa9036cb4ff12.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

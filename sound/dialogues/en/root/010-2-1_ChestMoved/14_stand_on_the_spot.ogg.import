@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/14_stand_on_the_spot.ogg-10a743c5c5d44bf06ee110066143fe96.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-2-1_ChestMoved/14_stand_on_the_spot.ogg"
+dest_files=[ "res://.import/14_stand_on_the_spot.ogg-10a743c5c5d44bf06ee110066143fe96.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
