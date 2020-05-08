@@ -361,15 +361,18 @@ nodes/walk/node = SubResource( 52 )
 nodes/walk/position = Vector2( 220, -300 )
 nodes/walk_squat/node = SubResource( 53 )
 nodes/walk_squat/position = Vector2( 140, -60 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "sitting_stump", "CutsceneTransition", 2, "stand_up_stump", "CutsceneTransition", 3, "takes_apata", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "sitting_stump", "CutsceneTransition", 2, "stand_up_stump", "CutsceneTransition", 3, "takes_apata", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17" ]
 
-[node name="female" instance=ExtResource( 1 )]
+[node name="female" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 rest_shots_max = 4
 speak_shots_max = 6
 
+[node name="Female_palladium_armature" parent="." index="0"]
+bones/50/bound_children = [ NodePath("RightHandAttachment") ]
+
 [node name="RightHandAttachment" type="BoneAttachment" parent="Female_palladium_armature" index="11"]
-transform = Transform( -0.898928, 0.377906, 0.221622, 0.24808, 0.0221432, 0.968487, 0.36109, 0.92558, -0.113656, -2.27226, 9.27018, 0.450618 )
+transform = Transform( -0.898928, 0.377906, 0.221621, 0.285844, 0.122581, 0.950404, 0.331998, 0.917694, -0.218213, -2.27226, 9.21882, 0.450617 )
 bone_name = "wrist.R"
 
 [node name="Position3D" type="Position3D" parent="Female_palladium_armature/RightHandAttachment" index="0"]
@@ -393,6 +396,7 @@ parameters/Transition/current = 0
 parameters/Transition_Lips/current = 0
 
 [node name="SpeechTimer" type="Timer" parent="." index="2"]
+process_mode = 0
 one_shot = true
 
 [node name="RestTimer" type="Timer" parent="." index="3"]
