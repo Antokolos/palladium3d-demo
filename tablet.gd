@@ -133,11 +133,14 @@ func _ready():
 	
 	vlanguage.add_item("None", settings.VLANGUAGE_NONE)
 	vlanguage.add_item("Russian", settings.VLANGUAGE_RU)
+	vlanguage.add_item("English", settings.VLANGUAGE_EN)
 	match (settings.vlanguage):
 		settings.VLANGUAGE_NONE:
 			vlanguage.select(0)
 		settings.VLANGUAGE_RU:
 			vlanguage.select(1)
+		settings.VLANGUAGE_EN:
+			vlanguage.select(2)
 		_:
 			language.select(0)
 	_on_VLanguage_item_selected(settings.vlanguage)

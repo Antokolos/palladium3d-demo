@@ -244,7 +244,10 @@ func story_proceed(player):
 		var vtags = get_vvalue(tags_dict)
 		has_voiceover = vtags and vtags.has("voiceover")
 		if has_voiceover:
-			var text = get_vvalue(texts)
+			# For simplicity, we are always using Russian text to autocreate lipsync
+			# To get more correct representation of English phonemes, you can use 'transcription' tag in the Ink file
+			# TODO: Alternatively, code for lipsync autocreation from English text should be written
+			var text = texts["ru"] #get_vvalue(texts)
 			var character = game_params.get_companion(actor_name)
 			character.set_speak_mode(true)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
