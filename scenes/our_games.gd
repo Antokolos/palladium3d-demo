@@ -8,7 +8,9 @@ func _ready():
 	visible = TranslationServer.get_locale() != "ru"
 
 func _on_StaticBody_input_event(camera, event, click_position, click_normal, shape_idx):
-	pass # Replace with function body.
+	if event is InputEventMouseButton and event.pressed:
+		game_params.scene_path = "res://our_games.tscn"
+		get_tree().change_scene("res://scene_loader.tscn")
 
 func _on_StaticBody_mouse_entered():
 	mouse_over()
