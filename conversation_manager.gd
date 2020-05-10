@@ -56,8 +56,7 @@ func stop_conversation(player):
 	is_finalizing = false
 	var hud = game_params.get_hud()
 	hud.conversation.visible = false
-	hud.quick_items_panel.visible = true
-	hud.info_label.visible = true
+	hud.show_game_ui(true)
 	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
 		emit_signal("meeting_finished", player, target_prev, initiator_prev)
 	player.get_cam().enable_use(true)
@@ -147,9 +146,7 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	self.is_finalizing = false
 	self.conversation_name = conversation_name
 	var hud = game_params.get_hud()
-	hud.quick_items_panel.visible = false
-	hud.info_label.visible = false
-	hud.inventory.visible = false
+	hud.show_game_ui(false)
 	var conversation = hud.conversation
 	conversation.visible = true
 	max_choice = 0

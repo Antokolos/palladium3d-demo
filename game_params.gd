@@ -235,8 +235,6 @@ func execute_custom_action(event, item):
 	return result
 
 func shader_cache_processed():
-	if story_vars.is_game_start:
-		story_vars.is_game_start = false
 	emit_signal("shader_cache_processed")
 
 func handle_conversation(player, target, initiator):

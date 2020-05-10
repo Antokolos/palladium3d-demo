@@ -10,6 +10,8 @@ func do_init(is_loaded):
 		var companion_origin = $PositionCompanion.get_transform().origin
 		player.set_transform(Transform(player_basis, player_origin))
 		player_female.set_transform(Transform(companion_basis, companion_origin))
+	if game_params.story_vars.is_game_start:
+		game_params.story_vars.is_game_start = false
 	if conversation_manager.meeting_is_finished(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)

@@ -52,7 +52,7 @@ func open_preview(item, hud, flashlight):
 			ch.text = common_utils.get_action_key(act) + tr(item.nam + "_" + act)
 			custom_actions_node.add_child(ch)
 		get_tree().paused = true
-		hud.quick_items_panel.hide()
+		hud.show_game_ui(false)
 		hud.actions_panel.show()
 
 func _input(event):
@@ -99,7 +99,7 @@ func close_preview():
 		ch.queue_free()
 	if hud:
 		hud.actions_panel.hide()
-		hud.quick_items_panel.show()
+		hud.show_game_ui(true)
 		if game_params.get_quick_items_count() > 1:
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])

@@ -11,6 +11,8 @@ const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
 const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
 
+export var cutscene_mode = false
+
 onready var main_hud = get_node("VBoxContainer/MainHUD")
 onready var quick_items_dimmer = main_hud.get_node("QuickItemsDimmer")
 onready var quick_items_panel = main_hud.get_node("QuickItemsDimmer/HBoxQuickItems")
@@ -27,11 +29,13 @@ onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
-onready var indicator_crouch = get_node("Indicators/IndicatorCrouchPanel/IndicatorCrouch")
+onready var indicators_panel = get_node("Indicators")
+onready var indicator_crouch = indicators_panel.get_node("IndicatorCrouchPanel/IndicatorCrouch")
 onready var tex_crouch_off = preload("res://assets/ui/tex_crouch_off.tres")
 onready var tex_crouch_on = preload("res://assets/ui/tex_crouch_on.tres")
 
-onready var health_bar = get_node("Info/MainPlayer/Stats/HealthBar")
+onready var info_panel = get_node("Info")
+onready var health_bar = info_panel.get_node("MainPlayer/Stats/HealthBar")
 onready var health_label = health_bar.get_node("HealthLabel")
 onready var health_progress = health_bar.get_node("HealthProgress")
 
@@ -51,6 +55,16 @@ func _ready():
 	synchronize_items()
 	select_active_item()
 	select_active_quick_item()
+	show_game_ui(not cutscene_mode)
+
+func show_game_ui(enable):
+	var v = enable and not cutscene_mode
+	info_panel.visible = v
+	indicators_panel.visible = v
+	quick_items_panel.visible = v
+	info_label.visible = v
+	if not v:
+		inventory.visible = false
 
 func queue_popup_message(template, args = [], fade = false, timeout_max = MESSAGE_TIMEOUT_MAX_S):
 	if game_params.get_message_state(template):
@@ -211,6 +225,8 @@ func insert_ui_quick_item(pos):
 	select_active_quick_item()
 
 func _on_shader_cache_processed():
+	if cutscene_mode:
+		return
 	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
 	if game_params.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
