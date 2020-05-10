@@ -34,10 +34,12 @@ const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = "res://forest.tscn"
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
 const PLAYER_HEALTH_MAX_DEFAULT = 100
+const FATHER_NAME_HINT = "father"
 const PLAYER_NAME_HINT = "player"
 const FEMALE_NAME_HINT = "female"
 const BANDIT_NAME_HINT = "bandit"
 const PARTY_DEFAULT = {
+	FATHER_NAME_HINT : false,
 	PLAYER_NAME_HINT : true,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false

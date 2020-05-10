@@ -89,6 +89,8 @@ func _on_AudioStreamPlayer_finished():
 			$ShortPhraseTimer.start()
 	elif StoryNode.CanContinue():
 		conversation_manager.story_proceed(player)
+	else:
+		conversation_manager.stop_conversation(player)
 
 func _on_ShortPhraseTimer_timeout():
 	var player = game_params.get_player()
