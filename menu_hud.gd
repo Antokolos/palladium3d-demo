@@ -27,7 +27,6 @@ func pause_game(enable):
 func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
 	if is_show:
 		pause_game(true)
-		tablet.visible = true
 		tablet.activate(activation_mode)
 	else:
 		tablet.visible = false

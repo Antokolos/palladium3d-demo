@@ -57,6 +57,9 @@ func _ready():
 	select_active_quick_item()
 	show_game_ui(not cutscene_mode)
 
+func has_game_ui():
+	return info_panel.visible and indicators_panel.visible
+
 func show_game_ui(enable):
 	var v = enable and not cutscene_mode
 	info_panel.visible = v
@@ -176,8 +179,7 @@ func _process(delta):
 func show_tablet(is_show):
 	if is_show:
 		pause_game(true)
-		tablet.visible = true
-		tablet._on_HomeButton_pressed()
+		tablet.activate(Tablet.ActivationMode.DESKTOP)
 	else:
 		tablet.visible = false
 		pause_game(false)

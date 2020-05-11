@@ -43,6 +43,9 @@ func start_area_conversation(conversation_name):
 		start_conversation(player, conversation_name)
 
 func stop_conversation(player):
+	if not conversation_name:
+		# Already stopped
+		return
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
 	for companion in game_params.get_companions():

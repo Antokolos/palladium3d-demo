@@ -15,6 +15,7 @@ func _ready():
 	conversation_manager.connect("conversation_started", self, "_on_conversation_started")
 	var chest = get_node("Apata_room/apata_chest")
 	chest.connect("was_translated", self, "_on_ChestArea_body_exited")
+	$destructible_web.connect("web_destroyed", self, "_on_web_destroyed")
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
@@ -211,9 +212,8 @@ func _on_AreaDeadEnd2_body_entered(body):
 	if body.is_in_group("party") and game_params.is_in_party(game_params.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
-func _on_InscriptionsArea_body_entered(body):
-	if body.is_in_group("party"):
-		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
+func _on_web_destroyed(web):
+	conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):

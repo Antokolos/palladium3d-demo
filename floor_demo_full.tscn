@@ -74,6 +74,7 @@
 [ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=72]
 [ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=73]
 [ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=74]
+[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=75]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -94,21 +95,18 @@ extents = Vector3( 4.68733, 2.29441, 1.21978 )
 extents = Vector3( 3.78506, 1.90136, 3.14294 )
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 2.24065, 2.73226, 3.72146 )
-
-[sub_resource type="BoxShape" id=8]
 extents = Vector3( 4.90392, 3.14005, 3.72118 )
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 4.57794, 2.32469, 3.38208 )
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 2.46396, 1, 3.07291 )
 
-[sub_resource type="BoxShape" id=11]
+[sub_resource type="BoxShape" id=10]
 extents = Vector3( 4.97818, 2.86632, 5.99325 )
 
-[sub_resource type="BoxShape" id=12]
+[sub_resource type="BoxShape" id=11]
 extents = Vector3( 2.04657, 1, 1.35013 )
 
 [node name="floor_demo_full" type="Spatial" groups=[
@@ -740,14 +738,6 @@ transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.2
 [node name="BanditPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.48208, 1.2, 39.9036 )
 
-[node name="InscriptionsArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.439, 3.96, 36.6947 )
-input_ray_pickable = false
-monitorable = false
-
-[node name="CollisionShape" type="CollisionShape" parent="InscriptionsArea"]
-shape = SubResource( 7 )
-
 [node name="ApataCutscenePosition" type="Position3D" parent="."]
 transform = Transform( -0.754209, 0.233088, -0.613872, -0.0239097, 0.924508, 0.380412, 0.656199, 0.301588, -0.691699, 21.3352, 3.76897, 24.2893 )
 
@@ -757,7 +747,7 @@ input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="ChooseCompanionArea"]
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="ChooseCompanionPosition" type="Position3D" parent="."]
 transform = Transform( -4.35223e-008, 0.0929206, -0.995674, 4.06169e-009, 0.995674, 0.0929206, 1, 0, -4.37114e-008, 1.8185, 3.71403, 26.5125 )
@@ -772,7 +762,7 @@ monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="BeforeEridaArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.20436, -0.394379 )
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="BeginEridaArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6224, 2.21311, 36.1646 )
@@ -780,7 +770,7 @@ input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="BeginEridaArea"]
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 
 [node name="AresRoomArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.86563, 2.2516, 24.6634 )
@@ -789,7 +779,7 @@ monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="AresRoomArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89452, 0 )
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 
 [node name="ChestArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6476, 2.23402, 31.6522 )
@@ -797,7 +787,7 @@ input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="ChestArea"]
-shape = SubResource( 12 )
+shape = SubResource( 11 )
 
 [node name="FemaleSavePosition" type="Position3D" parent="."]
 transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.0948, 1.2, 32.082 )
@@ -824,6 +814,9 @@ stream = ExtResource( 73 )
 [node name="EridaButtonWrong" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
 stream = ExtResource( 74 )
+
+[node name="destructible_web" parent="." instance=ExtResource( 75 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7175, 4.50903, 37.4462 )
 [connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
@@ -832,7 +825,6 @@ stream = ExtResource( 74 )
 [connection signal="body_entered" from="AreaApataDone" to="." method="_on_AreaApataDone_body_entered"]
 [connection signal="body_entered" from="IgnitionArea" to="." method="_on_IgnitionArea_body_entered"]
 [connection signal="body_entered" from="RatsArea" to="." method="_on_RatsArea_body_entered"]
-[connection signal="body_entered" from="InscriptionsArea" to="." method="_on_InscriptionsArea_body_entered"]
 [connection signal="body_entered" from="ChooseCompanionArea" to="." method="_on_ChooseCompanionArea_body_entered"]
 [connection signal="body_entered" from="BeforeEridaArea" to="." method="_on_BeforeEridaArea_body_entered"]
 [connection signal="body_entered" from="BeginEridaArea" to="." method="_on_BeginEridaArea_body_entered"]

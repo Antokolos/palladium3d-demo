@@ -38,24 +38,6 @@ enum ActivationMode {DESKTOP, CHAT, CREDITS, MAP, DOCUMENTS, SETTINGS, SAVE, LOA
 onready var hud = get_parent()
 
 func _ready():
-	if hud.is_menu_hud():
-		desktop_container_chat.visible = false
-		desktop_container_credits.visible = true
-		desktop_container_map.visible = false
-		desktop_container_documents.visible = false
-		desktop_container_settings.visible = true
-		desktop_container_save.visible = false
-		desktop_container_load.visible = true
-		desktop_container_quit.visible = true
-	else:
-		desktop_container_chat.visible = true
-		desktop_container_credits.visible = false
-		desktop_container_map.visible = false
-		desktop_container_documents.visible = false
-		desktop_container_settings.visible = true
-		desktop_container_save.visible = true
-		desktop_container_load.visible = true
-		desktop_container_quit.visible = true
 	tablet_orientation.add_item("Vertical", settings.TABLET_VERTICAL)
 	tablet_orientation.add_item("Horizontal", settings.TABLET_HORIZONTAL)
 	match (settings.tablet_orientation):
@@ -151,6 +133,25 @@ func _ready():
 	speech_volume_node.value = settings.speech_volume
 
 func activate(mode):
+	visible = true
+	if hud.is_menu_hud():
+		desktop_container_chat.visible = false
+		desktop_container_credits.visible = true
+		desktop_container_map.visible = false
+		desktop_container_documents.visible = false
+		desktop_container_settings.visible = true
+		desktop_container_save.visible = false
+		desktop_container_load.visible = true
+		desktop_container_quit.visible = true
+	else:
+		desktop_container_chat.visible = true
+		desktop_container_credits.visible = false
+		desktop_container_map.visible = false
+		desktop_container_documents.visible = false
+		desktop_container_settings.visible = true
+		desktop_container_save.visible = hud.has_game_ui()
+		desktop_container_load.visible = hud.has_game_ui()
+		desktop_container_quit.visible = true
 	match mode:
 		ActivationMode.CHAT:
 			_on_ChatButton_pressed()

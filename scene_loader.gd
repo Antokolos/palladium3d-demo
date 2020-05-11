@@ -17,6 +17,7 @@ func _process(delta):
 	if err == ERR_FILE_EOF:
 		var pscn = loader.get_resource()
 		loader = null
+		game_params.cleanup_paths()
 		get_tree().change_scene_to(pscn)
 	else:
 		progress.value = loader.get_stage()

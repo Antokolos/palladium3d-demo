@@ -44,7 +44,6 @@ const PARTY_DEFAULT = {
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false
 }
-const PLAYER_PATHS_DEFAULT = {}
 const STORY_VARS_DEFAULT = {
 	"is_game_start" : true,
 	"flashlight_on" : false,
@@ -103,7 +102,7 @@ var player_name_hint = PLAYER_NAME_HINT
 var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
 var party = PARTY_DEFAULT
-var player_paths = PLAYER_PATHS_DEFAULT
+var player_paths = {}
 var story_vars = STORY_VARS_DEFAULT
 var inventory = INVENTORY_DEFAULT
 var quick_items = QUICK_ITEMS_DEFAULT
@@ -126,7 +125,11 @@ onready var music = {
 var current_music = null
 
 func _ready():
+	cleanup_paths()
 	reset_variables()
+
+func cleanup_paths():
+	player_paths.clear()
 
 func reset_variables():
 	scene_path = SCENE_PATH_DEFAULT
@@ -134,7 +137,6 @@ func reset_variables():
 	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
 	party = PARTY_DEFAULT
-	player_paths = PLAYER_PATHS_DEFAULT
 	story_vars = STORY_VARS_DEFAULT
 	inventory = INVENTORY_DEFAULT
 	quick_items = QUICK_ITEMS_DEFAULT
@@ -520,7 +522,7 @@ func load_params(slot):
 	emit_signal("health_changed", PalladiumPlayer.PLAYER_NAME_HINT, player_health_current, player_health_max)
 
 	party = d.party if ("party" in d) else PARTY_DEFAULT
-	player_paths = d.player_paths if ("player_paths" in d) else PLAYER_PATHS_DEFAULT
+	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		for name_hint in d.characters.keys():
@@ -584,13 +586,13 @@ func save_params(slot):
 				"origin" : [o.x, o.y, o.z]
 			}
 	
+	# player_paths should not be saved, it must be recreated on level startup via register_player()
 	var d = {
 		"scene_path" : scene_path,
 		"player_name_hint" : player_name_hint,
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,
 		"party" : party,
-		"player_paths" : player_paths,
 		"characters" : characters,
 		"story_vars" : story_vars,
 		"inventory" : inventory,
