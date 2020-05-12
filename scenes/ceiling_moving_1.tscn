@@ -49,12 +49,13 @@ tracks/1/keys = {
 "values": [ Vector3( 23.213, 8.67389, 31.327 ), Vector3( 23.213, 0.946324, 31.327 ), Vector3( 23.213, 0.946324, 31.327 ) ]
 }
 
-[node name="ceiling_moving_1" groups=[
+[node name="ceiling_moving_1" index="0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="ceiling_moving001" parent="ceiling_armat000" index="1"]
+cast_shadow = 0
 extra_cull_margin = 10.0
 
 [node name="DeactivationTimer" type="Timer" parent="." index="1"]

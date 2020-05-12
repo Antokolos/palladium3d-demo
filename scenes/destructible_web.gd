@@ -13,7 +13,6 @@ func use(player_node):
 	destroy_web(true, true)
 
 func destroy_web(with_effects, update_state):
-	Particles
 	if with_effects:
 		$flames.visible = true
 		$DestroyTimer.start()
@@ -33,7 +32,7 @@ func _on_DestroyTimer_timeout():
 	$spider_web_2.visible = false
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_OPEN")
+	return "E: " + tr("ACTION_IGNITE")
 
 func remove_highlight(player_node):
 	pass

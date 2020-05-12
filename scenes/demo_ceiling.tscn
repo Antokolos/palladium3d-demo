@@ -5,7 +5,10 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 36.5957, 0.910582, 16.5494 )
 
-[node name="demo_ceiling" index="0" instance=ExtResource( 1 )]
+[node name="demo_ceiling" instance=ExtResource( 1 )]
+
+[node name="ceiling_2001" parent="." index="0"]
+cast_shadow = 0
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 

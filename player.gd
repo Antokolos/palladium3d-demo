@@ -13,11 +13,11 @@ export var model_path = "res://scenes/female.tscn"
 
 const GRAVITY = -6.2
 var vel = Vector3()
-const MAX_SPEED = 5
+const MAX_SPEED = 3
 const JUMP_SPEED = 4.5
 const ACCEL= 1.5
 
-const MAX_SPRINT_SPEED = 15
+const MAX_SPRINT_SPEED = 10
 const SPRINT_ACCEL = 4.5
 
 var dir = Vector3()
@@ -29,7 +29,6 @@ onready var upper_body_shape = $UpperBody_CollisionShape
 onready var body_shape = $Body_CollisionShape
 onready var rotation_helper = $Rotation_Helper
 onready var standing_area = $StandingArea
-onready var detail_timer = $DetailTimer
 
 var is_walking = false
 var is_crouching = false
@@ -175,7 +174,7 @@ func follow(current_transform, next_position):
 			if collision.collider_id == target_node.get_instance_id():
 				emit_signal("arrived_to_boundary", self, target_node)
 				companion_state = COMPANION_STATE.REST
-				model.look(rotation_angle_to_target_deg)
+				model.look(rotation_angle_to_target_deg, is_crouching)
 				dir = Vector3()
 				return
 		companion_state = COMPANION_STATE.WALK
@@ -184,7 +183,7 @@ func follow(current_transform, next_position):
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	else:
-		model.look(rotation_angle_to_target_deg)
+		model.look(rotation_angle_to_target_deg, is_crouching)
 		dir = Vector3()
 		if in_party:
 			companion_state = COMPANION_STATE.REST
@@ -401,9 +400,9 @@ func become_player():
 	player_camera_container.remove_child(camera)
 	camera_container.add_child(camera)
 	var player_model = player.get_model()
-	player_model.set_simple_mode(false)
+	player_model.set_simple_mode(false, player.is_crouching)
 	var model = get_model()
-	model.set_simple_mode(true)
+	model.set_simple_mode(true, is_crouching)
 	player.reset_rotation()
 	game_params.set_player_name_hint(name_hint)
 	camera.rebuild_exceptions(self)
@@ -428,7 +427,7 @@ func _ready():
 	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
-	model.set_simple_mode(initial_player)
+	model.set_simple_mode(initial_player, is_crouching)
 	model_container.add_child(model)
 	game_params.register_player(self)
 
@@ -442,10 +441,10 @@ func join_party():
 	angle_rad_y = 0
 
 func set_simple_mode(enable):
-	get_model().set_simple_mode(enable)
+	get_model().set_simple_mode(enable, is_crouching)
 
 func rest():
-	get_model().look(0)
+	get_model().look(0, is_crouching)
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
@@ -497,7 +496,7 @@ func _physics_process(delta):
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 			if angle_rad_y == 0:
 				companion_state = COMPANION_STATE.REST
-				get_model().look(rotation_angle_to_target_deg)
+				get_model().look(rotation_angle_to_target_deg, is_crouching)
 			else:
 				companion_state = COMPANION_STATE.WALK
 				get_model().walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
@@ -615,9 +614,7 @@ func process_movement(delta):
 		$SoundWalking.stop()
 		is_walking = false
 		if is_player_controlled():
-			if detail_timer.is_stopped():
-				detail_timer.start()
-			get_model().look(0)
+			rest()
 		return
 	
 	if not $SoundWalking.is_playing():
@@ -649,14 +646,9 @@ func process_movement(delta):
 
 	if is_player_controlled():
 		if is_walking:
-			if character_collisions.empty() and not nonchar_collision:
-				detail_timer.stop()
-				get_cam().set_detailed_mode(false)
 			get_model().walk(0, is_crouching, is_sprinting)
 		else:
-			if detail_timer.is_stopped():
-				detail_timer.start()
-			get_model().look(0)
+			rest()
 	elif nonchar_collision and pathfinding_enabled:
 		var n = nonchar_collision.normal
 		n.y = 0
@@ -667,10 +659,6 @@ func process_movement(delta):
 		var current_position = get_global_transform().origin
 		var target_position = get_target_position()
 		update_navpath(current_position, target_position)
-
-func _on_DetailTimer_timeout():
-	if is_player_controlled():
-		get_cam().set_detailed_mode(true)
 
 func is_player_controlled():
 	return is_in_party() and is_player()

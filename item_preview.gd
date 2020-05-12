@@ -57,7 +57,7 @@ func open_preview(item, hud, flashlight):
 
 func _input(event):
 	if item_holder_node.get_child_count() > 0:
-		if event.is_action_pressed("item_preview_toggle"):
+		if event.is_action_pressed("item_preview_toggle") or event.is_action_pressed("ui_tablet_toggle"):
 			close_preview()
 		elif game_params.execute_custom_action(event, item):
 			close_preview()

@@ -13,10 +13,10 @@ onready var player_female = get_node(player_female_path) if has_node(player_fema
 onready var player_bandit = get_node(player_bandit_path) if has_node(player_bandit_path) else null
 
 func _ready():
+	settings.set_reverb(is_inside)
 	if not is_loadable:
 		do_init(false)
 		return
-	settings.set_reverb(is_inside)
 	var is_loaded = game_params.finish_load()
 	do_init(is_loaded)
 	if not is_loaded:

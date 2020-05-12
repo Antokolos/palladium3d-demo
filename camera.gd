@@ -1,20 +1,18 @@
 extends Camera
 class_name PalladiumCamera
 
-const CAMERA_NEAR_NORMAL = 0.46
-const CAMERA_NEAR_DETAILED = 0.23
-
-onready var flashlight = get_node("Flashlight")
-onready var use_point = get_node("Gun_Fire_Points/Use_Point")
+onready var flashlight = get_node("Flashlight") if has_node("Flashlight") else null
+onready var flashlight_spot = flashlight.get_node("Flashlight") if flashlight else null
+onready var use_point = get_node("Gun_Fire_Points/Use_Point") if has_node("Gun_Fire_Points/Use_Point") else null
 
 onready var env_norm = preload("res://env_norm.tres")
 onready var env_opt = preload("res://env_opt.tres")
 onready var env_good = preload("res://env_good.tres")
 onready var env_high = preload("res://env_high.tres")
 
-onready var culling_rays = get_node("culling_rays")
-onready var shader_cache = get_node("viewpoint/shader_cache")
-onready var item_preview = get_node("viewpoint/item_preview")
+onready var culling_rays = get_node("culling_rays") if has_node("culling_rays") else null
+onready var shader_cache = get_node("viewpoint/shader_cache") if has_node("viewpoint/shader_cache") else null
+onready var item_preview = get_node("viewpoint/item_preview") if has_node("viewpoint/item_preview") else null
 
 var sky_outside
 var sky_inside
@@ -53,8 +51,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_normal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", false)
-			if flashlight:
-				flashlight.set("shadow_enabled", false)
+			if flashlight_spot:
+				flashlight_spot.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_OPT:
 			self.environment = env_opt
@@ -65,8 +63,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_optimal")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", false)
-			if flashlight:
-				flashlight.set("shadow_enabled", false)
+			if flashlight_spot:
+				flashlight_spot.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_GOOD:
 			self.environment = env_good
@@ -77,8 +75,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_good")
 			get_tree().call_group("moving", "shadow_casting_enable", false)
 			get_tree().call_group("trees", "wind_effect_enable", true)
-			if flashlight:
-				flashlight.set("shadow_enabled", false)
+			if flashlight_spot:
+				flashlight_spot.set("shadow_enabled", false)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_HIGH:
 			self.environment = env_high
@@ -89,8 +87,8 @@ func change_quality(quality):
 			get_tree().call_group("grass", "set_quality_high")
 			get_tree().call_group("moving", "shadow_casting_enable", true)
 			get_tree().call_group("trees", "wind_effect_enable", true)
-			if flashlight:
-				flashlight.set("shadow_enabled", true)
+			if flashlight_spot:
+				flashlight_spot.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
 	set_inside(game_params.is_inside(), game_params.is_bright())
 	if shader_cache:
@@ -102,10 +100,6 @@ func set_inside(inside, bright):
 	environment.set("background_sky", sky_inside if inside else sky_outside)
 	environment.set("background_energy", 0.3 if bright else (0.04 if inside else 0.4))
 	environment.set("ambient_light_energy", 0.3 if bright else (0.04 if inside else 0.4))
-
-func set_detailed_mode(enable):
-	# Set to CAMERA_NEAR_NORMAL in order to prevent player's inner parts from getting into camera view
-	self.near = CAMERA_NEAR_DETAILED if enable else CAMERA_NEAR_NORMAL
 
 func change_culling():
 	if culling_rays:

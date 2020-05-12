@@ -154,30 +154,33 @@ func get_viewport():
 	return get_node("/root/HUD/ViewportContainer/Viewport")
 
 func get_player():
-	return get_node(player_paths[player_name_hint]) if player_paths.has(player_name_hint) else null
+	return get_node(player_paths[player_name_hint]) if has_character(player_name_hint) else null
 
 func get_companion(name_hint = null):
 	if not name_hint:
 		var companions = get_companions()
 		return companions[0] if companions.size() > 0 else null
-	return get_node(player_paths[name_hint]) if player_paths.has(name_hint) else null
+	return get_node(player_paths[name_hint]) if has_character(name_hint) else null
 
 func get_companions():
 	var result = []
 	for name_hint in party.keys():
 		if party[name_hint] and name_hint != player_name_hint:
-			var companion_node = get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+			var companion_node = get_node(player_paths[name_hint]) if has_character(name_hint) else null
 			if companion_node:
 				result.append(companion_node)
 	return result
 
+func has_character(name_hint):
+	return name_hint and player_paths.has(name_hint) and has_node(player_paths[name_hint])
+
 func get_character(name_hint):
-	return get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+	return get_node(player_paths[name_hint]) if has_character(name_hint) else null
 
 func get_characters():
 	var result = []
 	for name_hint in party.keys():
-		var character_node = get_node(player_paths[name_hint]) if name_hint and player_paths.has(name_hint) else null
+		var character_node = get_node(player_paths[name_hint]) if has_character(name_hint) else null
 		if character_node:
 			result.append(character_node)
 	return result

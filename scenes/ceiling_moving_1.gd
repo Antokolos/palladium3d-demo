@@ -31,6 +31,9 @@ func ceiling_sound_stop():
 	ceiling_sound_4.stop()
 	ceiling_sound_5.stop()
 
+func is_active():
+	return game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN
+
 func activate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, SPEED_DOWN)
@@ -50,7 +53,7 @@ func deactivate():
 	ceiling_sound_play()
 
 func restore_state():
-	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN:
+	if is_active():
 		activate()
 	elif game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED:
 		activate()
@@ -85,6 +88,9 @@ func _on_DeactivationTimer_timeout():
 
 func _physics_process(delta):
 	chest_shape.disabled = game_params.story_vars.apata_chest_rigid != 0
+	if not is_active():
+		does_damage = false
+		return
 	for body in damage_area.get_overlapping_bodies():
 		if body.is_in_group("party"):
 			does_damage = true

@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/tree_oak.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/tree_oak.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 1.27605
-height = 3.53823
+radius = 1.67852
+height = 2.42057
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 1.57501, 2.00812, 1.85151 )
 
 [node name="tree_oak" groups=[
 "trees",
@@ -17,3 +20,7 @@ script = ExtResource( 2 )
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 0.998133, -0.00664889, 0.0607205, -0.0610032, -0.0575879, 0.996475, -0.00312868, -0.998318, -0.0578859, -0.298951, 1.57802, -0.174284 )
 shape = SubResource( 1 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody" index="1"]
+transform = Transform( 0.722576, 0, 0.691291, 0, 1, 0, -0.691291, 0, 0.722576, -0.914939, 6.8665, -0.729015 )
+shape = SubResource( 2 )
