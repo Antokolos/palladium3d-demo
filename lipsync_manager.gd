@@ -8,6 +8,15 @@ const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
+var character_speaker = null
+
+func stop_sound_and_lipsync():
+	if character_speaker:
+		character_speaker.get_model().stop_speaking()
+		character_speaker = null
+	if $AudioStreamPlayer.is_playing():
+		$AudioStreamPlayer.stop()
+
 func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
 	if not locale:
@@ -21,6 +30,7 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 	var conversation_sound_path = get_conversation_sound_path(conversation_name, target_name_hint)
 	if not conversation_sound_path:
 		return false
+	character_speaker = character
 	var ogg_file = File.new()
 	ogg_file.open(conversation_sound_path + file_name, File.READ)
 	var bytes = ogg_file.get_buffer(ogg_file.get_len())
@@ -82,6 +92,7 @@ func text_to_phonetic(text):
 	return result
 
 func _on_AudioStreamPlayer_finished():
+	stop_sound_and_lipsync()
 	var player = game_params.get_player()
 	if StoryNode.CanChoose():
 		var ch = StoryNode.GetChoices(TranslationServer.get_locale())

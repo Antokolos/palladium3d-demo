@@ -68,7 +68,7 @@ script = ExtResource( 6 )
 [node name="item_holder" type="Spatial" parent="viewpoint/item_preview"]
 
 [node name="Flashlight" type="Spatial" parent="."]
-transform = Transform( -1, -8.74228e-008, 0, 8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.6 )
+transform = Transform( -1, -8.74228e-008, 0, 8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.8 )
 visible = false
 
 [node name="Flashlight" type="SpotLight" parent="Flashlight"]
@@ -80,16 +80,17 @@ shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 spot_range = 18.0
 spot_attenuation = 1.7411
-spot_angle = 49.0
+spot_angle = 55.0
 spot_angle_attenuation = 2.07053
 
 [node name="OmniLight" type="OmniLight" parent="Flashlight"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.4
 light_cull_mask = 4293918721
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
-omni_range = 1.0
+omni_range = 1.5
 
 [node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

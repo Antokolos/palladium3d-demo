@@ -33,6 +33,7 @@ func open_preview(item, hud, flashlight):
 		self.inst = item.get_model_instance()
 		for ch in item_holder_node.get_children():
 			ch.queue_free()
+		common_utils.shadow_casting_enable(inst, false)
 		item_holder_node.add_child(inst)
 		var aabb = item.get_aabb(inst)
 		var vm = min(vmin(coord_div(MAX_SIZE, aabb.size)), MAX_SIZE.x)

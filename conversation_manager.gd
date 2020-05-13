@@ -46,6 +46,7 @@ func stop_conversation(player):
 	if not conversation_name:
 		# Already stopped
 		return
+	lipsync_manager.stop_sound_and_lipsync()
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
 	for companion in game_params.get_companions():

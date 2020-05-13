@@ -281,6 +281,13 @@ func speak(states):
 		do_speak_shot(get_shot_idx(speak_shots_max))
 	speech_timer.start()
 
+func stop_speaking():
+	if not speech_timer.is_stopped():
+		speech_timer.stop()
+	speech_states.clear()
+	speech_idx = 0
+	set_transition_lips(0)
+
 func speak_text(phonetic, audio_length):
 	var states = []
 	var words = phonetic.split(" ", false)
@@ -335,11 +342,9 @@ func _on_SpeechTimer_timeout():
 	if speech_idx < speech_states.size():
 		set_transition_lips(speech_states[speech_idx])
 		speech_idx = speech_idx + 1
-		$SpeechTimer.start()
+		speech_timer.start()
 	else:
-		speech_states.clear()
-		speech_idx = 0
-		set_transition_lips(0)
+		stop_speaking()
 
 func get_shot_idx(shots_max):
 	var shot_span = 1.0 / shots_max
