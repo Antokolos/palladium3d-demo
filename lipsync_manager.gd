@@ -21,21 +21,23 @@ func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
 	if not locale:
 		return null
-	var csp = "sound/dialogues/%s/%s/%s/" % [locale, target_name_hint if target_name_hint else "root", conversation_name]
-	var dir = Directory.new()
-	return csp if dir.dir_exists(csp) else null
+	return "res://sound/dialogues/%s/%s/%s/" % [locale, target_name_hint if target_name_hint else "root", conversation_name]
 
 func play_sound_and_start_lipsync(character, conversation_name, target_name_hint, file_name, text = null, transcription = null):
 	var phonetic = transcription if transcription else (text_to_phonetic(text.strip_edges()) if text else null)
 	var conversation_sound_path = get_conversation_sound_path(conversation_name, target_name_hint)
 	if not conversation_sound_path:
 		return false
+	var stream = load(conversation_sound_path + file_name)
+	if not stream:
+		return false
+	if stream is AudioStreamOGGVorbis:
+		stream.set_loop(false)
+	elif stream is AudioStreamSample:
+		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_DISABLED)
+	else:
+		return false
 	character_speaker = character
-	var ogg_file = File.new()
-	ogg_file.open(conversation_sound_path + file_name, File.READ)
-	var bytes = ogg_file.get_buffer(ogg_file.get_len())
-	var stream = AudioStreamOGGVorbis.new()
-	stream.data = bytes
 	var length = stream.get_length()
 	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
 	$AudioStreamPlayer.stream = stream

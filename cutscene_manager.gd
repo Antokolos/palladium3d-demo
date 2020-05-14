@@ -51,6 +51,7 @@ func restore_camera(player):
 		var camera = player_camera_holder.get_child(0)
 		camera.enable_use(true)
 		return
+	player.reset_movement_and_rotation()
 	player.set_simple_mode(true)
 	var camera = cutscene_node.get_child(0)
 	cutscene_node.remove_child(camera)

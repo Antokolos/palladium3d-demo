@@ -64,7 +64,7 @@ const ITEMS = {
 	"statue_melpomene" : { "item_image" : "statue_melpomene.png", "model_path" : "res://assets/statue_3.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_urania" : { "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_hermes" : { "item_image" : "statue_hermes.png", "model_path" : "res://assets/statue_hermes.escn", "can_give" : false, "custom_actions" : [] },
-	"sphere_for_postament_body" : { "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament_body.escn", "can_give" : false, "custom_actions" : [] },
+	"sphere_for_postament_body" : { "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_ares" : { "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_erida" : { "item_image" : "statue_erida.png", "model_path" : "res://assets/statue_erida.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_artemida" : { "item_image" : "statue_artemis.png", "model_path" : "res://assets/statue_artemida.escn", "can_give" : false, "custom_actions" : [] },
@@ -478,12 +478,16 @@ func is_in_party(name_hint):
 	return party[name_hint] if party.has(name_hint) else false
 
 func join_party(name_hint):
-	get_character(name_hint).clear_path()
+	var character = get_character(name_hint)
+	character.clear_path()
 	party[name_hint] = true
+	character.reset_movement_and_rotation()
 
 func leave_party(name_hint):
-	get_character(name_hint).clear_path()
+	var character = get_character(name_hint)
+	character.clear_path()
 	party[name_hint] = false
+	character.reset_movement_and_rotation()
 
 func register_player(player):
 	player_paths[player.name_hint] = player.get_path()

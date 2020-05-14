@@ -10,12 +10,12 @@ mid_height = 1.6
 [sub_resource type="CapsuleShape" id=2]
 margin = 0.06
 radius = 0.3
-height = 0.793343
+height = 0.794434
 
 [sub_resource type="CapsuleShape" id=3]
 margin = 0.06
-radius = 0.3
-height = 1.6
+radius = 0.5
+height = 1.2
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.16, 0.04, 0.16 )
@@ -55,7 +55,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 1.6, 0.6 ]
+"values": [ 1.2, 0.2 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("UpperBody_CollisionShape:translation")

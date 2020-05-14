@@ -327,7 +327,7 @@ func _input(event):
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
 			angle_rad_y = deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1)
-			process_rotation()
+			process_rotation(true)
 			angle_rad_x = 0
 			angle_rad_y = 0
 		elif event is InputEventJoypadMotion:
@@ -352,20 +352,23 @@ func _input(event):
 			elif event.is_action_released("cam_left") or event.is_action_released("cam_right"):
 				angle_rad_y = 0
 
-func process_rotation():
-	rotation_helper.rotate_x(angle_rad_x)
-	get_model_holder().rotate_x(angle_rad_x)
-	upper_body_shape.rotate_x(angle_rad_x)
-	self.rotate_y(angle_rad_y)
-	var camera_rot = rotation_helper.rotation_degrees
-	var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
-	var shape_rot = upper_body_shape.rotation_degrees
-	camera_rot.x = clamp(camera_rot.x, CAMERA_ROT_MIN_DEG, CAMERA_ROT_MAX_DEG)
-	rotation_helper.rotation_degrees = camera_rot
-	model_rot.x = clamp(model_rot.x, MODEL_ROT_MIN_DEG, MODEL_ROT_MAX_DEG)
-	get_model_holder().rotation_degrees = model_rot
-	shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
-	upper_body_shape.rotation_degrees = shape_rot
+func process_rotation(need_to_update_collisions):
+	if angle_rad_x != 0 or angle_rad_y != 0:
+		if need_to_update_collisions:
+			move_and_slide(ZERO_DIR, ZERO_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+		rotation_helper.rotate_x(angle_rad_x)
+		get_model_holder().rotate_x(angle_rad_x)
+		upper_body_shape.rotate_x(angle_rad_x)
+		self.rotate_y(angle_rad_y)
+		var camera_rot = rotation_helper.rotation_degrees
+		var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
+		var shape_rot = upper_body_shape.rotation_degrees
+		camera_rot.x = clamp(camera_rot.x, CAMERA_ROT_MIN_DEG, CAMERA_ROT_MAX_DEG)
+		rotation_helper.rotation_degrees = camera_rot
+		model_rot.x = clamp(model_rot.x, MODEL_ROT_MIN_DEG, MODEL_ROT_MAX_DEG)
+		get_model_holder().rotation_degrees = model_rot
+		shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
+		upper_body_shape.rotation_degrees = shape_rot
 
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
@@ -407,10 +410,20 @@ func become_player():
 	game_params.set_player_name_hint(name_hint)
 	camera.rebuild_exceptions(self)
 
+func reset_movement():
+	dir = Vector3()
+	set_sprinting(false)
+
 func reset_rotation():
+	angle_rad_x = 0
+	angle_rad_y = 0
 	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
 	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
+
+func reset_movement_and_rotation():
+	reset_movement()
+	reset_rotation()
 
 func _ready():
 	exclusions.append(self)
@@ -436,9 +449,6 @@ func remove_item_from_hand():
 
 func join_party():
 	game_params.join_party(name_hint)
-	dir = Vector3()
-	angle_rad_x = 0
-	angle_rad_y = 0
 
 func set_simple_mode(enable):
 	get_model().set_simple_mode(enable, is_crouching)
@@ -513,8 +523,8 @@ func _physics_process(delta):
 		build_path(target_position, in_party)
 		follow(current_transform, path.front() if path.size() > 0 else target_position)
 	
-	process_movement(delta)
-	process_rotation()
+	var is_moving = process_movement(delta)
+	process_rotation(not is_moving)
 
 func process_input(delta):
 
@@ -615,7 +625,7 @@ func process_movement(delta):
 		is_walking = false
 		if is_player_controlled():
 			rest()
-		return
+		return false
 	
 	if not $SoundWalking.is_playing():
 		$SoundWalking.play()
@@ -659,6 +669,7 @@ func process_movement(delta):
 		var current_position = get_global_transform().origin
 		var target_position = get_target_position()
 		update_navpath(current_position, target_position)
+	return true
 
 func is_player_controlled():
 	return is_in_party() and is_player()

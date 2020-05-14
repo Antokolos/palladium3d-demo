@@ -793,10 +793,10 @@ shape = SubResource( 11 )
 transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.0948, 1.2, 32.082 )
 
 [node name="BanditSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.153, 1.2, 32.7087 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.3001, 1.2, 32.9622 )
 
 [node name="PlayerSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.336, 1.2, 32.7087 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.2189, 1.2, 32.9622 )
 
 [node name="PlayerTeleportPosition" type="Position3D" parent="."]
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
