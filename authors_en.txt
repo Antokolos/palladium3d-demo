@@ -1,5 +1,48 @@
 [center]
-[b]Music & Sound[/b]
-Click sound from INSTEAD engine
+[b]A game by NLB project[/b]
+[url]https://nlbproject.com[/url]
+
+[b]Made with Godot Engine[/b]
+[table=2]
+[cell][img]res://assets/images/200px-Godot_logo.svg.png[/img][/cell]
+[cell][img]res://assets/images/1-52.png[/img][url]https://godotengine.org[/url][/cell]
+[/table]
+
+[b]Special thanks for English text proofreading: Christine Ewert[/b]
+
+[b]Fonts[/b]
+[url=https://www.1001fonts.com/roboto-font.html]Roboto Font Family[/url] by Christian Robertson, Font data copyright Google 2014, [url=http://www.apache.org/licenses/LICENSE-2.0]Apache License[/url]
+[url=https://www.1001fonts.com/forum-font.html]Forum Regular[/url] Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>, [url=http://scripts.sil.org/OFL]OFL[/url]
+[url=https://www.joelcarrouche.com/fonts/norse]Norse Font Family[/url] by Joël Carrouché, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+[url=https://sourceforge.net/projects/linuxlibertine]LinuxLibertine[/url] by Philipp H. Poll, [url=https://en.wikipedia.org/wiki/GPL_font_exception]GPL font exception[/url] and [url=http://scripts.sil.org/OFL]OFL[/url]
+
+[b]Sounds[/b]
+Click sound from [url=https://instead.syscall.ru]INSTEAD engine[/url]
+[url=https://freesound.org/people/JoseAgudelo/sounds/472399]A mouse going "squeek"[/url] by JoseAgudelo, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+[url=https://freesound.org/people/hykenfreak/sounds/331621]Flame Ignition[/url] by hykenfreak, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/ryanconway/sounds/260741]Button On and Off[/url] by ryanconway, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/klankbeeld/sounds/238059]Cigarette-lighter click light[/url] by klankbeeld, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/sculptor/sounds/16935]Torch fire[/url] by sculptor, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/qubodup/sounds/160213]Kicking/Forcing/Breaking Wooden Door[/url] by qubodup, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+[url=https://freesound.org/people/digifishmusic/sounds/43760]Gentle Sea On Flat Beach[/url] by digifishmusic, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/DasDeer/sounds/161815]Walking in the sand[/url] by DasDeer, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+[url=https://freesound.org/people/InspectorJ/sounds/336598]Footsteps, Concrete, A[/url] by InspectorJ, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/harrietniamh/sounds/400123]Footsteps on Grass[/url] by harrietniamh, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/JakLocke/sounds/261297]Body falling to floor[/url] by JakLocke, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
+[url=https://freesound.org/people/plumaudio/sounds/513819]Lock Unlock Wooden Door[/url] by plumaudio, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+[url=https://freesound.org/people/ertfelda/sounds/243699]Hidden Wall Opening[/url] by ertfelda, [url=https://creativecommons.org/publicdomain/zero/1.0]CC0[/url]
+
+[b]Music[/b]
+[url=https://opengameart.org/content/underwater-theme]Underwater Theme[/url] by CleytonKauffman, [url=https://creativecommons.org/licenses/by-sa/3.0]CC BY-SA 3.0[/url], [url=https://opengameart.org/content/oga-by-30-faq]OGA-BY 3.0[/url]
+[url=https://opengameart.org/content/cinema-world-27]Cinema World 27[/url] by C.Gspan, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url], [url=https://opengameart.org/content/oga-by-30-faq]OGA-BY 3.0[/url]
+[url=https://opengameart.org/content/sinking-island]Sinking Island[/url] by [url=https://soundcloud.com/gundatsch]Gundatsch[/url], [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url], [url=https://opengameart.org/content/oga-by-30-faq]OGA-BY 3.0[/url]
+[url=https://opengameart.org/content/a-raindrop-gentle-kymis-theme]"A Raindrop Gentle" (Kymi's Theme)[/url] by Spring/Spring Enterprises (Rasmus Damsgaard)
+[url=https://creativecommons.org/licenses/by/4.0]CC BY 4.0[/url], [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url], [url=https://creativecommons.org/licenses/by-sa/4.0]CC BY-SA 4.0[/url], [url=https://creativecommons.org/licenses/by-sa/3.0]CC BY-SA 3.0[/url]
+
+[b]Images[/b]
+[url=https://pixabay.com/photos/knossos-crete-palace-of-knossos-165561]Palace Of Knossos[/url] by davestem, [url=https://pixabay.com/service/license]Pixabay License[/url]
+[url=https://pixabay.com/vectors/greek-meander-ornament-pattern-153760]Greek Meander Ornament Pattern[/url] by OpenClipart-Vectors, [url=https://pixabay.com/service/license]Pixabay License[/url]
+[url=https://pixabay.com/vectors/greek-meander-ancient-pattern-158919]Greek Meander Ancient Pattern[/url] by OpenClipart-Vectors, [url=https://pixabay.com/service/license]Pixabay License[/url]
+[url=https://opengameart.org/content/splatter-pack]Splatter pack[/url] by johndh, [url=https://creativecommons.org/licenses/by/3.0]CC BY 3.0[/url]
 
 [/center]

@@ -66,3 +66,4 @@ bbcode_enabled = true
 margin_left = 1920.0
 margin_right = 1920.0
 margin_bottom = 1026.0
+[connection signal="meta_clicked" from="VBoxContainer/HBoxAuthors/ScrollContainer/AuthorsTextLabel" to="." method="_on_AuthorsTextLabel_meta_clicked"]

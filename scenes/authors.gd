@@ -19,3 +19,6 @@ func load_file(filename, fallback_filename):
 	var content = file.get_as_text()
 	file.close()
 	return content
+
+func _on_AuthorsTextLabel_meta_clicked(meta):
+	common_utils.open_url(meta)
