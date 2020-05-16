@@ -28,6 +28,7 @@ onready var message_labels = [
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
+onready var crosshair = get_node("Crosshair")
 
 onready var indicators_panel = get_node("Indicators")
 onready var indicator_crouch = indicators_panel.get_node("IndicatorCrouchPanel/IndicatorCrouch")
@@ -58,7 +59,7 @@ func _ready():
 	show_game_ui(not cutscene_mode)
 
 func has_game_ui():
-	return info_panel.visible and indicators_panel.visible
+	return info_panel.visible and indicators_panel.visible and crosshair.visible
 
 func show_game_ui(enable):
 	var v = enable and not cutscene_mode
@@ -66,6 +67,7 @@ func show_game_ui(enable):
 	indicators_panel.visible = v
 	quick_items_panel.visible = v
 	info_label.visible = v
+	crosshair.visible = v
 	if not v:
 		inventory.visible = false
 

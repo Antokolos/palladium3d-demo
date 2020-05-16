@@ -29,7 +29,6 @@ func use_takable(player_node, takable, parent, was_taken):
 		Takable.TakableIds.APATA:
 			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 				get_door("door_0").close()
-				get_node("Apata_room/ceiling_moving_1").activate()
 		Takable.TakableIds.HERMES:
 			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 			match pedestal_id:
@@ -269,6 +268,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			bandit.teleport(get_node("BanditPosition"))
 			conversation_manager.arrange_meeting(player, player, bandit, true, get_node("InscriptionsPosition"))
 		"009_ApataTrap":
+			get_node("Apata_room/ceiling_moving_1").activate()
 			female.set_target_node(get_node("FemaleSavePosition"))
 			if game_params.story_vars.apata_chest_rigid > 0:
 				player.connect("arrived_to", self, "_on_arrived_to_chest_push_position")

@@ -217,6 +217,7 @@ func story_choose(player, idx):
 				character.set_speak_mode(true)
 				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
 			change_stretch_ratio(conversation)
+		conversation.visible = settings.need_subtitles() or not has_sound
 		if not has_sound:
 			story_proceed(player)
 	elif story.CanContinue():
@@ -258,6 +259,7 @@ func story_proceed(player):
 	var choices = story.GetChoices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
 	if not can_continue and not can_choose and not has_voiceover:
 		$AutocloseTimer.start()
+	conversation.visible = settings.need_subtitles() or can_choose or not has_voiceover
 	display_choices(story, conversation, choices)
 
 func clear_choices(story, conversation):

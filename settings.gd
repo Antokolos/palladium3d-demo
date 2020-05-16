@@ -45,6 +45,7 @@ var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
 var language = LANGUAGE_EN
 var vlanguage = VLANGUAGE_RU
+var subtitles = true
 onready var master_bus_id = AudioServer.get_bus_index("Master")
 onready var music_bus_id = AudioServer.get_bus_index("Music")
 onready var sound_bus_id = AudioServer.get_bus_index("Sound")
@@ -108,6 +109,9 @@ func load_settings():
 	if ("vlanguage" in d):
 		vlanguage = int(d.vlanguage)
 
+	if ("subtitles" in d):
+		subtitles = bool(d.subtitles)
+
 	if ("master_volume" in d):
 		master_volume = int(d.master_volume)
 
@@ -136,6 +140,7 @@ func save_settings():
 		"aa_quality" : aa_quality,
 		"language" : language,
 		"vlanguage" : vlanguage,
+		"subtitles" : subtitles,
 		"master_volume" : master_volume,
 		"music_volume" : music_volume,
 		"sound_volume" : sound_volume,
@@ -185,6 +190,12 @@ func set_fullscreen(fs):
 	OS.set_window_fullscreen(fs)
 	fullscreen = fs
 
+func set_subtitles(s):
+	subtitles = s
+
+func need_subtitles():
+	return subtitles or (vlanguage == VLANGUAGE_NONE)
+
 func set_quality(ID):
 	quality = ID
 	emit_signal("quality_changed", ID)
@@ -210,4 +221,5 @@ func _ready():
 	set_speech_volume(speech_volume)
 	set_vsync(vsync)
 	set_fullscreen(fullscreen)
+	set_subtitles(subtitles)
 	set_resolution(resolution)

@@ -28,6 +28,7 @@ onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolu
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
 onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
+onready var subtitles = settings_app.get_node("VBoxContainer/HSubtitles/Subtitles")
 onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVolume/MasterVolume")
 onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
@@ -126,6 +127,9 @@ func _ready():
 		_:
 			language.select(0)
 	_on_VLanguage_item_selected(settings.vlanguage)
+	
+	subtitles.pressed = settings.subtitles
+	_on_Subtitles_pressed()
 	
 	master_volume_node.value = settings.master_volume
 	music_volume_node.value = settings.music_volume
@@ -352,6 +356,10 @@ func _on_Language_item_selected(ID):
 
 func _on_VLanguage_item_selected(ID):
 	settings.vlanguage = ID
+
+func _on_Subtitles_pressed():
+	var s = subtitles.is_pressed() if subtitles else settings.subtitles
+	settings.set_subtitles(s)
 
 func _on_MasterVolume_value_changed(value):
 	settings.set_master_volume(value)
