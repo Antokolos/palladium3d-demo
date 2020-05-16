@@ -100,6 +100,7 @@
 "MESSAGE_CONTROLS_CROUCH","Use %s to crouch","Используйте %s, чтобы присесть"
 "MESSAGE_CONTROLS_DIALOGUE_1","When in trouble, try to talk with your companion","В сложной ситуации попробуйте поговорить с компаньоном"
 "MESSAGE_CONTROLS_DIALOGUE_2","Companion can give you a hint what to do next","Компаньон может подсказать вам, что делать дальше"
+"father","Father","Отец"
 "player","Andreas","Андреас"
 "female","Xenia","Ксения"
 "bandit","Max","Макс"

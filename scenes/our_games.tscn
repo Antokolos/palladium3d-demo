@@ -15,6 +15,3 @@ text_path = "Text021"
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208797, 0, 0.494552 )
 shape = SubResource( 1 )
-[connection signal="input_event" from="StaticBody" to="." method="_on_StaticBody_input_event"]
-[connection signal="mouse_entered" from="StaticBody" to="." method="_on_StaticBody_mouse_entered"]
-[connection signal="mouse_exited" from="StaticBody" to="." method="_on_StaticBody_mouse_exited"]

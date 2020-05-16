@@ -19,18 +19,17 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			stop_cutscene(player)
 
 func start_cutscene(player, cutscene_node, conversation_name = null, target = null):
-	is_cutscene = true
 	self.conversation_name = conversation_name
 	self.target = target
 	borrow_camera(player, cutscene_node)
 
 func stop_cutscene(player):
-	is_cutscene = false
 	self.conversation_name = null
 	self.target = null
 	restore_camera(player)
 
 func borrow_camera(player, cutscene_node):
+	is_cutscene = true
 	var player_camera_holder = player.get_cam_holder()
 	if player_camera_holder.get_child_count() == 0:
 		# Do nothing if player has no camera. It looks like we are in cutscene already.
@@ -47,17 +46,16 @@ func borrow_camera(player, cutscene_node):
 
 func restore_camera(player):
 	var player_camera_holder = player.get_cam_holder()
-	if not cutscene_node:
-		var camera = player_camera_holder.get_child(0)
+	var camera = cutscene_node.get_child(0) if cutscene_node else player_camera_holder.get_child(0)
+	if cutscene_node:
+		player.reset_movement_and_rotation()
+		player.set_simple_mode(true)
+		cutscene_node.remove_child(camera)
+		player_camera_holder.add_child(camera)
 		camera.enable_use(true)
-		return
-	player.reset_movement_and_rotation()
-	player.set_simple_mode(true)
-	var camera = cutscene_node.get_child(0)
-	cutscene_node.remove_child(camera)
-	player_camera_holder.add_child(camera)
+		cutscene_node = null
 	camera.enable_use(true)
-	cutscene_node = null
+	is_cutscene = false
 
 func get_cam():
 	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
