@@ -24,9 +24,10 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="HBoxHeader" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 204.0
+editor/display_folded = true
+margin_top = 206.0
 margin_right = 1920.0
-margin_bottom = 254.0
+margin_bottom = 256.0
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxHeader"]
@@ -37,9 +38,10 @@ custom_fonts/font = ExtResource( 3 )
 text = "ABOUT_HEADER"
 
 [node name="HBoxAuthor" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 258.0
+editor/display_folded = true
+margin_top = 260.0
 margin_right = 1920.0
-margin_bottom = 308.0
+margin_bottom = 310.0
 rect_min_size = Vector2( 100, 50 )
 custom_constants/separation = 10
 alignment = 1
@@ -62,23 +64,23 @@ scroll_active = false
 
 [node name="GamesContent" type="HBoxContainer" parent="VBoxContainer"]
 margin_left = 517.0
-margin_top = 312.0
+margin_top = 314.0
 margin_right = 1403.0
-margin_bottom = 801.0
+margin_bottom = 745.0
 rect_min_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 alignment = 1
 
 [node name="HBoxContainerCaptions" type="HBoxContainer" parent="VBoxContainer/GamesContent"]
 margin_right = 422.0
-margin_bottom = 489.0
+margin_bottom = 431.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="CaptionsGrid" type="GridContainer" parent="VBoxContainer/GamesContent/HBoxContainerCaptions"]
 editor/display_folded = true
 margin_right = 422.0
-margin_bottom = 489.0
+margin_bottom = 431.0
 size_flags_horizontal = 4
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
@@ -121,13 +123,13 @@ text = "ABOUT_CAPTION_WIQ"
 [node name="HBoxContainerInfo" type="HBoxContainer" parent="VBoxContainer/GamesContent"]
 margin_left = 426.0
 margin_right = 886.0
-margin_bottom = 489.0
+margin_bottom = 431.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo"]
 margin_right = 460.0
-margin_bottom = 489.0
+margin_bottom = 431.0
 size_flags_horizontal = 3
 custom_styles/panel = ExtResource( 4 )
 tabs_visible = false
@@ -166,15 +168,6 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_IKE"]
-margin_left = 75.0
-margin_top = 409.0
-margin_right = 385.0
-margin_bottom = 447.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "ABOUT_OPEN_IN_STORE"
-
 [node name="ABOUT_CAPTION_NONLINEAR_TQ" type="VBoxContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -209,15 +202,6 @@ text = "ABOUT_GAME_NONLINEAR_TQ"
 align = 1
 valign = 1
 autowrap = true
-
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_NONLINEAR_TQ"]
-margin_left = 75.0
-margin_top = 409.0
-margin_right = 385.0
-margin_bottom = 447.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "ABOUT_OPEN_IN_STORE"
 
 [node name="ABOUT_CAPTION_ADVFOUR" type="VBoxContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
 visible = false
@@ -254,15 +238,6 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_ADVFOUR"]
-margin_left = 33.0
-margin_top = 38.0
-margin_right = 407.0
-margin_bottom = 81.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "ABOUT_OPEN_IN_STORE"
-
 [node name="ABOUT_CAPTION_REDHOOD" type="VBoxContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -297,15 +272,6 @@ text = "ABOUT_GAME_REDHOOD"
 align = 1
 valign = 1
 autowrap = true
-
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_REDHOOD"]
-margin_left = 33.0
-margin_top = 38.0
-margin_right = 407.0
-margin_bottom = 81.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "ABOUT_OPEN_IN_STORE"
 
 [node name="ABOUT_CAPTION_BARBARIAN" type="VBoxContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
 visible = false
@@ -342,15 +308,6 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_BARBARIAN"]
-margin_left = 33.0
-margin_top = 38.0
-margin_right = 407.0
-margin_bottom = 81.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "ABOUT_OPEN_IN_STORE"
-
 [node name="ABOUT_CAPTION_WIQ" type="VBoxContainer" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -385,19 +342,25 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="ButtonOpen" type="Button" parent="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_WIQ"]
-margin_left = 33.0
-margin_top = 38.0
-margin_right = 407.0
-margin_bottom = 81.0
+[node name="GameActions" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 749.0
+margin_right = 1920.0
+margin_bottom = 799.0
+alignment = 1
+
+[node name="ButtonOpen" type="Button" parent="VBoxContainer/GameActions"]
+margin_left = 805.0
+margin_right = 1115.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 100, 50 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "ABOUT_OPEN_IN_STORE"
 
 [node name="HBoxControls" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 805.0
+margin_top = 803.0
 margin_right = 1920.0
-margin_bottom = 875.0
+margin_bottom = 873.0
 rect_min_size = Vector2( 100, 70 )
 alignment = 1
 
@@ -416,10 +379,5 @@ text = "ABOUT_BACK"
 [connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerCaptions/CaptionsGrid/ABOUT_CAPTION_REDHOOD" to="." method="_on_ABOUT_CAPTION_REDHOOD_pressed"]
 [connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerCaptions/CaptionsGrid/ABOUT_CAPTION_BARBARIAN" to="." method="_on_ABOUT_CAPTION_BARBARIAN_pressed"]
 [connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerCaptions/CaptionsGrid/ABOUT_CAPTION_WIQ" to="." method="_on_ABOUT_CAPTION_WIQ_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_IKE/ButtonOpen" to="." method="_on_ButtonIKE_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_NONLINEAR_TQ/ButtonOpen" to="." method="_on_ButtonNonlinearTQ_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_ADVFOUR/ButtonOpen" to="." method="_on_ButtonAdvFour_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_REDHOOD/ButtonOpen" to="." method="_on_ButtonRedHood_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_BARBARIAN/ButtonOpen" to="." method="_on_ButtonBarbarian_pressed"]
-[connection signal="pressed" from="VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer/ABOUT_CAPTION_WIQ/ButtonOpen" to="." method="_on_ButtonWIQ_pressed"]
+[connection signal="pressed" from="VBoxContainer/GameActions/ButtonOpen" to="." method="_on_ButtonOpen_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxControls/Back" to="." method="_on_Back_pressed"]

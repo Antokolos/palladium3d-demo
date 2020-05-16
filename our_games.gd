@@ -1,8 +1,11 @@
 extends TextureRect
 
+const APPIDS = [ 1040310, 531630, 815070, 594320, 490690, 392820 ]
+
 onready var site_url_node = get_node("VBoxContainer/HBoxAuthor/SiteUrl")
 onready var tab_node = get_node("VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer")
 onready var back_node = get_node("VBoxContainer/HBoxControls/Back")
+onready var button_open_node = get_node("VBoxContainer/GameActions/ButtonOpen")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -21,27 +24,9 @@ func _on_Back_pressed():
 func _on_SiteUrl_meta_clicked(meta):
 	common_utils.open_url("https://nlbproject.com")
 
-func _on_ButtonIKE_pressed():
-	common_utils.open_store_page(1040310)
-
-func _on_ButtonNonlinearTQ_pressed():
-	common_utils.open_store_page(531630)
-
-func _on_ButtonAdvFour_pressed():
-	common_utils.open_store_page(815070)
-
-func _on_ButtonRedHood_pressed():
-	common_utils.open_store_page(594320)
-
-func _on_ButtonBarbarian_pressed():
-	common_utils.open_store_page(490690)
-
-func _on_ButtonWIQ_pressed():
-	common_utils.open_store_page(392820)
-
 func select_tab(tab_index):
 	tab_node.set("current_tab", tab_index)
-	tab_node.get_current_tab_control().get_node("ButtonOpen").visible = common_utils.is_steam_running()
+	button_open_node.visible = common_utils.is_steam_running()
 
 func _on_ABOUT_CAPTION_IKE_pressed():
 	select_tab(0)
@@ -60,6 +45,9 @@ func _on_ABOUT_CAPTION_BARBARIAN_pressed():
 
 func _on_ABOUT_CAPTION_WIQ_pressed():
 	select_tab(5)
+
+func _on_ButtonOpen_pressed():
+	common_utils.open_store_page(APPIDS[tab_node.get("current_tab")])
 
 func _input(event):
 	if common_utils.is_event_cancel_action(event):
