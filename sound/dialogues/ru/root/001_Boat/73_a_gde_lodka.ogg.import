@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/73_a_gde_lodka.ogg-d34348330d82b25ec23cd70e325d227e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Boat/73_a_gde_lodka.ogg"
+dest_files=[ "res://.import/73_a_gde_lodka.ogg-d34348330d82b25ec23cd70e325d227e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

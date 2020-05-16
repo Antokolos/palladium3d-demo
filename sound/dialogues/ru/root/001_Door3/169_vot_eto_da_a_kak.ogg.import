@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/169_vot_eto_da_a_kak.ogg-4e09eb7543e8c5820bd8fe94bd3731fb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/169_vot_eto_da_a_kak.ogg"
+dest_files=[ "res://.import/169_vot_eto_da_a_kak.ogg-4e09eb7543e8c5820bd8fe94bd3731fb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

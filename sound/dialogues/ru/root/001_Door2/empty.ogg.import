@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/empty.ogg-99a935283f76935aee8f57bbe5ab6e42.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/empty.ogg"
+dest_files=[ "res://.import/empty.ogg-99a935283f76935aee8f57bbe5ab6e42.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

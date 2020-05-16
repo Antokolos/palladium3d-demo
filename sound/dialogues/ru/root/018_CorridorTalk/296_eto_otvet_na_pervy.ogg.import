@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/296_eto_otvet_na_pervy.ogg-a08b878d86c037b9af3958e1437129f2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/296_eto_otvet_na_pervy.ogg"
+dest_files=[ "res://.import/296_eto_otvet_na_pervy.ogg-a08b878d86c037b9af3958e1437129f2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

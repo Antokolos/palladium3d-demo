@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/57_konvert_i_cluch.ogg-a8f8bfaa6e9c1e3eee8f82062441df47.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Oak/57_konvert_i_cluch.ogg"
+dest_files=[ "res://.import/57_konvert_i_cluch.ogg-a8f8bfaa6e9c1e3eee8f82062441df47.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

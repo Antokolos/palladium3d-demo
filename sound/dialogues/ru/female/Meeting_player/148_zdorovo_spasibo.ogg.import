@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/148_zdorovo_spasibo.ogg-c7e2bf24e886a41b817823b87f8a61fc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/148_zdorovo_spasibo.ogg"
+dest_files=[ "res://.import/148_zdorovo_spasibo.ogg-c7e2bf24e886a41b817823b87f8a61fc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

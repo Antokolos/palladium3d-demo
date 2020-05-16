@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/222_Andreas_pochemu_ty_menya.ogg-700a1e2d63fef34ce1d49edc5122d1cd.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/222_Andreas_pochemu_ty_menya.ogg"
+dest_files=[ "res://.import/222_Andreas_pochemu_ty_menya.ogg-700a1e2d63fef34ce1d49edc5122d1cd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

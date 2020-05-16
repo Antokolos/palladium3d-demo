@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Андреас, молодец! Ты решил загадку!\t",{"#":"actor:female"},"\n","^Да. Скорее в спасительную комнату.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Андреас, молодец! Ты решил загадку!\t",{"#":"actor:female"},{"#":"voiceover:288_Andreas_molodets_ty_reshil.ogg"},"\n","^Да. Скорее в спасительную комнату.\t",{"#":"actor:player"},{"#":"voiceover:242_da_skoree_v_spasitelnuyu_komnatu.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

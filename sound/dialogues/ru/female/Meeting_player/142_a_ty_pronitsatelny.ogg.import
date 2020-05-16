@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/142_a_ty_pronitsatelny.ogg-84a3acff73743f4a52a3530d26982147.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/142_a_ty_pronitsatelny.ogg"
+dest_files=[ "res://.import/142_a_ty_pronitsatelny.ogg-84a3acff73743f4a52a3530d26982147.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

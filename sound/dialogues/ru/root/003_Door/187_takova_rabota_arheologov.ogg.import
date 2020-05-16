@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/187_takova_rabota_arheologov.ogg-e9dd5133f5834eb1fa11e412369563b5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/003_Door/187_takova_rabota_arheologov.ogg"
+dest_files=[ "res://.import/187_takova_rabota_arheologov.ogg-e9dd5133f5834eb1fa11e412369563b5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,4 +1,4 @@
-Андреас, а в коридорах могут быть ловушки?	# actor:female
-Думаю нет.	# actor:player
-А почему?	# actor:female
-Технически это более сложно. И вероятность того что мы активируем ловушку в коридоре гораздо ниже.	# actor:player
+Андреас, а в коридорах могут быть ловушки?	# actor:female # voiceover:291_Andreas_a_v_koridorah_mogut_byt.ogg
+Думаю нет.	# actor:player # voiceover:246_dumayu_net.ogg
+А почему?	# actor:female # voiceover:292_a_pochemu.ogg
+Технически это более сложно. И вероятность того что мы активируем ловушку в коридоре гораздо ниже.	# actor:player # voiceover:247_tehnicheski_eto_bolee_slozhno.ogg

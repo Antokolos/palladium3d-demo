@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/83_priplyl_na_lodke.ogg-37824f3cf40cd01b0e516ab4c536f8d2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/83_priplyl_na_lodke.ogg"
+dest_files=[ "res://.import/83_priplyl_na_lodke.ogg-37824f3cf40cd01b0e516ab4c536f8d2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/177_da_ya_hotela_popast.ogg-cb3e8a7c23047ede39d4b5ecd7983b9e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/177_da_ya_hotela_popast.ogg"
+dest_files=[ "res://.import/177_da_ya_hotela_popast.ogg-cb3e8a7c23047ede39d4b5ecd7983b9e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

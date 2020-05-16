@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/211_Andreas_mne_kazhetsya_eto.ogg-1e319aa896e167a4edd6756aa6e08d5b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/211_Andreas_mne_kazhetsya_eto.ogg"
+dest_files=[ "res://.import/211_Andreas_mne_kazhetsya_eto.ogg-1e319aa896e167a4edd6756aa6e08d5b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

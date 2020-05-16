@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/178_ty_tozhe_oshybsya.ogg-d62f343a9b2be65e56d0bcb0c0e1b91e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/178_ty_tozhe_oshybsya.ogg"
+dest_files=[ "res://.import/178_ty_tozhe_oshybsya.ogg-d62f343a9b2be65e56d0bcb0c0e1b91e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/212_kogta_Pandora_otkryla_larets.ogg-5bb14f4c1068aeedfdb3a66888b92085.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/212_kogta_Pandora_otkryla_larets.ogg"
+dest_files=[ "res://.import/212_kogta_Pandora_otkryla_larets.ogg-5bb14f4c1068aeedfdb3a66888b92085.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

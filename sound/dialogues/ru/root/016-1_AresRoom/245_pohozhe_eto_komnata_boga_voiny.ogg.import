@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/245_pohozhe_eto_komnata_boga_voiny.ogg-fd60bc9706db32c66b262c51f487a1b6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016-1_AresRoom/245_pohozhe_eto_komnata_boga_voiny.ogg"
+dest_files=[ "res://.import/245_pohozhe_eto_komnata_boga_voiny.ogg-fd60bc9706db32c66b262c51f487a1b6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/290_da_eto_statuetka_Aresa_boga.ogg-5b1d06d8bc4f08c6428536acbe9af668.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016-1_AresRoom/290_da_eto_statuetka_Aresa_boga.ogg"
+dest_files=[ "res://.import/290_da_eto_statuetka_Aresa_boga.ogg-5b1d06d8bc4f08c6428536acbe9af668.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/228_net_prosto_ya_vernus_suda.ogg-062c223cd941fe102551d4c2c947ea84.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/228_net_prosto_ya_vernus_suda.ogg"
+dest_files=[ "res://.import/228_net_prosto_ya_vernus_suda.ogg-062c223cd941fe102551d4c2c947ea84.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

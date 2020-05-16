@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/287_Erida_boginya_razdora.ogg-23aed8d9d32aa003255567e65d9c5a4b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/287_Erida_boginya_razdora.ogg"
+dest_files=[ "res://.import/287_Erida_boginya_razdora.ogg-23aed8d9d32aa003255567e65d9c5a4b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

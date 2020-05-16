@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/163_ah_eto_shutka.ogg-4358eb8a594134c8701df1051d3e636e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/163_ah_eto_shutka.ogg"
+dest_files=[ "res://.import/163_ah_eto_shutka.ogg-4358eb8a594134c8701df1051d3e636e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/288_Andreas_molodets_ty_reshil.ogg-a6713cd6e93d2cdae55e03cb243fe080.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016_EridaDone/288_Andreas_molodets_ty_reshil.ogg"
+dest_files=[ "res://.import/288_Andreas_molodets_ty_reshil.ogg-a6713cd6e93d2cdae55e03cb243fe080.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

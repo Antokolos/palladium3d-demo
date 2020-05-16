@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/149_aga_budu_nema_kak_ryba.ogg-ece83523dde9c3e451ccc00eaa76c12e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/149_aga_budu_nema_kak_ryba.ogg"
+dest_files=[ "res://.import/149_aga_budu_nema_kak_ryba.ogg-ece83523dde9c3e451ccc00eaa76c12e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

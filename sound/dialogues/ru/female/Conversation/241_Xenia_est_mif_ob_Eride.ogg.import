@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/241_Xenia_est_mif_ob_Eride.ogg-398b406ce89e4a75e02f597b50933f7f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/241_Xenia_est_mif_ob_Eride.ogg"
+dest_files=[ "res://.import/241_Xenia_est_mif_ob_Eride.ogg-398b406ce89e4a75e02f597b50933f7f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

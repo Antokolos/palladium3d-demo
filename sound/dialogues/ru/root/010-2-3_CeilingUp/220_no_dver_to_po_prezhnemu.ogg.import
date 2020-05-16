@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/220_no_dver_to_po_prezhnemu.ogg-1a6243fc2d59198334581b9126a3543d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-3_CeilingUp/220_no_dver_to_po_prezhnemu.ogg"
+dest_files=[ "res://.import/220_no_dver_to_po_prezhnemu.ogg-1a6243fc2d59198334581b9126a3543d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -30,6 +30,7 @@ enum TakableState {
 	ABSENT = 2
 }
 
+const HEALING_RATE = 1
 const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = "res://forest.tscn"
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
@@ -418,6 +419,9 @@ func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters
 	if health_current <= 0:
 		get_tree().change_scene("res://game_over.tscn")
+		return
+	if health_current >= health_max:
+		player_health_current = health_max
 		return
 	player_health_current = health_current
 	player_health_max = health_max

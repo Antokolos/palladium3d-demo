@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/280_zdes_novaya_statuetka.ogg-9b33ab753f06201fe544519b8afa7614.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/280_zdes_novaya_statuetka.ogg"
+dest_files=[ "res://.import/280_zdes_novaya_statuetka.ogg-9b33ab753f06201fe544519b8afa7614.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

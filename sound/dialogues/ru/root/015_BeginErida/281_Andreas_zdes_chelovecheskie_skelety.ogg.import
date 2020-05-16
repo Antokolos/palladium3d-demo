@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/281_Andreas_zdes_chelovecheskie_skelety.ogg-a99e43d1b12426c4b60783190566af1d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/281_Andreas_zdes_chelovecheskie_skelety.ogg"
+dest_files=[ "res://.import/281_Andreas_zdes_chelovecheskie_skelety.ogg-a99e43d1b12426c4b60783190566af1d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

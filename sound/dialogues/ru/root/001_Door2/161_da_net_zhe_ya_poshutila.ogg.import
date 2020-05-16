@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/161_da_net_zhe_ya_poshutila.ogg-4d303cbe13561978bab8acee9b06dffa.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/161_da_net_zhe_ya_poshutila.ogg"
+dest_files=[ "res://.import/161_da_net_zhe_ya_poshutila.ogg-4d303cbe13561978bab8acee9b06dffa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

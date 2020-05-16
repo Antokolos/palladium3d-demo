@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/215_pohozhe_statuetki_izobrazhayut.ogg-0dde1d158e3f9f00c63b9d7f081f7f1f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/215_pohozhe_statuetki_izobrazhayut.ogg"
+dest_files=[ "res://.import/215_pohozhe_statuetki_izobrazhayut.ogg-0dde1d158e3f9f00c63b9d7f081f7f1f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

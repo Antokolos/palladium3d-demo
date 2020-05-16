@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/207_davayte_uzhe_uznaem.ogg-c70e1acfd651cb7757e9f0bcd4c14ea2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/207_davayte_uzhe_uznaem.ogg"
+dest_files=[ "res://.import/207_davayte_uzhe_uznaem.ogg-c70e1acfd651cb7757e9f0bcd4c14ea2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

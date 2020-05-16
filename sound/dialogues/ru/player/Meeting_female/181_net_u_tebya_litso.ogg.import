@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/181_net_u_tebya_litso.ogg-a16e40e424161bd152ffb41e279b6d42.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/181_net_u_tebya_litso.ogg"
+dest_files=[ "res://.import/181_net_u_tebya_litso.ogg-a16e40e424161bd152ffb41e279b6d42.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

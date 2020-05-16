@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/217_Andreas_potolok_snova_opuskaetsa.ogg-2a6089ec55ad6e5f105a6640b92b9e1d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-3_ApataMusesError/217_Andreas_potolok_snova_opuskaetsa.ogg"
+dest_files=[ "res://.import/217_Andreas_potolok_snova_opuskaetsa.ogg-2a6089ec55ad6e5f105a6640b92b9e1d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

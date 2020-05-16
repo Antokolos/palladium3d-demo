@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/111_ne_trogay_vse.ogg-00c0bca5d6c5fdacf4a033297024cc41.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/111_ne_trogay_vse.ogg"
+dest_files=[ "res://.import/111_ne_trogay_vse.ogg-00c0bca5d6c5fdacf4a033297024cc41.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

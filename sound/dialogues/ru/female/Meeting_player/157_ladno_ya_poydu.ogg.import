@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/157_ladno_ya_poydu.ogg-9569cf3a428ac2bb89867362637f6621.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/157_ladno_ya_poydu.ogg"
+dest_files=[ "res://.import/157_ladno_ya_poydu.ogg-9569cf3a428ac2bb89867362637f6621.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

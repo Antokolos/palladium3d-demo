@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/152_tvoy_otets.ogg-ca961f70f489a20570f6542ce638d7af.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Oak/152_tvoy_otets.ogg"
+dest_files=[ "res://.import/152_tvoy_otets.ogg-ca961f70f489a20570f6542ce638d7af.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/252_on_ne_otpuskal.ogg-3dfc3ce38cec710307dc4ae229bfbcfb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/252_on_ne_otpuskal.ogg"
+dest_files=[ "res://.import/252_on_ne_otpuskal.ogg-3dfc3ce38cec710307dc4ae229bfbcfb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

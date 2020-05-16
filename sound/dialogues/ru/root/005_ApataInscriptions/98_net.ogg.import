@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/98_net.ogg-2580f55261b7a4d54127a8315ffbbb16.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/98_net.ogg"
+dest_files=[ "res://.import/98_net.ogg-2580f55261b7a4d54127a8315ffbbb16.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

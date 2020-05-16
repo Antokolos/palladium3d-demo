@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/116_yasno.ogg-9dbe37a2577fc8b5053df12d39e3be4d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-2_MusesHint/116_yasno.ogg"
+dest_files=[ "res://.import/116_yasno.ogg-9dbe37a2577fc8b5053df12d39e3be4d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

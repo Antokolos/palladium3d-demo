@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/287_Erida_boginya_razdora.ogg-1b374004e9304b1ac048035385edeb69.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-1_EridaTrap/287_Erida_boginya_razdora.ogg"
+dest_files=[ "res://.import/287_Erida_boginya_razdora.ogg-1b374004e9304b1ac048035385edeb69.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

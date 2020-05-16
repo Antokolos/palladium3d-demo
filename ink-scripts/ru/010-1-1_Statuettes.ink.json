@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Ещё статуэтки.\t",{"#":"actor:female"},"\n","^Очередная загадка. А потом что, ещё одна?\t",{"#":"actor:bandit"},{"#":"voiceover:9_ocherednaya_zagadka.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Ещё статуэтки.\t",{"#":"actor:female"},{"#":"voiceover:213_eshyo_statuetki.ogg"},"\n","^Очередная загадка. А потом что, ещё одна?\t",{"#":"actor:bandit"},{"#":"voiceover:9_ocherednaya_zagadka.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

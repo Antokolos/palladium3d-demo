@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/306_kazhetsya_my_zashly_v.ogg-4512bd1676b52ee3727a1c1566687c40.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/023_DemoDeadEnd/306_kazhetsya_my_zashly_v.ogg"
+dest_files=[ "res://.import/306_kazhetsya_my_zashly_v.ogg-4512bd1676b52ee3727a1c1566687c40.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

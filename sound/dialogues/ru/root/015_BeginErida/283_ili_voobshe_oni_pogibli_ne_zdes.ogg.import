@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/283_ili_voobshe_oni_pogibli_ne_zdes.ogg-9d1d9db47733074bb4cd19e50b734041.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/283_ili_voobshe_oni_pogibli_ne_zdes.ogg"
+dest_files=[ "res://.import/283_ili_voobshe_oni_pogibli_ne_zdes.ogg-9d1d9db47733074bb4cd19e50b734041.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

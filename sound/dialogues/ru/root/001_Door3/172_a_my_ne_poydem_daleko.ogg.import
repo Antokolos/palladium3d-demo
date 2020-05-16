@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/172_a_my_ne_poydem_daleko.ogg-3da559cbe7465b4f276ce19c2213e95b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/172_a_my_ne_poydem_daleko.ogg"
+dest_files=[ "res://.import/172_a_my_ne_poydem_daleko.ogg-3da559cbe7465b4f276ce19c2213e95b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

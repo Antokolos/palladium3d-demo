@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/141_eto_prosto_bloknot.ogg-1c328d30854c59bbf0ede8c95dfcf14d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/141_eto_prosto_bloknot.ogg"
+dest_files=[ "res://.import/141_eto_prosto_bloknot.ogg-1c328d30854c59bbf0ede8c95dfcf14d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

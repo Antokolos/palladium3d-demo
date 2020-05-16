@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/137_aga_ya_priehala_iz.ogg-252fc19a8449fb6f62e53ca77e6b8177.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/137_aga_ya_priehala_iz.ogg"
+dest_files=[ "res://.import/137_aga_ya_priehala_iz.ogg-252fc19a8449fb6f62e53ca77e6b8177.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

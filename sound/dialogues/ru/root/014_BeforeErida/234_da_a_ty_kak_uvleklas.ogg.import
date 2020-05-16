@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/234_da_a_ty_kak_uvleklas.ogg-d439fe12b6b6721c0f45db771d68cfef.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/234_da_a_ty_kak_uvleklas.ogg"
+dest_files=[ "res://.import/234_da_a_ty_kak_uvleklas.ogg-d439fe12b6b6721c0f45db771d68cfef.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,1 +1,1 @@
-Крыса, крыса! Андреас, смотри!	# actor:female
+Крыса, крыса! Андреас, смотри!	# actor:female # voiceover:202_krysa_krysa.ogg

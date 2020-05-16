@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/147_ponyatno_spasibo_za_preduprezhdenie.ogg-1256c57d6914f47de39927533cda33c0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/147_ponyatno_spasibo_za_preduprezhdenie.ogg"
+dest_files=[ "res://.import/147_ponyatno_spasibo_za_preduprezhdenie.ogg-1256c57d6914f47de39927533cda33c0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

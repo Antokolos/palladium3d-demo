@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/216_ura_Andreas.ogg-a96a8b5c6d6504320bd75391deba44ff.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-4_ApataDoneXenia/216_ura_Andreas.ogg"
+dest_files=[ "res://.import/216_ura_Andreas.ogg-a96a8b5c6d6504320bd75391deba44ff.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

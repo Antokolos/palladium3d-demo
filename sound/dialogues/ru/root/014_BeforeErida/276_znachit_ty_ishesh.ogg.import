@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/276_znachit_ty_ishesh.ogg-1101fa12cf5f081550d48127984bfd67.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/276_znachit_ty_ishesh.ogg"
+dest_files=[ "res://.import/276_znachit_ty_ishesh.ogg-1101fa12cf5f081550d48127984bfd67.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

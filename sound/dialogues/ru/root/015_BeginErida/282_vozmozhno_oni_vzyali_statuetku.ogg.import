@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/282_vozmozhno_oni_vzyali_statuetku.ogg-3a66bda5c7f2b95e3ba6127c879c6b6c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/282_vozmozhno_oni_vzyali_statuetku.ogg"
+dest_files=[ "res://.import/282_vozmozhno_oni_vzyali_statuetku.ogg-3a66bda5c7f2b95e3ba6127c879c6b6c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

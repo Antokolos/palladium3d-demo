@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/154_tak_ty_zhe_sam_prosil.ogg-854c515f3950013c6c02b0b0926f81f3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door/154_tak_ty_zhe_sam_prosil.ogg"
+dest_files=[ "res://.import/154_tak_ty_zhe_sam_prosil.ogg-854c515f3950013c6c02b0b0926f81f3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

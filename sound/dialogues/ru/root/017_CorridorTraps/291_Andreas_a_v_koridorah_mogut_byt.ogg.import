@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/291_Andreas_a_v_koridorah_mogut_byt.ogg-a4c12ff60c6b2245a5e68a3525628532.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/017_CorridorTraps/291_Andreas_a_v_koridorah_mogut_byt.ogg"
+dest_files=[ "res://.import/291_Andreas_a_v_koridorah_mogut_byt.ogg-a4c12ff60c6b2245a5e68a3525628532.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

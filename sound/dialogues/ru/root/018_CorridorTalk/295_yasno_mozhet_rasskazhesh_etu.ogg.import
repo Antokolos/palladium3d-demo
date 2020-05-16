@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/295_yasno_mozhet_rasskazhesh_etu.ogg-2ad7e5998e3adac0ef558da000377d94.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/295_yasno_mozhet_rasskazhesh_etu.ogg"
+dest_files=[ "res://.import/295_yasno_mozhet_rasskazhesh_etu.ogg-2ad7e5998e3adac0ef558da000377d94.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

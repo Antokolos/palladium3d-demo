@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/213_eshyo_statuetki.ogg-f3220f93fb312fcb649914d3d59f4a3b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-1_Statuettes/213_eshyo_statuetki.ogg"
+dest_files=[ "res://.import/213_eshyo_statuetki.ogg-f3220f93fb312fcb649914d3d59f4a3b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

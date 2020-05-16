@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/54_tam_kuda_ya_napravlayus.ogg-2256492f6d2c4d54fd660764fe194da3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/54_tam_kuda_ya_napravlayus.ogg"
+dest_files=[ "res://.import/54_tam_kuda_ya_napravlayus.ogg-2256492f6d2c4d54fd660764fe194da3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

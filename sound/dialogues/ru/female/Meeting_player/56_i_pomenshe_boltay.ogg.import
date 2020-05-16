@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/56_i_pomenshe_boltay.ogg-67f62bc7ce06d256045f35a3805d3e79.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/56_i_pomenshe_boltay.ogg"
+dest_files=[ "res://.import/56_i_pomenshe_boltay.ogg-67f62bc7ce06d256045f35a3805d3e79.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

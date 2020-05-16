@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/182_pravda_zdorovo.ogg-135f8fa98c6c4e7c9821a87d60e917db.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/182_pravda_zdorovo.ogg"
+dest_files=[ "res://.import/182_pravda_zdorovo.ogg-135f8fa98c6c4e7c9821a87d60e917db.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

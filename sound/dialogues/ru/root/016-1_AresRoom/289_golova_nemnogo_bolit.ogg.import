@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/289_golova_nemnogo_bolit.ogg-57a213a839ee4e34415cb7675130a3e2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016-1_AresRoom/289_golova_nemnogo_bolit.ogg"
+dest_files=[ "res://.import/289_golova_nemnogo_bolit.ogg-57a213a839ee4e34415cb7675130a3e2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

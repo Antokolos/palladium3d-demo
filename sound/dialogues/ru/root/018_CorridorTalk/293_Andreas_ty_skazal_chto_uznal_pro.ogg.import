@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/293_Andreas_ty_skazal_chto_uznal_pro.ogg-f63746cabc2771f4d4e8a4e47121934a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/293_Andreas_ty_skazal_chto_uznal_pro.ogg"
+dest_files=[ "res://.import/293_Andreas_ty_skazal_chto_uznal_pro.ogg-f63746cabc2771f4d4e8a4e47121934a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

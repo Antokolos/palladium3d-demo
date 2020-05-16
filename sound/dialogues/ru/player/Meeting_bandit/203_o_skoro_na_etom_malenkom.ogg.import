@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/203_o_skoro_na_etom_malenkom.ogg-8164df45b17ba24e017df52c83139ba6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/203_o_skoro_na_etom_malenkom.ogg"
+dest_files=[ "res://.import/203_o_skoro_na_etom_malenkom.ogg-8164df45b17ba24e017df52c83139ba6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

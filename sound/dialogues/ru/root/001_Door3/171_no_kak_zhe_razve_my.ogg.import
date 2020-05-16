@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/171_no_kak_zhe_razve_my.ogg-16f067bb4f6d503036ae984adc4fd82d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/171_no_kak_zhe_razve_my.ogg"
+dest_files=[ "res://.import/171_no_kak_zhe_razve_my.ogg-16f067bb4f6d503036ae984adc4fd82d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

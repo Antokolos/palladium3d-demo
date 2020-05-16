@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/221_Andreas_esly_nam_zdes_bolshe.ogg-82490dfcfa6dbd1cc0708a4f1792ed8e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-4_ApataDoneMax/221_Andreas_esly_nam_zdes_bolshe.ogg"
+dest_files=[ "res://.import/221_Andreas_esly_nam_zdes_bolshe.ogg-82490dfcfa6dbd1cc0708a4f1792ed8e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

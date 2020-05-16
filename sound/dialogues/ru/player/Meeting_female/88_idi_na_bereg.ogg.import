@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/88_idi_na_bereg.ogg-b5498d67de6021653fc2944fa37ce7c6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/88_idi_na_bereg.ogg"
+dest_files=[ "res://.import/88_idi_na_bereg.ogg-b5498d67de6021653fc2944fa37ce7c6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

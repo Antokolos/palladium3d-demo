@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/66_chyort_znaet_chto.ogg-2d6fd4b81d5389611a43557f20a83c8e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/66_chyort_znaet_chto.ogg"
+dest_files=[ "res://.import/66_chyort_znaet_chto.ogg-2d6fd4b81d5389611a43557f20a83c8e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/196_tak_tut_skazano.ogg-4110580156693c522e61420dbea6dcf9.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/196_tak_tut_skazano.ogg"
+dest_files=[ "res://.import/196_tak_tut_skazano.ogg-4110580156693c522e61420dbea6dcf9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/145_pochemu_ty_hochesh.ogg-32b9fab2eeb2dfe1b089ddcf33227984.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/145_pochemu_ty_hochesh.ogg"
+dest_files=[ "res://.import/145_pochemu_ty_hochesh.ogg-32b9fab2eeb2dfe1b089ddcf33227984.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

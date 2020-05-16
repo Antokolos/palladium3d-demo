@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/176_net_no_nekotoraya_pomosh.ogg-e57ed17583ba6dcbc2597b0ee9b74f67.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/176_net_no_nekotoraya_pomosh.ogg"
+dest_files=[ "res://.import/176_net_no_nekotoraya_pomosh.ogg-e57ed17583ba6dcbc2597b0ee9b74f67.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

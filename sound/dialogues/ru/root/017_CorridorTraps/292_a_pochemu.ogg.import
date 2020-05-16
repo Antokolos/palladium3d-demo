@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/292_a_pochemu.ogg-d7640ede91ae3cb98fa3ffa05ecaef7e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/017_CorridorTraps/292_a_pochemu.ogg"
+dest_files=[ "res://.import/292_a_pochemu.ogg-d7640ede91ae3cb98fa3ffa05ecaef7e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

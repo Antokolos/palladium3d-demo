@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/117_ty_znaesh_chto_to.ogg-67366c84fc47690dba8353caa1a7f310.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/117_ty_znaesh_chto_to.ogg"
+dest_files=[ "res://.import/117_ty_znaesh_chto_to.ogg-67366c84fc47690dba8353caa1a7f310.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

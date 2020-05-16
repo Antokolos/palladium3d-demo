@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/198_horosho_ty_tozhe.ogg-bd67c3aa44833aaca87d7e61940192af.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/198_horosho_ty_tozhe.ogg"
+dest_files=[ "res://.import/198_horosho_ty_tozhe.ogg-bd67c3aa44833aaca87d7e61940192af.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

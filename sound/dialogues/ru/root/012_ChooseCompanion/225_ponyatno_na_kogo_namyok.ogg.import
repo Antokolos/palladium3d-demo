@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/225_ponyatno_na_kogo_namyok.ogg-3083ce0a43421278184d3c8fba214088.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/225_ponyatno_na_kogo_namyok.ogg"
+dest_files=[ "res://.import/225_ponyatno_na_kogo_namyok.ogg-3083ce0a43421278184d3c8fba214088.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

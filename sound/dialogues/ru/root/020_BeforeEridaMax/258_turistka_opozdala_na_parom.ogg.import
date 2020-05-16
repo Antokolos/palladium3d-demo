@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/258_turistka_opozdala_na_parom.ogg-2cd883b32321f242c075b4eac25e0cb5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/258_turistka_opozdala_na_parom.ogg"
+dest_files=[ "res://.import/258_turistka_opozdala_na_parom.ogg-2cd883b32321f242c075b4eac25e0cb5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/65_hvatia_sporit_bessmyslenno.ogg-f989fc02847c011c83cacb5aaab63675.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/65_hvatia_sporit_bessmyslenno.ogg"
+dest_files=[ "res://.import/65_hvatia_sporit_bessmyslenno.ogg-f989fc02847c011c83cacb5aaab63675.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

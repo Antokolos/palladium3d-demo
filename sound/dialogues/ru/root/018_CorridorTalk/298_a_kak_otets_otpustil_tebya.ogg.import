@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/298_a_kak_otets_otpustil_tebya.ogg-e631be4803f1a05c90cf18f385b3ec6d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/298_a_kak_otets_otpustil_tebya.ogg"
+dest_files=[ "res://.import/298_a_kak_otets_otpustil_tebya.ogg-e631be4803f1a05c90cf18f385b3ec6d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

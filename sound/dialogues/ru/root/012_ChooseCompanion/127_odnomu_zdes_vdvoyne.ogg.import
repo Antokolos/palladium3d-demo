@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/127_odnomu_zdes_vdvoyne.ogg-404f5f6872349383fd940988564a7b94.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/127_odnomu_zdes_vdvoyne.ogg"
+dest_files=[ "res://.import/127_odnomu_zdes_vdvoyne.ogg-404f5f6872349383fd940988564a7b94.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

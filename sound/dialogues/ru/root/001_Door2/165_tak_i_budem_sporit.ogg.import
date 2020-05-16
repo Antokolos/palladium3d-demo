@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/165_tak_i_budem_sporit.ogg-1765af3b1ac15d01a49e896e2f245407.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/165_tak_i_budem_sporit.ogg"
+dest_files=[ "res://.import/165_tak_i_budem_sporit.ogg-1765af3b1ac15d01a49e896e2f245407.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

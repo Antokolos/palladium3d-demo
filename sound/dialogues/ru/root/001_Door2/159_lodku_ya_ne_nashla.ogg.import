@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/159_lodku_ya_ne_nashla.ogg-289858dbd5d6b9416c1590b3f5a50522.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/159_lodku_ya_ne_nashla.ogg"
+dest_files=[ "res://.import/159_lodku_ya_ne_nashla.ogg-289858dbd5d6b9416c1590b3f5a50522.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

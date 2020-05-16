@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/205_samoe_opasnoe_mesto.ogg-771ee3f504ff842480286d9171c9ca4d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/205_samoe_opasnoe_mesto.ogg"
+dest_files=[ "res://.import/205_samoe_opasnoe_mesto.ogg-771ee3f504ff842480286d9171c9ca4d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

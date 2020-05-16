@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/299_to_est_ty_priehal_suda.ogg-1c43201e9ecb0448e55f43e884f8c8d1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/299_to_est_ty_priehal_suda.ogg"
+dest_files=[ "res://.import/299_to_est_ty_priehal_suda.ogg-1c43201e9ecb0448e55f43e884f8c8d1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

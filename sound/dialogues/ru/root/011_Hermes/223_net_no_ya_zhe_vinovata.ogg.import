@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/223_net_no_ya_zhe_vinovata.ogg-5e49f24844213a28a7058a8eebab1edf.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/223_net_no_ya_zhe_vinovata.ogg"
+dest_files=[ "res://.import/223_net_no_ya_zhe_vinovata.ogg-5e49f24844213a28a7058a8eebab1edf.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

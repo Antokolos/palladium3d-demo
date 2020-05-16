@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/116_yasno.ogg-8f300fb2b1d4f8a22202a138a239426e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/116_yasno.ogg"
+dest_files=[ "res://.import/116_yasno.ogg-8f300fb2b1d4f8a22202a138a239426e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

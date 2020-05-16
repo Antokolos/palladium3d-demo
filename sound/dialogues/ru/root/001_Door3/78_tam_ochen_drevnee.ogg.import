@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/78_tam_ochen_drevnee.ogg-fa1cd1deccd2daa7d889f6ce9cf7264d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/78_tam_ochen_drevnee.ogg"
+dest_files=[ "res://.import/78_tam_ochen_drevnee.ogg-fa1cd1deccd2daa7d889f6ce9cf7264d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

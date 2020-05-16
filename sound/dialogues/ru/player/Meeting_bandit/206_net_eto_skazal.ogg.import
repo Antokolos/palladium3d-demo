@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/206_net_eto_skazal.ogg-61a6791bb5c20a8b9bc462b9d3ca5086.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/206_net_eto_skazal.ogg"
+dest_files=[ "res://.import/206_net_eto_skazal.ogg-61a6791bb5c20a8b9bc462b9d3ca5086.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

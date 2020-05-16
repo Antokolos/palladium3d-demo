@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/50_pochemu_vybrala_greziyu.ogg-309254cb9906e2d0c29b46cedac89bf0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/50_pochemu_vybrala_greziyu.ogg"
+dest_files=[ "res://.import/50_pochemu_vybrala_greziyu.ogg-309254cb9906e2d0c29b46cedac89bf0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

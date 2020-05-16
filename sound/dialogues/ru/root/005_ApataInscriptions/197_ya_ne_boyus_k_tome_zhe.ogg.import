@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/197_ya_ne_boyus_k_tome_zhe.ogg-a1a8f08d965d4b145acb25030d36db3a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/197_ya_ne_boyus_k_tome_zhe.ogg"
+dest_files=[ "res://.import/197_ya_ne_boyus_k_tome_zhe.ogg-a1a8f08d965d4b145acb25030d36db3a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

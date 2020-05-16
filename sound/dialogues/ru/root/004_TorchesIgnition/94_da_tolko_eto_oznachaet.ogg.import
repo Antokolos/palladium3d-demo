@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/94_da_tolko_eto_oznachaet.ogg-58b711cc3026c6e82dd5b3eab81a07ca.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/004_TorchesIgnition/94_da_tolko_eto_oznachaet.ogg"
+dest_files=[ "res://.import/94_da_tolko_eto_oznachaet.ogg-58b711cc3026c6e82dd5b3eab81a07ca.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

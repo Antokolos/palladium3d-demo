@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/214_na_stene_napisano.ogg-1f6397367f54ab81508a7b6fe9ed0e1c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/214_na_stene_napisano.ogg"
+dest_files=[ "res://.import/214_na_stene_napisano.ogg-1f6397367f54ab81508a7b6fe9ed0e1c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

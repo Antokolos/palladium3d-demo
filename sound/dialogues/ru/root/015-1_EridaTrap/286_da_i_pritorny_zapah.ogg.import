@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/286_da_i_pritorny_zapah.ogg-ddf89c3a7080e21638671c78a7671f70.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-1_EridaTrap/286_da_i_pritorny_zapah.ogg"
+dest_files=[ "res://.import/286_da_i_pritorny_zapah.ogg-ddf89c3a7080e21638671c78a7671f70.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

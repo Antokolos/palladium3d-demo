@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/160_molchanie_znak.ogg-8ce53a2a06b63d545dd918cb6ae612fa.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/160_molchanie_znak.ogg"
+dest_files=[ "res://.import/160_molchanie_znak.ogg-8ce53a2a06b63d545dd918cb6ae612fa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

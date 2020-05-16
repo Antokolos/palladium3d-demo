@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/189_Andreas_kak_krasivo.ogg-ff635a66cd95405604ab1a374ceaa19b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/004_TorchesIgnition/189_Andreas_kak_krasivo.ogg"
+dest_files=[ "res://.import/189_Andreas_kak_krasivo.ogg-ff635a66cd95405604ab1a374ceaa19b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

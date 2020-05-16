@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/69_akkuratnee_s_shutkami.ogg-79d1b0c2404894ec089b0dd926d2c038.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/69_akkuratnee_s_shutkami.ogg"
+dest_files=[ "res://.import/69_akkuratnee_s_shutkami.ogg-79d1b0c2404894ec089b0dd926d2c038.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

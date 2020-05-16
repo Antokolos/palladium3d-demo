@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/162_chto_tut_mozhno_nepravilno.ogg-5398b447082c0a742a5a3b434fc475a4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/162_chto_tut_mozhno_nepravilno.ogg"
+dest_files=[ "res://.import/162_chto_tut_mozhno_nepravilno.ogg-5398b447082c0a742a5a3b434fc475a4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/218_mne_kazhetsya_luchshe.ogg-4df96182db1379bd6297897b399baa40.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-3_ApataMusesError/218_mne_kazhetsya_luchshe.ogg"
+dest_files=[ "res://.import/218_mne_kazhetsya_luchshe.ogg-4df96182db1379bd6297897b399baa40.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

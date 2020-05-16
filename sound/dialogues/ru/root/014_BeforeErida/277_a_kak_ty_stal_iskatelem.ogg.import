@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/277_a_kak_ty_stal_iskatelem.ogg-2673bca56852835661445e93318fc34c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/277_a_kak_ty_stal_iskatelem.ogg"
+dest_files=[ "res://.import/277_a_kak_ty_stal_iskatelem.ogg-2673bca56852835661445e93318fc34c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

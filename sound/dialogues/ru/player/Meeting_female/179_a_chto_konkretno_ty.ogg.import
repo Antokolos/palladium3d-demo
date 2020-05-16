@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/179_a_chto_konkretno_ty.ogg-03f18769f5e561befaf637e9d48a58ca.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/179_a_chto_konkretno_ty.ogg"
+dest_files=[ "res://.import/179_a_chto_konkretno_ty.ogg-03f18769f5e561befaf637e9d48a58ca.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

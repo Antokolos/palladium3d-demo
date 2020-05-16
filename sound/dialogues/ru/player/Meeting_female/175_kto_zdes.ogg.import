@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/175_kto_zdes.ogg-4f8056696f096dbade7b09d73cb01da0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/175_kto_zdes.ogg"
+dest_files=[ "res://.import/175_kto_zdes.ogg-4f8056696f096dbade7b09d73cb01da0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

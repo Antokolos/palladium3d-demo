@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/49_pustynnyy_ostrov_nomer_odin.ogg-e20fa3f713f4ea6b6ee39ab0bfa11318.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/49_pustynnyy_ostrov_nomer_odin.ogg"
+dest_files=[ "res://.import/49_pustynnyy_ostrov_nomer_odin.ogg-e20fa3f713f4ea6b6ee39ab0bfa11318.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

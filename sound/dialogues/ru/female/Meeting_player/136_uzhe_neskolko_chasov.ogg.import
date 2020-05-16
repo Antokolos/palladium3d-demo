@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/136_uzhe_neskolko_chasov.ogg-7e016f938d4dc207fd1725e6573acf21.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/136_uzhe_neskolko_chasov.ogg"
+dest_files=[ "res://.import/136_uzhe_neskolko_chasov.ogg-7e016f938d4dc207fd1725e6573acf21.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

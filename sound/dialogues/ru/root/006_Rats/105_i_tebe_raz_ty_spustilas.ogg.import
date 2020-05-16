@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/105_i_tebe_raz_ty_spustilas.ogg-8992edd3570951a998dd2a8bf229ebcb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/006_Rats/105_i_tebe_raz_ty_spustilas.ogg"
+dest_files=[ "res://.import/105_i_tebe_raz_ty_spustilas.ogg-8992edd3570951a998dd2a8bf229ebcb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

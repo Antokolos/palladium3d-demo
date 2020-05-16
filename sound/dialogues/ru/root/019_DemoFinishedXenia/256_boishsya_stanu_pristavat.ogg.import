@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/256_boishsya_stanu_pristavat.ogg-b396d1e4ea8acf1d3dae0e1a982850ca.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/019_DemoFinishedXenia/256_boishsya_stanu_pristavat.ogg"
+dest_files=[ "res://.import/256_boishsya_stanu_pristavat.ogg-b396d1e4ea8acf1d3dae0e1a982850ca.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/79_ty_ponimaesh_chto_tam.ogg-a6bbeb00fcbe3467a5a0e21ce6be4a0d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/79_ty_ponimaesh_chto_tam.ogg"
+dest_files=[ "res://.import/79_ty_ponimaesh_chto_tam.ogg-a6bbeb00fcbe3467a5a0e21ce6be4a0d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

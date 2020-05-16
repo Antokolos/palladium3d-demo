@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/87_ty_delaesh_eto_za_dvoih.ogg-ca0b38f71b97586f0c1f2eb2e4bde91a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/87_ty_delaesh_eto_za_dvoih.ogg"
+dest_files=[ "res://.import/87_ty_delaesh_eto_za_dvoih.ogg-ca0b38f71b97586f0c1f2eb2e4bde91a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

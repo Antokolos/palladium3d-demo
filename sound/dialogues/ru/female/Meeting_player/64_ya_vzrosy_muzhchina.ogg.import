@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/64_ya_vzrosy_muzhchina.ogg-6c4eb79df959a3fa62fe6c7d41f0cb20.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/64_ya_vzrosy_muzhchina.ogg"
+dest_files=[ "res://.import/64_ya_vzrosy_muzhchina.ogg-6c4eb79df959a3fa62fe6c7d41f0cb20.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

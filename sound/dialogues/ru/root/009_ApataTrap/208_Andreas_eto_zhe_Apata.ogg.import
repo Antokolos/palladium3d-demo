@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/208_Andreas_eto_zhe_Apata.ogg-c2b12e648571a2aa4c1c78546993151c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/208_Andreas_eto_zhe_Apata.ogg"
+dest_files=[ "res://.import/208_Andreas_eto_zhe_Apata.ogg-c2b12e648571a2aa4c1c78546993151c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/240_v_komnatu_postupayet_gaz.ogg-6775b16c4078777a76949527ba26e601.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-1_EridaTrap/240_v_komnatu_postupayet_gaz.ogg"
+dest_files=[ "res://.import/240_v_komnatu_postupayet_gaz.ogg-6775b16c4078777a76949527ba26e601.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

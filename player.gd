@@ -552,6 +552,15 @@ func process_input(delta):
 	# ----------------------------------
 
 	# ----------------------------------
+	# Crouching on/off
+	if Input.is_action_just_pressed("crouch"):
+		toggle_crouch()
+	# ----------------------------------
+
+	if is_crouching:
+		return
+
+	# ----------------------------------
 	# Jumping
 	if is_on_floor():
 		if Input.is_action_just_pressed("movement_jump"):
@@ -569,12 +578,6 @@ func process_input(delta):
 		set_sprinting(true)
 	else:
 		set_sprinting(false)
-	# ----------------------------------
-	
-	# ----------------------------------
-	# Crouching on/off
-	if Input.is_action_just_pressed("crouch"):
-		toggle_crouch()
 	# ----------------------------------
 
 func set_sprinting(enable):
@@ -673,6 +676,10 @@ func process_movement(delta):
 
 func is_player_controlled():
 	return is_in_party() and is_player()
+
+func _on_HealTimer_timeout():
+	if is_player():
+		game_params.set_health(name_hint, game_params.player_health_current + game_params.HEALING_RATE, game_params.player_health_max)
 
 func set_sound_walk(mode):
 	var spl = $SoundWalking

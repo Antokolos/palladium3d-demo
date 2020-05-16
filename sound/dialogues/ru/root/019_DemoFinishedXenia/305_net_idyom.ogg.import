@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/305_net_idyom.ogg-cb23229e5f97d7c4e020ece013587cd0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/019_DemoFinishedXenia/305_net_idyom.ogg"
+dest_files=[ "res://.import/305_net_idyom.ogg-cb23229e5f97d7c4e020ece013587cd0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

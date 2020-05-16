@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/164_pohozhe_v_etom_tvoya.ogg-4c0892857408b4d29c0bab97dfea6e8f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/164_pohozhe_v_etom_tvoya.ogg"
+dest_files=[ "res://.import/164_pohozhe_v_etom_tvoya.ogg-4c0892857408b4d29c0bab97dfea6e8f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

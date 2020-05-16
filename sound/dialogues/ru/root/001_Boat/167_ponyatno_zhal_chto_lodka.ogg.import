@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/167_ponyatno_zhal_chto_lodka.ogg-2be0f3e7d549ad79058ece3b86bea627.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Boat/167_ponyatno_zhal_chto_lodka.ogg"
+dest_files=[ "res://.import/167_ponyatno_zhal_chto_lodka.ogg-2be0f3e7d549ad79058ece3b86bea627.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

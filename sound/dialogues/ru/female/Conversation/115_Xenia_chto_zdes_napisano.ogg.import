@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/115_Xenia_chto_zdes_napisano.ogg-c2d147328200adc3e8a8493b41f48ed2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/115_Xenia_chto_zdes_napisano.ogg"
+dest_files=[ "res://.import/115_Xenia_chto_zdes_napisano.ogg-c2d147328200adc3e8a8493b41f48ed2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

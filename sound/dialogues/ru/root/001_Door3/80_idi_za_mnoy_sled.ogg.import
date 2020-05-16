@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/80_idi_za_mnoy_sled.ogg-c59d3639606386240b7241fdb2afae01.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/80_idi_za_mnoy_sled.ogg"
+dest_files=[ "res://.import/80_idi_za_mnoy_sled.ogg-c59d3639606386240b7241fdb2afae01.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

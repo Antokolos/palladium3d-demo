@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/219_a_vdrug_ne_srabotaet.ogg-b914e9fbb6fb7c8f92fd9435b549a9c0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/219_a_vdrug_ne_srabotaet.ogg"
+dest_files=[ "res://.import/219_a_vdrug_ne_srabotaet.ogg-b914e9fbb6fb7c8f92fd9435b549a9c0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

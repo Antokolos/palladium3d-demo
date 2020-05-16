@@ -1,2 +1,2 @@
-Кажется мы зашли в тупик. Или здесь может быть тайный проход?	# actor:female
-Нет, вряд ли. Надо вернуться назад и поискать другой путь.	# actor:player
+Кажется мы зашли в тупик. Или здесь может быть тайный проход?	# actor:female # voiceover:306_kazhetsya_my_zashly_v.ogg
+Нет, вряд ли. Надо вернуться назад и поискать другой путь.	# actor:player # voiceover:273_net_vryat_li_nado_vernutsya.ogg

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/77_ladno_poydyom_na_bereg.ogg-f82a3700dbdd58f0288ae45660e1d53f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/003_Door/77_ladno_poydyom_na_bereg.ogg"
+dest_files=[ "res://.import/77_ladno_poydyom_na_bereg.ogg-f82a3700dbdd58f0288ae45660e1d53f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/75_ladno_mne_nuzhno_proverit.ogg-1609da46cb41132a8fd0c3b893615f46.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Boat/75_ladno_mne_nuzhno_proverit.ogg"
+dest_files=[ "res://.import/75_ladno_mne_nuzhno_proverit.ogg-1609da46cb41132a8fd0c3b893615f46.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

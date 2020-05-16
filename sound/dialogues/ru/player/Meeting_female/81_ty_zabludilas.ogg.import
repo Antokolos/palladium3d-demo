@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/81_ty_zabludilas.ogg-d077bff4d758a14855da9d2804113a81.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/81_ty_zabludilas.ogg"
+dest_files=[ "res://.import/81_ty_zabludilas.ogg-d077bff4d758a14855da9d2804113a81.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

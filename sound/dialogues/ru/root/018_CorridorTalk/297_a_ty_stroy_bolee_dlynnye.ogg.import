@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/297_a_ty_stroy_bolee_dlynnye.ogg-abcf7e9eb015c9b8899aeb8dbc91fcfe.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/297_a_ty_stroy_bolee_dlynnye.ogg"
+dest_files=[ "res://.import/297_a_ty_stroy_bolee_dlynnye.ogg-abcf7e9eb015c9b8899aeb8dbc91fcfe.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/202_krysa_krysa.ogg-71c7987672a364a8465f4fba8137ca94.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/007_Rat/202_krysa_krysa.ogg"
+dest_files=[ "res://.import/202_krysa_krysa.ogg-71c7987672a364a8465f4fba8137ca94.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

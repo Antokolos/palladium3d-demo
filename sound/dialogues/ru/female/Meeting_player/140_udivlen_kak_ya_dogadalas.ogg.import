@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/140_udivlen_kak_ya_dogadalas.ogg-09e04ec280a95fd81fb724b41f7e708b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/140_udivlen_kak_ya_dogadalas.ogg"
+dest_files=[ "res://.import/140_udivlen_kak_ya_dogadalas.ogg-09e04ec280a95fd81fb724b41f7e708b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

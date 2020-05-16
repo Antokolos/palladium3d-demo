@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/139_a_menya_Xenia.ogg-c1889a3044eed2740a7d1d4510e3e65c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/139_a_menya_Xenia.ogg"
+dest_files=[ "res://.import/139_a_menya_Xenia.ogg-c1889a3044eed2740a7d1d4510e3e65c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

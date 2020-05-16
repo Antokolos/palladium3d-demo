@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/153_no_kak_kogda.ogg-67b172a0b30a4f0f6663b48424973f20.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Oak/153_no_kak_kogda.ogg"
+dest_files=[ "res://.import/153_no_kak_kogda.ogg-67b172a0b30a4f0f6663b48424973f20.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

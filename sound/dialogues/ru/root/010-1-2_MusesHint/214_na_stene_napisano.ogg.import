@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/214_na_stene_napisano.ogg-cae9f88f3a2002de2e3794d54d41f9eb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-1-2_MusesHint/214_na_stene_napisano.ogg"
+dest_files=[ "res://.import/214_na_stene_napisano.ogg-cae9f88f3a2002de2e3794d54d41f9eb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
