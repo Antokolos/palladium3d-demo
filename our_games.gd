@@ -2,10 +2,11 @@ extends TextureRect
 
 const APPIDS = [ 1040310, 531630, 815070, 594320, 490690, 392820 ]
 
-onready var site_url_node = get_node("VBoxContainer/HBoxAuthor/SiteUrl")
-onready var tab_node = get_node("VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer")
-onready var back_node = get_node("VBoxContainer/HBoxControls/Back")
-onready var button_open_node = get_node("VBoxContainer/GameActions/ButtonOpen")
+onready var main_panel = get_node("VBoxContainer/HBoxContainer/PanelContainer")
+onready var site_url_node = main_panel.get_node("VBoxContainer/HBoxAuthor/SiteUrl")
+onready var tab_node = main_panel.get_node("VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer")
+onready var back_node = main_panel.get_node("VBoxContainer/HBoxControls/Back")
+onready var button_open_node = main_panel.get_node("VBoxContainer/GameActions/ButtonOpen")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
