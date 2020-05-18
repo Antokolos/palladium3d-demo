@@ -8,16 +8,19 @@ radius = 0.3
 mid_height = 1.6
 
 [sub_resource type="CapsuleShape" id=2]
+resource_local_to_scene = true
 margin = 0.06
 radius = 0.3
 height = 0.794434
 
 [sub_resource type="CapsuleShape" id=3]
+resource_local_to_scene = true
 margin = 0.06
 radius = 0.5
 height = 1.2
 
 [sub_resource type="BoxShape" id=4]
+resource_local_to_scene = true
 extents = Vector3( 0.16, 0.04, 0.16 )
 
 [sub_resource type="Animation" id=5]
@@ -76,13 +79,14 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.0134519, 1 ),
+"times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.8, 0.3 ]
 }
 
 [sub_resource type="BoxShape" id=6]
+resource_local_to_scene = true
 extents = Vector3( 0.161138, 1, 0.146487 )
 
 [node name="player" type="KinematicBody" groups=[

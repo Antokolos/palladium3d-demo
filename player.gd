@@ -557,9 +557,6 @@ func process_input(delta):
 		toggle_crouch()
 	# ----------------------------------
 
-	if is_crouching:
-		return
-
 	# ----------------------------------
 	# Jumping
 	if is_on_floor():
@@ -571,7 +568,10 @@ func process_input(delta):
 				$SoundFallingToFloor.play()
 				is_in_jump = false
 	# ----------------------------------
-	
+
+	if is_crouching:
+		return
+
 	# ----------------------------------
 	# Sprinting
 	if Input.is_action_pressed("movement_sprint"):
