@@ -735,6 +735,9 @@ shape = SubResource( 6 )
 [node name="InscriptionsPosition" type="Position3D" parent="."]
 transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 14.4634, 3.87822, 39.6227 )
 
+[node name="ApataDoorPosition" type="Position3D" parent="."]
+transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 20.9597, 3.87822, 39.6227 )
+
 [node name="BanditPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.48208, 1.2, 39.9036 )
 
@@ -793,10 +796,13 @@ shape = SubResource( 11 )
 transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.0948, 1.2, 32.082 )
 
 [node name="BanditSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.3001, 1.2, 32.9622 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.379, 1.2, 32.9622 )
 
 [node name="PlayerSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.2189, 1.2, 32.9622 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.0384, 1.2, 32.9622 )
+
+[node name="PlayerIntermediatePosition" type="Position3D" parent="."]
+transform = Transform( -0.515604, 0, 0.856827, 0, 1, 0, -0.856827, 0, -0.515604, 21.1106, 1.2, 32.9622 )
 
 [node name="PlayerTeleportPosition" type="Position3D" parent="."]
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
@@ -804,8 +810,11 @@ transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903,
 [node name="PositionApata" type="Position3D" parent="."]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 1.21485, 27.5823 )
 
-[node name="ApataTakeTimer" type="Timer" parent="."]
-one_shot = true
+[node name="PositionApata2" type="Position3D" parent="."]
+transform = Transform( 0.680557, 0, -0.732695, 0, 1, 0, 0.732695, 0, 0.680557, 22.4661, 1.21485, 28.5788 )
+
+[node name="PositionApata3" type="Position3D" parent="."]
+transform = Transform( 0.486343, 0, 0.873768, 0, 1, 0, -0.873768, 0, 0.486343, 24.9343, 1.21485, 30.0176 )
 
 [node name="EridaButtonCorrect" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
@@ -817,6 +826,9 @@ stream = ExtResource( 74 )
 
 [node name="destructible_web" parent="." instance=ExtResource( 75 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7175, 4.50903, 37.4462 )
+
+[node name="ApataTakeTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]

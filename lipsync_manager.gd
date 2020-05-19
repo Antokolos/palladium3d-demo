@@ -8,12 +8,9 @@ const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
-var character_speaker = null
-
 func stop_sound_and_lipsync():
-	if character_speaker:
+	for character_speaker in game_params.get_characters():
 		character_speaker.get_model().stop_speaking()
-		character_speaker = null
 	if $AudioStreamPlayer.is_playing():
 		$AudioStreamPlayer.stop()
 
@@ -37,7 +34,6 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_DISABLED)
 	else:
 		return false
-	character_speaker = character
 	var length = stream.get_length()
 	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
 	$AudioStreamPlayer.stream = stream

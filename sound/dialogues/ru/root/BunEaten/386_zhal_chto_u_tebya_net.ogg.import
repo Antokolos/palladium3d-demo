@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/386_zhal_chto_u_tebya_net.ogg-9407e89aff8d62e90b124241d1b8ec03.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/BunEaten/386_zhal_chto_u_tebya_net.ogg"
+dest_files=[ "res://.import/386_zhal_chto_u_tebya_net.ogg-9407e89aff8d62e90b124241d1b8ec03.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -34,10 +34,19 @@ func ceiling_sound_stop():
 func is_active():
 	return game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.GOING_DOWN
 
+func get_ceiling_speed():
+	# Move the ceiling faster if the player decides to move the chest
+	return SPEED_DOWN if game_params.story_vars.apata_chest_rigid == 0 else 3 * SPEED_DOWN
+
+func activate_partial():
+	activate()
+	$PartialActivationTimer.start()
+
 func activate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.GOING_DOWN
-	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, SPEED_DOWN)
-	get_node("AnimationPlayer").play("CollisionAnim", -1, SPEED_DOWN)
+	var speed = get_ceiling_speed()
+	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
+	get_node("AnimationPlayer").play("CollisionAnim", -1, speed)
 	ceiling_sound_play()
 
 func pause():
@@ -48,8 +57,9 @@ func pause():
 
 func deactivate():
 	game_params.story_vars.apata_trap_stage = game_params.ApataTrapStages.DISABLED
-	get_node("ceiling_armat000/AnimationPlayer").play_backwards("ceiling_action.000")
-	get_node("AnimationPlayer").play_backwards("CollisionAnim")
+	var speed = get_ceiling_speed()
+	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
+	get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
 	ceiling_sound_play()
 
 func restore_state():
@@ -62,20 +72,24 @@ func restore_state():
 		pause()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.GOING_DOWN and conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
-		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
-		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
-		bandit.join_party()
-		female.join_party()
+	if game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.DISABLED:
 		ceiling_sound_stop()
-		conversation_manager.start_area_conversation("010-2-2_CeilingStopped")
-	elif game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.DISABLED \
-		and ( \
+		if ( \
 			conversation_manager.conversation_is_finished("010-2-3_CeilingUp") \
 			or conversation_manager.conversation_is_in_progress("010-2-3_CeilingUp")
 		):
-			ceiling_sound_stop()
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
+	elif game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.GOING_DOWN:
+		if conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
+			var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+			var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+			bandit.join_party()
+			female.join_party()
+			ceiling_sound_stop()
+			conversation_manager.start_area_conversation("010-2-2_CeilingStopped")
+		else:
+			# Instantly kills the player if the ceiling is at its lowest point
+			game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, 0, game_params.player_health_max)
 
 func _on_conversation_finished(player, conversation_name, target, initiator):
 	match conversation_name:
@@ -100,3 +114,6 @@ func _physics_process(delta):
 func _on_DamageTimer_timeout():
 	if does_damage:
 		game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current - spikes_injury_rate, game_params.player_health_max)
+
+func _on_PartialActivationTimer_timeout():
+	pause()

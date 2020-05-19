@@ -135,7 +135,7 @@ stream = ExtResource( 2 )
 bus = "Sound"
 
 [node name="StandingArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20699, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0 )
 input_ray_pickable = false
 monitorable = false
 collision_layer = 1024

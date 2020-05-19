@@ -71,6 +71,7 @@ var UP_DIR = Vector3(0, 1, 0)
 var Z_DIR = Vector3(0, 0, 1)
 var ZERO_DIR = Vector3(0, 0, 0)
 var PUSH_STRENGTH = 10
+var NONCHAR_PUSH_STRENGTH = 2
 
 var path = []
 var exclusions = []
@@ -135,6 +136,12 @@ func get_follow_parameters(node_to_follow_pos, current_transform, next_position)
 		"rotation_angle_to_target_deg" : rotation_angle_to_target_deg
 	}
 
+func is_rest_state():
+	return companion_state == COMPANION_STATE.REST
+
+func is_walk_state():
+	return companion_state == COMPANION_STATE.WALK
+
 func follow(current_transform, next_position):
 	var p = get_follow_parameters(game_params.get_player().get_global_transform().origin, current_transform, next_position)
 	var was_moving = p.was_moving
@@ -145,7 +152,7 @@ func follow(current_transform, next_position):
 	
 	var in_party = is_in_party()
 	angle_rad_y = 0
-	if not in_party or companion_state == COMPANION_STATE.WALK:
+	if not in_party or is_walk_state():
 		if rotation_angle > 0.1:
 			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
 		elif rotation_angle < -0.1:
@@ -168,12 +175,12 @@ func follow(current_transform, next_position):
 		dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif (in_party and distance > CLOSEUP_RANGE and companion_state == COMPANION_STATE.WALK) or (not in_party and distance > ALIGNMENT_RANGE):
+	elif (in_party and distance > CLOSEUP_RANGE and is_walk_state()) or (not in_party and distance > ALIGNMENT_RANGE):
 		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
-				emit_signal("arrived_to_boundary", self, target_node)
 				companion_state = COMPANION_STATE.REST
+				emit_signal("arrived_to_boundary", self, target_node)
 				model.look(rotation_angle_to_target_deg, is_crouching)
 				dir = Vector3()
 				return
@@ -189,8 +196,8 @@ func follow(current_transform, next_position):
 			companion_state = COMPANION_STATE.REST
 		else:
 			if was_moving and target_node and angle_rad_y == 0 and distance <= ALIGNMENT_RANGE:
-				emit_signal("arrived_to", self, target_node)
 				companion_state = COMPANION_STATE.REST
+				emit_signal("arrived_to", self, target_node)
 
 func is_in_speak_mode():
 	return get_model().is_in_speak_mode()
@@ -198,35 +205,36 @@ func is_in_speak_mode():
 func set_speak_mode(enable):
 	get_model().set_speak_mode(enable)
 
-func sit_down(force = false):
+func sit_down():
 	if $AnimationPlayer.is_playing():
 		return
-	get_model().sit_down(force)
+	get_model().sit_down()
 	$AnimationPlayer.play("crouch")
 	var is_player = is_player()
 	if is_player:
 		var companions = game_params.get_companions()
 		for companion in companions:
-			companion.sit_down(force)
+			companion.sit_down()
+	is_sprinting = false
 	is_crouching = true
 	if is_player:
 		var hud = game_params.get_hud()
 		if hud:
 			hud.set_crouch_indicator(true)
 
-func stand_up(force = false):
+func stand_up():
 	if $AnimationPlayer.is_playing():
 		return
 	if is_low_ceiling():
 		# I.e. if the player is crouching and something is above the head, do not allow to stand up.
 		return
-	get_model().stand_up(force)
+	get_model().stand_up()
 	$AnimationPlayer.play_backwards("crouch")
 	var is_player = is_player()
 	if is_player:
 		var companions = game_params.get_companions()
 		for companion in companions:
-			companion.stand_up(force)
+			companion.stand_up()
 	is_crouching = false
 	if is_player:
 		var hud = game_params.get_hud()
@@ -471,6 +479,9 @@ func is_in_party():
 func is_cutscene():
 	return get_model().is_cutscene()
 
+func get_target_node():
+	return target_node
+
 func set_target_node(node):
 	target_node = node
 
@@ -488,7 +499,7 @@ func teleport(node_to):
 func _physics_process(delta):
 	var in_party = is_in_party()
 	if is_low_ceiling() and not is_crouching and is_on_floor():
-		toggle_crouch()
+		sit_down()
 	if is_player() and in_party:
 		if cutscene_manager.is_cutscene():
 			dir = Vector3()
@@ -516,12 +527,11 @@ func _physics_process(delta):
 		if is_cutscene() and in_party:
 			return
 		var target_position = get_target_position()
-		if not target_position:
-			return
-		var current_transform = get_global_transform()
-		var current_position = current_transform.origin
-		build_path(target_position, in_party)
-		follow(current_transform, path.front() if path.size() > 0 else target_position)
+		if target_position:
+			var current_transform = get_global_transform()
+			var current_position = current_transform.origin
+			build_path(target_position, in_party)
+			follow(current_transform, path.front() if path.size() > 0 else target_position)
 	
 	var is_moving = process_movement(delta)
 	process_rotation(not is_moving)
@@ -622,20 +632,15 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel*delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
-	var is_moving = is_in_jump or vel.x > MIN_MOVEMENT or vel.x < -MIN_MOVEMENT or vel.z > MIN_MOVEMENT or vel.z < -MIN_MOVEMENT
-	if not is_moving:
-		$SoundWalking.stop()
-		is_walking = false
-		if is_player_controlled():
-			rest()
-		return false
 	
-	if not $SoundWalking.is_playing():
-		$SoundWalking.play()
-	$SoundWalking.pitch_scale = 2 if is_sprinting else 1
-
 	vel = move_and_slide_with_snap(vel, ZERO_DIR if is_in_jump else UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
 	is_walking = vel.length() > MIN_MOVEMENT
+	if is_walking:
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
+		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
+	else:
+		$SoundWalking.stop()
 	
 	var sc = get_slide_count()
 	var character_collisions = []
@@ -654,7 +659,7 @@ func process_movement(delta):
 	for collision in character_collisions:
 		var character = collision.collider
 		if not character.is_cutscene() and not character.is_player_controlled():
-			character.vel = -collision.normal * PUSH_STRENGTH
+			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
 
 	if is_player_controlled():
@@ -663,16 +668,24 @@ func process_movement(delta):
 		else:
 			rest()
 	elif nonchar_collision and pathfinding_enabled:
-		var n = nonchar_collision.normal
-		n.y = 0
-		var cross = UP_DIR.cross(n)
-		var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
-		vel = (n + coeff * cross) * PUSH_STRENGTH
+		var v = get_out_vec(nonchar_collision.normal) * NONCHAR_PUSH_STRENGTH
 		clear_path()
 		var current_position = get_global_transform().origin
+		var start_position = current_position + v
 		var target_position = get_target_position()
-		update_navpath(current_position, target_position)
-	return true
+		if target_position:
+			update_navpath(start_position, target_position)
+		path.push_front(start_position)
+		if DRAW_PATH:
+			draw_path()
+	return is_walking
+
+func get_out_vec(normal):
+	var n = normal
+	n.y = 0
+	var cross = UP_DIR.cross(n)
+	var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
+	return (n + coeff * cross).normalized()
 
 func is_player_controlled():
 	return is_in_party() and is_player()

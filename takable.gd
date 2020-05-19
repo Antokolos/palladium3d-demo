@@ -120,7 +120,7 @@ func make_absent():
 func add_highlight(player_node):
 	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
 #	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	if takable_id == TakableIds.APATA:
+	if takable_id == TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 		return ""
 	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 

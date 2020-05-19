@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/390_da_net_prosto_ne_uspela.ogg-a8d9505fd6917227ad3697888ffba28d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Bun/390_da_net_prosto_ne_uspela.ogg"
+dest_files=[ "res://.import/390_da_net_prosto_ne_uspela.ogg-a8d9505fd6917227ad3697888ffba28d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

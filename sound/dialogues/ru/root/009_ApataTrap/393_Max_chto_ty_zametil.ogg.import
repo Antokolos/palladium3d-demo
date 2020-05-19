@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/393_Max_chto_ty_zametil.ogg-f4cecafca3738c2a3a63ec7d2164b91a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/393_Max_chto_ty_zametil.ogg"
+dest_files=[ "res://.import/393_Max_chto_ty_zametil.ogg-f4cecafca3738c2a3a63ec7d2164b91a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -19,6 +19,8 @@ func _ready():
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
+	game_params.connect("player_registered", self, "_on_player_registered")
+	get_door("door_0").connect("door_state_changed", self, "_on_door_state_changed")
 
 func get_door(door_path):
 	return doors.get_node(door_path)
@@ -27,8 +29,7 @@ func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
 		Takable.TakableIds.APATA:
-			if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
-				get_door("door_0").close()
+			pass # door_0 is now closed a little bit later, when FEMALE_TAKES_APATA cutscene or corresponding dialogue is ended
 		Takable.TakableIds.HERMES:
 			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 			match pedestal_id:
@@ -90,6 +91,8 @@ func use_pedestal(player_node, pedestal, item_nam):
 		Pedestal.PedestalIds.APATA:
 			if game_params.story_vars.apata_trap_stage != GameParams.ApataTrapStages.GOING_DOWN:
 				return
+			if game_params.story_vars.apata_chest_rigid < 0:
+				return
 			var hope = hope_on_apata_pedestal(pedestal)
 			if item_nam == "statue_apata" and hope:
 				get_node("Apata_room/door_3").open()
@@ -103,6 +106,7 @@ func use_pedestal(player_node, pedestal, item_nam):
 				return
 			if not check_muses_correct(pedestal.get_parent()):
 				conversation_manager.start_area_conversation("010-1-3_ApataMusesError")
+				get_node("Apata_room/ceiling_moving_1").activate_partial()
 				return
 			conversation_manager.start_area_conversation("010-1-4_ApataDoneXenia")
 			get_door("door_4").open()
@@ -258,7 +262,27 @@ func _on_conversation_started(player, conversation_name, target, initiator):
 	match conversation_name:
 		"010-2-4_ApataDoneMax":
 			get_door("door_4").open()
-			get_node("Apata_room/door_3").close()
+			#get_node("Apata_room/door_3").close()
+
+func _on_player_registered(player):
+	player.connect("arrived_to", self, "_on_arrived_to")
+	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
+
+func _on_cutscene_finished(player, cutscene_id):
+	match player.name_hint:
+		game_params.FEMALE_NAME_HINT:
+			match cutscene_id:
+				PalladiumCharacter.FEMALE_TAKES_APATA:
+					if conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+						var p = game_params.get_player()
+						cutscene_manager.restore_camera(p)
+						cutscene_manager.borrow_camera(p, get_node("ApataDoorPosition"))
+					if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+						get_door("door_0").close()
+						get_node("Apata_room/ceiling_moving_1").ceiling_sound_play()
+					player.remove_item_from_hand()
+					player.set_target_node(get_node("PositionApata2"))
+					return
 
 func _on_conversation_finished(player, conversation_name, target, initiator):
 	var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
@@ -268,16 +292,16 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			bandit.teleport(get_node("BanditPosition"))
 			conversation_manager.arrange_meeting(player, player, bandit, true, get_node("InscriptionsPosition"))
 		"009_ApataTrap":
+			get_door("door_0").close() # Close the door if it is not already closed
 			get_node("Apata_room/ceiling_moving_1").activate()
-			female.set_target_node(get_node("FemaleSavePosition"))
+			female.set_target_node(get_node("PositionApata3"))
 			if game_params.story_vars.apata_chest_rigid > 0:
-				player.connect("arrived_to", self, "_on_arrived_to_chest_push_position")
-				player.set_target_node(get_node("PlayerSavePosition"))
+				player.set_target_node(get_node("PlayerIntermediatePosition"))
 				player.leave_party()
 				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
 		"010-2-1_ChestMoved":
-			bandit.sit_down(true)
-			female.sit_down(true)
+			bandit.sit_down()
+			female.sit_down()
 			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_CROUCH", ["C"])
 		"010-1-1_Statuettes", "015-1_EridaTrap", "021-1_EridaTrapMax":
 			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_1")
@@ -291,13 +315,35 @@ func _on_meeting_finished(player, target, initiator):
 		female.set_target_node(get_node("PositionApata"))
 		female.leave_party()
 		game_params.autosave_create()
-	
-func _on_arrived_to_chest_push_position(player_node, target_node):
-	if target_node == get_node("PlayerSavePosition"):
-		player_node.disconnect("arrived_to", self, "_on_arrived_to_chest_push_position")
-		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+
+func _on_door_state_changed(door_id, opened):
+	match door_id:
+		Door.DoorIds.APATA_TRAP_INNER:
+			if not opened and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+				var player = game_params.get_player()
+				cutscene_manager.restore_camera(player)
+				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
+
+func _on_arrived_to(player_node, target_node):
+	if game_params.story_vars.apata_chest_rigid <= 0:
+		return
+	var tid = target_node.get_instance_id()
+	var player = game_params.get_character(game_params.PLAYER_NAME_HINT)
+	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+	var piid = get_node("PlayerIntermediatePosition").get_instance_id()
+	var pa3id = get_node("PositionApata3").get_instance_id()
+	if tid == piid and player.get_instance_id() == player_node.get_instance_id():
+		player.set_target_node(get_node("PlayerSavePosition"))
+		return
+	elif tid == pa3id and female.get_instance_id() == player_node.get_instance_id():
+		female.set_target_node(get_node("FemaleSavePosition"))
+		return
+	var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+	var pid = get_node("PlayerSavePosition").get_instance_id()
+	var bid = get_node("BanditSavePosition").get_instance_id()
+	if (tid == pid or tid == bid) and player.is_rest_state() and bandit.is_rest_state():
 		bandit.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START)
-		player_node.play_cutscene(PalladiumCharacter.PLAYER_CUTSCENE_PUSHES_CHEST)
+		player.play_cutscene(PalladiumCharacter.PLAYER_CUTSCENE_PUSHES_CHEST)
 		var chest = get_node("Apata_room/apata_chest")
 		chest.do_push()
 

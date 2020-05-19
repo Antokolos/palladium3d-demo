@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/385_mmm_kakaya_vkusnaya.ogg-3f783eee119dcc526c5441a54ff4041e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/BunEaten/385_mmm_kakaya_vkusnaya.ogg"
+dest_files=[ "res://.import/385_mmm_kakaya_vkusnaya.ogg-3f783eee119dcc526c5441a54ff4041e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/387_pozhaluysta_v_otele_ne.ogg-6f46b68f6f4adc62f386f8918c498bd8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Bun/387_pozhaluysta_v_otele_ne.ogg"
+dest_files=[ "res://.import/387_pozhaluysta_v_otele_ne.ogg-6f46b68f6f4adc62f386f8918c498bd8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

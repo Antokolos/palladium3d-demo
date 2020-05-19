@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/396_znachit_my_chto_to_sdelali.ogg-fe03247d3170042f1b013a9ca4e1b433.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-2_EridaError/396_znachit_my_chto_to_sdelali.ogg"
+dest_files=[ "res://.import/396_znachit_my_chto_to_sdelali.ogg-fe03247d3170042f1b013a9ca4e1b433.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

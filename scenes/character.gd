@@ -69,7 +69,7 @@ func _ready():
 	game_params.connect("item_taken", self, "_on_item_taken")
 
 func _on_item_taken(nam, count):
-	if look_anim_name == "female_rest_99": # Apply only to female model
+	if look_anim_name == "female_rest_99" and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED: # Apply only to female model and only when the trap is still armed
 		if nam == "statue_apata":
 			var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")
 			var item = load("res://assets/statue_4.escn").instance() #load(game_params.ITEMS[nam].model_path).instance()
@@ -128,16 +128,12 @@ func is_cutscene():
 	var cutscene_empty = $AnimationTree.get("parameters/CutsceneTransition/current") == CUTSCENE_EMPTY
 	return not cutscene_empty and $AnimationTree.get("parameters/CutsceneShot/active")
 
-func stand_up(force = false):
-	if not force and is_cutscene():
-		return
+func stand_up():
 	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_STANDING:
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
 		get_anim_player().play(stand_up_anim_name)
 
-func sit_down(force = false):
-	if not force and is_cutscene():
-		return
+func sit_down():
 	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_SQUATTING:
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
 		get_anim_player().play(sit_down_anim_name)

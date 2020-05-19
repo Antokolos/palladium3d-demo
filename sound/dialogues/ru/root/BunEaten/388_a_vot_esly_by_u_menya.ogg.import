@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/388_a_vot_esly_by_u_menya.ogg-2c2b568e55775082b00af738a9dfbf5e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/BunEaten/388_a_vot_esly_by_u_menya.ogg"
+dest_files=[ "res://.import/388_a_vot_esly_by_u_menya.ogg-2c2b568e55775082b00af738a9dfbf5e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

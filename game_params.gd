@@ -2,6 +2,7 @@ extends Node
 class_name GameParams
 
 signal shader_cache_processed()
+signal player_registered(player)
 signal item_taken(nam, count)
 signal item_removed(nam, count)
 signal item_used(player_node, target, item_nam)
@@ -102,17 +103,17 @@ var scene_path = SCENE_PATH_DEFAULT
 var player_name_hint = PLAYER_NAME_HINT
 var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
-var party = PARTY_DEFAULT
+var party = PARTY_DEFAULT.duplicate(true)
 var player_paths = {}
-var story_vars = STORY_VARS_DEFAULT
-var inventory = INVENTORY_DEFAULT
-var quick_items = QUICK_ITEMS_DEFAULT
-var doors = DOORS_DEFAULT
-var lights = LIGHTS_DEFAULT
-var containers = CONTAINERS_DEFAULT
-var takables = TAKABLES_DEFAULT
-var multistates = MULTISTATES_DEFAULT
-var messages = MESSAGES_DEFAULT
+var story_vars = STORY_VARS_DEFAULT.duplicate(true)
+var inventory = INVENTORY_DEFAULT.duplicate(true)
+var quick_items = QUICK_ITEMS_DEFAULT.duplicate(true)
+var doors = DOORS_DEFAULT.duplicate(true)
+var lights = LIGHTS_DEFAULT.duplicate(true)
+var containers = CONTAINERS_DEFAULT.duplicate(true)
+var takables = TAKABLES_DEFAULT.duplicate(true)
+var multistates = MULTISTATES_DEFAULT.duplicate(true)
+var messages = MESSAGES_DEFAULT.duplicate(true)
 
 enum MusicId {LOADING, OUTSIDE, EXPLORE, MINOTAUR}
 const MUSIC_PATH_TEMPLATE = "res://music/%s"
@@ -137,16 +138,16 @@ func reset_variables():
 	player_name_hint = PLAYER_NAME_HINT
 	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
-	party = PARTY_DEFAULT
-	story_vars = STORY_VARS_DEFAULT
-	inventory = INVENTORY_DEFAULT
-	quick_items = QUICK_ITEMS_DEFAULT
-	doors = DOORS_DEFAULT
-	lights = LIGHTS_DEFAULT
-	containers = CONTAINERS_DEFAULT
-	takables = TAKABLES_DEFAULT
-	multistates = MULTISTATES_DEFAULT
-	messages = MESSAGES_DEFAULT
+	party = PARTY_DEFAULT.duplicate(true)
+	story_vars = STORY_VARS_DEFAULT.duplicate(true)
+	inventory = INVENTORY_DEFAULT.duplicate(true)
+	quick_items = QUICK_ITEMS_DEFAULT.duplicate(true)
+	doors = DOORS_DEFAULT.duplicate(true)
+	lights = LIGHTS_DEFAULT.duplicate(true)
+	containers = CONTAINERS_DEFAULT.duplicate(true)
+	takables = TAKABLES_DEFAULT.duplicate(true)
+	multistates = MULTISTATES_DEFAULT.duplicate(true)
+	messages = MESSAGES_DEFAULT.duplicate(true)
 
 func get_hud():
 	return get_node("/root/HUD/hud")
@@ -199,18 +200,6 @@ func is_bright():
 	return level.is_bright() if level else false
 
 func _on_cutscene_finished(player, cutscene_id):
-	match player.name_hint:
-		BANDIT_NAME_HINT:
-			match cutscene_id:
-				PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START:
-					return
-		FEMALE_NAME_HINT:
-			match cutscene_id:
-				PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP:
-					return
-				PalladiumCharacter.FEMALE_TAKES_APATA:
-					player.remove_item_from_hand()
-					return
 	player.stop_cutscene()
 
 func get_custom_actions(item):
@@ -497,6 +486,7 @@ func register_player(player):
 	player_paths[player.name_hint] = player.get_path()
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	play_initial_cutscene(player)
+	emit_signal("player_registered", player)
 
 func play_initial_cutscene(player):
 	if player.name_hint == FEMALE_NAME_HINT:
@@ -532,7 +522,7 @@ func load_params(slot):
 
 	emit_signal("health_changed", PalladiumPlayer.PLAYER_NAME_HINT, player_health_current, player_health_max)
 
-	party = d.party if ("party" in d) else PARTY_DEFAULT
+	party = d.party if ("party" in d) else PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
@@ -553,17 +543,24 @@ func load_params(slot):
 				character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
 			
 			character.set_transform(Transform(character_coords.basis, character_coords.origin))
+			
+			if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
+				character.set_target_node(get_node(dd.target_path))
+			
 			play_initial_cutscene(character)
+			
+			if ("is_crouching" in dd and dd.is_crouching):
+				character.sit_down()
 
-	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT
-	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT
-	quick_items = d.quick_items if ("quick_items" in d) else QUICK_ITEMS_DEFAULT
-	doors = d.doors if ("doors" in d) else DOORS_DEFAULT
-	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT
-	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT
-	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT
-	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT
-	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT
+	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT.duplicate(true)
+	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT.duplicate(true)
+	quick_items = d.quick_items if ("quick_items" in d) else QUICK_ITEMS_DEFAULT.duplicate(true)
+	doors = d.doors if ("doors" in d) else DOORS_DEFAULT.duplicate(true)
+	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
+	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
+	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT.duplicate(true)
+	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
+	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
 	get_tree().call_group("restorable_state", "restore_state")
 
@@ -584,7 +581,7 @@ func save_params(slot):
 	for name_hint in party.keys():
 		var character = get_character(name_hint)
 		if character:
-			var t = character.get_preferred_target()
+			var t = character.get_target_node()
 			var p = is_in_party(name_hint)
 			var b = t.get_transform().basis if t and not p else character.get_transform().basis
 			var o = t.get_transform().origin if t and not p else character.get_transform().origin
@@ -594,7 +591,9 @@ func save_params(slot):
 					[b.y.x, b.y.y, b.y.z],
 					[b.z.x, b.z.y, b.z.z]
 				] ,
-				"origin" : [o.x, o.y, o.z]
+				"origin" : [o.x, o.y, o.z],
+				"target_path" : t.get_path() if t else null,
+				"is_crouching" : character.is_crouching
 			}
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
