@@ -524,7 +524,7 @@ func _physics_process(delta):
 		else:
 			process_input(delta)
 	else:
-		if is_cutscene() and in_party:
+		if is_cutscene():
 			return
 		var target_position = get_target_position()
 		if target_position:
