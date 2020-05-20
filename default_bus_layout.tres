@@ -2,6 +2,8 @@
 
 [sub_resource type="AudioEffectLimiter" id=1]
 resource_name = "Limiter"
+ceiling_db = -1.1
+threshold_db = -1.0
 
 [sub_resource type="AudioEffectReverb" id=2]
 resource_name = "Reverb"
@@ -15,6 +17,8 @@ wet = 0.2
 
 [sub_resource type="AudioEffectCompressor" id=4]
 resource_name = "Compressor"
+threshold = -3.5
+ratio = 16.0
 
 [resource]
 bus/0/effect/0/effect = SubResource( 1 )
