@@ -98,8 +98,8 @@ func set_inside(inside, bright):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
 	environment.set_bg_color(Color(1, 1, 1) if bright else Color(0, 0, 0))
 	environment.set("background_sky", sky_inside if inside else sky_outside)
-	environment.set("background_energy", 0.3 if bright else (0.04 if inside else 0.4))
-	environment.set("ambient_light_energy", 0.3 if bright else (0.04 if inside else 0.4))
+	environment.set("background_energy", 0.3 if bright else (0.04 if inside else 0.25))
+	environment.set("ambient_light_energy", 0.3 if bright else (0.04 if inside else 0.25))
 
 func change_culling():
 	if culling_rays:
