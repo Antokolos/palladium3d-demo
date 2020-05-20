@@ -173,8 +173,11 @@ func check_muses_correct(base):
 	return check_pedestal(pedestal_history, Takable.TakableIds.CLIO)
 
 func _on_AreaApata_body_entered(body):
-	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED and body.is_in_group("party") and body.is_player():
+		var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
+		female.teleport(get_node("PositionApata"))
+		var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
+		bandit.teleport(get_node("BanditSavePosition"))
 		body.teleport(get_node("PlayerTeleportPosition"))
 		get_node("ApataTakeTimer").start()
 		female.play_cutscene(PalladiumCharacter.FEMALE_TAKES_APATA)

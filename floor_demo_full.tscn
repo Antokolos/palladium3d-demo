@@ -808,7 +808,7 @@ transform = Transform( -0.515604, 0, 0.856827, 0, 1, 0, -0.856827, 0, -0.515604,
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
 
 [node name="PositionApata" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 1.21485, 27.5823 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 1.21485, 27.6382 )
 
 [node name="PositionApata2" type="Position3D" parent="."]
 transform = Transform( 0.680557, 0, -0.732695, 0, 1, 0, 0.732695, 0, 0.680557, 22.4661, 1.21485, 28.5788 )

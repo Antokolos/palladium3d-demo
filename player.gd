@@ -494,6 +494,7 @@ func get_target_position():
 
 func teleport(node_to):
 	if node_to:
+		clear_path()
 		set_global_transform(node_to.get_global_transform())
 
 func _physics_process(delta):
