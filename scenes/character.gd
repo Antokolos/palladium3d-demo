@@ -27,35 +27,9 @@ const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
 export var main_skeleton = "Female_palladium_armature"
-export var look_anim_name = "female_rest_99"
-export var stand_up_anim_name = "female_squats_reversed"
-export var sit_down_anim_name = "female_squats"
-export var look_squat_anim_name = "female_squat_rest"
-export var walk_anim_name = "female_walk_2"
-export var run_anim_name = "female_runs"
-export var crouch_anim_name = "female_crouches_squatted"
 
 export var rest_shots_max = 2
 export var speak_shots_max = 2
-
-export var b0_anim_name = "b0"
-export var b1_anim_name = "b1"
-export var b2_anim_name = "b2"
-export var b3_anim_name = "b3"
-export var b4_anim_name = "b4"
-export var b5_anim_name = "b5"
-export var b6_anim_name = "b6"
-export var b7_anim_name = "b7"
-export var b8_anim_name = "b8"
-export var b9_anim_name = "b9"
-export var b10_anim_name = "b10"
-export var b11_anim_name = "b11"
-export var b12_anim_name = "b12"
-export var b13_anim_name = "b13"
-export var b14_anim_name = "b14"
-export var b15_anim_name = "b15"
-export var b16_anim_name = "b16"
-export var b17_anim_name = "b17"
 
 var simple_mode = true
 
@@ -69,7 +43,7 @@ func _ready():
 	game_params.connect("item_taken", self, "_on_item_taken")
 
 func _on_item_taken(nam, count):
-	if look_anim_name == "female_rest_99" and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED: # Apply only to female model and only when the trap is still armed
+	if main_skeleton == "Female_palladium_armature" and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED: # Apply only to female model and only when the trap is still armed
 		if nam == "statue_apata":
 			var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")
 			var item = load("res://assets/statue_4.escn").instance() #load(game_params.ITEMS[nam].model_path).instance()
@@ -89,12 +63,11 @@ func toggle_head(enable):
 			if m.get_layer_mask_bit(1):
 				m.set_layer_mask_bit(0, enable)
 
-func set_simple_mode(sm, is_crouching):
+func set_simple_mode(sm):
 	simple_mode = sm
 	toggle_head(not sm)
-	$AnimationTree.active = not simple_mode
 	if simple_mode:
-		look(0, is_crouching)
+		look(0)
 
 func do_rest_shot(shot_idx):
 	var look_state = $AnimationTree.get("parameters/LookStateTransition/current")
@@ -131,12 +104,10 @@ func is_cutscene():
 func stand_up():
 	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_STANDING:
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
-		get_anim_player().play(stand_up_anim_name)
 
 func sit_down():
 	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_SQUATTING:
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
-		get_anim_player().play(sit_down_anim_name)
 
 func normalize_angle(look_angle_deg):
 	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)
@@ -144,74 +115,15 @@ func normalize_angle(look_angle_deg):
 func rotate_head(look_angle_deg):
 	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (normalize_angle(look_angle_deg) / 45.0))
 
-func set_transition(t, is_crouching):
+func set_transition(t):
 	var transition = $AnimationTree.get("parameters/Transition/current")
 	if transition != t:
 		$AnimationTree.set("parameters/Transition/current", t)
-		get_anim_player().play(get_anim_name_by_transition(t, is_crouching))
 
 func set_transition_lips(t):
 	var transition = $AnimationTree.get("parameters/Transition_Lips/current")
 	if transition != t:
 		$AnimationTree.set("parameters/Transition_Lips/current", t)
-		get_anim_player().play(get_anim_name_by_transition_lips(t))
-
-func get_anim_player():
-	return $AnimationTree.get_node($AnimationTree.get_animation_player())
-
-func get_anim_name_by_transition(t, is_crouching):
-	match t:
-		TRANSITION_LOOK:
-			return look_squat_anim_name if is_crouching else look_anim_name
-		TRANSITION_WALK:
-			return walk_anim_name
-		TRANSITION_RUN:
-			return run_anim_name
-		TRANSITION_CROUCH:
-			return crouch_anim_name
-		_:
-			return look_anim_name
-
-func get_anim_name_by_transition_lips(t):
-	match t:
-		0:
-			return b0_anim_name
-		1:
-			return b1_anim_name
-		2:
-			return b2_anim_name
-		3:
-			return b3_anim_name
-		4:
-			return b4_anim_name
-		5:
-			return b5_anim_name
-		6:
-			return b6_anim_name
-		7:
-			return b7_anim_name
-		8:
-			return b8_anim_name
-		9:
-			return b9_anim_name
-		10:
-			return b10_anim_name
-		11:
-			return b11_anim_name
-		12:
-			return b12_anim_name
-		13:
-			return b13_anim_name
-		14:
-			return b14_anim_name
-		15:
-			return b15_anim_name
-		16:
-			return b16_anim_name
-		17:
-			return b17_anim_name
-		_:
-			return b0_anim_name
 
 func get_lips_transition_by_phoneme(phoneme):
 	var p = phoneme.to_upper()
@@ -255,18 +167,16 @@ func get_lips_transition_by_phoneme(phoneme):
 		_:
 			return -1
 
-func look(look_angle_deg, is_crouching):
-	if not simple_mode:
-		rotate_head(look_angle_deg)
-	set_transition(TRANSITION_LOOK, is_crouching)
+func look(look_angle_deg):
+	rotate_head(look_angle_deg)
+	set_transition(TRANSITION_LOOK)
 	var is_rest_active = $AnimationTree.get("parameters/LookShot/active")
 	if not is_rest_active and $RestTimer.is_stopped():
 		$RestTimer.start(REST_POSE_CHANGE_TIME_S)
 
 func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
-	if not simple_mode:
-		rotate_head(look_angle_deg)
-	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK), is_crouching)
+	rotate_head(look_angle_deg)
+	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK))
 	$RestTimer.stop()
 
 func speak(states):

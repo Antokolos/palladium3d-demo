@@ -181,7 +181,7 @@ func follow(current_transform, next_position):
 			if collision.collider_id == target_node.get_instance_id():
 				companion_state = COMPANION_STATE.REST
 				emit_signal("arrived_to_boundary", self, target_node)
-				model.look(rotation_angle_to_target_deg, is_crouching)
+				model.look(rotation_angle_to_target_deg)
 				dir = Vector3()
 				return
 		companion_state = COMPANION_STATE.WALK
@@ -190,7 +190,7 @@ func follow(current_transform, next_position):
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	else:
-		model.look(rotation_angle_to_target_deg, is_crouching)
+		model.look(rotation_angle_to_target_deg)
 		dir = Vector3()
 		if in_party:
 			companion_state = COMPANION_STATE.REST
@@ -411,9 +411,9 @@ func become_player():
 	player_camera_container.remove_child(camera)
 	camera_container.add_child(camera)
 	var player_model = player.get_model()
-	player_model.set_simple_mode(false, player.is_crouching)
+	player_model.set_simple_mode(false)
 	var model = get_model()
-	model.set_simple_mode(true, is_crouching)
+	model.set_simple_mode(true)
 	player.reset_rotation()
 	game_params.set_player_name_hint(name_hint)
 	camera.rebuild_exceptions(self)
@@ -448,7 +448,7 @@ func _ready():
 	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
-	model.set_simple_mode(initial_player, is_crouching)
+	model.set_simple_mode(initial_player)
 	model_container.add_child(model)
 	game_params.register_player(self)
 
@@ -459,10 +459,10 @@ func join_party():
 	game_params.join_party(name_hint)
 
 func set_simple_mode(enable):
-	get_model().set_simple_mode(enable, is_crouching)
+	get_model().set_simple_mode(enable)
 
 func rest():
-	get_model().look(0, is_crouching)
+	get_model().look(0)
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
@@ -518,7 +518,7 @@ func _physics_process(delta):
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 			if angle_rad_y == 0:
 				companion_state = COMPANION_STATE.REST
-				get_model().look(rotation_angle_to_target_deg, is_crouching)
+				get_model().look(rotation_angle_to_target_deg)
 			else:
 				companion_state = COMPANION_STATE.WALK
 				get_model().walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
