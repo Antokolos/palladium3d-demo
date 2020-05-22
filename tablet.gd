@@ -215,7 +215,7 @@ func refresh_slot_captions(is_load, base_node):
 	var starting_slot = 0 if is_load else 1
 	for i in range(starting_slot, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
-		var caption = StoryNode.GetSlotCaption(i)
+		var caption = story_node.get_slot_caption(i)
 		var exists = game_params.save_slot_exists(i)
 		node.set_disabled(is_load and not exists)
 		if i > 0:

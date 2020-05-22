@@ -94,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player.gd"
 }, {
+"base": "Node",
+"class": "PalladiumStory",
+"language": "GDScript",
+"path": "res://palladium_story.gd"
+}, {
 "base": "StaticBody",
 "class": "Pedestal",
 "language": "GDScript",
@@ -108,6 +113,11 @@ _global_script_classes=[ {
 "class": "ShaderCache",
 "language": "GDScript",
 "path": "res://shader_cache.gd"
+}, {
+"base": "Node",
+"class": "StoryNode",
+"language": "GDScript",
+"path": "res://story_node.gd"
 }, {
 "base": "Control",
 "class": "Tablet",
@@ -142,9 +152,11 @@ _global_script_class_icons={
 "PalladiumHUD": "",
 "PalladiumLevel": "",
 "PalladiumPlayer": "",
+"PalladiumStory": "",
 "Pedestal": "",
 "RoomEnabler": "",
 "ShaderCache": "",
+"StoryNode": "",
 "Tablet": "",
 "Takable": "",
 "ViewportHacks": ""
@@ -171,7 +183,7 @@ game_params="*res://game_params.tscn"
 lipsync_manager="*res://lipsync_manager.tscn"
 cutscene_manager="*res://cutscene_manager.tscn"
 conversation_manager="*res://conversation_manager.tscn"
-StoryNode="*res://StoryNode.cs"
+story_node="*res://story_node.tscn"
 
 [debug]
 
@@ -183,6 +195,10 @@ window/size/width=1920
 window/size/height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "inkgd" )
 
 [importer_defaults]
 

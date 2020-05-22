@@ -92,11 +92,11 @@ func text_to_phonetic(text):
 func _on_AudioStreamPlayer_finished():
 	stop_sound_and_lipsync()
 	var player = game_params.get_player()
-	if StoryNode.CanChoose():
-		var ch = StoryNode.GetChoices(TranslationServer.get_locale())
+	if story_node.can_choose():
+		var ch = story_node.get_choices(TranslationServer.get_locale())
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
-	elif StoryNode.CanContinue():
+	elif story_node.can_continue():
 		conversation_manager.story_proceed(player)
 	else:
 		conversation_manager.stop_conversation(player)

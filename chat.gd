@@ -7,46 +7,46 @@ var in_choice = false
 var max_choice = 0
 
 func _ready():
-	StoryNode.LoadStory("res://ink-scripts", "Chat.ink.json", true)
-	StoryNode.InitVariables(game_params, game_params.story_vars, game_params.party)
+	story_node.load_story("res://ink-scripts", "Chat.ink.json", true)
+	story_node.init_variables()
 
 func load_chat():
-	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
-	if StoryNode.ChatDriven() and StoryNode.CanChoose():
+	chat_window.bbcode_text = story_node.current_log(TranslationServer.get_locale())
+	if story_node.chat_driven() and story_node.can_choose():
 		display_choices()
 
 func _input(event):
 	if self.is_visible_in_tree():
-		if not StoryNode.ChatDriven():
+		if not story_node.chat_driven():
 			return
 		
-		if StoryNode.CanContinue() and event.is_action_pressed("dialogue_next"):
+		if story_node.can_continue() and event.is_action_pressed("dialogue_next"):
 			story_proceed(false)
-			if StoryNode.CanChoose():
+			if story_node.can_choose():
 				display_choices()
-		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_1"):
+		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_1"):
 			story_choose(0)
-		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_2"):
+		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_2"):
 			story_choose(1)
-		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_3"):
+		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_3"):
 			story_choose(2)
-		elif StoryNode.CanChoose() and event.is_action_pressed("dialogue_option_4"):
+		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_4"):
 			story_choose(3)
 
 func story_proceed(choice_response):
-	StoryNode.Continue(choice_response)
-	chat_window.bbcode_text = StoryNode.CurrentLog(TranslationServer.get_locale())
-	info_label.text = "...typing..." if StoryNode.CanContinue() else ""
+	story_node.continue(choice_response)
+	chat_window.bbcode_text = story_node.current_log(TranslationServer.get_locale())
+	info_label.text = "...typing..." if story_node.can_continue() else ""
 	in_choice = false
 
 func story_choose(idx):
 	if idx < max_choice:
-		StoryNode.Choose(idx)
+		story_node.choose(idx)
 		story_proceed(true)
 
 func display_choices():
 	in_choice = true
-	var ch = StoryNode.GetChoices(TranslationServer.get_locale())
+	var ch = story_node.get_choices(TranslationServer.get_locale())
 	var i = 1
 	info_label.text = ""
 	for c in ch:

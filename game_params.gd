@@ -501,7 +501,7 @@ func save_slot_exists(slot):
 
 func load_params(slot):
 	var hud = get_hud()
-	StoryNode.ReloadAllSaves(slot)
+	story_node.reload_all_saves(slot)
 	
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
@@ -575,7 +575,7 @@ func save_params(slot):
 	var error = f.open("user://saves/slot_%d/params.json" % slot, File.WRITE)
 	assert( not error )
 	
-	StoryNode.SaveAll(slot)
+	story_node.save_all(slot)
 	
 	var characters = {}
 	for name_hint in party.keys():

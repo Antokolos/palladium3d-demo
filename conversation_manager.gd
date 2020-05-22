@@ -97,7 +97,6 @@ func conversation_is_not_finished(conversation_name, target_name_hint = null):
 	return check_story_not_finished(conversation_name, target_name_hint)
 
 func check_story_not_finished(conversation_name, target_name_hint = null):
-	var story = StoryNode
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var cp_story
 	if story_state_cache.has(cp):
@@ -108,17 +107,16 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
 		cp_story = cp if exists_cp else "Default.ink.json"
 		story_state_cache[cp] = cp_story
-	return story.CheckStoryNotFinished("res://ink-scripts", cp_story)
+	return story_node.check_story_not_finished("res://ink-scripts", cp_story)
 
 func init_story(conversation_name, target_name_hint = null):
 	var locale = TranslationServer.get_locale()
-	var story = StoryNode
 	var f = File.new()
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
-	story.LoadStory("res://ink-scripts", cp if exists_cp else "Default.ink.json", false)
-	story.InitVariables(game_params, game_params.story_vars, game_params.party)
-	return story
+	story_node.load_story("res://ink-scripts", cp if exists_cp else "Default.ink.json", false)
+	story_node.init_variables()
+	return story_node
 
 func conversation_active():
 	return conversation_name and conversation_name.length() > 0
@@ -155,18 +153,18 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	conversation.visible = true
 	max_choice = 0
 	var story = init_story(conversation_name, target.name_hint if target else null)
-	clear_actors_and_texts(player, story, conversation)
+	clear_actors_and_texts(player, conversation)
 	story_proceed(player)
 
-func clear_actors_and_texts(player, story, conversation):
+func clear_actors_and_texts(player, conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_text_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ConversationText")
 	conversation_text_prev.text = ""
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	var conversation_actor_prev = conversation.get_node("VBox/VBoxText/HBoxTextPrev/ActorName")
 	conversation_actor_prev.text = ""
-	var tags = story.GetCurrentTags(TranslationServer.get_locale())
-	var cur_text = story.CurrentText(TranslationServer.get_locale())
+	var tags = story_node.get_current_tags_for_locale(TranslationServer.get_locale())
+	var cur_text = story_node.current_text(TranslationServer.get_locale())
 	if tags.has("finalizer") or cur_text.empty():
 		conversation_text.text = ""
 		conversation_actor.text = ""
@@ -193,17 +191,16 @@ func story_choose(player, idx):
 	var conversation = game_params.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-	var story = StoryNode
-	if is_finalizing or (not story.CanChoose() and not story.CanContinue() and idx == 0):
+	if is_finalizing or (not story_node.can_choose() and not story_node.can_continue() and idx == 0):
 		stop_conversation(player)
-	elif story.CanChoose() and max_choice > 0 and idx < max_choice:
+	elif story_node.can_choose() and max_choice > 0 and idx < max_choice:
 		move_current_text_to_prev(conversation)
-		clear_choices(story, conversation)
-		story.Choose(idx)
-		if story.CanContinue():
-			var texts = story.Continue(true)
+		clear_choices(conversation)
+		story_node.choose(idx)
+		if story_node.can_continue():
+			var texts = story_node.continue(true)
 			conversation_text.text = texts[TranslationServer.get_locale()].strip_edges()
-			var tags_dict = story.GetCurrentTags()
+			var tags_dict = story_node.get_current_tags()
 			var tags = tags_dict[TranslationServer.get_locale()]
 			is_finalizing = tags and tags.has("finalizer")
 			if is_finalizing:
@@ -220,7 +217,7 @@ func story_choose(player, idx):
 		conversation.visible = settings.need_subtitles() or not has_sound
 		if not has_sound:
 			story_proceed(player)
-	elif story.CanContinue():
+	elif story_node.can_continue():
 		story_proceed(player)
 
 func proceed_story_immediately(player):
@@ -230,15 +227,14 @@ func proceed_story_immediately(player):
 
 func story_proceed(player):
 	var conversation = game_params.get_hud().conversation
-	var story = StoryNode
 	var has_voiceover = false
-	if story.CanContinue():
+	if story_node.can_continue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 		move_current_text_to_prev(conversation)
-		var texts = story.Continue(false)
+		var texts = story_node.continue(false)
 		conversation_text.text = texts[TranslationServer.get_locale()].strip_edges()
 		var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-		var tags_dict = story.GetCurrentTags()
+		var tags_dict = story_node.get_current_tags()
 		var tags = tags_dict[TranslationServer.get_locale()]
 		is_finalizing = tags and tags.has("finalizer")
 		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
@@ -254,23 +250,23 @@ func story_proceed(player):
 			character.set_speak_mode(true)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
-	var can_continue = not is_finalizing and story.CanContinue()
-	var can_choose = not is_finalizing and story.CanChoose()
-	var choices = story.GetChoices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
+	var can_continue = not is_finalizing and story_node.can_continue()
+	var can_choose = not is_finalizing and story_node.can_choose()
+	var choices = story_node.get_choices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
 	if not can_continue and not can_choose and not has_voiceover:
 		$AutocloseTimer.start()
 	conversation.visible = settings.need_subtitles() or can_choose or not has_voiceover
-	display_choices(story, conversation, choices)
+	display_choices(conversation, choices)
 
-func clear_choices(story, conversation):
-	var ch = story.GetChoices(TranslationServer.get_locale())
+func clear_choices(conversation):
+	var ch = story_node.get_choices(TranslationServer.get_locale())
 	var choices = conversation.get_node("VBox/VBoxChoices").get_children()
 	var i = 1
 	for c in choices:
 		c.text = ""
 		i += 1
 
-func display_choices(story, conversation, choices):
+func display_choices(conversation, choices):
 	var choice_nodes = conversation.get_node("VBox/VBoxChoices").get_children()
 	var i = 1
 	for c in choice_nodes:
