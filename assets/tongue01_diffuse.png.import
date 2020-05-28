@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.s3tc.stex"
-path.etc2="res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.etc2.stex"
-path.etc="res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/tongue01_diffuse.png"
-dest_files=[ "res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.s3tc.stex", "res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.etc2.stex", "res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.etc.stex" ]
+dest_files=[ "res://.import/tongue01_diffuse.png-46a00c53cda722e6273c547ac33e57de.s3tc.stex" ]
 
 [params]
 

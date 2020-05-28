@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.s3tc.stex"
-path.etc2="res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.etc2.stex"
-path.etc="res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/column_2_norm.png"
-dest_files=[ "res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.s3tc.stex", "res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.etc2.stex", "res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.etc.stex" ]
+dest_files=[ "res://.import/column_2_norm.png-2fa4e3aaca9769079851cb520bad9fc8.s3tc.stex" ]
 
 [params]
 

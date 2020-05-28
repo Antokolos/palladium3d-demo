@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.s3tc.stex"
-path.etc2="res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.etc2.stex"
-path.etc="res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/weapon_bundle_ao.png"
-dest_files=[ "res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.s3tc.stex", "res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.etc2.stex", "res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.etc.stex" ]
+dest_files=[ "res://.import/weapon_bundle_ao.png-18ae3995b1e38e7b2cf9e70207db3fad.s3tc.stex" ]
 
 [params]
 

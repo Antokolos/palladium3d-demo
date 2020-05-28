@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.s3tc.stex"
-path.etc2="res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.etc2.stex"
-path.etc="res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/weapond_bundle_norm.png"
-dest_files=[ "res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.s3tc.stex", "res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.etc2.stex", "res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.etc.stex" ]
+dest_files=[ "res://.import/weapond_bundle_norm.png-bf4d7fe4b63a51d1a0d64a0b97a7b7fb.s3tc.stex" ]
 
 [params]
 

@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.s3tc.stex"
-path.etc2="res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.etc2.stex"
-path.etc="res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Hermes_mosaic_diffuseOriginal.jpg"
-dest_files=[ "res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.s3tc.stex", "res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.etc2.stex", "res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.etc.stex" ]
+dest_files=[ "res://.import/Hermes_mosaic_diffuseOriginal.jpg-c01034aa523d5f346f7dbb4636bfccec.s3tc.stex" ]
 
 [params]
 

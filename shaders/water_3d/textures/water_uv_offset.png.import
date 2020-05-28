@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.s3tc.stex"
-path.etc2="res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.etc2.stex"
-path.etc="res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://shaders/water_3d/textures/water_uv_offset.png"
-dest_files=[ "res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.s3tc.stex", "res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.etc2.stex", "res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.etc.stex" ]
+dest_files=[ "res://.import/water_uv_offset.png-b30639fd1b1bfb9f39d0c00e524c08bf.s3tc.stex" ]
 
 [params]
 

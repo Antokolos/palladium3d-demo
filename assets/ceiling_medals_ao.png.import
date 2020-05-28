@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.s3tc.stex"
-path.etc2="res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.etc2.stex"
-path.etc="res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ceiling_medals_ao.png"
-dest_files=[ "res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.s3tc.stex", "res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.etc2.stex", "res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.etc.stex" ]
+dest_files=[ "res://.import/ceiling_medals_ao.png-eb047019d030cffa56c242195ac21521.s3tc.stex" ]
 
 [params]
 

@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.s3tc.stex"
-path.etc2="res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.etc2.stex"
-path.etc="res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/greek_armor_bundle.png"
-dest_files=[ "res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.s3tc.stex", "res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.etc2.stex", "res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.etc.stex" ]
+dest_files=[ "res://.import/greek_armor_bundle.png-c9462e7eddf0dff8fa299d43bb038113.s3tc.stex" ]
 
 [params]
 

@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.s3tc.stex"
-path.etc2="res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.etc2.stex"
-path.etc="res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/spark.png"
-dest_files=[ "res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.s3tc.stex", "res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.etc2.stex", "res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.etc.stex" ]
+dest_files=[ "res://.import/spark.png-9e72e59a074ba69d56ac05a618c55831.s3tc.stex" ]
 
 [params]
 

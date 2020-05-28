@@ -1489,7 +1489,7 @@ common/physics_jitter_fix=0.25
 [rendering]
 
 quality/filters/anisotropic_filter_level=2
-vram_compression/import_etc=true
+vram_compression/import_etc2=false
 quality/reflections/texture_array_reflections=false
 quality/reflections/high_quality_ggx=false
 quality/shading/force_lambert_over_burley=true

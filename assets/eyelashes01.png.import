@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.s3tc.stex"
-path.etc2="res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.etc2.stex"
-path.etc="res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/eyelashes01.png"
-dest_files=[ "res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.s3tc.stex", "res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.etc2.stex", "res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.etc.stex" ]
+dest_files=[ "res://.import/eyelashes01.png-716080576973ad9060865821d5ec7e29.s3tc.stex" ]
 
 [params]
 

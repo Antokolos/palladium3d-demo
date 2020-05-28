@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.s3tc.stex"
-path.etc2="res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.etc2.stex"
-path.etc="res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/bark_apple_NRM.jpg"
-dest_files=[ "res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.s3tc.stex", "res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.etc2.stex", "res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.etc.stex" ]
+dest_files=[ "res://.import/bark_apple_NRM.jpg-bfe02c2ba95a2e0e112c10917cd5d008.s3tc.stex" ]
 
 [params]
 

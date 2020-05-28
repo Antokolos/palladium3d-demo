@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.s3tc.stex"
-path.etc2="res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.etc2.stex"
-path.etc="res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/TexturesCom_DesertSand1_3x3_1K_albedo.png"
-dest_files=[ "res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.s3tc.stex", "res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.etc2.stex", "res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.etc.stex" ]
+dest_files=[ "res://.import/TexturesCom_DesertSand1_3x3_1K_albedo.png-0642e19d0a30827c7d83201ecb5d5cff.s3tc.stex" ]
 
 [params]
 

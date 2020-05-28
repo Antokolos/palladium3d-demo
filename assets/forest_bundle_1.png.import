@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.s3tc.stex"
-path.etc2="res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.etc2.stex"
-path.etc="res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/forest_bundle_1.png"
-dest_files=[ "res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.s3tc.stex", "res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.etc2.stex", "res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.etc.stex" ]
+dest_files=[ "res://.import/forest_bundle_1.png-628c9d385bb65ac86609bb2e437b488c.s3tc.stex" ]
 
 [params]
 

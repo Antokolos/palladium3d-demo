@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.s3tc.stex"
-path.etc2="res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.etc2.stex"
-path.etc="res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/bush_leaf_2_2.png"
-dest_files=[ "res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.s3tc.stex", "res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.etc2.stex", "res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.etc.stex" ]
+dest_files=[ "res://.import/bush_leaf_2_2.png-b083916e2b49e992b74fc9330d5ef0b9.s3tc.stex" ]
 
 [params]
 

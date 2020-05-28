@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.s3tc.stex"
-path.etc2="res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.etc2.stex"
-path.etc="res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/stone_bed_norm_3.5k.png"
-dest_files=[ "res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.s3tc.stex", "res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.etc2.stex", "res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.etc.stex" ]
+dest_files=[ "res://.import/stone_bed_norm_3.5k.png-1aa53a46b36137bfc61eba85fcbc689c.s3tc.stex" ]
 
 [params]
 

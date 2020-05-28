@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.s3tc.stex"
-path.etc2="res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.etc2.stex"
-path.etc="res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/oak_branch_tr.png"
-dest_files=[ "res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.s3tc.stex", "res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.etc2.stex", "res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.etc.stex" ]
+dest_files=[ "res://.import/oak_branch_tr.png-9c7088f507833f75eac7695e22ef56e8.s3tc.stex" ]
 
 [params]
 

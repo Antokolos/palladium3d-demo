@@ -3,17 +3,15 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.s3tc.stex"
-path.etc2="res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.etc2.stex"
-path.etc="res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2", "etc" ],
+"imported_formats": [ "s3tc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/statue_ao.png"
-dest_files=[ "res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.s3tc.stex", "res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.etc2.stex", "res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.etc.stex" ]
+dest_files=[ "res://.import/statue_ao.png-e03e82c55653a95b8325368cfc0aa423.s3tc.stex" ]
 
 [params]
 
