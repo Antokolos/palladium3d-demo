@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/male.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/character.gd" type="Script" id=2]
@@ -51,18 +51,14 @@ input_3/name = "squatting"
 input_3/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=10]
-input_count = 2
+input_count = 1
 input_0/name = "state 0"
 input_0/auto_advance = false
-input_1/name = "state 1"
-input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=11]
-input_count = 2
+input_count = 1
 input_0/name = "state 0"
 input_0/auto_advance = false
-input_1/name = "state 1"
-input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=12]
 input_count = 4
@@ -116,14 +112,8 @@ input_16/auto_advance = false
 input_17/name = "b17"
 input_17/auto_advance = false
 
-[sub_resource type="AnimationNodeAnimation" id=14]
-animation = "male_rest"
-
 [sub_resource type="AnimationNodeAnimation" id=15]
 animation = "male_looks_up"
-
-[sub_resource type="AnimationNodeAnimation" id=16]
-animation = "male_rest"
 
 [sub_resource type="AnimationNodeAnimation" id=17]
 animation = "male_looks_up"
@@ -213,7 +203,7 @@ animation = "male_walks"
 animation = "male_crouches_squatted"
 
 [sub_resource type="AnimationNodeBlendTree" id=46]
-graph_offset = Vector2( 0, -172.033 )
+graph_offset = Vector2( 950.433, 23.4604 )
 nodes/Animation/node = SubResource( 1 )
 nodes/Animation/position = Vector2( 200, -140 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -221,80 +211,76 @@ nodes/Blend2_Aux/position = Vector2( 780, -60 )
 nodes/Blend2_Head/node = SubResource( 3 )
 nodes/Blend2_Head/position = Vector2( 1080, -20 )
 nodes/Blend2_Lips/node = SubResource( 4 )
-nodes/Blend2_Lips/position = Vector2( 1680, 620 )
+nodes/Blend2_Lips/position = Vector2( 3080, 220 )
 nodes/CutsceneShot/node = SubResource( 5 )
-nodes/CutsceneShot/position = Vector2( 1380, 280 )
+nodes/CutsceneShot/position = Vector2( 2840, 100 )
 nodes/CutsceneTransition/node = SubResource( 6 )
-nodes/CutsceneTransition/position = Vector2( 1100, 340 )
+nodes/CutsceneTransition/position = Vector2( 2560, 160 )
 nodes/LookShot/node = SubResource( 7 )
-nodes/LookShot/position = Vector2( -320, -660 )
+nodes/LookShot/position = Vector2( 1980, 20 )
 nodes/LookStateTransition/node = SubResource( 8 )
-nodes/LookStateTransition/position = Vector2( -580, -620 )
+nodes/LookStateTransition/position = Vector2( 1620, 440 )
 nodes/LookTransition/node = SubResource( 9 )
 nodes/LookTransition/position = Vector2( 180, -540 )
 nodes/RestTransition/node = SubResource( 10 )
-nodes/RestTransition/position = Vector2( -880, -760 )
+nodes/RestTransition/position = Vector2( 1320, 300 )
 nodes/SpeakTransition/node = SubResource( 11 )
-nodes/SpeakTransition/position = Vector2( -860, -520 )
+nodes/SpeakTransition/position = Vector2( 1340, 540 )
 nodes/Transition/node = SubResource( 12 )
 nodes/Transition/position = Vector2( 500, -240 )
 nodes/Transition_Lips/node = SubResource( 13 )
-nodes/Transition_Lips/position = Vector2( 640, 1040 )
-nodes/alt_rest1/node = SubResource( 14 )
-nodes/alt_rest1/position = Vector2( -1220, -800 )
-nodes/alt_rest2/node = SubResource( 15 )
-nodes/alt_rest2/position = Vector2( -1160, -680 )
-nodes/alt_speak1/node = SubResource( 16 )
-nodes/alt_speak1/position = Vector2( -1220, -440 )
-nodes/alt_speak2/node = SubResource( 17 )
-nodes/alt_speak2/position = Vector2( -1220, -320 )
+nodes/Transition_Lips/position = Vector2( 3180, 960 )
+nodes/alt_rest1/node = SubResource( 15 )
+nodes/alt_rest1/position = Vector2( 1080, 300 )
+nodes/alt_speak1/node = SubResource( 17 )
+nodes/alt_speak1/position = Vector2( 1040, 560 )
 nodes/b0/node = SubResource( 18 )
-nodes/b0/position = Vector2( 300, 420 )
+nodes/b0/position = Vector2( 2840, 340 )
 nodes/b1/node = SubResource( 19 )
-nodes/b1/position = Vector2( 300, 540 )
+nodes/b1/position = Vector2( 2840, 460 )
 nodes/b10/node = SubResource( 20 )
-nodes/b10/position = Vector2( 300, 1620 )
+nodes/b10/position = Vector2( 2840, 1540 )
 nodes/b11/node = SubResource( 21 )
-nodes/b11/position = Vector2( 300, 1740 )
+nodes/b11/position = Vector2( 2840, 1660 )
 nodes/b12/node = SubResource( 22 )
-nodes/b12/position = Vector2( 300, 1860 )
+nodes/b12/position = Vector2( 2840, 1780 )
 nodes/b13/node = SubResource( 23 )
-nodes/b13/position = Vector2( 300, 1980 )
+nodes/b13/position = Vector2( 2840, 1900 )
 nodes/b14/node = SubResource( 24 )
-nodes/b14/position = Vector2( 300, 2100 )
+nodes/b14/position = Vector2( 2840, 2020 )
 nodes/b15/node = SubResource( 25 )
-nodes/b15/position = Vector2( 300, 2220 )
+nodes/b15/position = Vector2( 2840, 2140 )
 nodes/b16/node = SubResource( 26 )
-nodes/b16/position = Vector2( 300, 2340 )
+nodes/b16/position = Vector2( 2840, 2260 )
 nodes/b17/node = SubResource( 27 )
-nodes/b17/position = Vector2( 300, 2460 )
+nodes/b17/position = Vector2( 2840, 2380 )
 nodes/b2/node = SubResource( 28 )
-nodes/b2/position = Vector2( 300, 660 )
+nodes/b2/position = Vector2( 2840, 580 )
 nodes/b3/node = SubResource( 29 )
-nodes/b3/position = Vector2( 300, 780 )
+nodes/b3/position = Vector2( 2840, 700 )
 nodes/b4/node = SubResource( 30 )
-nodes/b4/position = Vector2( 300, 900 )
+nodes/b4/position = Vector2( 2840, 820 )
 nodes/b5/node = SubResource( 31 )
-nodes/b5/position = Vector2( 300, 1020 )
+nodes/b5/position = Vector2( 2840, 940 )
 nodes/b6/node = SubResource( 32 )
-nodes/b6/position = Vector2( 300, 1140 )
+nodes/b6/position = Vector2( 2840, 1060 )
 nodes/b7/node = SubResource( 33 )
-nodes/b7/position = Vector2( 300, 1260 )
+nodes/b7/position = Vector2( 2840, 1180 )
 nodes/b8/node = SubResource( 34 )
-nodes/b8/position = Vector2( 300, 1380 )
+nodes/b8/position = Vector2( 2840, 1300 )
 nodes/b9/node = SubResource( 35 )
-nodes/b9/position = Vector2( 300, 1500 )
+nodes/b9/position = Vector2( 2840, 1420 )
 nodes/empty/node = SubResource( 36 )
-nodes/empty/position = Vector2( 780, 340 )
+nodes/empty/position = Vector2( 2240, 160 )
 nodes/headturn_left/node = SubResource( 37 )
 nodes/headturn_left/position = Vector2( 260, 280 )
 nodes/headturn_right/node = SubResource( 38 )
 nodes/headturn_right/position = Vector2( 260, 140 )
 nodes/look/node = SubResource( 39 )
-nodes/look/position = Vector2( -560, -820 )
-nodes/output/position = Vector2( 1880, 620 )
+nodes/look/position = Vector2( -160, -640 )
+nodes/output/position = Vector2( 3280, 220 )
 nodes/player_pushes_chest/node = SubResource( 40 )
-nodes/player_pushes_chest/position = Vector2( 780, 460 )
+nodes/player_pushes_chest/position = Vector2( 2240, 280 )
 nodes/sit_down/node = SubResource( 41 )
 nodes/sit_down/position = Vector2( -200, -460 )
 nodes/squat_rest/node = SubResource( 42 )
@@ -305,14 +291,19 @@ nodes/walk/node = SubResource( 44 )
 nodes/walk/position = Vector2( 200, -260 )
 nodes/walk_squat/node = SubResource( 45 )
 nodes/walk_squat/position = Vector2( 100, -20 )
-node_connections = [ "output", 0, "Blend2_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "LookShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "LookShot", 0, "look", "LookShot", 1, "LookStateTransition", "CutsceneShot", 0, "Blend2_Head", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition" ]
+node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "LookStateTransition", 0, "RestTransition", "LookStateTransition", 1, "SpeakTransition", "RestTransition", 0, "alt_rest1", "LookTransition", 0, "stand_up", "LookTransition", 1, "look", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "SpeakTransition", 0, "alt_speak1", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "CutsceneShot", 0, "LookShot", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookShot", 0, "Blend2_Head", "LookShot", 1, "LookStateTransition" ]
 
-[node name="male" instance=ExtResource( 1 )]
+[node name="male" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 main_skeleton = "Male_palladium"
+rest_shots_max = 1
+speak_shots_max = 0
+
+[node name="Male_palladium" parent="." index="0"]
+bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
 
 [node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
-transform = Transform( 1, -0.000732915, 0.00025017, -4.55044e-006, -0.328398, -0.94454, 0.000774466, 0.944539, -0.328397, 0.0402226, 15.161, -0.445857 )
+transform = Transform( 1, -7.4368e-005, 2.37823e-005, 7.84174e-007, -0.293147, -0.956068, 7.81198e-005, 0.956068, -0.293146, 0.0400252, 15.1736, -0.527002 )
 
 [node name="Male_palladium:Body" parent="Male_palladium" index="2"]
 layers = 3

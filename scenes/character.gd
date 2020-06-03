@@ -70,11 +70,12 @@ func set_simple_mode(sm):
 		look(0)
 
 func do_rest_shot(shot_idx):
-	var look_state = $AnimationTree.get("parameters/LookStateTransition/current")
-	var is_active = $AnimationTree.get("parameters/LookShot/active")
-	if not is_active and look_state == 0:
+	if not is_rest_active() and not is_in_speak_mode() and not is_sitting():
 		$AnimationTree.set("parameters/RestTransition/current", shot_idx)
 		$AnimationTree.set("parameters/LookShot/active", true)
+
+func is_rest_active():
+	return $AnimationTree.get("parameters/LookShot/active")
 
 func is_in_speak_mode():
 	return $AnimationTree.get("parameters/LookStateTransition/current") == 1
@@ -83,9 +84,7 @@ func set_speak_mode(enable):
 	$AnimationTree.set("parameters/LookStateTransition/current", 1 if enable else 0)
 
 func do_speak_shot(shot_idx):
-	var look_state = $AnimationTree.get("parameters/LookStateTransition/current")
-	var is_active = $AnimationTree.get("parameters/LookShot/active")
-	if not is_active and look_state == 1:
+	if not is_rest_active() and is_in_speak_mode():
 		$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
 		$AnimationTree.set("parameters/LookShot/active", true)
 
@@ -101,12 +100,18 @@ func is_cutscene():
 	var cutscene_empty = $AnimationTree.get("parameters/CutsceneTransition/current") == CUTSCENE_EMPTY
 	return not cutscene_empty and $AnimationTree.get("parameters/CutsceneShot/active")
 
+func is_standing():
+	return $AnimationTree.get("parameters/LookTransition/current") == LOOK_TRANSITION_STANDING
+
+func is_sitting():
+	return $AnimationTree.get("parameters/LookTransition/current") == LOOK_TRANSITION_SQUATTING
+
 func stand_up():
-	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_STANDING:
+	if not is_standing():
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
 
 func sit_down():
-	if $AnimationTree.get("parameters/LookTransition/current") != LOOK_TRANSITION_SQUATTING:
+	if not is_sitting():
 		$AnimationTree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
 
 func normalize_angle(look_angle_deg):
@@ -170,8 +175,7 @@ func get_lips_transition_by_phoneme(phoneme):
 func look(look_angle_deg):
 	rotate_head(look_angle_deg)
 	set_transition(TRANSITION_LOOK)
-	var is_rest_active = $AnimationTree.get("parameters/LookShot/active")
-	if not is_rest_active and $RestTimer.is_stopped():
+	if not is_rest_active() and not is_in_speak_mode() and $RestTimer.is_stopped():
 		$RestTimer.start(REST_POSE_CHANGE_TIME_S)
 
 func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
@@ -183,7 +187,7 @@ func speak(states):
 	speech_states = states
 	speech_idx = 0
 	set_transition_lips(0)
-	if speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD:
+	if speak_shots_max > 0 and speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD:
 		do_speak_shot(get_shot_idx(speak_shots_max))
 	speech_timer.start()
 
