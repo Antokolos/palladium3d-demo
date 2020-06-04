@@ -199,12 +199,6 @@ func follow(current_transform, next_position):
 				companion_state = COMPANION_STATE.REST
 				emit_signal("arrived_to", self, target_node)
 
-func is_in_speak_mode():
-	return get_model().is_in_speak_mode()
-
-func set_speak_mode(enable):
-	get_model().set_speak_mode(enable)
-
 func sit_down():
 	if $AnimationPlayer.is_playing():
 		return
@@ -306,7 +300,7 @@ func get_cam():
 	return cutscene_cam if cutscene_cam else get_cam_holder().get_node("camera")
 
 func use(player_node):
-	if not conversation_manager.conversation_active():
+	if not conversation_manager.conversation_is_in_progress():
 		game_params.handle_conversation(player_node, self, player_node)
 
 func get_model_holder():

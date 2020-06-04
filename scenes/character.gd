@@ -72,21 +72,24 @@ func set_simple_mode(sm):
 func do_rest_shot(shot_idx):
 	if not is_rest_active() and not is_in_speak_mode() and not is_sitting():
 		$AnimationTree.set("parameters/RestTransition/current", shot_idx)
-		$AnimationTree.set("parameters/LookShot/active", true)
+		$AnimationTree.set("parameters/RestShot/active", true)
+
+func stop_rest_shot():
+	$AnimationTree.set("parameters/RestShot/active", false)
 
 func is_rest_active():
-	return $AnimationTree.get("parameters/LookShot/active")
+	return $AnimationTree.get("parameters/RestShot/active")
 
 func is_in_speak_mode():
-	return $AnimationTree.get("parameters/LookStateTransition/current") == 1
-
-func set_speak_mode(enable):
-	$AnimationTree.set("parameters/LookStateTransition/current", 1 if enable else 0)
+	return conversation_manager.conversation_is_in_progress()
 
 func do_speak_shot(shot_idx):
 	if not is_rest_active() and is_in_speak_mode():
 		$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
-		$AnimationTree.set("parameters/LookShot/active", true)
+		$AnimationTree.set("parameters/SpeakShot/active", true)
+
+func stop_speak_shot():
+	$AnimationTree.set("parameters/SpeakShot/active", false)
 
 func play_cutscene(cutscene_id):
 	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
@@ -182,6 +185,8 @@ func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	rotate_head(look_angle_deg)
 	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK))
 	$RestTimer.stop()
+	stop_speak_shot()
+	stop_rest_shot()
 
 func speak(states):
 	speech_states = states

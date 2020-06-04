@@ -49,8 +49,6 @@ func stop_conversation(player):
 	lipsync_manager.stop_sound_and_lipsync()
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
-	for companion in game_params.get_companions():
-		companion.set_speak_mode(false)
 	var conversation_name_prev = conversation_name
 	var target_prev = target
 	var initiator_prev = initiator
@@ -69,7 +67,7 @@ func stop_conversation(player):
 func conversation_is_in_progress(conversation_name = null, target_name_hint = null):
 	if not conversation_name:
 		# Will return true if ANY conversation is in progress
-		return self.conversation_name != null
+		return self.conversation_name != null and self.conversation_name.length() > 0
 	if not target_name_hint or not target:
 		return self.conversation_name == conversation_name
 	return self.conversation_name == conversation_name and self.target.name_hint == target_name_hint
@@ -117,9 +115,6 @@ func init_story(conversation_name, target_name_hint = null):
 	story_node.load_story("res://ink-scripts", cp if exists_cp else "Default.ink.json", false)
 	story_node.init_variables()
 	return story_node
-
-func conversation_active():
-	return conversation_name and conversation_name.length() > 0
 
 func arrange_meeting(player, target, initiator, is_cutscene = false, cutscene_node = null):
 	if meeting_is_in_progress(target.name_hint, initiator.name_hint):
@@ -211,7 +206,6 @@ func story_choose(player, idx):
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
 				var character = game_params.get_character(actor_name)
-				character.set_speak_mode(true)
 				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
 			change_stretch_ratio(conversation)
 		conversation.visible = settings.need_subtitles() or not has_sound
@@ -247,7 +241,6 @@ func story_proceed(player):
 			# TODO: Alternatively, code for lipsync autocreation from English text should be written
 			var text = texts["ru"] #get_vvalue(texts)
 			var character = game_params.get_companion(actor_name)
-			character.set_speak_mode(true)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
 	var can_continue = not is_finalizing and story_node.can_continue()
