@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/536_no_but_it_was_my_mistake.ogg-7274adda2e914f86e782ccdc4fd1a4a4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/536_no_but_it_was_my_mistake.ogg"
+dest_files=[ "res://.import/536_no_but_it_was_my_mistake.ogg-7274adda2e914f86e782ccdc4fd1a4a4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

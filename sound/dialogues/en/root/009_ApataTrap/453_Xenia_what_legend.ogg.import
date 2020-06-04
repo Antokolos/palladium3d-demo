@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/453_Xenia_what_legend.ogg-8da6bfcda6f650b024a39fef8d10470a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/453_Xenia_what_legend.ogg"
+dest_files=[ "res://.import/453_Xenia_what_legend.ogg-8da6bfcda6f650b024a39fef8d10470a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/345_follow_me_in_my_tracks.ogg-dbcfcbf119c202df82f324110a19462e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door3/345_follow_me_in_my_tracks.ogg"
+dest_files=[ "res://.import/345_follow_me_in_my_tracks.ogg-dbcfcbf119c202df82f324110a19462e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

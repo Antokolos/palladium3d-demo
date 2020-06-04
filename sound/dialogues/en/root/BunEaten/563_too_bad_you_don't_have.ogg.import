@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/563_too_bad_you_don't_have.ogg-a87e9bd0ed777943e3508d26f2a6a83a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/BunEaten/563_too_bad_you_don't_have.ogg"
+dest_files=[ "res://.import/563_too_bad_you_don't_have.ogg-a87e9bd0ed777943e3508d26f2a6a83a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

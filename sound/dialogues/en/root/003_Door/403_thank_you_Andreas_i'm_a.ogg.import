@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/403_thank_you_Andreas_i'm_a.ogg-291334dec767a6c3866a90a886629ec6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/003_Door/403_thank_you_Andreas_i'm_a.ogg"
+dest_files=[ "res://.import/403_thank_you_Andreas_i'm_a.ogg-291334dec767a6c3866a90a886629ec6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

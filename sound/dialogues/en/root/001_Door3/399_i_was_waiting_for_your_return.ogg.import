@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/399_i_was_waiting_for_your_return.ogg-9ea69b3b5229a70517e042b17d459b6d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door3/399_i_was_waiting_for_your_return.ogg"
+dest_files=[ "res://.import/399_i_was_waiting_for_your_return.ogg-9ea69b3b5229a70517e042b17d459b6d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

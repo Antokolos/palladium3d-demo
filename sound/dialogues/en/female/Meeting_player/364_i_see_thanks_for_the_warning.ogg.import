@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/364_i_see_thanks_for_the_warning.ogg-bfd74f1b868bfbb994a8398a10884722.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/364_i_see_thanks_for_the_warning.ogg"
+dest_files=[ "res://.import/364_i_see_thanks_for_the_warning.ogg-bfd74f1b868bfbb994a8398a10884722.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

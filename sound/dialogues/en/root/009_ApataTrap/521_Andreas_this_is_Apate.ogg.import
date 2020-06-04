@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/521_Andreas_this_is_Apate.ogg-ab18689e900c2984e4de9b4e2b3c3fd3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/521_Andreas_this_is_Apate.ogg"
+dest_files=[ "res://.import/521_Andreas_this_is_Apate.ogg-ab18689e900c2984e4de9b4e2b3c3fd3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

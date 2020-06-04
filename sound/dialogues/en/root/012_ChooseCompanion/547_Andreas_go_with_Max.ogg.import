@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/547_Andreas_go_with_Max.ogg-9af88c7c1f4a1c0df2591e2c7606cfc2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/547_Andreas_go_with_Max.ogg"
+dest_files=[ "res://.import/547_Andreas_go_with_Max.ogg-9af88c7c1f4a1c0df2591e2c7606cfc2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

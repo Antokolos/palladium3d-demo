@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/546_apparently_every_room_has.ogg-834fb5b70e8c1746d93ea5d089435d15.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/546_apparently_every_room_has.ogg"
+dest_files=[ "res://.import/546_apparently_every_room_has.ogg-834fb5b70e8c1746d93ea5d089435d15.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/524_Andreas_i_think_it_might.ogg-47b7f8571cc93760665857328fdd65ac.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/524_Andreas_i_think_it_might.ogg"
+dest_files=[ "res://.import/524_Andreas_i_think_it_might.ogg-47b7f8571cc93760665857328fdd65ac.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

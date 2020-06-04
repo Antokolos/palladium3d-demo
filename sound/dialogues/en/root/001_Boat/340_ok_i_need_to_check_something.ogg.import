@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/340_ok_i_need_to_check_something.ogg-48ba1d7473720f4480d48b343b97953c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Boat/340_ok_i_need_to_check_something.ogg"
+dest_files=[ "res://.import/340_ok_i_need_to_check_something.ogg-48ba1d7473720f4480d48b343b97953c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

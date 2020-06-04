@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/430_no_it_was_Mark.ogg-c440ca36db867fa6a26e9d243da1c1e5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/430_no_it_was_Mark.ogg"
+dest_files=[ "res://.import/430_no_it_was_Mark.ogg-c440ca36db867fa6a26e9d243da1c1e5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

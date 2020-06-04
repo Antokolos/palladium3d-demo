@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/440_so_what_does_it_say.ogg-04f07b5e201082888e8ab8aa2eac6d74.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/440_so_what_does_it_say.ogg"
+dest_files=[ "res://.import/440_so_what_does_it_say.ogg-04f07b5e201082888e8ab8aa2eac6d74.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/569_my_head_hurts_a_little.ogg-f5570ffe9c6e0731c6765c2248e36ac2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/016-1_AresRoom/569_my_head_hurts_a_little.ogg"
+dest_files=[ "res://.import/569_my_head_hurts_a_little.ogg-f5570ffe9c6e0731c6765c2248e36ac2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

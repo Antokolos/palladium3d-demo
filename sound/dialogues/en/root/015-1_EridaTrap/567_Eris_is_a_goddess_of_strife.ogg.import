@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/567_Eris_is_a_goddess_of_strife.ogg-2687e4059522cdeaafc33fa106d3448f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015-1_EridaTrap/567_Eris_is_a_goddess_of_strife.ogg"
+dest_files=[ "res://.import/567_Eris_is_a_goddess_of_strife.ogg-2687e4059522cdeaafc33fa106d3448f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

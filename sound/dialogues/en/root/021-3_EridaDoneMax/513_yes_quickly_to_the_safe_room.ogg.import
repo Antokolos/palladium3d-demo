@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/513_yes_quickly_to_the_safe_room.ogg-179b769dce1b31fc9e982061b06667e0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021-3_EridaDoneMax/513_yes_quickly_to_the_safe_room.ogg"
+dest_files=[ "res://.import/513_yes_quickly_to_the_safe_room.ogg-179b769dce1b31fc9e982061b06667e0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

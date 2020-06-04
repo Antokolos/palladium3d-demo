@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/420_it_says_every_riddle.ogg-1607c353b205d8fa2a7b3bc1a9f0d107.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/420_it_says_every_riddle.ogg"
+dest_files=[ "res://.import/420_it_says_every_riddle.ogg-1607c353b205d8fa2a7b3bc1a9f0d107.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

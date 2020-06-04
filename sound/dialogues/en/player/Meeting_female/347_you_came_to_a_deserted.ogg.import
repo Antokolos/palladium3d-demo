@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/347_you_came_to_a_deserted.ogg-a7f26d618da6b55abfe6d8d496c2771d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/347_you_came_to_a_deserted.ogg"
+dest_files=[ "res://.import/347_you_came_to_a_deserted.ogg-a7f26d618da6b55abfe6d8d496c2771d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

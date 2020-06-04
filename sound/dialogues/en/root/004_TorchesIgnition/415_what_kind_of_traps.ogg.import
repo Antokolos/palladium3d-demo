@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/415_what_kind_of_traps.ogg-a86c3949c8f9224d411b3129eb0566c0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/004_TorchesIgnition/415_what_kind_of_traps.ogg"
+dest_files=[ "res://.import/415_what_kind_of_traps.ogg-a86c3949c8f9224d411b3129eb0566c0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

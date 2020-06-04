@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/576_is_that_an_answer.ogg-114d475d11ebd11b4052293429db5479.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/576_is_that_an_answer.ogg"
+dest_files=[ "res://.import/576_is_that_an_answer.ogg-114d475d11ebd11b4052293429db5479.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/328_you_don't_understand.ogg-ed865282be2022b1ad03b1ad290a5569.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/328_you_don't_understand.ogg"
+dest_files=[ "res://.import/328_you_don't_understand.ogg-ed865282be2022b1ad03b1ad290a5569.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

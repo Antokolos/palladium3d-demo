@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/583_no_that_is_the_least.ogg-354e36dcbda9dbb37095e690aae910ff.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/019_DemoFinishedXenia/583_no_that_is_the_least.ogg"
+dest_files=[ "res://.import/583_no_that_is_the_least.ogg-354e36dcbda9dbb37095e690aae910ff.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

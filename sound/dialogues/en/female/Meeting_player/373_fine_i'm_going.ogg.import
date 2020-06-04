@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/373_fine_i'm_going.ogg-71143ec44fe88d1e41c7b97877acd1de.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/373_fine_i'm_going.ogg"
+dest_files=[ "res://.import/373_fine_i'm_going.ogg-71143ec44fe88d1e41c7b97877acd1de.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

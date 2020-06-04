@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/465_we_don't_know_for_sure.ogg-ede13fd96317437f4d06cbb6f760dfda.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/465_we_don't_know_for_sure.ogg"
+dest_files=[ "res://.import/465_we_don't_know_for_sure.ogg-ede13fd96317437f4d06cbb6f760dfda.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

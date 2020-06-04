@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/540_well_if_i_had_a_bun.ogg-2f4385275222a303a84ddf1ecad92810.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/BunEaten/540_well_if_i_had_a_bun.ogg"
+dest_files=[ "res://.import/540_well_if_i_had_a_bun.ogg-2f4385275222a303a84ddf1ecad92810.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

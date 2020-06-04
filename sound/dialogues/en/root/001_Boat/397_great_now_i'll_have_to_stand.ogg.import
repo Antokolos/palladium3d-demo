@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/397_great_now_i'll_have_to_stand.ogg-053edd2512e07845a3b1374fb6624e77.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Boat/397_great_now_i'll_have_to_stand.ogg"
+dest_files=[ "res://.import/397_great_now_i'll_have_to_stand.ogg-053edd2512e07845a3b1374fb6624e77.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

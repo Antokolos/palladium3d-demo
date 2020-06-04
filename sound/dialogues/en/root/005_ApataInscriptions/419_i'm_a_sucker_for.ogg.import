@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/419_i'm_a_sucker_for.ogg-81f7ab4a653da4f23963fbd4973a58e2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/419_i'm_a_sucker_for.ogg"
+dest_files=[ "res://.import/419_i'm_a_sucker_for.ogg-81f7ab4a653da4f23963fbd4973a58e2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/338_where_is_the_boat.ogg-2343a83147c4172352603626de638278.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Boat/338_where_is_the_boat.ogg"
+dest_files=[ "res://.import/338_where_is_the_boat.ogg-2343a83147c4172352603626de638278.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

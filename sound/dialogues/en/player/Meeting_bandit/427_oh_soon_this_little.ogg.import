@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/427_oh_soon_this_little.ogg-cedb1658c3ce586aca1f43c9076fd131.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/427_oh_soon_this_little.ogg"
+dest_files=[ "res://.import/427_oh_soon_this_little.ogg-cedb1658c3ce586aca1f43c9076fd131.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

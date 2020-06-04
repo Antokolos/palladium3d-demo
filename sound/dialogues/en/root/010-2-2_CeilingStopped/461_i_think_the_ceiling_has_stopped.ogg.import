@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/461_i_think_the_ceiling_has_stopped.ogg-f036a7f61345048ffff38d0297d66c75.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-2-2_CeilingStopped/461_i_think_the_ceiling_has_stopped.ogg"
+dest_files=[ "res://.import/461_i_think_the_ceiling_has_stopped.ogg-f036a7f61345048ffff38d0297d66c75.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

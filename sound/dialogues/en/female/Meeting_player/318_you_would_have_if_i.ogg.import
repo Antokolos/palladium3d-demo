@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/318_you_would_have_if_i.ogg-300c02834de5ffa6992931b5b339d5f6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/318_you_would_have_if_i.ogg"
+dest_files=[ "res://.import/318_you_would_have_if_i.ogg-300c02834de5ffa6992931b5b339d5f6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

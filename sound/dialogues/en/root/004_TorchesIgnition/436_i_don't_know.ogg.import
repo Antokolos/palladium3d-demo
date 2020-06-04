@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/436_i_don't_know.ogg-20837bb6ee0a3302e578e2cd4a305222.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/004_TorchesIgnition/436_i_don't_know.ogg"
+dest_files=[ "res://.import/436_i_don't_know.ogg-20837bb6ee0a3302e578e2cd4a305222.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

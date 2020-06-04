@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/516_that_is_possible_but_i'm_just_after.ogg-845ca863e9aec89fb36abc4d06f91bac.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/516_that_is_possible_but_i'm_just_after.ogg"
+dest_files=[ "res://.import/516_that_is_possible_but_i'm_just_after.ogg-845ca863e9aec89fb36abc4d06f91bac.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

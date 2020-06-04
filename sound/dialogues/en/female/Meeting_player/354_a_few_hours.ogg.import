@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/354_a_few_hours.ogg-0446be59d00a052ce2f0b23e43f51c88.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/354_a_few_hours.ogg"
+dest_files=[ "res://.import/354_a_few_hours.ogg-0446be59d00a052ce2f0b23e43f51c88.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

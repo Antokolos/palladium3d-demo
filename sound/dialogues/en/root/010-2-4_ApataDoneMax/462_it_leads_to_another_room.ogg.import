@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/462_it_leads_to_another_room.ogg-90ad755f07bf792115206f3ffb6328cc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-2-4_ApataDoneMax/462_it_leads_to_another_room.ogg"
+dest_files=[ "res://.import/462_it_leads_to_another_room.ogg-90ad755f07bf792115206f3ffb6328cc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

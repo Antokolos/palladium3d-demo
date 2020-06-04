@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/401_we_won't_go_far.ogg-62d7724f7c2f7a8f3a3e5096030a9dfa.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/003_Door/401_we_won't_go_far.ogg"
+dest_files=[ "res://.import/401_we_won't_go_far.ogg-62d7724f7c2f7a8f3a3e5096030a9dfa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

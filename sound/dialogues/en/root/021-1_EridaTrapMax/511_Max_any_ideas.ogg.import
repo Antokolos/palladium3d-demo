@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/511_Max_any_ideas.ogg-c7a9db8260db53757f2321b4edb983ff.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021-1_EridaTrapMax/511_Max_any_ideas.ogg"
+dest_files=[ "res://.import/511_Max_any_ideas.ogg-c7a9db8260db53757f2321b4edb983ff.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

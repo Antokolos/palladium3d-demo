@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/553_how_did_you_become_a_seeker.ogg-0862f0b72d9883602417ea2f97876ad3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/553_how_did_you_become_a_seeker.ogg"
+dest_files=[ "res://.import/553_how_did_you_become_a_seeker.ogg-0862f0b72d9883602417ea2f97876ad3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

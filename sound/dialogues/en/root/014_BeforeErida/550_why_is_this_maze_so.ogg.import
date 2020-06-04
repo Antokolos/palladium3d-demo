@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/550_why_is_this_maze_so.ogg-2dd67a7d22a8def95340c408ea353723.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/550_why_is_this_maze_so.ogg"
+dest_files=[ "res://.import/550_why_is_this_maze_so.ogg-2dd67a7d22a8def95340c408ea353723.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

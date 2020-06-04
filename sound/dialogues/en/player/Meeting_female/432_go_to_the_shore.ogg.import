@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/432_go_to_the_shore.ogg-8728b8a1a05f7bccf0dcc06a0206ea07.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/432_go_to_the_shore.ogg"
+dest_files=[ "res://.import/432_go_to_the_shore.ogg-8728b8a1a05f7bccf0dcc06a0206ea07.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

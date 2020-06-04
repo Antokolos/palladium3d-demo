@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/577_and_you_should_give_more_detailed.ogg-7aee10d845be5438591c7a8abf4f547b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/577_and_you_should_give_more_detailed.ogg"
+dest_files=[ "res://.import/577_and_you_should_give_more_detailed.ogg-7aee10d845be5438591c7a8abf4f547b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/366_ok_i'll_be_silent.ogg-18b5aacdf804f90873659de39fab0c61.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/366_ok_i'll_be_silent.ogg"
+dest_files=[ "res://.import/366_ok_i'll_be_silent.ogg-18b5aacdf804f90873659de39fab0c61.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

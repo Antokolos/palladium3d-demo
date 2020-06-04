@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/344_do_you_understand_just_how.ogg-5d91e6378ee391c80d1b1ec9c5be5a83.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/003_Door/344_do_you_understand_just_how.ogg"
+dest_files=[ "res://.import/344_do_you_understand_just_how.ogg-5d91e6378ee391c80d1b1ec9c5be5a83.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

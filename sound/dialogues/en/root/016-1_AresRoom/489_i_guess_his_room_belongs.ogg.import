@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/489_i_guess_his_room_belongs.ogg-50ba20eacd2736ee606f91da3139838d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/016-1_AresRoom/489_i_guess_his_room_belongs.ogg"
+dest_files=[ "res://.import/489_i_guess_his_room_belongs.ogg-50ba20eacd2736ee606f91da3139838d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

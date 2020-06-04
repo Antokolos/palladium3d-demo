@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^More statues.\t",{"#":"actor:female"},"\n","^Another riddle. And what then, another one?\t",{"#":"actor:bandit"},{"#":"voiceover:9_another_riddle.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^More statues.\t",{"#":"actor:female"},{"#":"voiceover:526_more_statues.ogg"},"\n","^Another riddle. And what then, another one?\t",{"#":"actor:bandit"},{"#":"voiceover:9_another_riddle.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

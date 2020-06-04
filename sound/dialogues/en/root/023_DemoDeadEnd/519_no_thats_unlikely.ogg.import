@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/519_no_thats_unlikely.ogg-bc2870763e3b3a585442e9b2576ab28e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/023_DemoDeadEnd/519_no_thats_unlikely.ogg"
+dest_files=[ "res://.import/519_no_thats_unlikely.ogg-bc2870763e3b3a585442e9b2576ab28e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

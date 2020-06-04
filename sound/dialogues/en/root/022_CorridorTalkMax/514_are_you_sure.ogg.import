@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/514_are_you_sure.ogg-e259033878ead9131f20fe59489ee128.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/514_are_you_sure.ogg"
+dest_files=[ "res://.import/514_are_you_sure.ogg-e259033878ead9131f20fe59489ee128.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

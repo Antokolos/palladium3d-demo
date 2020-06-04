@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/406_i_wanted_to_go_to_Crete.ogg-58f2c04d7ff94611646cfa6541f9dd6c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/406_i_wanted_to_go_to_Crete.ogg"
+dest_files=[ "res://.import/406_i_wanted_to_go_to_Crete.ogg-58f2c04d7ff94611646cfa6541f9dd6c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

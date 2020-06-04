@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/327_no.ogg-e562a170d7826a7fbc8ec21d4e52a632.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door/327_no.ogg"
+dest_files=[ "res://.import/327_no.ogg-e562a170d7826a7fbc8ec21d4e52a632.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

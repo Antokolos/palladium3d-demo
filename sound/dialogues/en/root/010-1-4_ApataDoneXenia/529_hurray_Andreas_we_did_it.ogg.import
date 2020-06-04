@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/529_hurray_Andreas_we_did_it.ogg-5e9c804dd5828899a70f6f5f28628195.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-4_ApataDoneXenia/529_hurray_Andreas_we_did_it.ogg"
+dest_files=[ "res://.import/529_hurray_Andreas_we_did_it.ogg-5e9c804dd5828899a70f6f5f28628195.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

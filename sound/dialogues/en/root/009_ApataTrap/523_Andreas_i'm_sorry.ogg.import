@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/523_Andreas_i'm_sorry.ogg-a90172cb08dc93cc257f57f0ff907720.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/523_Andreas_i'm_sorry.ogg"
+dest_files=[ "res://.import/523_Andreas_i'm_sorry.ogg-a90172cb08dc93cc257f57f0ff907720.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

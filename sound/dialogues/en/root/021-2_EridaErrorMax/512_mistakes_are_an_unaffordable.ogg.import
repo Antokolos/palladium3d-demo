@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/512_mistakes_are_an_unaffordable.ogg-1d69c21dd79ab8357380db68a7379f4a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021-2_EridaErrorMax/512_mistakes_are_an_unaffordable.ogg"
+dest_files=[ "res://.import/512_mistakes_are_an_unaffordable.ogg-1d69c21dd79ab8357380db68a7379f4a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

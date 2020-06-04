@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/372_i'm_not_a_child_either.ogg-775b29962aa94646b341bd0a48419d58.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/372_i'm_not_a_child_either.ogg"
+dest_files=[ "res://.import/372_i'm_not_a_child_either.ogg-775b29962aa94646b341bd0a48419d58.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

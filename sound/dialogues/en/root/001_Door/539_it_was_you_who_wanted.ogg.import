@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/539_it_was_you_who_wanted.ogg-c3bfc8d9261a4ca23ceee65e882754b1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door/539_it_was_you_who_wanted.ogg"
+dest_files=[ "res://.import/539_it_was_you_who_wanted.ogg-c3bfc8d9261a4ca23ceee65e882754b1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

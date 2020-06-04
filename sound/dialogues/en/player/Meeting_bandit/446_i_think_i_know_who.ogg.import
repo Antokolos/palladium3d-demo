@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/446_i_think_i_know_who.ogg-eaf62d8f0a150940b7e66744346747a1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/446_i_think_i_know_who.ogg"
+dest_files=[ "res://.import/446_i_think_i_know_who.ogg-eaf62d8f0a150940b7e66744346747a1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

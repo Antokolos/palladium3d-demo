@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/504_she_is_a_tourist_who_was.ogg-cf4f0319a8fe3f6884e35fdbecd4beed.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/020_BeforeEridaMax/504_she_is_a_tourist_who_was.ogg"
+dest_files=[ "res://.import/504_she_is_a_tourist_who_was.ogg-cf4f0319a8fe3f6884e35fdbecd4beed.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

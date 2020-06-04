@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/534_Andreas_if_we_don't_need.ogg-aa3b5bbc0834716e3989aa8c83c152a3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-2-4_ApataDoneMax/534_Andreas_if_we_don't_need.ogg"
+dest_files=[ "res://.import/534_Andreas_if_we_don't_need.ogg-aa3b5bbc0834716e3989aa8c83c152a3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

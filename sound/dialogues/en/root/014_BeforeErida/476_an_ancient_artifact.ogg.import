@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/476_an_ancient_artifact.ogg-98989439a869a9477bea47fea6f16943.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/476_an_ancient_artifact.ogg"
+dest_files=[ "res://.import/476_an_ancient_artifact.ogg-98989439a869a9477bea47fea6f16943.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

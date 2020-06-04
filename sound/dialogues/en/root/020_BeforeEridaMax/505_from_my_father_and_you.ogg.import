@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/505_from_my_father_and_you.ogg-fd4eb42bb13141d244b9759d2a38f0ff.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/020_BeforeEridaMax/505_from_my_father_and_you.ogg"
+dest_files=[ "res://.import/505_from_my_father_and_you.ogg-fd4eb42bb13141d244b9759d2a38f0ff.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

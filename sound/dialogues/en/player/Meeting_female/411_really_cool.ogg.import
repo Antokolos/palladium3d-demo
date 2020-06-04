@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/411_really_cool.ogg-070379b8321cf05b409e5c80dad10bac.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/411_really_cool.ogg"
+dest_files=[ "res://.import/411_really_cool.ogg-070379b8321cf05b409e5c80dad10bac.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

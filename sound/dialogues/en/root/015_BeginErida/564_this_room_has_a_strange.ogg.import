@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/564_this_room_has_a_strange.ogg-06e8cd54348eb9903aacaf59c0474a97.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/564_this_room_has_a_strange.ogg"
+dest_files=[ "res://.import/564_this_room_has_a_strange.ogg-06e8cd54348eb9903aacaf59c0474a97.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

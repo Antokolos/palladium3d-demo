@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/463_do_you_want_me_too.ogg-589b6356f4fe783ee2f6a7a54ef6739b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/463_do_you_want_me_too.ogg"
+dest_files=[ "res://.import/463_do_you_want_me_too.ogg-589b6356f4fe783ee2f6a7a54ef6739b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

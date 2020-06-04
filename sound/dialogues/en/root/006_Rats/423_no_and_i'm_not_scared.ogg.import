@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/423_no_and_i'm_not_scared.ogg-01bc3e1d19f681a0dc1580b655dd9192.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/006_Rats/423_no_and_i'm_not_scared.ogg"
+dest_files=[ "res://.import/423_no_and_i'm_not_scared.ogg-01bc3e1d19f681a0dc1580b655dd9192.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

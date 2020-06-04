@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/33_things_with_statues_can_be_rotated.ogg-17d05d2099bda2e92c2e2cf10f0bd915.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/33_things_with_statues_can_be_rotated.ogg"
+dest_files=[ "res://.import/33_things_with_statues_can_be_rotated.ogg-17d05d2099bda2e92c2e2cf10f0bd915.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

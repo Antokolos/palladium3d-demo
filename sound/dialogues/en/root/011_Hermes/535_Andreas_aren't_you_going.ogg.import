@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/535_Andreas_aren't_you_going.ogg-b3fbe0e5fa972f135e07a5b87ffb0916.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/535_Andreas_aren't_you_going.ogg"
+dest_files=[ "res://.import/535_Andreas_aren't_you_going.ogg-b3fbe0e5fa972f135e07a5b87ffb0916.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/472_Max_i_like_your_approach.ogg-ed72f3a60ad20172f3c93bf6d3799a13.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/472_Max_i_like_your_approach.ogg"
+dest_files=[ "res://.import/472_Max_i_like_your_approach.ogg-ed72f3a60ad20172f3c93bf6d3799a13.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

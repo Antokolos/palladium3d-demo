@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/477_yes_Apate_is_probably_one.ogg-e0058448ce1b97d2a2893738f1f502e0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/477_yes_Apate_is_probably_one.ogg"
+dest_files=[ "res://.import/477_yes_Apate_is_probably_one.ogg-e0058448ce1b97d2a2893738f1f502e0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

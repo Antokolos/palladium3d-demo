@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/457_got_it.ogg-1df529260910b8c89f0da39da727b4bd.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/457_got_it.ogg"
+dest_files=[ "res://.import/457_got_it.ogg-1df529260910b8c89f0da39da727b4bd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

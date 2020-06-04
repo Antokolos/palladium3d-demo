@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/556_there's_a_new_statue_here.ogg-e8ee8626bb17751523924bca9f606ed8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/556_there's_a_new_statue_here.ogg"
+dest_files=[ "res://.import/556_there's_a_new_statue_here.ogg-e8ee8626bb17751523924bca9f606ed8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

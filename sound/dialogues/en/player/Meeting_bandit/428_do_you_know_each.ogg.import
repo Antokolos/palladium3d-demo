@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/428_do_you_know_each.ogg-012b406018d281612942ed0db8c8b289.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/428_do_you_know_each.ogg"
+dest_files=[ "res://.import/428_do_you_know_each.ogg-012b406018d281612942ed0db8c8b289.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

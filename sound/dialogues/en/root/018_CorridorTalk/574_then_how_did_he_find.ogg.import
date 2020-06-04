@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/574_then_how_did_he_find.ogg-83ee15ff806373e64982f800a83521fb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/574_then_how_did_he_find.ogg"
+dest_files=[ "res://.import/574_then_how_did_he_find.ogg-83ee15ff806373e64982f800a83521fb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

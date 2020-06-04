@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/506_yes_i_heard_that_story_too.ogg-d3dc13415ac4514d083bcb7151c7803d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/020_BeforeEridaMax/506_yes_i_heard_that_story_too.ogg"
+dest_files=[ "res://.import/506_yes_i_heard_that_story_too.ogg-d3dc13415ac4514d083bcb7151c7803d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

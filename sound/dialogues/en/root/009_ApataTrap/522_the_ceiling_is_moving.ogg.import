@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/522_the_ceiling_is_moving.ogg-a30f1aeaa6fc76ae23a1fcba9f2298d5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/522_the_ceiling_is_moving.ogg"
+dest_files=[ "res://.import/522_the_ceiling_is_moving.ogg-a30f1aeaa6fc76ae23a1fcba9f2298d5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

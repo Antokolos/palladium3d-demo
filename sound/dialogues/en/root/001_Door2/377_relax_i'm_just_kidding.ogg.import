@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/377_relax_i'm_just_kidding.ogg-9736ff736e8090eb82aa6270a8e96639.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/377_relax_i'm_just_kidding.ogg"
+dest_files=[ "res://.import/377_relax_i'm_just_kidding.ogg-9736ff736e8090eb82aa6270a8e96639.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

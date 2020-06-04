@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/323_my_father.ogg-7faad3953f757abec2a34b3ed7f8122b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Oak/323_my_father.ogg"
+dest_files=[ "res://.import/323_my_father.ogg-7faad3953f757abec2a34b3ed7f8122b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

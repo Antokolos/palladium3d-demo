@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/400_but_don't_you_want_to_see.ogg-51ea751995eb8de5daa86440dfe0a860.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/003_Door/400_but_don't_you_want_to_see.ogg"
+dest_files=[ "res://.import/400_but_don't_you_want_to_see.ogg-51ea751995eb8de5daa86440dfe0a860.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

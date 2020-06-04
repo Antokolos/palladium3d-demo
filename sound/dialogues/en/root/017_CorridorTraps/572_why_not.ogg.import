@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/572_why_not.ogg-287215428f6b55062d44070a3aadfcb7.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/017_CorridorTraps/572_why_not.ogg"
+dest_files=[ "res://.import/572_why_not.ogg-287215428f6b55062d44070a3aadfcb7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

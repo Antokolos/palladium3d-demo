@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/557_Andreas_there_are_human_skeletons.ogg-baccaee7617c7c961fbe0cb5cd0abb7b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/557_Andreas_there_are_human_skeletons.ogg"
+dest_files=[ "res://.import/557_Andreas_there_are_human_skeletons.ogg-baccaee7617c7c961fbe0cb5cd0abb7b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

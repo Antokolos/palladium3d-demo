@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/537_according_to_its_attributes.ogg-55911d8023de93d9c595c1f9b9a7f658.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/537_according_to_its_attributes.ogg"
+dest_files=[ "res://.import/537_according_to_its_attributes.ogg-55911d8023de93d9c595c1f9b9a7f658.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

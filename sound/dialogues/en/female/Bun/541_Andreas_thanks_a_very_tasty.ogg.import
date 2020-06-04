@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/541_Andreas_thanks_a_very_tasty.ogg-4b64352564a224bc9ec80e4871a1d3d2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Bun/541_Andreas_thanks_a_very_tasty.ogg"
+dest_files=[ "res://.import/541_Andreas_thanks_a_very_tasty.ogg-4b64352564a224bc9ec80e4871a1d3d2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

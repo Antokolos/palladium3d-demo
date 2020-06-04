@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/452_not_now_remember_the.ogg-5339e3b5a30b3f1fb79f11418aa837e4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/452_not_now_remember_the.ogg"
+dest_files=[ "res://.import/452_not_now_remember_the.ogg-5339e3b5a30b3f1fb79f11418aa837e4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

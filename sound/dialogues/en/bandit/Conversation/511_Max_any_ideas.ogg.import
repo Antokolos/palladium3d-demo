@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/511_Max_any_ideas.ogg-c0c72f0dc5103d7cd5ef7bd5b2c0c4d1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/511_Max_any_ideas.ogg"
+dest_files=[ "res://.import/511_Max_any_ideas.ogg-c0c72f0dc5103d7cd5ef7bd5b2c0c4d1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

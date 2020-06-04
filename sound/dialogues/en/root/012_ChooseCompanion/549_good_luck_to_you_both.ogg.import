@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/549_good_luck_to_you_both.ogg-514561c3f0d7c84a7e01f7f9b85d8c65.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/549_good_luck_to_you_both.ogg"
+dest_files=[ "res://.import/549_good_luck_to_you_both.ogg-514561c3f0d7c84a7e01f7f9b85d8c65.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

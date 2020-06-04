@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/586_damn_the_hissing_sound.ogg-424f00ba4ebf4c122c360691d98539eb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015-2_EridaError/586_damn_the_hissing_sound.ogg"
+dest_files=[ "res://.import/586_damn_the_hissing_sound.ogg-424f00ba4ebf4c122c360691d98539eb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

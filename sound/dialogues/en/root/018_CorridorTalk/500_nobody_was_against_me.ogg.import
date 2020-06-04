@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/500_nobody_was_against_me.ogg-9ac88fff35bf2370d68fca3e76c3e956.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/500_nobody_was_against_me.ogg"
+dest_files=[ "res://.import/500_nobody_was_against_me.ogg-9ac88fff35bf2370d68fca3e76c3e956.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

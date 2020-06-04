@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/470_i'm_sure_we_can_come.ogg-ed8b3f496cddc113fe52d5f320c8f9e4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/470_i'm_sure_we_can_come.ogg"
+dest_files=[ "res://.import/470_i'm_sure_we_can_come.ogg-ed8b3f496cddc113fe52d5f320c8f9e4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

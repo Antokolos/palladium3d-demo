@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/349_i_study_small_greek_islands.ogg-de191c70201c0d2b8be22bd6a477611e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/349_i_study_small_greek_islands.ogg"
+dest_files=[ "res://.import/349_i_study_small_greek_islands.ogg-de191c70201c0d2b8be22bd6a477611e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

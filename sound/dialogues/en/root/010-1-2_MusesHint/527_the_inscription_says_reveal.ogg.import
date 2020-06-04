@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/527_the_inscription_says_reveal.ogg-51abb2781aae95614f74110107ea9fb1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-2_MusesHint/527_the_inscription_says_reveal.ogg"
+dest_files=[ "res://.import/527_the_inscription_says_reveal.ogg-51abb2781aae95614f74110107ea9fb1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

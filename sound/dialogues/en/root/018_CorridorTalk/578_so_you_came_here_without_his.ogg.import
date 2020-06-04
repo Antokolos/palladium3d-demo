@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/578_so_you_came_here_without_his.ogg-5e52f41320cbb4ad07fb808001c0e9b4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/578_so_you_came_here_without_his.ogg"
+dest_files=[ "res://.import/578_so_you_came_here_without_his.ogg-5e52f41320cbb4ad07fb808001c0e9b4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/577_1_so_how_did_your_father.ogg-73bff0156780d95ae43b5176cc8911d5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/577_1_so_how_did_your_father.ogg"
+dest_files=[ "res://.import/577_1_so_how_did_your_father.ogg-73bff0156780d95ae43b5176cc8911d5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

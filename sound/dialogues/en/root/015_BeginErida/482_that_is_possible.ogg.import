@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/482_that_is_possible.ogg-adba7a4332ca31efac31b89765410f16.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/482_that_is_possible.ogg"
+dest_files=[ "res://.import/482_that_is_possible.ogg-adba7a4332ca31efac31b89765410f16.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

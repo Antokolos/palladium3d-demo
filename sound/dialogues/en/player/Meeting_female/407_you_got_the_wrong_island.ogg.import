@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/407_you_got_the_wrong_island.ogg-cdc96cdf189100d9c75fb77e66a07835.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/407_you_got_the_wrong_island.ogg"
+dest_files=[ "res://.import/407_you_got_the_wrong_island.ogg-cdc96cdf189100d9c75fb77e66a07835.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

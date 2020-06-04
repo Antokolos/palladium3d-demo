@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/358_that_was_just_my_notes.ogg-8478e19fb251521f07371830c977f449.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/358_that_was_just_my_notes.ogg"
+dest_files=[ "res://.import/358_that_was_just_my_notes.ogg-8478e19fb251521f07371830c977f449.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

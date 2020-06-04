@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/352_you_are_doing_it_enough.ogg-3ba43213287930210d0acc282d3052a8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/352_you_are_doing_it_enough.ogg"
+dest_files=[ "res://.import/352_you_are_doing_it_enough.ogg-3ba43213287930210d0acc282d3052a8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

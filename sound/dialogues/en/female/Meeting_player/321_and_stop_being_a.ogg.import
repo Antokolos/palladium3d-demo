@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/321_and_stop_being_a.ogg-ecb059ff41fc24ead846166edebd3924.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/321_and_stop_being_a.ogg"
+dest_files=[ "res://.import/321_and_stop_being_a.ogg-ecb059ff41fc24ead846166edebd3924.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

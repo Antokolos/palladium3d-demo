@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/558_maybe_they_took_the_statue.ogg-ce92ce88121e53b2f5eb21d6ff335962.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/558_maybe_they_took_the_statue.ogg"
+dest_files=[ "res://.import/558_maybe_they_took_the_statue.ogg-ce92ce88121e53b2f5eb21d6ff335962.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

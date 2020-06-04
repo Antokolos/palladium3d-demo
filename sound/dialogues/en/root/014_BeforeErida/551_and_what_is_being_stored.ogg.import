@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/551_and_what_is_being_stored.ogg-e72e2b18ba9453b5e14a15d17954c6d6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/551_and_what_is_being_stored.ogg"
+dest_files=[ "res://.import/551_and_what_is_being_stored.ogg-e72e2b18ba9453b5e14a15d17954c6d6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

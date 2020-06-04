@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/434_yes_but_it_means_that.ogg-5021325c82bd13643ae8a7c572c18039.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/004_TorchesIgnition/434_yes_but_it_means_that.ogg"
+dest_files=[ "res://.import/434_yes_but_it_means_that.ogg-5021325c82bd13643ae8a7c572c18039.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/374_wow_how_did_you_find.ogg-4380eff0832db09cf3dfc0b57376c9cf.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/374_wow_how_did_you_find.ogg"
+dest_files=[ "res://.import/374_wow_how_did_you_find.ogg-4380eff0832db09cf3dfc0b57376c9cf.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

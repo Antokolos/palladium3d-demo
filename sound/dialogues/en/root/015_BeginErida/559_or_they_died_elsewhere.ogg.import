@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/559_or_they_died_elsewhere.ogg-913ac1d0117a2338bbf1ec7826e27ace.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/559_or_they_died_elsewhere.ogg"
+dest_files=[ "res://.import/559_or_they_died_elsewhere.ogg-913ac1d0117a2338bbf1ec7826e27ace.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/496_no.ogg-a01adb108f28e7f5603f5fa5f235fecd.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/496_no.ogg"
+dest_files=[ "res://.import/496_no.ogg-a01adb108f28e7f5603f5fa5f235fecd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

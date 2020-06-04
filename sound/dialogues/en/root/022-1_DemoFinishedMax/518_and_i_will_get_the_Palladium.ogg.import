@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/518_and_i_will_get_the_Palladium.ogg-d5f58e33843d2dcbab10fd897d5340ac.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022-1_DemoFinishedMax/518_and_i_will_get_the_Palladium.ogg"
+dest_files=[ "res://.import/518_and_i_will_get_the_Palladium.ogg-d5f58e33843d2dcbab10fd897d5340ac.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

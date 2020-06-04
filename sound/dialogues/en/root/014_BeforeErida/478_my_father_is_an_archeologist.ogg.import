@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/478_my_father_is_an_archeologist.ogg-25e23ad0f0a19e960ea2220098488692.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/478_my_father_is_an_archeologist.ogg"
+dest_files=[ "res://.import/478_my_father_is_an_archeologist.ogg-25e23ad0f0a19e960ea2220098488692.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

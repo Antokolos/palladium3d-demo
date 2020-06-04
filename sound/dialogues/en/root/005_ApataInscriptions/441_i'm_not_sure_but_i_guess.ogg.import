@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/441_i'm_not_sure_but_i_guess.ogg-8fe164d60ab9107ccba14e27caa02936.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/441_i'm_not_sure_but_i_guess.ogg"
+dest_files=[ "res://.import/441_i'm_not_sure_but_i_guess.ogg-8fe164d60ab9107ccba14e27caa02936.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

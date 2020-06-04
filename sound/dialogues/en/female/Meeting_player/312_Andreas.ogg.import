@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/312_Andreas.ogg-509a433591c50f4a9b2cfb591f9d9488.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/312_Andreas.ogg"
+dest_files=[ "res://.import/312_Andreas.ogg-509a433591c50f4a9b2cfb591f9d9488.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

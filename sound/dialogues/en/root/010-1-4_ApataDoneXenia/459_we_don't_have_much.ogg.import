@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/459_we_don't_have_much.ogg-09118b9a7e633288ff7a383f62adfea8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-4_ApataDoneXenia/459_we_don't_have_much.ogg"
+dest_files=[ "res://.import/459_we_don't_have_much.ogg-09118b9a7e633288ff7a383f62adfea8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

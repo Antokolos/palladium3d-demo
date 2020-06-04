@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/555_oh_that's_a_long_story.ogg-b24bc74c74bb28c11120f22fad19640e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/555_oh_that's_a_long_story.ogg"
+dest_files=[ "res://.import/555_oh_that's_a_long_story.ogg-b24bc74c74bb28c11120f22fad19640e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

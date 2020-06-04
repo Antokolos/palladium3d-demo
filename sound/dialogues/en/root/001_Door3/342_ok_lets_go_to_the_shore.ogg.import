@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/342_ok_lets_go_to_the_shore.ogg-bda477c14b4df9519f48d38ed12b7198.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door3/342_ok_lets_go_to_the_shore.ogg"
+dest_files=[ "res://.import/342_ok_lets_go_to_the_shore.ogg-bda477c14b4df9519f48d38ed12b7198.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

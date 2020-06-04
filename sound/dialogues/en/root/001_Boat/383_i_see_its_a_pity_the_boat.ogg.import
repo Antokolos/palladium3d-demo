@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/383_i_see_its_a_pity_the_boat.ogg-54aefac01f9b10d18cbbe4869b2b1ee2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Boat/383_i_see_its_a_pity_the_boat.ogg"
+dest_files=[ "res://.import/383_i_see_its_a_pity_the_boat.ogg-54aefac01f9b10d18cbbe4869b2b1ee2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

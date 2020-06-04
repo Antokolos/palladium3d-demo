@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/490_Xenia_how_do_you_feel.ogg-8975481aae058e83edc34c204ec93381.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/016-1_AresRoom/490_Xenia_how_do_you_feel.ogg"
+dest_files=[ "res://.import/490_Xenia_how_do_you_feel.ogg-8975481aae058e83edc34c204ec93381.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

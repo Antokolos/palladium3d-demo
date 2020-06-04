@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/508_no_i_doubt_that.ogg-62a6dad55686ed7e5e2cbd9984a6fc63.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021_BeginEridaMax/508_no_i_doubt_that.ogg"
+dest_files=[ "res://.import/508_no_i_doubt_that.ogg-62a6dad55686ed7e5e2cbd9984a6fc63.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

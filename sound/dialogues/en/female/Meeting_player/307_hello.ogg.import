@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/307_hello.ogg-87fdfdb44520c80f3508c551609e9217.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/307_hello.ogg"
+dest_files=[ "res://.import/307_hello.ogg-87fdfdb44520c80f3508c551609e9217.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

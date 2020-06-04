@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/410_no_you_have_kind.ogg-dbade1c7f68d10244e12fcadad5538da.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/410_no_you_have_kind.ogg"
+dest_files=[ "res://.import/410_no_you_have_kind.ogg-dbade1c7f68d10244e12fcadad5538da.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

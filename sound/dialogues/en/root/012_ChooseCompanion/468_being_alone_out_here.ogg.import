@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/468_being_alone_out_here.ogg-267b260615a0515a6a5652f0e953e8be.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/468_being_alone_out_here.ogg"
+dest_files=[ "res://.import/468_being_alone_out_here.ogg-267b260615a0515a6a5652f0e953e8be.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/439_you_understand_ancient_Greek.ogg-aae8d7ffd2468b6b3277145100540ee4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/439_you_understand_ancient_Greek.ogg"
+dest_files=[ "res://.import/439_you_understand_ancient_Greek.ogg-aae8d7ffd2468b6b3277145100540ee4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

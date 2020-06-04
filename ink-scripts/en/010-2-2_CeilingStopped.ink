@@ -1,2 +1,2 @@
-I think the ceiling has stopped, but what now Max?	# actor:player
+I think the ceiling has stopped, but what now Max?	# actor:player # voiceover:461_i_think_the_ceiling_has_stopped.ogg
 We should wait. I think the trap should deactivate itself.	# actor:bandit # voiceover:15_we_should_wait.ogg

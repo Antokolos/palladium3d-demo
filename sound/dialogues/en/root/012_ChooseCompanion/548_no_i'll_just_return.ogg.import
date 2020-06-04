@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/548_no_i'll_just_return.ogg-582812c631b96e19d4d8d8c9f45c2a11.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/548_no_i'll_just_return.ogg"
+dest_files=[ "res://.import/548_no_i'll_just_return.ogg-582812c631b96e19d4d8d8c9f45c2a11.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

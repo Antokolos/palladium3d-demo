@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/357_1_and_i'm_Xenia.ogg-92aa2e846992929b850a51b494fb1f9b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/357_1_and_i'm_Xenia.ogg"
+dest_files=[ "res://.import/357_1_and_i'm_Xenia.ogg-92aa2e846992929b850a51b494fb1f9b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

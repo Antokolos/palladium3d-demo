@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/585_i_think_it's_a_dead_end.ogg-9296edc4b4e19bbb55a43bcefec17b64.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/023_DemoDeadEnd/585_i_think_it's_a_dead_end.ogg"
+dest_files=[ "res://.import/585_i_think_it's_a_dead_end.ogg-9296edc4b4e19bbb55a43bcefec17b64.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

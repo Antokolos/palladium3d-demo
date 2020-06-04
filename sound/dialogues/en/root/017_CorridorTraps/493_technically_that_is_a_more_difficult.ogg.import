@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/493_technically_that_is_a_more_difficult.ogg-c2869878c499108913ca5f1ac8737cb5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/017_CorridorTraps/493_technically_that_is_a_more_difficult.ogg"
+dest_files=[ "res://.import/493_technically_that_is_a_more_difficult.ogg-c2869878c499108913ca5f1ac8737cb5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

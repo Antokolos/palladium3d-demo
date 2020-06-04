@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/413_Andreas_it's_so_beautiful.ogg-afe90843c616001c719a1d1c9317eafc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/004_TorchesIgnition/413_Andreas_it's_so_beautiful.ogg"
+dest_files=[ "res://.import/413_Andreas_it's_so_beautiful.ogg-afe90843c616001c719a1d1c9317eafc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

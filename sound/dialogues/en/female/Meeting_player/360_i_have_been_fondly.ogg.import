@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/360_i_have_been_fondly.ogg-007ff9a8e15c3bebd2b1351fa366c1b3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/360_i_have_been_fondly.ogg"
+dest_files=[ "res://.import/360_i_have_been_fondly.ogg-007ff9a8e15c3bebd2b1351fa366c1b3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

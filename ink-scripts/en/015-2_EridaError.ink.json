@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Damn, the hissing sound became louder.\t",{"#":"actor:player"},"\n","^It seems we did something wrong.\t",{"#":"actor:female"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Damn, the hissing sound became louder.\t",{"#":"actor:player"},{"#":"voiceover:586_damn_the_hissing_sound.ogg"},"\n","^Which means we did something wrong.\t",{"#":"actor:female"},{"#":"voiceover:587_which_means_we_did.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

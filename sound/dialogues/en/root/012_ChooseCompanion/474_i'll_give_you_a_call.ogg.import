@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/474_i'll_give_you_a_call.ogg-1b98adba02ad289e0d0d723adb64a582.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/474_i'll_give_you_a_call.ogg"
+dest_files=[ "res://.import/474_i'll_give_you_a_call.ogg-1b98adba02ad289e0d0d723adb64a582.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

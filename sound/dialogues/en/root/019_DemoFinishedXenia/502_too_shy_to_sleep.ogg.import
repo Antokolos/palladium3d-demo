@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/502_too_shy_to_sleep.ogg-c3d4fb4f347c1e95a73aaf62abe2f829.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/019_DemoFinishedXenia/502_too_shy_to_sleep.ogg"
+dest_files=[ "res://.import/502_too_shy_to_sleep.ogg-c3d4fb4f347c1e95a73aaf62abe2f829.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

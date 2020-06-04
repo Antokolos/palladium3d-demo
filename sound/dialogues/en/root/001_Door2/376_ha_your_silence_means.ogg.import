@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/376_ha_your_silence_means.ogg-5a54b5b93fe1dc80505102910bd69b97.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/376_ha_your_silence_means.ogg"
+dest_files=[ "res://.import/376_ha_your_silence_means.ogg-5a54b5b93fe1dc80505102910bd69b97.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

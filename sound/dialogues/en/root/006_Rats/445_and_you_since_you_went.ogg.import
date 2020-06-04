@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/445_and_you_since_you_went.ogg-610b07ea2cc3987fd1b8982f8a3cd281.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/006_Rats/445_and_you_since_you_went.ogg"
+dest_files=[ "res://.import/445_and_you_since_you_went.ogg-610b07ea2cc3987fd1b8982f8a3cd281.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

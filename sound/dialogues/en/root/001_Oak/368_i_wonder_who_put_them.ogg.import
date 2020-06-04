@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/368_i_wonder_who_put_them.ogg-615bb7d8bddf732b9e8c2754750f9566.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Oak/368_i_wonder_who_put_them.ogg"
+dest_files=[ "res://.import/368_i_wonder_who_put_them.ogg-615bb7d8bddf732b9e8c2754750f9566.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

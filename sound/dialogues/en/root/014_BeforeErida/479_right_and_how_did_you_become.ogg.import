@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/479_right_and_how_did_you_become.ogg-29db6562becfbe7ce8cacce1073055cf.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/014_BeforeErida/479_right_and_how_did_you_become.ogg"
+dest_files=[ "res://.import/479_right_and_how_did_you_become.ogg-29db6562becfbe7ce8cacce1073055cf.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

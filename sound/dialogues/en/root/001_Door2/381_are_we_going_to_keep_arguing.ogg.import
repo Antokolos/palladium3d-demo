@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/381_are_we_going_to_keep_arguing.ogg-8a583b83ce913ee59db713e17bd7b552.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/381_are_we_going_to_keep_arguing.ogg"
+dest_files=[ "res://.import/381_are_we_going_to_keep_arguing.ogg-8a583b83ce913ee59db713e17bd7b552.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

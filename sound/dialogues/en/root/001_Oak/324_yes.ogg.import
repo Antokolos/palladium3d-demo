@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/324_yes.ogg-c5ca76e7b93e9123242823ee0d0d708b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Oak/324_yes.ogg"
+dest_files=[ "res://.import/324_yes.ogg-c5ca76e7b93e9123242823ee0d0d708b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

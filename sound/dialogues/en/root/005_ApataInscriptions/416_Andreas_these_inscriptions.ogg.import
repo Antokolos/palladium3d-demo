@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/416_Andreas_these_inscriptions.ogg-b3fea37d192fa1eb5f251405dee6d829.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/416_Andreas_these_inscriptions.ogg"
+dest_files=[ "res://.import/416_Andreas_these_inscriptions.ogg-b3fea37d192fa1eb5f251405dee6d829.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/456_Xenia_what_is_written.ogg-1c91ed97c01502974b18bedf3f4bbbe6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/010-1-2_MusesHint/456_Xenia_what_is_written.ogg"
+dest_files=[ "res://.import/456_Xenia_what_is_written.ogg-1c91ed97c01502974b18bedf3f4bbbe6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

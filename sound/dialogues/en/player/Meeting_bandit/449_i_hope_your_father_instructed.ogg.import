@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/449_i_hope_your_father_instructed.ogg-6a5a2f2c326fe7ef7b4e36ff089a9690.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/449_i_hope_your_father_instructed.ogg"
+dest_files=[ "res://.import/449_i_hope_your_father_instructed.ogg-6a5a2f2c326fe7ef7b4e36ff089a9690.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

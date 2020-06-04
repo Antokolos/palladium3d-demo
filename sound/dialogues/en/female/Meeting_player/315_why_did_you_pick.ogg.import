@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/315_why_did_you_pick.ogg-8f836b7ec4438551fc563613c12ef971.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/315_why_did_you_pick.ogg"
+dest_files=[ "res://.import/315_why_did_you_pick.ogg-8f836b7ec4438551fc563613c12ef971.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

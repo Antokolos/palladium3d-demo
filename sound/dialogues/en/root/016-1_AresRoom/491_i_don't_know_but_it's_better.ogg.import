@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/491_i_don't_know_but_it's_better.ogg-5d00a298f6f766ebb3d237d5ee856d44.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/016-1_AresRoom/491_i_don't_know_but_it's_better.ogg"
+dest_files=[ "res://.import/491_i_don't_know_but_it's_better.ogg-5d00a298f6f766ebb3d237d5ee856d44.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

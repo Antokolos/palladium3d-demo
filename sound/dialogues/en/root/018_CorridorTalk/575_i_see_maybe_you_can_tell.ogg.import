@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/575_i_see_maybe_you_can_tell.ogg-a774001d5156747ebbcbaa399ac0edab.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/575_i_see_maybe_you_can_tell.ogg"
+dest_files=[ "res://.import/575_i_see_maybe_you_can_tell.ogg-a774001d5156747ebbcbaa399ac0edab.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

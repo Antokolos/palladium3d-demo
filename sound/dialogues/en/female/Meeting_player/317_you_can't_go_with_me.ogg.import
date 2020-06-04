@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/317_you_can't_go_with_me.ogg-463818512dc4018d075155281b0da043.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/317_you_can't_go_with_me.ogg"
+dest_files=[ "res://.import/317_you_can't_go_with_me.ogg-463818512dc4018d075155281b0da043.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

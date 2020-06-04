@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/573_Andreas_you_said_you_found.ogg-6b9b9eae1b63b77afdc899935ab05004.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/573_Andreas_you_said_you_found.ogg"
+dest_files=[ "res://.import/573_Andreas_you_said_you_found.ogg-6b9b9eae1b63b77afdc899935ab05004.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/348_i_came_on_a_boat.ogg-274de9957a91f21569bd413fa8b136f3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/348_i_came_on_a_boat.ogg"
+dest_files=[ "res://.import/348_i_came_on_a_boat.ogg-274de9957a91f21569bd413fa8b136f3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

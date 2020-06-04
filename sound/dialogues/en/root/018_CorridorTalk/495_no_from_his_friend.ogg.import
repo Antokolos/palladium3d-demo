@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/495_no_from_his_friend.ogg-548d1979610b78ab12ea817b0e6e089e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/018_CorridorTalk/495_no_from_his_friend.ogg"
+dest_files=[ "res://.import/495_no_from_his_friend.ogg-548d1979610b78ab12ea817b0e6e089e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/444_no_a_man_should_not_be_scared.ogg-a13ecd5ad1dcf58bb5608d6916765591.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/006_Rats/444_no_a_man_should_not_be_scared.ogg"
+dest_files=[ "res://.import/444_no_a_man_should_not_be_scared.ogg-a13ecd5ad1dcf58bb5608d6916765591.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

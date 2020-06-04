@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/466_Xenia_can_you_tell_us.ogg-c88ff553d421dd5d517e44214f8e3381.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/011_Hermes/466_Xenia_can_you_tell_us.ogg"
+dest_files=[ "res://.import/466_Xenia_can_you_tell_us.ogg-c88ff553d421dd5d517e44214f8e3381.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

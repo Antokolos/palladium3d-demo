@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Andreas, well done! You solved the riddle!\t",{"#":"actor:female"},"\n","^Yes. Quickly, to the safe room.\t",{"#":"actor:player"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Andreas, well done! You solved the riddle!\t",{"#":"actor:female"},{"#":"voiceover:568_Andreas_well_done.ogg"},"\n","^Yes. Quickly, to the safe room.\t",{"#":"actor:player"},{"#":"voiceover:488_yes_quickly_to_the_safe.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/515_where_have_you_met.ogg-3885f97e54c17bb899106e1a71274686.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/022_CorridorTalkMax/515_where_have_you_met.ogg"
+dest_files=[ "res://.import/515_where_have_you_met.ogg-3885f97e54c17bb899106e1a71274686.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

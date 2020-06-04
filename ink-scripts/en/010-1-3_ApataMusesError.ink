@@ -1,3 +1,3 @@
-Andreas, the ceiling is closing in on us again! You probably put the muses in the wrong spots.	# actor:female
+Andreas, the ceiling is closing in on us again! You probably put the muses in the wrong spots.	# actor:female # voiceover:530_Andreas_the_ceiling_is_closing.ogg
 Try other options; there are not many combinations left. 	# actor:bandit # voiceover:11_try_other_options.ogg
-I think it's time to concentrate. We only have time to try two or three more combinations.	# actor:female
+I think it's time to concentrate. We only have time to try two or three more combinations.	# actor:female # voiceover:531_i_think_its_time_to_concentrate.ogg

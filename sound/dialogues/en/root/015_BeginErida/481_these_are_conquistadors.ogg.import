@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/481_these_are_conquistadors.ogg-d366f4638e2d90f28fb2678a90fc9b2a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015_BeginErida/481_these_are_conquistadors.ogg"
+dest_files=[ "res://.import/481_these_are_conquistadors.ogg-d366f4638e2d90f28fb2678a90fc9b2a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/566_yes_that_sugary_smell.ogg-a20a4eccc95c4468069b1508edeee3bc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015-1_EridaTrap/566_yes_that_sugary_smell.ogg"
+dest_files=[ "res://.import/566_yes_that_sugary_smell.ogg-a20a4eccc95c4468069b1508edeee3bc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

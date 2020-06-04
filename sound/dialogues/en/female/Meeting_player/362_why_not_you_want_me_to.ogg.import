@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/362_why_not_you_want_me_to.ogg-9c35382b2829abbd7ec9b94728dd2263.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/362_why_not_you_want_me_to.ogg"
+dest_files=[ "res://.import/362_why_not_you_want_me_to.ogg-9c35382b2829abbd7ec9b94728dd2263.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

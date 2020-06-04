@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/486_it's_gas_coming_inside.ogg-7f243eec62c83c82a699a0ebf8ef739f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/015-1_EridaTrap/486_it's_gas_coming_inside.ogg"
+dest_files=[ "res://.import/486_it's_gas_coming_inside.ogg-7f243eec62c83c82a699a0ebf8ef739f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

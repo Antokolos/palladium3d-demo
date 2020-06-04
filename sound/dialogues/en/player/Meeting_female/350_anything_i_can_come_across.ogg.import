@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/350_anything_i_can_come_across.ogg-73a59f893d579c930dd2662f76e92b79.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_female/350_anything_i_can_come_across.ogg"
+dest_files=[ "res://.import/350_anything_i_can_come_across.ogg-73a59f893d579c930dd2662f76e92b79.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

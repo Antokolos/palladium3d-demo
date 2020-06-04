@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Rat, there's a rat! Andreas, look!\t",{"#":"actor:female"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Rat, there's a rat! Andreas, look!\t",{"#":"actor:female"},{"#":"voiceover:426_rat_there's_the_rat.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

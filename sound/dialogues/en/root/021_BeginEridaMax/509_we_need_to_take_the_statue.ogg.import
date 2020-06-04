@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/509_we_need_to_take_the_statue.ogg-fb86d94f4eee9bdf4cb046964c787f8a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/021_BeginEridaMax/509_we_need_to_take_the_statue.ogg"
+dest_files=[ "res://.import/509_we_need_to_take_the_statue.ogg-fb86d94f4eee9bdf4cb046964c787f8a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

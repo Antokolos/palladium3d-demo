@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/421_i'm_not_scared_besides.ogg-8479dc7f50b02ffb178b39e1b557bcc8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/005_ApataInscriptions/421_i'm_not_scared_besides.ogg"
+dest_files=[ "res://.import/421_i'm_not_scared_besides.ogg-8479dc7f50b02ffb178b39e1b557bcc8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

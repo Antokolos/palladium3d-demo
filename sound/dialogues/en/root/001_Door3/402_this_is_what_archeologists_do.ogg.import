@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/402_this_is_what_archeologists_do.ogg-3c550fb0208a58b00b5caf0d28a0f72e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door3/402_this_is_what_archeologists_do.ogg"
+dest_files=[ "res://.import/402_this_is_what_archeologists_do.ogg-3c550fb0208a58b00b5caf0d28a0f72e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

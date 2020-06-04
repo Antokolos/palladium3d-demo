@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/308_is_everything_alright.ogg-c15a37b3cab0ce699e6634061d7fc030.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Meeting_player/308_is_everything_alright.ogg"
+dest_files=[ "res://.import/308_is_everything_alright.ogg-c15a37b3cab0ce699e6634061d7fc030.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

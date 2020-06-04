@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/520_let's_find_out_what.ogg-8133d737709b6c48a173f361271463a7.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/player/Meeting_bandit/520_let's_find_out_what.ogg"
+dest_files=[ "res://.import/520_let's_find_out_what.ogg-8133d737709b6c48a173f361271463a7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
