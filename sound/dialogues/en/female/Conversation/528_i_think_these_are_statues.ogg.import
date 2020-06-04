@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/528_i_think_these_are_statues.ogg-547e1e085fd624f914f6f028b36b8ebb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/528_i_think_these_are_statues.ogg"
+dest_files=[ "res://.import/528_i_think_these_are_statues.ogg-547e1e085fd624f914f6f028b36b8ebb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

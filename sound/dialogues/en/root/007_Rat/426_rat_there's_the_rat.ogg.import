@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/426_rat_there's_the_rat.ogg-63e0a30439e063444189b878e098533f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/007_Rat/426_rat_there's_the_rat.ogg"
+dest_files=[ "res://.import/426_rat_there's_the_rat.ogg-63e0a30439e063444189b878e098533f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
