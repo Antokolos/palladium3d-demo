@@ -19,22 +19,20 @@ filter_enabled = true
 filters = [ ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R" ]
 
 [sub_resource type="AnimationNodeOneShot" id=5]
-fadein_time = 0.0
-fadeout_time = 0.0
+fadein_time = 0.5
+fadeout_time = 0.5
 
 [sub_resource type="AnimationNodeTransition" id=6]
-input_count = 4
+input_count = 3
 input_0/name = "empty"
 input_0/auto_advance = false
-input_1/name = "sitting_stump"
+input_1/name = "stand_up_stump"
 input_1/auto_advance = false
-input_2/name = "stand_up_stump"
+input_2/name = "takes_apata"
 input_2/auto_advance = false
-input_3/name = "takes_apata"
-input_3/auto_advance = false
 
-[sub_resource type="AnimationNodeTransition" id=8]
-input_count = 4
+[sub_resource type="AnimationNodeTransition" id=7]
+input_count = 5
 input_0/name = "stand_up"
 input_0/auto_advance = true
 input_1/name = "standing"
@@ -43,10 +41,14 @@ input_2/name = "sit_down"
 input_2/auto_advance = true
 input_3/name = "squatting"
 input_3/auto_advance = false
+input_4/name = "sitting_stump"
+input_4/auto_advance = false
 
-[sub_resource type="AnimationNodeOneShot" id=9]
+[sub_resource type="AnimationNodeOneShot" id=8]
+fadein_time = 0.5
+fadeout_time = 0.5
 
-[sub_resource type="AnimationNodeTransition" id=10]
+[sub_resource type="AnimationNodeTransition" id=9]
 input_count = 5
 input_0/name = "state 0"
 input_0/auto_advance = false
@@ -59,7 +61,7 @@ input_3/auto_advance = false
 input_4/name = "state 4"
 input_4/auto_advance = false
 
-[sub_resource type="AnimationNodeOneShot" id=56]
+[sub_resource type="AnimationNodeOneShot" id=10]
 
 [sub_resource type="AnimationNodeTransition" id=11]
 input_count = 6
@@ -252,7 +254,7 @@ animation = "female_walk_2"
 animation = "female_crouches_squatted"
 
 [sub_resource type="AnimationNodeBlendTree" id=55]
-graph_offset = Vector2( 598.288, -208.006 )
+graph_offset = Vector2( 926.963, -128.256 )
 nodes/Animation/node = SubResource( 1 )
 nodes/Animation/position = Vector2( 240, -180 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -265,13 +267,13 @@ nodes/CutsceneShot/node = SubResource( 5 )
 nodes/CutsceneShot/position = Vector2( 2840, 400 )
 nodes/CutsceneTransition/node = SubResource( 6 )
 nodes/CutsceneTransition/position = Vector2( 2580, 460 )
-nodes/LookTransition/node = SubResource( 8 )
+nodes/LookTransition/node = SubResource( 7 )
 nodes/LookTransition/position = Vector2( 180, -540 )
-nodes/RestShot/node = SubResource( 9 )
+nodes/RestShot/node = SubResource( 8 )
 nodes/RestShot/position = Vector2( 1900, 180 )
-nodes/RestTransition/node = SubResource( 10 )
+nodes/RestTransition/node = SubResource( 9 )
 nodes/RestTransition/position = Vector2( 1420, 280 )
-nodes/SpeakShot/node = SubResource( 56 )
+nodes/SpeakShot/node = SubResource( 10 )
 nodes/SpeakShot/position = Vector2( -380, -680 )
 nodes/SpeakTransition/node = SubResource( 11 )
 nodes/SpeakTransition/position = Vector2( -660, -460 )
@@ -338,7 +340,7 @@ nodes/b8/position = Vector2( 2860, 1580 )
 nodes/b9/node = SubResource( 42 )
 nodes/b9/position = Vector2( 2860, 1700 )
 nodes/empty/node = SubResource( 43 )
-nodes/empty/position = Vector2( 2340, 440 )
+nodes/empty/position = Vector2( 2300, 380 )
 nodes/headturn_left/node = SubResource( 44 )
 nodes/headturn_left/position = Vector2( 260, 280 )
 nodes/headturn_right/node = SubResource( 45 )
@@ -349,20 +351,20 @@ nodes/output/position = Vector2( 3620, 560 )
 nodes/sit_down/node = SubResource( 47 )
 nodes/sit_down/position = Vector2( -200, -460 )
 nodes/sitting_stump/node = SubResource( 48 )
-nodes/sitting_stump/position = Vector2( 2260, 560 )
+nodes/sitting_stump/position = Vector2( -260, -220 )
 nodes/squat_rest/node = SubResource( 49 )
 nodes/squat_rest/position = Vector2( -220, -340 )
 nodes/stand_up/node = SubResource( 50 )
 nodes/stand_up/position = Vector2( -140, -760 )
 nodes/stand_up_stump/node = SubResource( 51 )
-nodes/stand_up_stump/position = Vector2( 2240, 680 )
+nodes/stand_up_stump/position = Vector2( 2180, 500 )
 nodes/takes_apata/node = SubResource( 52 )
-nodes/takes_apata/position = Vector2( 2320, 820 )
+nodes/takes_apata/position = Vector2( 2240, 620 )
 nodes/walk/node = SubResource( 53 )
 nodes/walk/position = Vector2( 220, -300 )
 nodes/walk_squat/node = SubResource( 54 )
 nodes/walk_squat/position = Vector2( 140, -60 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "RestTransition", 4, "alt_rest5", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "sitting_stump", "CutsceneTransition", 2, "stand_up_stump", "CutsceneTransition", 3, "takes_apata", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
+node_connections = [ "output", 0, "Blend2_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "stand_up_stump", "CutsceneTransition", 2, "takes_apata", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "LookTransition", 4, "sitting_stump", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "RestTransition", 4, "alt_rest5", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
 
 [node name="female" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -391,7 +393,7 @@ layers = 3
 layers = 3
 
 [node name="RightHandAttachment" type="BoneAttachment" parent="Female_palladium_armature" index="11"]
-transform = Transform( -0.898928, 0.377906, 0.221621, 0.247635, 0.0210046, 0.968626, 0.361395, 0.925606, -0.112464, -2.27226, 9.27076, 0.450619 )
+transform = Transform( -0.489232, -0.530697, -0.692107, -0.614181, 0.77306, -0.158623, 0.619221, 0.347476, -0.70415, -1.01299, 7.7275, 0.286329 )
 bone_name = "wrist.R"
 
 [node name="Position3D" type="Position3D" parent="Female_palladium_armature/RightHandAttachment" index="0"]
@@ -406,7 +408,7 @@ parameters/Blend2_Head/blend_amount = 0.5
 parameters/Blend2_Lips/blend_amount = 1.0
 parameters/CutsceneShot/active = false
 parameters/CutsceneTransition/current = 0
-parameters/LookTransition/current = 1
+parameters/LookTransition/current = 4
 parameters/RestShot/active = false
 parameters/RestTransition/current = 0
 parameters/SpeakShot/active = false

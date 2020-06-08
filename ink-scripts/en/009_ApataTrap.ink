@@ -1,4 +1,5 @@
 VAR apata_chest_rigid = 0
+VAR cutscene_bandit = 0
 Andreas, this is Apate, a goddess…	# actor:female # voiceover:521_Andreas_this_is_Apate.ogg
 Don't touch it! Everybody out!	# actor:player # voiceover:451_don't_touch_it.ogg
 The ceiling is moving.	# actor:female # voiceover:522_the_ceiling_is_moving.ogg
@@ -13,6 +14,7 @@ Yeah, now’s a great time for stories! Andreas, I noticed something on the ceil
 	Apparently, Apate symbolizes all the misfortunes in Pandora's casket. But among the misfortunes and trials, there's always hope.	# actor:player # voiceover:455_apparently_Apate_symbolizes.ogg
 *	[Listen to Max.]
 	Max, what have you noticed?	# actor:player # voiceover:560_Max_what_have_you.ogg
+	~ cutscene_bandit = 2
 	On the ceiling, right above the casket, there are no spikes! If we remove the casket, we can stand where it stands now.	# actor:bandit # voiceover:12_right_above_the_casket.ogg
 	What if it doesn't work? We need to solve the riddle and find the exit.	# actor:female # voiceover:532_what_if_it_doesn't_work.ogg
 	Removing the casket is quicker. Andreas, give me a hand; the casket is heavy.	# actor:bandit # voiceover:13_give_me_a_hand.ogg

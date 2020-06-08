@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://game_window.gd" type="Script" id=1]
 [ext_resource path="res://viewport.tscn" type="PackedScene" id=2]
@@ -29,6 +29,13 @@ extents = Vector3( 36.0585, 0.197774, 16.6409 )
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.30433, 0.869232, 15.5059 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 5.70115, 0.353532, 7.58823 )
+
+[sub_resource type="CapsuleShape" id=6]
+radius = 0.289286
+height = 15.4115
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
@@ -154,5 +161,17 @@ shape = SubResource( 3 )
 [node name="Demo1" type="CollisionShape" parent="ViewportContainer/Viewport/palladium/StaticBodyFloor"]
 transform = Transform( 1, 0, 0, 0, 0.94545, 0.325767, 0, -0.325767, 0.94545, 0.585339, 5.60319, 64.1666 )
 shape = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/palladium/StaticBodyFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2094, 0.928359, 25.0049 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="ViewportContainer/Viewport/palladium/StaticBodyFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9559, 0.987632, 24.8949 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="ViewportContainer/Viewport/palladium/StaticBodyFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.47263, 0.987632, 24.8949 )
+shape = SubResource( 6 )
 
 [node name="hud" parent="." instance=ExtResource( 15 )]

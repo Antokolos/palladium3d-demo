@@ -147,4 +147,10 @@ shape = SubResource( 6 )
 [node name="HealTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="CutsceneTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
+[connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]

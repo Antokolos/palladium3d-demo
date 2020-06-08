@@ -458,8 +458,15 @@ func set_simple_mode(enable):
 func rest():
 	get_model().look(0)
 
+func set_look_transition(force = false):
+	if force \
+		or conversation_manager.meeting_is_in_progress(name_hint, game_params.PLAYER_NAME_HINT) \
+		or conversation_manager.meeting_is_finished(name_hint, game_params.PLAYER_NAME_HINT):
+		get_model().set_look_transition(PalladiumCharacter.LOOK_TRANSITION_SQUATTING if is_crouching else PalladiumCharacter.LOOK_TRANSITION_STANDING)
+
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
+	$CutsceneTimer.start()
 
 func stop_cutscene():
 	get_model().stop_cutscene()
@@ -688,6 +695,9 @@ func is_player_controlled():
 func _on_HealTimer_timeout():
 	if is_player():
 		game_params.set_health(name_hint, game_params.player_health_current + game_params.HEALING_RATE, game_params.player_health_max)
+
+func _on_CutsceneTimer_timeout():
+	set_look_transition(true)
 
 func set_sound_walk(mode):
 	var spl = $SoundWalking

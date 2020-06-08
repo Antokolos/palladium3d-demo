@@ -200,6 +200,7 @@ func is_bright():
 	return level.is_bright() if level else false
 
 func _on_cutscene_finished(player, cutscene_id):
+	player.set_look_transition(true)
 	player.stop_cutscene()
 
 func get_custom_actions(item):
@@ -485,15 +486,8 @@ func leave_party(name_hint):
 func register_player(player):
 	player_paths[player.name_hint] = player.get_path()
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
-	play_initial_cutscene(player)
+	player.set_look_transition()
 	emit_signal("player_registered", player)
-
-func play_initial_cutscene(player):
-	if player.name_hint == FEMALE_NAME_HINT:
-		if conversation_manager.meeting_is_finished(FEMALE_NAME_HINT, PLAYER_NAME_HINT):
-			player.stop_cutscene()
-		else:
-			player.play_cutscene(PalladiumCharacter.FEMALE_CUTSCENE_SITTING_STUMP)
 
 func save_slot_exists(slot):
 	var f = File.new()
@@ -547,10 +541,10 @@ func load_params(slot):
 			if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
 				character.set_target_node(get_node(dd.target_path))
 			
-			play_initial_cutscene(character)
-			
 			if ("is_crouching" in dd and dd.is_crouching):
-				character.sit_down()
+				character.is_crouching = dd.is_crouching
+			
+			character.set_look_transition()
 
 	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT.duplicate(true)
 	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT.duplicate(true)

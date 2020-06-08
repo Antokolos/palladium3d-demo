@@ -12,7 +12,7 @@ Can't you just phone your hotel?	# actor:player # voiceover:311_can't_you_just_p
 My cell phone provider has no coverage here. What is your name?	# actor:female # voiceover:356_my_cell_phone_provider.ogg
 Andreas.	# actor:player # voiceover:312_Andreas.ogg
 And I'm Xenia. Are you by any chance an archeologist?	# actor:female # voiceover:357_1_and_i'm_Xenia.ogg
-...	# actor:player
+...	# actor:player # voiceover:empty.ogg
 You want to know how I guessed? You have a large backpack, but there are no mountains here, so you're not a mountain climber. And as far as I know, only the largest Greek islands have been thoroughly explored by scientists, unlike small islands like this one. That's why I think it's a good place for archeological finds. Did you have the same thoughts?	# actor:female # voiceover:357_you_want_to_know_how.ogg
 Maybe. What were you reading?	# actor:player # voiceover:313_maybe_what_were_you.ogg
 That was just my notes on the Greek sights I wanted to see.	# actor:female # voiceover:358_that_was_just_my_notes.ogg

@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://assets/bandit.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/character.gd" type="Script" id=2]
@@ -19,15 +19,17 @@ filter_enabled = true
 filters = [ ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R" ]
 
 [sub_resource type="AnimationNodeOneShot" id=5]
-fadein_time = 0.0
-fadeout_time = 0.0
+fadein_time = 0.5
+fadeout_time = 0.5
 
 [sub_resource type="AnimationNodeTransition" id=6]
-input_count = 2
+input_count = 3
 input_0/name = "empty"
 input_0/auto_advance = false
 input_1/name = "bandit_pushes_chest_start"
 input_1/auto_advance = false
+input_2/name = "bandit_points_ceiling"
+input_2/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=7]
 input_count = 4
@@ -41,6 +43,8 @@ input_3/name = "squatting"
 input_3/auto_advance = false
 
 [sub_resource type="AnimationNodeOneShot" id=8]
+fadein_time = 0.5
+fadeout_time = 0.5
 
 [sub_resource type="AnimationNodeTransition" id=9]
 input_count = 4
@@ -207,37 +211,40 @@ animation = "b8"
 animation = "b9"
 
 [sub_resource type="AnimationNodeAnimation" id=42]
-animation = "bandit_pushes_chest_start"
+animation = "bandit_points_ceiling"
 
 [sub_resource type="AnimationNodeAnimation" id=43]
-animation = "bandit_squats_reversed"
+animation = "bandit_pushes_chest_start"
 
 [sub_resource type="AnimationNodeAnimation" id=44]
-animation = "bandit_headturn_left"
-
-[sub_resource type="AnimationNodeAnimation" id=45]
-animation = "bandit_headturn_right"
-
-[sub_resource type="AnimationNodeAnimation" id=46]
-animation = "bandit_rest"
-
-[sub_resource type="AnimationNodeAnimation" id=47]
-animation = "bandit_squats"
-
-[sub_resource type="AnimationNodeAnimation" id=48]
-animation = "bandit_squat_rest"
-
-[sub_resource type="AnimationNodeAnimation" id=49]
 animation = "bandit_squats_reversed"
 
+[sub_resource type="AnimationNodeAnimation" id=45]
+animation = "bandit_headturn_left"
+
+[sub_resource type="AnimationNodeAnimation" id=46]
+animation = "bandit_headturn_right"
+
+[sub_resource type="AnimationNodeAnimation" id=47]
+animation = "bandit_rest"
+
+[sub_resource type="AnimationNodeAnimation" id=48]
+animation = "bandit_squats"
+
+[sub_resource type="AnimationNodeAnimation" id=49]
+animation = "bandit_squat_rest"
+
 [sub_resource type="AnimationNodeAnimation" id=50]
-animation = "bandit_walks_2"
+animation = "bandit_squats_reversed"
 
 [sub_resource type="AnimationNodeAnimation" id=51]
+animation = "bandit_walks_2"
+
+[sub_resource type="AnimationNodeAnimation" id=52]
 animation = "bandit_crouches_squatted"
 
-[sub_resource type="AnimationNodeBlendTree" id=52]
-graph_offset = Vector2( 1673, 88.8773 )
+[sub_resource type="AnimationNodeBlendTree" id=53]
+graph_offset = Vector2( 1049.01, 40.75 )
 nodes/Animation/node = SubResource( 1 )
 nodes/Animation/position = Vector2( 160, -140 )
 nodes/Blend2_Aux/node = SubResource( 2 )
@@ -320,28 +327,30 @@ nodes/b8/node = SubResource( 40 )
 nodes/b8/position = Vector2( 2440, 1520 )
 nodes/b9/node = SubResource( 41 )
 nodes/b9/position = Vector2( 2440, 1640 )
-nodes/bandit_pushes_chest_start/node = SubResource( 42 )
-nodes/bandit_pushes_chest_start/position = Vector2( 1840, 520 )
-nodes/empty/node = SubResource( 43 )
+nodes/bandit_points_ceiling/node = SubResource( 42 )
+nodes/bandit_points_ceiling/position = Vector2( 1780, 620 )
+nodes/bandit_pushes_chest_start/node = SubResource( 43 )
+nodes/bandit_pushes_chest_start/position = Vector2( 1760, 500 )
+nodes/empty/node = SubResource( 44 )
 nodes/empty/position = Vector2( 1840, 380 )
-nodes/headturn_left/node = SubResource( 44 )
+nodes/headturn_left/node = SubResource( 45 )
 nodes/headturn_left/position = Vector2( 260, 280 )
-nodes/headturn_right/node = SubResource( 45 )
+nodes/headturn_right/node = SubResource( 46 )
 nodes/headturn_right/position = Vector2( 260, 140 )
-nodes/look/node = SubResource( 46 )
+nodes/look/node = SubResource( 47 )
 nodes/look/position = Vector2( -580, -780 )
 nodes/output/position = Vector2( 2980, 460 )
-nodes/sit_down/node = SubResource( 47 )
+nodes/sit_down/node = SubResource( 48 )
 nodes/sit_down/position = Vector2( -200, -460 )
-nodes/squat_rest/node = SubResource( 48 )
+nodes/squat_rest/node = SubResource( 49 )
 nodes/squat_rest/position = Vector2( -220, -340 )
-nodes/stand_up/node = SubResource( 49 )
+nodes/stand_up/node = SubResource( 50 )
 nodes/stand_up/position = Vector2( -200, -820 )
-nodes/walk/node = SubResource( 50 )
+nodes/walk/node = SubResource( 51 )
 nodes/walk/position = Vector2( 140, -260 )
-nodes/walk_squat/node = SubResource( 51 )
+nodes/walk_squat/node = SubResource( 52 )
 nodes/walk_squat/position = Vector2( 60, -20 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "bandit_pushes_chest_start", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
+node_connections = [ "output", 0, "Blend2_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "bandit_pushes_chest_start", "CutsceneTransition", 2, "bandit_points_ceiling", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
 
 [node name="bandit" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -355,7 +364,7 @@ bones/57/bound_children = [ NodePath("spine01BoneAttachment") ]
 
 [node name="spine01BoneAttachment" parent="Bandit_armature" index="1"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, -0.316073, -0.948743, 0, 0.948737, -0.316069, 0, 12.8705, -0.461139 )
+transform = Transform( 1, 0, 0, 0, -0.345585, -0.938396, 0, 0.93839, -0.345581, 0, 12.8757, -0.396142 )
 
 [node name="Bandit:Eyebrow012" parent="Bandit_armature" index="2"]
 layers = 3
@@ -379,7 +388,7 @@ layers = 3
 layers = 3
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 52 )
+tree_root = SubResource( 53 )
 anim_player = NodePath("../Bandit_armature/AnimationPlayer")
 active = true
 parameters/Blend2_Aux/blend_amount = 1.0

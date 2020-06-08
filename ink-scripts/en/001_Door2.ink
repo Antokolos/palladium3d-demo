@@ -1,7 +1,7 @@
 Wow! How did you find that? Where do these stairs lead?	# actor:female # voiceover:374_wow_how_did_you_find.ogg
 What are you doing here?	# actor:player # voiceover:433_what_are_you_doing.ogg
 I couldn't find the boat and decided to return. You probably forgot to tie it up and the tide swept it out to the sea. Can I go with you now?	# actor:female # voiceover:375_i_couldn't_find_the_boat.ogg
-...	# actor:player
+...	# actor:player # voiceover:empty.ogg
 Ha, your silence means consent! Besides, now you can't let me go, because I might let the world know about your little find, and a bunch of archeologists will be here pretty soon with their shovels ready.	# actor:female # voiceover:376_ha_your_silence_means.ogg
 Are you blackmailing me?	# actor:player # voiceover:333_are_you_blackmailing_me.ogg
 Relax, I'm just kidding! You have no sense of humor whatsoever.	# actor:female # voiceover:377_relax_i'm_just_kidding.ogg

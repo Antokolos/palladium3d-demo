@@ -9,6 +9,7 @@ const AvailableLocales = ["en", "ru"]
 const TagSeparator = ":"
 const TagParts : int = 2
 const PARTY_VAR_PREFIX : String = "party_"
+const CUTSCENE_VAR_PREFIX : String = "cutscene_"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
@@ -139,6 +140,13 @@ func _observe_party(variable_name, new_value) -> void:
 	elif not v and party[name_hint]:
 		game_params.leave_party(name_hint)
 
+func _observe_cutscene(variable_name, new_value) -> void:
+	var v : int = int(new_value)
+	var party = game_params.party
+	var name_hint = variable_name.substr(CUTSCENE_VAR_PREFIX.length(), variable_name.length())
+	var character = game_params.get_character(name_hint)
+	character.play_cutscene(v)
+
 func init_variables() -> void:
 	var storyVars : Dictionary = game_params.story_vars
 	var party : Dictionary = game_params.party
@@ -155,10 +163,15 @@ func init_variables() -> void:
 					story.observe_variable(key, self, "_observe_variable")
 			for party_key in party_keys:
 				var story_key : String = PARTY_VAR_PREFIX + party_key;
+				var cutscene_key : String = CUTSCENE_VAR_PREFIX + party_key;
 				if story.variables_state.global_variable_exists_with_name(story_key):
 					story.variables_state.set(story_key, party[party_key])
 					story.remove_variable_observer(self, "_observe_party", story_key)
 					story.observe_variable(story_key, self, "_observe_party")
+				if story.variables_state.global_variable_exists_with_name(cutscene_key):
+					story.variables_state.set(cutscene_key, 0)  # No cutscene by default, the cutscene will be activated during dialogue if it will be set to  value > 0
+					story.remove_variable_observer(self, "_observe_cutscene", cutscene_key)
+					story.observe_variable(cutscene_key, self, "_observe_cutscene")
 
 func reset() -> void:
 	for locale in AvailableLocales:
@@ -183,6 +196,38 @@ func get_slot_caption(slot : int) -> String:
 func get_save_file_path(slot : int, locale : String, storyPath : String) -> String:
 	return "user://saves/slot_%d/ink-scripts/%s/%s.sav" % [ slot, locale, storyPath ]
 
+func get_month_as_string(m):
+	match m:
+		1:
+			return "Jan"
+		2:
+			return "Feb"
+		3:
+			return "Mar"
+		4:
+			return "Apr"
+		5:
+			return "May"
+		6:
+			return "Jun"
+		7:
+			return "Jul"
+		8:
+			return "Aug"
+		9:
+			return "Sep"
+		10:
+			return "Oct"
+		11:
+			return "Nov"
+		12:
+			return "Dec"
+		_:
+			return ""
+
+func datetime_as_string(dt):
+	return "%0*d %s %d, %0*d:%0*d:%0*d" % [2, dt.day, get_month_as_string(dt.month), dt.year, 2, dt.hour, 2, dt.minute, 2, dt.second]
+
 # Saves all stories from the _inkStories dictionary. Each one will create its own file in the user's profile folder.
 func save_all(slot : int) -> void:
 	for locale in _inkStories:
@@ -197,7 +242,7 @@ func save_all(slot : int) -> void:
 			saveFile.close()
 	var slotCaptionFile : File = File.new()
 	slotCaptionFile.open(get_slot_caption_file_path(slot), File.WRITE)
-	slotCaptionFile.store_string(str(OS.get_datetime()))
+	slotCaptionFile.store_string(datetime_as_string(OS.get_datetime()))
 	slotCaptionFile.close()
 
 func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PalladiumStory) -> bool:
