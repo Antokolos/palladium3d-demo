@@ -43,10 +43,9 @@ func start_area_conversation(conversation_name):
 		start_conversation(player, conversation_name)
 
 func stop_conversation(player):
-	if not conversation_name:
+	if not conversation_is_in_progress():
 		# Already stopped
 		return
-	lipsync_manager.stop_sound_and_lipsync()
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
 	var conversation_name_prev = conversation_name
@@ -55,7 +54,7 @@ func stop_conversation(player):
 	conversation_name = null
 	target = null
 	initiator = null
-	is_finalizing = false
+	#is_finalizing = false -- this had some troubles with the lipsync_manager, it is better to not touch it now
 	var hud = game_params.get_hud()
 	hud.conversation.visible = false
 	hud.show_game_ui(true)
@@ -251,6 +250,9 @@ func story_proceed(player):
 		$AutocloseTimer.start()
 	conversation.visible = settings.need_subtitles() or can_choose or not has_voiceover
 	display_choices(conversation, choices)
+
+func is_finalizing():
+	return is_finalizing
 
 func clear_choices(conversation):
 	var ch = story_node.get_choices(TranslationServer.get_locale())

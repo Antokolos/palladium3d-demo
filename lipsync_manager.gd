@@ -8,11 +8,19 @@ const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 
+func _ready():
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
+
+func _on_conversation_finished(player, conversation_name, target, initiator):
+	stop_sound_and_lipsync()
+
 func stop_sound_and_lipsync():
 	for character_speaker in game_params.get_characters():
 		character_speaker.get_model().stop_speaking()
 	if $AudioStreamPlayer.is_playing():
 		$AudioStreamPlayer.stop()
+	if not $ShortPhraseTimer.is_stopped():
+		$ShortPhraseTimer.stop()
 
 func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
@@ -92,7 +100,9 @@ func text_to_phonetic(text):
 func _on_AudioStreamPlayer_finished():
 	stop_sound_and_lipsync()
 	var player = game_params.get_player()
-	if story_node.can_choose():
+	if conversation_manager.is_finalizing():
+		conversation_manager.stop_conversation(player)
+	elif story_node.can_choose():
 		var ch = story_node.get_choices(TranslationServer.get_locale())
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
@@ -103,4 +113,7 @@ func _on_AudioStreamPlayer_finished():
 
 func _on_ShortPhraseTimer_timeout():
 	var player = game_params.get_player()
-	conversation_manager.story_choose(player, 0)
+	if conversation_manager.is_finalizing():
+		conversation_manager.stop_conversation(player)
+	else:
+		conversation_manager.story_choose(player, 0)

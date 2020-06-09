@@ -27,12 +27,17 @@ const REST_POSE_CHANGE_TIME_S = 7
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
 export var main_skeleton = "Female_palladium_armature"
+export var backpack_animation_player_path = ""
+export var backpack_speak_animations = {}
+export var backpack_rest_animations = {}
+export var backpack_cutscene_animations = {}
 
 export var rest_shots_max = 2
 export var speak_shots_max = 2
 
 var simple_mode = true
 
+onready var backpack_animation_player = get_node(backpack_animation_player_path) if not backpack_animation_player_path.empty() else null
 onready var speech_timer = get_node("SpeechTimer")
 
 var speech_states = []
@@ -76,6 +81,8 @@ func do_rest_shot(shot_idx):
 	if can_do_rest_shot():
 		$AnimationTree.set("parameters/RestTransition/current", shot_idx)
 		$AnimationTree.set("parameters/RestShot/active", true)
+		if backpack_animation_player and backpack_rest_animations.has(shot_idx):
+			backpack_animation_player.play(backpack_rest_animations[shot_idx])
 
 func stop_rest_shot():
 	$AnimationTree.set("parameters/RestShot/active", false)
@@ -92,6 +99,8 @@ func is_speak_active():
 func do_speak_shot(shot_idx):
 	$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
 	$AnimationTree.set("parameters/SpeakShot/active", true)
+	if backpack_animation_player and backpack_speak_animations.has(shot_idx):
+		backpack_animation_player.play(backpack_speak_animations[shot_idx])
 
 func stop_speak_shot():
 	$AnimationTree.set("parameters/SpeakShot/active", false)
@@ -99,6 +108,8 @@ func stop_speak_shot():
 func play_cutscene(cutscene_id):
 	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
 	$AnimationTree.set("parameters/CutsceneShot/active", true)
+	if backpack_animation_player and backpack_cutscene_animations.has(cutscene_id):
+		backpack_animation_player.play(backpack_cutscene_animations[cutscene_id])
 
 func stop_cutscene():
 	$AnimationTree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
