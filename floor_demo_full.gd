@@ -197,7 +197,7 @@ func _on_AreaApataDone_body_entered(body):
 		conversation_manager.start_area_conversation("011_Hermes")
 
 func _on_EridaTrapTimer_timeout():
-	game_params.set_health(PalladiumPlayer.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
+	game_params.set_health(game_params.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
