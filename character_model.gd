@@ -35,7 +35,7 @@ export var backpack_cutscene_animations = {}
 export var rest_shots_max = 2
 export var speak_shots_max = 2
 
-var simple_mode = true
+var simple_mode = false
 
 onready var backpack_animation_player = get_node(backpack_animation_player_path) if not backpack_animation_player_path.empty() else null
 onready var speech_timer = get_node("SpeechTimer")

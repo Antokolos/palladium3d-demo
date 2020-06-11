@@ -74,7 +74,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://camera.gd"
 }, {
-"base": "KinematicBody",
+"base": "PLDPathfinder",
 "class": "PLDCharacter",
 "language": "GDScript",
 "path": "res://character.gd"
@@ -93,6 +93,11 @@ _global_script_classes=[ {
 "class": "PLDLevel",
 "language": "GDScript",
 "path": "res://palladium_level.gd"
+}, {
+"base": "KinematicBody",
+"class": "PLDPathfinder",
+"language": "GDScript",
+"path": "res://pathfinder.gd"
 }, {
 "base": "PLDCharacter",
 "class": "PLDPlayer",
@@ -157,6 +162,7 @@ _global_script_class_icons={
 "PLDCharacterModel": "",
 "PLDHUD": "",
 "PLDLevel": "",
+"PLDPathfinder": "",
 "PLDPlayer": "",
 "PLDStory": "",
 "Pedestal": "",
