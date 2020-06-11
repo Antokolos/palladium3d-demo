@@ -1,5 +1,5 @@
 extends Node
-class_name PalladiumStory
+class_name PLDStory
 
 # type of variable: "res://addons/inkgd/runtime/story.gd"
 var _inkstory

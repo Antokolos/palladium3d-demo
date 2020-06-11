@@ -134,7 +134,7 @@ func add_material_meshes(pos, scn):
 			var sk = mesh.get_node(mesh.get_skeleton_path())
 			if sk is Skeleton:
 				var sk_path = sk.get_path()
-				var target_dic = character_skeleton_paths if sk.get_parent() is PalladiumCharacter else skeleton_paths
+				var target_dic = character_skeleton_paths if sk.get_parent() is PLDCharacterModel else skeleton_paths
 				if not target_dic.has(sk_path):
 					target_dic[sk_path] = make_skeleton(pos, sk.duplicate(Node.DUPLICATE_USE_INSTANCING))
 					self.add_child(target_dic[sk_path])

@@ -180,7 +180,7 @@ func _on_AreaApata_body_entered(body):
 		bandit.teleport(get_node("BanditSavePosition"))
 		body.teleport(get_node("PlayerTeleportPosition"))
 		get_node("ApataTakeTimer").start()
-		female.play_cutscene(PalladiumCharacter.FEMALE_TAKES_APATA)
+		female.play_cutscene(PLDCharacterModel.FEMALE_TAKES_APATA)
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_ApataTakeTimer_timeout():
@@ -275,7 +275,7 @@ func _on_cutscene_finished(player, cutscene_id):
 	match player.name_hint:
 		game_params.FEMALE_NAME_HINT:
 			match cutscene_id:
-				PalladiumCharacter.FEMALE_TAKES_APATA:
+				PLDCharacterModel.FEMALE_TAKES_APATA:
 					if conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 						var p = game_params.get_player()
 						cutscene_manager.restore_camera(p)
@@ -345,8 +345,8 @@ func _on_arrived_to(player_node, target_node):
 	var pid = get_node("PlayerSavePosition").get_instance_id()
 	var bid = get_node("BanditSavePosition").get_instance_id()
 	if (tid == pid or tid == bid) and player.is_rest_state() and bandit.is_rest_state():
-		bandit.play_cutscene(PalladiumCharacter.BANDIT_CUTSCENE_PUSHES_CHEST_START)
-		player.play_cutscene(PalladiumCharacter.PLAYER_CUTSCENE_PUSHES_CHEST)
+		bandit.play_cutscene(PLDCharacterModel.BANDIT_CUTSCENE_PUSHES_CHEST_START)
+		player.play_cutscene(PLDCharacterModel.PLAYER_CUTSCENE_PUSHES_CHEST)
 		var chest = get_node("Apata_room/apata_chest")
 		chest.do_push()
 

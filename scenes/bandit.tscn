@@ -1,7 +1,9 @@
 [gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://assets/bandit.escn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/character.gd" type="Script" id=2]
+[ext_resource path="res://character_model.gd" type="Script" id=2]
+
+
 
 [sub_resource type="AnimationNodeAnimation" id=1]
 animation = "bandit_runs"

@@ -1,5 +1,5 @@
 extends Camera
-class_name PalladiumCamera
+class_name PLDCamera
 
 onready var flashlight = get_node("Flashlight") if has_node("Flashlight") else null
 onready var flashlight_spot = flashlight.get_node("Flashlight") if flashlight else null

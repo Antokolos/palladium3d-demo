@@ -1,5 +1,5 @@
 extends Navigation
-class_name PalladiumLevel
+class_name PLDLevel
 
 export var is_bright = false
 export var is_inside = true

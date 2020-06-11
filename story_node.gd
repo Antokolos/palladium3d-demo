@@ -13,12 +13,12 @@ const CUTSCENE_VAR_PREFIX : String = "cutscene_"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
-# In C# it was Dictionary<String, PalladiumStory>
+# In C# it was Dictionary<String, PLDStory>
 var _inkStory = Dictionary()
 
 # Contains all ink stories for all locales. Can be used as the stories cache (all possible stories can be preloaded when the game starts).
 # The key is the locale name, the value is the Dictionary whose key is the story path and the value is the story itself.
-# In C# it was Dictionary<String, Dictionary<String, PalladiumStory>>
+# In C# it was Dictionary<String, Dictionary<String, PLDStory>>
 var _inkStories = Dictionary()
 
 func _ready():
@@ -30,7 +30,7 @@ func _exit_tree():
 func _add_runtime():
 	InkRuntime.init(get_tree().root)
 	for locale in AvailableLocales:
-		var storiesByLocale = Dictionary() # new Dictionary<String, PalladiumStory>();
+		var storiesByLocale = Dictionary() # new Dictionary<String, PLDStory>();
 		_inkStories[locale] = storiesByLocale
 	make_slot_dirs(0)
 	make_slot_dirs(1)
@@ -74,7 +74,7 @@ func build_stories_cache_for_locale(storiesDirectoryPath : String, locale : Stri
 			var story = load_story_from_file(storyPath)
 			# TODO: restore story log from save
 			var chatDriven : bool = false # TODO: restore chatDriven from save
-			var palladiumStory : PalladiumStory = PalladiumStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
 			load_save_or_reset(0, locale, storyPath, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
@@ -94,16 +94,16 @@ func check_story_not_finished(storiesDirectoryPath : String, storyPath : String)
 	for locale in AvailableLocales:
 		if not _inkStories.has(locale):
 			continue
-		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PalladiumStory>
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		if storiesByLocale.has(storyPath):
-			var ps : PalladiumStory = storiesByLocale[storyPath]
+			var ps : PLDStory = storiesByLocale[storyPath]
 			var story = ps.get_ink_story() # Story
 			result = result and (story.can_continue or not story.current_choices.empty())
 		else:
 			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
 			var story = load_story_from_file(path) # Story
 			var chatDriven : bool = false # TODO: restore chatDriven from save
-			var palladiumStory : PalladiumStory = PalladiumStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
 			load_save_or_reset(0, locale, path, palladiumStory)
 			storiesByLocale[storyPath] = palladiumStory
 			result = result and (story.can_continue or not story.current_choices.empty())
@@ -115,15 +115,15 @@ func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : 
 			_inkStory.erase(locale)
 		if not _inkStories.has(locale):
 			continue;
-		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PalladiumStory>
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		if storiesByLocale.has(storyPath):
-			var cachedPalladiumStory : PalladiumStory = storiesByLocale[storyPath]
+			var cachedPalladiumStory : PLDStory = storiesByLocale[storyPath]
 			cachedPalladiumStory.set_chat_driven(chatDriven)
 			_inkStory[locale] = cachedPalladiumStory
 		else:
 			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
 			var story = load_story_from_file(path) # Story
-			var palladiumStory : PalladiumStory = PalladiumStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
 			load_save_or_reset(0, locale, path, palladiumStory)
 			storiesByLocale[storyPath] = palladiumStory
 			_inkStory[locale] = palladiumStory
@@ -154,7 +154,7 @@ func init_variables() -> void:
 	var party_keys = party.keys()
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
-			var palladiumStory : PalladiumStory = _inkStory[locale]
+			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			for key in keys:
 				if story.variables_state.global_variable_exists_with_name(key):
@@ -176,7 +176,7 @@ func init_variables() -> void:
 func reset() -> void:
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
-			var palladiumStory : PalladiumStory = _inkStory[locale]
+			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			story.reset_state()
 
@@ -231,9 +231,9 @@ func datetime_as_string(dt):
 # Saves all stories from the _inkStories dictionary. Each one will create its own file in the user's profile folder.
 func save_all(slot : int) -> void:
 	for locale in _inkStories:
-		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PalladiumStory>
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		for path in storiesByLocale:
-			var palladiumStory : PalladiumStory = storiesByLocale[path]
+			var palladiumStory : PLDStory = storiesByLocale[path]
 			var story = palladiumStory.get_ink_story() # Story
 			var savedJson : String = story.state.to_json()
 			var saveFile : File = File.new()
@@ -245,7 +245,7 @@ func save_all(slot : int) -> void:
 	slotCaptionFile.store_string(datetime_as_string(OS.get_datetime()))
 	slotCaptionFile.close()
 
-func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PalladiumStory) -> bool:
+func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PLDStory) -> bool:
 	var story = palladiumStory.get_ink_story() # Story
 	var saveFile : File = File.new()
 	var saveFilePath : String = get_save_file_path(slot, locale, path)
@@ -262,21 +262,21 @@ func load_save_or_reset(slot : int, locale : String, path : String, palladiumSto
 # Reloads state of all stories from the _inkStories dictionary from the save file.
 func reload_all_saves(slot : int) -> void:
 	for locale in _inkStories:
-		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PalladiumStory>
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		for path in storiesByLocale:
-			var palladiumStory : PalladiumStory = storiesByLocale[path]
+			var palladiumStory : PLDStory = storiesByLocale[path]
 			load_save_or_reset(slot, locale, path, palladiumStory)
 
 func can_continue() -> bool:
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
-			var palladiumStory : PalladiumStory = _inkStory[locale]
+			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			if not story.can_continue:
 				return false
 	return true
 
-func update_log(palladiumStory : PalladiumStory, locale : String, text : String, choiceResponse : bool) -> void:
+func update_log(palladiumStory : PLDStory, locale : String, text : String, choiceResponse : bool) -> void:
 	var fullLog : String = ""
 	var story_log = palladiumStory.get_story_log()
 	if story_log.has(locale):
@@ -292,7 +292,7 @@ func continue(choiceResponse : bool) -> Dictionary: # Dictionary<String, String>
 	var result : Dictionary = Dictionary() # Dictionary<String, String>
 	for loc in AvailableLocales:
 		if _inkStory.has(loc):
-			var palladiumStory : PalladiumStory = _inkStory[loc]
+			var palladiumStory : PLDStory = _inkStory[loc]
 			var story = palladiumStory.get_ink_story() # Story
 			var text : String = story.continue()
 			result[loc] = text
@@ -301,14 +301,14 @@ func continue(choiceResponse : bool) -> Dictionary: # Dictionary<String, String>
 
 func current_text(locale : String) -> String:
 	if _inkStory.has(locale):
-		var palladiumStory : PalladiumStory = _inkStory[locale]
+		var palladiumStory : PLDStory = _inkStory[locale]
 		var story = palladiumStory.get_ink_story() # Story
 		return story.current_text
 	return ""
 
 func current_log(locale : String) -> String:
 	if _inkStory.has(locale):
-		var palladiumStory : PalladiumStory = _inkStory[locale]
+		var palladiumStory : PLDStory = _inkStory[locale]
 		var storyLog : Dictionary = palladiumStory.get_story_log() # Dictionary<String, String>
 		if storyLog.has(locale):
 			return storyLog[locale]
@@ -317,14 +317,14 @@ func current_log(locale : String) -> String:
 func chat_driven() -> bool:
 	for loc in AvailableLocales:
 		if _inkStory.has(loc):
-			var palladiumStory : PalladiumStory = _inkStory[loc]
+			var palladiumStory : PLDStory = _inkStory[loc]
 			return palladiumStory.is_chat_driven()
 	return false
 
 func can_choose() -> bool:
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
-			var palladiumStory : PalladiumStory = _inkStory[locale]
+			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			if story.current_choices.empty():
 				return false
@@ -334,7 +334,7 @@ func choose(i : int) -> bool:
 	var success : bool = true
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
-			var palladiumStory : PalladiumStory = _inkStory[locale]
+			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			success = success and (i >= 0 and i < story.current_choices.size())
 			if success:
@@ -350,7 +350,7 @@ func get_current_tags() -> Dictionary: # Dictionary<String, Dictionary<String, S
 func get_current_tags_for_locale(locale : String) -> Dictionary: # Dictionary<String, String>
 	var result : Dictionary = Dictionary() # Dictionary<String, String>
 	if _inkStory.has(locale):
-		var palladiumStory : PalladiumStory = _inkStory[locale]
+		var palladiumStory : PLDStory = _inkStory[locale]
 		var story = palladiumStory.get_ink_story() # Story
 		for tag in story.current_tags:
 			var tagParts = tag.strip_edges().split(TagSeparator, false, TagParts)
@@ -362,7 +362,7 @@ func get_current_tags_for_locale(locale : String) -> Dictionary: # Dictionary<St
 
 func get_choices(locale : String): # -> String[]
 	if _inkStory.has(locale):
-		var palladiumStory : PalladiumStory = _inkStory[locale]
+		var palladiumStory : PLDStory = _inkStory[locale]
 		var story = palladiumStory.get_ink_story() # Story
 		var ret = []
 		for i in range(story.current_choices.size()):

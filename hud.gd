@@ -1,5 +1,5 @@
 extends Control
-class_name PalladiumHUD
+class_name PLDHUD
 
 const MESSAGE_TIMEOUT_ITEM_S = 2
 const MESSAGE_TIMEOUT_MAX_S = 5

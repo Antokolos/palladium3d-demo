@@ -1,4 +1,4 @@
-extends PalladiumLevel
+extends PLDLevel
 
 var player_toggle_enable = true
 

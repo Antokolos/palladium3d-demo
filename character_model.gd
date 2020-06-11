@@ -1,5 +1,5 @@
 extends Spatial
-class_name PalladiumCharacter
+class_name PLDCharacterModel
 
 signal cutscene_finished(player, cutscene_id)
 
