@@ -200,7 +200,8 @@ func _physics_process(delta):
 			var target_position = get_target_position()
 			if not target_position:
 				return
-			var p = get_follow_parameters(target_position, get_global_transform(), target_position)
+			var was_moving = companion_state != COMPANION_STATE.REST
+			var p = get_follow_parameters(was_moving, in_party, target_position, get_global_transform(), target_position)
 			var rotation_angle = p.rotation_angle
 			var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
 			angle_rad_y = 0
