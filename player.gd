@@ -200,8 +200,7 @@ func _physics_process(delta):
 			var target_position = get_target_position()
 			if not target_position:
 				return
-			var was_moving = companion_state != COMPANION_STATE.REST
-			var p = get_follow_parameters(was_moving, in_party, target_position, get_global_transform(), target_position)
+			var p = get_follow_parameters(in_party, target_position, get_global_transform(), target_position)
 			var rotation_angle = p.rotation_angle
 			var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
 			angle_rad_y = 0
@@ -210,10 +209,10 @@ func _physics_process(delta):
 			elif rotation_angle < -0.1:
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 			if angle_rad_y == 0:
-				companion_state = COMPANION_STATE.REST
+#				companion_state = COMPANION_STATE.REST
 				get_model().look(rotation_angle_to_target_deg)
 			else:
-				companion_state = COMPANION_STATE.WALK
+#				companion_state = COMPANION_STATE.WALK
 				get_model().walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
 		else:
 			set_dir(process_input(delta))

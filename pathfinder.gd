@@ -15,21 +15,16 @@ const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 
-enum COMPANION_STATE {REST, WALK, RUN}
-
 onready var pyramid = get_parent()
 
-var companion_state = COMPANION_STATE.REST
+var rest_state = true
 var pathfinding_enabled = true
 var target_node = null
 var path = []
 var angle_rad_y = 0
 
 func is_rest_state():
-	return companion_state == COMPANION_STATE.REST
-
-func is_walk_state():
-	return companion_state == COMPANION_STATE.WALK
+	return rest_state
 
 func has_collisions():
 	var sc = get_slide_count()
@@ -68,7 +63,8 @@ func get_rotation_angle(cur_dir, target_dir):
 	else:
 		return sgn * acos(dot)
 
-func get_follow_parameters(was_moving, in_party, node_to_follow_pos, current_transform, next_position):
+func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next_position):
+	var was_moving = not rest_state
 	var current_position = current_transform.origin
 	var cur_dir = current_transform.basis.xform(Z_DIR)
 	cur_dir.y = 0
@@ -89,21 +85,21 @@ func get_follow_parameters(was_moving, in_party, node_to_follow_pos, current_tra
 		rotation_angle_to_target_deg = rad2deg(get_rotation_angle(cur_dir, mov_vec))
 	
 	return {
-		"was_moving" : was_moving,
 		"next_dir" : next_dir,
 		"rotation_angle" : rotation_angle,
 		"rotation_angle_to_target_deg" : rotation_angle_to_target_deg
 	}
 
-func follow(was_moving, in_party, current_transform, next_position):
-	var p = get_follow_parameters(was_moving, in_party, game_params.get_player().get_global_transform().origin, current_transform, next_position)
+func follow(in_party, current_transform, next_position):
+	var was_moving = not rest_state
+	var p = get_follow_parameters(in_party, game_params.get_player().get_global_transform().origin, current_transform, next_position)
 	var next_dir = p.next_dir
 	var distance = next_dir.length()
 	var rotation_angle = p.rotation_angle
 	var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
 	
 	angle_rad_y = 0
-	if not in_party or is_walk_state():
+	if not in_party or not is_rest_state():
 		if rotation_angle > 0.1:
 			angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
 		elif rotation_angle < -0.1:
@@ -111,7 +107,7 @@ func follow(was_moving, in_party, current_transform, next_position):
 	
 	var dir = Vector3()
 	if not path.empty():
-		companion_state = COMPANION_STATE.WALK
+		rest_state = false
 		if distance <= ALIGNMENT_RANGE:
 			path.pop_front()
 		else:
@@ -119,35 +115,35 @@ func follow(was_moving, in_party, current_transform, next_position):
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	elif in_party and distance > FOLLOW_RANGE:
-		companion_state = COMPANION_STATE.WALK
+		rest_state = false
 		dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
-	elif (in_party and distance > CLOSEUP_RANGE and is_walk_state()) or (not in_party and distance > ALIGNMENT_RANGE):
+	elif (in_party and distance > CLOSEUP_RANGE and not is_rest_state()) or (not in_party and distance > ALIGNMENT_RANGE):
 		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
-				companion_state = COMPANION_STATE.REST
+				rest_state = true
 				emit_signal("arrived_to_boundary", self, target_node)
 				return {
 					"dir" : dir,
-					"companion_state" : companion_state,
+					"rest_state" : rest_state,
 					"rotation_angle_to_target_deg" : rotation_angle_to_target_deg
 				}
-		companion_state = COMPANION_STATE.WALK
+		rest_state = false
 		dir = next_dir.normalized()
 		if not $SoundWalking.is_playing():
 			$SoundWalking.play()
 	else:
 		if in_party:
-			companion_state = COMPANION_STATE.REST
+			rest_state = true
 		else:
 			if was_moving and target_node and angle_rad_y == 0 and distance <= ALIGNMENT_RANGE:
-				companion_state = COMPANION_STATE.REST
+				rest_state = true
 				emit_signal("arrived_to", self, target_node)
 	return {
 		"dir" : dir,
-		"companion_state" : companion_state,
+		"rest_state" : rest_state,
 		"rotation_angle_to_target_deg" : rotation_angle_to_target_deg
 	}
 

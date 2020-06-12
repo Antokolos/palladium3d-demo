@@ -104,7 +104,7 @@ func is_player():
 	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
 func is_player_controlled():
-	return is_in_party() and is_player()
+	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
 
 func sit_down():
 	if $AnimationPlayer.is_playing():
@@ -297,16 +297,12 @@ func _physics_process(delta):
 			var current_transform = get_global_transform()
 			var current_position = current_transform.origin
 			build_path(target_position, in_party)
-			var was_moving = companion_state != COMPANION_STATE.REST
-			var data = follow(was_moving, in_party, current_transform, path.front() if path.size() > 0 else target_position)
+			var data = follow(in_party, current_transform, path.front() if path.size() > 0 else target_position)
 			dir = data.dir
-			var model = get_model()
-			match data.companion_state:
-				COMPANION_STATE.WALK:
-					model.walk(data.rotation_angle_to_target_deg, is_crouching, is_sprinting)
-				COMPANION_STATE.REST:
-					model.look(data.rotation_angle_to_target_deg)
-	
+			if data.rest_state:
+				get_model().look(data.rotation_angle_to_target_deg)
+			else:
+				get_model().walk(data.rotation_angle_to_target_deg, is_crouching, is_sprinting)
 	var is_moving = process_movement(delta)
 	process_rotation(not is_moving)
 

@@ -80,7 +80,7 @@ func _on_RockArea_body_exited(body):
 func _on_BoatArea_body_entered(body):
 	if not body is PLDPlayer \
 		or game_params.is_loading() \
-		or player_female.companion_state != PLDPlayer.COMPANION_STATE.REST:
+		or not player_female.is_rest_state():
 		return
 	var boat_area = get_node("BoatArea")
 	if not boat_area or not boat_area.overlaps_body(player) or not boat_area.overlaps_body(player_female):
