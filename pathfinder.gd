@@ -41,7 +41,7 @@ func set_target_node(node):
 	target_node = node
 
 func get_preferred_target():
-	return target_node if not is_in_party() else (game_params.get_companion() if is_player() else game_params.get_player())
+	return target_node
 
 func get_target_position():
 	var t = get_preferred_target()

@@ -100,6 +100,9 @@ func stop_cutscene():
 func is_cutscene():
 	return get_model().is_cutscene()
 
+func get_preferred_target():
+	return .get_preferred_target() if not is_in_party() else (game_params.get_companion() if is_player() else game_params.get_player())
+
 func is_player():
 	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
