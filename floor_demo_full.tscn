@@ -733,7 +733,7 @@ monitorable = false
 shape = SubResource( 6 )
 
 [node name="InscriptionsPosition" type="Position3D" parent="."]
-transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 14.4634, 3.87822, 39.6227 )
+transform = Transform( -4.37114e-008, -0.234039, 0.972228, 0, 0.972227, 0.23404, -1, 1.02302e-008, -4.24974e-008, 14.3412, 3.87822, 37.0018 )
 
 [node name="ApataDoorPosition" type="Position3D" parent="."]
 transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 20.9597, 3.87822, 39.6227 )
