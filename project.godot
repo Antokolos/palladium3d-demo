@@ -177,7 +177,7 @@ _global_script_class_icons={
 [application]
 
 config/name="palladium"
-run/main_scene="res://main_menu.tscn"
+run/main_scene="res://entry_point.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="palladium"
 config/project_settings_override="user://settings.ini"
