@@ -23,7 +23,6 @@ const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
 
 enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE}
 
-export var name_hint = game_params.PLAYER_NAME_HINT
 export var model_path = "res://scenes/female.tscn"
 
 onready var upper_body_shape = $UpperBody_CollisionShape
@@ -37,14 +36,10 @@ onready var sound = {
 	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg")
 }
 
-var angle_rad_x = 0
 var vel = Vector3()
-var dir = Vector3()
 
-var is_walking = false
 var is_crouching = false
 var is_sprinting = false
-var is_in_jump = false
 
 func _ready():
 	var model_container = get_node("Model")
@@ -78,9 +73,6 @@ func use(player_node):
 
 ### States ###
 
-func is_in_party():
-	return game_params.is_in_party(name_hint)
-
 func rest():
 	get_model().look(0)
 
@@ -99,12 +91,6 @@ func stop_cutscene():
 
 func is_cutscene():
 	return get_model().is_cutscene()
-
-func get_preferred_target():
-	return .get_preferred_target() if not is_in_party() else (game_params.get_companion() if is_player() else game_params.get_player())
-
-func is_player():
-	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
 func is_player_controlled():
 	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
@@ -163,59 +149,45 @@ func set_sprinting(enable):
 		for companion in companions:
 			companion.set_sprinting(enable)
 
-func teleport(node_to):
-	if node_to:
-		clear_path()
-		set_global_transform(node_to.get_global_transform())
-
 func set_sound_walk(mode):
 	var spl = $SoundWalking
 	spl.stop()
 	spl.stream = sound[mode] if sound.has(mode) else null
 	spl.set_unit_db(0)
 
-func shadow_casting_enable(enable):
-	common_utils.shadow_casting_enable(self, enable)
-
 ### Player/target following ###
 
-func set_dir(dir):
-	self.dir = dir
-
 func reset_movement():
-	dir = Vector3()
+	.reset_movement()
 	set_sprinting(false)
 
 func reset_rotation():
-	angle_rad_x = 0
-	angle_rad_y = 0
+	.reset_rotation()
 	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
 	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
 
-func reset_movement_and_rotation():
-	reset_movement()
-	reset_rotation()
-
 func process_rotation(need_to_update_collisions):
-	if angle_rad_x != 0 or angle_rad_y != 0:
-		if need_to_update_collisions:
-			move_and_slide(ZERO_DIR, ZERO_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
-		rotation_helper.rotate_x(angle_rad_x)
-		get_model_holder().rotate_x(angle_rad_x)
-		upper_body_shape.rotate_x(angle_rad_x)
+	if need_to_update_collisions:
+		move_and_slide(-UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+	if angle_rad_y != 0:
 		self.rotate_y(angle_rad_y)
+		return true
+	return false
+
+func get_snap():
+	return UP_DIR
 
 func process_movement(delta):
-	dir.y = 0
-	dir = dir.normalized()
+	var target = dir
+	target.y = 0
+	target = target.normalized()
 
 	vel.y += delta*GRAVITY
 
 	var hvel = vel
 	hvel.y = 0
 
-	var target = dir
 	if is_sprinting:
 		target *= MAX_SPRINT_SPEED
 	else:
@@ -234,14 +206,8 @@ func process_movement(delta):
 	vel.x = hvel.x
 	vel.z = hvel.z
 	
-	vel = move_and_slide_with_snap(vel, ZERO_DIR if is_in_jump else UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
-	is_walking = vel.length() > MIN_MOVEMENT
-	if is_walking:
-		if not $SoundWalking.is_playing():
-			$SoundWalking.play()
-		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
-	else:
-		$SoundWalking.stop()
+	vel = move_and_slide_with_snap(vel, get_snap(), UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+	var is_walking = vel.length() > MIN_MOVEMENT
 	
 	var sc = get_slide_count()
 	var character_collisions = []
@@ -263,12 +229,7 @@ func process_movement(delta):
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
 
-	if is_player_controlled():
-		if is_walking:
-			get_model().walk(0, is_crouching, is_sprinting)
-		else:
-			rest()
-	elif nonchar_collision and pathfinding_enabled:
+	if nonchar_collision and pathfinding_enabled and not is_player_controlled():
 		var v = get_out_vec(nonchar_collision.normal) * NONCHAR_PUSH_STRENGTH
 		clear_path()
 		var current_position = get_global_transform().origin
@@ -289,25 +250,20 @@ func get_out_vec(normal):
 	return (n + coeff * cross).normalized()
 
 func _physics_process(delta):
-	var in_party = is_in_party()
+	if is_cutscene():
+		return
 	if is_low_ceiling() and not is_crouching and is_on_floor():
 		sit_down()
-	if not is_player() or not in_party:
-		if is_cutscene():
-			return
-		var target_position = get_target_position()
-		if target_position:
-			var current_transform = get_global_transform()
-			var current_position = current_transform.origin
-			build_path(target_position, in_party)
-			var data = follow(in_party, current_transform, path.front() if path.size() > 0 else target_position)
-			dir = data.dir
-			if data.rest_state:
-				get_model().look(data.rotation_angle_to_target_deg)
-			else:
-				get_model().walk(data.rotation_angle_to_target_deg, is_crouching, is_sprinting)
 	var is_moving = process_movement(delta)
-	process_rotation(not is_moving)
+	var is_rotating = process_rotation(not is_moving)
+	if is_moving or is_rotating:
+		if not $SoundWalking.is_playing():
+			$SoundWalking.play()
+		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
+		get_model().walk(get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
+	else:
+		$SoundWalking.stop()
+		get_model().look(get_rotation_angle_to_target_deg())
 
 func _on_HealTimer_timeout():
 	if is_player():

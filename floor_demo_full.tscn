@@ -793,7 +793,7 @@ monitorable = false
 shape = SubResource( 11 )
 
 [node name="FemaleSavePosition" type="Position3D" parent="."]
-transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.0948, 1.2, 32.082 )
+transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.2436, 1.2, 31.8215 )
 
 [node name="BanditSavePosition" type="Position3D" parent="."]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.379, 1.2, 32.9622 )

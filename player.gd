@@ -10,6 +10,9 @@ const SHAPE_ROT_MAX_DEG = -90+88
 
 export var initial_player = true
 
+var angle_rad_x = 0
+var is_in_jump = false
+
 func _ready():
 	if initial_player:
 		var camera = load("res://camera.tscn").instance()
@@ -17,6 +20,10 @@ func _ready():
 		camera.rebuild_exceptions(self)
 		game_params.set_player_name_hint(get_name_hint())
 	get_model().set_simple_mode(initial_player)
+
+func reset_rotation():
+	.reset_rotation()
+	angle_rad_x = 0
 
 ### Getting character's parts ###
 
@@ -115,10 +122,6 @@ func process_input(delta):
 		if Input.is_action_just_pressed("movement_jump"):
 			vel.y = JUMP_SPEED
 			is_in_jump = true
-		else:
-			if is_in_jump:
-				$SoundFallingToFloor.play()
-				is_in_jump = false
 	# ----------------------------------
 
 	if is_crouching():
@@ -134,8 +137,11 @@ func process_input(delta):
 	return dir
 
 func process_rotation(need_to_update_collisions):
-	.process_rotation(need_to_update_collisions)
-	if angle_rad_x != 0 or angle_rad_y != 0:
+	var result = .process_rotation(need_to_update_collisions)
+	if angle_rad_x != 0:
+		rotation_helper.rotate_x(angle_rad_x)
+		get_model_holder().rotate_x(angle_rad_x)
+		upper_body_shape.rotate_x(angle_rad_x)
 		var camera_rot = rotation_helper.rotation_degrees
 		var model_rot = Vector3(camera_rot.x, camera_rot.y, camera_rot.z)
 		var shape_rot = upper_body_shape.rotation_degrees
@@ -145,6 +151,11 @@ func process_rotation(need_to_update_collisions):
 		get_model_holder().rotation_degrees = model_rot
 		shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
 		upper_body_shape.rotation_degrees = shape_rot
+		return true
+	return result
+
+func get_snap():
+	return ZERO_DIR if is_in_jump else UP_DIR
 
 func _input(event):
 	if not is_player():
@@ -192,27 +203,8 @@ func _input(event):
 				angle_rad_y = 0
 
 func _physics_process(delta):
-	var in_party = is_in_party()
-	if is_player() and in_party:
-		if cutscene_manager.is_cutscene():
-			set_dir(Vector3())
-			$SoundWalking.stop()
-			var target_position = get_target_position()
-			if not target_position:
-				return
-			var p = get_follow_parameters(in_party, target_position, get_global_transform(), target_position)
-			var rotation_angle = p.rotation_angle
-			var rotation_angle_to_target_deg = p.rotation_angle_to_target_deg
-			angle_rad_y = 0
-			if rotation_angle > 0.1:
-				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
-			elif rotation_angle < -0.1:
-				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
-			if angle_rad_y == 0:
-#				companion_state = COMPANION_STATE.REST
-				get_model().look(rotation_angle_to_target_deg)
-			else:
-#				companion_state = COMPANION_STATE.WALK
-				get_model().walk(rotation_angle_to_target_deg, is_crouching, is_sprinting)
-		else:
-			set_dir(process_input(delta))
+	if is_on_floor() and is_in_jump:
+		is_in_jump = false
+		$SoundFallingToFloor.play()
+	if is_player() and is_in_party() and not is_cutscene() and not cutscene_manager.is_cutscene():
+		set_dir(process_input(delta))
