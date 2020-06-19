@@ -29,8 +29,17 @@ var angle_rad_y = 0
 var dir = Vector3()
 var rotation_angle_to_target_deg = 0
 
+func get_name_hint():
+	return name_hint
+
 func get_rotation_angle_to_target_deg():
 	return rotation_angle_to_target_deg
+
+func is_in_party():
+	return game_params.is_in_party(name_hint)
+
+func is_player():
+	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
 func is_rest_state():
 	return rest_state
@@ -224,12 +233,6 @@ func clear_path():
 	for ch in pyramid.get_node("path_holder").get_children():
 		pyramid.get_node("path_holder").remove_child(ch)
 	path.clear()
-
-func is_in_party():
-	return game_params.is_in_party(name_hint)
-
-func is_player():
-	return game_params.get_player().get_instance_id() == self.get_instance_id()
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

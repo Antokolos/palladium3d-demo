@@ -25,9 +25,6 @@ enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CON
 
 export var model_path = "res://scenes/female.tscn"
 
-onready var upper_body_shape = $UpperBody_CollisionShape
-onready var body_shape = $Body_CollisionShape
-onready var rotation_helper = $Rotation_Helper
 onready var standing_area = $StandingArea
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
@@ -50,9 +47,6 @@ func _ready():
 	game_params.register_player(self)
 
 ### Getting character's parts ###
-
-func get_name_hint():
-	return name_hint
 
 func get_model_holder():
 	return get_node("Model")
@@ -163,9 +157,7 @@ func reset_movement():
 
 func reset_rotation():
 	.reset_rotation()
-	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
-	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
 
 func process_rotation(need_to_update_collisions):
 	if need_to_update_collisions:

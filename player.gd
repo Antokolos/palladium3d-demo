@@ -10,6 +10,9 @@ const SHAPE_ROT_MAX_DEG = -90+88
 
 export var initial_player = true
 
+onready var upper_body_shape = $UpperBody_CollisionShape
+onready var rotation_helper = $Rotation_Helper
+
 var angle_rad_x = 0
 var is_in_jump = false
 
@@ -24,6 +27,9 @@ func _ready():
 func reset_rotation():
 	.reset_rotation()
 	angle_rad_x = 0
+	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
+
 
 ### Getting character's parts ###
 
