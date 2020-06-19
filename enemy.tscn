@@ -84,8 +84,8 @@ resource_local_to_scene = true
 extents = Vector3( 0.161138, 1, 0.146487 )
 
 [node name="enemy" type="KinematicBody" groups=[
-"moving",
 "enemy",
+"moving",
 ]]
 script = ExtResource( 1 )
 name_hint = "skeleton"
