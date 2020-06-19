@@ -1,25 +1,19 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://player.gd" type="Script" id=1]
+[ext_resource path="res://enemy.gd" type="Script" id=1]
 [ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.5
 mid_height = 1.2
 
-[sub_resource type="CapsuleShape" id=5]
-resource_local_to_scene = true
-margin = 0.06
-radius = 0.3
-height = 0.794434
-
-[sub_resource type="CapsuleShape" id=6]
+[sub_resource type="CapsuleShape" id=2]
 resource_local_to_scene = true
 margin = 0.06
 radius = 0.5
 height = 1.2
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=3]
 resource_local_to_scene = true
 extents = Vector3( 0.16, 0.04, 0.16 )
 
@@ -85,15 +79,17 @@ tracks/4/keys = {
 "values": [ 0.8, 0.3 ]
 }
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=5]
 resource_local_to_scene = true
 extents = Vector3( 0.161138, 1, 0.146487 )
 
-[node name="player" type="KinematicBody" groups=[
-"party",
+[node name="enemy" type="KinematicBody" groups=[
 "moving",
+"enemy",
 ]]
 script = ExtResource( 1 )
+name_hint = "skeleton"
+model_path = "res://scenes/greek_skeleton.tscn"
 
 [node name="placeholder" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
@@ -102,23 +98,13 @@ material/0 = null
 
 [node name="Model" type="Spatial" parent="."]
 
-[node name="UpperBody_CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.5, 0 )
-shape = SubResource( 5 )
-
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 
 [node name="Feet_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0 )
-shape = SubResource( 7 )
-
-[node name="Rotation_Helper" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52, 0 )
-
-[node name="Camera" type="Spatial" parent="Rotation_Helper"]
-transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0.6, 0 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/crouch = SubResource( 4 )
@@ -140,7 +126,7 @@ collision_layer = 1024
 collision_mask = 1024
 
 [node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="HealTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -150,5 +136,4 @@ autostart = true
 process_mode = 0
 wait_time = 0.5
 one_shot = true
-[connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]

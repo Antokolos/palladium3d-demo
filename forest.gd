@@ -59,7 +59,7 @@ func on_item_used(player_node, target, item_nam):
 func _on_meeting_started(player, target, initiator):
 	remove_pocket_book()
 	player_female.set_target_node(get_node("PositionBoat"))
-	player_female.play_cutscene(PLDCharacterModel.FEMALE_CUTSCENE_STAND_UP_STUMP)
+	player_female.play_cutscene(PLDFemaleModel.FEMALE_CUTSCENE_STAND_UP_STUMP)
 
 func _on_AreaGrass_body_entered(body):
 	if body.is_in_group("party"):
