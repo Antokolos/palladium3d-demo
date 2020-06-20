@@ -46,14 +46,13 @@ void fragment() {
 	ROUGHNESS = 0.1;
 	NORMALMAP = texture(normalmap, base_uv_offset).rgb;
 	
-	/* It seems that refraction cannot be used together with proximity fade under GLES2 :(
+	/* It seems that refraction cannot be used together with proximity fade under GLES2 :( */
 	// Refraction
 	vec3 ref_normal = normalize( mix(NORMAL,TANGENT * NORMALMAP.x + BINORMAL * NORMALMAP.y + NORMAL * NORMALMAP.z,NORMALMAP_DEPTH) );
 	vec2 ref_ofs = SCREEN_UV - ref_normal.xy * refraction;
 	EMISSION += textureLod(SCREEN_TEXTURE,ref_ofs,ROUGHNESS * 8.0).rgb * (1.0 - ALPHA);
 	ALBEDO *= ALPHA;
 	ALPHA = 1.0;
-	*/
 	
 	// Proximity fade
 	float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
