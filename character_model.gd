@@ -113,6 +113,9 @@ func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	$RestTimer.stop()
 	stop_rest_shot()
 
+func activate(enable):
+	pass
+
 func _process(delta):
 	if not simple_mode:
 		if not is_cutscene():

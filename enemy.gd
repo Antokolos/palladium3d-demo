@@ -23,6 +23,8 @@ func use(player_node):
 	elif hits > MAX_HITS:
 		die()
 	else:
+		if fmod(hits, 2) == 0.0:
+			is_sprinting = true
 		take_damage()
 		hits = hits + 1
 
