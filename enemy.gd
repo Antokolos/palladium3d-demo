@@ -1,7 +1,10 @@
 extends PLDCharacter
 class_name PLDEnemy
 
+const MAX_HITS = 3
+
 var activated = false
+var hits = 0
 
 func _ready():
 	pass
@@ -15,10 +18,18 @@ func remove_highlight(player_node):
 	pass
 
 func use(player_node):
-	activate(not activated)
+	if not activated:
+		activate(true)
+	elif hits > MAX_HITS:
+		die()
+	else:
+		take_damage()
+		hits = hits + 1
 
 func activate(enable):
+	hits = 0
 	get_model().activate(enable)
+	$CutsceneTimer.start()
 	activated = enable
 
 func get_preferred_target():
@@ -29,6 +40,12 @@ func is_enemy():
 
 func attack():
 	get_model().attack()
+
+func take_damage():
+	get_model().take_damage()
+
+func die():
+	activate(false)
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)

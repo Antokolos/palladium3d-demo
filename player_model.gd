@@ -97,10 +97,6 @@ func get_lips_transition_by_phoneme(phoneme):
 		_:
 			return -1
 
-func rotate_head(look_angle_deg):
-	.rotate_head(look_angle_deg)
-	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (normalize_angle(look_angle_deg) / 45.0))
-
 func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	.walk(look_angle_deg, is_crouching, is_sprinting)
 	stop_speak_shot()
