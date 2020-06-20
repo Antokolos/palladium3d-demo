@@ -26,6 +26,14 @@ var simple_mode = false
 func _ready():
 	randomize()
 
+func ragdoll_start():
+	$AnimationTree.set_active(false)
+	get_node(main_skeleton).physical_bones_start_simulation()
+
+func ragdoll_stop():
+	get_node(main_skeleton).physical_bones_stop_simulation()
+	$AnimationTree.set_active(true)
+
 func set_simple_mode(sm):
 	simple_mode = sm
 	if simple_mode:

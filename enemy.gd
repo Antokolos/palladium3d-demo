@@ -46,6 +46,7 @@ func take_damage():
 
 func die():
 	activate(false)
+	get_model().ragdoll_start()
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
