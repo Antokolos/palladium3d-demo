@@ -10,6 +10,12 @@ const LOOK_TRANSITION_STANDING = 1
 const LOOK_TRANSITION_SIT_DOWN = 2
 const LOOK_TRANSITION_SQUATTING = 3
 
+const DAMAGE_TRANSITION_FATAL = 0
+const DAMAGE_TRANSITION_NORMAL = 1
+
+const ALIVE_TRANSITION_ALIVE = 0
+const ALIVE_TRANSITION_DEAD = 1
+
 const TRANSITION_LOOK = 0
 const TRANSITION_WALK = 1
 const TRANSITION_RUN = 2
@@ -20,11 +26,16 @@ const REST_POSE_CHANGE_TIME_S = 7
 export var main_skeleton = "Female_palladium_armature"
 
 export var rest_shots_max = 2
+export var ragdoll_enabled = false
 
 var simple_mode = false
 
 func _ready():
 	randomize()
+	ragdoll_stop()
+
+func activate():
+	pass
 
 func ragdoll_start():
 	$AnimationTree.set_active(false)
@@ -93,8 +104,14 @@ func normalize_angle(look_angle_deg):
 func rotate_head(look_angle_deg):
 	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (normalize_angle(look_angle_deg) / 45.0))
 
-func take_damage():
+func take_damage(fatal):
+	if ragdoll_enabled and fatal:
+		ragdoll_start()
+		return
+	$AnimationTree.set("parameters/DamageTransition/current", DAMAGE_TRANSITION_FATAL if fatal else DAMAGE_TRANSITION_NORMAL)
 	$AnimationTree.set("parameters/DamageShot/active", true)
+	if fatal:
+		$AnimationTree.set("parameters/AliveTransition/current", ALIVE_TRANSITION_DEAD)
 
 func set_transition(t):
 	var transition = $AnimationTree.get("parameters/Transition/current")
@@ -112,9 +129,6 @@ func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK))
 	$RestTimer.stop()
 	stop_rest_shot()
-
-func activate(enable):
-	pass
 
 func _process(delta):
 	if not simple_mode:

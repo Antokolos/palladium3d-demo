@@ -102,15 +102,14 @@ model_path = "res://scenes/male.tscn"
 
 [node name="player_female" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.276566, 9.84315, 73.1262 )
-initial_player = false
-initial_companion = true
 name_hint = "female"
+initial_player = false
 
 [node name="player_bandit" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7614, 2.2922, 0 )
-initial_player = false
 name_hint = "bandit"
 model_path = "res://scenes/bandit.tscn"
+initial_player = false
 
 [node name="rat" parent="ViewportContainer/Viewport/palladium" groups=[
 "moving",

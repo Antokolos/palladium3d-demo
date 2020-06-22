@@ -12,27 +12,27 @@ func _ready():
 ### Use target ###
 
 func add_highlight(player_node):
-	return "E: Disable" if activated else "E: Activate"
+	return "E: Hit" if activated else "E: Activate"
 
 func remove_highlight(player_node):
 	pass
 
 func use(player_node):
 	if not activated:
-		activate(true)
+		activate()
 	elif hits > MAX_HITS:
-		die()
+		take_damage(true)
 	else:
 		if fmod(hits, 2) == 0.0:
 			is_sprinting = true
-		take_damage()
+		take_damage(false)
 		hits = hits + 1
 
-func activate(enable):
+func activate():
 	hits = 0
-	get_model().activate(enable)
+	get_model().activate()
 	$CutsceneTimer.start()
-	activated = enable
+	activated = true
 
 func get_preferred_target():
 	return game_params.get_player() if activated else null
@@ -43,12 +43,12 @@ func is_enemy():
 func attack():
 	get_model().attack()
 
-func take_damage():
-	get_model().take_damage()
-
-func die():
-	activate(false)
-	get_model().ragdoll_start()
+func take_damage(fatal):
+	get_model().take_damage(fatal)
+	if fatal:
+		$Body_CollisionShape.disabled = true
+		$Feet_CollisionShape.disabled = true
+		$StandingArea/CollisionShape.disabled = true
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
