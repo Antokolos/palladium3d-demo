@@ -38,6 +38,7 @@ var vel = Vector3()
 
 var is_crouching = false
 var is_sprinting = false
+var has_floor_collision = true
 
 func _ready():
 	var model_container = get_node("Model")
@@ -220,6 +221,7 @@ func process_movement(delta):
 	var character_collisions = []
 	var nonchar_collision = null
 	var characters = [] if sc == 0 else game_params.get_characters()
+	var collides_floor = false
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
 		var has_char_collision = false
@@ -228,7 +230,9 @@ func process_movement(delta):
 				has_char_collision = true
 				character_collisions.append(collision)
 				break
-		if not has_char_collision and not collision.collider.get_collision_mask_bit(2):
+		var is_floor_collision = collision.collider.get_collision_mask_bit(2)
+		collides_floor = collides_floor or is_floor_collision
+		if not has_char_collision and not is_floor_collision:
 			nonchar_collision = collision
 	for collision in character_collisions:
 		var character = collision.collider
@@ -247,7 +251,7 @@ func process_movement(delta):
 		path.push_front(start_position)
 		if DRAW_PATH:
 			draw_path()
-	return is_walking
+	return { "is_walking" : is_walking, "collides_floor" : collides_floor }
 
 func get_out_vec(normal):
 	var n = normal
@@ -264,12 +268,18 @@ func get_push_vec(camera_node):
 func push_back(push_vec):
 	vel = push_vec
 
+func has_floor_collision():
+	return has_floor_collision
+
 func _physics_process(delta):
 	if is_cutscene() or is_dead():
+		has_floor_collision = true
 		return
-	if is_low_ceiling() and not is_crouching and is_on_floor():
+	if is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
-	var is_moving = process_movement(delta)
+	var movement_data = process_movement(delta)
+	has_floor_collision = movement_data.collides_floor
+	var is_moving = movement_data.is_walking
 	var is_rotating = process_rotation(not is_moving)
 	if is_moving or is_rotating:
 		if not $SoundWalking.is_playing():

@@ -124,7 +124,7 @@ func process_input(delta):
 
 	# ----------------------------------
 	# Jumping
-	if is_on_floor():
+	if has_floor_collision():
 		if Input.is_action_just_pressed("movement_jump"):
 			vel.y = JUMP_SPEED
 			is_in_jump = true
@@ -209,7 +209,7 @@ func _input(event):
 				angle_rad_y = 0
 
 func _physics_process(delta):
-	if is_on_floor() and is_in_jump:
+	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
 		$SoundFallingToFloor.play()
 	if is_player() and is_in_party() and not is_movement_disabled() and not cutscene_manager.is_cutscene():

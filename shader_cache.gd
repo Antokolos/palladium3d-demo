@@ -195,9 +195,4 @@ func _process(delta):
 			stage = 0
 
 func refresh():
-	if SHADER_CACHE_ENABLED:
-		stage = 1
-	else:
-		game_params.get_hud().clear_popup_message()
-		game_params.shader_cache_processed()
-		get_tree().call_group("room_enablers", "set_active", true)
+	stage = 1 if SHADER_CACHE_ENABLED else 3
