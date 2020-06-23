@@ -254,6 +254,16 @@ func clear_path():
 		pyramid.get_node("path_holder").remove_child(ch)
 	path.clear()
 
+func get_distance_to_target():
+	var target_position = get_target_position()
+	if target_position:
+		var current_position = get_global_transform().origin
+		var mov_vec = target_position - current_position
+		mov_vec.y = 0
+		return mov_vec.length()
+	else:
+		return 0.0
+
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 

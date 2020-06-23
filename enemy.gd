@@ -2,6 +2,7 @@ extends PLDCharacter
 class_name PLDEnemy
 
 const MAX_HITS = 3
+const TOO_FAR_RANGE = 10
 
 var activated = false
 var hits = 0
@@ -30,6 +31,7 @@ func use(player_node, camera_node):
 
 func activate():
 	hits = 0
+	is_sprinting = false
 	get_model().activate()
 	$CutsceneTimer.start()
 	activated = true
@@ -41,6 +43,7 @@ func is_enemy():
 	return true
 
 func attack():
+	is_sprinting = false
 	get_model().attack()
 
 func take_damage(fatal, camera_node):
@@ -56,4 +59,5 @@ func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
 
 func _physics_process(delta):
-	pass
+	if not is_sprinting and get_distance_to_target() > TOO_FAR_RANGE:
+		is_sprinting = true
