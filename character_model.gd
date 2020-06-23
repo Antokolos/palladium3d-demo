@@ -11,7 +11,8 @@ const LOOK_TRANSITION_SIT_DOWN = 2
 const LOOK_TRANSITION_SQUATTING = 3
 
 const DAMAGE_TRANSITION_FATAL = 0
-const DAMAGE_TRANSITION_NORMAL = 1
+const DAMAGE_TRANSITION_JUMPSCARE = 1
+const DAMAGE_TRANSITION_NORMAL = 2
 
 const ALIVE_TRANSITION_ALIVE = 0
 const ALIVE_TRANSITION_DEAD = 1
@@ -75,6 +76,18 @@ func stop_cutscene():
 	$AnimationTree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
 	$AnimationTree.set("parameters/CutsceneShot/active", false)
 
+func is_movement_disabled():
+	return is_cutscene() or is_dead() or is_taking_damage()
+
+func is_dying():
+	return is_taking_damage() and $AnimationTree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+
+func is_dead():
+	return not is_taking_damage() and $AnimationTree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+
+func is_taking_damage():
+	return $AnimationTree.get("parameters/DamageShot/active")
+
 func is_cutscene():
 	if $AnimationTree.get("parameters/LookTransition/current") > LOOK_TRANSITION_SQUATTING:
 		return true
@@ -105,12 +118,14 @@ func rotate_head(look_angle_deg):
 	$AnimationTree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (normalize_angle(look_angle_deg) / 45.0))
 
 func take_damage(fatal):
-	if ragdoll_enabled and fatal:
+	var alive = not is_dead()
+	if alive and ragdoll_enabled and fatal:
 		ragdoll_start()
 		return
-	$AnimationTree.set("parameters/DamageTransition/current", DAMAGE_TRANSITION_FATAL if fatal else DAMAGE_TRANSITION_NORMAL)
+	var dt = DAMAGE_TRANSITION_JUMPSCARE if not alive else DAMAGE_TRANSITION_FATAL if fatal else DAMAGE_TRANSITION_NORMAL
+	$AnimationTree.set("parameters/DamageTransition/current", dt)
 	$AnimationTree.set("parameters/DamageShot/active", true)
-	if fatal:
+	if alive and fatal:
 		$AnimationTree.set("parameters/AliveTransition/current", ALIVE_TRANSITION_DEAD)
 
 func set_transition(t):

@@ -64,7 +64,7 @@ func close(with_sound = true, speed_scale = 1.0):
 	collision_opened.disabled = true
 	game_params.set_container_state(get_path(), false)
 
-func use(player_node):
+func use(player_node, camera_node):
 	if animation_player.is_playing():
 		return
 	var opened = is_opened()

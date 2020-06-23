@@ -29,7 +29,7 @@ func _ready():
 #	outlined_material = material.duplicate()
 #	outlined_material.next_pass = outline_material
 
-func use(player_node):
+func use(player_node, camera_node):
 	if animation_player.is_playing():
 		return
 	

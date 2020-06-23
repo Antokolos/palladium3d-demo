@@ -1,6 +1,6 @@
 extends StaticBody
 
-func use(player_node):
+func use(player_node, camera_node):
 	game_params.scene_path = "res://forest.tscn"
 	get_tree().change_scene("res://scene_loader.tscn")
 

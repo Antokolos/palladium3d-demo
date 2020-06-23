@@ -75,7 +75,7 @@ func get_item_name():
 		_:
 			return null
 
-func use(player_node):
+func use(player_node, camera_node):
 	if takable_id == TakableIds.APATA and player_node.is_player() and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 		# Cannot be taken by the main player if Apata's trap has not been activated yet
 		return

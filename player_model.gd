@@ -102,7 +102,7 @@ func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
 	stop_speak_shot()
 
 func can_do_speak_shot():
-	return speak_shots_max > 0 and speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD and not is_cutscene() and not is_rest_active() and not is_speak_active()
+	return speak_shots_max > 0 and speech_states.size() > PHRASE_WITH_ANIM_LEN_THRESHOLD and not is_movement_disabled() and not is_rest_active() and not is_speak_active()
 
 func speak(states):
 	speech_states = states

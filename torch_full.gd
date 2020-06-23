@@ -30,7 +30,7 @@ func enable(active, update):
 	if update:
 		game_params.set_light_state(get_path(), active)
 
-func use(player_node):
+func use(player_node, camera_node):
 	var active = not is_active()
 	if active:
 		$AudioStreamLighter.play()

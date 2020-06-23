@@ -16,7 +16,7 @@ export(PedestalIds) var pedestal_id = PedestalIds.NONE
 func connect_signals(level):
 	connect("use_pedestal", level, "use_pedestal")
 
-func use(player_node):
+func use(player_node, camera_node):
 	var hud = game_params.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()

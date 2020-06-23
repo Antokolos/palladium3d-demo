@@ -7,7 +7,7 @@ const STATE_DESTROYED = 1
 func _ready():
 	restore_state()
 
-func use(player_node):
+func use(player_node, camera_node):
 	if game_params.get_multistate_state(get_path()) == STATE_DESTROYED:
 		return
 	destroy_web(true, true)

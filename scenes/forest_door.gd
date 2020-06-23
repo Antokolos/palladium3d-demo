@@ -8,7 +8,7 @@ onready var barn_lock_node = get_parent().get_node("barn_lock")
 func _ready():
 	restore_state()
 
-func use(player_node):
+func use(player_node, camera_node):
 	if anim_player.is_playing() \
 		or game_params.get_multistate_state(get_path()) == STATE_OPENED \
 		or game_params.get_multistate_state(barn_lock_node.get_path()) != BarnLock.STATE_OPENED:

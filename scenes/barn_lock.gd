@@ -6,7 +6,7 @@ const STATE_OPENED = 1
 func _ready():
 	restore_state()
 
-func use(player_node):
+func use(player_node, camera_node):
 	var hud = game_params.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()

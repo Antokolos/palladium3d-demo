@@ -10,7 +10,7 @@ func rebuild_exceptions(player_node):
 func enable(enable):
 	ray.enabled = enable
 
-func action(player_node):
+func action(player_node, camera_node):
 	if not ray.enabled:
 		return
 	
@@ -20,7 +20,7 @@ func action(player_node):
 		if body.get_instance_id() == player_node.get_instance_id():
 			pass
 		elif body.has_method("use"):
-			body.use(player_node)
+			body.use(player_node, camera_node)
 
 func switch_highlight(player_node, body):
 	if action_body == body:

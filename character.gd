@@ -13,6 +13,7 @@ const MIN_MOVEMENT = 0.01
 const UP_DIR = Vector3(0, 1, 0)
 const ZERO_DIR = Vector3(0, 0, 0)
 const PUSH_STRENGTH = 10
+const PUSH_BACK_STRENGTH = 30
 const NONCHAR_PUSH_STRENGTH = 2
 const NONCHAR_COLLISION_RANGE_MAX = 5.9
 
@@ -62,7 +63,7 @@ func add_highlight(player_node):
 func remove_highlight(player_node):
 	pass
 
-func use(player_node):
+func use(player_node, camera_node):
 	pass
 
 ### States ###
@@ -85,6 +86,18 @@ func stop_cutscene():
 
 func is_cutscene():
 	return get_model().is_cutscene()
+
+func is_dying():
+	return get_model().is_dying()
+
+func is_dead():
+	return get_model().is_dead()
+
+func is_taking_damage():
+	return get_model().is_taking_damage()
+
+func is_movement_disabled():
+	return get_model().is_movement_disabled()
 
 func is_player_controlled():
 	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
@@ -162,6 +175,8 @@ func reset_rotation():
 func process_rotation(need_to_update_collisions):
 	if need_to_update_collisions:
 		move_and_slide(-UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+	if is_dying():
+		return false
 	if angle_rad_y != 0:
 		self.rotate_y(angle_rad_y)
 		return true
@@ -171,7 +186,7 @@ func get_snap():
 	return UP_DIR
 
 func process_movement(delta):
-	var target = dir
+	var target = ZERO_DIR if is_movement_disabled() else dir
 	target.y = 0
 	target = target.normalized()
 
@@ -217,7 +232,7 @@ func process_movement(delta):
 			nonchar_collision = collision
 	for collision in character_collisions:
 		var character = collision.collider
-		if not character.is_cutscene() and not character.is_player_controlled():
+		if not character.is_movement_disabled() and not character.is_player_controlled():
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
 
@@ -241,8 +256,16 @@ func get_out_vec(normal):
 	var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
 	return (n + coeff * cross).normalized()
 
+func get_push_vec(camera_node):
+	var cam_z = camera_node.get_global_transform().basis.z.normalized()
+	cam_z.y = 0
+	return -cam_z * PUSH_BACK_STRENGTH
+
+func push_back(push_vec):
+	vel = push_vec
+
 func _physics_process(delta):
-	if is_cutscene():
+	if is_cutscene() or is_dead():
 		return
 	if is_low_ceiling() and not is_crouching and is_on_floor():
 		sit_down()

@@ -53,7 +53,7 @@ func add_highlight(player_node):
 func remove_highlight(player_node):
 	pass
 
-func use(player_node):
+func use(player_node, camera_node):
 	if not conversation_manager.conversation_is_in_progress():
 		game_params.handle_conversation(player_node, self, player_node)
 
@@ -212,5 +212,5 @@ func _physics_process(delta):
 	if is_on_floor() and is_in_jump:
 		is_in_jump = false
 		$SoundFallingToFloor.play()
-	if is_player() and is_in_party() and not is_cutscene() and not cutscene_manager.is_cutscene():
+	if is_player() and is_in_party() and not is_movement_disabled() and not cutscene_manager.is_cutscene():
 		set_dir(process_input(delta))

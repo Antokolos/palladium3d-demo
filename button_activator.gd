@@ -16,7 +16,7 @@ onready var animation_player = get_node(animation_player_path)
 func connect_signals(level):
 	connect("use_button_activator", level, "use_button_activator")
 
-func use(player_node):
+func use(player_node, camera_node):
 	if animation_player.is_playing():
 		return
 	animation_player.play(anim_name)

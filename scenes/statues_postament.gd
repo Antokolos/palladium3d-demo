@@ -5,7 +5,7 @@ export(int) var correct_state = 0
 func _ready():
 	restore_state()
 
-func use(player_node):
+func use(player_node, camera_node):
 	var state = $AnimationTree.get("parameters/Transition/current")
 	var new_state = state + 1 if state < 3 else 1
 	$AnimationTree.set("parameters/Transition/current", new_state)

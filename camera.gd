@@ -134,7 +134,7 @@ func _input(event):
 	if event.is_action_pressed("action"):
 		var player = game_params.get_player()
 		if player:
-			use_point.action(player)
+			use_point.action(player, self)
 	elif event.is_action_pressed("item_preview_toggle"):
 		var hud = game_params.get_hud()
 		if hud and not item_preview.is_opened():

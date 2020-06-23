@@ -17,15 +17,15 @@ func add_highlight(player_node):
 func remove_highlight(player_node):
 	pass
 
-func use(player_node):
+func use(player_node, camera_node):
 	if not activated:
 		activate()
 	elif hits > MAX_HITS:
-		take_damage(true)
+		take_damage(true, camera_node)
 	else:
-		if fmod(hits, 2) == 0.0:
-			is_sprinting = true
-		take_damage(false)
+#		if fmod(hits, 2) == 0.0:
+#			is_sprinting = true
+		take_damage(false, camera_node)
 		hits = hits + 1
 
 func activate():
@@ -43,11 +43,13 @@ func is_enemy():
 func attack():
 	get_model().attack()
 
-func take_damage(fatal):
+func take_damage(fatal, camera_node):
+	stop_cutscene()
 	get_model().take_damage(fatal)
+	push_back(get_push_vec(camera_node))
 	if fatal:
 		$Body_CollisionShape.disabled = true
-		$Feet_CollisionShape.disabled = true
+		$Feet_CollisionShape.disabled = false
 		$StandingArea/CollisionShape.disabled = true
 
 func _on_CutsceneTimer_timeout():
