@@ -2,6 +2,7 @@ extends Spatial
 class_name PLDCharacterModel
 
 signal cutscene_finished(player, cutscene_id)
+signal character_dead(player)
 
 const CUTSCENE_EMPTY = 0
 
@@ -30,6 +31,7 @@ export var rest_shots_max = 2
 export var ragdoll_enabled = false
 
 var simple_mode = false
+var was_dying = false
 
 func _ready():
 	randomize()
@@ -152,6 +154,10 @@ func _process(delta):
 			if cutscene_id > CUTSCENE_EMPTY:
 				var player = get_node("../..")
 				emit_signal("cutscene_finished", player, cutscene_id)
+		if was_dying and is_dead():
+			var player = get_node("../..")
+			emit_signal("character_dead", player)
+		was_dying = is_dying()
 		return
 
 func get_shot_idx(shots_max):
