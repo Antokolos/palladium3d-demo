@@ -186,7 +186,7 @@ func _on_AreaApata_body_entered(body):
 func _on_ApataTakeTimer_timeout():
 	var female = game_params.get_character(game_params.FEMALE_NAME_HINT)
 	var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
-	apata_statue.use(female)
+	apata_statue.use(female, null)
 
 func _on_AreaMuses_body_entered(body):
 	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED and body.is_in_group("party") and body.is_player():
