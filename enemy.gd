@@ -13,7 +13,9 @@ func _ready():
 ### Use target ###
 
 func add_highlight(player_node):
-	return "E: Hit" if activated else "E: Activate"
+	if is_dying() or is_dead():
+		return ""
+	return "E: Shoot" if activated else ""
 
 func remove_highlight(player_node):
 	pass
@@ -47,6 +49,8 @@ func attack():
 	get_model().attack()
 
 func take_damage(fatal, camera_node):
+	if is_dying() or is_dead():
+		return
 	stop_cutscene()
 	get_model().take_damage(fatal)
 	push_back(get_push_vec(camera_node))
