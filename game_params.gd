@@ -40,6 +40,7 @@ const FATHER_NAME_HINT = "father"
 const PLAYER_NAME_HINT = "player"
 const FEMALE_NAME_HINT = "female"
 const BANDIT_NAME_HINT = "bandit"
+const SKELETON_NAME_HINT = "skeleton"
 const PARTY_DEFAULT = {
 	FATHER_NAME_HINT : false,
 	PLAYER_NAME_HINT : true,

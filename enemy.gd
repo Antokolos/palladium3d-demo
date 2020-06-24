@@ -22,7 +22,7 @@ func remove_highlight(player_node):
 
 func use(player_node, camera_node):
 	if not activated:
-		activate()
+		return
 	elif hits > MAX_HITS:
 		take_damage(true, camera_node)
 	else:

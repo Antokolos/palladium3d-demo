@@ -9,7 +9,8 @@ enum PedestalIds {
 	MUSES = 20,
 	ERIDA_LOCK = 30,
 	DEMO_HERMES = 40,
-	DEMO_ARES = 50
+	DEMO_ARES = 50,
+	HEBE_LOCK = 60
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
