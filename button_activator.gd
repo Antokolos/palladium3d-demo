@@ -5,7 +5,8 @@ signal use_button_activator(player_node, button_activator)
 
 enum ButtonActivatorIds {
 	NONE = 0,
-	ERIDA = 10
+	ERIDA = 10,
+	RIDDLE_BUTTON = 20
 }
 export(ButtonActivatorIds) var activator_id = ButtonActivatorIds.NONE
 export var animation_player_path = "../apple_button_armature/AnimationPlayer"
@@ -17,10 +18,10 @@ func connect_signals(level):
 	connect("use_button_activator", level, "use_button_activator")
 
 func use(player_node, camera_node):
+	emit_signal("use_button_activator", player_node, self)
 	if animation_player.is_playing():
 		return
 	animation_player.play(anim_name)
-	emit_signal("use_button_activator", player_node, self)
 
 func add_highlight(player_node):
 	return "E: " + tr("ACTION_PUSH")
