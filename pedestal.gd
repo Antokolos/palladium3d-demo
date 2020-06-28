@@ -19,7 +19,9 @@ enum PedestalIds {
 	ERIS_FLAT = 120,
 	ARES_FLAT = 130,
 	HEBE_FLAT = 140,
-	SWORD = 150
+	SWORD = 150,
+	ARTEMIS_TRAP = 160,
+	ARTEMIS_APHRODITE = 160,
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 

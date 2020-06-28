@@ -89,6 +89,7 @@ func teleport(node_to):
 	if node_to:
 		clear_path()
 		set_global_transform(node_to.get_global_transform())
+		reset_movement_and_rotation()
 
 func set_pathfinding_enabled(enabled):
 	pathfinding_enabled = enabled
