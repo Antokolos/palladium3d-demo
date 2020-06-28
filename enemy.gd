@@ -38,6 +38,9 @@ func activate():
 	$CutsceneTimer.start()
 	activated = true
 
+func is_activated():
+	return activated
+
 func get_preferred_target():
 	return game_params.get_player() if activated else null
 

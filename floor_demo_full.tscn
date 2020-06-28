@@ -269,7 +269,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.76295, 0, 1.47492 )
 collision_mask = 2
 
 [node name="Hermes_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="torch_full11" parent="Hermes_room" instance=ExtResource( 21 )]
 transform = Transform( -0.999908, 0, 0.0135483, 0, 1, 0, -0.0135483, 0, -0.999908, 6.06551, 3.66712, 22.6969 )
@@ -289,6 +288,7 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 7.170
 [node name="postament_flat4" parent="Hermes_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2357, 1.30194, 25.0063 )
+pedestal_id = 110
 
 [node name="statue_hermes" parent="Hermes_room/postament_flat4" instance=ExtResource( 30 )]
 transform = Transform( 0.411541, 0, 0.911391, 0, 1, 0, -0.911391, 0, 0.411541, -0.0030508, 1.44556, 0.0140724 )
@@ -391,6 +391,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5252, 1.20149, 28.9826 )
 [node name="postament_flat" parent="Erida_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 0.0923095, 0, 0.99573, 0, 1, 0, -0.99573, 0, 0.0923095, -26.6657, 1.198, 36.3554 )
+pedestal_id = 120
 
 [node name="statue_erida" parent="Erida_room/postament_flat" instance=ExtResource( 41 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48142, -0.0213776 )
@@ -461,7 +462,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.58078, 0, 1.30258 )
 collision_mask = 2
 
 [node name="Ares_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="torch_full10" parent="Ares_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64801, 3.66712, 22.1418 )
@@ -481,6 +481,7 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -13.8
 [node name="postament_flat2" parent="Ares_room" instance=ExtResource( 29 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26774, 1.19072, 23.0791 )
+pedestal_id = 130
 
 [node name="statue_ares" parent="Ares_room/postament_flat2" instance=ExtResource( 49 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00500202, 1.52472, 0.00882149 )

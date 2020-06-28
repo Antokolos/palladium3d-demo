@@ -74,7 +74,7 @@ visible = false
 [node name="Flashlight" type="SpotLight" parent="Flashlight"]
 transform = Transform( 1, -1.74846e-007, 0, 1.74846e-007, 1, 0, 0, 0, 1, 0, 0, 0 )
 light_color = Color( 1, 0.913725, 0.768627, 1 )
-light_energy = 0.4
+light_energy = 0.2
 light_cull_mask = 4293918721
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
@@ -86,7 +86,7 @@ spot_angle_attenuation = 2.07053
 [node name="OmniLight" type="OmniLight" parent="Flashlight"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 light_color = Color( 1, 0.913725, 0.768627, 1 )
-light_energy = 0.4
+light_energy = 0.2
 light_cull_mask = 4293918721
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3

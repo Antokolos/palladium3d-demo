@@ -27,33 +27,37 @@ func get_door(door_path):
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
+	var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 	match takable_id:
 		Takable.TakableIds.APATA:
 			pass # door_0 is now closed a little bit later, when FEMALE_TAKES_APATA cutscene or corresponding dialogue is ended
 		Takable.TakableIds.HERMES:
-			var pedestal_id = parent.pedestal_id if parent is Pedestal else Pedestal.PedestalIds.NONE
 			match pedestal_id:
 				Pedestal.PedestalIds.ERIDA_LOCK:
 					get_door("door_8").close()
-				_:
+				Pedestal.PedestalIds.HERMES_FLAT:
 					var door = get_door("door_5")
 					var was_opened = door.is_opened()
 					door.open()
 					if not was_opened:
 						game_params.autosave_create()
 		Takable.TakableIds.ERIDA:
-			if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ARMED:
-				get_door("door_8").close()
-				conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[game_params.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
-				game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.ACTIVE
-				$EridaTrapTimer.start()
-				erida_trap_play_sound()
+			match pedestal_id:
+				Pedestal.PedestalIds.ERIS_FLAT:
+					if game_params.story_vars.erida_trap_stage == game_params.EridaTrapStages.ARMED:
+						get_door("door_8").close()
+						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[game_params.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
+						game_params.story_vars.erida_trap_stage = game_params.EridaTrapStages.ACTIVE
+						$EridaTrapTimer.start()
+						erida_trap_play_sound()
 		Takable.TakableIds.ARES:
-			var door = get_door("door_6")
-			var was_opened = door.is_opened()
-			door.open()
-			if not was_opened:
-				game_params.autosave_create()
+			match pedestal_id:
+				Pedestal.PedestalIds.ARES_FLAT:
+					var door = get_door("door_6")
+					var was_opened = door.is_opened()
+					door.open()
+					if not was_opened:
+						game_params.autosave_create()
 
 func erida_trap_play_sound():
 	erida_trap_sound_1.play()

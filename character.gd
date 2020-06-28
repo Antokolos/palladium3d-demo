@@ -261,6 +261,8 @@ func get_out_vec(normal):
 	return (n + coeff * cross).normalized()
 
 func get_push_vec(camera_node):
+	if not camera_node:
+		return ZERO_DIR
 	var cam_z = camera_node.get_global_transform().basis.z.normalized()
 	cam_z.y = 0
 	return -cam_z * PUSH_BACK_STRENGTH

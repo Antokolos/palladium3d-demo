@@ -10,7 +10,16 @@ enum PedestalIds {
 	ERIDA_LOCK = 30,
 	DEMO_HERMES = 40,
 	DEMO_ARES = 50,
-	HEBE_LOCK = 60
+	HEBE_LOCK = 60,
+	APHRODITE_LOCK = 70,
+	HERA_LOCK = 80,
+	ARTEMIS_LOCK = 90,
+	APOLLO_LOCK = 100,
+	HERMES_FLAT = 110,
+	ERIS_FLAT = 120,
+	ARES_FLAT = 130,
+	HEBE_FLAT = 140,
+	SWORD = 150
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
