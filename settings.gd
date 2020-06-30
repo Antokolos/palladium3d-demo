@@ -57,6 +57,9 @@ var speech_volume = SPEECH_VOLUME_DEFAULT
 
 var resolutions = [
 {
+	"height" : 480
+},
+{
 	"height" : 576
 },
 {

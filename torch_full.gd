@@ -1,10 +1,18 @@
 extends StaticBody
 class_name LightSource
 
+signal state_changed(light_source, active)
+
 const DISTANCE_TO_CAMERA_MAX = 36
 
 enum LightIds {
-	NONE = 0
+	NONE = 0,
+	APOLLO_1 = 10,
+	APOLLO_2 = 20,
+	APOLLO_3 = 30,
+	APOLLO_4 = 40,
+	APOLLO_5 = 50,
+	APOLLO_6 = 60
 }
 export(LightIds) var light_id = LightIds.NONE
 export var initially_active = true
@@ -29,6 +37,7 @@ func enable(active, update):
 		torch_light.enable(active)
 	if update:
 		game_params.set_light_state(get_path(), active)
+	emit_signal("state_changed", self, active)
 
 func use(player_node, camera_node):
 	var active = not is_active()
@@ -43,6 +52,9 @@ func add_highlight(player_node):
 
 func remove_highlight(player_node):
 	pass
+
+func connect_signals(level):
+	connect("state_changed", level, "_on_torch_state_changed")
 
 func restore_state():
 	var active = is_active()
