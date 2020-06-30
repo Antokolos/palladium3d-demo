@@ -271,7 +271,7 @@ func push_back(push_vec):
 	vel = push_vec
 
 func has_floor_collision():
-	return has_floor_collision
+	return has_floor_collision or is_on_floor()
 
 func _physics_process(delta):
 	if is_cutscene() or is_dead():
