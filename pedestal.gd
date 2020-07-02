@@ -22,6 +22,7 @@ enum PedestalIds {
 	SWORD = 150,
 	ARTEMIS_TRAP = 160,
 	ARTEMIS_APHRODITE = 160,
+	APOLLO_STATUE = 170
 }
 export(PedestalIds) var pedestal_id = PedestalIds.NONE
 
