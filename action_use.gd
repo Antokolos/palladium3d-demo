@@ -21,29 +21,43 @@ func action(player_node, camera_node):
 			pass
 		elif body.has_method("use"):
 			body.use(player_node, camera_node)
+			return
+	var item = game_params.get_hud().get_active_item()
+	if not item:
+		return
+	var custom_actions = game_params.get_custom_actions(item)
+	if custom_actions.empty():
+		return
+	var event = InputEventAction.new()
+	event.set_action(custom_actions[0])
+	event.set_pressed(true)
+	game_params.execute_custom_action(event, item)
 
 func switch_highlight(player_node, body):
-	if action_body == body:
-		return
 	if action_body:
 		var ref = action_body.get_ref()
 		if ref and ref.has_method("remove_highlight"):
 			ref.remove_highlight(player_node)
-		var main_hud = game_params.get_hud().main_hud
-		main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
-	if body and body.has_method("add_highlight"):
-		var hint_message = body.add_highlight(player_node)
-		var main_hud = game_params.get_hud().main_hud
-		main_hud.get_node("HBoxHints/ActionHintLabel").text = hint_message if hint_message else ""
 	action_body = weakref(body) if body else null
+	var hint_message = body.add_highlight(player_node) if body and body.has_method("add_highlight") else null
+	if hint_message:
+		return hint_message
+	else:
+		var item = game_params.get_hud().get_active_item()
+		if not item:
+			return ""
+		var custom_actions = game_params.get_custom_actions(item)
+		if custom_actions.empty():
+			return ""
+		return common_utils.get_action_key("action") + tr(item.nam + "_" + custom_actions[0])
 
 func highlight(player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
 	if ray.is_colliding():
 		var body = ray.get_collider()
 		if body.get_instance_id() == player_node.get_instance_id():
-			switch_highlight(player_node, null)
+			return switch_highlight(player_node, null)
 		else:
-			switch_highlight(player_node, body)
+			return switch_highlight(player_node, body)
 	else:
-		switch_highlight(player_node, null)
+		return switch_highlight(player_node, null)

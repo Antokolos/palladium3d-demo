@@ -125,19 +125,20 @@ func _process(delta):
 	
 	if use_point:
 		var player = game_params.get_player()
-		use_point.highlight(player)
+		game_params.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = use_point.highlight(player)
 	change_culling()
 
 func _input(event):
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
-	if event.is_action_pressed("action"):
-		var player = game_params.get_player()
-		if player:
-			use_point.action(player, self)
-	elif event.is_action_pressed("item_preview_toggle"):
+	if event.is_action_pressed("item_preview_toggle"):
 		var hud = game_params.get_hud()
 		if hud and not item_preview.is_opened():
 			var item = hud.get_active_item()
 			if item:
+				game_params.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 				item_preview.open_preview(item, hud, flashlight)
+	elif event.is_action_pressed("action"):
+		var player = game_params.get_player()
+		if player:
+			use_point.action(player, self)

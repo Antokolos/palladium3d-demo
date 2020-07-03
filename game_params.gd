@@ -77,9 +77,9 @@ const ITEMS = {
 	"statue_apollo" : { "item_image" : "statue_apollo.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
 	"statue_athena" : { "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
 	"sword_body" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/sword.escn", "can_give" : false, "custom_actions" : [] },
-	"lyre_rat" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_rat.escn", "can_give" : false, "custom_actions" : [] },
-	"lyre_snake" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_snake.escn", "can_give" : false, "custom_actions" : [] },
-	"lyre_spider" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_spider.escn", "can_give" : false, "custom_actions" : [] },
+	"lyre_rat" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_rat.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	"lyre_snake" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_snake.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	"lyre_spider" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_spider.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
@@ -227,6 +227,10 @@ func execute_custom_action(event, item):
 				item.remove()
 				take("barn_lock_key")
 				take("island_map_2")
+			"lyre_snake", "lyre_spider":
+				pass
+			"lyre_rat":
+				pass
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
