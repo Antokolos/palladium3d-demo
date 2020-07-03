@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Apollo_lyre_good_2.ogg-03f71329da235feec6c2eb070ea52fdb.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Apollo_lyre_good_2.ogg"
+dest_files=[ "res://.import/Apollo_lyre_good_2.ogg-03f71329da235feec6c2eb070ea52fdb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
