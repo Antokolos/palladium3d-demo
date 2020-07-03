@@ -50,6 +50,7 @@ const PARTY_DEFAULT = {
 const STORY_VARS_DEFAULT = {
 	"is_game_start" : true,
 	"flashlight_on" : false,
+	"in_lyre_area" : false,
 	"apata_chest_rigid" : 0,
 	"relationship_female" : 0,
 	"relationship_bandit" : 0,
@@ -127,6 +128,13 @@ onready var music = {
 	MusicId.OUTSIDE : load(MUSIC_PATH_TEMPLATE % "underwater.ogg"),
 	MusicId.EXPLORE : null,
 	MusicId.MINOTAUR : load(MUSIC_PATH_TEMPLATE % "sinkingisland.ogg")
+}
+
+enum SoundId {LYRE_CORRECT, LYRE_WRONG}
+const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
+onready var sound = {
+	SoundId.LYRE_CORRECT : load(SOUND_PATH_TEMPLATE % "Apollo_lyre_good_2.ogg"),
+	SoundId.LYRE_WRONG : load(SOUND_PATH_TEMPLATE % "Apollo_bad_lyre_sound.ogg")
 }
 
 var current_music = null
@@ -228,9 +236,12 @@ func execute_custom_action(event, item):
 				take("barn_lock_key")
 				take("island_map_2")
 			"lyre_snake", "lyre_spider":
-				pass
+				play_sound(SoundId.LYRE_WRONG)
+				set_health(PLAYER_NAME_HINT, 0, player_health_max)
 			"lyre_rat":
-				pass
+				play_sound(SoundId.LYRE_CORRECT)
+				if story_vars.in_lyre_area:
+					emit_signal("item_used", item.nam, null)
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
@@ -304,6 +315,15 @@ func change_music_to(music_id):
 		current_music = music_id
 		$MusicPlayer.stream = music[music_id]
 		$MusicPlayer.play()
+
+func play_sound(sound_id, is_loop = false):
+	var stream = sound[sound_id]
+	if stream is AudioStreamOGGVorbis:
+		stream.set_loop(is_loop)
+	elif stream is AudioStreamSample:
+		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_FORWARD if is_loop else AudioStreamSample.LoopMode.LOOP_DISABLED)
+	$SoundPlayer.stream = stream
+	$SoundPlayer.play()
 
 func stop_music():
 	$MusicPlayer.stop()
@@ -383,7 +403,7 @@ func remove(nam, count = 1):
 			return
 
 func item_used(player_node, target, item_nam):
-	emit_signal("item_used", player_node, target, item_nam)
+	emit_signal("item_used", item_nam, target)
 
 func set_quick_item(pos, nam):
 	if pos >= MAX_QUICK_ITEMS:

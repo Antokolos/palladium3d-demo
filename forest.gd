@@ -39,7 +39,7 @@ func use_takable(player_node, takable, parent, was_taken):
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")
 
-func on_item_used(player_node, target, item_nam):
+func on_item_used(item_nam, target):
 	if item_nam == "barn_lock_key" and target is BarnLock:
 		var was_in_party = player_female.is_in_party()
 		if not was_in_party:
