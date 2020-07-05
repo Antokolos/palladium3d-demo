@@ -24,7 +24,8 @@ enum TakableIds {
 	GREEK_SWORD = 170,
 	LYRE_SNAKE = 180,
 	LYRE_RAT = 190,
-	LYRE_SPIDER = 200
+	LYRE_SPIDER = 200,
+	ARGUS_EYES = 210
 }
 export(TakableIds) var takable_id = TakableIds.NONE
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
@@ -82,6 +83,8 @@ func get_item_name():
 			return "lyre_snake"
 		TakableIds.LYRE_SPIDER:
 			return "lyre_spider"
+		TakableIds.ARGUS_EYES:
+			return "argus_eyes"
 		TakableIds.NONE:
 			continue
 		_:
