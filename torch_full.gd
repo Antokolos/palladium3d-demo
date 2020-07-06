@@ -56,6 +56,14 @@ func remove_highlight(player_node):
 func connect_signals(level):
 	connect("state_changed", level, "_on_torch_state_changed")
 
+func decrease_light():
+	torch_fire.decrease_flame()
+	torch_light.decrease_light()
+
+func restore_light():
+	torch_fire.restore_flame()
+	torch_light.restore_light()
+
 func restore_state():
 	var active = is_active()
 	enable(active, false)

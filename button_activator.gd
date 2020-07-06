@@ -6,7 +6,13 @@ signal use_button_activator(player_node, button_activator)
 enum ButtonActivatorIds {
 	NONE = 0,
 	ERIDA = 10,
-	RIDDLE_BUTTON = 20
+	RIDDLE_BUTTON = 20,
+	POMEGRANATE_1 = 30,
+	POMEGRANATE_2 = 40,
+	POMEGRANATE_3 = 50,
+	POMEGRANATE_4 = 60,
+	POMEGRANATE_5 = 70,
+	POMEGRANATE_6 = 80,
 }
 export(ButtonActivatorIds) var activator_id = ButtonActivatorIds.NONE
 export var animation_player_path = "../apple_button_armature/AnimationPlayer"

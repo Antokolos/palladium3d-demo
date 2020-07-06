@@ -15,7 +15,7 @@ extents = Vector3( 0.24, 0.36, 0.2 )
 [node name="camera" type="Camera" groups=[
 "restorable_state",
 ]]
-cull_mask = 1
+cull_mask = 1025
 environment = ExtResource( 1 )
 current = true
 fov = 55.0
@@ -75,7 +75,7 @@ visible = false
 transform = Transform( 1, -1.74846e-007, 0, 1.74846e-007, 1, 0, 0, 0, 1, 0, 0, 0 )
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.2
-light_cull_mask = 4293918721
+light_cull_mask = 4293919745
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 spot_range = 18.0
