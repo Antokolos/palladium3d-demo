@@ -72,14 +72,14 @@ func restore_state():
 		pause()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.DISABLED:
+	if game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.DISABLED:
 		ceiling_sound_stop()
 		if ( \
 			conversation_manager.conversation_is_finished("010-2-3_CeilingUp") \
 			or conversation_manager.conversation_is_in_progress("010-2-3_CeilingUp")
 		):
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
-	elif game_params.story_vars.apata_trap_stage == GameParams.ApataTrapStages.GOING_DOWN:
+	elif game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.GOING_DOWN:
 		if conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
 			var bandit = game_params.get_character(game_params.BANDIT_NAME_HINT)
 			var female = game_params.get_character(game_params.FEMALE_NAME_HINT)

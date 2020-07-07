@@ -56,17 +56,6 @@ func get_model_holder():
 func get_model():
 	return get_model_holder().get_child(0)
 
-### Use target ###
-
-func add_highlight(player_node):
-	return ""
-
-func remove_highlight(player_node):
-	pass
-
-func use(player_node, camera_node):
-	pass
-
 ### States ###
 
 func rest():

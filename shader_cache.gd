@@ -1,5 +1,5 @@
 extends Spatial
-class_name ShaderCache
+class_name PLDShaderCache
 
 const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true

@@ -1,5 +1,5 @@
 extends Spatial
-class_name MenuItem
+class_name PLDMenuItem
 
 export var text_path = "Text023"
 export var sfx_player_over_path = "../../SFXOver"

@@ -30,6 +30,19 @@ var angle_rad_y = 0
 var dir = Vector3()
 var rotation_angle_to_target_deg = 0
 
+### Use target ###
+# It is very similar to the code in PLDUsable,
+# but unfortunately we need the inheritance from KinematicBody
+
+func use(player_node, camera_node):
+	pass
+
+func add_highlight(player_node):
+	return ""
+
+func remove_highlight(player_node):
+	pass
+
 func get_name_hint():
 	return name_hint
 

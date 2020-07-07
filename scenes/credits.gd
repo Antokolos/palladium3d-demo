@@ -1,10 +1,10 @@
-extends MenuItem
+extends PLDMenuItem
 
 onready var spider = get_node("../../menu_spider")
 onready var spotlight = get_parent().get_node("SpotLight")
 
 func click():
-	game_params.get_hud().show_tablet(true, Tablet.ActivationMode.CREDITS)
+	game_params.get_hud().show_tablet(true, PLDTablet.ActivationMode.CREDITS)
 
 func mouse_over():
 	.mouse_over()

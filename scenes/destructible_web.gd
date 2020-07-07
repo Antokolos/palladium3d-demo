@@ -1,4 +1,5 @@
-extends StaticBody
+extends PLDUsable
+class_name PLDDestructibleWeb
 
 signal web_destroyed(web)
 
@@ -11,6 +12,9 @@ func use(player_node, camera_node):
 	if game_params.get_multistate_state(get_path()) == STATE_DESTROYED:
 		return
 	destroy_web(true, true)
+
+func add_highlight(player_node):
+	return "E: " + tr("ACTION_IGNITE")
 
 func destroy_web(with_effects, update_state):
 	if with_effects:
@@ -30,12 +34,6 @@ func _on_DestroyTimer_timeout():
 	$flames.visible = false
 	$spider_web_1.visible = false
 	$spider_web_2.visible = false
-
-func add_highlight(player_node):
-	return "E: " + tr("ACTION_IGNITE")
-
-func remove_highlight(player_node):
-	pass
 
 func restore_state():
 	var state = game_params.get_multistate_state(get_path())

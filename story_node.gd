@@ -1,5 +1,5 @@
 extends Node
-class_name StoryNode
+class_name PLDStoryNode
 
 var InkRuntime = load("res://addons/inkgd/runtime.gd")
 var Story = load("res://addons/inkgd/runtime/story.gd")

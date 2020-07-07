@@ -1,7 +1,7 @@
-extends MenuItem
+extends PLDMenuItem
 
 func click():
-	game_params.get_hud().show_tablet(true, Tablet.ActivationMode.SETTINGS)
+	game_params.get_hud().show_tablet(true, PLDTablet.ActivationMode.SETTINGS)
 
 func mouse_over():
 	.mouse_over()

@@ -1,5 +1,5 @@
-extends RigidBody
-class_name ItemContainer
+extends PLDUsable
+class_name PLDItemContainer
 
 enum ContainerIds {
 	NONE = 0,
@@ -74,14 +74,7 @@ func use(player_node, camera_node):
 		open()
 
 func add_highlight(player_node):
-	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
-#	door_mesh.set_surface_material(surface_idx_door, outlined_material)
 	return "E: " + tr("ACTION_CLOSE") if is_opened() else "E: " + tr("ACTION_OPEN")
-
-func remove_highlight(player_node):
-#	door_mesh.set_surface_material(surface_idx_door, null)
-	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
-	pass
 
 func restore_state():
 	var state = game_params.get_container_state(get_path())

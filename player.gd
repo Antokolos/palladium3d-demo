@@ -42,6 +42,10 @@ func get_cam():
 
 ### Use target ###
 
+func use(player_node, camera_node):
+	if not conversation_manager.conversation_is_in_progress():
+		game_params.handle_conversation(player_node, self, player_node)
+
 func add_highlight(player_node):
 	var hud = game_params.get_hud()
 	var inventory = hud.inventory
@@ -49,13 +53,6 @@ func add_highlight(player_node):
 	if conversation.visible:
 		return ""
 	return game_params.handle_player_highlight(player_node, self)
-
-func remove_highlight(player_node):
-	pass
-
-func use(player_node, camera_node):
-	if not conversation_manager.conversation_is_in_progress():
-		game_params.handle_conversation(player_node, self, player_node)
 
 ### States ###
 

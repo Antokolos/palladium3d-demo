@@ -1,5 +1,5 @@
 extends PLDPlayerModel
-class_name PLDFemaleModel
+class_name FemaleModel
 
 const FEMALE_CUTSCENE_STAND_UP_STUMP = 1
 const FEMALE_TAKES_APATA = 2

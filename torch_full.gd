@@ -1,5 +1,5 @@
-extends StaticBody
-class_name LightSource
+extends PLDUsable
+class_name PLDLightSource
 
 signal state_changed(light_source, active)
 
@@ -49,9 +49,6 @@ func use(player_node, camera_node):
 
 func add_highlight(player_node):
 	return ("E: " + tr("ACTION_EXTINGUISH") if is_active() else "E: " + tr("ACTION_IGNITE"))
-
-func remove_highlight(player_node):
-	pass
 
 func connect_signals(level):
 	connect("state_changed", level, "_on_torch_state_changed")

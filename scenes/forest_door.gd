@@ -1,4 +1,4 @@
-extends StaticBody
+extends PLDUsable
 
 const STATE_OPENED = 1
 
@@ -15,6 +15,11 @@ func use(player_node, camera_node):
 		return
 	door_open(true, true)
 
+func add_highlight(player_node):
+	if game_params.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
+		return "E: " + tr("ACTION_OPEN")
+	return ""
+
 func door_open(with_sound, update_state):
 	get_node("closed_door").disabled = true
 	get_node("opened_door").disabled = false
@@ -23,14 +28,6 @@ func door_open(with_sound, update_state):
 		$AudioStreamPlayer.play()
 	if update_state:
 		game_params.set_multistate_state(get_path(), STATE_OPENED)
-
-func add_highlight(player_node):
-	if game_params.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
-		return "E: " + tr("ACTION_OPEN")
-	return ""
-
-func remove_highlight(player_node):
-	pass
 
 func restore_state():
 	var state = game_params.get_multistate_state(get_path())

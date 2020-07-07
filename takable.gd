@@ -1,5 +1,5 @@
-extends PhysicsBody
-class_name Takable
+extends PLDUsable
+class_name PLDTakable
 
 signal use_takable(player_node, takable, parent, was_taken)
 
@@ -98,6 +98,11 @@ func use(player_node, camera_node):
 	game_params.take(get_item_name())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 
+func add_highlight(player_node):
+	if takable_id == TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+		return ""
+	return "E: " + tr("ACTION_TAKE") if is_present() else ""
+
 func _on_item_taken(nam, cnt):
 	if nam == get_item_name():
 		make_absent()
@@ -131,18 +136,6 @@ func make_absent():
 	visible = false
 	enable_collisions(false)
 	game_params.set_takable_state(get_path(), true)
-
-func add_highlight(player_node):
-	#door_mesh.mesh.surface_set_material(surface_idx_door, null)
-#	door_mesh.set_surface_material(surface_idx_door, outlined_material)
-	if takable_id == TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
-		return ""
-	return "E: " + tr("ACTION_TAKE") if is_present() else ""
-
-func remove_highlight(player_node):
-#	door_mesh.set_surface_material(surface_idx_door, null)
-	#door_mesh.mesh.surface_set_material(surface_idx_door, material)
-	pass
 
 func restore_state():
 	var state = game_params.get_takable_state(get_path())

@@ -1,5 +1,5 @@
 extends Spatial
-class_name Door
+class_name PLDDoor
 
 signal door_state_changed(door_id, opened)
 

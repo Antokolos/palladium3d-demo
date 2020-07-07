@@ -1,5 +1,5 @@
 extends Node
-class_name ConversationManager
+class_name PLDConversationManager
 
 const MEETING_CONVERSATION_PREFIX = "Meeting_"
 const MEETING_CONVERSATION_TEMPLATE = "%s%%s" % MEETING_CONVERSATION_PREFIX

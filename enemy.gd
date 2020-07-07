@@ -12,14 +12,6 @@ func _ready():
 
 ### Use target ###
 
-func add_highlight(player_node):
-	if is_dying() or is_dead():
-		return ""
-	return "E: Shoot" if activated else ""
-
-func remove_highlight(player_node):
-	pass
-
 func use(player_node, camera_node):
 	if not activated:
 		return
@@ -30,6 +22,11 @@ func use(player_node, camera_node):
 #			is_sprinting = true
 		take_damage(false, camera_node)
 		hits = hits + 1
+
+func add_highlight(player_node):
+	if is_dying() or is_dead():
+		return ""
+	return "E: Shoot" if activated else ""
 
 func activate():
 	hits = 0

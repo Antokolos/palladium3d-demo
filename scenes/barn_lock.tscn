@@ -11,6 +11,7 @@ extents = Vector3( 0.271197, 0.243779, 0.219471 )
 "restorable_state",
 ]]
 script = ExtResource( 1 )
+matched_item_names = PoolStringArray( "barn_lock_key" )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0372225, 0.0609417 )

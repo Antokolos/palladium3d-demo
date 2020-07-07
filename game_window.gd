@@ -1,5 +1,5 @@
 extends ViewportContainer
-class_name GameWindow
+class_name PLDGameWindow
 
 const AXIS_VALUE_THRESHOLD = 0.15
 const MOUSE_SENSITIVITY = 30

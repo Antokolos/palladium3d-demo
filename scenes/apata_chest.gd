@@ -1,4 +1,4 @@
-extends ItemContainer
+extends PLDItemContainer
 class_name ApataChest
 
 signal was_translated(chest)

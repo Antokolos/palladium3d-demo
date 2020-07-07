@@ -34,7 +34,7 @@ func remove_pocket_book():
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
-		Takable.TakableIds.ENVELOPE:
+		PLDTakable.TakableIds.ENVELOPE:
 			game_params.remove("island_map")
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")
@@ -59,7 +59,7 @@ func on_item_used(item_nam, target):
 func _on_meeting_started(player, target, initiator):
 	remove_pocket_book()
 	player_female.set_target_node(get_node("PositionBoat"))
-	player_female.play_cutscene(PLDFemaleModel.FEMALE_CUTSCENE_STAND_UP_STUMP)
+	player_female.play_cutscene(FemaleModel.FEMALE_CUTSCENE_STAND_UP_STUMP)
 
 func _on_AreaGrass_body_entered(body):
 	if body.is_in_group("party"):

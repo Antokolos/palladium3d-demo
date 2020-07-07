@@ -1,4 +1,4 @@
-extends MenuItem
+extends PLDMenuItem
 
 onready var rat = get_node("../../rat")
 onready var rat_cover = get_node("../../rat_cover")

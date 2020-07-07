@@ -1,5 +1,5 @@
 extends Node
-class_name GameParams
+class_name PLDGameParams
 
 signal shader_cache_processed()
 signal player_registered(player)

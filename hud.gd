@@ -181,7 +181,7 @@ func _process(delta):
 func show_tablet(is_show):
 	if is_show:
 		pause_game(true)
-		tablet.activate(Tablet.ActivationMode.DESKTOP)
+		tablet.activate(PLDTablet.ActivationMode.DESKTOP)
 	else:
 		tablet.visible = false
 		pause_game(false)

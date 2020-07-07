@@ -24,7 +24,7 @@ func pause_game(enable):
 	dimmer.visible = enable
 	get_tree().paused = enable
 
-func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
+func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 	if is_show:
 		pause_game(true)
 		tablet.activate(activation_mode)
@@ -36,4 +36,4 @@ func show_tablet(is_show, activation_mode = Tablet.ActivationMode.DESKTOP):
 func _unhandled_input(event):
 	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle"):
 		get_tree().set_input_as_handled()
-		show_tablet(true, Tablet.ActivationMode.DESKTOP)
+		show_tablet(true, PLDTablet.ActivationMode.DESKTOP)

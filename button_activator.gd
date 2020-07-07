@@ -1,5 +1,5 @@
-extends StaticBody
-class_name ButtonActivator
+extends PLDUsable
+class_name PLDButtonActivator
 
 signal use_button_activator(player_node, button_activator)
 
@@ -31,6 +31,3 @@ func use(player_node, camera_node):
 
 func add_highlight(player_node):
 	return "E: " + tr("ACTION_PUSH")
-
-func remove_highlight(player_node):
-	pass

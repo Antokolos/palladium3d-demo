@@ -1,4 +1,4 @@
-extends MenuItem
+extends PLDMenuItem
 
 onready var vase_over = get_parent().get_node("menu_vase_octopus_1")
 onready var vase_out = get_parent().get_node("menu_vase_octopus_2")

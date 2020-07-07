@@ -1,5 +1,5 @@
 extends Control
-class_name Tablet
+class_name PLDTablet
 
 onready var tablet_panel = get_node("TabletPanel")
 onready var home_button = get_node("TabletPanel/HomeButton")

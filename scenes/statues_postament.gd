@@ -1,4 +1,4 @@
-extends Spatial
+extends PLDUsable
 
 export(int) var correct_state = 0
 
@@ -12,17 +12,14 @@ func use(player_node, camera_node):
 	game_params.set_multistate_state(get_path(), new_state)
 	$SoundRotation.play()
 
+func add_highlight(player_node):
+	return "E: " + tr("ACTION_TURN")
+
 func is_state_correct():
 	var state = $AnimationTree.get("parameters/Transition/current")
 	if state == 0:
 		state = 3
 	return state == correct_state
-
-func add_highlight(player_node):
-	return "E: " + tr("ACTION_TURN")
-
-func remove_highlight(player_node):
-	pass
 
 func restore_state():
 	$AnimationTree.active = true

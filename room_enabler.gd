@@ -1,5 +1,5 @@
 extends VisibilityNotifier
-class_name RoomEnabler
+class_name PLDRoomEnabler
 
 const REMOVE_FROM_TREE = false
 

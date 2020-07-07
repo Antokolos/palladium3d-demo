@@ -1,5 +1,5 @@
-extends GameWindow
-class_name ViewportHacks
+extends PLDGameWindow
+class_name PLDViewportHacks
 
 # See https://github.com/godotengine/godot/issues/17326
 func _input(event):

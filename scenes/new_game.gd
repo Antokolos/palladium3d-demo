@@ -1,4 +1,4 @@
-extends MenuItem
+extends PLDMenuItem
 
 onready var spotlight = get_parent().get_node("SpotLight")
 

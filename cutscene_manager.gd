@@ -1,5 +1,5 @@
 extends Node
-class_name CutsceneManager
+class_name PLDCutsceneManager
 
 var cutscene_node = null
 var conversation_name = null
