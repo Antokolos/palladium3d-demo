@@ -10,6 +10,7 @@ func use_action(player_node, item):
 	game_params.set_multistate_state(get_path(), STATE_OPENED)
 	$AudioStreamPlayer.play()
 	visible = false
+	return true
 
 func get_use_action_text():
 	return tr("ACTION_OPEN")

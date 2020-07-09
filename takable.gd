@@ -25,7 +25,8 @@ enum TakableIds {
 	LYRE_SNAKE = 180,
 	LYRE_RAT = 190,
 	LYRE_SPIDER = 200,
-	ARGUS_EYES = 210
+	ARGUS_EYES = 210,
+	GREEK_ARROW = 220
 }
 export(TakableIds) var takable_id = TakableIds.NONE
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
@@ -85,6 +86,8 @@ func get_item_name():
 			return "lyre_spider"
 		TakableIds.ARGUS_EYES:
 			return "argus_eyes"
+		TakableIds.GREEK_ARROW:
+			return "greek_arrow"
 		TakableIds.NONE:
 			continue
 		_:
@@ -95,7 +98,7 @@ func use(player_node, camera_node):
 		# Cannot be taken by the main player if Apata's trap has not been activated yet
 		return
 	var was_taken = is_present()
-	game_params.take(get_item_name())
+	game_params.take(get_item_name(), get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 
 func add_highlight(player_node):
@@ -103,8 +106,8 @@ func add_highlight(player_node):
 		return ""
 	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 
-func _on_item_taken(nam, cnt):
-	if nam == get_item_name():
+func _on_item_taken(nam, cnt, item_path):
+	if nam == get_item_name() and item_path == get_path():
 		make_absent()
 
 func _on_item_removed(nam, cnt):

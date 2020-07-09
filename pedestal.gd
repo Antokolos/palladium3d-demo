@@ -33,6 +33,7 @@ func connect_signals(level):
 func use_action(player_node, item):
 	make_present(item)
 	emit_signal("use_pedestal", player_node, self, item.nam)
+	return true
 
 func is_empty():
 	for ch in get_children():

@@ -12,12 +12,11 @@ func use(player_node, camera_node):
 			return
 		hud.inventory.visible = false
 		item.used(player_node, self)
-		if remove_on_use:
+		if use_action(player_node, item) and remove_on_use:
 			item.remove()
-		use_action(player_node, item)
 
 func use_action(player_node, item):
-	pass
+	return true
 
 func item_match(item):
 	if not item:

@@ -7,7 +7,7 @@ const FEMALE_TAKES_APATA = 2
 func _ready():
 	game_params.connect("item_taken", self, "_on_item_taken")
 
-func _on_item_taken(nam, count):
+func _on_item_taken(nam, count, item_path):
 	if main_skeleton == "Female_palladium_armature" and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED: # Apply only to female model and only when the trap is still armed
 		if nam == "statue_apata":
 			var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")

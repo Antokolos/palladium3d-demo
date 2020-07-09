@@ -235,7 +235,7 @@ func _on_shader_cache_processed():
 	if game_params.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 
-func _on_item_taken(nam, cnt):
+func _on_item_taken(nam, cnt, item_path):
 	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], true, MESSAGE_TIMEOUT_ITEM_S)
 	synchronize_items()
 

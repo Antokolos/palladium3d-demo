@@ -3,7 +3,7 @@ class_name PLDGameParams
 
 signal shader_cache_processed()
 signal player_registered(player)
-signal item_taken(nam, count)
+signal item_taken(nam, count, item_path)
 signal item_removed(nam, count)
 signal item_used(player_node, target, item_nam)
 signal health_changed(name_hint, health_current, health_max)
@@ -82,6 +82,7 @@ const ITEMS = {
 	"lyre_snake" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_snake.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	"lyre_spider" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_spider.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	"argus_eyes" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/argus_eyes_pile.escn", "can_give" : false, "custom_actions" : [] },
+	"greek_arrow" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/greek_arrow.escn", "can_give" : false, "custom_actions" : [] },
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
@@ -354,7 +355,7 @@ func get_quick_items_count():
 			result = result + 1
 	return result
 
-func take(nam):
+func take(nam, item_path = null):
 	if not is_item_registered(nam):
 		print("WARN: Unknown item name: " + nam)
 		return
@@ -365,24 +366,24 @@ func take(nam):
 		if not quick_item.nam:
 			quick_item.nam = nam
 			quick_item.count = 1
-			emit_signal("item_taken", nam, quick_item.count)
+			emit_signal("item_taken", nam, quick_item.count, item_path)
 			return
 		if nam == quick_item.nam:
 			quick_item.count = quick_item.count + 1
-			emit_signal("item_taken", nam, quick_item.count)
+			emit_signal("item_taken", nam, quick_item.count, item_path)
 			return
 		maxpos = maxpos + 1
 	if maxpos < MAX_QUICK_ITEMS:
 		quick_items.append({ "nam" : nam, "count" : 1 })
-		emit_signal("item_taken", nam, 1)
+		emit_signal("item_taken", nam, 1, item_path)
 		return
 	for item in inventory:
 		if nam == item.nam:
 			item.count = item.count + 1
-			emit_signal("item_taken", nam, item.count)
+			emit_signal("item_taken", nam, item.count, item_path)
 			return
 	inventory.append({ "nam" : nam, "count" : 1 })
-	emit_signal("item_taken", nam, 1)
+	emit_signal("item_taken", nam, 1, item_path)
 	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 
 func remove(nam, count = 1):
