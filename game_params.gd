@@ -238,7 +238,7 @@ func execute_custom_action(event, item):
 				take("island_map_2")
 			"lyre_snake", "lyre_spider":
 				play_sound(SoundId.LYRE_WRONG)
-				set_health(PLAYER_NAME_HINT, 0, player_health_max)
+				kill_party()
 			"lyre_rat":
 				play_sound(SoundId.LYRE_CORRECT)
 				if story_vars.in_lyre_area:
@@ -434,6 +434,9 @@ func set_quick_item(pos, nam):
 
 func set_player_name_hint(name_hint):
 	player_name_hint = name_hint
+
+func kill_party():
+	set_health(PLAYER_NAME_HINT, 0, player_health_max)
 
 func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters

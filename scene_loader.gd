@@ -5,9 +5,13 @@ onready var label = get_node("VBoxContainer/HBoxContainer/VBoxContainer/Progress
 var loader = null
 
 func _ready():
+	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	game_params.change_music_to(game_params.MusicId.LOADING)
 	loader = ResourceLoader.load_interactive(game_params.scene_path)
+
+func _exit_tree():
+	get_tree().paused = false
 
 func _process(delta):
 	if not loader:

@@ -99,7 +99,7 @@ func _on_Area_body_entered(body):
 		activate()
 
 func _on_Area_body_exited(body):
-	if not active:
+	if not active or game_params.is_loading():
 		return
 	var player = game_params.get_player()
 	if body == player:

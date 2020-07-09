@@ -89,7 +89,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			conversation_manager.start_area_conversation("010-2-2_CeilingStopped")
 		else:
 			# Instantly kills the player if the ceiling is at its lowest point
-			game_params.set_health(game_params.PLAYER_NAME_HINT, 0, game_params.player_health_max)
+			game_params.kill_party()
 
 func _on_conversation_finished(player, conversation_name, target, initiator):
 	match conversation_name:

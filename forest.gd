@@ -67,11 +67,12 @@ func _on_AreaGrass_body_entered(body):
 			body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
 
 func _on_AreaGrass_body_exited(body):
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and not game_params.is_loading():
 		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
-	conversation_manager.arrange_meeting(player, player, player_female)
+	if body.is_in_group("party") and not game_params.is_loading():
+		conversation_manager.arrange_meeting(player, player, player_female)
 
 func _on_RockArea_body_exited(body):
 	if game_params.has_item("envelope") or game_params.has_item("barn_lock_key"):
@@ -96,6 +97,6 @@ func _on_TunnelArea_body_entered(body):
 		body.set_pathfinding_enabled(false)
 
 func _on_TunnelArea_body_exited(body):
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and not game_params.is_loading():
 		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
 		body.set_pathfinding_enabled(true)
