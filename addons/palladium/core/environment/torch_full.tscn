@@ -7,11 +7,6 @@
 [ext_resource path="res://sound/environment/torch_fire.ogg" type="AudioStream" id=5]
 [ext_resource path="res://sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.wav" type="AudioStream" id=6]
 
-
-
-
-
-
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.11
 bottom_radius = 0.11
@@ -21,11 +16,12 @@ height = 0.01
 radius = 0.15
 height = 0.8
 
-[node name="torch_full" type="StaticBody" groups=[
-"torches",
+[node name="torch_full" type="RigidBody" groups=[
 "restorable_state",
+"torches",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.987, 3.964, -3.362 )
+mode = 1
 script = ExtResource( 1 )
 
 [node name="torch_wall" parent="." instance=ExtResource( 2 )]

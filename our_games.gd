@@ -19,8 +19,7 @@ func _ready():
 	back_node.grab_focus()
 
 func _on_Back_pressed():
-	game_params.scene_path = "res://main_menu.tscn"
-	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+	game_params.change_scene("res://main_menu.tscn")
 
 func _on_SiteUrl_meta_clicked(meta):
 	common_utils.open_url("https://nlbproject.com")

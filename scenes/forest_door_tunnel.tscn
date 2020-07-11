@@ -42,7 +42,8 @@ shape = SubResource( 2 )
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -29.8307, 0.55899, -41.6668 )
 shape = SubResource( 3 )
 
-[node name="transition_palladium" type="StaticBody" parent="." index="7"]
+[node name="transition_palladium" type="RigidBody" parent="." index="7"]
+mode = 1
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="transition_palladium" index="0"]

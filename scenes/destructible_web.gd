@@ -1,5 +1,5 @@
 extends PLDUsable
-class_name PLDDestructibleWeb
+class_name DestructibleWeb
 
 signal web_destroyed(web)
 

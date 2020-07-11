@@ -111,10 +111,11 @@ nodes/Transition/position = Vector2( 420, 100 )
 nodes/output/position = Vector2( 640, 100 )
 node_connections = [ "output", 0, "Transition", "Transition", 0, "Rotate0", "Transition", 1, "Rotate1", "Transition", 2, "Rotate2", "Transition", 3, "Rotate3" ]
 
-[node name="statues_postament_3" type="StaticBody" groups=[
-"erida_postaments",
+[node name="statues_postament_3" type="RigidBody" groups=[
 "restorable_state",
+"erida_postaments",
 ]]
+mode = 1
 script = ExtResource( 1 )
 correct_state = 3
 

@@ -282,6 +282,10 @@ func handle_player_highlight(initiator, target):
 	var item = hud.get_active_item()
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
+func change_scene(scene_path):
+	self.scene_path = scene_path
+	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+
 func initiate_load(slot):
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
@@ -294,13 +298,10 @@ func initiate_load(slot):
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
 
-	reset_variables()
-	
 	if ("scene_path" in d):
-		scene_path = d.scene_path
-	slot_to_load_from = slot
-	
-	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+		reset_variables()
+		slot_to_load_from = slot
+		change_scene(d.scene_path)
 
 func is_loading():
 	return slot_to_load_from >= 0

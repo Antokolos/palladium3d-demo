@@ -3,8 +3,7 @@ extends PLDMenuItem
 onready var spotlight = get_parent().get_node("SpotLight")
 
 func click():
-	game_params.scene_path = "res://forest.tscn"
-	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+	game_params.change_scene("res://forest.tscn")
 
 func mouse_over():
 	.mouse_over()

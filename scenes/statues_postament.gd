@@ -1,4 +1,5 @@
 extends PLDUsable
+class_name StatuesPostament
 
 export(int) var correct_state = 0
 

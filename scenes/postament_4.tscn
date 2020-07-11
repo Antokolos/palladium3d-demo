@@ -3,14 +3,13 @@
 [ext_resource path="res://addons/palladium/core/environment/pedestal.gd" type="Script" id=1]
 [ext_resource path="res://assets/postament_4.escn" type="PackedScene" id=2]
 
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.258541, 0.453864, 0.287318 )
 
-[node name="postament_4" type="StaticBody" groups=[
+[node name="postament_4" type="RigidBody" groups=[
 "pedestals",
 ]]
+mode = 1
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

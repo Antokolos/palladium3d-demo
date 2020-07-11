@@ -1,4 +1,4 @@
-extends CollisionObject
+extends RigidBody
 class_name PLDUsable
 
 func use(player_node, camera_node):

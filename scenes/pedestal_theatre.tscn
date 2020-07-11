@@ -2,16 +2,16 @@
 
 [ext_resource path="res://addons/palladium/core/environment/pedestal.gd" type="Script" id=1]
 
-
-
 [sub_resource type="CylinderShape" id=1]
 radius = 0.266584
 height = 0.324263
 
-[node name="pedestal_theatre" type="StaticBody" groups=[
+[node name="pedestal_theatre" type="RigidBody" groups=[
 "pedestals",
 ]]
+mode = 1
 script = ExtResource( 1 )
+pedestal_id = 20
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.193828, 0 )

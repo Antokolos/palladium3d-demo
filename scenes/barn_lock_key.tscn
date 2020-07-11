@@ -3,15 +3,14 @@
 [ext_resource path="res://addons/palladium/core/takable.gd" type="Script" id=1]
 [ext_resource path="res://assets/barn_lock_key.escn" type="PackedScene" id=2]
 
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.0105164, 0.0754251, 0.249563 )
 
-[node name="barn_lock_key" type="StaticBody" groups=[
+[node name="barn_lock_key" type="RigidBody" groups=[
 "takables",
 "restorable_state",
 ]]
+mode = 1
 script = ExtResource( 1 )
 takable_id = 160
 

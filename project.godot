@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/barn_lock.gd"
 }, {
+"base": "PLDUsable",
+"class": "DestructibleWeb",
+"language": "GDScript",
+"path": "res://scenes/destructible_web.gd"
+}, {
 "base": "PLDPlayerModel",
 "class": "FemaleModel",
 "language": "GDScript",
@@ -63,11 +68,6 @@ _global_script_classes=[ {
 "class": "PLDCutsceneManager",
 "language": "GDScript",
 "path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
-}, {
-"base": "PLDUsable",
-"class": "PLDDestructibleWeb",
-"language": "GDScript",
-"path": "res://scenes/destructible_web.gd"
 }, {
 "base": "Spatial",
 "class": "PLDDoor",
@@ -169,7 +169,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/takable.gd"
 }, {
-"base": "CollisionObject",
+"base": "RigidBody",
 "class": "PLDUsable",
 "language": "GDScript",
 "path": "res://addons/palladium/core/usable.gd"
@@ -183,11 +183,17 @@ _global_script_classes=[ {
 "class": "PLDViewportHacks",
 "language": "GDScript",
 "path": "res://addons/palladium/ui/viewport_hack.gd"
+}, {
+"base": "PLDUsable",
+"class": "StatuesPostament",
+"language": "GDScript",
+"path": "res://scenes/statues_postament.gd"
 } ]
 _global_script_class_icons={
 "ApataChest": "",
 "BanditModel": "",
 "BarnLock": "",
+"DestructibleWeb": "",
 "FemaleModel": "",
 "MaleModel": "",
 "PLDButtonActivator": "",
@@ -196,7 +202,6 @@ _global_script_class_icons={
 "PLDCharacterModel": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
-"PLDDestructibleWeb": "",
 "PLDDoor": "",
 "PLDEnemy": "",
 "PLDGameParams": "",
@@ -219,7 +224,8 @@ _global_script_class_icons={
 "PLDTakable": "",
 "PLDUsable": "",
 "PLDUseTarget": "",
-"PLDViewportHacks": ""
+"PLDViewportHacks": "",
+"StatuesPostament": ""
 }
 
 [application]

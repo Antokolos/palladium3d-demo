@@ -4,15 +4,14 @@
 [ext_resource path="res://assets/statue_ares.escn" type="PackedScene" id=2]
 [ext_resource path="res://sound/environment/labyrinth_6_statue.ogg" type="AudioStream" id=3]
 
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.146272, 0.488243, 0.102511 )
 
-[node name="statue_ares" type="StaticBody" groups=[
+[node name="statue_ares" type="RigidBody" groups=[
 "takables",
 "restorable_state",
 ]]
+mode = 1
 script = ExtResource( 1 )
 takable_id = 50
 
