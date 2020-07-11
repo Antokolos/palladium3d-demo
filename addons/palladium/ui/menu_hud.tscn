@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/palladium/ui/menu_hud.gd" type="Script" id=2]
+[ext_resource path="res://addons/palladium/assets/fonts/Forum-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=5]
+
+
+
+
+
+
+
+
+
+
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 92
+extra_spacing_bottom = -20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+extra_spacing_char = 8
+font_data = ExtResource( 3 )
+
+[node name="menu_hud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 10.0
+margin_right = 450.0
+margin_bottom = 120.0
+
+[node name="LabelGameName" type="Label" parent="VBoxContainer"]
+margin_right = 440.0
+margin_bottom = 82.0
+custom_fonts/font = SubResource( 1 )
+text = "PALLADIUM"
+
+[node name="LabelGameSubname" type="Label" parent="VBoxContainer"]
+margin_top = 86.0
+margin_right = 440.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 2 )
+text = "ADVENTURE IN GREECE"
+
+[node name="LabelJoyHint" type="Label" parent="."]
+anchor_left = 0.1
+anchor_top = 1.0
+anchor_right = 0.9
+anchor_bottom = 1.0
+grow_vertical = 0
+text = "MAIN_MENU_JOY_HINT"
+align = 1
+valign = 1
+
+[node name="LabelVersion" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "v. 0.10.0"
+align = 2
+valign = 2
+
+[node name="Dimmer" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
+
+[node name="tablet" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="quit_dialog" parent="." instance=ExtResource( 5 )]

@@ -1,0 +1,108 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://addons/palladium/env_opt.tres" type="Environment" id=1]
+[ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=2]
+[ext_resource path="res://addons/palladium/core/culling_rays.gd" type="Script" id=3]
+[ext_resource path="res://addons/palladium/core/action_use.gd" type="Script" id=4]
+[ext_resource path="res://addons/palladium/core/shader_cache.gd" type="Script" id=5]
+[ext_resource path="res://addons/palladium/core/item_preview.gd" type="Script" id=6]
+[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=7]
+[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=8]
+
+
+
+
+
+
+
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.24, 0.36, 0.2 )
+
+[node name="camera" type="Camera" groups=[
+"restorable_state",
+]]
+cull_mask = 1025
+environment = ExtResource( 1 )
+current = true
+fov = 55.0
+far = 23.0
+script = ExtResource( 2 )
+
+[node name="culling_rays" type="Spatial" parent="."]
+editor/display_folded = true
+script = ExtResource( 3 )
+
+[node name="RayCast" type="RayCast" parent="culling_rays"]
+enabled = true
+cast_to = Vector3( 0, 0, -23 )
+collision_mask = 2
+
+[node name="Gun_Fire_Points" type="Spatial" parent="."]
+transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0, -0.05 )
+
+[node name="Rifle_Point" type="Spatial" parent="Gun_Fire_Points"]
+
+[node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Rifle_Point"]
+cast_to = Vector3( 0, 0, 32 )
+
+[node name="Knife_Point" type="Spatial" parent="Gun_Fire_Points"]
+
+[node name="InteractArea" type="Area" parent="Gun_Fire_Points/Knife_Point"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
+input_ray_pickable = false
+
+[node name="Collision_Shape" type="CollisionShape" parent="Gun_Fire_Points/Knife_Point/InteractArea"]
+shape = SubResource( 1 )
+
+[node name="Use_Point" type="Spatial" parent="Gun_Fire_Points"]
+script = ExtResource( 4 )
+
+[node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Use_Point"]
+enabled = true
+cast_to = Vector3( 0, 0, 2 )
+
+[node name="viewpoint" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
+
+[node name="shader_cache" type="Spatial" parent="viewpoint"]
+script = ExtResource( 5 )
+
+[node name="item_preview" type="Spatial" parent="viewpoint"]
+pause_mode = 2
+script = ExtResource( 6 )
+
+[node name="item_holder" type="Spatial" parent="viewpoint/item_preview"]
+
+[node name="Flashlight" type="Spatial" parent="."]
+transform = Transform( -1, -8.74228e-008, 0, 8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.8 )
+visible = false
+
+[node name="Flashlight" type="SpotLight" parent="Flashlight"]
+transform = Transform( 1, -1.74846e-007, 0, 1.74846e-007, 1, 0, 0, 0, 1, 0, 0, 0 )
+light_color = Color( 1, 0.913725, 0.768627, 1 )
+light_energy = 0.2
+light_cull_mask = 4293919745
+shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
+shadow_bias = 0.3
+spot_range = 18.0
+spot_attenuation = 1.7411
+spot_angle = 55.0
+spot_angle_attenuation = 2.07053
+
+[node name="OmniLight" type="OmniLight" parent="Flashlight"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+light_color = Color( 1, 0.913725, 0.768627, 1 )
+light_energy = 0.2
+light_cull_mask = 4293918721
+shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
+shadow_bias = 0.3
+omni_range = 1.5
+
+[node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+bus = "Sound"
+
+[node name="AudioStreamFlashlightOff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "Sound"

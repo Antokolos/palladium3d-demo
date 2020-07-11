@@ -1,7 +1,7 @@
 [gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
-[ext_resource path="res://room_enabler.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/palladium/core/environment/room_enabler.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/door_3.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/granite_base_1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/text_2.tscn" type="PackedScene" id=5]
@@ -20,7 +20,7 @@
 [ext_resource path="res://scenes/vase_1.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/vase_2.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/text_1.tscn" type="PackedScene" id=20]
-[ext_resource path="res://torch_full.tscn" type="PackedScene" id=21]
+[ext_resource path="res://addons/palladium/core/environment/torch_full.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/apatha_add_1.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/ceiling_moving_1.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/apata_chest.tscn" type="PackedScene" id=24]
@@ -75,6 +75,13 @@
 [ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=73]
 [ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=74]
 [ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=75]
+
+
+
+
+
+
+
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )

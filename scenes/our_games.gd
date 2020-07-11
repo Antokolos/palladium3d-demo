@@ -6,7 +6,7 @@ onready var spotlight = get_parent().get_node("SpotLight")
 
 func click():
 	game_params.scene_path = "res://our_games.tscn"
-	get_tree().change_scene("res://scene_loader.tscn")
+	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
 
 func mouse_over():
 	.mouse_over()

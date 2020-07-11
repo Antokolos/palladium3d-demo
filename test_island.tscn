@@ -2,8 +2,13 @@
 
 [ext_resource path="res://assets/forest_floor.material" type="Material" id=1]
 [ext_resource path="res://assets/sand.material" type="Material" id=2]
-[ext_resource path="res://player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://shaders/water_3d/displacement_offset_textured/displacement_offset_textured_material.tres" type="Material" id=4]
+[ext_resource path="res://addons/palladium/core/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/palladium/shaders/water_3d/displacement_offset_textured/displacement_offset_textured_material.tres" type="Material" id=4]
+
+
+
+
+
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Plane"

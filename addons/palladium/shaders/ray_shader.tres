@@ -1,0 +1,57 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+uniform float ray_opacity = 0.5;
+uniform float brightness = 100.0;
+
+// Particle billboard mode params
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+
+void vertex() {
+	// Particle billboard mode
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
+	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor(particle_frame / h_frames) / v_frames);
+}
+
+void fragment() {
+	vec3 c = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
+	float r2 = (UV.x - 0.5) * (UV.x - 0.5) + (UV.y - 0.5) * (UV.y - 0.5);
+	float circ = 1.0 - r2 / 0.25;
+	if (circ < 0.0) {
+		// If it is outside the circle, it is not visible
+		ALPHA = 0.0;
+	} else {
+		// If it is inside the circle, the ALPHA is determined by how far from the center it is
+		c.rgb = mix(vec3(0.0), c.rgb, circ * brightness);
+		ALBEDO = c;
+		ALPHA = circ * ray_opacity;
+	}
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/ray_opacity = 0.5
+shader_param/brightness = 100.0
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = null
+shader_param/particles_anim_h_frames = 1
+shader_param/particles_anim_v_frames = 1
+shader_param/particles_anim_loop = false

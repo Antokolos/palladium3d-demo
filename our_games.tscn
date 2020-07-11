@@ -1,15 +1,19 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://our_games.gd" type="Script" id=2]
-[ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://styles/transparent_panel.tres" type="StyleBox" id=4]
-[ext_resource path="res://assets/images/about/ike.jpg" type="Texture" id=5]
-[ext_resource path="res://assets/images/about/nonlin_tq.jpg" type="Texture" id=6]
-[ext_resource path="res://assets/images/about/advfour.jpg" type="Texture" id=7]
-[ext_resource path="res://assets/images/about/red_hood.jpg" type="Texture" id=8]
-[ext_resource path="res://assets/images/about/the_barbarian.jpg" type="Texture" id=9]
-[ext_resource path="res://assets/images/about/wild_island_quest.jpg" type="Texture" id=10]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://addons/palladium/styles/transparent_panel.tres" type="StyleBox" id=4]
+[ext_resource path="res://addons/palladium/assets/images/about/ike.jpg" type="Texture" id=5]
+[ext_resource path="res://addons/palladium/assets/images/about/nonlin_tq.jpg" type="Texture" id=6]
+[ext_resource path="res://addons/palladium/assets/images/about/advfour.jpg" type="Texture" id=7]
+[ext_resource path="res://addons/palladium/assets/images/about/red_hood.jpg" type="Texture" id=8]
+[ext_resource path="res://addons/palladium/assets/images/about/the_barbarian.jpg" type="Texture" id=9]
+[ext_resource path="res://addons/palladium/assets/images/about/wild_island_quest.jpg" type="Texture" id=10]
+
+
+
+
 
 [sub_resource type="StyleBoxEmpty" id=1]
 

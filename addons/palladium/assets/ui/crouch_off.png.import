@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/crouch_off.png-66ee3b90f537d9e37171f2be38c3b59f.image"
+
+[deps]
+
+source_file="res://addons/palladium/assets/ui/crouch_off.png"
+dest_files=[ "res://.import/crouch_off.png-66ee3b90f537d9e37171f2be38c3b59f.image" ]
+
+[params]
+

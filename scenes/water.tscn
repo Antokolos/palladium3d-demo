@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/water.escn" type="PackedScene" id=1]
-[ext_resource path="res://shaders/water_3d/displacement_offset_textured/displacement_offset_textured_material.tres" type="Material" id=2]
+[ext_resource path="res://addons/palladium/shaders/water_3d/displacement_offset_textured/displacement_offset_textured_material.tres" type="Material" id=2]
+
 
 [node name="water" instance=ExtResource( 1 )]
 

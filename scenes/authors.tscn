@@ -1,11 +1,12 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/authors.gd" type="Script" id=1]
-[ext_resource path="res://styles/tablet_caption_font.tres" type="DynamicFont" id=2]
-[ext_resource path="res://styles/default_font_bi.tres" type="DynamicFont" id=3]
-[ext_resource path="res://styles/default_font_i.tres" type="DynamicFont" id=4]
-[ext_resource path="res://styles/default_font_b.tres" type="DynamicFont" id=5]
-[ext_resource path="res://styles/default_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://addons/palladium/styles/default_font_bi.tres" type="DynamicFont" id=3]
+[ext_resource path="res://addons/palladium/styles/default_font_i.tres" type="DynamicFont" id=4]
+[ext_resource path="res://addons/palladium/styles/default_font_b.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/palladium/styles/default_font.tres" type="DynamicFont" id=6]
+
 
 [node name="credits" type="TextureRect"]
 anchor_right = 1.0

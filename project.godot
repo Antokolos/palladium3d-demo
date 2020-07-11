@@ -37,32 +37,32 @@ _global_script_classes=[ {
 "base": "PLDUsable",
 "class": "PLDButtonActivator",
 "language": "GDScript",
-"path": "res://button_activator.gd"
+"path": "res://addons/palladium/core/environment/button_activator.gd"
 }, {
 "base": "Camera",
 "class": "PLDCamera",
 "language": "GDScript",
-"path": "res://camera.gd"
+"path": "res://addons/palladium/core/camera.gd"
 }, {
 "base": "PLDPathfinder",
 "class": "PLDCharacter",
 "language": "GDScript",
-"path": "res://character.gd"
+"path": "res://addons/palladium/core/character.gd"
 }, {
 "base": "Spatial",
 "class": "PLDCharacterModel",
 "language": "GDScript",
-"path": "res://character_model.gd"
+"path": "res://addons/palladium/core/character_model.gd"
 }, {
 "base": "Node",
 "class": "PLDConversationManager",
 "language": "GDScript",
-"path": "res://conversation_manager.gd"
+"path": "res://addons/palladium/core/singletons/conversation_manager.gd"
 }, {
 "base": "Node",
 "class": "PLDCutsceneManager",
 "language": "GDScript",
-"path": "res://cutscene_manager.gd"
+"path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
 }, {
 "base": "PLDUsable",
 "class": "PLDDestructibleWeb",
@@ -72,117 +72,117 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "PLDDoor",
 "language": "GDScript",
-"path": "res://door.gd"
+"path": "res://addons/palladium/core/environment/door.gd"
 }, {
 "base": "PLDCharacter",
 "class": "PLDEnemy",
 "language": "GDScript",
-"path": "res://enemy.gd"
+"path": "res://addons/palladium/core/enemy.gd"
 }, {
 "base": "Node",
 "class": "PLDGameParams",
 "language": "GDScript",
-"path": "res://game_params.gd"
+"path": "res://addons/palladium/core/singletons/game_params.gd"
 }, {
 "base": "ViewportContainer",
 "class": "PLDGameWindow",
 "language": "GDScript",
-"path": "res://game_window.gd"
+"path": "res://addons/palladium/ui/game_window.gd"
 }, {
 "base": "Control",
 "class": "PLDHUD",
 "language": "GDScript",
-"path": "res://hud.gd"
+"path": "res://addons/palladium/ui/hud.gd"
 }, {
 "base": "PLDUsable",
 "class": "PLDItemContainer",
 "language": "GDScript",
-"path": "res://item_container.gd"
+"path": "res://addons/palladium/core/environment/item_container.gd"
 }, {
 "base": "Navigation",
 "class": "PLDLevel",
 "language": "GDScript",
-"path": "res://palladium_level.gd"
+"path": "res://addons/palladium/core/palladium_level.gd"
 }, {
 "base": "PLDUsable",
 "class": "PLDLightSource",
 "language": "GDScript",
-"path": "res://torch_full.gd"
+"path": "res://addons/palladium/core/environment/torch_full.gd"
 }, {
 "base": "Node",
 "class": "PLDLipsyncManager",
 "language": "GDScript",
-"path": "res://lipsync_manager.gd"
+"path": "res://addons/palladium/core/singletons/lipsync_manager.gd"
 }, {
 "base": "Spatial",
 "class": "PLDMenuItem",
 "language": "GDScript",
-"path": "res://menu_item.gd"
+"path": "res://addons/palladium/core/environment/menu_item.gd"
 }, {
 "base": "KinematicBody",
 "class": "PLDPathfinder",
 "language": "GDScript",
-"path": "res://pathfinder.gd"
+"path": "res://addons/palladium/core/pathfinder.gd"
 }, {
 "base": "PLDUseTarget",
 "class": "PLDPedestal",
 "language": "GDScript",
-"path": "res://pedestal.gd"
+"path": "res://addons/palladium/core/environment/pedestal.gd"
 }, {
 "base": "PLDCharacter",
 "class": "PLDPlayer",
 "language": "GDScript",
-"path": "res://player.gd"
+"path": "res://addons/palladium/core/player.gd"
 }, {
 "base": "PLDCharacterModel",
 "class": "PLDPlayerModel",
 "language": "GDScript",
-"path": "res://player_model.gd"
+"path": "res://addons/palladium/core/player_model.gd"
 }, {
 "base": "VisibilityNotifier",
 "class": "PLDRoomEnabler",
 "language": "GDScript",
-"path": "res://room_enabler.gd"
+"path": "res://addons/palladium/core/environment/room_enabler.gd"
 }, {
 "base": "Spatial",
 "class": "PLDShaderCache",
 "language": "GDScript",
-"path": "res://shader_cache.gd"
+"path": "res://addons/palladium/core/shader_cache.gd"
 }, {
 "base": "Node",
 "class": "PLDStory",
 "language": "GDScript",
-"path": "res://palladium_story.gd"
+"path": "res://addons/palladium/core/palladium_story.gd"
 }, {
 "base": "Node",
 "class": "PLDStoryNode",
 "language": "GDScript",
-"path": "res://story_node.gd"
+"path": "res://addons/palladium/core/singletons/story_node.gd"
 }, {
 "base": "Control",
 "class": "PLDTablet",
 "language": "GDScript",
-"path": "res://tablet.gd"
+"path": "res://addons/palladium/ui/tablet.gd"
 }, {
 "base": "PLDUsable",
 "class": "PLDTakable",
 "language": "GDScript",
-"path": "res://takable.gd"
+"path": "res://addons/palladium/core/takable.gd"
 }, {
 "base": "CollisionObject",
 "class": "PLDUsable",
 "language": "GDScript",
-"path": "res://usable.gd"
+"path": "res://addons/palladium/core/usable.gd"
 }, {
 "base": "PLDUsable",
 "class": "PLDUseTarget",
 "language": "GDScript",
-"path": "res://use_target.gd"
+"path": "res://addons/palladium/core/use_target.gd"
 }, {
 "base": "PLDGameWindow",
 "class": "PLDViewportHacks",
 "language": "GDScript",
-"path": "res://viewport_hack.gd"
+"path": "res://addons/palladium/ui/viewport_hack.gd"
 } ]
 _global_script_class_icons={
 "ApataChest": "",
@@ -229,7 +229,7 @@ run/main_scene="res://entry_point.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="palladium"
 config/project_settings_override="user://settings.ini"
-boot_splash/image="res://assets/images/nlblogo.png"
+boot_splash/image="res://addons/palladium/assets/images/nlblogo.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.00392157, 0.0745098, 0.133333, 1 )
 config/icon="res://icon.png"
@@ -237,13 +237,13 @@ config/auto_accept_quit=false
 
 [autoload]
 
-common_utils="*res://common_utils.tscn"
-settings="*res://settings.gd"
-game_params="*res://game_params.tscn"
-lipsync_manager="*res://lipsync_manager.tscn"
-cutscene_manager="*res://cutscene_manager.tscn"
-conversation_manager="*res://conversation_manager.tscn"
-story_node="*res://story_node.tscn"
+common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
+settings="*res://addons/palladium/core/singletons/settings.gd"
+game_params="*res://addons/palladium/core/singletons/game_params.tscn"
+lipsync_manager="*res://addons/palladium/core/singletons/lipsync_manager.tscn"
+cutscene_manager="*res://addons/palladium/core/singletons/cutscene_manager.tscn"
+conversation_manager="*res://addons/palladium/core/singletons/conversation_manager.tscn"
+story_node="*res://addons/palladium/core/singletons/story_node.tscn"
 
 [debug]
 
@@ -256,7 +256,7 @@ window/size/height=1080
 
 [editor_plugins]
 
-enabled=PoolStringArray( "inkgd" )
+enabled=PoolStringArray( "inkgd", "palladium" )
 
 [importer_defaults]
 

@@ -1,8 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://takable.gd" type="Script" id=1]
+[ext_resource path="res://addons/palladium/core/takable.gd" type="Script" id=1]
 [ext_resource path="res://assets/statue_3.escn" type="PackedScene" id=2]
 [ext_resource path="res://sound/environment/labyrinth_6_statue.ogg" type="AudioStream" id=3]
+
+
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.164987

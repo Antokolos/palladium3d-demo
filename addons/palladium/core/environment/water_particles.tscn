@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/palladium/shaders/water_3d/displacement_offset_textured/water_particles.tres" type="Material" id=1]
+
+
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.211965 ), 0.0, 0.0, 0, 0, Vector2( 0.556474, 0.607965 ), 0.909678, 0.909678, 0, 0, Vector2( 1, 0.748765 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_rotate_y = true
+spread = 1.0
+gravity = Vector3( 0, 0, 1 )
+initial_velocity = 4.0
+angular_velocity = 30.0
+angular_velocity_random = 1.0
+linear_accel = 1.0
+radial_accel = 1.0
+radial_accel_random = 1.0
+tangential_accel = 1.0
+damping = 0.6
+damping_random = 1.0
+angle = 360.0
+angle_random = 1.0
+scale = 0.7
+scale_curve = SubResource( 3 )
+
+[sub_resource type="QuadMesh" id=5]
+material = ExtResource( 1 )
+size = Vector2( 0.6, 0.6 )
+
+[node name="water_particles" type="Particles"]
+transform = Transform( 0.996096, -3.85877e-09, -0.0882784, -0.0882784, -4.35407e-08, -0.996096, 0, 1, -4.37114e-08, -1.32562, 3.0709, -0.0323716 )
+amount = 64
+lifetime = 0.6
+speed_scale = 0.35
+randomness = 1.0
+draw_order = 2
+process_material = SubResource( 4 )
+draw_pass_1 = SubResource( 5 )

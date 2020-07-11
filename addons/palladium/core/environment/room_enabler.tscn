@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/palladium/core/environment/room_enabler.gd" type="Script" id=1]
+
+
+
+
+
+
+[node name="room_enabler" type="VisibilityNotifier" groups=[
+"room_enablers",
+]]
+script = ExtResource( 1 )
