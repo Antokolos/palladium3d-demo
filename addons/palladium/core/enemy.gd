@@ -16,7 +16,15 @@ func _ready():
 ### Use target ###
 
 func use(player_node, camera_node):
-	hit(camera_node)
+	if activated and can_be_attacked():
+		hit(camera_node)
+
+func add_highlight(player_node):
+	if not activated or not can_be_attacked():
+		return ""
+	if is_dying() or is_dead():
+		return ""
+	return "E: Shoot" if activated else ""
 
 func hit(hit_direction_node):
 	if not activated:
@@ -29,11 +37,6 @@ func hit(hit_direction_node):
 		take_damage(false, hit_direction_node)
 		hits = hits + 1
 
-func add_highlight(player_node):
-	if is_dying() or is_dead():
-		return ""
-	return "E: Shoot" if activated else ""
-
 func activate():
 	hits = 0
 	is_sprinting = false
@@ -45,15 +48,35 @@ func is_activated():
 	return activated
 
 func get_preferred_target():
-	return game_params.get_player() if activated else null
+	if not activated:
+		return null
+	var party = get_tree().get_nodes_in_group("party")
+	var tgt = null
+	var dist_squared_min
+	var origin = get_global_transform().origin
+	for ch in party:
+		var dist_squared_cur = origin.distance_squared_to(ch.get_global_transform().origin)
+		if not tgt:
+			tgt = ch
+			dist_squared_min = dist_squared_cur
+			continue
+		if dist_squared_cur < dist_squared_min:
+			dist_squared_min = dist_squared_cur
+			tgt = ch
+	return tgt
 
 func is_enemy():
 	return true
+
+func can_be_attacked():
+	return false
 
 func can_run():
 	return true
 
 func can_attack():
+	if not activated:
+		return false
 	for body in melee_damage_area.get_overlapping_bodies():
 		if body.get_instance_id() == get_instance_id():
 			continue
@@ -62,13 +85,15 @@ func can_attack():
 	return false
 
 func attack():
+	if not activated:
+		return
 	if attack_timer.is_stopped():
 		is_sprinting = false
 		get_model().attack()
 		attack_timer.start()
 
 func take_damage(fatal, hit_direction_node):
-	if is_dying() or is_dead():
+	if not activated or is_dying() or is_dead():
 		return
 	stop_cutscene()
 	get_model().take_damage(fatal)
@@ -77,11 +102,14 @@ func take_damage(fatal, hit_direction_node):
 		$Body_CollisionShape.disabled = true
 		$Feet_CollisionShape.disabled = false
 		$StandingArea/CollisionShape.disabled = true
+		melee_damage_area.get_node("CollisionShape").disabled = true
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
 
 func _physics_process(delta):
+	if not activated or is_dead() or is_dying():
+		return
 	if can_attack():
 		attack()
 	elif not attack_timer.is_stopped():
@@ -93,6 +121,8 @@ func _physics_process(delta):
 		is_sprinting = true
 
 func _on_AttackTimer_timeout():
+	if not activated:
+		return
 	if can_attack():
 		game_params.set_health(game_params.PLAYER_NAME_HINT, game_params.player_health_current - injury_rate, game_params.player_health_max)
 	else:
