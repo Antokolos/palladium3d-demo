@@ -14,7 +14,6 @@ const KEY_LOOK_SPEED_FACTOR = 30
 
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
-const ATTACK_RANGE = 2.2
 const ALIGNMENT_RANGE = 0.2
 
 export var name_hint = game_params.PLAYER_NAME_HINT
@@ -57,12 +56,6 @@ func is_player():
 
 func is_rest_state():
 	return rest_state
-
-func is_enemy():
-	return false
-
-func attack():
-	pass
 
 func has_collisions():
 	var sc = get_slide_count()
@@ -158,7 +151,6 @@ func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next
 
 func follow(in_party, current_transform, next_position):
 	var rest_state = is_rest_state()
-	var is_enemy = is_enemy()
 	var was_moving = not rest_state
 	var p = get_follow_parameters(in_party, game_params.get_player().get_global_transform().origin, current_transform, next_position)
 	
@@ -174,18 +166,7 @@ func follow(in_party, current_transform, next_position):
 		next_dir = p.dir
 	elif (in_party and p.distance > CLOSEUP_RANGE and not is_rest_state()) \
 		or (not in_party and p.distance > ALIGNMENT_RANGE):
-		if is_enemy:
-			if p.distance < ATTACK_RANGE:
-				rest_state = true
-				attack()
-				return {
-					"dir" : next_dir,
-					"rest_state" : rest_state,
-					"rotation_angle" : p.rotation_angle,
-					"rotation_angle_to_target_deg" : p.rotation_angle_to_target_deg,
-					"sgnl" : null
-				}
-		elif was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
+		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
 				rest_state = true
