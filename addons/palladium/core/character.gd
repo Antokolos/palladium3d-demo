@@ -45,6 +45,7 @@ func _ready():
 	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
+	model.connect("character_dead", self, "_on_character_dead")
 	model_container.add_child(model)
 	game_params.register_player(self)
 
@@ -280,6 +281,9 @@ func _physics_process(delta):
 	else:
 		$SoundWalking.stop()
 		get_model().look(get_rotation_angle_to_target_deg())
+
+func _on_character_dead(player):
+	pass
 
 func _on_HealTimer_timeout():
 	if is_player():

@@ -1,6 +1,8 @@
 extends PLDCharacter
 class_name PLDEnemy
 
+signal attack_started(enemy, target)
+
 const MAX_HITS = 3
 const TOO_FAR_RANGE = 10
 
@@ -20,11 +22,9 @@ func use(player_node, camera_node):
 		hit(camera_node)
 
 func add_highlight(player_node):
-	if not activated or not can_be_attacked():
+	if not activated or not can_be_attacked() or is_dying():
 		return ""
-	if is_dying() or is_dead():
-		return ""
-	return "E: Shoot" if activated else ""
+	return "E: Shoot"
 
 func hit(hit_direction_node):
 	if not activated:
@@ -74,26 +74,27 @@ func can_be_attacked():
 func can_run():
 	return true
 
-func can_attack():
+func get_possible_attack_target():
 	if not activated:
-		return false
+		return null
 	for body in melee_damage_area.get_overlapping_bodies():
 		if body.get_instance_id() == get_instance_id():
 			continue
 		if body.is_in_group("party"):
-			return true
-	return false
+			return body
+	return null
 
-func attack():
+func attack_start(possible_attack_target):
 	if not activated:
 		return
 	if attack_timer.is_stopped():
 		is_sprinting = false
+		emit_signal("attack_started", self, possible_attack_target)
 		get_model().attack()
 		attack_timer.start()
 
 func take_damage(fatal, hit_direction_node):
-	if not activated or is_dying() or is_dead():
+	if not activated or is_dying():
 		return
 	stop_cutscene()
 	get_model().take_damage(fatal)
@@ -104,14 +105,19 @@ func take_damage(fatal, hit_direction_node):
 		$StandingArea/CollisionShape.disabled = true
 		melee_damage_area.get_node("CollisionShape").disabled = true
 
+func _on_character_dead(player):
+	._on_character_dead(player)
+	activated = false
+
 func _on_CutsceneTimer_timeout():
-	set_look_transition(true)
+	._on_CutsceneTimer_timeout()
 
 func _physics_process(delta):
-	if not activated or is_dead() or is_dying():
+	if not activated or is_dying():
 		return
-	if can_attack():
-		attack()
+	var possible_attack_target = get_possible_attack_target()
+	if possible_attack_target:
+		attack_start(possible_attack_target)
 	elif not attack_timer.is_stopped():
 		attack_timer.stop()
 		stop_cutscene()
@@ -123,7 +129,7 @@ func _physics_process(delta):
 func _on_AttackTimer_timeout():
 	if not activated:
 		return
-	if can_attack():
+	if get_possible_attack_target():
 		game_params.set_health(game_params.PLAYER_NAME_HINT, game_params.player_health_current - injury_rate, game_params.player_health_max)
 	else:
 		stop_cutscene()
