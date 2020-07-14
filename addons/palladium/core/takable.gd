@@ -26,7 +26,10 @@ enum TakableIds {
 	LYRE_RAT = 190,
 	LYRE_SPIDER = 200,
 	ARGUS_EYES = 210,
-	GREEK_ARROW = 220
+	GREEK_ARROW = 220,
+	APPLE_JAR_GG = 230,
+	APPLE_JAR_GS = 240,
+	APPLE_JAR_SS = 250
 }
 export(TakableIds) var takable_id = TakableIds.NONE
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
@@ -88,6 +91,12 @@ func get_item_name():
 			return "argus_eyes"
 		TakableIds.GREEK_ARROW:
 			return "greek_arrow"
+		TakableIds.APPLE_JAR_GG:
+			return "apple_jar_gg"
+		TakableIds.APPLE_JAR_GS:
+			return "apple_jar_gs"
+		TakableIds.APPLE_JAR_SS:
+			return "apple_jar_ss"
 		TakableIds.NONE:
 			continue
 		_:
@@ -96,10 +105,11 @@ func get_item_name():
 func use(player_node, camera_node):
 	if takable_id == TakableIds.APATA and player_node.is_player() and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
 		# Cannot be taken by the main player if Apata's trap has not been activated yet
-		return
+		return false
 	var was_taken = is_present()
 	game_params.take(get_item_name(), get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
+	return was_taken
 
 func add_highlight(player_node):
 	if takable_id == TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:

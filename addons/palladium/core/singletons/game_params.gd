@@ -83,6 +83,11 @@ const ITEMS = {
 	"lyre_spider" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_spider.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	"argus_eyes" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/argus_eyes_pile.escn", "can_give" : false, "custom_actions" : [] },
 	"greek_arrow" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/greek_arrow.escn", "can_give" : false, "custom_actions" : [] },
+	"apple_jar_gg" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
+	"apple_jar_gs" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
+	"apple_jar_ss" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
+	"apple_gold" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
+	"apple_silver" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
