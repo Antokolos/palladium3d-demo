@@ -1,7 +1,8 @@
 extends PLDPathfinder
 class_name PLDCharacter
 
-const GRAVITY = -6.2
+const GRAVITY_DEFAULT = -6.2
+const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3
 const MAX_SPRINT_SPEED = 10
 const JUMP_SPEED = 4.5
@@ -35,6 +36,7 @@ onready var sound = {
 }
 
 var vel = Vector3()
+var gravity = GRAVITY_DEFAULT
 
 var is_crouching = false
 var is_sprinting = false
@@ -58,6 +60,9 @@ func get_model():
 	return get_model_holder().get_child(0)
 
 ### States ###
+
+func set_underwater(enable):
+	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
 
 func rest():
 	get_model().look(0)
@@ -181,7 +186,7 @@ func process_movement(delta):
 	target.y = 0
 	target = target.normalized()
 
-	vel.y += delta*GRAVITY
+	vel.y += delta * gravity
 
 	var hvel = vel
 	hvel.y = 0
@@ -262,6 +267,9 @@ func push_back(push_vec):
 
 func has_floor_collision():
 	return has_floor_collision or is_on_floor()
+
+func can_jump():
+	return has_floor_collision() or gravity <= GRAVITY_UNDERWATER
 
 func _physics_process(delta):
 	if is_cutscene() or is_dead():

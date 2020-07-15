@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/hud.gd" type="Script" id=2]
@@ -17,30 +17,45 @@
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=16]
 
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
 
+uniform vec4 target_color: hint_color;
+uniform float frequency = 6;
+uniform float depth = 0.005;
+uniform float blur_amount: hint_range(0.0, 5.0) = 3.0;
+uniform float target_color_amount: hint_range(0.0, 1.0) = 0.1;
 
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x += sin(uv.y * frequency + TIME) * depth;
+	uv.x = clamp(uv.x, 0.0, 1.0);
+	vec3 c = textureLod(SCREEN_TEXTURE, uv, blur_amount).rgb;
+	c = c * (1.0 - target_color_amount) + target_color.rgb * target_color_amount;
+	
+	COLOR.rgb = c;
+}
+"
 
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/target_color = Color( 0.333333, 1, 0.827451, 1 )
+shader_param/frequency = 6.0
+shader_param/depth = 0.005
+shader_param/blur_amount = 3.0
+shader_param/target_color_amount = 0.1
 
-
-
-
-
-
-
-
-
-
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 0, 0, 0 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 0.447059, 0, 1 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=5]
 size = 42
 use_filter = true
 font_data = ExtResource( 13 )
@@ -52,6 +67,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+
+[node name="UnderwaterEffect" type="ColorRect" parent="."]
+visible = false
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="BloodSplat" type="TextureRect" parent="."]
 visible = false
@@ -65,6 +88,7 @@ texture = ExtResource( 3 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+editor/display_folded = true
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -100,7 +124,7 @@ margin_right = 960.0
 margin_bottom = 504.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="HBoxQuickItems" type="HBoxContainer" parent="VBoxContainer/MainHUD/QuickItemsDimmer"]
 show_behind_parent = true
@@ -378,6 +402,7 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="HBoxMessages" type="HBoxContainer" parent="."]
+editor/display_folded = true
 anchor_top = 0.3
 anchor_right = 1.0
 anchor_bottom = 0.5
@@ -474,6 +499,7 @@ texture = ExtResource( 11 )
 expand = true
 
 [node name="Info" type="VBoxContainer" parent="."]
+editor/display_folded = true
 anchor_right = 0.2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -509,11 +535,12 @@ margin_bottom = 26.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-custom_styles/fg = SubResource( 2 )
+custom_styles/fg = SubResource( 4 )
 value = 50.0
 percent_visible = false
 
 [node name="Indicators" type="HBoxContainer" parent="."]
+editor/display_folded = true
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
@@ -542,7 +569,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 align = 2
 valign = 2

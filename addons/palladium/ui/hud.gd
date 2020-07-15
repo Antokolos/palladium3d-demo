@@ -149,6 +149,9 @@ func pause_game(enable):
 	dimmer.visible = enable
 	get_tree().paused = enable
 
+func enable_underwater_effect(enable):
+	$UnderwaterEffect.visible = enable
+
 func set_quick_items_dimmed(dimmed):
 	var panel_style = quick_items_dimmer.get("custom_styles/panel")
 	panel_style.set("bg_color", COLOR_DIMMED if dimmed else COLOR_TRANSPARENT)

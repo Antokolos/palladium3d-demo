@@ -5,7 +5,6 @@
 [ext_resource path="res://addons/palladium/shaders/water_3d/textures/water_diffuse.png" type="Texture" id=3]
 [ext_resource path="res://addons/palladium/shaders/water_3d/textures/water_uv_offset.png" type="Texture" id=4]
 
-
 [resource]
 shader = ExtResource( 1 )
 shader_param/amplitude = Vector2( 0.005, 0.005 )

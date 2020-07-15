@@ -9,15 +9,8 @@
 [ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=7]
 [ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=8]
 
-
-
-
-
-
-
-
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.24, 0.36, 0.2 )
+extents = Vector3( 0.05, 0.05, 0.05 )
 
 [node name="camera" type="Camera" groups=[
 "restorable_state",
@@ -46,13 +39,14 @@ transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0,
 [node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Rifle_Point"]
 cast_to = Vector3( 0, 0, 32 )
 
-[node name="Knife_Point" type="Spatial" parent="Gun_Fire_Points"]
+[node name="View_Point" type="Spatial" parent="Gun_Fire_Points"]
 
-[node name="InteractArea" type="Area" parent="Gun_Fire_Points/Knife_Point"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
+[node name="ViewArea" type="Area" parent="Gun_Fire_Points/View_Point" groups=[
+"view_area",
+]]
 input_ray_pickable = false
 
-[node name="Collision_Shape" type="CollisionShape" parent="Gun_Fire_Points/Knife_Point/InteractArea"]
+[node name="Collision_Shape" type="CollisionShape" parent="Gun_Fire_Points/View_Point/ViewArea"]
 shape = SubResource( 1 )
 
 [node name="Use_Point" type="Spatial" parent="Gun_Fire_Points"]
