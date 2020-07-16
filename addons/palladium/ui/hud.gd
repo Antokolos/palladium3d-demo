@@ -29,6 +29,7 @@ onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 onready var crosshair = get_node("Crosshair")
+onready var underwater_effect = get_node("UnderwaterEffect")
 
 onready var indicators_panel = get_node("Indicators")
 onready var indicator_crouch = indicators_panel.get_node("IndicatorCrouchPanel/IndicatorCrouch")
@@ -50,6 +51,7 @@ func _ready():
 	game_params.connect("item_taken", self, "_on_item_taken")
 	game_params.connect("item_removed", self, "_on_item_removed")
 	game_params.connect("health_changed", self, "on_health_changed")
+	game_params.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(game_params.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -149,8 +151,10 @@ func pause_game(enable):
 	dimmer.visible = enable
 	get_tree().paused = enable
 
-func enable_underwater_effect(enable):
-	$UnderwaterEffect.visible = enable
+func set_underwater(player, enable):
+	if player and player.get_instance_id() != game_params.get_player().get_instance_id():
+		return
+	underwater_effect.visible = enable
 
 func set_quick_items_dimmed(dimmed):
 	var panel_style = quick_items_dimmer.get("custom_styles/panel")

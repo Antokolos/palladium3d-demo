@@ -6,6 +6,7 @@ const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3
 const MAX_SPRINT_SPEED = 10
 const JUMP_SPEED = 4.5
+const BOB_UP_SPEED = 1.5
 const ACCEL= 1.5
 const DEACCEL= 16
 const SPRINT_ACCEL = 4.5
@@ -47,6 +48,7 @@ func _ready():
 	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
+	game_params.connect("player_underwater", self, "set_underwater")
 	model.connect("character_dead", self, "_on_character_dead")
 	model_container.add_child(model)
 	game_params.register_player(self)
@@ -61,8 +63,11 @@ func get_model():
 
 ### States ###
 
-func set_underwater(enable):
+func set_underwater(player, enable):
+	if player and (player.get_instance_id() != get_instance_id()):
+		return
 	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
+	vel.y = 0 if enable else BOB_UP_SPEED
 
 func rest():
 	get_model().look(0)
@@ -225,7 +230,7 @@ func process_movement(delta):
 				has_char_collision = true
 				character_collisions.append(collision)
 				break
-		var is_floor_collision = collision.collider.get_collision_mask_bit(2)
+		var is_floor_collision = collision.collider.get_collision_mask_bit(2) and collision.normal and collision.normal.y > 0
 		collides_floor = collides_floor or is_floor_collision
 		if not has_char_collision and not is_floor_collision:
 			nonchar_collision = collision
@@ -269,7 +274,7 @@ func has_floor_collision():
 	return has_floor_collision or is_on_floor()
 
 func can_jump():
-	return has_floor_collision() or gravity <= GRAVITY_UNDERWATER
+	return has_floor_collision() or game_params.is_underwater(get_name_hint())
 
 func _physics_process(delta):
 	if is_cutscene() or is_dead():

@@ -3,6 +3,7 @@ class_name PLDGameParams
 
 signal shader_cache_processed()
 signal player_registered(player)
+signal player_underwater(player, enabled)
 signal item_taken(nam, count, item_path)
 signal item_removed(nam, count)
 signal item_used(player_node, target, item_nam)
@@ -44,6 +45,11 @@ const SKELETON_NAME_HINT = "skeleton"
 const PARTY_DEFAULT = {
 	FATHER_NAME_HINT : false,
 	PLAYER_NAME_HINT : true,
+	FEMALE_NAME_HINT : false,
+	BANDIT_NAME_HINT : false
+}
+const UNDERWATER_DEFAULT = {
+	PLAYER_NAME_HINT : false,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false
 }
@@ -117,6 +123,7 @@ var player_name_hint = PLAYER_NAME_HINT
 var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
 var party = PARTY_DEFAULT.duplicate(true)
+var underwater = UNDERWATER_DEFAULT.duplicate(true)
 var player_paths = {}
 var story_vars = STORY_VARS_DEFAULT.duplicate(true)
 var inventory = INVENTORY_DEFAULT.duplicate(true)
@@ -159,6 +166,7 @@ func reset_variables():
 	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
 	party = PARTY_DEFAULT.duplicate(true)
+	underwater = UNDERWATER_DEFAULT.duplicate(true)
 	story_vars = STORY_VARS_DEFAULT.duplicate(true)
 	inventory = INVENTORY_DEFAULT.duplicate(true)
 	quick_items = QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -218,6 +226,13 @@ func is_inside():
 func is_bright():
 	var level = get_level()
 	return level.is_bright() if level else false
+
+func is_underwater(name_hint):
+	return underwater.has(name_hint) and underwater[name_hint]
+
+func set_underwater(player, enable):
+	underwater[player.get_name_hint()] = enable
+	emit_signal("player_underwater", player, enable)
 
 func _on_cutscene_finished(player, cutscene_id):
 	player.set_look_transition(true)
@@ -559,6 +574,8 @@ func load_params(slot):
 	party = d.party if ("party" in d) else PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	
+	underwater = d.underwater if ("underwater" in d) else UNDERWATER_DEFAULT.duplicate(true)
+	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		for name_hint in d.characters.keys():
 			var dd = d.characters[name_hint]
@@ -585,6 +602,7 @@ func load_params(slot):
 				character.is_crouching = dd.is_crouching
 			
 			character.set_look_transition()
+			set_underwater(character, is_underwater(name_hint))
 
 	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT.duplicate(true)
 	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT.duplicate(true)
@@ -637,6 +655,7 @@ func save_params(slot):
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,
 		"party" : party,
+		"underwater" : underwater,
 		"characters" : characters,
 		"story_vars" : story_vars,
 		"inventory" : inventory,

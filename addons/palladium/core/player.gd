@@ -86,6 +86,7 @@ func become_player():
 	model.set_simple_mode(true)
 	player.reset_rotation()
 	game_params.set_player_name_hint(get_name_hint())
+	game_params.set_underwater(self, game_params.is_underwater(get_name_hint()))
 	camera.rebuild_exceptions(self)
 
 func process_input(delta):
