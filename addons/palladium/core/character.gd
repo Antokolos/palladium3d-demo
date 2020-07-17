@@ -6,6 +6,7 @@ const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3
 const MAX_SPRINT_SPEED = 10
 const JUMP_SPEED = 4.5
+const DIVE_SPEED = 0.2
 const BOB_UP_SPEED = 1.5
 const ACCEL= 1.5
 const DEACCEL= 16
@@ -67,7 +68,7 @@ func set_underwater(player, enable):
 	if player and (player.get_instance_id() != get_instance_id()):
 		return
 	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
-	vel.y = 0 if enable else BOB_UP_SPEED
+	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
 
 func rest():
 	get_model().look(0)
@@ -260,12 +261,12 @@ func get_out_vec(normal):
 	var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
 	return (n + coeff * cross).normalized()
 
-func get_push_vec(camera_node):
-	if not camera_node:
+func get_push_vec(direction_node):
+	if not direction_node:
 		return ZERO_DIR
-	var cam_z = camera_node.get_global_transform().basis.z.normalized()
-	cam_z.y = 0
-	return -cam_z * PUSH_BACK_STRENGTH
+	var dir_z = direction_node.get_global_transform().basis.z.normalized()
+	dir_z.y = 0
+	return -dir_z * PUSH_BACK_STRENGTH
 
 func push_back(push_vec):
 	vel = push_vec
