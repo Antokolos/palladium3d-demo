@@ -8,6 +8,7 @@ signal item_taken(nam, count, item_path)
 signal item_removed(nam, count)
 signal item_used(player_node, target, item_nam)
 signal health_changed(name_hint, health_current, health_max)
+signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
 
 enum ApataTrapStages { ARMED = 0, DISABLED = 1, GOING_DOWN = 2, PAUSED = 3 }
 enum EridaTrapStages { ARMED = 0, DISABLED = 1, ACTIVE = 2 }
@@ -37,6 +38,9 @@ const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = "res://forest.tscn"
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
 const PLAYER_HEALTH_MAX_DEFAULT = 100
+const SUFFOCATION_DAMAGE_RATE = 10
+const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
+const PLAYER_OXYGEN_MAX_DEFAULT = 100
 const FATHER_NAME_HINT = "father"
 const PLAYER_NAME_HINT = "player"
 const FEMALE_NAME_HINT = "female"
@@ -122,6 +126,8 @@ var scene_path = SCENE_PATH_DEFAULT
 var player_name_hint = PLAYER_NAME_HINT
 var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
+var player_oxygen_current = PLAYER_OXYGEN_CURRENT_DEFAULT
+var player_oxygen_max = PLAYER_OXYGEN_MAX_DEFAULT
 var party = PARTY_DEFAULT.duplicate(true)
 var underwater = UNDERWATER_DEFAULT.duplicate(true)
 var player_paths = {}
@@ -165,6 +171,8 @@ func reset_variables():
 	player_name_hint = PLAYER_NAME_HINT
 	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
+	player_oxygen_current = PLAYER_OXYGEN_CURRENT_DEFAULT
+	player_oxygen_max = PLAYER_OXYGEN_MAX_DEFAULT
 	party = PARTY_DEFAULT.duplicate(true)
 	underwater = UNDERWATER_DEFAULT.duplicate(true)
 	story_vars = STORY_VARS_DEFAULT.duplicate(true)
@@ -465,12 +473,18 @@ func set_health(name_hint, health_current, health_max):
 	if health_current <= 0:
 		get_tree().change_scene("res://addons/palladium/ui/game_over.tscn")
 		return
-	if health_current >= health_max:
-		player_health_current = health_max
-		return
-	player_health_current = health_current
+	player_health_current = health_current if health_current < health_max else health_max
 	player_health_max = health_max
-	emit_signal("health_changed", name_hint, health_current, health_max)
+	emit_signal("health_changed", name_hint, player_health_current, player_health_max)
+
+func set_oxygen(name_hint, oxygen_current, oxygen_max):
+	# TODO: use name_hint to set oxygen for different characters
+	if oxygen_current < 0:
+		set_health(name_hint, player_health_current - SUFFOCATION_DAMAGE_RATE, player_health_max)
+		return
+	player_oxygen_current = oxygen_current if oxygen_current < oxygen_max else oxygen_max
+	player_oxygen_max = oxygen_max
+	emit_signal("oxygen_changed", name_hint, player_oxygen_current, player_oxygen_max)
 
 func get_door_state(door_path):
 	var id = scene_path + ":" + door_path
@@ -568,8 +582,11 @@ func load_params(slot):
 	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else PLAYER_NAME_HINT
 	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else PLAYER_HEALTH_MAX_DEFAULT
+	player_oxygen_current = int(d.player_oxygen_current) if ("player_oxygen_current" in d) else PLAYER_OXYGEN_CURRENT_DEFAULT
+	player_oxygen_max = int(d.player_oxygen_max) if ("player_oxygen_max" in d) else PLAYER_OXYGEN_MAX_DEFAULT
 
 	emit_signal("health_changed", PLAYER_NAME_HINT, player_health_current, player_health_max)
+	emit_signal("oxygen_changed", PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
 
 	party = d.party if ("party" in d) else PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
@@ -654,6 +671,8 @@ func save_params(slot):
 		"player_name_hint" : player_name_hint,
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,
+		"player_oxygen_current" : player_oxygen_current,
+		"player_oxygen_max" : player_oxygen_max,
 		"party" : party,
 		"underwater" : underwater,
 		"characters" : characters,

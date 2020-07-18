@@ -1,6 +1,7 @@
 extends PLDPathfinder
 class_name PLDCharacter
 
+const OXYGEN_DECREASE_RATE = 5
 const GRAVITY_DEFAULT = -6.2
 const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3
@@ -29,6 +30,7 @@ enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CON
 
 export var model_path = ""
 
+onready var oxygen_timer = $OxygenTimer
 onready var standing_area = $StandingArea
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
@@ -283,6 +285,12 @@ func _physics_process(delta):
 		return
 	if is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
+	var is_underwater = game_params.is_underwater(get_name_hint())
+	if is_underwater and oxygen_timer.is_stopped():
+		oxygen_timer.start()
+	elif not is_underwater and not oxygen_timer.is_stopped():
+		oxygen_timer.stop()
+		game_params.set_oxygen(get_name_hint(), game_params.player_oxygen_max, game_params.player_oxygen_max)
 	var movement_data = process_movement(delta)
 	has_floor_collision = movement_data.collides_floor
 	var is_moving = movement_data.is_walking
@@ -301,7 +309,12 @@ func _on_character_dead(player):
 
 func _on_HealTimer_timeout():
 	if is_player():
-		game_params.set_health(name_hint, game_params.player_health_current + game_params.HEALING_RATE, game_params.player_health_max)
+		game_params.set_health(get_name_hint(), game_params.player_health_current + game_params.HEALING_RATE, game_params.player_health_max)
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
+
+func _on_OxygenTimer_timeout():
+	if oxygen_timer.is_stopped():
+		return
+	game_params.set_oxygen(get_name_hint(), game_params.player_oxygen_current - OXYGEN_DECREASE_RATE, game_params.player_oxygen_max)

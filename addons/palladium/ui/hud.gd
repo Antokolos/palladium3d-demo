@@ -38,8 +38,11 @@ onready var tex_crouch_on = preload("res://addons/palladium/assets/ui/tex_crouch
 
 onready var info_panel = get_node("Info")
 onready var health_bar = info_panel.get_node("MainPlayer/Stats/HealthBar")
-onready var health_label = health_bar.get_node("HealthLabel")
-onready var health_progress = health_bar.get_node("HealthProgress")
+onready var health_label = health_bar.get_node("Label")
+onready var health_progress = health_bar.get_node("Progress")
+onready var oxygen_bar = info_panel.get_node("MainPlayer/Stats/OxygenBar")
+onready var oxygen_label = oxygen_bar.get_node("Label")
+onready var oxygen_progress = oxygen_bar.get_node("Progress")
 
 var active_item_idx = 0
 var active_quick_item_idx = 0
@@ -51,9 +54,11 @@ func _ready():
 	game_params.connect("item_taken", self, "_on_item_taken")
 	game_params.connect("item_removed", self, "_on_item_removed")
 	game_params.connect("health_changed", self, "on_health_changed")
+	game_params.connect("oxygen_changed", self, "on_oxygen_changed")
 	game_params.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(game_params.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
+	on_oxygen_changed(game_params.PLAYER_NAME_HINT, game_params.player_oxygen_current, game_params.player_oxygen_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	synchronize_items()
 	select_active_item()
@@ -136,6 +141,12 @@ func on_health_changed(name_hint, health_current, health_max):
 		$BloodSplatTimer.start()
 	health_progress.value = health_current
 	health_progress.max_value = health_max
+
+func on_oxygen_changed(name_hint, oxygen_current, oxygen_max):
+	oxygen_bar.visible = oxygen_current < oxygen_max
+	oxygen_label.text = "%d/%d" % [oxygen_current, oxygen_max]
+	oxygen_progress.value = oxygen_current
+	oxygen_progress.max_value = oxygen_max
 
 func on_language_changed(ID):
 	select_active_item()
