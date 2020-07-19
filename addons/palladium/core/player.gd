@@ -123,7 +123,8 @@ func process_input(delta):
 	# ----------------------------------
 	# Jumping
 	if can_jump():
-		if Input.is_action_just_pressed("movement_jump"):
+		if Input.is_action_just_pressed("movement_jump") \
+			or (game_params.is_underwater(get_name_hint()) and Input.is_action_pressed("movement_jump")):
 			vel.y = JUMP_SPEED
 			is_in_jump = true
 	# ----------------------------------
