@@ -72,18 +72,6 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector3( 0, 1.5, 0 ), Vector3( 0, 0.75, 0 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("UpperBody_CollisionShape:shape:height")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.8, 0.3 ]
-}
 
 [sub_resource type="BoxShape" id=6]
 resource_local_to_scene = true
