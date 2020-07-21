@@ -3,29 +3,7 @@ class_name PLDPedestal
 
 signal use_pedestal(player_node, pedestal, item_nam)
 
-enum PedestalIds {
-	NONE = 0,
-	APATA = 10,
-	MUSES = 20,
-	ERIDA_LOCK = 30,
-	DEMO_HERMES = 40,
-	DEMO_ARES = 50,
-	HEBE_LOCK = 60,
-	APHRODITE_LOCK = 70,
-	HERA_LOCK = 80,
-	ARTEMIS_LOCK = 90,
-	APOLLO_LOCK = 100,
-	HERMES_FLAT = 110,
-	ERIS_FLAT = 120,
-	ARES_FLAT = 130,
-	HEBE_FLAT = 140,
-	SWORD = 150,
-	ARTEMIS_TRAP = 160,
-	ARTEMIS_APHRODITE = 160,
-	APOLLO_STATUE = 170,
-	ARGUS_HERMES = 180
-}
-export(PedestalIds) var pedestal_id = PedestalIds.NONE
+export(DB.PedestalIds) var pedestal_id = DB.PedestalIds.NONE
 
 func connect_signals(level):
 	connect("use_pedestal", level, "use_pedestal")

@@ -5,16 +5,7 @@ signal state_changed(light_source, active)
 
 const DISTANCE_TO_CAMERA_MAX = 36
 
-enum LightIds {
-	NONE = 0,
-	APOLLO_1 = 10,
-	APOLLO_2 = 20,
-	APOLLO_3 = 30,
-	APOLLO_4 = 40,
-	APOLLO_5 = 50,
-	APOLLO_6 = 60
-}
-export(LightIds) var light_id = LightIds.NONE
+export(DB.LightIds) var light_id = DB.LightIds.NONE
 export var initially_active = true
 export var persistent = false
 

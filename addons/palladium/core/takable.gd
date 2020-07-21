@@ -3,35 +3,7 @@ class_name PLDTakable
 
 signal use_takable(player_node, takable, parent, was_taken)
 
-enum TakableIds {
-	NONE = 0,
-	APATA = 10,
-	URANIA = 20,
-	CLIO = 30,
-	MELPOMENE = 40,
-	ARES = 50,
-	HERMES = 60,
-	ERIDA = 70,
-	ARTEMIDA = 80,
-	APHRODITE = 90,
-	HEBE = 100,
-	HERA = 110,
-	APOLLO = 120,
-	ATHENA = 130,
-	SPHERE_FOR_POSTAMENT = 140,
-	ENVELOPE = 150,
-	BARN_LOCK_KEY = 160,
-	GREEK_SWORD = 170,
-	LYRE_SNAKE = 180,
-	LYRE_RAT = 190,
-	LYRE_SPIDER = 200,
-	ARGUS_EYES = 210,
-	GREEK_ARROW = 220,
-	APPLE_JAR_GG = 230,
-	APPLE_JAR_GS = 240,
-	APPLE_JAR_SS = 250
-}
-export(TakableIds) var takable_id = TakableIds.NONE
+export(DB.TakableIds) var takable_id = DB.TakableIds.NONE
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
 
@@ -46,74 +18,20 @@ func connect_signals(level):
 	connect("use_takable", level, "use_takable")
 
 func get_item_name():
-	match takable_id:
-		TakableIds.APATA:
-			return "statue_apata"
-		TakableIds.URANIA:
-			return "statue_urania"
-		TakableIds.CLIO:
-			return "statue_clio"
-		TakableIds.MELPOMENE:
-			return "statue_melpomene"
-		TakableIds.ARES:
-			return "statue_ares"
-		TakableIds.HERMES:
-			return "statue_hermes"
-		TakableIds.ERIDA:
-			return "statue_erida"
-		TakableIds.ARTEMIDA:
-			return "statue_artemida"
-		TakableIds.APHRODITE:
-			return "statue_aphrodite"
-		TakableIds.HEBE:
-			return "statue_hebe"
-		TakableIds.HERA:
-			return "hera_statue"
-		TakableIds.APOLLO:
-			return "statue_apollo"
-		TakableIds.ATHENA:
-			return "statue_athena"
-		TakableIds.SPHERE_FOR_POSTAMENT:
-			return "sphere_for_postament_body"
-		TakableIds.ENVELOPE:
-			return "envelope"
-		TakableIds.BARN_LOCK_KEY:
-			return "barn_lock_key"
-		TakableIds.GREEK_SWORD:
-			return "sword_body"
-		TakableIds.LYRE_RAT:
-			return "lyre_rat"
-		TakableIds.LYRE_SNAKE:
-			return "lyre_snake"
-		TakableIds.LYRE_SPIDER:
-			return "lyre_spider"
-		TakableIds.ARGUS_EYES:
-			return "argus_eyes"
-		TakableIds.GREEK_ARROW:
-			return "greek_arrow"
-		TakableIds.APPLE_JAR_GG:
-			return "apple_jar_gg"
-		TakableIds.APPLE_JAR_GS:
-			return "apple_jar_gs"
-		TakableIds.APPLE_JAR_SS:
-			return "apple_jar_ss"
-		TakableIds.NONE:
-			continue
-		_:
-			return null
+	return DB.get_item_name(takable_id)
 
 func use(player_node, camera_node):
-	if takable_id == TakableIds.APATA and player_node.is_player() and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
-		# Cannot be taken by the main player if Apata's trap has not been activated yet
-		return false
+#	if takable_id == DB.TakableIds.APATA and player_node.is_player() and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+#		# Cannot be taken by the main player if Apata's trap has not been activated yet
+#		return false
 	var was_taken = is_present()
 	game_params.take(get_item_name(), get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 
 func add_highlight(player_node):
-	if takable_id == TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
-		return ""
+#	if takable_id == DB.TakableIds.APATA and game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.ARMED:
+#		return ""
 	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 
 func _on_item_taken(nam, cnt, item_path):

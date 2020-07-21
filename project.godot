@@ -69,11 +69,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
 }, {
-"base": "Node",
-"class": "PLDDBManager",
-"language": "GDScript",
-"path": "res://addons/palladium/core/singletons/db_manager.gd"
-}, {
 "base": "Spatial",
 "class": "PLDDoor",
 "language": "GDScript",
@@ -212,7 +207,6 @@ _global_script_class_icons={
 "PLDCharacterModel": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
-"PLDDBManager": "",
 "PLDDoor": "",
 "PLDEnemy": "",
 "PLDGameParams": "",
@@ -255,8 +249,8 @@ config/auto_accept_quit=false
 
 [autoload]
 
+DB="*res://db/db.gd"
 common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
-db_manager="*res://addons/palladium/core/singletons/db_manager.gd"
 settings="*res://addons/palladium/core/singletons/settings.gd"
 game_params="*res://addons/palladium/core/singletons/game_params.tscn"
 lipsync_manager="*res://addons/palladium/core/singletons/lipsync_manager.tscn"

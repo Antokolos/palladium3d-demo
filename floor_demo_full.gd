@@ -27,32 +27,32 @@ func get_door(door_path):
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
-	var pedestal_id = parent.pedestal_id if parent is PLDPedestal else PLDPedestal.PedestalIds.NONE
+	var pedestal_id = parent.pedestal_id if parent is PLDPedestal else DB.PedestalIds.NONE
 	match takable_id:
-		PLDTakable.TakableIds.APATA:
+		DB.TakableIds.APATA:
 			pass # door_0 is now closed a little bit later, when FEMALE_TAKES_APATA cutscene or corresponding dialogue is ended
-		PLDTakable.TakableIds.HERMES:
+		DB.TakableIds.HERMES:
 			match pedestal_id:
-				PLDPedestal.PedestalIds.ERIDA_LOCK:
+				DB.PedestalIds.ERIDA_LOCK:
 					get_door("door_8").close()
-				PLDPedestal.PedestalIds.HERMES_FLAT:
+				DB.PedestalIds.HERMES_FLAT:
 					var door = get_door("door_5")
 					var was_opened = door.is_opened()
 					door.open()
 					if not was_opened:
 						game_params.autosave_create()
-		PLDTakable.TakableIds.ERIDA:
+		DB.TakableIds.ERIDA:
 			match pedestal_id:
-				PLDPedestal.PedestalIds.ERIS_FLAT:
+				DB.PedestalIds.ERIS_FLAT:
 					if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ARMED:
 						get_door("door_8").close()
 						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
 						game_params.story_vars.erida_trap_stage = PLDGameParams.EridaTrapStages.ACTIVE
 						$EridaTrapTimer.start()
 						erida_trap_play_sound()
-		PLDTakable.TakableIds.ARES:
+		DB.TakableIds.ARES:
 			match pedestal_id:
-				PLDPedestal.PedestalIds.ARES_FLAT:
+				DB.PedestalIds.ARES_FLAT:
 					var door = get_door("door_6")
 					var was_opened = door.is_opened()
 					door.open()
@@ -92,7 +92,7 @@ func check_demo_finish():
 func use_pedestal(player_node, pedestal, item_nam):
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
-		PLDPedestal.PedestalIds.APATA:
+		DB.PedestalIds.APATA:
 			if game_params.story_vars.apata_trap_stage != PLDGameParams.ApataTrapStages.GOING_DOWN:
 				return
 			if game_params.story_vars.apata_chest_rigid < 0:
@@ -105,7 +105,7 @@ func use_pedestal(player_node, pedestal, item_nam):
 				female.join_party()
 				var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
 				bandit.join_party()
-		PLDPedestal.PedestalIds.MUSES:
+		DB.PedestalIds.MUSES:
 			if has_empty_muses_pedestal(pedestal.get_parent()):
 				return
 			if not check_muses_correct(pedestal.get_parent()):
@@ -116,17 +116,17 @@ func use_pedestal(player_node, pedestal, item_nam):
 			get_door("door_4").open()
 			get_node("Apata_room/ceiling_moving_1").deactivate()
 			get_node("Apata_room/door_3").close()
-		PLDPedestal.PedestalIds.ERIDA_LOCK:
+		DB.PedestalIds.ERIDA_LOCK:
 			get_door("door_8").open()
-		PLDPedestal.PedestalIds.DEMO_ARES:
+		DB.PedestalIds.DEMO_ARES:
 			check_demo_finish()
-		PLDPedestal.PedestalIds.DEMO_HERMES:
+		DB.PedestalIds.DEMO_HERMES:
 			check_demo_finish()
 
 func use_button_activator(player_node, button_activator):
 	var activator_id = button_activator.activator_id
 	match activator_id:
-		PLDButtonActivator.ButtonActivatorIds.ERIDA:
+		DB.ButtonActivatorIds.ERIDA:
 			if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ACTIVE:
 				var postaments = get_tree().get_nodes_in_group("erida_postaments")
 				for postament in postaments:
@@ -144,7 +144,7 @@ func use_button_activator(player_node, button_activator):
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():
-		if (ch is PLDTakable) and ch.is_present() and ch.takable_id == PLDTakable.TakableIds.SPHERE_FOR_POSTAMENT:
+		if (ch is PLDTakable) and ch.is_present() and ch.takable_id == DB.TakableIds.SPHERE_FOR_POSTAMENT:
 			return true
 	return false
 
@@ -168,13 +168,13 @@ func has_empty_muses_pedestal(base):
 
 func check_muses_correct(base):
 	var pedestal_theatre = base.get_node("pedestal_theatre")
-	if not check_pedestal(pedestal_theatre, PLDTakable.TakableIds.MELPOMENE):
+	if not check_pedestal(pedestal_theatre, DB.TakableIds.MELPOMENE):
 		return false
 	var pedestal_astronomy = base.get_node("pedestal_astronomy")
-	if not check_pedestal(pedestal_astronomy, PLDTakable.TakableIds.URANIA):
+	if not check_pedestal(pedestal_astronomy, DB.TakableIds.URANIA):
 		return false
 	var pedestal_history = base.get_node("pedestal_history")
-	return check_pedestal(pedestal_history, PLDTakable.TakableIds.CLIO)
+	return check_pedestal(pedestal_history, DB.TakableIds.CLIO)
 
 func _on_AreaApata_body_entered(body):
 	if game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.ARMED and body.is_in_group("party") and body.is_player():
@@ -252,7 +252,7 @@ func _on_AresRoomArea_body_entered(body):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
-	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == PLDItemContainer.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.GOING_DOWN and not game_params.is_loading():
+	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.GOING_DOWN and not game_params.is_loading():
 		game_params.story_vars.apata_chest_rigid = -1
 		var player = game_params.get_player()
 		cutscene_manager.restore_camera(player)
@@ -325,7 +325,7 @@ func _on_meeting_finished(player, target, initiator):
 
 func _on_door_state_changed(door_id, opened):
 	match door_id:
-		PLDDoor.DoorIds.APATA_TRAP_INNER:
+		DB.DoorIds.APATA_TRAP_INNER:
 			if not opened and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.ARMED and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 				var player = game_params.get_player()
 				cutscene_manager.restore_camera(player)

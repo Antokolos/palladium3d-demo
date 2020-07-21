@@ -5,15 +5,7 @@ signal door_state_changed(door_id, opened)
 
 const ANIM_SPEED_SCALE = 0.725
 
-enum DoorIds {
-	NONE = 0,
-	APATA_TRAP_INNER = 10,
-	APATA_SAVE_INNER = 20,
-	APATA_SAVE_OUTER = 30,
-	ERIDA_TRAP_INNER = 40,
-	DEMO_FINISH = 50
-}
-export(DoorIds) var door_id = DoorIds.NONE
+export(DB.DoorIds) var door_id = DB.DoorIds.NONE
 export var initially_opened = false
 export var door_collision_path = "StaticBody/CollisionShape"
 export var anim_player_path = "door_4_armature001/AnimationPlayer"

@@ -34,7 +34,7 @@ func remove_pocket_book():
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
-		PLDTakable.TakableIds.ENVELOPE:
+		DB.TakableIds.ENVELOPE:
 			game_params.remove("island_map")
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")

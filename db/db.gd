@@ -1,4 +1,100 @@
-{
+extends Node
+
+enum LightIds {
+	NONE = 0,
+	APOLLO_1 = 10,
+	APOLLO_2 = 20,
+	APOLLO_3 = 30,
+	APOLLO_4 = 40,
+	APOLLO_5 = 50,
+	APOLLO_6 = 60
+}
+
+enum RiddleIds {
+	NONE = 0,
+	HEBE_BUTTONS = 10,
+	PLANETS = 20
+}
+
+enum PedestalIds {
+	NONE = 0,
+	APATA = 10,
+	MUSES = 20,
+	ERIDA_LOCK = 30,
+	DEMO_HERMES = 40,
+	DEMO_ARES = 50,
+	HEBE_LOCK = 60,
+	APHRODITE_LOCK = 70,
+	HERA_LOCK = 80,
+	ARTEMIS_LOCK = 90,
+	APOLLO_LOCK = 100,
+	HERMES_FLAT = 110,
+	ERIS_FLAT = 120,
+	ARES_FLAT = 130,
+	HEBE_FLAT = 140,
+	SWORD = 150,
+	ARTEMIS_TRAP = 160,
+	ARTEMIS_APHRODITE = 160,
+	APOLLO_STATUE = 170,
+	ARGUS_HERMES = 180
+}
+
+enum ContainerIds {
+	NONE = 0,
+	APATA_CHEST = 10
+}
+
+enum DoorIds {
+	NONE = 0,
+	APATA_TRAP_INNER = 10,
+	APATA_SAVE_INNER = 20,
+	APATA_SAVE_OUTER = 30,
+	ERIDA_TRAP_INNER = 40,
+	DEMO_FINISH = 50
+}
+
+enum ButtonActivatorIds {
+	NONE = 0,
+	ERIDA = 10,
+	RIDDLE_BUTTON = 20,
+	POMEGRANATE_1 = 30,
+	POMEGRANATE_2 = 40,
+	POMEGRANATE_3 = 50,
+	POMEGRANATE_4 = 60,
+	POMEGRANATE_5 = 70,
+	POMEGRANATE_6 = 80,
+}
+
+enum TakableIds {
+	NONE = 0,
+	APATA = 10,
+	URANIA = 20,
+	CLIO = 30,
+	MELPOMENE = 40,
+	ARES = 50,
+	HERMES = 60,
+	ERIDA = 70,
+	ARTEMIDA = 80,
+	APHRODITE = 90,
+	HEBE = 100,
+	HERA = 110,
+	APOLLO = 120,
+	ATHENA = 130,
+	SPHERE_FOR_POSTAMENT = 140,
+	ENVELOPE = 150,
+	BARN_LOCK_KEY = 160,
+	GREEK_SWORD = 170,
+	LYRE_SNAKE = 180,
+	LYRE_RAT = 190,
+	LYRE_SPIDER = 200,
+	ARGUS_EYES = 210,
+	GREEK_ARROW = 220,
+	APPLE_JAR_GG = 230,
+	APPLE_JAR_GS = 240,
+	APPLE_JAR_SS = 250
+}
+
+const ITEMS = {
 	"saffron_bun" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
 	"island_map" : { "item_image" : "island_child.png", "model_path" : "res://assets/island_map.escn", "can_give" : false, "custom_actions" : [] },
 	"envelope" : { "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
@@ -30,3 +126,60 @@
 	"apple_gold" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
 	"apple_silver" : { "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
 }
+
+static func get_item_name(takable_id):
+	match takable_id:
+		TakableIds.APATA:
+			return "statue_apata"
+		TakableIds.URANIA:
+			return "statue_urania"
+		TakableIds.CLIO:
+			return "statue_clio"
+		TakableIds.MELPOMENE:
+			return "statue_melpomene"
+		TakableIds.ARES:
+			return "statue_ares"
+		TakableIds.HERMES:
+			return "statue_hermes"
+		TakableIds.ERIDA:
+			return "statue_erida"
+		TakableIds.ARTEMIDA:
+			return "statue_artemida"
+		TakableIds.APHRODITE:
+			return "statue_aphrodite"
+		TakableIds.HEBE:
+			return "statue_hebe"
+		TakableIds.HERA:
+			return "hera_statue"
+		TakableIds.APOLLO:
+			return "statue_apollo"
+		TakableIds.ATHENA:
+			return "statue_athena"
+		TakableIds.SPHERE_FOR_POSTAMENT:
+			return "sphere_for_postament_body"
+		TakableIds.ENVELOPE:
+			return "envelope"
+		TakableIds.BARN_LOCK_KEY:
+			return "barn_lock_key"
+		TakableIds.GREEK_SWORD:
+			return "sword_body"
+		TakableIds.LYRE_RAT:
+			return "lyre_rat"
+		TakableIds.LYRE_SNAKE:
+			return "lyre_snake"
+		TakableIds.LYRE_SPIDER:
+			return "lyre_spider"
+		TakableIds.ARGUS_EYES:
+			return "argus_eyes"
+		TakableIds.GREEK_ARROW:
+			return "greek_arrow"
+		TakableIds.APPLE_JAR_GG:
+			return "apple_jar_gg"
+		TakableIds.APPLE_JAR_GS:
+			return "apple_jar_gs"
+		TakableIds.APPLE_JAR_SS:
+			return "apple_jar_ss"
+		TakableIds.NONE:
+			continue
+		_:
+			return null

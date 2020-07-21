@@ -269,8 +269,7 @@ func handle_conversation(player, target, initiator):
 		conversation_manager.start_conversation(player, "Conversation", target)
 
 func can_be_given(item):
-	var db = db_manager.get_items_db()
-	return item and db[item.nam] and db[item.nam].can_give
+	return item and DB.ITEMS[item.nam] and DB.ITEMS[item.nam].can_give
 
 func handle_player_highlight(initiator, target):
 	if not target.is_in_party():
@@ -330,12 +329,10 @@ func stop_music():
 	current_music = null
 
 func is_item_registered(nam):
-	var db = db_manager.get_items_db()
-	return db.has(nam)
+	return DB.ITEMS.has(nam)
 
 func get_registered_item_data(nam):
-	var db = db_manager.get_items_db()
-	return db[nam] if is_item_registered(nam) else null
+	return DB.ITEMS[nam] if is_item_registered(nam) else null
 
 func has_item(nam):
 	if not nam:
@@ -359,9 +356,8 @@ func take(nam, item_path = null):
 	if not is_item_registered(nam):
 		print("WARN: Unknown item name: " + nam)
 		return
-	var db = db_manager.get_items_db()
-	var item_image = db[nam].item_image
-	var model_path = db[nam].model_path
+	var item_image = DB.ITEMS[nam].item_image
+	var model_path = DB.ITEMS[nam].model_path
 	var maxpos = 0
 	for quick_item in quick_items:
 		if not quick_item.nam:

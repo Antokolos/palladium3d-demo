@@ -1,11 +1,7 @@
 extends PLDUsable
 class_name PLDItemContainer
 
-enum ContainerIds {
-	NONE = 0,
-	APATA_CHEST = 10
-}
-export(ContainerIds) var container_id = ContainerIds.NONE
+export(DB.ContainerIds) var container_id = DB.ContainerIds.NONE
 export var initially_opened = false
 export var path_blocker = ""
 export var path_collision_closed = "closed_door"
