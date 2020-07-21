@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/apata_chest.gd"
 }, {
+"base": "PLDTakable",
+"class": "AppleJar",
+"language": "GDScript",
+"path": "res://scenes/apple_jar.gd"
+}, {
 "base": "PLDPlayerModel",
 "class": "BanditModel",
 "language": "GDScript",
@@ -33,6 +38,16 @@ _global_script_classes=[ {
 "class": "FemaleModel",
 "language": "GDScript",
 "path": "res://scenes/female_model.gd"
+}, {
+"base": "PLDCharacterModel",
+"class": "GreekSkeletonModel",
+"language": "GDScript",
+"path": "res://scenes/greek_skeleton_model.gd"
+}, {
+"base": "PLDTakable",
+"class": "GreekSword",
+"language": "GDScript",
+"path": "res://scenes/sword_body.gd"
 }, {
 "base": "PLDPlayerModel",
 "class": "MaleModel",
@@ -68,6 +83,11 @@ _global_script_classes=[ {
 "class": "PLDCutsceneManager",
 "language": "GDScript",
 "path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
+}, {
+"base": "Node",
+"class": "PLDDBManager",
+"language": "GDScript",
+"path": "res://addons/palladium/core/singletons/db_manager.gd"
 }, {
 "base": "Spatial",
 "class": "PLDDoor",
@@ -139,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
 }, {
+"base": "Spatial",
+"class": "PLDRiddle",
+"language": "GDScript",
+"path": "res://scenes/buttons_riddle.gd"
+}, {
 "base": "VisibilityNotifier",
 "class": "PLDRoomEnabler",
 "language": "GDScript",
@@ -191,10 +216,13 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ApataChest": "",
+"AppleJar": "",
 "BanditModel": "",
 "BarnLock": "",
 "DestructibleWeb": "",
 "FemaleModel": "",
+"GreekSkeletonModel": "",
+"GreekSword": "",
 "MaleModel": "",
 "PLDButtonActivator": "",
 "PLDCamera": "",
@@ -202,6 +230,7 @@ _global_script_class_icons={
 "PLDCharacterModel": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
+"PLDDBManager": "",
 "PLDDoor": "",
 "PLDEnemy": "",
 "PLDGameParams": "",
@@ -216,6 +245,7 @@ _global_script_class_icons={
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
+"PLDRiddle": "",
 "PLDRoomEnabler": "",
 "PLDShaderCache": "",
 "PLDStory": "",
@@ -244,6 +274,7 @@ config/auto_accept_quit=false
 [autoload]
 
 common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
+db_manager="*res://addons/palladium/core/singletons/db_manager.gd"
 settings="*res://addons/palladium/core/singletons/settings.gd"
 game_params="*res://addons/palladium/core/singletons/game_params.tscn"
 lipsync_manager="*res://addons/palladium/core/singletons/lipsync_manager.tscn"
