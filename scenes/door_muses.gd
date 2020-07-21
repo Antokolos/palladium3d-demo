@@ -9,5 +9,5 @@ func close():
 	get_node("StaticBody/CollisionShape").disabled = false
 
 func restore_state():
-	if game_params.story_vars.apata_trap_stage == game_params.ApataTrapStages.PAUSED:
+	if game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.PAUSED:
 		open()

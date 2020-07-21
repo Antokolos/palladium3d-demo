@@ -10,8 +10,12 @@ signal item_used(player_node, target, item_nam)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
 
-enum ApataTrapStages { ARMED = 0, DISABLED = 1, GOING_DOWN = 2, PAUSED = 3 }
-enum EridaTrapStages { ARMED = 0, DISABLED = 1, ACTIVE = 2 }
+enum TrapStages {
+	ARMED = 0,
+	DISABLED = 1,
+	ACTIVE = 2,
+	PAUSED = 3
+}
 enum DoorState {
 	DEFAULT = 0,
 	OPENED = 1,
@@ -64,8 +68,8 @@ const STORY_VARS_DEFAULT = {
 	"apata_chest_rigid" : 0,
 	"relationship_female" : 0,
 	"relationship_bandit" : 0,
-	"apata_trap_stage" : ApataTrapStages.ARMED,
-	"erida_trap_stage" : EridaTrapStages.ARMED
+	"apata_trap_stage" : TrapStages.ARMED,
+	"erida_trap_stage" : TrapStages.ARMED
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [

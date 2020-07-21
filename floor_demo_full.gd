@@ -44,10 +44,10 @@ func use_takable(player_node, takable, parent, was_taken):
 		DB.TakableIds.ERIDA:
 			match pedestal_id:
 				DB.PedestalIds.ERIS_FLAT:
-					if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ARMED:
+					if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED:
 						get_door("door_8").close()
 						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
-						game_params.story_vars.erida_trap_stage = PLDGameParams.EridaTrapStages.ACTIVE
+						game_params.story_vars.erida_trap_stage = PLDGameParams.TrapStages.ACTIVE
 						$EridaTrapTimer.start()
 						erida_trap_play_sound()
 		DB.TakableIds.ARES:
@@ -93,7 +93,7 @@ func use_pedestal(player_node, pedestal, item_nam):
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
 		DB.PedestalIds.APATA:
-			if game_params.story_vars.apata_trap_stage != PLDGameParams.ApataTrapStages.GOING_DOWN:
+			if game_params.story_vars.apata_trap_stage != PLDGameParams.TrapStages.ACTIVE:
 				return
 			if game_params.story_vars.apata_chest_rigid < 0:
 				return
@@ -127,7 +127,7 @@ func use_button_activator(player_node, button_activator):
 	var activator_id = button_activator.activator_id
 	match activator_id:
 		DB.ButtonActivatorIds.ERIDA:
-			if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ACTIVE:
+			if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ACTIVE:
 				var postaments = get_tree().get_nodes_in_group("erida_postaments")
 				for postament in postaments:
 					if not postament.is_state_correct():
@@ -138,7 +138,7 @@ func use_button_activator(player_node, button_activator):
 				$EridaButtonCorrect.play()
 				get_door("door_7").open()
 				conversation_manager.start_area_conversation("016_EridaDone" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
-				game_params.story_vars.erida_trap_stage = PLDGameParams.EridaTrapStages.DISABLED
+				game_params.story_vars.erida_trap_stage = PLDGameParams.TrapStages.DISABLED
 				$EridaTrapTimer.stop()
 				erida_trap_stop_sound()
 
@@ -177,7 +177,7 @@ func check_muses_correct(base):
 	return check_pedestal(pedestal_history, DB.TakableIds.CLIO)
 
 func _on_AreaApata_body_entered(body):
-	if game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.ARMED and body.is_in_group("party") and body.is_player():
+	if game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ARMED and body.is_in_group("party") and body.is_player():
 		var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
 		female.teleport(get_node("PositionApata"))
 		var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
@@ -193,7 +193,7 @@ func _on_ApataTakeTimer_timeout():
 	apata_statue.use(female, null)
 
 func _on_AreaMuses_body_entered(body):
-	if game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.PAUSED and body.is_in_group("party") and body.is_player():
+	if game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.PAUSED and body.is_in_group("party") and body.is_player():
 		conversation_manager.start_area_conversation("010-1-1_Statuettes")
 
 func _on_AreaApataDone_body_entered(body):
@@ -227,20 +227,20 @@ func _on_web_destroyed(web):
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.DISABLED:
+		if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.DISABLED:
 			var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
 			var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
 			bandit.set_target_node(get_node("OutPosition"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
-		elif game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.DISABLED:
+		elif game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.DISABLED:
 			conversation_manager.start_area_conversation("018_CorridorTalk" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "022_CorridorTalkMax")
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.DISABLED:
+		if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.DISABLED:
 			conversation_manager.start_area_conversation("014_BeforeErida" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "020_BeforeEridaMax")
-		elif game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.DISABLED and game_params.party[PLDGameParams.FEMALE_NAME_HINT]:
+		elif game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.DISABLED and game_params.party[PLDGameParams.FEMALE_NAME_HINT]:
 			conversation_manager.start_area_conversation("017_CorridorTraps")
 
 func _on_BeginEridaArea_body_entered(body):
@@ -252,7 +252,7 @@ func _on_AresRoomArea_body_entered(body):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
-	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.GOING_DOWN and not game_params.is_loading():
+	if game_params.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ACTIVE and not game_params.is_loading():
 		game_params.story_vars.apata_chest_rigid = -1
 		var player = game_params.get_player()
 		cutscene_manager.restore_camera(player)
@@ -284,7 +284,7 @@ func _on_cutscene_finished(player, cutscene_id):
 						var p = game_params.get_player()
 						cutscene_manager.restore_camera(p)
 						cutscene_manager.borrow_camera(p, get_node("ApataDoorPosition"))
-					if game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.ARMED:
+					if game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ARMED:
 						get_door("door_0").close()
 						get_node("Apata_room/ceiling_moving_1").ceiling_sound_play()
 					player.remove_item_from_hand()
@@ -326,7 +326,7 @@ func _on_meeting_finished(player, target, initiator):
 func _on_door_state_changed(door_id, opened):
 	match door_id:
 		DB.DoorIds.APATA_TRAP_INNER:
-			if not opened and game_params.story_vars.apata_trap_stage == PLDGameParams.ApataTrapStages.ARMED and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+			if not opened and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ARMED and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 				var player = game_params.get_player()
 				cutscene_manager.restore_camera(player)
 				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
@@ -355,7 +355,7 @@ func _on_arrived_to(player_node, target_node):
 		chest.do_push()
 
 func restore_state():
-	if game_params.story_vars.erida_trap_stage == PLDGameParams.EridaTrapStages.ACTIVE:
+	if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ACTIVE:
 		$EridaTrapTimer.start()
 	else:
 		$EridaTrapTimer.stop()
