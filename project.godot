@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/apata_chest.gd"
 }, {
-"base": "PLDTakable",
-"class": "AppleJar",
-"language": "GDScript",
-"path": "res://scenes/apple_jar.gd"
-}, {
 "base": "PLDPlayerModel",
 "class": "BanditModel",
 "language": "GDScript",
@@ -38,16 +33,6 @@ _global_script_classes=[ {
 "class": "FemaleModel",
 "language": "GDScript",
 "path": "res://scenes/female_model.gd"
-}, {
-"base": "PLDCharacterModel",
-"class": "GreekSkeletonModel",
-"language": "GDScript",
-"path": "res://scenes/greek_skeleton_model.gd"
-}, {
-"base": "PLDTakable",
-"class": "GreekSword",
-"language": "GDScript",
-"path": "res://scenes/sword_body.gd"
 }, {
 "base": "PLDPlayerModel",
 "class": "MaleModel",
@@ -159,11 +144,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
 }, {
-"base": "Spatial",
-"class": "PLDRiddle",
-"language": "GDScript",
-"path": "res://scenes/buttons_riddle.gd"
-}, {
 "base": "VisibilityNotifier",
 "class": "PLDRoomEnabler",
 "language": "GDScript",
@@ -216,13 +196,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ApataChest": "",
-"AppleJar": "",
 "BanditModel": "",
 "BarnLock": "",
 "DestructibleWeb": "",
 "FemaleModel": "",
-"GreekSkeletonModel": "",
-"GreekSword": "",
 "MaleModel": "",
 "PLDButtonActivator": "",
 "PLDCamera": "",
@@ -245,7 +222,6 @@ _global_script_class_icons={
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
-"PLDRiddle": "",
 "PLDRoomEnabler": "",
 "PLDShaderCache": "",
 "PLDStory": "",
