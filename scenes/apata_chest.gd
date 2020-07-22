@@ -38,12 +38,12 @@ func do_translate():
 	emit_signal("was_translated", self)
 
 #func _physics_process(delta):
-#	if game_params.story_vars.apata_chest_rigid > 0 and mode != RigidBody.MODE_RIGID:
+#	if game_state.story_vars.apata_chest_rigid > 0 and mode != RigidBody.MODE_RIGID:
 #		set_mode(RigidBody.MODE_RIGID)
-#	elif game_params.story_vars.apata_chest_rigid <= 0 and mode != RigidBody.MODE_STATIC:
+#	elif game_state.story_vars.apata_chest_rigid <= 0 and mode != RigidBody.MODE_STATIC:
 #		set_mode(RigidBody.MODE_STATIC)
 
 func restore_state():
 	.restore_state()
-	if game_params.story_vars.apata_chest_rigid < 0:
+	if game_state.story_vars.apata_chest_rigid < 0:
 		translate(TRANSLATE_OFFSET)

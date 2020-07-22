@@ -129,27 +129,27 @@ func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : 
 			_inkStory[locale] = palladiumStory
 
 func _observe_variable(variable_name, new_value) -> void:
-	game_params.story_vars[variable_name] = new_value
+	game_state.story_vars[variable_name] = new_value
 
 func _observe_party(variable_name, new_value) -> void:
 	var v : bool = int(new_value) > 0
-	var party = game_params.party
+	var party = game_state.party
 	var name_hint = variable_name.substr(PARTY_VAR_PREFIX.length(), variable_name.length())
 	if v and not party[name_hint]:
-		game_params.join_party(name_hint)
+		game_state.join_party(name_hint)
 	elif not v and party[name_hint]:
-		game_params.leave_party(name_hint)
+		game_state.leave_party(name_hint)
 
 func _observe_cutscene(variable_name, new_value) -> void:
 	var v : int = int(new_value)
-	var party = game_params.party
+	var party = game_state.party
 	var name_hint = variable_name.substr(CUTSCENE_VAR_PREFIX.length(), variable_name.length())
-	var character = game_params.get_character(name_hint)
+	var character = game_state.get_character(name_hint)
 	character.play_cutscene(v)
 
 func init_variables() -> void:
-	var storyVars : Dictionary = game_params.story_vars
-	var party : Dictionary = game_params.party
+	var storyVars : Dictionary = game_state.story_vars
+	var party : Dictionary = game_state.party
 	var keys = storyVars.keys()
 	var party_keys = party.keys()
 	for locale in AvailableLocales:

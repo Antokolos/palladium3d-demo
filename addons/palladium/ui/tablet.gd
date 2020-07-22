@@ -216,7 +216,7 @@ func refresh_slot_captions(is_load, base_node):
 	for i in range(starting_slot, 6):
 		var node = base_node.get_node("VBoxContainer/Slot%d/ButtonSlot%d" % [i, i])
 		var caption = story_node.get_slot_caption(i)
-		var exists = game_params.save_slot_exists(i)
+		var exists = game_state.save_slot_exists(i)
 		node.set_disabled(is_load and not exists)
 		if i > 0:
 			node.text = caption if exists else tr("TABLET_EMPTY_SLOT")
@@ -249,11 +249,11 @@ func simulate_esc():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func save_to_slot(slot):
-	game_params.save_params(slot)
+	game_state.save_params(slot)
 	simulate_esc()
 
 func load_from_slot(slot):
-	game_params.initiate_load(slot)
+	game_state.initiate_load(slot)
 	simulate_esc()
 
 func _on_ButtonSaveSlot1_pressed():
@@ -272,7 +272,7 @@ func _on_ButtonSaveSlot5_pressed():
 	save_to_slot(5)
 
 func _on_ButtonSlot0_pressed():
-	game_params.autosave_restore()
+	game_state.autosave_restore()
 	simulate_esc()
 
 func _on_ButtonLoadSlot1_pressed():
@@ -340,7 +340,7 @@ func _on_Resolution_item_selected(ID):
 	settings.set_resolution(ID)
 
 func _on_AA_item_selected(ID):
-	var viewport = game_params.get_viewport()
+	var viewport = game_state.get_viewport()
 	if (ID == settings.AA_8X):
 		viewport.msaa = Viewport.MSAA_8X
 	elif (ID == settings.AA_4X):

@@ -14,7 +14,7 @@ func set_attenuation(attenuation):
 	$AudioStreamSea.set_volume_db(-attenuation)
 
 func _process(delta):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if player:
 		var player_origin = player.get_global_transform().origin
 		player_origin.y = 0

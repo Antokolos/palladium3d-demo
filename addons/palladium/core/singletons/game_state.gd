@@ -1,5 +1,5 @@
 extends Node
-class_name PLDGameParams
+class_name PLDGameState
 
 signal shader_cache_processed()
 signal player_registered(player)
@@ -190,7 +190,7 @@ func execute_custom_action(event, item):
 			"saffron_bun":
 				result = true
 				item.remove()
-				var player = game_params.get_player()
+				var player = game_state.get_player()
 				if is_in_party(DB.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
 			"envelope":

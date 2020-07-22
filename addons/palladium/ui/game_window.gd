@@ -21,7 +21,7 @@ func _input(event):
 			rel_pos.y = MOUSE_SENSITIVITY * v if nonzero else 0
 	if not event is InputEventMouseButton \
 		and event.is_action_pressed("action") \
-		and (not get_tree().paused or game_params.get_hud().is_tablet_visible()):
+		and (not get_tree().paused or game_state.get_hud().is_tablet_visible()):
 		click_the_left_mouse_button()
 
 func _notification(what):

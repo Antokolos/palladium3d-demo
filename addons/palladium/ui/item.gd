@@ -31,10 +31,10 @@ func set_appearance(is_quick_item, selected):
 	set_selected(selected)
 
 func set_item_data(nam, item_count):
-	if not game_params.is_item_registered(nam):
+	if not game_state.is_item_registered(nam):
 		print("WARN: Unknown item name in set_item_data: " + nam)
 		return
-	var item_data = game_params.get_registered_item_data(nam)
+	var item_data = game_state.get_registered_item_data(nam)
 	self.nam = nam
 	self.item_count = item_count
 	self.item_image = item_data.item_image
@@ -99,7 +99,7 @@ func get_model_instance():
 	return instance.instance() if instance else null
 
 func remove():
-	game_params.remove(nam)
+	game_state.remove(nam)
 
 func used(player_node, target):
 	emit_signal("used", player_node, target, nam)

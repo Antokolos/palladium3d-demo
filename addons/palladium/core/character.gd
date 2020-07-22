@@ -51,10 +51,10 @@ func _ready():
 	var placeholder = get_node("placeholder")
 	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
 	var model = load(model_path).instance()
-	game_params.connect("player_underwater", self, "set_underwater")
+	game_state.connect("player_underwater", self, "set_underwater")
 	model.connect("character_dead", self, "_on_character_dead")
 	model_container.add_child(model)
-	game_params.register_player(self)
+	game_state.register_player(self)
 
 ### Getting character's parts ###
 
@@ -113,13 +113,13 @@ func sit_down():
 	$AnimationPlayer.play("crouch")
 	var is_player = is_player()
 	if is_player:
-		var companions = game_params.get_companions()
+		var companions = game_state.get_companions()
 		for companion in companions:
 			companion.sit_down()
 	is_sprinting = false
 	is_crouching = true
 	if is_player:
-		var hud = game_params.get_hud()
+		var hud = game_state.get_hud()
 		if hud:
 			hud.set_crouch_indicator(true)
 
@@ -137,12 +137,12 @@ func stand_up():
 	$AnimationPlayer.play_backwards("crouch")
 	var is_player = is_player()
 	if is_player:
-		var companions = game_params.get_companions()
+		var companions = game_state.get_companions()
 		for companion in companions:
 			companion.stand_up()
 	is_crouching = false
 	if is_player:
-		var hud = game_params.get_hud()
+		var hud = game_state.get_hud()
 		if hud:
 			hud.set_crouch_indicator(false)
 
@@ -156,7 +156,7 @@ func set_sprinting(enable):
 	is_sprinting = enable
 	var is_player = is_player()
 	if is_player:
-		var companions = game_params.get_companions()
+		var companions = game_state.get_companions()
 		for companion in companions:
 			companion.set_sprinting(enable)
 
@@ -223,7 +223,7 @@ func process_movement(delta):
 	var sc = get_slide_count()
 	var character_collisions = []
 	var nonchar_collision = null
-	var characters = [] if sc == 0 else game_params.get_characters()
+	var characters = [] if sc == 0 else game_state.get_characters()
 	var collides_floor = false
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
@@ -277,7 +277,7 @@ func has_floor_collision():
 	return has_floor_collision or is_on_floor()
 
 func can_jump():
-	return has_floor_collision() or game_params.is_underwater(get_name_hint())
+	return has_floor_collision() or game_state.is_underwater(get_name_hint())
 
 func _physics_process(delta):
 	if is_cutscene() or is_dead():
@@ -285,12 +285,12 @@ func _physics_process(delta):
 		return
 	if is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
-	var is_underwater = game_params.is_underwater(get_name_hint())
+	var is_underwater = game_state.is_underwater(get_name_hint())
 	if is_underwater and oxygen_timer.is_stopped():
 		oxygen_timer.start()
 	elif not is_underwater and not oxygen_timer.is_stopped():
 		oxygen_timer.stop()
-		game_params.set_oxygen(get_name_hint(), game_params.player_oxygen_max, game_params.player_oxygen_max)
+		game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
 	var movement_data = process_movement(delta)
 	has_floor_collision = movement_data.collides_floor
 	var is_moving = movement_data.is_walking
@@ -309,7 +309,7 @@ func _on_character_dead(player):
 
 func _on_HealTimer_timeout():
 	if is_player():
-		game_params.set_health(get_name_hint(), game_params.player_health_current + DB.HEALING_RATE, game_params.player_health_max)
+		game_state.set_health(get_name_hint(), game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)
@@ -317,4 +317,4 @@ func _on_CutsceneTimer_timeout():
 func _on_OxygenTimer_timeout():
 	if oxygen_timer.is_stopped():
 		return
-	game_params.set_oxygen(get_name_hint(), game_params.player_oxygen_current - OXYGEN_DECREASE_RATE, game_params.player_oxygen_max)
+	game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_current - OXYGEN_DECREASE_RATE, game_state.player_oxygen_max)

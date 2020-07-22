@@ -17,10 +17,10 @@ func _ready():
 	if not is_loadable:
 		do_init(false)
 		return
-	var is_loaded = game_params.finish_load()
+	var is_loaded = game_state.finish_load()
 	do_init(is_loaded)
 	if not is_loaded:
-		game_params.autosave_create()
+		game_state.autosave_create()
 
 func do_init(is_loaded):
 	# Override in children instead of _ready()

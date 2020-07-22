@@ -34,8 +34,8 @@ func _on_base_animation_finished(anim_name):
 	animation_player_base.set_speed_scale(1.0)
 
 func is_opened():
-	var cs = game_params.get_container_state(get_path())
-	return (cs == game_params.ContainerState.DEFAULT and initially_opened) or (cs == game_params.ContainerState.OPENED)
+	var cs = game_state.get_container_state(get_path())
+	return (cs == game_state.ContainerState.DEFAULT and initially_opened) or (cs == game_state.ContainerState.OPENED)
 
 func open(with_sound = true, speed_scale = 1.0):
 	if blocker_node and blocker_node.opened:
@@ -44,14 +44,14 @@ func open(with_sound = true, speed_scale = 1.0):
 	animation_player.play(anim_name)
 	collision_closed.disabled = true
 	collision_opened.disabled = false
-	game_params.set_container_state(get_path(), true)
+	game_state.set_container_state(get_path(), true)
 
 func close(with_sound = true, speed_scale = 1.0):
 	animation_player.set_speed_scale(speed_scale)
 	animation_player.play_backwards(anim_name)
 	collision_closed.disabled = false
 	collision_opened.disabled = true
-	game_params.set_container_state(get_path(), false)
+	game_state.set_container_state(get_path(), false)
 
 func use(player_node, camera_node):
 	if animation_player.is_playing():
@@ -66,12 +66,12 @@ func add_highlight(player_node):
 	return "E: " + tr("ACTION_CLOSE") if is_opened() else "E: " + tr("ACTION_OPEN")
 
 func restore_state():
-	var state = game_params.get_container_state(get_path())
-	if state == game_params.ContainerState.DEFAULT:
+	var state = game_state.get_container_state(get_path())
+	if state == game_state.ContainerState.DEFAULT:
 		if initially_opened:
 			open(false)
 		return
-	if state == game_params.ContainerState.OPENED:
+	if state == game_state.ContainerState.OPENED:
 		open(false)
 	else:
 		close(false)

@@ -49,10 +49,10 @@ func get_rotation_angle_to_target_deg():
 	return rotation_angle_to_target_deg
 
 func is_in_party():
-	return game_params.is_in_party(name_hint)
+	return game_state.is_in_party(name_hint)
 
 func is_player():
-	return game_params.get_player().get_instance_id() == self.get_instance_id()
+	return game_state.get_player().get_instance_id() == self.get_instance_id()
 
 func is_rest_state():
 	return rest_state
@@ -85,7 +85,7 @@ func set_target_node(node):
 	target_node = node
 
 func get_preferred_target():
-	return target_node if not is_in_party() else (game_params.get_companion() if is_player() else game_params.get_player())
+	return target_node if not is_in_party() else (game_state.get_companion() if is_player() else game_state.get_player())
 
 func get_target_position():
 	var t = get_preferred_target()
@@ -152,7 +152,7 @@ func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next
 func follow(in_party, current_transform, next_position):
 	var rest_state = is_rest_state()
 	var was_moving = not rest_state
-	var p = get_follow_parameters(in_party, game_params.get_player().get_global_transform().origin, current_transform, next_position)
+	var p = get_follow_parameters(in_party, game_state.get_player().get_global_transform().origin, current_transform, next_position)
 	
 	var next_dir = Vector3()
 	if not path.empty():

@@ -30,7 +30,7 @@ func stop_cutscene(player):
 
 func borrow_camera(player, cutscene_node):
 	is_cutscene = true
-	game_params.get_hud().show_game_ui(false)
+	game_state.get_hud().show_game_ui(false)
 	var player_camera_holder = player.get_cam_holder()
 	if player_camera_holder.get_child_count() == 0:
 		# Do nothing if player has no camera. It looks like we are in cutscene already.
@@ -56,7 +56,7 @@ func restore_camera(player):
 		camera.enable_use(true)
 		cutscene_node = null
 	camera.enable_use(true)
-	game_params.get_hud().show_game_ui(true)
+	game_state.get_hud().show_game_ui(true)
 	is_cutscene = false
 
 func get_cam():

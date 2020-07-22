@@ -6,17 +6,6 @@
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=5]
 
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="DynamicFont" id=1]
 size = 92
 extra_spacing_bottom = -20
@@ -71,7 +60,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v. 0.10.0"
+text = "v. 0.11.0"
 align = 2
 valign = 2
 

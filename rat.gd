@@ -20,7 +20,7 @@ func can_move_without_collision(motion):
 	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if not player:
 		return
 	var current_transform = get_global_transform()
@@ -64,5 +64,5 @@ func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
 func _on_RatArea_body_entered(body):
-	if not retreating and game_params.is_in_party(DB.FEMALE_NAME_HINT) and body.is_in_group("party"):
+	if not retreating and game_state.is_in_party(DB.FEMALE_NAME_HINT) and body.is_in_group("party"):
 		conversation_manager.start_area_conversation("007_Rat")

@@ -24,7 +24,7 @@ func set_attenuation(attenuation):
 	stop_sound.set_volume_db(-attenuation)
 
 func _physics_process(delta):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if not player:
 		return
 	var player_origin = player.get_global_transform().origin

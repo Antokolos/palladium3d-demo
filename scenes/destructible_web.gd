@@ -9,7 +9,7 @@ func _ready():
 	restore_state()
 
 func use(player_node, camera_node):
-	if game_params.get_multistate_state(get_path()) == STATE_DESTROYED:
+	if game_state.get_multistate_state(get_path()) == STATE_DESTROYED:
 		return
 	destroy_web(true, true)
 
@@ -25,7 +25,7 @@ func destroy_web(with_effects, update_state):
 	else:
 		_on_DestroyTimer_timeout()
 	if update_state:
-		game_params.set_multistate_state(get_path(), STATE_DESTROYED)
+		game_state.set_multistate_state(get_path(), STATE_DESTROYED)
 
 func _on_DestroyTimer_timeout():
 	emit_signal("web_destroyed", self)
@@ -36,6 +36,6 @@ func _on_DestroyTimer_timeout():
 	$spider_web_2.visible = false
 
 func restore_state():
-	var state = game_params.get_multistate_state(get_path())
+	var state = game_state.get_multistate_state(get_path())
 	if state == STATE_DESTROYED:
 		destroy_web(false, false)

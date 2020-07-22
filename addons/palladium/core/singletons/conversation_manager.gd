@@ -32,13 +32,13 @@ func change_stretch_ratio(conversation):
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
 func start_area_cutscene(conversation_name, cutscene_node = null):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
 		player.rest()
 		start_conversation(player, conversation_name, null, null, true, cutscene_node)
 
 func start_area_conversation(conversation_name):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
 		start_conversation(player, conversation_name)
 
@@ -55,7 +55,7 @@ func stop_conversation(player):
 	target = null
 	initiator = null
 	#is_finalizing = false -- this had some troubles with the lipsync_manager, it is better to not touch it now
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	hud.conversation.visible = false
 	hud.show_game_ui(true)
 	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
@@ -141,7 +141,7 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	self.initiator = initiator
 	self.is_finalizing = false
 	self.conversation_name = conversation_name
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	hud.show_game_ui(false)
 	var conversation = hud.conversation
 	conversation.visible = true
@@ -182,7 +182,7 @@ func get_vvalue(dict):
 
 func story_choose(player, idx):
 	var has_sound = false
-	var conversation = game_params.get_hud().conversation
+	var conversation = game_state.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
 	lipsync_manager.stop_sound_and_lipsync()  # If the character has not finished speaking, but the player already decided to continue dialogue
@@ -205,7 +205,7 @@ func story_choose(player, idx):
 			conversation_actor.text = tr(actor_name) + ": " if actor_name else ""
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
-				var character = game_params.get_character(actor_name)
+				var character = game_state.get_character(actor_name)
 				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
 			change_stretch_ratio(conversation)
 		conversation.visible = settings.need_subtitles() or not has_sound
@@ -220,7 +220,7 @@ func proceed_story_immediately(player):
 		story_proceed(player)
 
 func story_proceed(player):
-	var conversation = game_params.get_hud().conversation
+	var conversation = game_state.get_hud().conversation
 	var has_voiceover = false
 	if story_node.can_continue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -240,7 +240,7 @@ func story_proceed(player):
 			# To get more correct representation of English phonemes, you can use 'transcription' tag in the Ink file
 			# TODO: Alternatively, code for lipsync autocreation from English text should be written
 			var text = texts["ru"] #get_vvalue(texts)
-			var character = game_params.get_companion(actor_name)
+			var character = game_state.get_companion(actor_name)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
 	var can_continue = not is_finalizing and story_node.can_continue()
@@ -271,5 +271,5 @@ func display_choices(conversation, choices):
 	max_choice = choices.size()
 
 func _on_AutocloseTimer_timeout():
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	stop_conversation(player)

@@ -47,7 +47,7 @@ func open_preview(item, hud, flashlight):
 		var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
 		for ch in custom_actions_node.get_children():
 			ch.queue_free()
-		custom_actions = game_params.get_custom_actions(item)
+		custom_actions = game_state.get_custom_actions(item)
 		for act in custom_actions:
 			var ch = label_close_node.duplicate(0)
 			ch.text = common_utils.get_action_key(act) + tr(item.nam + "_" + act)
@@ -60,7 +60,7 @@ func _input(event):
 	if item_holder_node.get_child_count() > 0:
 		if event.is_action_pressed("item_preview_toggle") or event.is_action_pressed("ui_tablet_toggle"):
 			close_preview()
-		elif game_params.execute_custom_action(event, item):
+		elif game_state.execute_custom_action(event, item):
 			close_preview()
 		elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			if event is InputEventMouseMotion:
@@ -101,7 +101,7 @@ func close_preview():
 	if hud:
 		hud.actions_panel.hide()
 		hud.show_game_ui(true)
-		if game_params.get_quick_items_count() > 1:
+		if game_state.get_quick_items_count() > 1:
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
 	custom_actions.clear()

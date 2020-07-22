@@ -7,5 +7,5 @@ func _on_Area_body_entered(body):
 		$AnimationTree.set("parameters/Transition/current", 1)
 
 func _on_Area_body_exited(body):
-	if not game_params.is_loading() and body.is_in_group("party"):
+	if not game_state.is_loading() and body.is_in_group("party"):
 		$AnimationTree.set("parameters/Transition/current", 0)

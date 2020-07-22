@@ -45,7 +45,7 @@ func change_quality(quality):
 		settings.QUALITY_NORM:
 			self.environment = env_norm
 			#get_tree().call_group("lightmaps", "enable", false)
-			#game_params.get_viewport().shadow_atlas_size = 2048
+			#game_state.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_normal")
 			get_tree().call_group("light_sources", "set_quality_normal")
 			get_tree().call_group("grass", "set_quality_normal")
@@ -57,7 +57,7 @@ func change_quality(quality):
 		settings.QUALITY_OPT:
 			self.environment = env_opt
 			#get_tree().call_group("lightmaps", "enable", true)
-			#game_params.get_viewport().shadow_atlas_size = 2048
+			#game_state.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_optimal")
 			get_tree().call_group("light_sources", "set_quality_optimal")
 			get_tree().call_group("grass", "set_quality_optimal")
@@ -69,7 +69,7 @@ func change_quality(quality):
 		settings.QUALITY_GOOD:
 			self.environment = env_good
 			#get_tree().call_group("lightmaps", "enable", false)
-			#game_params.get_viewport().shadow_atlas_size = 4096
+			#game_state.get_viewport().shadow_atlas_size = 4096
 			get_tree().call_group("fire_sources", "set_quality_good")
 			get_tree().call_group("light_sources", "set_quality_good")
 			get_tree().call_group("grass", "set_quality_good")
@@ -81,7 +81,7 @@ func change_quality(quality):
 		settings.QUALITY_HIGH:
 			self.environment = env_high
 			#get_tree().call_group("lightmaps", "enable", false)
-			#game_params.get_viewport().shadow_atlas_size = 8192
+			#game_state.get_viewport().shadow_atlas_size = 8192
 			get_tree().call_group("fire_sources", "set_quality_high")
 			get_tree().call_group("light_sources", "set_quality_high")
 			get_tree().call_group("grass", "set_quality_high")
@@ -90,7 +90,7 @@ func change_quality(quality):
 			if flashlight_spot:
 				flashlight_spot.set("shadow_enabled", true)
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
-	set_inside(game_params.is_inside(), game_params.is_bright())
+	set_inside(game_state.is_inside(), game_state.is_bright())
 	if shader_cache:
 		shader_cache.refresh()
 
@@ -106,7 +106,7 @@ func change_culling():
 		self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
 
 func restore_state():
-	if game_params.story_vars.flashlight_on:
+	if game_state.story_vars.flashlight_on:
 		flashlight.show()
 
 func _process(delta):
@@ -116,29 +116,29 @@ func _process(delta):
 		if flashlight.is_visible_in_tree():
 			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
-			game_params.story_vars.flashlight_on = false
+			game_state.story_vars.flashlight_on = false
 		else:
 			$AudioStreamFlashlightOn.play()
 			flashlight.show()
-			game_params.story_vars.flashlight_on = true
+			game_state.story_vars.flashlight_on = true
 	# ----------------------------------
 	
 	if use_point:
-		var player = game_params.get_player()
-		game_params.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = use_point.highlight(player)
+		var player = game_state.get_player()
+		game_state.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = use_point.highlight(player)
 	change_culling()
 
 func _input(event):
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
 	if event.is_action_pressed("item_preview_toggle"):
-		var hud = game_params.get_hud()
+		var hud = game_state.get_hud()
 		if hud and not item_preview.is_opened():
 			var item = hud.get_active_item()
 			if item:
-				game_params.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
+				game_state.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 				item_preview.open_preview(item, hud, flashlight)
 	elif event.is_action_pressed("action"):
-		var player = game_params.get_player()
+		var player = game_state.get_player()
 		if player:
 			use_point.action(player, self)

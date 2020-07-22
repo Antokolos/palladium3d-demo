@@ -31,8 +31,8 @@ const STORY_VARS_DEFAULT = {
 	"apata_chest_rigid" : 0,
 	"relationship_female" : 0,
 	"relationship_bandit" : 0,
-	"apata_trap_stage" : PLDGameParams.TrapStages.ARMED,
-	"erida_trap_stage" : PLDGameParams.TrapStages.ARMED
+	"apata_trap_stage" : PLDGameState.TrapStages.ARMED,
+	"erida_trap_stage" : PLDGameState.TrapStages.ARMED
 }
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [

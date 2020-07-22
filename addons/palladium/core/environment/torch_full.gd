@@ -18,8 +18,8 @@ func _ready():
 	restore_state()
 
 func is_active():
-	var ls = game_params.get_light_state(get_path())
-	return (ls == game_params.LightState.DEFAULT and initially_active) or (ls == game_params.LightState.ON)
+	var ls = game_state.get_light_state(get_path())
+	return (ls == game_state.LightState.DEFAULT and initially_active) or (ls == game_state.LightState.ON)
 
 func enable(active, update):
 	if torch_fire:
@@ -27,7 +27,7 @@ func enable(active, update):
 	if torch_light:
 		torch_light.enable(active)
 	if update:
-		game_params.set_light_state(get_path(), active)
+		game_state.set_light_state(get_path(), active)
 	emit_signal("state_changed", self, active)
 
 func use(player_node, camera_node):
@@ -63,7 +63,7 @@ func _physics_process(delta):
 	if not screen_entered or not torch_light.visible or persistent:
 		raycast.enabled = false
 		return
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if player:
 		var camera = player.get_cam()
 		var origin = camera.get_global_transform().origin

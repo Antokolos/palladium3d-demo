@@ -5,7 +5,7 @@ export var remove_on_use = true
 export var matched_item_names : PoolStringArray = PoolStringArray()
 
 func use(player_node, camera_node):
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if not item_match(item):
@@ -27,7 +27,7 @@ func item_match(item):
 	return false
 
 func add_highlight(player_node):
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):

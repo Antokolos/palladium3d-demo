@@ -59,7 +59,7 @@ func init():
 		y = y + ystep
 
 func get_camera_limit():
-	return 50 if game_params.is_inside() else 330
+	return 50 if game_state.is_inside() else 330
 
 func get_max_distance(camera_origin):
 	var dsup = get_camera_limit()

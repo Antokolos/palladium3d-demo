@@ -7,8 +7,8 @@ var loader = null
 func _ready():
 	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	game_params.change_music_to(game_params.MusicId.LOADING)
-	loader = ResourceLoader.load_interactive(game_params.scene_path)
+	game_state.change_music_to(game_state.MusicId.LOADING)
+	loader = ResourceLoader.load_interactive(game_state.scene_path)
 
 func _exit_tree():
 	get_tree().paused = false
@@ -21,7 +21,7 @@ func _process(delta):
 	if err == ERR_FILE_EOF:
 		var pscn = loader.get_resource()
 		loader = null
-		game_params.cleanup_paths()
+		game_state.cleanup_paths()
 		get_tree().change_scene_to(pscn)
 	else:
 		progress.value = loader.get_stage()

@@ -3,24 +3,24 @@ extends PLDLevel
 onready var pocket_book = get_node("pocket_book")
 
 func do_init(is_loaded):
-	if not game_params.story_vars.is_game_start and not is_loaded:
+	if not game_state.story_vars.is_game_start and not is_loaded:
 		var player_basis = $PositionPlayer.get_transform().basis
 		var player_origin = $PositionPlayer.get_transform().origin
 		var companion_basis = $PositionCompanion.get_transform().basis
 		var companion_origin = $PositionCompanion.get_transform().origin
 		player.set_transform(Transform(player_basis, player_origin))
 		player_female.set_transform(Transform(companion_basis, companion_origin))
-	if game_params.story_vars.is_game_start:
-		game_params.story_vars.is_game_start = false
+	if game_state.story_vars.is_game_start:
+		game_state.story_vars.is_game_start = false
 	if conversation_manager.meeting_is_finished(DB.PLAYER_NAME_HINT, DB.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)
-	game_params.connect("item_used", self, "on_item_used")
+	game_state.connect("item_used", self, "on_item_used")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
 	player.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS if player_in_grass else PLDPlayer.SoundId.SOUND_WALK_SAND)
-	game_params.change_music_to(game_params.MusicId.OUTSIDE)
+	game_state.change_music_to(game_state.MusicId.OUTSIDE)
 	player_female.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS if female_in_grass else PLDPlayer.SoundId.SOUND_WALK_SAND)
 	var boat_area = get_node("BoatArea")
 	if boat_area and boat_area.overlaps_body(player) and boat_area.overlaps_body(player_female):
@@ -35,7 +35,7 @@ func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
 		DB.TakableIds.ENVELOPE:
-			game_params.remove("island_map")
+			game_state.remove("island_map")
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")
 
@@ -67,20 +67,20 @@ func _on_AreaGrass_body_entered(body):
 			body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
 
 func _on_AreaGrass_body_exited(body):
-	if body.is_in_group("party") and not game_params.is_loading():
+	if body.is_in_group("party") and not game_state.is_loading():
 		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
-	if body.is_in_group("party") and not game_params.is_loading():
+	if body.is_in_group("party") and not game_state.is_loading():
 		conversation_manager.arrange_meeting(player, player, player_female)
 
 func _on_RockArea_body_exited(body):
-	if game_params.has_item("envelope") or game_params.has_item("barn_lock_key"):
+	if game_state.has_item("envelope") or game_state.has_item("barn_lock_key"):
 		_on_StumpArea_body_exited(body)
 
 func _on_BoatArea_body_entered(body):
 	if not body is PLDPlayer \
-		or game_params.is_loading() \
+		or game_state.is_loading() \
 		or not player_female.is_rest_state():
 		return
 	var boat_area = get_node("BoatArea")
@@ -97,6 +97,6 @@ func _on_TunnelArea_body_entered(body):
 		body.set_pathfinding_enabled(false)
 
 func _on_TunnelArea_body_exited(body):
-	if body.is_in_group("party") and not game_params.is_loading():
+	if body.is_in_group("party") and not game_state.is_loading():
 		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
 		body.set_pathfinding_enabled(true)

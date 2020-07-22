@@ -5,7 +5,7 @@ onready var vase_out = get_parent().get_node("menu_vase_octopus_2")
 onready var spotlight = get_parent().get_node("SpotLight")
 
 func click():
-	game_params.change_scene("res://our_games.tscn")
+	game_state.change_scene("res://our_games.tscn")
 
 func mouse_over():
 	.mouse_over()

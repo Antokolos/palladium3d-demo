@@ -50,15 +50,15 @@ var first_item_idx = 0
 var popup_message_queue = []
 
 func _ready():
-	game_params.connect("shader_cache_processed", self, "_on_shader_cache_processed")
-	game_params.connect("item_taken", self, "_on_item_taken")
-	game_params.connect("item_removed", self, "_on_item_removed")
-	game_params.connect("health_changed", self, "on_health_changed")
-	game_params.connect("oxygen_changed", self, "on_oxygen_changed")
-	game_params.connect("player_underwater", self, "set_underwater")
+	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
+	game_state.connect("item_taken", self, "_on_item_taken")
+	game_state.connect("item_removed", self, "_on_item_removed")
+	game_state.connect("health_changed", self, "on_health_changed")
+	game_state.connect("oxygen_changed", self, "on_oxygen_changed")
+	game_state.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
-	on_health_changed(DB.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
-	on_oxygen_changed(DB.PLAYER_NAME_HINT, game_params.player_oxygen_current, game_params.player_oxygen_max)
+	on_health_changed(DB.PLAYER_NAME_HINT, game_state.player_health_current, game_state.player_health_max)
+	on_oxygen_changed(DB.PLAYER_NAME_HINT, game_state.player_oxygen_current, game_state.player_oxygen_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	synchronize_items()
 	select_active_item()
@@ -79,8 +79,8 @@ func show_game_ui(enable):
 		inventory.visible = false
 
 func queue_popup_message(template, args = [], fade = false, timeout_max = MESSAGE_TIMEOUT_MAX_S):
-	if game_params.get_message_state(template):
-		game_params.set_message_state(template, false)
+	if game_state.get_message_state(template):
+		game_state.set_message_state(template, false)
 		popup_message_queue.push_back({
 			"template" : template,
 			"args" : args,
@@ -163,7 +163,7 @@ func pause_game(enable):
 	get_tree().paused = enable
 
 func set_underwater(player, enable):
-	if player and player.get_instance_id() != game_params.get_player().get_instance_id():
+	if player and player.get_instance_id() != game_state.get_player().get_instance_id():
 		return
 	underwater_effect.visible = enable
 
@@ -224,10 +224,10 @@ func synchronize_items():
 
 func insert_ui_inventory_item(pos):
 	var new_item = load("res://addons/palladium/ui/item.tscn").instance()
-	new_item.connect("used", game_params, "item_used")
+	new_item.connect("used", game_state, "item_used")
 	var i = first_item_idx + pos
-	if i >= 0 and i < game_params.inventory.size():
-		new_item.set_item_data(game_params.inventory[i].nam, game_params.inventory[i].count)
+	if i >= 0 and i < game_state.inventory.size():
+		new_item.set_item_data(game_state.inventory[i].nam, game_state.inventory[i].count)
 	inventory_panel.add_child(new_item)
 	if pos < inventory_panel.get_child_count() - 1:
 		inventory_panel.move_child(new_item, pos)
@@ -235,10 +235,10 @@ func insert_ui_inventory_item(pos):
 
 func insert_ui_quick_item(pos):
 	var new_item = load("res://addons/palladium/ui/item.tscn").instance()
-	new_item.connect("used", game_params, "item_used")
+	new_item.connect("used", game_state, "item_used")
 	new_item.set_appearance(true, false)
-	if pos < game_params.quick_items.size():
-		var quick_item = game_params.quick_items[pos]
+	if pos < game_state.quick_items.size():
+		var quick_item = game_state.quick_items[pos]
 		if quick_item.nam:
 			new_item.set_item_data(quick_item.nam, quick_item.count)
 	quick_items_panel.add_child(new_item)
@@ -250,7 +250,7 @@ func _on_shader_cache_processed():
 	if cutscene_mode:
 		return
 	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
-	if game_params.get_quick_items_count() > 0:
+	if game_state.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 
 func _on_item_taken(nam, cnt, item_path):
@@ -268,7 +268,7 @@ func remove_ui_inventory_item(nam, count):
 	for ui_item in ui_items:
 		if nam == ui_item.nam and count <= 0:
 			inventory_panel.remove_child(ui_item)
-			ui_item.disconnect("used", game_params, "item_used")
+			ui_item.disconnect("used", game_state, "item_used")
 			ui_item.queue_free()
 			insert_ui_inventory_item(MAX_VISIBLE_ITEMS - 1)
 			if idx == active_item_idx and active_item_idx > 0:
@@ -277,7 +277,7 @@ func remove_ui_inventory_item(nam, count):
 	if inventory_panel.get_child(0).is_empty():
 		# If very first item is empty, than all following items are empty too
 		# Therefore we should try to shift visible items window to the left
-		first_item_idx = int(max(game_params.inventory.size() - MAX_VISIBLE_ITEMS, 0))
+		first_item_idx = int(max(game_state.inventory.size() - MAX_VISIBLE_ITEMS, 0))
 		synchronize_items()
 		set_active_item(0)
 
@@ -287,14 +287,14 @@ func remove_ui_quick_item(nam, count):
 	for ui_item in ui_items:
 		if nam == ui_item.nam and count <= 0:
 			quick_items_panel.remove_child(ui_item)
-			ui_item.disconnect("used", game_params, "item_used")
+			ui_item.disconnect("used", game_state, "item_used")
 			ui_item.queue_free()
 			insert_ui_quick_item(idx)
 			return
 		idx = idx + 1
 
 func shift_items_left():
-	if first_item_idx < game_params.inventory.size() - MAX_VISIBLE_ITEMS:
+	if first_item_idx < game_state.inventory.size() - MAX_VISIBLE_ITEMS:
 		first_item_idx = first_item_idx + 1
 		var ui_item = inventory_panel.get_child(0)
 		remove_ui_inventory_item(ui_item.nam, -1)
@@ -306,7 +306,7 @@ func shift_items_right():
 		insert_ui_inventory_item(0)
 
 func is_valid_index(item_idx):
-	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
+	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_state.inventory.size()
 
 func is_valid_quick_index(item_idx):
 	return item_idx >= 0 and item_idx < DB.MAX_QUICK_ITEMS
@@ -382,7 +382,7 @@ func _input(event):
 		elif event.is_action_pressed("active_item_toggle"):
 			var item = get_active_item()
 			if item:
-				game_params.set_quick_item(active_quick_item_idx, item.nam)
+				game_state.set_quick_item(active_quick_item_idx, item.nam)
 				synchronize_items()
 		elif event.is_action_pressed("active_item_1"):
 			set_active_item(0)

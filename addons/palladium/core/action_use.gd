@@ -25,16 +25,16 @@ func action(player_node, camera_node):
 		elif body_is_usable(body):
 			body.use(player_node, camera_node)
 			return
-	var item = game_params.get_hud().get_active_item()
+	var item = game_state.get_hud().get_active_item()
 	if not item:
 		return
-	var custom_actions = game_params.get_custom_actions(item)
+	var custom_actions = game_state.get_custom_actions(item)
 	if custom_actions.empty():
 		return
 	var event = InputEventAction.new()
 	event.set_action(custom_actions[0])
 	event.set_pressed(true)
-	game_params.execute_custom_action(event, item)
+	game_state.execute_custom_action(event, item)
 
 func switch_highlight(player_node, body):
 	if action_body:
@@ -46,10 +46,10 @@ func switch_highlight(player_node, body):
 	if hint_message:
 		return hint_message
 	else:
-		var item = game_params.get_hud().get_active_item()
+		var item = game_state.get_hud().get_active_item()
 		if not item:
 			return ""
-		var custom_actions = game_params.get_custom_actions(item)
+		var custom_actions = game_state.get_custom_actions(item)
 		if custom_actions.empty():
 			return ""
 		return common_utils.get_action_key("action") + tr(item.nam + "_" + custom_actions[0])

@@ -56,7 +56,7 @@ func set_active(active):
 		enable_room()
 
 func _physics_process(delta):
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	var camera = player.get_cam()
 	var origin = camera.get_global_transform().origin
 	var need_enable = get_aabb().has_point(to_local(origin))

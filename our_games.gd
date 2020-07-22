@@ -19,7 +19,7 @@ func _ready():
 	back_node.grab_focus()
 
 func _on_Back_pressed():
-	game_params.change_scene("res://main_menu.tscn")
+	game_state.change_scene("res://main_menu.tscn")
 
 func _on_SiteUrl_meta_clicked(meta):
 	common_utils.open_url("https://nlbproject.com")

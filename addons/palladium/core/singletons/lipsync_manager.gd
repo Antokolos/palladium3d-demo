@@ -15,7 +15,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 	stop_sound_and_lipsync()
 
 func stop_sound_and_lipsync():
-	for character_speaker in game_params.get_characters():
+	for character_speaker in game_state.get_characters():
 		character_speaker.get_model().stop_speaking()
 	if $AudioStreamPlayer.is_playing():
 		$AudioStreamPlayer.stop()
@@ -99,7 +99,7 @@ func text_to_phonetic(text):
 
 func _on_AudioStreamPlayer_finished():
 	stop_sound_and_lipsync()
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if conversation_manager.is_finalizing():
 		conversation_manager.stop_conversation(player)
 	elif story_node.can_choose():
@@ -112,7 +112,7 @@ func _on_AudioStreamPlayer_finished():
 		conversation_manager.stop_conversation(player)
 
 func _on_ShortPhraseTimer_timeout():
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	if conversation_manager.is_finalizing():
 		conversation_manager.stop_conversation(player)
 	else:

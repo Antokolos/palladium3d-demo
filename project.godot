@@ -80,9 +80,9 @@ _global_script_classes=[ {
 "path": "res://addons/palladium/core/enemy.gd"
 }, {
 "base": "Node",
-"class": "PLDGameParams",
+"class": "PLDGameState",
 "language": "GDScript",
-"path": "res://addons/palladium/core/singletons/game_params.gd"
+"path": "res://addons/palladium/core/singletons/game_state.gd"
 }, {
 "base": "ViewportContainer",
 "class": "PLDGameWindow",
@@ -209,7 +209,7 @@ _global_script_class_icons={
 "PLDCutsceneManager": "",
 "PLDDoor": "",
 "PLDEnemy": "",
-"PLDGameParams": "",
+"PLDGameState": "",
 "PLDGameWindow": "",
 "PLDHUD": "",
 "PLDItemContainer": "",
@@ -252,7 +252,7 @@ config/auto_accept_quit=false
 DB="*res://db/db.gd"
 common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
 settings="*res://addons/palladium/core/singletons/settings.gd"
-game_params="*res://addons/palladium/core/singletons/game_params.tscn"
+game_state="*res://addons/palladium/core/singletons/game_state.tscn"
 lipsync_manager="*res://addons/palladium/core/singletons/lipsync_manager.tscn"
 cutscene_manager="*res://addons/palladium/core/singletons/cutscene_manager.tscn"
 conversation_manager="*res://addons/palladium/core/singletons/conversation_manager.tscn"

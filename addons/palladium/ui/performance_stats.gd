@@ -5,8 +5,8 @@ func _physics_process(delta):
 		visible = false
 		return
 	visible = true
-	var camera = game_params.get_player().get_cam()
-	var viewport = game_params.get_viewport()
+	var camera = game_state.get_player().get_cam()
+	var viewport = game_state.get_viewport()
 	var viewport_size = viewport.size if viewport else Vector2(0, 0)
 	var stats = [
 	"FPS: %d" % Performance.get_monitor(Performance.TIME_FPS),

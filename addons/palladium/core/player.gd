@@ -21,7 +21,7 @@ func _ready():
 		var camera = load("res://addons/palladium/core/camera.tscn").instance()
 		get_cam_holder().add_child(camera)
 		camera.rebuild_exceptions(self)
-		game_params.set_player_name_hint(get_name_hint())
+		game_state.set_player_name_hint(get_name_hint())
 	get_model().set_simple_mode(initial_player)
 
 func reset_rotation():
@@ -44,15 +44,15 @@ func get_cam():
 
 func use(player_node, camera_node):
 	if not conversation_manager.conversation_is_in_progress():
-		game_params.handle_conversation(player_node, self, player_node)
+		game_state.handle_conversation(player_node, self, player_node)
 
 func add_highlight(player_node):
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	var inventory = hud.inventory
 	var conversation = hud.conversation
 	if conversation.visible:
 		return ""
-	return game_params.handle_player_highlight(player_node, self)
+	return game_state.handle_player_highlight(player_node, self)
 
 ### States ###
 
@@ -63,16 +63,16 @@ func remove_item_from_hand():
 	get_model().remove_item_from_hand()
 
 func join_party():
-	game_params.join_party(get_name_hint())
+	game_state.join_party(get_name_hint())
 
 func leave_party():
-	game_params.leave_party(get_name_hint())
+	game_state.leave_party(get_name_hint())
 
 func become_player():
 	if is_player():
 		get_cam().rebuild_exceptions(self)
 		return
-	var player = game_params.get_player()
+	var player = game_state.get_player()
 	var rotation_helper = get_node("Rotation_Helper")
 	var camera_container = rotation_helper.get_node("Camera")
 	var player_rotation_helper = player.get_node("Rotation_Helper")
@@ -85,8 +85,8 @@ func become_player():
 	var model = get_model()
 	model.set_simple_mode(true)
 	player.reset_rotation()
-	game_params.set_player_name_hint(get_name_hint())
-	game_params.set_underwater(self, game_params.is_underwater(get_name_hint()))
+	game_state.set_player_name_hint(get_name_hint())
+	game_state.set_underwater(self, game_state.is_underwater(get_name_hint()))
 	camera.rebuild_exceptions(self)
 
 func process_input(delta):
@@ -124,7 +124,7 @@ func process_input(delta):
 	# Jumping
 	if can_jump():
 		if Input.is_action_just_pressed("movement_jump") \
-			or (game_params.is_underwater(get_name_hint()) and Input.is_action_pressed("movement_jump")):
+			or (game_state.is_underwater(get_name_hint()) and Input.is_action_pressed("movement_jump")):
 			vel.y = JUMP_SPEED
 			is_in_jump = true
 	# ----------------------------------
@@ -165,7 +165,7 @@ func get_snap():
 func _input(event):
 	if not is_player():
 		return
-	var hud = game_params.get_hud()
+	var hud = game_state.get_hud()
 	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
 		if event.is_action_pressed("dialogue_next"):

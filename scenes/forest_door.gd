@@ -10,13 +10,13 @@ func _ready():
 
 func use(player_node, camera_node):
 	if anim_player.is_playing() \
-		or game_params.get_multistate_state(get_path()) == STATE_OPENED \
-		or game_params.get_multistate_state(barn_lock_node.get_path()) != BarnLock.STATE_OPENED:
+		or game_state.get_multistate_state(get_path()) == STATE_OPENED \
+		or game_state.get_multistate_state(barn_lock_node.get_path()) != BarnLock.STATE_OPENED:
 		return
 	door_open(true, true)
 
 func add_highlight(player_node):
-	if game_params.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
+	if game_state.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
 		return "E: " + tr("ACTION_OPEN")
 	return ""
 
@@ -27,9 +27,9 @@ func door_open(with_sound, update_state):
 	if with_sound:
 		$AudioStreamPlayer.play()
 	if update_state:
-		game_params.set_multistate_state(get_path(), STATE_OPENED)
+		game_state.set_multistate_state(get_path(), STATE_OPENED)
 
 func restore_state():
-	var state = game_params.get_multistate_state(get_path())
+	var state = game_state.get_multistate_state(get_path())
 	if state == STATE_OPENED:
 		door_open(false, false)
