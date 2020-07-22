@@ -81,8 +81,8 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
 	elif game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ACTIVE:
 		if conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
-			var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
-			var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+			var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
+			var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 			bandit.join_party()
 			female.join_party()
 			ceiling_sound_stop()
@@ -113,7 +113,7 @@ func _physics_process(delta):
 
 func _on_DamageTimer_timeout():
 	if does_damage:
-		game_params.set_health(game_params.PLAYER_NAME_HINT, game_params.player_health_current - spikes_injury_rate, game_params.player_health_max)
+		game_params.set_health(DB.PLAYER_NAME_HINT, game_params.player_health_current - spikes_injury_rate, game_params.player_health_max)
 
 func _on_PartialActivationTimer_timeout():
 	pause()

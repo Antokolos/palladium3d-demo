@@ -77,8 +77,8 @@ func rest():
 
 func set_look_transition(force = false):
 	if force \
-		or conversation_manager.meeting_is_in_progress(name_hint, game_params.PLAYER_NAME_HINT) \
-		or conversation_manager.meeting_is_finished(name_hint, game_params.PLAYER_NAME_HINT):
+		or conversation_manager.meeting_is_in_progress(name_hint, DB.PLAYER_NAME_HINT) \
+		or conversation_manager.meeting_is_finished(name_hint, DB.PLAYER_NAME_HINT):
 		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
 
 func play_cutscene(cutscene_id):
@@ -309,7 +309,7 @@ func _on_character_dead(player):
 
 func _on_HealTimer_timeout():
 	if is_player():
-		game_params.set_health(get_name_hint(), game_params.player_health_current + game_params.HEALING_RATE, game_params.player_health_max)
+		game_params.set_health(get_name_hint(), game_params.player_health_current + DB.HEALING_RATE, game_params.player_health_max)
 
 func _on_CutsceneTimer_timeout():
 	set_look_transition(true)

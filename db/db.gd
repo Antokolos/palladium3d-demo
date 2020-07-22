@@ -1,5 +1,45 @@
 extends Node
 
+const HEALING_RATE = 1
+const MAX_QUICK_ITEMS = 6
+const SCENE_PATH_DEFAULT = "res://forest.tscn"
+const PLAYER_HEALTH_CURRENT_DEFAULT = 100
+const PLAYER_HEALTH_MAX_DEFAULT = 100
+const SUFFOCATION_DAMAGE_RATE = 10
+const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
+const PLAYER_OXYGEN_MAX_DEFAULT = 100
+const FATHER_NAME_HINT = "father"
+const PLAYER_NAME_HINT = "player"
+const FEMALE_NAME_HINT = "female"
+const BANDIT_NAME_HINT = "bandit"
+const SKELETON_NAME_HINT = "skeleton"
+const PARTY_DEFAULT = {
+	FATHER_NAME_HINT : false,
+	PLAYER_NAME_HINT : true,
+	FEMALE_NAME_HINT : false,
+	BANDIT_NAME_HINT : false
+}
+const UNDERWATER_DEFAULT = {
+	PLAYER_NAME_HINT : false,
+	FEMALE_NAME_HINT : false,
+	BANDIT_NAME_HINT : false
+}
+const STORY_VARS_DEFAULT = {
+	"is_game_start" : true,
+	"flashlight_on" : false,
+	"in_lyre_area" : false,
+	"apata_chest_rigid" : 0,
+	"relationship_female" : 0,
+	"relationship_bandit" : 0,
+	"apata_trap_stage" : PLDGameParams.TrapStages.ARMED,
+	"erida_trap_stage" : PLDGameParams.TrapStages.ARMED
+}
+const INVENTORY_DEFAULT = []
+const QUICK_ITEMS_DEFAULT = [
+	{ "nam" : "island_map", "count" : 1 },
+	{ "nam" : "saffron_bun", "count" : 1 }
+]
+
 enum LightIds {
 	NONE = 0,
 	APOLLO_1 = 10,

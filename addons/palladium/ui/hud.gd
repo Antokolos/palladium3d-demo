@@ -57,8 +57,8 @@ func _ready():
 	game_params.connect("oxygen_changed", self, "on_oxygen_changed")
 	game_params.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
-	on_health_changed(game_params.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
-	on_oxygen_changed(game_params.PLAYER_NAME_HINT, game_params.player_oxygen_current, game_params.player_oxygen_max)
+	on_health_changed(DB.PLAYER_NAME_HINT, game_params.player_health_current, game_params.player_health_max)
+	on_oxygen_changed(DB.PLAYER_NAME_HINT, game_params.player_oxygen_current, game_params.player_oxygen_max)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	synchronize_items()
 	select_active_item()
@@ -219,7 +219,7 @@ func synchronize_items():
 	for pos in range(0, MAX_VISIBLE_ITEMS):
 		insert_ui_inventory_item(pos)
 	cleanup_panel(quick_items_panel)
-	for pos in range(0, game_params.MAX_QUICK_ITEMS):
+	for pos in range(0, DB.MAX_QUICK_ITEMS):
 		insert_ui_quick_item(pos)
 
 func insert_ui_inventory_item(pos):
@@ -309,7 +309,7 @@ func is_valid_index(item_idx):
 	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_params.inventory.size()
 
 func is_valid_quick_index(item_idx):
-	return item_idx >= 0 and item_idx < game_params.MAX_QUICK_ITEMS
+	return item_idx >= 0 and item_idx < DB.MAX_QUICK_ITEMS
 
 func select_active_item():
 	var items = inventory_panel.get_children()

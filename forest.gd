@@ -12,7 +12,7 @@ func do_init(is_loaded):
 		player_female.set_transform(Transform(companion_basis, companion_origin))
 	if game_params.story_vars.is_game_start:
 		game_params.story_vars.is_game_start = false
-	if conversation_manager.meeting_is_finished(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT):
+	if conversation_manager.meeting_is_finished(DB.PLAYER_NAME_HINT, DB.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)
 	game_params.connect("item_used", self, "on_item_used")
@@ -53,7 +53,7 @@ func on_item_used(item_nam, target):
 			if boatFinished:
 				conversation_manager.start_conversation(player, "001_Door3")
 			else:
-				var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(game_params.PLAYER_NAME_HINT, game_params.FEMALE_NAME_HINT)
+				var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(DB.PLAYER_NAME_HINT, DB.FEMALE_NAME_HINT)
 				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
 
 func _on_meeting_started(player, target, initiator):
@@ -88,7 +88,7 @@ func _on_BoatArea_body_entered(body):
 		return
 	var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
 	if not boatFinished:
-		if conversation_manager.meeting_is_finished(game_params.FEMALE_NAME_HINT, game_params.PLAYER_NAME_HINT):
+		if conversation_manager.meeting_is_finished(DB.FEMALE_NAME_HINT, DB.PLAYER_NAME_HINT):
 			conversation_manager.start_conversation(player, "001_Boat")
 
 func _on_TunnelArea_body_entered(body):

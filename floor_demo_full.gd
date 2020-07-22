@@ -46,7 +46,7 @@ func use_takable(player_node, takable, parent, was_taken):
 				DB.PedestalIds.ERIS_FLAT:
 					if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED:
 						get_door("door_8").close()
-						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
+						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_params.party[DB.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
 						game_params.story_vars.erida_trap_stage = PLDGameParams.TrapStages.ACTIVE
 						$EridaTrapTimer.start()
 						erida_trap_play_sound()
@@ -87,7 +87,7 @@ func check_demo_finish():
 		if not statue.is_present():
 			return
 	get_door("door_demo").open()
-	conversation_manager.start_area_conversation("019_DemoFinishedXenia" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "022-1_DemoFinishedMax")
+	conversation_manager.start_area_conversation("019_DemoFinishedXenia" if game_params.party[DB.FEMALE_NAME_HINT] else "022-1_DemoFinishedMax")
 
 func use_pedestal(player_node, pedestal, item_nam):
 	var pedestal_id = pedestal.pedestal_id
@@ -101,9 +101,9 @@ func use_pedestal(player_node, pedestal, item_nam):
 			if item_nam == "statue_apata" and hope:
 				get_node("Apata_room/door_3").open()
 				get_node("Apata_room/ceiling_moving_1").pause()
-				var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+				var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 				female.join_party()
-				var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
+				var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
 				bandit.join_party()
 		DB.PedestalIds.MUSES:
 			if has_empty_muses_pedestal(pedestal.get_parent()):
@@ -131,13 +131,13 @@ func use_button_activator(player_node, button_activator):
 				var postaments = get_tree().get_nodes_in_group("erida_postaments")
 				for postament in postaments:
 					if not postament.is_state_correct():
-						conversation_manager.start_area_conversation("015-2_EridaError" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-2_EridaErrorMax")
+						conversation_manager.start_area_conversation("015-2_EridaError" if game_params.party[DB.FEMALE_NAME_HINT] else "021-2_EridaErrorMax")
 						erida_trap_increase_sound_volume()
 						$EridaButtonWrong.play()
 						return
 				$EridaButtonCorrect.play()
 				get_door("door_7").open()
-				conversation_manager.start_area_conversation("016_EridaDone" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
+				conversation_manager.start_area_conversation("016_EridaDone" if game_params.party[DB.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
 				game_params.story_vars.erida_trap_stage = PLDGameParams.TrapStages.DISABLED
 				$EridaTrapTimer.stop()
 				erida_trap_stop_sound()
@@ -178,9 +178,9 @@ func check_muses_correct(base):
 
 func _on_AreaApata_body_entered(body):
 	if game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.ARMED and body.is_in_group("party") and body.is_player():
-		var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+		var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 		female.teleport(get_node("PositionApata"))
-		var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
+		var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
 		bandit.teleport(get_node("BanditSavePosition"))
 		body.teleport(get_node("PlayerTeleportPosition"))
 		get_node("ApataTakeTimer").start()
@@ -188,7 +188,7 @@ func _on_AreaApata_body_entered(body):
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_ApataTakeTimer_timeout():
-	var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+	var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 	var apata_statue = get_node("Apata_room/pedestal_apata/statue_4")
 	apata_statue.use(female, null)
 
@@ -201,7 +201,7 @@ func _on_AreaApataDone_body_entered(body):
 		conversation_manager.start_area_conversation("011_Hermes")
 
 func _on_EridaTrapTimer_timeout():
-	game_params.set_health(game_params.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
+	game_params.set_health(DB.PLAYER_NAME_HINT, game_params.player_health_current - gas_injury_rate, game_params.player_health_max)
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_params.get_player()
@@ -211,15 +211,15 @@ func _on_IgnitionArea_body_entered(body):
 		conversation_manager.start_conversation(player, "004_TorchesIgnition")
 
 func _on_RatsArea_body_entered(body):
-	if body.is_in_group("party") and game_params.is_in_party(PLDGameParams.FEMALE_NAME_HINT):
+	if body.is_in_group("party") and game_params.is_in_party(DB.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("006_Rats")
 
 func _on_AreaDeadEnd_body_entered(body):
-	if body.is_in_group("party") and game_params.is_in_party(PLDGameParams.FEMALE_NAME_HINT):
+	if body.is_in_group("party") and game_params.is_in_party(DB.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_AreaDeadEnd2_body_entered(body):
-	if body.is_in_group("party") and game_params.is_in_party(PLDGameParams.FEMALE_NAME_HINT):
+	if body.is_in_group("party") and game_params.is_in_party(DB.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_web_destroyed(web):
@@ -228,27 +228,27 @@ func _on_web_destroyed(web):
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
 		if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.DISABLED:
-			var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+			var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
-			var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
+			var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
 			bandit.set_target_node(get_node("OutPosition"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
 		elif game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.DISABLED:
-			conversation_manager.start_area_conversation("018_CorridorTalk" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "022_CorridorTalkMax")
+			conversation_manager.start_area_conversation("018_CorridorTalk" if game_params.party[DB.FEMALE_NAME_HINT] else "022_CorridorTalkMax")
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
 		if game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.ARMED and game_params.story_vars.apata_trap_stage == PLDGameParams.TrapStages.DISABLED:
-			conversation_manager.start_area_conversation("014_BeforeErida" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "020_BeforeEridaMax")
-		elif game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.DISABLED and game_params.party[PLDGameParams.FEMALE_NAME_HINT]:
+			conversation_manager.start_area_conversation("014_BeforeErida" if game_params.party[DB.FEMALE_NAME_HINT] else "020_BeforeEridaMax")
+		elif game_params.story_vars.erida_trap_stage == PLDGameParams.TrapStages.DISABLED and game_params.party[DB.FEMALE_NAME_HINT]:
 			conversation_manager.start_area_conversation("017_CorridorTraps")
 
 func _on_BeginEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		conversation_manager.start_area_conversation("015_BeginErida" if game_params.party[PLDGameParams.FEMALE_NAME_HINT] else "021_BeginEridaMax")
+		conversation_manager.start_area_conversation("015_BeginErida" if game_params.party[DB.FEMALE_NAME_HINT] else "021_BeginEridaMax")
 
 func _on_AresRoomArea_body_entered(body):
-	if body.is_in_group("party") and game_params.is_in_party(PLDGameParams.FEMALE_NAME_HINT):
+	if body.is_in_group("party") and game_params.is_in_party(DB.FEMALE_NAME_HINT):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
@@ -256,8 +256,8 @@ func _on_ChestArea_body_exited(body):
 		game_params.story_vars.apata_chest_rigid = -1
 		var player = game_params.get_player()
 		cutscene_manager.restore_camera(player)
-		var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
-		var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+		var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
+		var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 		player.stop_cutscene()
 		bandit.stop_cutscene()
 		player.join_party()
@@ -277,7 +277,7 @@ func _on_player_registered(player):
 
 func _on_cutscene_finished(player, cutscene_id):
 	match player.name_hint:
-		PLDGameParams.FEMALE_NAME_HINT:
+		DB.FEMALE_NAME_HINT:
 			match cutscene_id:
 				FemaleModel.FEMALE_TAKES_APATA:
 					if conversation_manager.conversation_is_not_finished("009_ApataTrap"):
@@ -292,8 +292,8 @@ func _on_cutscene_finished(player, cutscene_id):
 					return
 
 func _on_conversation_finished(player, conversation_name, target, initiator):
-	var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
-	var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+	var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
+	var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 	match conversation_name:
 		"005_ApataInscriptions":
 			bandit.teleport(get_node("BanditPosition"))
@@ -315,10 +315,10 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			game_params.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_2")
 
 func _on_meeting_finished(player, target, initiator):
-	if initiator and initiator.name_hint == PLDGameParams.BANDIT_NAME_HINT:
+	if initiator and initiator.name_hint == DB.BANDIT_NAME_HINT:
 		initiator.set_target_node(get_node("BanditSavePosition"))
 		initiator.leave_party()
-		var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+		var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 		female.set_target_node(get_node("PositionApata"))
 		female.leave_party()
 		game_params.autosave_create()
@@ -335,8 +335,8 @@ func _on_arrived_to(player_node, target_node):
 	if game_params.story_vars.apata_chest_rigid <= 0:
 		return
 	var tid = target_node.get_instance_id()
-	var player = game_params.get_character(PLDGameParams.PLAYER_NAME_HINT)
-	var female = game_params.get_character(PLDGameParams.FEMALE_NAME_HINT)
+	var player = game_params.get_character(DB.PLAYER_NAME_HINT)
+	var female = game_params.get_character(DB.FEMALE_NAME_HINT)
 	var piid = get_node("PlayerIntermediatePosition").get_instance_id()
 	var pa3id = get_node("PositionApata3").get_instance_id()
 	if tid == piid and player.get_instance_id() == player_node.get_instance_id():
@@ -345,7 +345,7 @@ func _on_arrived_to(player_node, target_node):
 	elif tid == pa3id and female.get_instance_id() == player_node.get_instance_id():
 		female.set_target_node(get_node("FemaleSavePosition"))
 		return
-	var bandit = game_params.get_character(PLDGameParams.BANDIT_NAME_HINT)
+	var bandit = game_params.get_character(DB.BANDIT_NAME_HINT)
 	var pid = get_node("PlayerSavePosition").get_instance_id()
 	var bid = get_node("BanditSavePosition").get_instance_id()
 	if (tid == pid or tid == bid) and player.is_rest_state() and bandit.is_rest_state():

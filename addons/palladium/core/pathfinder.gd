@@ -16,7 +16,7 @@ const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 
-export var name_hint = game_params.PLAYER_NAME_HINT
+export var name_hint = DB.PLAYER_NAME_HINT
 
 onready var pyramid = get_parent()
 

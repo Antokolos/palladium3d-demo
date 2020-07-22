@@ -37,45 +37,6 @@ enum TakableState {
 	ABSENT = 2
 }
 
-const HEALING_RATE = 1
-const MAX_QUICK_ITEMS = 6
-const SCENE_PATH_DEFAULT = "res://forest.tscn"
-const PLAYER_HEALTH_CURRENT_DEFAULT = 100
-const PLAYER_HEALTH_MAX_DEFAULT = 100
-const SUFFOCATION_DAMAGE_RATE = 10
-const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
-const PLAYER_OXYGEN_MAX_DEFAULT = 100
-const FATHER_NAME_HINT = "father"
-const PLAYER_NAME_HINT = "player"
-const FEMALE_NAME_HINT = "female"
-const BANDIT_NAME_HINT = "bandit"
-const SKELETON_NAME_HINT = "skeleton"
-const PARTY_DEFAULT = {
-	FATHER_NAME_HINT : false,
-	PLAYER_NAME_HINT : true,
-	FEMALE_NAME_HINT : false,
-	BANDIT_NAME_HINT : false
-}
-const UNDERWATER_DEFAULT = {
-	PLAYER_NAME_HINT : false,
-	FEMALE_NAME_HINT : false,
-	BANDIT_NAME_HINT : false
-}
-const STORY_VARS_DEFAULT = {
-	"is_game_start" : true,
-	"flashlight_on" : false,
-	"in_lyre_area" : false,
-	"apata_chest_rigid" : 0,
-	"relationship_female" : 0,
-	"relationship_bandit" : 0,
-	"apata_trap_stage" : TrapStages.ARMED,
-	"erida_trap_stage" : TrapStages.ARMED
-}
-const INVENTORY_DEFAULT = []
-const QUICK_ITEMS_DEFAULT = [
-	{ "nam" : "island_map", "count" : 1 },
-	{ "nam" : "saffron_bun", "count" : 1 }
-]
 const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
@@ -94,18 +55,18 @@ const MESSAGES_DEFAULT = {
 }
 
 var slot_to_load_from = -1
-var scene_path = SCENE_PATH_DEFAULT
-var player_name_hint = PLAYER_NAME_HINT
-var player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
-var player_health_max = PLAYER_HEALTH_MAX_DEFAULT
-var player_oxygen_current = PLAYER_OXYGEN_CURRENT_DEFAULT
-var player_oxygen_max = PLAYER_OXYGEN_MAX_DEFAULT
-var party = PARTY_DEFAULT.duplicate(true)
-var underwater = UNDERWATER_DEFAULT.duplicate(true)
+var scene_path = DB.SCENE_PATH_DEFAULT
+var player_name_hint = DB.PLAYER_NAME_HINT
+var player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
+var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
+var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
+var player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
+var party = DB.PARTY_DEFAULT.duplicate(true)
+var underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
 var player_paths = {}
-var story_vars = STORY_VARS_DEFAULT.duplicate(true)
-var inventory = INVENTORY_DEFAULT.duplicate(true)
-var quick_items = QUICK_ITEMS_DEFAULT.duplicate(true)
+var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
+var inventory = DB.INVENTORY_DEFAULT.duplicate(true)
+var quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
 var doors = DOORS_DEFAULT.duplicate(true)
 var lights = LIGHTS_DEFAULT.duplicate(true)
 var containers = CONTAINERS_DEFAULT.duplicate(true)
@@ -139,17 +100,17 @@ func cleanup_paths():
 	player_paths.clear()
 
 func reset_variables():
-	scene_path = SCENE_PATH_DEFAULT
-	player_name_hint = PLAYER_NAME_HINT
-	player_health_current = PLAYER_HEALTH_CURRENT_DEFAULT
-	player_health_max = PLAYER_HEALTH_MAX_DEFAULT
-	player_oxygen_current = PLAYER_OXYGEN_CURRENT_DEFAULT
-	player_oxygen_max = PLAYER_OXYGEN_MAX_DEFAULT
-	party = PARTY_DEFAULT.duplicate(true)
-	underwater = UNDERWATER_DEFAULT.duplicate(true)
-	story_vars = STORY_VARS_DEFAULT.duplicate(true)
-	inventory = INVENTORY_DEFAULT.duplicate(true)
-	quick_items = QUICK_ITEMS_DEFAULT.duplicate(true)
+	scene_path = DB.SCENE_PATH_DEFAULT
+	player_name_hint = DB.PLAYER_NAME_HINT
+	player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
+	player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
+	player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
+	player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
+	party = DB.PARTY_DEFAULT.duplicate(true)
+	underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
+	story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
+	inventory = DB.INVENTORY_DEFAULT.duplicate(true)
+	quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
 	doors = DOORS_DEFAULT.duplicate(true)
 	lights = LIGHTS_DEFAULT.duplicate(true)
 	containers = CONTAINERS_DEFAULT.duplicate(true)
@@ -230,7 +191,7 @@ func execute_custom_action(event, item):
 				result = true
 				item.remove()
 				var player = game_params.get_player()
-				if is_in_party(FEMALE_NAME_HINT):
+				if is_in_party(DB.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
 			"envelope":
 				result = true
@@ -374,7 +335,7 @@ func take(nam, item_path = null):
 			emit_signal("item_taken", nam, quick_item.count, item_path)
 			return
 		maxpos = maxpos + 1
-	if maxpos < MAX_QUICK_ITEMS:
+	if maxpos < DB.MAX_QUICK_ITEMS:
 		quick_items.append({ "nam" : nam, "count" : 1 })
 		emit_signal("item_taken", nam, 1, item_path)
 		return
@@ -409,7 +370,7 @@ func item_used(player_node, target, item_nam):
 	emit_signal("item_used", item_nam, target)
 
 func set_quick_item(pos, nam):
-	if pos >= MAX_QUICK_ITEMS:
+	if pos >= DB.MAX_QUICK_ITEMS:
 		return
 	for i in range(quick_items.size(), pos + 1):
 		quick_items.append({ "nam" : null, "count" : 0 })
@@ -438,7 +399,7 @@ func set_player_name_hint(name_hint):
 	player_name_hint = name_hint
 
 func kill_party():
-	set_health(PLAYER_NAME_HINT, 0, player_health_max)
+	set_health(DB.PLAYER_NAME_HINT, 0, player_health_max)
 
 func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters
@@ -452,7 +413,7 @@ func set_health(name_hint, health_current, health_max):
 func set_oxygen(name_hint, oxygen_current, oxygen_max):
 	# TODO: use name_hint to set oxygen for different characters
 	if oxygen_current < 0:
-		set_health(name_hint, player_health_current - SUFFOCATION_DAMAGE_RATE, player_health_max)
+		set_health(name_hint, player_health_current - DB.SUFFOCATION_DAMAGE_RATE, player_health_max)
 		return
 	player_oxygen_current = oxygen_current if oxygen_current < oxygen_max else oxygen_max
 	player_oxygen_max = oxygen_max
@@ -549,21 +510,21 @@ func load_params(slot):
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
 
-	scene_path = d.scene_path if ("scene_path" in d) else SCENE_PATH_DEFAULT
+	scene_path = d.scene_path if ("scene_path" in d) else DB.SCENE_PATH_DEFAULT
 	
-	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else PLAYER_NAME_HINT
-	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else PLAYER_HEALTH_CURRENT_DEFAULT
-	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else PLAYER_HEALTH_MAX_DEFAULT
-	player_oxygen_current = int(d.player_oxygen_current) if ("player_oxygen_current" in d) else PLAYER_OXYGEN_CURRENT_DEFAULT
-	player_oxygen_max = int(d.player_oxygen_max) if ("player_oxygen_max" in d) else PLAYER_OXYGEN_MAX_DEFAULT
+	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else DB.PLAYER_NAME_HINT
+	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else DB.PLAYER_HEALTH_CURRENT_DEFAULT
+	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else DB.PLAYER_HEALTH_MAX_DEFAULT
+	player_oxygen_current = int(d.player_oxygen_current) if ("player_oxygen_current" in d) else DB.PLAYER_OXYGEN_CURRENT_DEFAULT
+	player_oxygen_max = int(d.player_oxygen_max) if ("player_oxygen_max" in d) else DB.PLAYER_OXYGEN_MAX_DEFAULT
 
-	emit_signal("health_changed", PLAYER_NAME_HINT, player_health_current, player_health_max)
-	emit_signal("oxygen_changed", PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
+	emit_signal("health_changed", DB.PLAYER_NAME_HINT, player_health_current, player_health_max)
+	emit_signal("oxygen_changed", DB.PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
 
-	party = d.party if ("party" in d) else PARTY_DEFAULT.duplicate(true)
+	party = d.party if ("party" in d) else DB.PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	
-	underwater = d.underwater if ("underwater" in d) else UNDERWATER_DEFAULT.duplicate(true)
+	underwater = d.underwater if ("underwater" in d) else DB.UNDERWATER_DEFAULT.duplicate(true)
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		for name_hint in d.characters.keys():
@@ -593,9 +554,9 @@ func load_params(slot):
 			character.set_look_transition()
 			set_underwater(character, is_underwater(name_hint))
 
-	story_vars = d.story_vars if ("story_vars" in d) else STORY_VARS_DEFAULT.duplicate(true)
-	inventory = d.inventory if ("inventory" in d) else INVENTORY_DEFAULT.duplicate(true)
-	quick_items = d.quick_items if ("quick_items" in d) else QUICK_ITEMS_DEFAULT.duplicate(true)
+	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
+	inventory = d.inventory if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
+	quick_items = d.quick_items if ("quick_items" in d) else DB.QUICK_ITEMS_DEFAULT.duplicate(true)
 	doors = d.doors if ("doors" in d) else DOORS_DEFAULT.duplicate(true)
 	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
