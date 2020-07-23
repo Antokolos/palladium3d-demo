@@ -1,7 +1,7 @@
 extends PLDUseTarget
 class_name PLDPedestal
 
-signal use_pedestal(player_node, pedestal, item_nam)
+signal use_pedestal(player_node, pedestal, item_id)
 
 export(DB.PedestalIds) var pedestal_id = DB.PedestalIds.NONE
 
@@ -10,7 +10,7 @@ func connect_signals(level):
 
 func use_action(player_node, item):
 	make_present(item)
-	emit_signal("use_pedestal", player_node, self, item.nam)
+	emit_signal("use_pedestal", player_node, self, item.item_id)
 	return true
 
 func is_empty():
@@ -20,17 +20,17 @@ func is_empty():
 				return false
 	return true
 
-func is_present(item_nam):
+func is_present(item_id):
 	for ch in get_children():
 		if ch is PLDTakable:
-			if ch.get_item_name() == item_nam and ch.is_present():
+			if ch.takable_id == item_id and ch.is_present():
 				return true
 	return false
 
 func make_present(item):
 	for ch in get_children():
 		if ch is PLDTakable:
-			if ch.get_item_name() == item.nam:
+			if ch.takable_id == item.item_id:
 				ch.make_present()
 			elif ch.is_exclusive():
 				ch.make_absent()
@@ -42,9 +42,9 @@ func item_match(item):
 	for ch in get_children():
 		if ch is PLDTakable:
 			if ch.is_present() and ch.is_exclusive():
-				# If some exclusive item is already present, return false even if the name matches
+				# If some exclusive item is already present, return false even if the item_id matches
 				return false
-			result = result or (not ch.is_present() and ch.get_item_name() == item.nam)
+			result = result or (not ch.is_present() and ch.takable_id == item.item_id)
 	return result
 
 func get_use_action_text():

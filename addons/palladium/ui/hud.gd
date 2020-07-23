@@ -227,7 +227,7 @@ func insert_ui_inventory_item(pos):
 	new_item.connect("used", game_state, "item_used")
 	var i = first_item_idx + pos
 	if i >= 0 and i < game_state.inventory.size():
-		new_item.set_item_data(game_state.inventory[i].nam, game_state.inventory[i].count)
+		new_item.set_item_data(game_state.inventory[i].item_id, game_state.inventory[i].count)
 	inventory_panel.add_child(new_item)
 	if pos < inventory_panel.get_child_count() - 1:
 		inventory_panel.move_child(new_item, pos)
@@ -239,8 +239,8 @@ func insert_ui_quick_item(pos):
 	new_item.set_appearance(true, false)
 	if pos < game_state.quick_items.size():
 		var quick_item = game_state.quick_items[pos]
-		if quick_item.nam:
-			new_item.set_item_data(quick_item.nam, quick_item.count)
+		if quick_item.item_id:
+			new_item.set_item_data(quick_item.item_id, quick_item.count)
 	quick_items_panel.add_child(new_item)
 	if pos < quick_items_panel.get_child_count() - 1:
 		quick_items_panel.move_child(new_item, pos)
@@ -253,20 +253,20 @@ func _on_shader_cache_processed():
 	if game_state.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
 
-func _on_item_taken(nam, cnt, item_path):
-	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(nam)], true, MESSAGE_TIMEOUT_ITEM_S)
+func _on_item_taken(item_id, cnt, item_path):
+	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(DB.get_item_name(item_id))], true, MESSAGE_TIMEOUT_ITEM_S)
 	synchronize_items()
 
-func _on_item_removed(nam, cnt):
-	remove_ui_inventory_item(nam, cnt)
-	remove_ui_quick_item(nam, cnt)
+func _on_item_removed(item_id, cnt):
+	remove_ui_inventory_item(item_id, cnt)
+	remove_ui_quick_item(item_id, cnt)
 	synchronize_items()
 
-func remove_ui_inventory_item(nam, count):
+func remove_ui_inventory_item(item_id, count):
 	var ui_items = inventory_panel.get_children()
 	var idx = 0
 	for ui_item in ui_items:
-		if nam == ui_item.nam and count <= 0:
+		if item_id == ui_item.item_id and count <= 0:
 			inventory_panel.remove_child(ui_item)
 			ui_item.disconnect("used", game_state, "item_used")
 			ui_item.queue_free()
@@ -281,11 +281,11 @@ func remove_ui_inventory_item(nam, count):
 		synchronize_items()
 		set_active_item(0)
 
-func remove_ui_quick_item(nam, count):
+func remove_ui_quick_item(item_id, count):
 	var ui_items = quick_items_panel.get_children()
 	var idx = 0
 	for ui_item in ui_items:
-		if nam == ui_item.nam and count <= 0:
+		if item_id == ui_item.item_id and count <= 0:
 			quick_items_panel.remove_child(ui_item)
 			ui_item.disconnect("used", game_state, "item_used")
 			ui_item.queue_free()
@@ -297,7 +297,7 @@ func shift_items_left():
 	if first_item_idx < game_state.inventory.size() - MAX_VISIBLE_ITEMS:
 		first_item_idx = first_item_idx + 1
 		var ui_item = inventory_panel.get_child(0)
-		remove_ui_inventory_item(ui_item.nam, -1)
+		remove_ui_inventory_item(ui_item.item_id, -1)
 
 func shift_items_right():
 	if first_item_idx > 0:
@@ -317,7 +317,7 @@ func select_active_item():
 		return
 	var idx = 0
 	for item in items:
-		if items[idx].nam:
+		if items[idx].item_id and items[idx].item_id != DB.TakableIds.NONE:
 			var label_key = items[idx].get_node("ItemBox/LabelKey")
 			label_key.text = str(idx + 1)
 			if idx == active_item_idx:
@@ -346,7 +346,7 @@ func select_active_quick_item():
 		var is_active = idx == active_quick_item_idx
 		items[idx].set_selected(is_active)
 		if is_active and (not inventory.is_visible_in_tree() or not is_valid_index(active_item_idx)):
-			info_label.text = tr(items[idx].nam) if items[idx].nam else ""
+			info_label.text = tr(DB.get_item_name(items[idx].item_id)) if items[idx].item_id and items[idx].item_id != DB.TakableIds.NONE else ""
 		idx = idx + 1
 
 func set_active_quick_item(item_idx):
@@ -361,7 +361,7 @@ func set_active_quick_item(item_idx):
 func get_active_item():
 	if inventory_panel.is_visible_in_tree() and is_valid_index(active_item_idx):
 		return inventory_panel.get_child(active_item_idx)
-	if is_valid_quick_index(active_quick_item_idx) and quick_items_panel.get_child(active_quick_item_idx).nam:
+	if is_valid_quick_index(active_quick_item_idx) and quick_items_panel.get_child(active_quick_item_idx).item_id:
 		return quick_items_panel.get_child(active_quick_item_idx)
 	return null
 
@@ -382,7 +382,7 @@ func _input(event):
 		elif event.is_action_pressed("active_item_toggle"):
 			var item = get_active_item()
 			if item:
-				game_state.set_quick_item(active_quick_item_idx, item.nam)
+				game_state.set_quick_item(active_quick_item_idx, item.item_id)
 				synchronize_items()
 		elif event.is_action_pressed("active_item_1"):
 			set_active_item(0)

@@ -35,12 +35,12 @@ func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
 	match takable_id:
 		DB.TakableIds.ENVELOPE:
-			game_state.remove("island_map")
+			game_state.remove(DB.TakableIds.ISLAND_MAP)
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")
 
-func on_item_used(item_nam, target):
-	if item_nam == "barn_lock_key" and target is BarnLock:
+func on_item_used(item_id, target):
+	if item_id == DB.TakableIds.BARN_LOCK_KEY and target is BarnLock:
 		var was_in_party = player_female.is_in_party()
 		if not was_in_party:
 			player_female.join_party()
@@ -75,7 +75,7 @@ func _on_StumpArea_body_exited(body):
 		conversation_manager.arrange_meeting(player, player, player_female)
 
 func _on_RockArea_body_exited(body):
-	if game_state.has_item("envelope") or game_state.has_item("barn_lock_key"):
+	if game_state.has_item(DB.TakableIds.ENVELOPE) or game_state.has_item(DB.TakableIds.BARN_LOCK_KEY):
 		_on_StumpArea_body_exited(body)
 
 func _on_BoatArea_body_entered(body):

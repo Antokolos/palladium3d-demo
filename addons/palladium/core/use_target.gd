@@ -22,7 +22,7 @@ func item_match(item):
 	if not item:
 		return false
 	for item_name in matched_item_names:
-		if item_name == item.nam:
+		if item_name == DB.get_item_name(item.item_id):
 			return true
 	return false
 

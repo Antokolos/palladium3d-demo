@@ -249,7 +249,7 @@ func simulate_esc():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func save_to_slot(slot):
-	game_state.save_params(slot)
+	game_state.save_state(slot)
 	simulate_esc()
 
 func load_from_slot(slot):

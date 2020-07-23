@@ -52,7 +52,7 @@ func switch_highlight(player_node, body):
 		var custom_actions = game_state.get_custom_actions(item)
 		if custom_actions.empty():
 			return ""
-		return common_utils.get_action_key("action") + tr(item.nam + "_" + custom_actions[0])
+		return common_utils.get_action_key("action") + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 
 func highlight(player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process

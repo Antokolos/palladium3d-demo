@@ -4,9 +4,9 @@ class_name PLDGameState
 signal shader_cache_processed()
 signal player_registered(player)
 signal player_underwater(player, enabled)
-signal item_taken(nam, count, item_path)
-signal item_removed(nam, count)
-signal item_used(player_node, target, item_nam)
+signal item_taken(item_id, count, item_path)
+signal item_removed(item_id, count)
+signal item_used(player_node, target, item_id)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
 
@@ -180,31 +180,31 @@ func _on_cutscene_finished(player, cutscene_id):
 	player.stop_cutscene()
 
 func get_custom_actions(item):
-	var item_record = get_registered_item_data(item.nam)
+	var item_record = get_registered_item_data(item.item_id)
 	return item_record.custom_actions.duplicate() if item_record else []
 
 func execute_custom_action(event, item):
 	var result = false
 	if event.is_action_pressed("item_preview_action_1"):
-		match item.nam:
-			"saffron_bun":
+		match item.item_id:
+			DB.TakableIds.BUN:
 				result = true
 				item.remove()
 				var player = game_state.get_player()
 				if is_in_party(DB.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
-			"envelope":
+			DB.TakableIds.ENVELOPE:
 				result = true
 				item.remove()
-				take("barn_lock_key")
-				take("island_map_2")
-			"lyre_snake", "lyre_spider":
+				take(DB.TakableIds.BARN_LOCK_KEY)
+				take(DB.TakableIds.ISLAND_MAP_2)
+			DB.TakableIds.LYRE_SNAKE, DB.TakableIds.LYRE_SPIDER:
 				play_sound(SoundId.LYRE_WRONG)
 				kill_party()
-			"lyre_rat":
+			DB.TakableIds.LYRE_RAT:
 				play_sound(SoundId.LYRE_CORRECT)
 				if story_vars.in_lyre_area:
-					emit_signal("item_used", item.nam, null)
+					emit_signal("item_used", item.item_id, null)
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
@@ -225,7 +225,7 @@ func handle_conversation(player, target, initiator):
 		return
 	var hud = get_hud()
 	var item = hud.get_active_item()
-	if item and item.nam == "saffron_bun":
+	if item and item.item_id == DB.TakableIds.BUN:
 		hud.inventory.visible = false
 		item.used(player, target)
 		item.remove()
@@ -234,7 +234,7 @@ func handle_conversation(player, target, initiator):
 		conversation_manager.start_conversation(player, "Conversation", target)
 
 func can_be_given(item):
-	return item and DB.ITEMS[item.nam] and DB.ITEMS[item.nam].can_give
+	return item and DB.ITEMS[item.item_id] and DB.ITEMS[item.item_id].can_give
 
 func handle_player_highlight(initiator, target):
 	if not target.is_in_party():
@@ -249,10 +249,10 @@ func change_scene(scene_path):
 
 func initiate_load(slot):
 	var f = File.new()
-	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
+	var error = f.open("user://saves/slot_%d/state.json" % slot, File.READ)
 
 	if (error):
-		print("no params to load.")
+		print("no state to load.")
 		return
 
 	var d = parse_json( f.get_as_text() )
@@ -269,7 +269,7 @@ func is_loading():
 
 func finish_load():
 	if is_loading():
-		load_params(slot_to_load_from)
+		load_state(slot_to_load_from)
 		slot_to_load_from = -1
 		return true
 	return false
@@ -293,101 +293,101 @@ func stop_music():
 	$MusicPlayer.stop()
 	current_music = null
 
-func is_item_registered(nam):
-	return DB.ITEMS.has(nam)
+func is_item_registered(item_id):
+	return DB.ITEMS.has(item_id)
 
-func get_registered_item_data(nam):
-	return DB.ITEMS[nam] if is_item_registered(nam) else null
+func get_registered_item_data(item_id):
+	return DB.ITEMS[item_id] if is_item_registered(item_id) else null
 
-func has_item(nam):
-	if not nam:
+func has_item(item_id):
+	if not item_id or item_id == DB.TakableIds.NONE:
 		return false
 	for quick_item in quick_items:
-		if nam == quick_item.nam:
+		if item_id == quick_item.item_id:
 			return true
 	for item in inventory:
-		if nam == item.nam:
+		if item_id == item.item_id:
 			return true
 	return false
 
 func get_quick_items_count():
 	var result = 0
 	for quick_item in quick_items:
-		if quick_item.nam:
+		if quick_item.item_id and quick_item.item_id != DB.TakableIds.NONE:
 			result = result + 1
 	return result
 
-func take(nam, item_path = null):
-	if not is_item_registered(nam):
-		print("WARN: Unknown item name: " + nam)
+func take(item_id, item_path = null):
+	if not is_item_registered(item_id):
+		push_error("Unknown item_id: " + item_id)
 		return
-	var item_image = DB.ITEMS[nam].item_image
-	var model_path = DB.ITEMS[nam].model_path
+	var item_image = DB.ITEMS[item_id].item_image
+	var model_path = DB.ITEMS[item_id].model_path
 	var maxpos = 0
 	for quick_item in quick_items:
-		if not quick_item.nam:
-			quick_item.nam = nam
+		if not quick_item.item_id or quick_item.item_id == DB.TakableIds.NONE:
+			quick_item.item_id = item_id
 			quick_item.count = 1
-			emit_signal("item_taken", nam, quick_item.count, item_path)
+			emit_signal("item_taken", item_id, quick_item.count, item_path)
 			return
-		if nam == quick_item.nam:
+		if item_id == quick_item.item_id:
 			quick_item.count = quick_item.count + 1
-			emit_signal("item_taken", nam, quick_item.count, item_path)
+			emit_signal("item_taken", item_id, quick_item.count, item_path)
 			return
 		maxpos = maxpos + 1
 	if maxpos < DB.MAX_QUICK_ITEMS:
-		quick_items.append({ "nam" : nam, "count" : 1 })
-		emit_signal("item_taken", nam, 1, item_path)
+		quick_items.append({ "item_id" : item_id, "count" : 1 })
+		emit_signal("item_taken", item_id, 1, item_path)
 		return
 	for item in inventory:
-		if nam == item.nam:
+		if item_id == item.item_id:
 			item.count = item.count + 1
-			emit_signal("item_taken", nam, item.count, item_path)
+			emit_signal("item_taken", item_id, item.count, item_path)
 			return
-	inventory.append({ "nam" : nam, "count" : 1 })
-	emit_signal("item_taken", nam, 1, item_path)
+	inventory.append({ "item_id" : item_id, "count" : 1 })
+	emit_signal("item_taken", item_id, 1, item_path)
 	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 
-func remove(nam, count = 1):
+func remove(item_id, count = 1):
 	var idx = 0
 	for item in inventory:
-		if nam == item.nam:
+		if item_id == item.item_id:
 			item.count = item.count - count
 			if item.count <= 0:
 				inventory.remove(idx)
-			emit_signal("item_removed", nam, item.count)
+			emit_signal("item_removed", item_id, item.count)
 			return
 		idx = idx + 1
 	for quick_item in quick_items:
-		if nam == quick_item.nam:
+		if item_id == quick_item.item_id:
 			quick_item.count = quick_item.count - count
 			if quick_item.count <= 0:
-				quick_item.nam = null
-			emit_signal("item_removed", nam, quick_item.count)
+				quick_item.item_id = null
+			emit_signal("item_removed", item_id, quick_item.count)
 			return
 
-func item_used(player_node, target, item_nam):
-	emit_signal("item_used", item_nam, target)
+func item_used(player_node, target, item_id):
+	emit_signal("item_used", item_id, target)
 
-func set_quick_item(pos, nam):
+func set_quick_item(pos, item_id):
 	if pos >= DB.MAX_QUICK_ITEMS:
 		return
 	for i in range(quick_items.size(), pos + 1):
-		quick_items.append({ "nam" : null, "count" : 0 })
+		quick_items.append({ "item_id" : null, "count" : 0 })
 	var existing_quick_item = quick_items[pos]
 	for quick_item in quick_items:
-		if nam == quick_item.nam:
-			var new_item = { "nam" : nam, "count" : quick_item.count }
-			quick_item.nam = existing_quick_item.nam
+		if item_id == quick_item.item_id:
+			var new_item = { "item_id" : item_id, "count" : quick_item.count }
+			quick_item.item_id = existing_quick_item.item_id
 			quick_item.count = existing_quick_item.count
 			quick_items[pos] = new_item
 			return
 	var idx = 0
 	for item in inventory:
-		if nam == item.nam:
-			var new_item = { "nam" : nam, "count" : item.count }
-			if existing_quick_item.nam:
-				item.nam = existing_quick_item.nam
+		if item_id == item.item_id:
+			var new_item = { "item_id" : item_id, "count" : item.count }
+			if existing_quick_item.item_id:
+				item.item_id = existing_quick_item.item_id
 				item.count = existing_quick_item.count
 			else:
 				inventory.remove(idx)
@@ -493,17 +493,17 @@ func register_player(player):
 
 func save_slot_exists(slot):
 	var f = File.new()
-	return f.file_exists("user://saves/slot_%d/params.json" % slot)
+	return f.file_exists("user://saves/slot_%d/state.json" % slot)
 
-func load_params(slot):
+func load_state(slot):
 	var hud = get_hud()
 	story_node.reload_all_saves(slot)
 	
 	var f = File.new()
-	var error = f.open("user://saves/slot_%d/params.json" % slot, File.READ)
+	var error = f.open("user://saves/slot_%d/state.json" % slot, File.READ)
 
 	if (error):
-		print("no params to load.")
+		print("no state to load.")
 		return
 
 	var d = parse_json( f.get_as_text() )
@@ -555,8 +555,8 @@ func load_params(slot):
 			set_underwater(character, is_underwater(name_hint))
 
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
-	inventory = d.inventory if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
-	quick_items = d.quick_items if ("quick_items" in d) else DB.QUICK_ITEMS_DEFAULT.duplicate(true)
+	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
+	quick_items = sanitize_items(d.quick_items) if ("quick_items" in d) else DB.QUICK_ITEMS_DEFAULT.duplicate(true)
 	doors = d.doors if ("doors" in d) else DOORS_DEFAULT.duplicate(true)
 	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
@@ -566,15 +566,22 @@ func load_params(slot):
 	
 	get_tree().call_group("restorable_state", "restore_state")
 
+# Because item_ids are saved as ints but should be enums
+func sanitize_items(items):
+	var result = []
+	for item in items:
+		result.append({ "item_id" : DB.lookup_takable_from_int(item.item_id) if item.item_id else null, "count" : int(item.count) })
+	return result
+
 func autosave_create():
-	return save_params(0)
+	return save_state(0)
 
 func autosave_restore():
 	return initiate_load(0)
 
-func save_params(slot):
+func save_state(slot):
 	var f = File.new()
-	var error = f.open("user://saves/slot_%d/params.json" % slot, File.WRITE)
+	var error = f.open("user://saves/slot_%d/state.json" % slot, File.WRITE)
 	assert( not error )
 	
 	story_node.save_all(slot)

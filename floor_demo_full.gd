@@ -89,7 +89,7 @@ func check_demo_finish():
 	get_door("door_demo").open()
 	conversation_manager.start_area_conversation("019_DemoFinishedXenia" if game_state.party[DB.FEMALE_NAME_HINT] else "022-1_DemoFinishedMax")
 
-func use_pedestal(player_node, pedestal, item_nam):
+func use_pedestal(player_node, pedestal, item_id):
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
 		DB.PedestalIds.APATA:
@@ -98,7 +98,7 @@ func use_pedestal(player_node, pedestal, item_nam):
 			if game_state.story_vars.apata_chest_rigid < 0:
 				return
 			var hope = hope_on_apata_pedestal(pedestal)
-			if item_nam == "statue_apata" and hope:
+			if item_id == DB.TakableIds.APATA and hope:
 				get_node("Apata_room/door_3").open()
 				get_node("Apata_room/ceiling_moving_1").pause()
 				var female = game_state.get_character(DB.FEMALE_NAME_HINT)

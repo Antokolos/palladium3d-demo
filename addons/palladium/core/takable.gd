@@ -17,15 +17,12 @@ func _ready():
 func connect_signals(level):
 	connect("use_takable", level, "use_takable")
 
-func get_item_name():
-	return DB.get_item_name(takable_id)
-
 func use(player_node, camera_node):
 #	if takable_id == DB.TakableIds.APATA and player_node.is_player() and game_state.story_vars.apata_trap_stage == game_state.ApataTrapStages.ARMED:
 #		# Cannot be taken by the main player if Apata's trap has not been activated yet
 #		return false
 	var was_taken = is_present()
-	game_state.take(get_item_name(), get_path())
+	game_state.take(takable_id, get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 
@@ -34,11 +31,11 @@ func add_highlight(player_node):
 #		return ""
 	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 
-func _on_item_taken(nam, cnt, item_path):
-	if nam == get_item_name() and item_path == get_path():
+func _on_item_taken(item_id, cnt, item_path):
+	if item_id == takable_id and item_path == get_path():
 		make_absent()
 
-func _on_item_removed(nam, cnt):
+func _on_item_removed(item_id, cnt):
 	# TODO: make present??? Likely it is handled in containers...
 	if has_node("SoundPut"):
 		$SoundPut.play()
