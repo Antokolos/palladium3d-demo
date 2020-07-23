@@ -1,32 +1,101 @@
 extends Node
 
+### COMMON PART ###
 const HEALING_RATE = 1
 const MAX_QUICK_ITEMS = 6
-const SCENE_PATH_DEFAULT = "res://forest.tscn"
+const SCENE_PATH_DEFAULT = ""
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
 const PLAYER_HEALTH_MAX_DEFAULT = 100
 const SUFFOCATION_DAMAGE_RATE = 10
 const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
 const PLAYER_OXYGEN_MAX_DEFAULT = 100
-const FATHER_NAME_HINT = "father"
 const PLAYER_NAME_HINT = "player"
+
+static func lookup_takable_from_int(item_id : int):
+	for takable_id in TakableIds:
+		if item_id == TakableIds[takable_id]:
+			return TakableIds[takable_id]
+	return TakableIds.NONE
+
+static func get_item_data(takable_id):
+	if not takable_id or takable_id == TakableIds.NONE or not ITEMS.has(takable_id):
+		return null
+	return ITEMS[takable_id]
+
+static func get_item_name(takable_id):
+	var item_data = get_item_data(takable_id)
+	return item_data.item_nam if item_data else null
+
+### CODE THAT MUST BE INCLUDED IN THE GAME-SPECIFIC PART ###
+#const PARTY_DEFAULT = {
+#	PLAYER_NAME_HINT : true
+#}
+
+#const UNDERWATER_DEFAULT = {
+#	PLAYER_NAME_HINT : false
+#}
+
+#const STORY_VARS_DEFAULT = {
+#	"flashlight_on" : false
+#}
+
+#enum LightIds {
+#	NONE = 0
+#}
+
+#enum RiddleIds {
+#	NONE = 0
+#}
+
+#enum PedestalIds {
+#	NONE = 0
+#}
+
+#enum ContainerIds {
+#	NONE = 0
+#}
+
+#enum DoorIds {
+#	NONE = 0
+#}
+
+#enum ButtonActivatorIds {
+#	NONE = 0
+#}
+
+#enum TakableIds {
+#	NONE = 0
+#}
+
+#const INVENTORY_DEFAULT = []
+#const QUICK_ITEMS_DEFAULT = []
+
+#const ITEMS = {
+#	TakableIds.NONE : { "item_nam" : "item_none", "item_image" : "none.png", "model_path" : "res://assets/none.escn", "can_give" : false, "custom_actions" : [] },
+#}
+
+### GAME-SPECIFIC PART ###
+const FATHER_NAME_HINT = "father"
 const FEMALE_NAME_HINT = "female"
 const BANDIT_NAME_HINT = "bandit"
 const SKELETON_NAME_HINT = "skeleton"
+
 const PARTY_DEFAULT = {
 	FATHER_NAME_HINT : false,
 	PLAYER_NAME_HINT : true,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false
 }
+
 const UNDERWATER_DEFAULT = {
 	PLAYER_NAME_HINT : false,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false
 }
+
 const STORY_VARS_DEFAULT = {
-	"is_game_start" : true,
 	"flashlight_on" : false,
+	"is_game_start" : true,
 	"in_lyre_area" : false,
 	"apata_chest_rigid" : 0,
 	"relationship_female" : 0,
@@ -172,18 +241,3 @@ const ITEMS = {
 	TakableIds.APPLE_GOLD : { "item_nam" : "apple_gold", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.APPLE_SILVER : { "item_nam" : "apple_silver", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
 }
-
-static func lookup_takable_from_int(item_id : int):
-	for takable_id in TakableIds:
-		if item_id == TakableIds[takable_id]:
-			return TakableIds[takable_id]
-	return TakableIds.NONE
-
-static func get_item_data(takable_id):
-	if not takable_id or takable_id == TakableIds.NONE or not ITEMS.has(takable_id):
-		return null
-	return ITEMS[takable_id]
-
-static func get_item_name(takable_id):
-	var item_data = get_item_data(takable_id)
-	return item_data.item_nam if item_data else null
