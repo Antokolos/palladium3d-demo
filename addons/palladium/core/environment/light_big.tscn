@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/palladium/core/environment/torch_light.gd" type="Script" id=1]
+[ext_resource path="res://addons/palladium/core/environment/light_big.gd" type="Script" id=1]
 
-[node name="torch_light" type="OmniLight" groups=[
+[node name="light_big" type="OmniLight" groups=[
 "light_sources",
 ]]
 light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
@@ -10,6 +10,6 @@ light_cull_mask = 4293918723
 shadow_enabled = true
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.1
-omni_range = 7.6
-omni_attenuation = 2.07054
+omni_range = 8.0
+omni_attenuation = 2.14355
 script = ExtResource( 1 )

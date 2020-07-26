@@ -27,15 +27,11 @@ script = ExtResource( 1 )
 [node name="torch_wall" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00022006, 0, 0 )
 
-[node name="torch_fire" parent="torch_wall" groups=[
-"fire_sources",
-] instance=ExtResource( 3 )]
+[node name="torch_fire" parent="torch_wall" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.3, 0.3, 0 )
 visible = false
 
-[node name="torch_light" parent="torch_wall" groups=[
-"light_sources",
-] instance=ExtResource( 4 )]
+[node name="torch_light" parent="torch_wall" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.508, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="torch_wall"]

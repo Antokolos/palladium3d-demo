@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://addons/palladium/core/environment/torch_fire.gd" type="Script" id=1]
+[ext_resource path="res://addons/palladium/core/environment/fire_big.gd" type="Script" id=1]
 [ext_resource path="res://assets/spark_fire.material" type="Material" id=2]
 [ext_resource path="res://assets/spark_smoke.material" type="Material" id=3]
 
@@ -12,27 +12,25 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.996078, 1, 0.698039, 1, 0.968627, 0.45490
 gradient = SubResource( 1 )
 
 [sub_resource type="Curve" id=3]
-_data = [ Vector2( 0, 0.521626 ), 0.0, 0.0, 0, 0, Vector2( 0.249959, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.840708, 0 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.4945 ), 0.0, 0.0, 0, 0, Vector2( 0.525099, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.1425 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=4]
 curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 0.15
 flag_rotate_y = true
 spread = 0.0
-gravity = Vector3( 0, 0, 1 )
-initial_velocity = 0.8
+gravity = Vector3( 0, 0, 2 )
+initial_velocity = 1.0
 angular_velocity = 30.0
 angular_velocity_random = 1.0
 linear_accel = 1.0
 radial_accel = 1.0
 radial_accel_random = 1.0
-tangential_accel = 1.0
-damping = 0.6
-damping_random = 1.0
-angle = 360.0
-angle_random = 1.0
-scale = 0.9
+damping = 2.0
+scale = 2.0
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
 
@@ -47,52 +45,51 @@ colors = PoolColorArray( 0, 0, 0, 0, 0.412791, 0.412791, 0.412791, 1, 1, 1, 1, 0
 [sub_resource type="GradientTexture" id=8]
 gradient = SubResource( 7 )
 
-[sub_resource type="ParticlesMaterial" id=9]
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.725895, 1 ), 0.158764, 0.158764, 0, 0, Vector2( 1, 0.8498 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 1
+emission_sphere_radius = 0.2
 flag_rotate_y = true
 spread = 0.0
 gravity = Vector3( 0, 0, 1 )
-initial_velocity = 0.8
-angular_velocity = 30.0
-angular_velocity_random = 1.0
+initial_velocity = 1.0
 linear_accel = 1.0
-radial_accel = 1.0
-radial_accel_random = 1.0
-tangential_accel = 1.0
-damping = 0.6
+damping = 2.0
 damping_random = 1.0
 angle = 360.0
 angle_random = 1.0
-scale = 0.3
-scale_random = 0.5
+scale = 2.0
+scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 
-[sub_resource type="QuadMesh" id=10]
+[sub_resource type="QuadMesh" id=12]
 material = ExtResource( 3 )
 size = Vector2( 0.3, 0.3 )
 
-[node name="torch_fire" type="Spatial" groups=[
+[node name="fire_big" type="Spatial" groups=[
 "fire_sources",
 ]]
 script = ExtResource( 1 )
 
 [node name="flames" type="Particles" parent="."]
 amount = 16
-lifetime = 0.5
-speed_scale = 0.4
-randomness = 1.0
+lifetime = 0.7
 draw_order = 2
 process_material = SubResource( 5 )
 draw_pass_1 = SubResource( 6 )
 
 [node name="smoke" type="Particles" parent="."]
-lifetime = 0.6
-speed_scale = 0.4
-randomness = 1.0
+amount = 16
+lifetime = 0.9
 draw_order = 2
-process_material = SubResource( 9 )
-draw_pass_1 = SubResource( 10 )
+process_material = SubResource( 11 )
+draw_pass_1 = SubResource( 12 )
 
 [node name="ExtinguishTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-[connection signal="timeout" from="ExtinguishTimer" to="." method="_on_ExtinguishTimer_timeout"]
