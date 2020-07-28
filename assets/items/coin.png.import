@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/coin.png-8bbcb72414c4c7281612cecc548f7ec3.image"
+
+[deps]
+
+source_file="res://assets/items/coin.png"
+dest_files=[ "res://.import/coin.png-8bbcb72414c4c7281612cecc548f7ec3.image" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/tube_breath.png-f5ffddf99983b44d177d118403ba4e27.image"
+
+[deps]
+
+source_file="res://assets/items/tube_breath.png"
+dest_files=[ "res://.import/tube_breath.png-f5ffddf99983b44d177d118403ba4e27.image" ]
+
+[params]
+
