@@ -14,7 +14,7 @@ height = 0.793229
 ]]
 mode = 1
 script = ExtResource( 1 )
-takable_id = 10
+takable_id = 100
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00919968, 0 )

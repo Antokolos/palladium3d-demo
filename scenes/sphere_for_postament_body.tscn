@@ -12,7 +12,7 @@ radius = 0.0683383
 ]]
 mode = 1
 script = ExtResource( 1 )
-takable_id = 140
+takable_id = 90
 
 [node name="sphere_for_postament" parent="." instance=ExtResource( 2 )]
 

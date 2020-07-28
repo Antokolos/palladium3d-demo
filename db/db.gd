@@ -75,13 +75,10 @@ static func get_item_name(takable_id):
 #}
 
 ### GAME-SPECIFIC PART ###
-const FATHER_NAME_HINT = "father"
 const FEMALE_NAME_HINT = "female"
 const BANDIT_NAME_HINT = "bandit"
-const SKELETON_NAME_HINT = "skeleton"
 
 const PARTY_DEFAULT = {
-	FATHER_NAME_HINT : false,
 	PLAYER_NAME_HINT : true,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false
@@ -105,42 +102,23 @@ const STORY_VARS_DEFAULT = {
 }
 
 enum LightIds {
-	NONE = 0,
-	APOLLO_1 = 10,
-	APOLLO_2 = 20,
-	APOLLO_3 = 30,
-	APOLLO_4 = 40,
-	APOLLO_5 = 50,
-	APOLLO_6 = 60
+	NONE = 0
 }
 
 enum RiddleIds {
-	NONE = 0,
-	HEBE_BUTTONS = 10,
-	PLANETS = 20
+	NONE = 0
 }
 
 enum PedestalIds {
 	NONE = 0,
 	APATA = 10,
 	MUSES = 20,
-	ERIDA_LOCK = 30,
-	DEMO_HERMES = 40,
-	DEMO_ARES = 50,
-	HEBE_LOCK = 60,
-	APHRODITE_LOCK = 70,
-	HERA_LOCK = 80,
-	ARTEMIS_LOCK = 90,
-	APOLLO_LOCK = 100,
-	HERMES_FLAT = 110,
-	ERIS_FLAT = 120,
-	ARES_FLAT = 130,
-	HEBE_FLAT = 140,
-	SWORD = 150,
-	ARTEMIS_TRAP = 160,
-	ARTEMIS_APHRODITE = 160,
-	APOLLO_STATUE = 170,
-	ARGUS_HERMES = 180
+	HERMES_FLAT = 30,
+	ERIDA_LOCK = 40,
+	ERIS_FLAT = 50,
+	ARES_FLAT = 60,
+	DEMO_HERMES = 70,
+	DEMO_ARES = 80
 }
 
 enum ContainerIds {
@@ -159,85 +137,53 @@ enum DoorIds {
 
 enum ButtonActivatorIds {
 	NONE = 0,
-	ERIDA = 10,
-	RIDDLE_BUTTON = 20,
-	POMEGRANATE_1 = 30,
-	POMEGRANATE_2 = 40,
-	POMEGRANATE_3 = 50,
-	POMEGRANATE_4 = 60,
-	POMEGRANATE_5 = 70,
-	POMEGRANATE_6 = 80,
+	ERIDA = 10
 }
 
 enum TakableIds {
 	NONE = 0,
-	BUN = 2,
-	ISLAND_MAP = 4,
-	ISLAND_MAP_2 = 6,
-	APATA = 10,
-	URANIA = 20,
-	CLIO = 30,
-	MELPOMENE = 40,
-	ARES = 50,
-	HERMES = 60,
-	ERIDA = 70,
-	ARTEMIDA = 80,
-	APHRODITE = 90,
-	HEBE = 100,
-	HERA = 110,
-	APOLLO = 120,
-	ATHENA = 130,
-	SPHERE_FOR_POSTAMENT = 140,
-	ENVELOPE = 150,
-	BARN_LOCK_KEY = 160,
-	GREEK_SWORD = 170,
-	LYRE_SNAKE = 180,
-	LYRE_RAT = 190,
-	LYRE_SPIDER = 200,
-	ARGUS_EYES = 210,
-	GREEK_ARROW = 220,
-	APPLE_JAR_GG = 230,
-	APPLE_JAR_GS = 240,
-	APPLE_JAR_SS = 250,
-	APPLE_GOLD = 260,
-	APPLE_SILVER = 270
+	COIN = 10,
+	FLASK_EMPTY = 20,
+	FLASK_HEALING = 30,
+	BUN = 40,
+	ISLAND_MAP = 50,
+	ENVELOPE = 60,
+	BARN_LOCK_KEY = 70,
+	ISLAND_MAP_2 = 80,
+	SPHERE_FOR_POSTAMENT = 90,
+	APATA = 100,
+	URANIA = 110,
+	CLIO = 120,
+	MELPOMENE = 130,
+	HERMES = 140,
+	ERIDA = 150,
+	ARES = 160,
+	TUBE_BREATH = 170
 }
 
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
 	{ "item_id" : TakableIds.ISLAND_MAP, "count" : 1 },
+	{ "item_id" : TakableIds.FLASK_EMPTY, "count" : 1 },
 	{ "item_id" : TakableIds.BUN, "count" : 1 }
 ]
 
 const ITEMS = {
+	TakableIds.COIN : { "item_nam" : "coin", "item_image" : "coin.png", "model_path" : "res://assets/coin.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.FLASK_EMPTY : { "item_nam" : "flask_empty", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.FLASK_HEALING : { "item_nam" : "flask_healing", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.BUN : { "item_nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.ISLAND_MAP : { "item_nam" : "island_map", "item_image" : "island_child.png", "model_path" : "res://assets/island_map.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.ENVELOPE : { "item_nam" : "envelope", "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
-	TakableIds.ISLAND_MAP_2 : { "item_nam" : "island_map_2", "item_image" : "island_father.png", "model_path" : "res://assets/island_map_2.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.BARN_LOCK_KEY : { "item_nam" : "barn_lock_key", "item_image" : "key.png", "model_path" : "res://assets/barn_lock_key.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.ISLAND_MAP_2 : { "item_nam" : "island_map_2", "item_image" : "island_father.png", "model_path" : "res://assets/island_map_2.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.SPHERE_FOR_POSTAMENT : { "item_nam" : "sphere_for_postament_body", "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.APATA : { "item_nam" : "statue_apata", "item_image" : "statue_apata.png", "model_path" : "res://assets/statue_4.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.URANIA : { "item_nam" : "statue_urania", "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.CLIO : { "item_nam" : "statue_clio", "item_image" : "statue_clio.png", "model_path" : "res://assets/statue_2.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.MELPOMENE : { "item_nam" : "statue_melpomene", "item_image" : "statue_melpomene.png", "model_path" : "res://assets/statue_3.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.URANIA : { "item_nam" : "statue_urania", "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.HERMES : { "item_nam" : "statue_hermes", "item_image" : "statue_hermes.png", "model_path" : "res://assets/statue_hermes.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.SPHERE_FOR_POSTAMENT : { "item_nam" : "sphere_for_postament_body", "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.ERIDA : { "item_nam" : "statue_erida", "item_image" : "statue_erida.png", "model_path" : "res://assets/statue_erida.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.ARTEMIDA : { "item_nam" : "statue_artemida", "item_image" : "statue_artemis.png", "model_path" : "res://assets/statue_artemida.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APHRODITE : { "item_nam" : "statue_aphrodite", "item_image" : "statue_aphrodite.png", "model_path" : "res://assets/statue_aphrodite.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.HEBE : { "item_nam" : "statue_hebe", "item_image" : "statue_hebe.png", "model_path" : "res://assets/statue_hebe.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.HERA : { "item_nam" : "hera_statue", "item_image" : "statue_hera.png", "model_path" : "res://assets/hera_statue.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APOLLO : { "item_nam" : "statue_apollo", "item_image" : "statue_apollo.png", "model_path" : "res://assets/statue_apollo.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.ATHENA : { "item_nam" : "statue_athena", "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.GREEK_SWORD : { "item_nam" : "sword_body", "item_image" : "saffron_bun.png", "model_path" : "res://assets/sword.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.LYRE_RAT : { "item_nam" : "lyre_rat", "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_rat.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
-	TakableIds.LYRE_SNAKE : { "item_nam" : "lyre_snake", "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_snake.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
-	TakableIds.LYRE_SPIDER : { "item_nam" : "lyre_spider", "item_image" : "saffron_bun.png", "model_path" : "res://assets/lyre_spider.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
-	TakableIds.ARGUS_EYES : { "item_nam" : "argus_eyes", "item_image" : "saffron_bun.png", "model_path" : "res://assets/argus_eyes_pile.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.GREEK_ARROW : { "item_nam" : "greek_arrow", "item_image" : "saffron_bun.png", "model_path" : "res://assets/greek_arrow.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APPLE_JAR_GG : { "item_nam" : "apple_jar_gg", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APPLE_JAR_GS : { "item_nam" : "apple_jar_gs", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APPLE_JAR_SS : { "item_nam" : "apple_jar_ss", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple_jar.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APPLE_GOLD : { "item_nam" : "apple_gold", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
-	TakableIds.APPLE_SILVER : { "item_nam" : "apple_silver", "item_image" : "saffron_bun.png", "model_path" : "res://assets/apple.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
+	TakableIds.TUBE_BREATH : { "item_nam" : "tube_breath", "item_image" : "tube_breath.png", "model_path" : "res://assets/tube_breath.escn", "can_give" : false, "custom_actions" : [] },
 }

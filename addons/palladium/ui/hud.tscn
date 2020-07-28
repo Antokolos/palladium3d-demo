@@ -12,7 +12,7 @@
 [ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=10]
 [ext_resource path="res://addons/palladium/assets/ui/32-32_white.png" type="Texture" id=11]
 [ext_resource path="res://addons/palladium/assets/ui/tex_crouch_off.tres" type="Texture" id=12]
-[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=13]
+[ext_resource path="res://addons/palladium/assets/fonts/roboto.regular.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://addons/palladium/ui/performance_stats.gd" type="Script" id=14]
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=16]
@@ -508,7 +508,7 @@ size_flags_vertical = 3
 
 [node name="MainPlayer" type="HBoxContainer" parent="Info"]
 margin_right = 384.0
-margin_bottom = 68.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

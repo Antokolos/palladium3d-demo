@@ -32,7 +32,7 @@ func set_appearance(is_quick_item, selected):
 
 func set_item_data(item_id, item_count):
 	if not game_state.is_item_registered(item_id):
-		push_error("Unknown item_id in set_item_data: " + item_id)
+		push_error("Unknown item_id in set_item_data: " + str(item_id))
 		return
 	var item_data = game_state.get_registered_item_data(item_id)
 	self.item_id = item_id

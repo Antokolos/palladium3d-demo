@@ -319,7 +319,7 @@ func get_quick_items_count():
 
 func take(item_id, item_path = null):
 	if not is_item_registered(item_id):
-		push_error("Unknown item_id: " + item_id)
+		push_error("Unknown item_id: " + str(item_id))
 		return
 	var item_image = DB.ITEMS[item_id].item_image
 	var model_path = DB.ITEMS[item_id].model_path

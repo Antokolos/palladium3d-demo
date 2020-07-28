@@ -12,7 +12,7 @@ extents = Vector3( 0.147987, 0.102775, 0.0582002 )
 ]]
 mode = 1
 script = ExtResource( 1 )
-takable_id = 150
+takable_id = 60
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
