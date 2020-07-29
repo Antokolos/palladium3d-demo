@@ -7,6 +7,7 @@ const ANIM_SPEED_SCALE = 0.725
 
 export(DB.DoorIds) var door_id = DB.DoorIds.NONE
 export var initially_opened = false
+export var reverse = false
 export var door_collision_path = "StaticBody/CollisionShape"
 export var anim_player_path = "door_4_armature001/AnimationPlayer"
 export var anim_name_open = "door_4_armatureAction.001"
@@ -24,7 +25,7 @@ func _on_animation_finished(anim_name):
 func open(with_sound = true, force = false):
 	if not force and is_opened():
 		return
-	anim_player.play(anim_name_open, -1, ANIM_SPEED_SCALE)
+	anim_player.play(anim_name_open, -1, -ANIM_SPEED_SCALE if reverse else ANIM_SPEED_SCALE, reverse)
 	door_collision.disabled = true
 	game_state.set_door_state(get_path(), true)
 	if with_sound and has_node("door_sound"):
@@ -35,7 +36,7 @@ func close(with_sound = true, force = false):
 		return
 	if with_sound and has_node("door_sound"):
 		get_node("door_sound").play(true)
-	anim_player.play(anim_name_open, -1, -ANIM_SPEED_SCALE, true)
+	anim_player.play(anim_name_open, -1, ANIM_SPEED_SCALE if reverse else -ANIM_SPEED_SCALE, not reverse)
 	game_state.set_door_state(get_path(), false)
 	door_collision.disabled = false
 
