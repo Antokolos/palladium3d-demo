@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/palladium/core/environment/torch_fire.gd" type="Script" id=1]
-[ext_resource path="res://assets/spark_fire.material" type="Material" id=2]
-[ext_resource path="res://assets/spark_smoke.material" type="Material" id=3]
+[ext_resource path="res://addons/palladium/shaders/spark_fire.tres" type="Material" id=2]
+[ext_resource path="res://addons/palladium/shaders/spark_smoke.tres" type="Material" id=3]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.00145349, 0.761589 )

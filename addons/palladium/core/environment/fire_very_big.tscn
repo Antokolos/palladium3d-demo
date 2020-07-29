@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://addons/palladium/core/environment/fire_big.gd" type="Script" id=1]
+[ext_resource path="res://addons/palladium/core/environment/fire_very_big.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/shaders/spark_fire.tres" type="Material" id=2]
 [ext_resource path="res://addons/palladium/shaders/spark_smoke.tres" type="Material" id=3]
 
@@ -19,7 +19,7 @@ curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
 emission_shape = 1
-emission_sphere_radius = 0.15
+emission_sphere_radius = 0.3
 flag_rotate_y = true
 spread = 0.0
 gravity = Vector3( 0, 0, 2 )
@@ -30,7 +30,7 @@ linear_accel = 1.0
 radial_accel = 1.0
 radial_accel_random = 1.0
 damping = 2.0
-scale = 2.0
+scale = 4.0
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
 
@@ -53,17 +53,18 @@ curve = SubResource( 9 )
 
 [sub_resource type="ParticlesMaterial" id=11]
 emission_shape = 1
-emission_sphere_radius = 0.2
+emission_sphere_radius = 0.4
 flag_rotate_y = true
 spread = 0.0
 gravity = Vector3( 0, 0, 1 )
 initial_velocity = 1.0
+angular_velocity = 2.10195e-044
 linear_accel = 1.0
 damping = 2.0
 damping_random = 1.0
 angle = 360.0
 angle_random = 1.0
-scale = 2.0
+scale = 4.0
 scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 
@@ -71,7 +72,7 @@ color_ramp = SubResource( 8 )
 material = ExtResource( 3 )
 size = Vector2( 0.3, 0.3 )
 
-[node name="fire_big" type="Spatial" groups=[
+[node name="fire_very_big" type="Spatial" groups=[
 "fire_sources",
 ]]
 script = ExtResource( 1 )

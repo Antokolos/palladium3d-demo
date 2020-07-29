@@ -1,8 +1,11 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/palladium/core/environment/torch_fire.gd" type="Script" id=1]
-[ext_resource path="res://assets/spark_fire.material" type="Material" id=2]
-[ext_resource path="res://assets/spark_smoke.material" type="Material" id=3]
+[ext_resource path="res://addons/palladium/shaders/reference/spark_fire.material" type="Material" id=2]
+[ext_resource path="res://addons/palladium/shaders/reference/spark_smoke.material" type="Material" id=3]
+
+
+
 
 
 
