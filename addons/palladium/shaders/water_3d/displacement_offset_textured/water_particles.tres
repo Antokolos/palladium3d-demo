@@ -20,29 +20,11 @@ uniform float refraction = 0.05;
 uniform float proximity_fade_distance = 0.1;
 uniform float water_opacity = 0.7;
 
-// Particle billboard mode params
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-
 void vertex() {
 	// Particle billboard mode
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
 	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
 	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
 	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor(particle_frame / h_frames) / v_frames);
 }
 
 void fragment() {
@@ -99,11 +81,6 @@ shader_param/texture_scale = Vector2( 8, 4 )
 shader_param/refraction = 0.05
 shader_param/proximity_fade_distance = 0.1
 shader_param/water_opacity = 0.7
-shader_param/uv1_scale = Vector3( 1, 1, 1 )
-shader_param/uv1_offset = null
-shader_param/particles_anim_h_frames = 1
-shader_param/particles_anim_v_frames = 1
-shader_param/particles_anim_loop = false
 shader_param/uv_offset_texture = ExtResource( 3 )
 shader_param/texturemap = ExtResource( 2 )
 shader_param/normalmap = ExtResource( 1 )

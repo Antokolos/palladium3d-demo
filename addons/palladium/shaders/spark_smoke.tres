@@ -15,29 +15,11 @@ uniform sampler2D texture_metallic : hint_white;
 uniform vec4 metallic_texture_channel;
 uniform sampler2D texture_roughness : hint_white;
 uniform vec4 roughness_texture_channel;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
 
 void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
 	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
 	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
 	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor(particle_frame / h_frames) / v_frames);
 }
 
 void fragment() {
@@ -72,11 +54,4 @@ shader_param/roughness = 1.0
 shader_param/point_size = 1.0
 shader_param/metallic_texture_channel = Plane( 1, 0, 0, 0 )
 shader_param/roughness_texture_channel = Plane( 1, 0, 0, 0 )
-shader_param/particles_anim_h_frames = 1
-shader_param/particles_anim_v_frames = 1
-shader_param/particles_anim_loop = false
-shader_param/uv1_scale = Vector3( 1, 1, 1 )
-shader_param/uv1_offset = Vector3( 0, 0, 0 )
-shader_param/uv2_scale = Vector3( 1, 1, 1 )
-shader_param/uv2_offset = Vector3( 0, 0, 0 )
 shader_param/texture_albedo = ExtResource( 1 )
