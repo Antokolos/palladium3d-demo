@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/piro.png-a98ec50b4980521e883bfd761915700a.image"
+
+[deps]
+
+source_file="res://assets/items/piro.png"
+dest_files=[ "res://.import/piro.png-a98ec50b4980521e883bfd761915700a.image" ]
+
+[params]
+
