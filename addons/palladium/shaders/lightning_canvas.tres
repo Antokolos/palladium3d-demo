@@ -6,6 +6,10 @@ code = "shader_type canvas_item;
 uniform vec2 resolution = vec2(1024.0, 256.0);
 uniform vec3 color = vec3(4.75, 5.0, 20.0);
 
+float rand(vec2 co){
+	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 float hash(vec2 p, in float s)
 {
 	return fract(sin(dot(vec3(p.xy,10.0 * abs(sin(s))), vec3(27.1, 61.7, 12.4))) * 273758.5453123);
@@ -29,11 +33,15 @@ float fbm(vec2 p)
 	return v;
 }
 
+float envelope(vec2 uv) {
+	return uv.y - 0.7 * sin(uv.x * 1.2) - 0.9;
+}
+
 void fragment()
 {
 	vec2 uv = (FRAGCOORD.xy / resolution.xy) * 2.0 - 1.0;
 	uv.x *= resolution.x / resolution.y;
-	float t = abs(4.0 / ((uv.x + fbm(uv + TIME)) * 50.0));
+	float t = abs(4.0 / ((envelope(uv) + fbm(uv + TIME)) * 50.0));
 	vec3 finalColor = t * color;
 	COLOR = vec4(finalColor, 0.1);
 }"

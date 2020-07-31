@@ -63,6 +63,10 @@ static func get_item_name(takable_id):
 #	NONE = 0
 #}
 
+#enum UsableIds {
+#	NONE = 0
+#}
+
 #enum TakableIds {
 #	NONE = 0
 #}
@@ -138,6 +142,10 @@ enum DoorIds {
 enum ButtonActivatorIds {
 	NONE = 0,
 	ERIDA = 10
+}
+
+enum UsableIds {
+	NONE = 0
 }
 
 enum TakableIds {

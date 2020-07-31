@@ -3,6 +3,7 @@ class_name PLDGameState
 
 signal shader_cache_processed()
 signal player_registered(player)
+signal player_surge(player, enabled)
 signal player_underwater(player, enabled)
 signal item_taken(item_id, count, item_path)
 signal item_removed(item_id, count)
@@ -170,6 +171,9 @@ func is_bright():
 
 func is_underwater(name_hint):
 	return underwater.has(name_hint) and underwater[name_hint]
+
+func set_surge(player, enable):
+	emit_signal("player_surge", player, enable)
 
 func set_underwater(player, enable):
 	underwater[player.get_name_hint()] = enable

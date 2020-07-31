@@ -29,6 +29,7 @@ onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 onready var crosshair = get_node("Crosshair")
+onready var surge_effect = get_node("SurgeEffect")
 onready var underwater_effect = get_node("UnderwaterEffect")
 
 onready var indicators_panel = get_node("Indicators")
@@ -55,6 +56,7 @@ func _ready():
 	game_state.connect("item_removed", self, "_on_item_removed")
 	game_state.connect("health_changed", self, "on_health_changed")
 	game_state.connect("oxygen_changed", self, "on_oxygen_changed")
+	game_state.connect("player_surge", self, "set_surge")
 	game_state.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(DB.PLAYER_NAME_HINT, game_state.player_health_current, game_state.player_health_max)
@@ -161,6 +163,11 @@ func is_tablet_visible():
 func pause_game(enable):
 	dimmer.visible = enable
 	get_tree().paused = enable
+
+func set_surge(player, enable):
+	if player and player.get_instance_id() != game_state.get_player().get_instance_id():
+		return
+	surge_effect.visible = enable
 
 func set_underwater(player, enable):
 	if player and player.get_instance_id() != game_state.get_player().get_instance_id():

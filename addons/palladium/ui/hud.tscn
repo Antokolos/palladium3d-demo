@@ -1,21 +1,22 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/hud.gd" type="Script" id=2]
-[ext_resource path="res://addons/palladium/assets/ui/splat.png" type="Texture" id=3]
-[ext_resource path="res://addons/palladium/styles/actorname_prev_font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://addons/palladium/styles/conversation_prev_font.tres" type="DynamicFont" id=5]
-[ext_resource path="res://addons/palladium/styles/actorname_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://addons/palladium/styles/conversation_font.tres" type="DynamicFont" id=7]
-[ext_resource path="res://addons/palladium/assets/ui/arrow_left.png" type="Texture" id=8]
-[ext_resource path="res://addons/palladium/assets/ui/arrow_right.png" type="Texture" id=9]
-[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=10]
-[ext_resource path="res://addons/palladium/assets/ui/32-32_white.png" type="Texture" id=11]
-[ext_resource path="res://addons/palladium/assets/ui/tex_crouch_off.tres" type="Texture" id=12]
-[ext_resource path="res://addons/palladium/assets/fonts/roboto.regular.ttf" type="DynamicFontData" id=13]
-[ext_resource path="res://addons/palladium/ui/performance_stats.gd" type="Script" id=14]
-[ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=15]
-[ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=16]
+[ext_resource path="res://addons/palladium/shaders/lightning_canvas.tres" type="Material" id=3]
+[ext_resource path="res://addons/palladium/assets/ui/splat.png" type="Texture" id=4]
+[ext_resource path="res://addons/palladium/styles/actorname_prev_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/palladium/styles/conversation_prev_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://addons/palladium/styles/actorname_font.tres" type="DynamicFont" id=7]
+[ext_resource path="res://addons/palladium/styles/conversation_font.tres" type="DynamicFont" id=8]
+[ext_resource path="res://addons/palladium/assets/ui/arrow_left.png" type="Texture" id=9]
+[ext_resource path="res://addons/palladium/assets/ui/arrow_right.png" type="Texture" id=10]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=11]
+[ext_resource path="res://addons/palladium/assets/ui/32-32_white.png" type="Texture" id=12]
+[ext_resource path="res://addons/palladium/assets/ui/tex_crouch_off.tres" type="Texture" id=13]
+[ext_resource path="res://addons/palladium/assets/fonts/roboto.regular.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://addons/palladium/ui/performance_stats.gd" type="Script" id=15]
+[ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=16]
+[ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=17]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -61,7 +62,7 @@ bg_color = Color( 0, 0.811765, 1, 1 )
 [sub_resource type="DynamicFont" id=6]
 size = 42
 use_filter = true
-font_data = ExtResource( 13 )
+font_data = ExtResource( 14 )
 
 [node name="hud" type="Control" groups=[
 "restorable_state",
@@ -70,6 +71,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+
+[node name="SurgeEffect" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="UnderwaterEffect" type="ColorRect" parent="."]
 visible = false
@@ -87,7 +94,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -187,7 +194,7 @@ margin_right = 958.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
@@ -198,7 +205,7 @@ margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ConversationText"
 valign = 1
@@ -217,7 +224,7 @@ margin_right = 958.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0.290196, 0.243137, 0.243137, 1 )
 text = "ActorName"
 align = 2
@@ -228,7 +235,7 @@ margin_right = 1920.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 8 )
 text = "ConversationText"
 valign = 1
 autowrap = true
@@ -302,7 +309,7 @@ margin_bottom = 237.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 
@@ -346,7 +353,7 @@ margin_bottom = 237.0
 rect_min_size = Vector2( 180, 206 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
@@ -421,7 +428,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="HBoxMessages/VBoxContainer"]
 margin_right = 1920.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 text = "MESSAGE_PLEASE_WAIT"
 align = 1
 
@@ -429,14 +436,14 @@ align = 1
 visible = false
 margin_right = 1920.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 align = 1
 
 [node name="Label3" type="Label" parent="HBoxMessages/VBoxContainer"]
 visible = false
 margin_right = 1920.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 align = 1
 
 [node name="Crosshair" type="Control" parent="."]
@@ -460,7 +467,7 @@ margin_left = -2.5
 margin_top = 4.5
 margin_right = 2.5
 margin_bottom = 20.5
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 expand = true
 
 [node name="Top_IMG" type="TextureRect" parent="Crosshair"]
@@ -472,7 +479,7 @@ margin_left = -2.5
 margin_top = -20.5
 margin_right = 2.5
 margin_bottom = -4.5
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 expand = true
 
 [node name="Left_IMG" type="TextureRect" parent="Crosshair"]
@@ -485,7 +492,7 @@ margin_top = -2.5
 margin_right = 0.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 expand = true
 
 [node name="Right_IMG" type="TextureRect" parent="Crosshair"]
@@ -498,7 +505,7 @@ margin_top = -2.5
 margin_right = 24.5
 margin_bottom = 12.5
 rect_rotation = 90.0
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 expand = true
 
 [node name="Info" type="VBoxContainer" parent="."]
@@ -585,7 +592,7 @@ margin_right = 71.0
 margin_bottom = 71.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 
 [node name="performance_stats" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.705882 )
@@ -599,7 +606,7 @@ custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 align = 2
 valign = 2
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
 visible = false
@@ -607,10 +614,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 
-[node name="tablet" parent="." instance=ExtResource( 15 )]
+[node name="tablet" parent="." instance=ExtResource( 16 )]
 visible = false
 
-[node name="quit_dialog" parent="." instance=ExtResource( 16 )]
+[node name="quit_dialog" parent="." instance=ExtResource( 17 )]
 margin_right = 11.0
 
 [node name="BloodSplatTimer" type="Timer" parent="."]
