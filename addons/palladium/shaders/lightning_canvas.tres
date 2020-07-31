@@ -3,7 +3,7 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
-uniform vec2 resolution = vec2(1024.0, 256.0);
+//uniform vec2 resolution = vec2(1024.0, 256.0);
 uniform vec3 color = vec3(4.75, 5.0, 20.0);
 
 float rand(vec2 co){
@@ -33,20 +33,27 @@ float fbm(vec2 p)
 	return v;
 }
 
+vec2 rot(vec2 uv, float th) {
+	float x = uv.x * cos(th) + uv.y * sin(th);
+	float y = -uv.x * sin(th) + uv.y * cos(th);
+	return vec2(x, y);
+}
+
 float envelope(vec2 uv) {
-	return uv.y - 0.7 * sin(uv.x * 1.2) - 0.9;
+	vec2 uvr = rot(uv, -0.7);
+	return uvr.y - 0.3 * cos(uvr.x * 1.1) * sin((uvr.x + 0.3)* 4.8) - 0.3;
 }
 
 void fragment()
 {
-	vec2 uv = (FRAGCOORD.xy / resolution.xy) * 2.0 - 1.0;
-	uv.x *= resolution.x / resolution.y;
-	float t = abs(4.0 / ((envelope(uv) + fbm(uv + TIME)) * 50.0));
+	//vec2 uv = (FRAGCOORD.xy / resolution.xy) * 2.0 - 1.0;
+	//uv.x *= resolution.x / resolution.y;
+	vec2 uv = UV * 2.0 - 1.0;
+	float t = 0.1 * abs(1.0 / (envelope(uv) + fbm(uv + TIME)));
 	vec3 finalColor = t * color;
 	COLOR = vec4(finalColor, 0.1);
 }"
 
 [resource]
 shader = SubResource( 1 )
-shader_param/resolution = Vector2( 1024, 256 )
 shader_param/color = Vector3( 4.75, 5, 20 )
