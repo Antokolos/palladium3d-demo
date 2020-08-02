@@ -5,6 +5,7 @@ signal shader_cache_processed()
 signal player_registered(player)
 signal player_surge(player, enabled)
 signal player_underwater(player, enabled)
+signal player_poisoned(player, enabled)
 signal item_taken(item_id, count, item_path)
 signal item_removed(item_id, count)
 signal item_used(player_node, target, item_id)
@@ -64,6 +65,7 @@ var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 var player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
 var party = DB.PARTY_DEFAULT.duplicate(true)
 var underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
+var poisoned = DB.POISONED_DEFAULT.duplicate(true)
 var player_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 var inventory = DB.INVENTORY_DEFAULT.duplicate(true)
@@ -109,6 +111,7 @@ func reset_variables():
 	player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
 	party = DB.PARTY_DEFAULT.duplicate(true)
 	underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
+	poisoned = DB.POISONED_DEFAULT.duplicate(true)
 	story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = DB.INVENTORY_DEFAULT.duplicate(true)
 	quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -172,12 +175,19 @@ func is_bright():
 func is_underwater(name_hint):
 	return underwater.has(name_hint) and underwater[name_hint]
 
+func is_poisoned(name_hint):
+	return poisoned.has(name_hint) and poisoned[name_hint]
+
 func set_surge(player, enable):
 	emit_signal("player_surge", player, enable)
 
 func set_underwater(player, enable):
 	underwater[player.get_name_hint()] = enable
 	emit_signal("player_underwater", player, enable)
+
+func set_poisoned(player, enable):
+	poisoned[player.get_name_hint()] = enable
+	emit_signal("player_poisoned", player, enable)
 
 func _on_cutscene_finished(player, cutscene_id):
 	player.set_look_transition(true)
@@ -529,6 +539,7 @@ func load_state(slot):
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	
 	underwater = d.underwater if ("underwater" in d) else DB.UNDERWATER_DEFAULT.duplicate(true)
+	poisoned = d.poisoned if ("poisoned" in d) else DB.POISONED_DEFAULT.duplicate(true)
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		for name_hint in d.characters.keys():
@@ -557,6 +568,7 @@ func load_state(slot):
 			
 			character.set_look_transition()
 			set_underwater(character, is_underwater(name_hint))
+			set_poisoned(character, is_poisoned(name_hint))
 
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
@@ -619,6 +631,7 @@ func save_state(slot):
 		"player_oxygen_max" : player_oxygen_max,
 		"party" : party,
 		"underwater" : underwater,
+		"poisoned" : poisoned,
 		"characters" : characters,
 		"story_vars" : story_vars,
 		"inventory" : inventory,

@@ -35,6 +35,10 @@ static func get_item_name(takable_id):
 #	PLAYER_NAME_HINT : false
 #}
 
+#const POISONED_DEFAULT = {
+#	PLAYER_NAME_HINT : false
+#}
+
 #const STORY_VARS_DEFAULT = {
 #	"flashlight_on" : false
 #}
@@ -89,6 +93,12 @@ const PARTY_DEFAULT = {
 }
 
 const UNDERWATER_DEFAULT = {
+	PLAYER_NAME_HINT : false,
+	FEMALE_NAME_HINT : false,
+	BANDIT_NAME_HINT : false
+}
+
+const POISONED_DEFAULT = {
 	PLAYER_NAME_HINT : false,
 	FEMALE_NAME_HINT : false,
 	BANDIT_NAME_HINT : false

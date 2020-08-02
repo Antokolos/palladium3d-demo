@@ -2,6 +2,7 @@ extends PLDPathfinder
 class_name PLDCharacter
 
 const OXYGEN_DECREASE_RATE = 5
+const POISON_LETHALITY_RATE = 2
 const GRAVITY_DEFAULT = -6.2
 const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3
@@ -31,6 +32,7 @@ enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CON
 export var model_path = ""
 
 onready var oxygen_timer = $OxygenTimer
+onready var poison_timer = $PoisonTimer
 onready var standing_area = $StandingArea
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
@@ -291,6 +293,11 @@ func _physics_process(delta):
 	elif not is_underwater and not oxygen_timer.is_stopped():
 		oxygen_timer.stop()
 		game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
+	var is_poisoned = game_state.is_poisoned(get_name_hint())
+	if is_poisoned and poison_timer.is_stopped():
+		poison_timer.start()
+	elif not is_poisoned and not poison_timer.is_stopped():
+		poison_timer.stop()
 	var movement_data = process_movement(delta)
 	has_floor_collision = movement_data.collides_floor
 	var is_moving = movement_data.is_walking
@@ -318,3 +325,8 @@ func _on_OxygenTimer_timeout():
 	if oxygen_timer.is_stopped():
 		return
 	game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_current - OXYGEN_DECREASE_RATE, game_state.player_oxygen_max)
+
+func _on_PoisonTimer_timeout():
+	if poison_timer.is_stopped():
+		return
+	game_state.set_health(get_name_hint(), game_state.player_health_current - POISON_LETHALITY_RATE, game_state.player_health_max)

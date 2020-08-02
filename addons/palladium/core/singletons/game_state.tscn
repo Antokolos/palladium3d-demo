@@ -2,12 +2,6 @@
 
 [ext_resource path="res://addons/palladium/core/singletons/game_state.gd" type="Script" id=1]
 
-
-
-
-
-
-
 [node name="game_params" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )

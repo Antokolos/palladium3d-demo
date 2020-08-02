@@ -87,6 +87,7 @@ func become_player():
 	player.reset_rotation()
 	game_state.set_player_name_hint(get_name_hint())
 	game_state.set_underwater(self, game_state.is_underwater(get_name_hint()))
+	game_state.set_poisoned(self, game_state.is_poisoned(get_name_hint()))
 	camera.rebuild_exceptions(self)
 
 func process_input(delta):

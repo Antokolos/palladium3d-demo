@@ -51,8 +51,8 @@ extents = Vector3( 0.161138, 1, 0.146487 )
 extents = Vector3( 0.879759, 1, 0.502388 )
 
 [node name="enemy" type="KinematicBody" groups=[
-"enemies",
 "moving",
+"enemies",
 ]]
 collision_mask = 7
 script = ExtResource( 1 )
@@ -107,6 +107,8 @@ one_shot = true
 
 [node name="OxygenTimer" type="Timer" parent="."]
 
+[node name="PoisonTimer" type="Timer" parent="."]
+
 [node name="AttackTimer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 1.4
@@ -121,4 +123,5 @@ collision_mask = 7
 shape = SubResource( 6 )
 [connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
 [connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
+[connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

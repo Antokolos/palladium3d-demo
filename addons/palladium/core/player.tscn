@@ -141,6 +141,9 @@ wait_time = 0.5
 one_shot = true
 
 [node name="OxygenTimer" type="Timer" parent="."]
+
+[node name="PoisonTimer" type="Timer" parent="."]
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
 [connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
+[connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
