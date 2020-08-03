@@ -281,7 +281,7 @@ func has_floor_collision():
 func can_jump():
 	return has_floor_collision() or game_state.is_underwater(get_name_hint())
 
-func _physics_process(delta):
+func do_process(delta):
 	if is_cutscene() or is_dead():
 		has_floor_collision = true
 		return
@@ -310,6 +310,7 @@ func _physics_process(delta):
 	else:
 		$SoundWalking.stop()
 		get_model().look(get_rotation_angle_to_target_deg())
+	.do_process(delta)
 
 func _on_character_dead(player):
 	pass

@@ -209,6 +209,7 @@ func _input(event):
 				angle_rad_y = 0
 
 func _physics_process(delta):
+	.do_process(delta)
 	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
 		$SoundFallingToFloor.play()

@@ -262,7 +262,7 @@ func get_distance_to_target():
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
-func _physics_process(delta):
+func do_process(delta):
 	dir = Vector3()
 	var in_party = is_in_party()
 	var is_player = is_player()
