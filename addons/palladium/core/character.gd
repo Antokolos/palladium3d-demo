@@ -2,7 +2,7 @@ extends PLDPathfinder
 class_name PLDCharacter
 
 const OXYGEN_DECREASE_RATE = 5
-const POISON_LETHALITY_RATE = 2
+const POISON_LETHALITY_RATE = 1
 const GRAVITY_DEFAULT = -6.2
 const GRAVITY_UNDERWATER = -0.2
 const MAX_SPEED = 3

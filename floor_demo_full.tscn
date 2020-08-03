@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=93 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/core/environment/room_enabler.tscn" type="PackedScene" id=2]
@@ -48,38 +48,39 @@
 [ext_resource path="res://scenes/labyrinth_skeleton_4.tscn" type="PackedScene" id=46]
 [ext_resource path="res://scenes/statue_erida_big.tscn" type="PackedScene" id=47]
 [ext_resource path="res://sound/environment/Erida_gas_room.ogg" type="AudioStream" id=48]
-[ext_resource path="res://scenes/statue_ares.tscn" type="PackedScene" id=49]
-[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=50]
-[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=51]
-[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=52]
-[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=53]
-[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=54]
-[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=55]
-[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=56]
-[ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=57]
-[ext_resource path="res://scenes/spider_small.tscn" type="PackedScene" id=58]
-[ext_resource path="res://scenes/spider_web_2.tscn" type="PackedScene" id=59]
-[ext_resource path="res://scenes/floor_demo_2.tscn" type="PackedScene" id=60]
-[ext_resource path="res://scenes/floor_demo_floor_2.tscn" type="PackedScene" id=61]
-[ext_resource path="res://scenes/floor_demo_ceiling_slabs.tscn" type="PackedScene" id=62]
-[ext_resource path="res://scenes/vabtablack_demo.tscn" type="PackedScene" id=63]
-[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=64]
-[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=65]
-[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=66]
-[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=67]
-[ext_resource path="res://scenes/tablet_Ares.tscn" type="PackedScene" id=68]
-[ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=69]
-[ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=70]
-[ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=71]
-[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=72]
-[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=73]
-[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=74]
-[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=75]
-[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=76]
-[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=77]
-[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=78]
-[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=79]
-[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=80]
+[ext_resource path="res://scenes/eris_particles.tscn" type="PackedScene" id=49]
+[ext_resource path="res://scenes/statue_ares.tscn" type="PackedScene" id=50]
+[ext_resource path="res://scenes/chest_2.tscn" type="PackedScene" id=51]
+[ext_resource path="res://scenes/greek_armor_boxed.tscn" type="PackedScene" id=52]
+[ext_resource path="res://scenes/ares_shield_1.tscn" type="PackedScene" id=53]
+[ext_resource path="res://scenes/ares_shield_2.tscn" type="PackedScene" id=54]
+[ext_resource path="res://scenes/spear.tscn" type="PackedScene" id=55]
+[ext_resource path="res://scenes/sword.tscn" type="PackedScene" id=56]
+[ext_resource path="res://scenes/bow.tscn" type="PackedScene" id=57]
+[ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=58]
+[ext_resource path="res://scenes/spider_small.tscn" type="PackedScene" id=59]
+[ext_resource path="res://scenes/spider_web_2.tscn" type="PackedScene" id=60]
+[ext_resource path="res://scenes/floor_demo_2.tscn" type="PackedScene" id=61]
+[ext_resource path="res://scenes/floor_demo_floor_2.tscn" type="PackedScene" id=62]
+[ext_resource path="res://scenes/floor_demo_ceiling_slabs.tscn" type="PackedScene" id=63]
+[ext_resource path="res://scenes/vabtablack_demo.tscn" type="PackedScene" id=64]
+[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=65]
+[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=66]
+[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=67]
+[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=68]
+[ext_resource path="res://scenes/tablet_Ares.tscn" type="PackedScene" id=69]
+[ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=70]
+[ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=71]
+[ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=72]
+[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=73]
+[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=74]
+[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=75]
+[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=76]
+[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=77]
+[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=78]
+[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=79]
+[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=80]
+[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=81]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -445,6 +446,9 @@ stream = ExtResource( 48 )
 unit_db = -18.0
 bus = "Sound"
 
+[node name="eris_particles" parent="Erida_room" instance=ExtResource( 49 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -22.3974, 4.20243, 29.3131 )
+
 [node name="Ares_room_enabler" parent="." instance=ExtResource( 2 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91577, 4.83816, 25.2311 )
@@ -481,45 +485,45 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26774, 1.19072, 23.0791 )
 pedestal_id = 60
 
-[node name="statue_ares" parent="Ares_room/postament_flat2" instance=ExtResource( 49 )]
+[node name="statue_ares" parent="Ares_room/postament_flat2" instance=ExtResource( 50 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00500202, 1.52472, 0.00882149 )
 
-[node name="chest_2" parent="Ares_room" instance=ExtResource( 50 )]
+[node name="chest_2" parent="Ares_room" instance=ExtResource( 51 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.89875, 1.18648, 18.3013 )
 
-[node name="greek_armor_boxed" parent="Ares_room/chest_2" instance=ExtResource( 51 )]
+[node name="greek_armor_boxed" parent="Ares_room/chest_2" instance=ExtResource( 52 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0515965, 0 )
 
-[node name="ares_shield_1" parent="Ares_room" instance=ExtResource( 52 )]
+[node name="ares_shield_1" parent="Ares_room" instance=ExtResource( 53 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1175, 0, 32.4291 )
 
-[node name="ares_shield_2" parent="Ares_room" instance=ExtResource( 53 )]
+[node name="ares_shield_2" parent="Ares_room" instance=ExtResource( 54 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.20933, 0, 17.9124 )
 
-[node name="spear" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.6198 )
 
-[node name="spear2" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear2" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 22.0765 )
 
-[node name="spear3" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear3" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.5613 )
 
-[node name="spear4" parent="Ares_room" instance=ExtResource( 54 )]
+[node name="spear4" parent="Ares_room" instance=ExtResource( 55 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.0346 )
 
 [node name="granite_base_6" parent="Ares_room" instance=ExtResource( 12 )]
 editor/display_folded = true
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -5.29208, 1.20675, 21.447 )
 
-[node name="sword" parent="Ares_room/granite_base_6" instance=ExtResource( 55 )]
+[node name="sword" parent="Ares_room/granite_base_6" instance=ExtResource( 56 )]
 transform = Transform( -0.0433195, 0.0240685, 0.998771, 0.00104294, 0.99971, -0.0240459, -0.999061, 1.05207e-009, -0.043332, -0.294041, 0.654566, -4.76837e-007 )
 
-[node name="bow" parent="Ares_room" instance=ExtResource( 56 )]
+[node name="bow" parent="Ares_room" instance=ExtResource( 57 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.76091, 3.97121, 29.9481 )
 
-[node name="bow2" parent="Ares_room" instance=ExtResource( 56 )]
+[node name="bow2" parent="Ares_room" instance=ExtResource( 57 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -14.902, 3.97121, 29.9481 )
 
 [node name="vase_8" parent="." instance=ExtResource( 33 )]
@@ -591,28 +595,28 @@ transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 10.89
 [node name="column_34" parent="." instance=ExtResource( 28 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.06699, 1.51402, 39.4013 )
 
-[node name="spider_web_1" parent="." instance=ExtResource( 57 )]
+[node name="spider_web_1" parent="." instance=ExtResource( 58 )]
 editor/display_folded = true
 transform = Transform( 0.464381, -0.5748, 0.673762, -0.816933, 0.015773, 0.576517, -0.342009, -0.818142, -0.462248, 33.9657, 6.35285, 46.8701 )
 
-[node name="spider_small" parent="spider_web_1" instance=ExtResource( 58 )]
+[node name="spider_small" parent="spider_web_1" instance=ExtResource( 59 )]
 transform = Transform( 0.997327, -0.0728641, -0.00542351, 0.0724906, 0.996043, -0.0514135, 0.00914835, 0.0508827, 0.998663, 0, 0, 0 )
 
-[node name="spider_web_2" parent="." instance=ExtResource( 59 )]
+[node name="spider_web_2" parent="." instance=ExtResource( 60 )]
 editor/display_folded = true
 transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134, 0.999996, -0.00252308, 0.00131254, 35.7145, 6.18291, 33.8711 )
 
-[node name="spider_small" parent="spider_web_2" instance=ExtResource( 58 )]
+[node name="spider_small" parent="spider_web_2" instance=ExtResource( 59 )]
 
-[node name="floor_demo_2" parent="." instance=ExtResource( 60 )]
+[node name="floor_demo_2" parent="." instance=ExtResource( 61 )]
 
-[node name="floor_demo_floor_2" parent="." instance=ExtResource( 61 )]
+[node name="floor_demo_floor_2" parent="." instance=ExtResource( 62 )]
 
-[node name="floor_demo_ceiling_slabs" parent="." instance=ExtResource( 62 )]
+[node name="floor_demo_ceiling_slabs" parent="." instance=ExtResource( 63 )]
 
-[node name="vabtablack_demo" parent="." instance=ExtResource( 63 )]
+[node name="vabtablack_demo" parent="." instance=ExtResource( 64 )]
 
-[node name="postament_1" parent="." instance=ExtResource( 64 )]
+[node name="postament_1" parent="." instance=ExtResource( 65 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21168, 1.21748, 20.6024 )
 pedestal_id = 70
@@ -623,18 +627,18 @@ pedestal_id = 70
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
 visible = false
 
-[node name="postament_4" parent="." instance=ExtResource( 65 )]
+[node name="postament_4" parent="." instance=ExtResource( 66 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5163, 1.19309, 20.7609 )
 pedestal_id = 80
 
 [node name="statue_ares" parent="postament_4" groups=[
 "demo_finish_statues",
-] instance=ExtResource( 49 )]
+] instance=ExtResource( 50 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39803, 0 )
 visible = false
 
-[node name="postament_1_1" parent="." instance=ExtResource( 64 )]
+[node name="postament_1_1" parent="." instance=ExtResource( 65 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 pedestal_id = 40
@@ -643,30 +647,28 @@ pedestal_id = 40
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
 
-[node name="door_debris" parent="." instance=ExtResource( 66 )]
+[node name="door_debris" parent="." instance=ExtResource( 67 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19466, 1.72087, 32.9329 )
 
-[node name="demo_ceiling" parent="." instance=ExtResource( 67 )]
+[node name="demo_ceiling" parent="." instance=ExtResource( 68 )]
 
-[node name="EridaTrapTimer" type="Timer" parent="."]
-
-[node name="tablet_Ares" parent="." instance=ExtResource( 68 )]
+[node name="tablet_Ares" parent="." instance=ExtResource( 69 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.60744, 7.28487, 26.5618 )
 
-[node name="tablet_Hermes" parent="." instance=ExtResource( 69 )]
+[node name="tablet_Hermes" parent="." instance=ExtResource( 70 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02011, 7.30213, 26.2661 )
 
-[node name="text_5" parent="." instance=ExtResource( 70 )]
+[node name="text_5" parent="." instance=ExtResource( 71 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72163, 4.78111, 33.6938 )
 
-[node name="text_6" parent="." instance=ExtResource( 71 )]
+[node name="text_6" parent="." instance=ExtResource( 72 )]
 transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999993, 14.7988, 4.78241, 40.3261 )
 
 [node name="vase_52" parent="." instance=ExtResource( 14 )]
 editor/display_folded = true
 transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 35.2237, 1.34907, 23.2499 )
 
-[node name="spider_small" parent="vase_52" instance=ExtResource( 58 )]
+[node name="spider_small" parent="vase_52" instance=ExtResource( 59 )]
 transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
 
 [node name="AreaDeadEnd" type="Area" parent="."]
@@ -711,7 +713,7 @@ shape = SubResource( 4 )
 
 [node name="SoundIgnitionClick" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.342, 47.969 )
-stream = ExtResource( 72 )
+stream = ExtResource( 73 )
 bus = "Sound"
 
 [node name="IgnitionArea" type="Area" parent="."]
@@ -817,13 +819,13 @@ transform = Transform( 0.486343, 0, 0.873768, 0, 1, 0, -0.873768, 0, 0.486343, 2
 
 [node name="EridaButtonCorrect" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 73 )
+stream = ExtResource( 74 )
 
 [node name="EridaButtonWrong" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 74 )
+stream = ExtResource( 75 )
 
-[node name="destructible_web" parent="." instance=ExtResource( 75 )]
+[node name="destructible_web" parent="." instance=ExtResource( 76 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7175, 4.50903, 37.4462 )
 
 [node name="ApataTakeTimer" type="Timer" parent="."]
@@ -838,20 +840,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
 [node name="vase_11" parent="." instance=ExtResource( 16 )]
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 4.03199, 1.19035, 29.9398 )
 
-[node name="last_trap_floor" parent="." instance=ExtResource( 76 )]
+[node name="last_trap_floor" parent="." instance=ExtResource( 77 )]
 
-[node name="last_trap_postament" parent="." instance=ExtResource( 77 )]
+[node name="last_trap_postament" parent="." instance=ExtResource( 78 )]
 visible = false
 
-[node name="last_trap_spikes" parent="." instance=ExtResource( 78 )]
+[node name="last_trap_spikes" parent="." instance=ExtResource( 79 )]
 visible = false
 
-[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 79 )]
+[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 80 )]
 transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 4.91086, 4.24137, 30.6924 )
 visible = false
 
-[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 80 )]
-[connection signal="timeout" from="EridaTrapTimer" to="." method="_on_EridaTrapTimer_timeout"]
+[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 81 )]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]

@@ -6,7 +6,7 @@ onready var erida_trap_sound_1 = get_node("Erida_room/EridaTrapSound1")
 onready var erida_trap_sound_2 = get_node("Erida_room/EridaTrapSound2")
 onready var erida_trap_sound_3 = get_node("Erida_room/EridaTrapSound3")
 onready var erida_trap_sound_4 = get_node("Erida_room/EridaTrapSound4")
-var gas_injury_rate = 1
+onready var eris_particles = get_node("Erida_room/eris_particles")
 
 func _ready():
 	restore_state()
@@ -48,8 +48,8 @@ func use_takable(player_node, takable, parent, was_taken):
 						get_door("door_8").close()
 						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_state.party[DB.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
 						game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.ACTIVE
-						$EridaTrapTimer.start()
-						erida_trap_play_sound()
+						game_state.set_poisoned(player_node, true)
+						erida_trap_activate()
 		DB.TakableIds.ARES:
 			match pedestal_id:
 				DB.PedestalIds.ARES_FLAT:
@@ -59,11 +59,13 @@ func use_takable(player_node, takable, parent, was_taken):
 					if not was_opened:
 						game_state.autosave_create()
 
-func erida_trap_play_sound():
+func erida_trap_activate():
 	erida_trap_sound_1.play()
 	erida_trap_sound_2.play()
 	erida_trap_sound_3.play()
 	erida_trap_sound_4.play()
+	eris_particles.emitting = true
+	eris_particles.restart()
 
 func erida_trap_increase_sound_volume():
 	var v1 = erida_trap_sound_1.get_unit_db()
@@ -75,11 +77,12 @@ func erida_trap_increase_sound_volume():
 	var v4 = erida_trap_sound_4.get_unit_db()
 	erida_trap_sound_4.set_unit_db(v4 / 2)
 
-func erida_trap_stop_sound():
+func erida_trap_deactivate():
 	erida_trap_sound_1.stop()
 	erida_trap_sound_2.stop()
 	erida_trap_sound_3.stop()
 	erida_trap_sound_4.stop()
+	eris_particles.emitting = false
 
 func check_demo_finish():
 	var statues = get_tree().get_nodes_in_group("demo_finish_statues")
@@ -139,8 +142,8 @@ func use_button_activator(player_node, button_activator):
 				get_door("door_7").open()
 				conversation_manager.start_area_conversation("016_EridaDone" if game_state.party[DB.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
 				game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.DISABLED
-				$EridaTrapTimer.stop()
-				erida_trap_stop_sound()
+				game_state.set_poisoned(player_node, false)
+				erida_trap_deactivate()
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():
@@ -199,9 +202,6 @@ func _on_AreaMuses_body_entered(body):
 func _on_AreaApataDone_body_entered(body):
 	if body.is_in_group("party") and body.is_player():
 		conversation_manager.start_area_conversation("011_Hermes")
-
-func _on_EridaTrapTimer_timeout():
-	game_state.set_health(DB.PLAYER_NAME_HINT, game_state.player_health_current - gas_injury_rate, game_state.player_health_max)
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_state.get_player()
@@ -356,6 +356,6 @@ func _on_arrived_to(player_node, target_node):
 
 func restore_state():
 	if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ACTIVE:
-		$EridaTrapTimer.start()
+		erida_trap_activate()
 	else:
-		$EridaTrapTimer.stop()
+		erida_trap_deactivate()
