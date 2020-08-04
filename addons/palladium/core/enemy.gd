@@ -113,9 +113,9 @@ func _on_CutsceneTimer_timeout():
 	._on_CutsceneTimer_timeout()
 
 func _physics_process(delta):
-	.do_process(delta)
 	if not activated or is_dying():
 		return
+	.do_process(delta)
 	var possible_attack_target = get_possible_attack_target()
 	if possible_attack_target:
 		attack_start(possible_attack_target)

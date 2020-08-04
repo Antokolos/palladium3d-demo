@@ -179,14 +179,12 @@ func reset_rotation():
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
 
 func process_rotation(need_to_update_collisions):
+	if angle_rad_y == 0 or is_dying():
+		return false
 	if need_to_update_collisions:
 		move_and_slide(-UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
-	if is_dying():
-		return false
-	if angle_rad_y != 0:
-		self.rotate_y(angle_rad_y)
-		return true
-	return false
+	self.rotate_y(angle_rad_y)
+	return true
 
 func get_snap():
 	return UP_DIR
@@ -218,6 +216,9 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel*delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
+	
+	if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
+		return { "is_walking" : false, "collides_floor" : true }
 	
 	vel = move_and_slide_with_snap(vel, get_snap(), UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
 	var is_walking = vel.length() > MIN_MOVEMENT
