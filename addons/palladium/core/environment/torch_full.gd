@@ -9,6 +9,8 @@ export(DB.LightIds) var light_id = DB.LightIds.NONE
 export var initially_active = true
 export var persistent = false
 
+onready var sound_lighter = $AudioStreamLighter
+onready var sound_burning = $AudioStreamBurning
 onready var torch_fire = get_node("torch_wall/torch_fire")
 onready var torch_light = get_node("torch_wall/torch_light")
 onready var raycast = get_node("RayCast")
@@ -33,9 +35,9 @@ func enable(active, update):
 func use(player_node, camera_node):
 	var active = not is_active()
 	if active:
-		$AudioStreamLighter.play()
+		sound_lighter.play()
 	else:
-		$AudioStreamBurning.stop()
+		sound_burning.stop()
 	enable(active, true)
 
 func add_highlight(player_node):
@@ -79,10 +81,14 @@ func _physics_process(delta):
 			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
 				torch_fire.set_simple_mode(false)
 				torch_light.enable_shadow_if_needed(true)
+				if not sound_burning.is_playing():
+					sound_burning.play()
 		else:
 			if not raycast.enabled or raycast.is_colliding() or is_far_away:
 				torch_fire.set_simple_mode(true)
 				torch_light.enable_shadow_if_needed(false)
+				if sound_burning.is_playing():
+					sound_burning.stop()
 
 func _on_VisibilityNotifier_screen_entered():
 	if persistent:

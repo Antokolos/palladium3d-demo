@@ -47,9 +47,6 @@ shape = SubResource( 2 )
 stream = ExtResource( 5 )
 attenuation_model = 1
 max_db = -6.0
-autoplay = true
-max_distance = 5.0
-out_of_range_mode = 1
 bus = "Sound"
 
 [node name="AudioStreamLighter" type="AudioStreamPlayer" parent="."]
