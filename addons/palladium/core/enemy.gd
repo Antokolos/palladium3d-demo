@@ -4,11 +4,11 @@ class_name PLDEnemy
 signal attack_started(enemy, target)
 
 const MAX_HITS = 3
+const AGGRESSION_RANGE = 9.5
 const TOO_FAR_RANGE = 10
 
 onready var melee_damage_area = $MeleeDamageArea
 onready var attack_timer = $AttackTimer
-var activated = false
 var hits = 0
 var injury_rate = 20
 
@@ -18,16 +18,16 @@ func _ready():
 ### Use target ###
 
 func use(player_node, camera_node):
-	if activated and can_be_attacked():
+	if is_activated() and can_be_attacked():
 		hit(camera_node)
 
 func add_highlight(player_node):
-	if not activated or not can_be_attacked() or is_dying():
+	if not is_activated() or not can_be_attacked() or is_dying():
 		return ""
 	return "E: Shoot"
 
 func hit(hit_direction_node):
-	if not activated:
+	if not is_activated():
 		return
 	elif hits > MAX_HITS:
 		take_damage(true, hit_direction_node)
@@ -38,18 +38,12 @@ func hit(hit_direction_node):
 		hits = hits + 1
 
 func activate():
+	.activate()
 	hits = 0
 	is_sprinting = false
-	get_model().activate()
 	$CutsceneTimer.start()
-	activated = true
 
-func is_activated():
-	return activated
-
-func get_preferred_target():
-	if not activated:
-		return null
+func get_nearest_party_member():
 	var party = get_tree().get_nodes_in_group("party")
 	var tgt = null
 	var dist_squared_min
@@ -65,6 +59,11 @@ func get_preferred_target():
 			tgt = ch
 	return tgt
 
+func get_preferred_target():
+	if not is_activated():
+		return null
+	return get_nearest_party_member() if is_aggressive() else .get_preferred_target()
+
 func is_enemy():
 	return true
 
@@ -75,7 +74,7 @@ func can_run():
 	return true
 
 func get_possible_attack_target():
-	if not activated:
+	if not is_activated():
 		return null
 	for body in melee_damage_area.get_overlapping_bodies():
 		if body.get_instance_id() == get_instance_id():
@@ -85,7 +84,7 @@ func get_possible_attack_target():
 	return null
 
 func attack_start(possible_attack_target):
-	if not activated:
+	if not is_activated():
 		return
 	if attack_timer.is_stopped():
 		is_sprinting = false
@@ -94,7 +93,7 @@ func attack_start(possible_attack_target):
 		attack_timer.start()
 
 func take_damage(fatal, hit_direction_node):
-	if not activated or is_dying():
+	if not is_activated() or is_dying():
 		return
 	stop_cutscene()
 	get_model().take_damage(fatal)
@@ -105,17 +104,18 @@ func take_damage(fatal, hit_direction_node):
 		$StandingArea/CollisionShape.disabled = true
 		melee_damage_area.get_node("CollisionShape").disabled = true
 
-func _on_character_dead(player):
-	._on_character_dead(player)
-	activated = false
-
-func _on_CutsceneTimer_timeout():
-	._on_CutsceneTimer_timeout()
-
 func _physics_process(delta):
-	if not activated or is_dying():
-		return
 	.do_process(delta)
+	if not is_activated():
+		return
+	var dtp = get_distance_to_player()
+	var aggressive = dtp < AGGRESSION_RANGE
+	is_sprinting = aggressive
+	set_aggressive(aggressive)
+	if not is_aggressive():
+		if not is_patrolling():
+			set_patrolling(true)
+		return
 	var possible_attack_target = get_possible_attack_target()
 	if possible_attack_target:
 		attack_start(possible_attack_target)
@@ -128,7 +128,7 @@ func _physics_process(delta):
 		is_sprinting = true
 
 func _on_AttackTimer_timeout():
-	if not activated:
+	if not is_activated():
 		return
 	if get_possible_attack_target():
 		game_state.set_health(DB.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)

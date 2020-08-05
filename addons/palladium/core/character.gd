@@ -1,6 +1,9 @@
 extends PLDPathfinder
 class_name PLDCharacter
 
+signal patrolling_changed(player_node, previous_state, new_state)
+signal aggressive_changed(player_node, previous_state, new_state)
+
 const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
 const GRAVITY_DEFAULT = -6.2
@@ -44,6 +47,8 @@ onready var sound = {
 var vel = Vector3()
 var gravity = GRAVITY_DEFAULT
 
+var is_patrolling = false
+var is_aggressive = false
 var is_crouching = false
 var is_sprinting = false
 var has_floor_collision = true
@@ -73,6 +78,28 @@ func set_underwater(player, enable):
 		return
 	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
 	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
+
+func activate():
+	.activate()
+	get_model().activate()
+
+func is_patrolling():
+	return is_patrolling
+
+func set_patrolling(enable):
+	var is_patrolling_prev = is_patrolling
+	is_patrolling = enable
+	if is_patrolling_prev != is_patrolling:
+		emit_signal("patrolling_changed", self, is_patrolling_prev, is_patrolling)
+
+func is_aggressive():
+	return is_aggressive
+
+func set_aggressive(enable):
+	var is_aggressive_prev = is_aggressive
+	is_aggressive = enable
+	if is_aggressive_prev != is_aggressive:
+		emit_signal("aggressive_changed", self, is_aggressive_prev, is_aggressive)
 
 func rest():
 	get_model().look(0)
@@ -283,7 +310,10 @@ func can_jump():
 	return has_floor_collision() or game_state.is_underwater(get_name_hint())
 
 func do_process(delta):
-	if is_cutscene() or is_dead():
+	if not is_activated():
+		.do_process(delta)
+		return
+	if is_cutscene() or is_dying() or is_dead():
 		has_floor_collision = true
 		return
 	if is_low_ceiling() and not is_crouching and has_floor_collision():
@@ -312,9 +342,6 @@ func do_process(delta):
 		$SoundWalking.stop()
 		get_model().look(get_rotation_angle_to_target_deg())
 	.do_process(delta)
-
-func _on_character_dead(player):
-	pass
 
 func _on_HealTimer_timeout():
 	if is_player():

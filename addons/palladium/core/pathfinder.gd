@@ -1,6 +1,8 @@
 extends KinematicBody
 class_name PLDPathfinder
 
+signal activated_changed(player_node, previous_state, new_state)
+signal rest_state_changed(player_node, previous_state, new_state)
 signal arrived_to(player_node, target_node)
 signal arrived_to_boundary(player_node, target_node)
 
@@ -20,6 +22,7 @@ export var name_hint = DB.PLAYER_NAME_HINT
 
 onready var pyramid = get_parent()
 
+var activated = false
 var rest_state = true
 var pathfinding_enabled = true
 var target_node = null
@@ -54,8 +57,31 @@ func is_in_party():
 func is_player():
 	return game_state.get_player().get_instance_id() == self.get_instance_id()
 
+func is_activated():
+	return activated
+
 func is_rest_state():
 	return rest_state
+
+func activate():
+	var activated_prev = activated
+	var rest_state_prev = rest_state
+	activated = true
+	rest_state = false
+	if activated_prev != activated:
+		emit_signal("activated_changed", self, activated_prev, activated)
+	if rest_state_prev != rest_state:
+		emit_signal("rest_state_changed", self, rest_state_prev, rest_state)
+
+func deactivate():
+	var activated_prev = activated
+	var rest_state_prev = rest_state
+	activated = false
+	rest_state = true
+	if activated_prev != activated:
+		emit_signal("activated_changed", self, activated_prev, activated)
+	if rest_state_prev != rest_state:
+		emit_signal("rest_state_changed", self, rest_state_prev, rest_state)
 
 func has_collisions():
 	var sc = get_slide_count()
@@ -150,51 +176,51 @@ func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next
 		}
 
 func follow(in_party, current_transform, next_position):
-	var rest_state = is_rest_state()
-	var was_moving = not rest_state
+	var rest_state_next = is_rest_state()
+	var was_moving = not rest_state_next
 	var p = get_follow_parameters(in_party, game_state.get_player().get_global_transform().origin, current_transform, next_position)
 	
 	var next_dir = Vector3()
 	if not path.empty():
-		rest_state = false
+		rest_state_next = false
 		if p.distance <= ALIGNMENT_RANGE:
 			path.pop_front()
 		else:
 			next_dir = p.dir
 	elif in_party and p.distance > FOLLOW_RANGE:
-		rest_state = false
+		rest_state_next = false
 		next_dir = p.dir
 	elif (in_party and p.distance > CLOSEUP_RANGE and not is_rest_state()) \
 		or (not in_party and p.distance > ALIGNMENT_RANGE):
 		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
 			var collision = get_slide_collision(0)
 			if collision.collider_id == target_node.get_instance_id():
-				rest_state = true
+				rest_state_next = true
 				return {
 					"dir" : next_dir,
-					"rest_state" : rest_state,
+					"rest_state" : rest_state_next,
 					"rotation_angle" : p.rotation_angle,
 					"rotation_angle_to_target_deg" : p.rotation_angle_to_target_deg,
 					"sgnl" : "arrived_to_boundary"
 				}
-		rest_state = false
+		rest_state_next = false
 		next_dir = p.dir
 	else:
 		if in_party:
-			rest_state = true
+			rest_state_next = true
 		else:
 			if was_moving and target_node and angle_rad_y == 0 and p.distance <= ALIGNMENT_RANGE:
-				rest_state = true
+				rest_state_next = true
 				return {
 					"dir" : next_dir,
-					"rest_state" : rest_state,
+					"rest_state" : rest_state_next,
 					"rotation_angle" : p.rotation_angle,
 					"rotation_angle_to_target_deg" : p.rotation_angle_to_target_deg,
 					"sgnl" : "arrived_to"
 				}
 	return {
 		"dir" : next_dir,
-		"rest_state" : rest_state,
+		"rest_state" : rest_state_next,
 		"rotation_angle" : p.rotation_angle,
 		"rotation_angle_to_target_deg" : p.rotation_angle_to_target_deg,
 		"sgnl" : null
@@ -249,21 +275,28 @@ func clear_path():
 		pyramid.get_node("path_holder").remove_child(ch)
 	path.clear()
 
-func get_distance_to_target():
-	var target_position = get_target_position()
-	if target_position:
+func get_distance_to(pos):
+	if pos:
 		var current_position = get_global_transform().origin
-		var mov_vec = target_position - current_position
+		var mov_vec = pos - current_position
 		mov_vec.y = 0
 		return mov_vec.length()
 	else:
 		return 0.0
+
+func get_distance_to_target():
+	return get_distance_to(get_target_position())
+
+func get_distance_to_player():
+	return get_distance_to(game_state.get_player().get_global_transform().origin)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
 func do_process(delta):
 	dir = Vector3()
+	if not is_activated():
+		return
 	var in_party = is_in_party()
 	var is_player = is_player()
 	var target_position = get_target_position()
@@ -286,6 +319,11 @@ func do_process(delta):
 			elif data.rotation_angle < -ROTATION_ANGLE_MIN_RAD:
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
 		rotation_angle_to_target_deg = data.rotation_angle_to_target_deg
-		rest_state = data.rest_state
+		if rest_state != data.rest_state:
+			emit_signal("rest_state_changed", self, rest_state, data.rest_state)
+			rest_state = data.rest_state
 		if data.sgnl:
 			emit_signal(data.sgnl, self, target_node)
+
+func _on_character_dead(player):
+	deactivate()

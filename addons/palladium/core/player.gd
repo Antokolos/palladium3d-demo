@@ -23,13 +23,13 @@ func _ready():
 		camera.rebuild_exceptions(self)
 		game_state.set_player_name_hint(get_name_hint())
 	get_model().set_simple_mode(initial_player)
+	activate()
 
 func reset_rotation():
 	.reset_rotation()
 	angle_rad_x = 0
 	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
 	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
-
 
 ### Getting character's parts ###
 
@@ -210,6 +210,8 @@ func _input(event):
 
 func _physics_process(delta):
 	.do_process(delta)
+	if not is_activated():
+		return
 	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
 		$SoundFallingToFloor.play()

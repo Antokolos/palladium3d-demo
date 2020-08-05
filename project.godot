@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/pathfinder.gd"
 }, {
+"base": "Area",
+"class": "PLDPatrolArea",
+"language": "GDScript",
+"path": "res://addons/palladium/core/ai/patrol_area.gd"
+}, {
 "base": "PLDUseTarget",
 "class": "PLDPedestal",
 "language": "GDScript",
@@ -218,6 +223,7 @@ _global_script_class_icons={
 "PLDLipsyncManager": "",
 "PLDMenuItem": "",
 "PLDPathfinder": "",
+"PLDPatrolArea": "",
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
