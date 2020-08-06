@@ -59,4 +59,7 @@ func do_patrol():
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():
+		if not agent:
+			push_warning("Error calling _on_patrol_area_body_entered() for patrol area: agent path is incorrect")
+			return
 		agent.activate()

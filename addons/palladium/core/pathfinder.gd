@@ -19,8 +19,9 @@ const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 
 export var name_hint = DB.PLAYER_NAME_HINT
+export(NodePath) var navigation_path = NodePath("..")
 
-onready var pyramid = get_parent()
+onready var navigation_node = get_node(navigation_path) if navigation_path and has_node(navigation_path) else null
 
 var activated = false
 var rest_state = true
@@ -234,9 +235,9 @@ func update_navpath(pstart, pend):
 func get_navpath(pstart, pend):
 	if not pathfinding_enabled:
 		return []
-	var p1 = pyramid.get_closest_point(pstart)
-	var p2 = pyramid.get_closest_point(pend)
-	var p = pyramid.get_simple_path(p1, p2, true)
+	var p1 = navigation_node.get_closest_point(pstart)
+	var p2 = navigation_node.get_closest_point(pend)
+	var p = navigation_node.get_simple_path(p1, p2, true)
 	return Array(p) # Vector3array too complex to use, convert to regular array
 
 func build_path(target_position, in_party):
@@ -259,20 +260,20 @@ func build_path(target_position, in_party):
 		update_navpath(current_position, target_position)
 
 func draw_path():
-	for ch in pyramid.get_node("path_holder").get_children():
-		pyramid.get_node("path_holder").remove_child(ch)
+	for ch in navigation_node.get_node("path_holder").get_children():
+		navigation_node.get_node("path_holder").remove_child(ch)
 	var k = 1.0
 	for p in path:
 		var m = MeshInstance.new()
 		m.mesh = SphereMesh.new()
 		m.mesh.radius = 0.1 * k
 		k = k + 0.1
-		pyramid.get_node("path_holder").add_child(m)
+		navigation_node.get_node("path_holder").add_child(m)
 		m.global_translate(p)
 
 func clear_path():
-	for ch in pyramid.get_node("path_holder").get_children():
-		pyramid.get_node("path_holder").remove_child(ch)
+	for ch in navigation_node.get_node("path_holder").get_children():
+		navigation_node.get_node("path_holder").remove_child(ch)
 	path.clear()
 
 func get_distance_to(pos):
