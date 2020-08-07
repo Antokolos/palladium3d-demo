@@ -6,6 +6,7 @@ export(NodePath) var agent_path = null
 onready var agent : PLDCharacter = get_node(agent_path) if agent_path and has_node(agent_path) else null
 
 var waypoints = []
+var waypoint_idx = 0
 
 func _ready():
 	if agent:
@@ -25,37 +26,44 @@ func _on_patrolling_changed(player_node, previous_state, new_state):
 func _on_arrived_to(player_node, target_node):
 	if waypoints.empty():
 		return
-	var arrival_target_found = false
-	for wp in waypoints:
-		if arrival_target_found:
-			agent.set_target_node(wp)
-			return
-		if wp.get_instance_id() == target_node.get_instance_id():
-			arrival_target_found = true
 	var wp_size = waypoints.size()
-	if wp_size > 1:
+	if waypoint_idx < wp_size - 1:
+		waypoint_idx = waypoint_idx + 1
+	elif wp_size > 1:
 		waypoints.invert()
-		agent.set_target_node(waypoints[1])
+		waypoint_idx = 1
+	else:
+		return
+	agent.set_target_node(waypoints[waypoint_idx])
 
-func get_closest_waypoint():
+func get_closest_waypoint(node_to):
+	if not node_to:
+		push_warning("Error calling get_closest_waypoint() for patrol area: no node specified")
+		return { "waypoint" : null, "waypoint_idx" : -1 }
 	if waypoints.empty():
-		return null
+		push_warning("Error calling get_closest_waypoint() for patrol area: no waypoints specified")
+		return { "waypoint" : null, "waypoint_idx" : -1 }
 	var result = waypoints[0]
-	var origin = get_global_transform().origin
+	var result_idx = 0
+	var origin = node_to.get_global_transform().origin
 	var min_distance = origin.distance_squared_to(result.get_global_transform().origin)
+	var idx = 0
 	for wp in waypoints:
 		if origin.distance_squared_to(wp.get_global_transform().origin) < min_distance:
 			result = wp
-	return result
+			result_idx = idx
+		idx = idx + 1
+	return { "waypoint" : result, "waypoint_idx" : result_idx }
 
 func do_patrol():
 	if not agent:
 		push_warning("Error calling do_patrol() for patrol area: agent path is incorrect")
 		return
-	if waypoints.empty():
-		push_warning("Error calling do_patrol() for patrol area: no waypoints specified")
+	var wp_data = get_closest_waypoint(agent)
+	if not wp_data.waypoint:
 		return
-	agent.set_target_node(get_closest_waypoint())
+	waypoint_idx = wp_data.waypoint_idx
+	agent.set_target_node(wp_data.waypoint)
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():
