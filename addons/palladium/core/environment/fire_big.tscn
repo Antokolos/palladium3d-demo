@@ -58,6 +58,7 @@ flag_rotate_y = true
 spread = 0.0
 gravity = Vector3( 0, 0, 1 )
 initial_velocity = 1.0
+angular_velocity = -7.13813e-018
 linear_accel = 1.0
 damping = 2.0
 damping_random = 1.0
@@ -72,6 +73,7 @@ material = ExtResource( 3 )
 size = Vector2( 0.3, 0.3 )
 
 [node name="fire_big" type="Spatial" groups=[
+"fire_big",
 "fire_sources",
 ]]
 script = ExtResource( 1 )

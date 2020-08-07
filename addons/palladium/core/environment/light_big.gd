@@ -1,4 +1,4 @@
-extends Light
+extends OmniLight
 
 var shadow = true
 var flicker = true
@@ -19,10 +19,12 @@ func enable_shadow_if_needed(enable):
 	set_shadow(shadow and enable)
 
 func decrease_light():
+	omni_range = 5.7
 	max_light = 0.5
 	light_energy = max_light
 
 func restore_light():
+	omni_range = 8.0
 	max_light = 1.0
 	light_energy = max_light
 
