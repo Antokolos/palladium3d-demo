@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/core/environment/room_enabler.tscn" type="PackedScene" id=2]
@@ -63,24 +63,23 @@
 [ext_resource path="res://scenes/floor_demo_2.tscn" type="PackedScene" id=61]
 [ext_resource path="res://scenes/floor_demo_floor_2.tscn" type="PackedScene" id=62]
 [ext_resource path="res://scenes/floor_demo_ceiling_slabs.tscn" type="PackedScene" id=63]
-[ext_resource path="res://scenes/vabtablack_demo.tscn" type="PackedScene" id=64]
-[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=65]
-[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=66]
-[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=67]
-[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=68]
-[ext_resource path="res://scenes/tablet_Ares.tscn" type="PackedScene" id=69]
-[ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=70]
-[ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=71]
-[ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=72]
-[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=73]
-[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=74]
-[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=75]
-[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=76]
-[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=77]
-[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=78]
-[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=79]
-[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=80]
-[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=81]
+[ext_resource path="res://scenes/postament_1.tscn" type="PackedScene" id=64]
+[ext_resource path="res://scenes/postament_4.tscn" type="PackedScene" id=65]
+[ext_resource path="res://scenes/door_debris.tscn" type="PackedScene" id=66]
+[ext_resource path="res://scenes/demo_ceiling.tscn" type="PackedScene" id=67]
+[ext_resource path="res://scenes/tablet_Ares.tscn" type="PackedScene" id=68]
+[ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=69]
+[ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=70]
+[ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=71]
+[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=72]
+[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=73]
+[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=74]
+[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=75]
+[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=76]
+[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=77]
+[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=78]
+[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=79]
+[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=80]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -614,9 +613,7 @@ transform = Transform( -0.00284395, -0.887131, 0.461509, 0, -0.461511, -0.887134
 
 [node name="floor_demo_ceiling_slabs" parent="." instance=ExtResource( 63 )]
 
-[node name="vabtablack_demo" parent="." instance=ExtResource( 64 )]
-
-[node name="postament_1" parent="." instance=ExtResource( 65 )]
+[node name="postament_1" parent="." instance=ExtResource( 64 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21168, 1.21748, 20.6024 )
 pedestal_id = 70
@@ -627,7 +624,7 @@ pedestal_id = 70
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3865, 0 )
 visible = false
 
-[node name="postament_4" parent="." instance=ExtResource( 66 )]
+[node name="postament_4" parent="." instance=ExtResource( 65 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5163, 1.19309, 20.7609 )
 pedestal_id = 80
@@ -638,7 +635,7 @@ pedestal_id = 80
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39803, 0 )
 visible = false
 
-[node name="postament_1_1" parent="." instance=ExtResource( 65 )]
+[node name="postament_1_1" parent="." instance=ExtResource( 64 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 pedestal_id = 40
@@ -647,21 +644,21 @@ pedestal_id = 40
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
 
-[node name="door_debris" parent="." instance=ExtResource( 67 )]
+[node name="door_debris" parent="." instance=ExtResource( 66 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19466, 1.72087, 32.9329 )
 
-[node name="demo_ceiling" parent="." instance=ExtResource( 68 )]
+[node name="demo_ceiling" parent="." instance=ExtResource( 67 )]
 
-[node name="tablet_Ares" parent="." instance=ExtResource( 69 )]
+[node name="tablet_Ares" parent="." instance=ExtResource( 68 )]
 transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.60744, 7.28487, 26.5618 )
 
-[node name="tablet_Hermes" parent="." instance=ExtResource( 70 )]
+[node name="tablet_Hermes" parent="." instance=ExtResource( 69 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02011, 7.30213, 26.2661 )
 
-[node name="text_5" parent="." instance=ExtResource( 71 )]
+[node name="text_5" parent="." instance=ExtResource( 70 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72163, 4.78111, 33.6938 )
 
-[node name="text_6" parent="." instance=ExtResource( 72 )]
+[node name="text_6" parent="." instance=ExtResource( 71 )]
 transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999993, 14.7988, 4.78241, 40.3261 )
 
 [node name="vase_52" parent="." instance=ExtResource( 14 )]
@@ -713,7 +710,7 @@ shape = SubResource( 4 )
 
 [node name="SoundIgnitionClick" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.342, 47.969 )
-stream = ExtResource( 73 )
+stream = ExtResource( 72 )
 bus = "Sound"
 
 [node name="IgnitionArea" type="Area" parent="."]
@@ -819,13 +816,13 @@ transform = Transform( 0.486343, 0, 0.873768, 0, 1, 0, -0.873768, 0, 0.486343, 2
 
 [node name="EridaButtonCorrect" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 74 )
+stream = ExtResource( 73 )
 
 [node name="EridaButtonWrong" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 75 )
+stream = ExtResource( 74 )
 
-[node name="destructible_web" parent="." instance=ExtResource( 76 )]
+[node name="destructible_web" parent="." instance=ExtResource( 75 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7175, 4.50903, 37.4462 )
 
 [node name="ApataTakeTimer" type="Timer" parent="."]
@@ -840,19 +837,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
 [node name="vase_11" parent="." instance=ExtResource( 16 )]
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 4.03199, 1.19035, 29.9398 )
 
-[node name="last_trap_floor" parent="." instance=ExtResource( 77 )]
+[node name="last_trap_floor" parent="." instance=ExtResource( 76 )]
 
-[node name="last_trap_postament" parent="." instance=ExtResource( 78 )]
+[node name="last_trap_postament" parent="." instance=ExtResource( 77 )]
 visible = false
 
-[node name="last_trap_spikes" parent="." instance=ExtResource( 79 )]
+[node name="last_trap_spikes" parent="." instance=ExtResource( 78 )]
 visible = false
 
-[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 80 )]
+[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 79 )]
 transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 4.91086, 4.24137, 30.6924 )
 visible = false
 
-[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 81 )]
+[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 80 )]
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
