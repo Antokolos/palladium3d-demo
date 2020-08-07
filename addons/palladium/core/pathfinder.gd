@@ -295,7 +295,9 @@ func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
 func do_process(delta):
-	dir = Vector3()
+	dir.x = 0
+	dir.y = 0
+	dir.z = 0
 	if not is_activated():
 		return
 	var in_party = is_in_party()

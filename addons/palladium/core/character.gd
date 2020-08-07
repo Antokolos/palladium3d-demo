@@ -25,7 +25,7 @@ const PUSH_BACK_STRENGTH = 30
 const NONCHAR_PUSH_STRENGTH = 2
 const NONCHAR_COLLISION_RANGE_MAX = 5.9
 
-const MAX_SLOPE_ANGLE = 60
+const MAX_SLOPE_ANGLE_RAD = deg2rad(60)
 const AXIS_VALUE_THRESHOLD = 0.15
 
 const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
@@ -37,6 +37,7 @@ export var model_path = ""
 onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
 onready var standing_area = $StandingArea
+onready var sound_player_walking = $SoundWalking
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
 	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
@@ -190,10 +191,9 @@ func set_sprinting(enable):
 			companion.set_sprinting(enable)
 
 func set_sound_walk(mode):
-	var spl = $SoundWalking
-	spl.stop()
-	spl.stream = sound[mode] if sound.has(mode) else null
-	spl.set_unit_db(0)
+	sound_player_walking.stop()
+	sound_player_walking.stream = sound[mode] if sound.has(mode) else null
+	sound_player_walking.set_unit_db(0)
 
 ### Player/target following ###
 
@@ -209,7 +209,7 @@ func process_rotation(need_to_update_collisions):
 	if angle_rad_y == 0 or is_dying():
 		return false
 	if need_to_update_collisions:
-		move_and_slide(-UP_DIR, UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+		move_and_slide(-UP_DIR, UP_DIR, true, 4, MAX_SLOPE_ANGLE_RAD, is_in_party())
 	self.rotate_y(angle_rad_y)
 	return true
 
@@ -247,7 +247,15 @@ func process_movement(delta):
 	if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
 		return { "is_walking" : false, "collides_floor" : true }
 	
-	vel = move_and_slide_with_snap(vel, get_snap(), UP_DIR, true, 4, deg2rad(MAX_SLOPE_ANGLE), is_in_party())
+	vel = move_and_slide_with_snap(
+		vel,
+		get_snap(),
+		UP_DIR,
+		true,
+		4,
+		MAX_SLOPE_ANGLE_RAD,
+		is_in_party()
+	)
 	var is_walking = vel.length() > MIN_MOVEMENT
 	
 	var sc = get_slide_count()
@@ -334,12 +342,12 @@ func do_process(delta):
 	var is_moving = movement_data.is_walking
 	var is_rotating = process_rotation(not is_moving)
 	if is_moving or is_rotating:
-		if not $SoundWalking.is_playing():
-			$SoundWalking.play()
-		$SoundWalking.pitch_scale = 2 if is_sprinting else 1
+		if not sound_player_walking.is_playing():
+			sound_player_walking.play()
+		sound_player_walking.pitch_scale = 2 if is_sprinting else 1
 		get_model().walk(get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
 	else:
-		$SoundWalking.stop()
+		sound_player_walking.stop()
 		get_model().look(get_rotation_angle_to_target_deg())
 	.do_process(delta)
 
