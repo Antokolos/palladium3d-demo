@@ -4,8 +4,9 @@ class_name PLDEnemy
 signal attack_started(enemy, target)
 
 const MAX_HITS = 3
-const AGGRESSION_RANGE = 9.5
 const TOO_FAR_RANGE = 10
+const AGGRESSION_RANGE = 11
+const STOP_CHASING_RANGE = 12
 
 onready var melee_damage_area = $MeleeDamageArea
 onready var attack_timer = $AttackTimer
@@ -32,15 +33,13 @@ func hit(hit_direction_node):
 	elif hits > MAX_HITS:
 		take_damage(true, hit_direction_node)
 	else:
-#		if fmod(hits, 2) == 0.0:
-#			is_sprinting = true
 		take_damage(false, hit_direction_node)
 		hits = hits + 1
 
 func activate():
 	.activate()
 	hits = 0
-	is_sprinting = false
+	set_sprinting(false)
 	$CutsceneTimer.start()
 
 func get_nearest_party_member():
@@ -67,12 +66,6 @@ func get_preferred_target():
 func is_enemy():
 	return true
 
-func can_be_attacked():
-	return false
-
-func can_run():
-	return true
-
 func get_possible_attack_target():
 	if not is_activated():
 		return null
@@ -87,7 +80,7 @@ func attack_start(possible_attack_target):
 	if not is_activated():
 		return
 	if attack_timer.is_stopped():
-		is_sprinting = false
+		set_sprinting(false)
 		emit_signal("attack_started", self, possible_attack_target)
 		get_model().attack()
 		attack_timer.start()
@@ -105,15 +98,22 @@ func take_damage(fatal, hit_direction_node):
 		melee_damage_area.get_node("CollisionShape").disabled = true
 
 func _physics_process(delta):
-	.do_process(delta)
+	.do_process(delta, false, false)
 	if not is_activated():
 		return
 	var dtp = get_distance_to_player()
-	var aggressive = dtp < AGGRESSION_RANGE
-	is_sprinting = aggressive
-	set_aggressive(aggressive)
+	if is_aggressive() and dtp > TOO_FAR_RANGE:
+		set_sprinting(true)
+	if dtp < AGGRESSION_RANGE:
+		if not is_aggressive():
+			# Run at the player when aggression was just triggered
+			set_sprinting(true)
+		set_aggressive(true)
+	elif dtp > STOP_CHASING_RANGE:
+		set_aggressive(false)
 	if not is_aggressive():
 		if not is_patrolling():
+			set_sprinting(false)
 			set_patrolling(true)
 		return
 	var possible_attack_target = get_possible_attack_target()
@@ -122,10 +122,6 @@ func _physics_process(delta):
 	elif not attack_timer.is_stopped():
 		attack_timer.stop()
 		stop_cutscene()
-	if not can_run():
-		return
-	if not is_sprinting and get_distance_to_target() > TOO_FAR_RANGE:
-		is_sprinting = true
 
 func _on_AttackTimer_timeout():
 	if not is_activated():

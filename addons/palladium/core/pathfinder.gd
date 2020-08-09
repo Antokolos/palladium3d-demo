@@ -294,14 +294,12 @@ func get_distance_to_player():
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
-func do_process(delta):
+func do_process(delta, in_party, is_player):
 	dir.x = 0
 	dir.y = 0
 	dir.z = 0
 	if not is_activated():
 		return
-	var in_party = is_in_party()
-	var is_player = is_player()
 	var target_position = get_target_position()
 	if target_position:
 		var current_transform = get_global_transform()

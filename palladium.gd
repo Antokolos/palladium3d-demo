@@ -9,6 +9,8 @@ func do_init(is_loaded):
 	player_bandit.set_sound_walk(player.SoundId.SOUND_WALK_CONCRETE)
 	if has_node("greek_skeleton"):
 		get_node("greek_skeleton").set_sound_walk(player.SoundId.SOUND_WALK_CONCRETE)
+	if has_node("minotaur"):
+		get_node("minotaur").set_sound_walk(player.SoundId.SOUND_WALK_MINOTAUR)
 	if not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", false, false)
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")

@@ -1,6 +1,7 @@
 extends PLDPathfinder
 class_name PLDCharacter
 
+signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
 
@@ -30,19 +31,21 @@ const AXIS_VALUE_THRESHOLD = 0.15
 
 const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
 
-enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE}
+enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE, SOUND_WALK_MINOTAUR}
 
 export var model_path = ""
 
 onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
 onready var standing_area = $StandingArea
+onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
 	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
 	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
-	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg")
+	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg"),
+	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg")
 }
 
 var vel = Vector3()
@@ -84,6 +87,9 @@ func activate():
 	.activate()
 	get_model().activate()
 
+func is_visible_to_player():
+	return visibility_notifier.is_on_screen()
+
 func is_patrolling():
 	return is_patrolling
 
@@ -92,6 +98,8 @@ func set_patrolling(enable):
 	is_patrolling = enable
 	if is_patrolling_prev != is_patrolling:
 		emit_signal("patrolling_changed", self, is_patrolling_prev, is_patrolling)
+	if enable:
+		set_aggressive(false)
 
 func is_aggressive():
 	return is_aggressive
@@ -101,6 +109,8 @@ func set_aggressive(enable):
 	is_aggressive = enable
 	if is_aggressive_prev != is_aggressive:
 		emit_signal("aggressive_changed", self, is_aggressive_prev, is_aggressive)
+	if enable:
+		set_patrolling(false)
 
 func rest():
 	get_model().look(0)
@@ -182,7 +192,18 @@ func is_crouching():
 func toggle_crouch():
 	stand_up() if is_crouching else sit_down()
 
+func can_be_attacked():
+	return false
+
+func can_run():
+	return true
+
+func is_sprinting():
+	return is_sprinting
+
 func set_sprinting(enable):
+	if enable and not can_run():
+		return
 	is_sprinting = enable
 	var is_player = is_player()
 	if is_player:
@@ -206,10 +227,10 @@ func reset_rotation():
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
 
 func process_rotation(need_to_update_collisions):
+	if need_to_update_collisions:
+		move_and_collide(ZERO_DIR)
 	if angle_rad_y == 0 or is_dying():
 		return false
-	if need_to_update_collisions:
-		move_and_slide(-UP_DIR, UP_DIR, true, 4, MAX_SLOPE_ANGLE_RAD, is_in_party())
 	self.rotate_y(angle_rad_y)
 	return true
 
@@ -317,12 +338,13 @@ func has_floor_collision():
 func can_jump():
 	return has_floor_collision() or game_state.is_underwater(get_name_hint())
 
-func do_process(delta):
+func do_process(delta, in_party, is_player):
 	if not is_activated():
-		.do_process(delta)
+		.do_process(delta, in_party, is_player)
 		return
 	if is_cutscene() or is_dying() or is_dead():
 		has_floor_collision = true
+		.do_process(delta, in_party, is_player)
 		return
 	if is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
@@ -340,7 +362,7 @@ func do_process(delta):
 	var movement_data = process_movement(delta)
 	has_floor_collision = movement_data.collides_floor
 	var is_moving = movement_data.is_walking
-	var is_rotating = process_rotation(not is_moving)
+	var is_rotating = process_rotation(not is_moving and is_player)
 	if is_moving or is_rotating:
 		if not sound_player_walking.is_playing():
 			sound_player_walking.play()
@@ -349,7 +371,7 @@ func do_process(delta):
 	else:
 		sound_player_walking.stop()
 		get_model().look(get_rotation_angle_to_target_deg())
-	.do_process(delta)
+	.do_process(delta, in_party, is_player)
 
 func _on_HealTimer_timeout():
 	if is_player():
@@ -367,3 +389,9 @@ func _on_PoisonTimer_timeout():
 	if poison_timer.is_stopped():
 		return
 	game_state.set_health(get_name_hint(), game_state.player_health_current - POISON_LETHALITY_RATE, game_state.player_health_max)
+
+func _on_VisibilityNotifier_screen_entered():
+	emit_signal("visibility_to_player_changed", self, false, true)
+
+func _on_VisibilityNotifier_screen_exited():
+	emit_signal("visibility_to_player_changed", self, true, false)

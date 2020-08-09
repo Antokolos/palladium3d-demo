@@ -143,7 +143,12 @@ one_shot = true
 [node name="OxygenTimer" type="Timer" parent="."]
 
 [node name="PoisonTimer" type="Timer" parent="."]
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
 [connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
 [connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]
