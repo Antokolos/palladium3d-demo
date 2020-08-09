@@ -55,6 +55,8 @@ func switch_highlight(player_node, body):
 		return common_utils.get_action_key("action") + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 
 func highlight(player_node):
+	if player_node.is_hidden():
+		return "E: " + tr("ACTION_UNHIDE")
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
 	if ray.is_colliding():
 		var body = ray.get_collider()

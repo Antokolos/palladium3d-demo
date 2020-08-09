@@ -14,7 +14,16 @@ var hits = 0
 var injury_rate = 20
 
 func _ready():
-	pass
+	get_tree().call_group("hideouts", "connect_signals", self)
+
+func use_usable(player_node, usable):
+	if not usable is PLDHideout:
+		return
+	set_sprinting(false)
+	set_aggressive(false)
+	if not attack_timer.is_stopped():
+		attack_timer.stop()
+		stop_cutscene()
 
 ### Use target ###
 
@@ -97,11 +106,12 @@ func take_damage(fatal, hit_direction_node):
 		$StandingArea/CollisionShape.disabled = true
 		melee_damage_area.get_node("CollisionShape").disabled = true
 
-func _physics_process(delta):
-	.do_process(delta, false, false)
-	if not is_activated():
+func set_states(player):
+	if player.is_hidden():
+		set_sprinting(false)
+		set_aggressive(false)
 		return
-	var dtp = get_distance_to_player()
+	var dtp = get_distance_to_character(player)
 	if is_aggressive() and dtp > TOO_FAR_RANGE:
 		set_sprinting(true)
 	if dtp < AGGRESSION_RANGE:
@@ -111,6 +121,12 @@ func _physics_process(delta):
 		set_aggressive(true)
 	elif dtp > STOP_CHASING_RANGE:
 		set_aggressive(false)
+
+func _physics_process(delta):
+	.do_process(delta, false, false)
+	if not is_activated():
+		return
+	set_states(game_state.get_player())
 	if not is_aggressive():
 		if not is_patrolling():
 			set_sprinting(false)

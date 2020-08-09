@@ -20,15 +20,18 @@ func _ready():
 			waypoints.append(ch)
 
 func _on_visibility_to_player_changed(player_node, previous_state, new_state):
+	change_mode(not new_state)
+
+func change_mode(with_patrol_timer):
 	var patrolling = agent.is_patrolling()
-	if new_state:
-		if not patrol_timer.is_stopped():
-			patrol_timer.stop()
-		agent.set_target_node(waypoints[waypoint_idx] if patrolling else null)
-	else:
+	if with_patrol_timer:
 		agent.set_target_node(null)
 		if patrolling:
 			patrol_timer.start()
+	else:
+		if not patrol_timer.is_stopped():
+			patrol_timer.stop()
+		agent.set_target_node(waypoints[waypoint_idx] if patrolling else null)
 
 func _on_patrolling_changed(player_node, previous_state, new_state):
 	if new_state:

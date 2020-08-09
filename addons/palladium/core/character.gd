@@ -51,6 +51,7 @@ onready var sound = {
 var vel = Vector3()
 var gravity = GRAVITY_DEFAULT
 
+var is_hidden = false
 var is_patrolling = false
 var is_aggressive = false
 var is_crouching = false
@@ -89,6 +90,22 @@ func activate():
 
 func is_visible_to_player():
 	return visibility_notifier.is_on_screen()
+
+func is_hidden():
+	return is_hidden
+
+func set_hidden(enable):
+	is_hidden = enable
+	visible = not enable
+	if has_node("UpperBody_CollisionShape"):
+		$UpperBody_CollisionShape.disabled = enable
+	$Body_CollisionShape.disabled = enable
+	$StandingArea/CollisionShape.disabled = enable
+	var is_player = is_player()
+	if is_player:
+		var companions = game_state.get_companions()
+		for companion in companions:
+			companion.set_hidden(enable)
 
 func is_patrolling():
 	return is_patrolling

@@ -26,6 +26,11 @@ func _ready():
 	get_model().set_simple_mode(initial_player)
 	activate()
 
+func reset_movement():
+	.reset_movement()
+	input_movement_vector.x = 0
+	input_movement_vector.y = 0
+
 func reset_rotation():
 	.reset_rotation()
 	angle_rad_x = 0

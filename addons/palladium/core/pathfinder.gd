@@ -288,8 +288,8 @@ func get_distance_to(pos):
 func get_distance_to_target():
 	return get_distance_to(get_target_position())
 
-func get_distance_to_player():
-	return get_distance_to(game_state.get_player().get_global_transform().origin)
+func get_distance_to_character(character):
+	return get_distance_to(character.get_global_transform().origin)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)

@@ -5,8 +5,8 @@ signal use_pedestal(player_node, pedestal, item_id)
 
 export(DB.PedestalIds) var pedestal_id = DB.PedestalIds.NONE
 
-func connect_signals(level):
-	connect("use_pedestal", level, "use_pedestal")
+func connect_signals(target):
+	connect("use_pedestal", target, "use_pedestal")
 
 func use_action(player_node, item):
 	make_present(item)

@@ -5,8 +5,8 @@ signal use_usable(player_node, usable)
 
 export(DB.UsableIds) var usable_id = DB.UsableIds.NONE
 
-func connect_signals(level):
-	connect("use_usable", level, "use_usable")
+func connect_signals(target):
+	connect("use_usable", target, "use_usable")
 
 func use(player_node, camera_node):
 	emit_signal("use_usable", player_node, self)

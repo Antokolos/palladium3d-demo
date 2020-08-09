@@ -14,8 +14,8 @@ func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")
 	game_state.connect("item_removed", self, "_on_item_removed")
 
-func connect_signals(level):
-	connect("use_takable", level, "use_takable")
+func connect_signals(target):
+	connect("use_takable", target, "use_takable")
 
 func use(player_node, camera_node):
 #	if takable_id == DB.TakableIds.APATA and player_node.is_player() and game_state.story_vars.apata_trap_stage == game_state.ApataTrapStages.ARMED:

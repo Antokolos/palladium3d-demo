@@ -131,6 +131,9 @@ func _process(delta):
 func _input(event):
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 		return
+	var player = game_state.get_player()
+	if not player or player.is_hidden():
+		return
 	if event.is_action_pressed("item_preview_toggle"):
 		var hud = game_state.get_hud()
 		if hud and not item_preview.is_opened():
@@ -139,6 +142,5 @@ func _input(event):
 				game_state.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 				item_preview.open_preview(item, hud, flashlight)
 	elif event.is_action_pressed("action"):
-		var player = game_state.get_player()
-		if player:
-			use_point.action(player, self)
+		use_point.action(player, self)
+		get_tree().set_input_as_handled()
