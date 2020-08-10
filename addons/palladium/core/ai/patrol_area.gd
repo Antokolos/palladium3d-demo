@@ -4,41 +4,24 @@ class_name PLDPatrolArea
 export(NodePath) var agent_path = null
 
 onready var agent : PLDCharacter = get_node(agent_path) if agent_path and has_node(agent_path) else null
-onready var patrol_timer = $PatrolTimer
 
 var waypoints = []
 var waypoint_idx = 0
 
 func _ready():
 	if agent:
-		agent.connect("visibility_to_player_changed", self, "_on_visibility_to_player_changed")
 		agent.connect("patrolling_changed", self, "_on_patrolling_changed")
 		agent.connect("arrived_to", self, "_on_arrived_to")
 	connect("body_entered", self, "_on_patrol_area_body_entered")
+	#connect("body_exited", self, "_on_patrol_area_body_exited")
 	for ch in get_children():
 		if ch is Position3D:
 			waypoints.append(ch)
-
-func _on_visibility_to_player_changed(player_node, previous_state, new_state):
-	change_mode(not new_state)
-
-func change_mode(with_patrol_timer):
-	var patrolling = agent.is_patrolling()
-	if with_patrol_timer:
-		agent.set_target_node(null)
-		if patrolling:
-			patrol_timer.start()
-	else:
-		if not patrol_timer.is_stopped():
-			patrol_timer.stop()
-		agent.set_target_node(waypoints[waypoint_idx] if patrolling else null)
 
 func _on_patrolling_changed(player_node, previous_state, new_state):
 	if new_state:
 		do_patrol()
 	else:
-		if not patrol_timer.is_stopped():
-			patrol_timer.stop()
 		agent.set_target_node(null)
 
 func _on_arrived_to(player_node, target_node):
@@ -85,11 +68,7 @@ func do_patrol():
 	if not wp_data.waypoint:
 		return
 	waypoint_idx = wp_data.waypoint_idx
-	if agent.is_visible_to_player():
-		agent.set_target_node(wp_data.waypoint)
-	else:
-		agent.set_target_node(null)
-		patrol_timer.start()
+	agent.set_target_node(wp_data.waypoint)
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():
@@ -98,6 +77,10 @@ func _on_patrol_area_body_entered(body):
 			return
 		agent.activate()
 
-func _on_PatrolTimer_timeout():
-	agent.teleport(waypoints[waypoint_idx])
-	get_next_target()
+#func _on_patrol_area_body_exited(body):
+#	if not agent:
+#		push_warning("Error calling _on_patrol_area_body_exited() for patrol area: agent path is incorrect")
+#		return
+#	if body.is_in_group("party") and body.is_player() and not agent.is_aggressive():
+#		agent.set_target_node(null)
+#		agent.deactivate()

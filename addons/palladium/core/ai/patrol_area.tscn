@@ -4,7 +4,3 @@
 
 [node name="patrol_area" type="Area"]
 script = ExtResource( 1 )
-
-[node name="PatrolTimer" type="Timer" parent="."]
-wait_time = 3.0
-[connection signal="timeout" from="PatrolTimer" to="." method="_on_PatrolTimer_timeout"]

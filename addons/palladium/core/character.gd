@@ -254,6 +254,23 @@ func process_rotation(need_to_update_collisions):
 func get_snap():
 	return UP_DIR
 
+func is_need_to_use_physics():
+	if is_patrolling():
+		return false
+	return vel.y > 0 \
+		or is_player() \
+		or not has_floor_collision() \
+		or is_visible_to_player() \
+		or is_aggressive()
+
+func move_without_physics(vel, delta):
+	var v = Vector3()
+	v.x = vel.x
+	v.y = 0
+	v.z = vel.z
+	global_translate(v * delta)
+	return v
+
 func process_movement(delta):
 	var target = ZERO_DIR if is_movement_disabled() else dir
 	target.y = 0
@@ -285,15 +302,20 @@ func process_movement(delta):
 	if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
 		return { "is_walking" : false, "collides_floor" : true }
 	
-	vel = move_and_slide_with_snap(
-		vel,
-		get_snap(),
-		UP_DIR,
-		true,
-		4,
-		MAX_SLOPE_ANGLE_RAD,
-		is_in_party()
-	)
+	if is_need_to_use_physics():
+		vel = move_and_slide_with_snap(
+			vel,
+			get_snap(),
+			UP_DIR,
+			true,
+			4,
+			MAX_SLOPE_ANGLE_RAD,
+			is_in_party()
+		)
+	else:
+		vel = move_without_physics(vel, delta)
+		return { "is_walking" : true, "collides_floor" : true }
+	
 	var is_walking = vel.length() > MIN_MOVEMENT
 	
 	var sc = get_slide_count()
