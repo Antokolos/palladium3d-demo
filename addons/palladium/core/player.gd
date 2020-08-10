@@ -112,6 +112,7 @@ func process_rotation(need_to_update_collisions):
 	get_model_holder().rotation_degrees = model_rot
 	shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
 	upper_body_shape.rotation_degrees = shape_rot
+	angle_rad_x = 0
 	return true
 
 func get_snap():
@@ -137,9 +138,6 @@ func _input(event):
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
 			angle_rad_y = deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1)
-			process_rotation(true)
-			angle_rad_x = 0
-			angle_rad_y = 0
 		elif event is InputEventJoypadMotion:
 			var v = event.get_axis_value()
 			var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD

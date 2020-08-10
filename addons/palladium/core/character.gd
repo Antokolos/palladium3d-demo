@@ -249,13 +249,14 @@ func process_rotation(need_to_update_collisions):
 	if angle_rad_y == 0 or is_dying():
 		return false
 	self.rotate_y(angle_rad_y)
+	angle_rad_y = 0
 	return true
 
 func get_snap():
 	return UP_DIR
 
 func is_need_to_use_physics():
-	if is_patrolling():
+	if has_path() or is_patrolling():
 		return false
 	return vel.y > 0 \
 		or is_player() \

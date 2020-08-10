@@ -10,6 +10,8 @@ const STOP_CHASING_RANGE = 12
 
 onready var melee_damage_area = $MeleeDamageArea
 onready var attack_timer = $AttackTimer
+
+var party_members_cache = []
 var hits = 0
 var injury_rate = 20
 
@@ -51,8 +53,13 @@ func activate():
 	set_sprinting(false)
 	$CutsceneTimer.start()
 
+func get_party_members():
+	if party_members_cache.empty():
+		party_members_cache = get_tree().get_nodes_in_group("party")
+	return party_members_cache
+
 func get_nearest_party_member():
-	var party = get_tree().get_nodes_in_group("party")
+	var party = get_party_members()
 	var tgt = null
 	var dist_squared_min
 	var origin = get_global_transform().origin
@@ -112,7 +119,7 @@ func set_states(player):
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(player)
-	if is_aggressive() and dtp > TOO_FAR_RANGE:
+	if is_aggressive() and (dtp > TOO_FAR_RANGE or player.is_sprinting()):
 		set_sprinting(true)
 	if dtp < AGGRESSION_RANGE:
 		if not is_aggressive():
@@ -121,12 +128,13 @@ func set_states(player):
 		set_aggressive(true)
 	elif dtp > STOP_CHASING_RANGE:
 		set_aggressive(false)
+		set_sprinting(false)
 
 func _physics_process(delta):
 	.do_process(delta, false, false)
 	if not is_activated():
 		return
-	set_states(game_state.get_player())
+	set_states(get_nearest_party_member())
 	if not is_aggressive():
 		if not is_patrolling():
 			set_sprinting(false)

@@ -240,6 +240,9 @@ func get_navpath(pstart, pend):
 	var p = navigation_node.get_simple_path(p1, p2, true)
 	return Array(p) # Vector3array too complex to use, convert to regular array
 
+func has_path():
+	return not path.empty()
+
 func build_path(target_position, in_party):
 	var current_position = get_global_transform().origin
 	var mov_vec = target_position - current_position
