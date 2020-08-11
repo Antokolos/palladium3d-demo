@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/environment/menu_item.gd"
 }, {
+"base": "Node",
+"class": "PLDMovementData",
+"language": "GDScript",
+"path": "res://addons/palladium/core/movement_data.gd"
+}, {
 "base": "KinematicBody",
 "class": "PLDPathfinder",
 "language": "GDScript",
@@ -228,6 +233,7 @@ _global_script_class_icons={
 "PLDLightSource": "",
 "PLDLipsyncManager": "",
 "PLDMenuItem": "",
+"PLDMovementData": "",
 "PLDPathfinder": "",
 "PLDPatrolArea": "",
 "PLDPedestal": "",

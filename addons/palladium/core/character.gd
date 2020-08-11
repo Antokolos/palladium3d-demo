@@ -259,7 +259,7 @@ func is_need_to_use_physics():
 	if has_path() or is_patrolling():
 		return false
 	return vel.y > 0 \
-		or is_player() \
+		or is_player_controlled() \
 		or not has_floor_collision() \
 		or is_visible_to_player() \
 		or is_aggressive()
@@ -272,7 +272,7 @@ func move_without_physics(vel, delta):
 	global_translate(v * delta)
 	return v
 
-func process_movement(delta):
+func process_movement(delta, dir):
 	var target = ZERO_DIR if is_movement_disabled() else dir
 	target.y = 0
 	target = target.normalized()
@@ -380,11 +380,9 @@ func can_jump():
 
 func do_process(delta, in_party, is_player):
 	if not is_activated():
-		.do_process(delta, in_party, is_player)
 		return
 	if is_cutscene() or is_dying() or is_dead():
 		has_floor_collision = true
-		.do_process(delta, in_party, is_player)
 		return
 	if is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
@@ -399,19 +397,20 @@ func do_process(delta, in_party, is_player):
 		poison_timer.start()
 	elif not is_poisoned and not poison_timer.is_stopped():
 		poison_timer.stop()
-	var movement_data = process_movement(delta)
-	has_floor_collision = movement_data.collides_floor
-	var is_moving = movement_data.is_walking
+	var movement_data = get_movement_data(in_party, is_player)
+	update_state(movement_data, in_party)
+	var movement_process_data = process_movement(delta, movement_data.get_dir())
+	has_floor_collision = movement_process_data.collides_floor
+	var is_moving = movement_process_data.is_walking
 	var is_rotating = process_rotation(not is_moving and is_player)
 	if is_moving or is_rotating:
 		if not sound_player_walking.is_playing():
 			sound_player_walking.play()
 		sound_player_walking.pitch_scale = 2 if is_sprinting else 1
-		get_model().walk(get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
+		get_model().walk(movement_data.get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
 	else:
 		sound_player_walking.stop()
-		get_model().look(get_rotation_angle_to_target_deg())
-	.do_process(delta, in_party, is_player)
+		get_model().look(movement_data.get_rotation_angle_to_target_deg())
 
 func _on_HealTimer_timeout():
 	if is_player():

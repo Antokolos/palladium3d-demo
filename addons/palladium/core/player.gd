@@ -186,15 +186,7 @@ func _input(event):
 				elif event.is_action_released("movement_sprint"):
 					set_sprinting(false)
 
-func _physics_process(delta):
-	var in_party = is_in_party()
-	var is_player = is_player()
-	.do_process(delta, in_party, is_player)
-	if not is_activated():
-		return
-	if has_floor_collision() and is_in_jump:
-		is_in_jump = false
-		$SoundFallingToFloor.play()
+func get_movement_data(in_party, is_player):
 	if is_player \
 		and in_party \
 		and input_movement_vector.length_squared() > 0 \
@@ -205,4 +197,16 @@ func _physics_process(delta):
 			var n = input_movement_vector.normalized()
 			dir_input += -cam_xform.basis.z.normalized() * n.y
 			dir_input += cam_xform.basis.x.normalized() * n.x
-			set_dir(dir_input)
+			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
+	else:
+		return .get_movement_data(in_party, is_player)
+
+func _physics_process(delta):
+	if not is_activated():
+		return
+	var in_party = is_in_party()
+	var is_player = is_player()
+	.do_process(delta, in_party, is_player)
+	if has_floor_collision() and is_in_jump:
+		is_in_jump = false
+		$SoundFallingToFloor.play()
