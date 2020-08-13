@@ -116,7 +116,7 @@ func process_rotation(need_to_update_collisions):
 	return true
 
 func get_snap():
-	return ZERO_DIR if is_in_jump else UP_DIR
+	return Vector3.ZERO if is_in_jump else Vector3.UP
 
 func _input(event):
 	if not is_player():

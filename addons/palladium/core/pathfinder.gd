@@ -136,10 +136,10 @@ func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next
 	var was_moving = not rest_state
 	var current_position = current_transform.origin
 	var cur_dir = current_transform.basis.xform(Z_DIR)
-	cur_dir.y = 0
 	var next_dir = next_position - current_position
+	var data : PLDMovementData = PLDMovementData.new().with_dir(next_dir).with_distance(next_dir.length())
+	cur_dir.y = 0
 	next_dir.y = 0
-	var data : PLDMovementData = PLDMovementData.new().with_dir(next_dir.normalized()).with_distance(next_dir.length())
 	
 	var preferred_target = get_preferred_target()
 	if preferred_target:

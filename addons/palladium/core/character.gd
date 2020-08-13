@@ -7,8 +7,8 @@ signal aggressive_changed(player_node, previous_state, new_state)
 
 const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
-const GRAVITY_DEFAULT = -6.2
-const GRAVITY_UNDERWATER = -0.2
+const GRAVITY_DEFAULT = 6.2
+const GRAVITY_UNDERWATER = 0.2
 const MAX_SPEED = 3
 const MAX_SPRINT_SPEED = 10
 const JUMP_SPEED = 4.5
@@ -19,8 +19,6 @@ const DEACCEL= 16
 const SPRINT_ACCEL = 4.5
 const MIN_MOVEMENT = 0.01
 
-const UP_DIR = Vector3(0, 1, 0)
-const ZERO_DIR = Vector3(0, 0, 0)
 const PUSH_STRENGTH = 10
 const PUSH_BACK_STRENGTH = 30
 const NONCHAR_PUSH_STRENGTH = 2
@@ -245,7 +243,7 @@ func reset_rotation():
 
 func process_rotation(need_to_update_collisions):
 	if need_to_update_collisions:
-		move_and_collide(ZERO_DIR)
+		move_and_collide(Vector3.ZERO)
 	if angle_rad_y == 0 or is_dying():
 		return false
 	self.rotate_y(angle_rad_y)
@@ -253,40 +251,35 @@ func process_rotation(need_to_update_collisions):
 	return true
 
 func get_snap():
-	return UP_DIR
+	return Vector3.UP
 
 func is_need_to_use_physics():
-	if has_path() or is_patrolling():
-		return false
-	return vel.y > 0 \
-		or is_player_controlled() \
-		or not has_floor_collision() \
-		or is_visible_to_player() \
-		or is_aggressive()
+	if is_player_controlled() or (is_in_party() and is_visible_to_player()):
+		return true
+	return false
 
-func move_without_physics(vel, delta):
-	var v = Vector3()
-	v.x = vel.x
-	v.y = 0
-	v.z = vel.z
-	global_translate(v * delta)
-	return v
+func move_without_physics(hvel, delta):
+	if hvel.length() >= MIN_MOVEMENT:
+		global_translate(hvel * delta)
+	return hvel
 
 func process_movement(delta, dir):
-	var target = ZERO_DIR if is_movement_disabled() else dir
-	target.y = 0
+	var is_need_to_use_physics = is_need_to_use_physics()
+	var target = Vector3.ZERO if is_movement_disabled() else dir
+	if is_need_to_use_physics:
+		target.y = 0
 	target = target.normalized()
 
-	vel.y += delta * gravity
-
-	var hvel = vel
-	hvel.y = 0
+	vel.y -= delta * gravity
 
 	if is_sprinting:
 		target *= MAX_SPRINT_SPEED
 	else:
 		target *= MAX_SPEED
 
+	var hvel = vel
+	hvel.y = 0 if is_need_to_use_physics else target.y
+	
 	var accel
 	if dir.dot(hvel) > 0:
 		if is_sprinting:
@@ -300,24 +293,23 @@ func process_movement(delta, dir):
 	vel.x = hvel.x
 	vel.z = hvel.z
 	
-	if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
-		return { "is_walking" : false, "collides_floor" : true }
-	
-	if is_need_to_use_physics():
+	if is_need_to_use_physics:
+		if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
+			return { "is_walking" : false, "collides_floor" : true }
 		vel = move_and_slide_with_snap(
 			vel,
 			get_snap(),
-			UP_DIR,
+			Vector3.UP,
 			true,
 			4,
 			MAX_SLOPE_ANGLE_RAD,
 			is_in_party()
 		)
 	else:
-		vel = move_without_physics(vel, delta)
-		return { "is_walking" : true, "collides_floor" : true }
+		vel = move_without_physics(hvel, delta)
+		return { "is_walking" : vel.length() >= MIN_MOVEMENT, "collides_floor" : true }
 	
-	var is_walking = vel.length() > MIN_MOVEMENT
+	var is_walking = vel.length() >= MIN_MOVEMENT
 	
 	var sc = get_slide_count()
 	var character_collisions = []
@@ -358,13 +350,13 @@ func process_movement(delta, dir):
 func get_out_vec(normal):
 	var n = normal
 	n.y = 0
-	var cross = UP_DIR.cross(n)
+	var cross = Vector3.UP.cross(n)
 	var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
 	return (n + coeff * cross).normalized()
 
 func get_push_vec(direction_node):
 	if not direction_node:
-		return ZERO_DIR
+		return Vector3.ZERO
 	var dir_z = direction_node.get_global_transform().basis.z.normalized()
 	dir_z.y = 0
 	return -dir_z * PUSH_BACK_STRENGTH
@@ -431,6 +423,8 @@ func _on_PoisonTimer_timeout():
 
 func _on_VisibilityNotifier_screen_entered():
 	emit_signal("visibility_to_player_changed", self, false, true)
+	if is_in_party():
+		move_and_collide(GRAVITY_DEFAULT * Vector3.DOWN)
 
 func _on_VisibilityNotifier_screen_exited():
 	emit_signal("visibility_to_player_changed", self, true, false)

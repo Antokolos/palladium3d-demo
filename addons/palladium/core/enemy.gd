@@ -79,9 +79,6 @@ func get_preferred_target():
 		return null
 	return get_nearest_party_member() if is_aggressive() else .get_preferred_target()
 
-func is_enemy():
-	return true
-
 func get_possible_attack_target():
 	if not is_activated():
 		return null

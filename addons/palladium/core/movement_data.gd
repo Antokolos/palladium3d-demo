@@ -4,7 +4,8 @@ class_name PLDMovementData
 var data = {}
 
 func with_dir(dir):
-	data["dir"] = dir
+	var d = Vector3(dir.x, dir.y, dir.z)
+	data["dir"] = d
 	return self
 
 func with_distance(distance):

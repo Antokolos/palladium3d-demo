@@ -10,7 +10,6 @@ const WARN_RANGE = 3
 const RETREAT_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
 
-var zero_dir = Vector3(0, 0, 0)
 var x_dir = Vector3(4, 0, 0)
 var retreating = false
 
@@ -28,7 +27,7 @@ func _integrate_forces(state):
 	var player_position = player.get_global_transform().origin
 	var dir = player_position - current_position
 	var l = dir.length()
-	state.set_linear_velocity(zero_dir)
+	state.set_linear_velocity(Vector3.ZERO)
 	if not retreating and l > SAFE_RANGE:
 		rest()
 	elif not retreating and l > SNIFF_RANGE:
@@ -52,7 +51,7 @@ func _integrate_forces(state):
 		if not can_move_without_collision(motion):
 			queue_free()
 		state.set_linear_velocity(run_dir)
-	state.set_angular_velocity(zero_dir)
+	state.set_angular_velocity(Vector3.ZERO)
 
 func rest():
 	rat.rest()
