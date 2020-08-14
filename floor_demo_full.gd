@@ -92,7 +92,8 @@ func check_demo_finish():
 	get_door("door_demo").open()
 	conversation_manager.start_area_conversation("019_DemoFinishedXenia" if game_state.party[DB.FEMALE_NAME_HINT] else "022-1_DemoFinishedMax")
 
-func use_pedestal(player_node, pedestal, item_id):
+func use_pedestal(player_node, pedestal, inventory_item, child_item):
+	var item_id = inventory_item.item_id
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
 		DB.PedestalIds.APATA:
