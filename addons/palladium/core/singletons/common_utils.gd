@@ -2,6 +2,8 @@ extends Node
 
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:
+	if node is Timer:
+		return
 	node.set_process(!pause)
 	node.set_process_input(!pause)
 	node.set_process_internal(!pause)

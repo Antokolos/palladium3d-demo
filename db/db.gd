@@ -26,6 +26,14 @@ static func get_item_name(takable_id):
 	var item_data = get_item_data(takable_id)
 	return item_data.item_nam if item_data else null
 
+static func is_weapon_stun(takable_id):
+	if not takable_id or takable_id == TakableIds.NONE:
+		return false
+	return WEAPONS_STUN.has(takable_id)
+
+static func get_weapon_stun_data(takable_id):
+	return WEAPONS_STUN[takable_id] if is_weapon_stun(takable_id) else null
+
 ### CODE THAT MUST BE INCLUDED IN THE GAME-SPECIFIC PART ###
 #const PARTY_DEFAULT = {
 #	PLAYER_NAME_HINT : true
@@ -80,6 +88,10 @@ static func get_item_name(takable_id):
 
 #const ITEMS = {
 #	TakableIds.NONE : { "item_nam" : "item_none", "item_image" : "none.png", "model_path" : "res://assets/none.escn", "can_give" : false, "custom_actions" : [] },
+#}
+
+#const WEAPONS_STUN = {
+#	TakableIds.MEDUSA_HEAD : { "stun_duration" : 5 }
 #}
 
 ### GAME-SPECIFIC PART ###
@@ -205,3 +217,5 @@ const ITEMS = {
 	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.TUBE_BREATH : { "item_nam" : "tube_breath", "item_image" : "tube_breath.png", "model_path" : "res://assets/tube_breath.escn", "can_give" : false, "custom_actions" : [] },
 }
+
+const WEAPONS_STUN = {}

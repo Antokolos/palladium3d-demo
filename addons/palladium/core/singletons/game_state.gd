@@ -86,11 +86,12 @@ onready var music = {
 	MusicId.MINOTAUR : load(MUSIC_PATH_TEMPLATE % "sinkingisland.ogg")
 }
 
-enum SoundId {LYRE_CORRECT, LYRE_WRONG}
+enum SoundId {LYRE_CORRECT, LYRE_WRONG, SNAKE_HISS}
 const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
 onready var sound = {
 	SoundId.LYRE_CORRECT : load(SOUND_PATH_TEMPLATE % "Apollo_lyre_good_2.ogg"),
-	SoundId.LYRE_WRONG : load(SOUND_PATH_TEMPLATE % "Apollo_bad_lyre_sound.ogg")
+	SoundId.LYRE_WRONG : load(SOUND_PATH_TEMPLATE % "Apollo_bad_lyre_sound.ogg"),
+	SoundId.SNAKE_HISS : load(SOUND_PATH_TEMPLATE % "Labyrinth_snake_hiss.ogg")
 }
 
 var current_music = null

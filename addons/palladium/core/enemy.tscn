@@ -109,6 +109,9 @@ one_shot = true
 
 [node name="PoisonTimer" type="Timer" parent="."]
 
+[node name="StunTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="AttackTimer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 1.4
@@ -127,6 +130,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
 [connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
 [connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
 [connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Labyrinth_snake_hiss.ogg-3dbae4640aac6723f051afc29357f021.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Labyrinth_snake_hiss.ogg"
+dest_files=[ "res://.import/Labyrinth_snake_hiss.ogg-3dbae4640aac6723f051afc29357f021.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

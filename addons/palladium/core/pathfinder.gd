@@ -41,28 +41,9 @@ func get_use_distance():
 	return use_distance
 
 func use(player_node, camera_node):
-	var hud = game_state.get_hud()
-	if hud and hud.get_active_item():
-		var item = hud.get_active_item()
-		if not item_match(item):
-			return false
-		hud.inventory.visible = false
-		item.used(player_node, self)
-		common_utils.set_pause_scene(self, true)
-		return true
 	return false
 
-func item_match(item):
-	if not item:
-		return false
-	return DB.get_item_name(item.item_id) == "medusa_head"
-
 func add_highlight(player_node):
-	var hud = game_state.get_hud()
-	if hud and hud.get_active_item():
-		var item = hud.get_active_item()
-		if item_match(item):
-			return "E: " + tr("ACTION_USE")
 	return ""
 
 func remove_highlight(player_node):

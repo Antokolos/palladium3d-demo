@@ -35,6 +35,7 @@ export var model_path = ""
 
 onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
+onready var stun_timer = $StunTimer
 onready var standing_area = $StandingArea
 onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
@@ -65,6 +66,42 @@ func _ready():
 	model.connect("character_dead", self, "_on_character_dead")
 	model_container.add_child(model)
 	game_state.register_player(self)
+
+### Use target ###
+
+func use(player_node, camera_node):
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		if not item_is_weapon(item):
+			return false
+		hud.inventory.visible = false
+		item.used(player_node, self)
+		use_weapon(item)
+		return true
+	return false
+
+func item_is_weapon(item):
+	if not item:
+		return false
+	return DB.is_weapon_stun(item.item_id)
+
+func use_weapon(item):
+	if not item:
+		return
+	if DB.is_weapon_stun(item.item_id):
+		var weapon_data = DB.get_weapon_stun_data(item.item_id)
+		game_state.play_sound(PLDGameState.SoundId.SNAKE_HISS)
+		common_utils.set_pause_scene(self, true)
+		stun_timer.start(weapon_data.stun_duration)
+
+func add_highlight(player_node):
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		if item_is_weapon(item):
+			return "E: " + tr("ACTION_ATTACK")
+	return ""
 
 ### Getting character's parts ###
 
@@ -420,6 +457,9 @@ func _on_PoisonTimer_timeout():
 	if poison_timer.is_stopped():
 		return
 	game_state.set_health(get_name_hint(), game_state.player_health_current - POISON_LETHALITY_RATE, game_state.player_health_max)
+
+func _on_StunTimer_timeout():
+	common_utils.set_pause_scene(self, false)
 
 func _on_VisibilityNotifier_screen_entered():
 	emit_signal("visibility_to_player_changed", self, false, true)
