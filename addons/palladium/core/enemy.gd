@@ -30,13 +30,20 @@ func use_usable(player_node, usable):
 ### Use target ###
 
 func use(player_node, camera_node):
-	if is_activated() and can_be_attacked():
+	if not is_activated():
+		return false
+	var u = .use(player_node, camera_node)
+	if not u and can_be_attacked():
 		hit(camera_node)
+	return true
 
 func add_highlight(player_node):
 	if not is_activated() or not can_be_attacked() or is_dying():
 		return ""
-	return "E: Shoot"
+	var h = .add_highlight(player_node)
+	if not h.empty():
+		return h
+	return "E: Shoot" if can_be_attacked() else ""
 
 func hit(hit_direction_node):
 	if not is_activated():

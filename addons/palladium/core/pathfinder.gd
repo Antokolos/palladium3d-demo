@@ -17,7 +17,9 @@ const KEY_LOOK_SPEED_FACTOR = 30
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
+const USE_DISTANCE_COMMON = 2
 
+export(int) var use_distance = USE_DISTANCE_COMMON
 export var name_hint = DB.PLAYER_NAME_HINT
 export(NodePath) var navigation_path = NodePath("..")
 
@@ -35,10 +37,32 @@ var angle_rad_y = 0
 # It is very similar to the code in PLDUsable,
 # but unfortunately we need the inheritance from KinematicBody
 
+func get_use_distance():
+	return use_distance
+
 func use(player_node, camera_node):
-	pass
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		if not item_match(item):
+			return false
+		hud.inventory.visible = false
+		item.used(player_node, self)
+		common_utils.set_pause_scene(self, true)
+		return true
+	return false
+
+func item_match(item):
+	if not item:
+		return false
+	return DB.get_item_name(item.item_id) == "medusa_head"
 
 func add_highlight(player_node):
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		if item_match(item):
+			return "E: " + tr("ACTION_USE")
 	return ""
 
 func remove_highlight(player_node):
