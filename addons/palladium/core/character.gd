@@ -291,7 +291,7 @@ func get_snap():
 	return Vector3.UP
 
 func is_need_to_use_physics():
-	if is_player_controlled() or (is_in_party() and is_visible_to_player()):
+	if is_player_controlled() or (is_in_party() and is_visible_to_player()) or is_aggressive():
 		return true
 	return false
 

@@ -59,7 +59,8 @@ func is_player():
 	return game_state.get_player().get_instance_id() == self.get_instance_id()
 
 func is_activated():
-	return activated
+	# Checking is_physics_processing() because node can be paused
+	return activated and is_physics_processing()
 
 func is_rest_state():
 	return rest_state
