@@ -1,23 +1,27 @@
 extends Spatial
 
-onready var ray = $Ray_Cast
+onready var ray_items = $RayCastItems
+onready var ray_characters = $RayCastCharacters
 var action_body = null
 
 func rebuild_exceptions(player_node):
-	ray.clear_exceptions()
-	ray.add_exception(player_node)
+	ray_items.clear_exceptions()
+	ray_items.add_exception(player_node)
+	ray_characters.clear_exceptions()
+	ray_characters.add_exception(player_node)
 
 func enable(enable):
-	ray.enabled = enable
+	ray_items.enabled = enable
+	ray_characters.enabled = enable
 
 func body_is_usable(body, distance_to_body):
 	return body \
 		and (body is PLDUsable or body is PLDPathfinder) \
 		and distance_to_body <= body.get_use_distance()
 
-func action(player_node, camera_node):
+func ray_action(ray, player_node, camera_node):
 	if not ray.enabled:
-		return
+		return false
 	
 	ray.force_raycast_update()
 	if ray.is_colliding():
@@ -27,7 +31,13 @@ func action(player_node, camera_node):
 			pass
 		elif body_is_usable(body, collision_vec.length()):
 			body.use(player_node, camera_node)
-			return
+			return true
+	return false
+
+func action(player_node, camera_node):
+	if ray_action(ray_items, player_node, camera_node) \
+		or ray_action(ray_characters, player_node, camera_node):
+		return
 	var item = game_state.get_hud().get_active_item()
 	if not item:
 		return
@@ -60,6 +70,10 @@ func switch_highlight(player_node, body, distance_to_body):
 func highlight(player_node):
 	if player_node.is_hidden():
 		return "E: " + tr("ACTION_UNHIDE")
+	var text_ray_items = ray_highlight(ray_items, player_node)
+	return ray_highlight(ray_characters, player_node) if text_ray_items.empty() else text_ray_items
+
+func ray_highlight(ray, player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())

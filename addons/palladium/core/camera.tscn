@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/palladium/env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=2]
 [ext_resource path="res://addons/palladium/core/culling_rays.gd" type="Script" id=3]
-[ext_resource path="res://addons/palladium/core/action_use.gd" type="Script" id=4]
+[ext_resource path="res://addons/palladium/core/use_point.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/palladium/core/shader_cache.gd" type="Script" id=5]
 [ext_resource path="res://addons/palladium/core/item_preview.gd" type="Script" id=6]
 [ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=7]
@@ -34,11 +34,6 @@ collision_mask = 2
 [node name="Gun_Fire_Points" type="Spatial" parent="."]
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0, -0.05 )
 
-[node name="Rifle_Point" type="Spatial" parent="Gun_Fire_Points"]
-
-[node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Rifle_Point"]
-cast_to = Vector3( 0, 0, 32 )
-
 [node name="View_Point" type="Spatial" parent="Gun_Fire_Points"]
 
 [node name="ViewArea" type="Area" parent="Gun_Fire_Points/View_Point" groups=[
@@ -49,12 +44,7 @@ input_ray_pickable = false
 [node name="Collision_Shape" type="CollisionShape" parent="Gun_Fire_Points/View_Point/ViewArea"]
 shape = SubResource( 1 )
 
-[node name="Use_Point" type="Spatial" parent="Gun_Fire_Points"]
-script = ExtResource( 4 )
-
-[node name="Ray_Cast" type="RayCast" parent="Gun_Fire_Points/Use_Point"]
-enabled = true
-cast_to = Vector3( 0, 0, 5 )
+[node name="use_point" parent="Gun_Fire_Points" instance=ExtResource( 4 )]
 
 [node name="viewpoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )

@@ -1559,6 +1559,17 @@ ui_tablet_toggle={
  ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Default"
+3d_physics/layer_2="Walls"
+3d_physics/layer_3="Floor"
+3d_physics/layer_4="Interactive"
+3d_physics/layer_11="Ceiling Hint"
+3d_physics/layer_12="Player"
+3d_physics/layer_13="Enemy"
+3d_physics/layer_14="Obstacles"
+
 [locale]
 
 translations=PoolStringArray( "res://game_text.en.translation", "res://game_text.ru.translation" )

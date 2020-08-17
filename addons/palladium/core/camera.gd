@@ -3,7 +3,7 @@ class_name PLDCamera
 
 onready var flashlight = get_node("Flashlight") if has_node("Flashlight") else null
 onready var flashlight_spot = flashlight.get_node("Flashlight") if flashlight else null
-onready var use_point = get_node("Gun_Fire_Points/Use_Point") if has_node("Gun_Fire_Points/Use_Point") else null
+onready var use_point = get_node("Gun_Fire_Points/use_point") if has_node("Gun_Fire_Points/use_point") else null
 
 onready var env_norm = preload("res://addons/palladium/env_norm.tres")
 onready var env_opt = preload("res://addons/palladium/env_opt.tres")

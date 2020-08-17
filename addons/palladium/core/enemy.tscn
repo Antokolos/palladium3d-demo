@@ -54,7 +54,8 @@ extents = Vector3( 0.879759, 1, 0.502388 )
 "moving",
 "enemies",
 ]]
-collision_mask = 7
+collision_layer = 4096
+collision_mask = 14343
 script = ExtResource( 1 )
 name_hint = "skeleton"
 model_path = "res://scenes/greek_skeleton.tscn"
