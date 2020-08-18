@@ -8,12 +8,8 @@ const TOO_FAR_RANGE = 10
 const AGGRESSION_RANGE = 11
 const STOP_CHASING_RANGE = 12
 
-onready var melee_damage_area = $MeleeDamageArea
-onready var attack_timer = $AttackTimer
-
 var party_members_cache = []
 var hits = 0
-var injury_rate = 20
 
 func _ready():
 	get_tree().call_group("hideouts", "connect_signals", self)
@@ -23,9 +19,7 @@ func use_usable(player_node, usable):
 		return
 	set_sprinting(false)
 	set_aggressive(false)
-	if not attack_timer.is_stopped():
-		attack_timer.stop()
-		stop_cutscene()
+	character_nodes.stop_attack()
 
 ### Use target ###
 
@@ -38,7 +32,7 @@ func use(player_node, camera_node):
 	return true
 
 func add_highlight(player_node):
-	if not is_activated() or not can_be_attacked() or is_dying():
+	if not is_activated() or is_dying():
 		return ""
 	var h = .add_highlight(player_node)
 	if not h.empty():
@@ -58,7 +52,7 @@ func activate():
 	.activate()
 	hits = 0
 	set_sprinting(false)
-	$CutsceneTimer.start()
+	character_nodes.start_cutscene_timer()
 
 func get_party_members():
 	if party_members_cache.empty():
@@ -86,25 +80,6 @@ func get_preferred_target():
 		return null
 	return get_nearest_party_member() if is_aggressive() else .get_preferred_target()
 
-func get_possible_attack_target():
-	if not is_activated():
-		return null
-	for body in melee_damage_area.get_overlapping_bodies():
-		if body.get_instance_id() == get_instance_id():
-			continue
-		if body.is_in_group("party"):
-			return body
-	return null
-
-func attack_start(possible_attack_target):
-	if not is_activated():
-		return
-	if attack_timer.is_stopped():
-		set_sprinting(false)
-		emit_signal("attack_started", self, possible_attack_target)
-		get_model().attack()
-		attack_timer.start()
-
 func take_damage(fatal, hit_direction_node):
 	if not is_activated() or is_dying():
 		return
@@ -114,8 +89,7 @@ func take_damage(fatal, hit_direction_node):
 	if fatal:
 		$Body_CollisionShape.disabled = true
 		$Feet_CollisionShape.disabled = false
-		$StandingArea/CollisionShape.disabled = true
-		melee_damage_area.get_node("CollisionShape").disabled = true
+		character_nodes.enable_areas(false)
 
 func set_states(player):
 	if player.is_hidden():
@@ -144,17 +118,4 @@ func _physics_process(delta):
 			set_sprinting(false)
 			set_patrolling(true)
 		return
-	var possible_attack_target = get_possible_attack_target()
-	if possible_attack_target:
-		attack_start(possible_attack_target)
-	elif not attack_timer.is_stopped():
-		attack_timer.stop()
-		stop_cutscene()
-
-func _on_AttackTimer_timeout():
-	if not is_activated():
-		return
-	if get_possible_attack_target():
-		game_state.set_health(DB.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
-	else:
-		stop_cutscene()
+	character_nodes.handle_attack()

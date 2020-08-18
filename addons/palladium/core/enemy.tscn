@@ -1,11 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/palladium/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
-
-[sub_resource type="CapsuleMesh" id=1]
-radius = 0.5
-mid_height = 1.2
+[ext_resource path="res://addons/palladium/core/character_nodes.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CapsuleShape" id=2]
 resource_local_to_scene = true
@@ -17,42 +13,9 @@ height = 1.2
 resource_local_to_scene = true
 extents = Vector3( 0.16, 0.04, 0.16 )
 
-[sub_resource type="Animation" id=4]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Body_CollisionShape:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 1.1, 0 ), Vector3( 0, 0.6, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Body_CollisionShape:shape:height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.2, 0.2 ]
-}
-
-[sub_resource type="BoxShape" id=5]
-resource_local_to_scene = true
-extents = Vector3( 0.161138, 1, 0.146487 )
-
-[sub_resource type="BoxShape" id=6]
-extents = Vector3( 0.879759, 1, 0.502388 )
-
 [node name="enemy" type="KinematicBody" groups=[
-"moving",
 "enemies",
+"moving",
 ]]
 collision_layer = 4096
 collision_mask = 14343
@@ -60,12 +23,7 @@ script = ExtResource( 1 )
 name_hint = "skeleton"
 model_path = "res://scenes/greek_skeleton.tscn"
 
-[node name="placeholder" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Model" type="Spatial" parent="."]
+[node name="character_nodes" parent="." instance=ExtResource( 2 )]
 
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.1, 0 )
@@ -74,64 +32,3 @@ shape = SubResource( 2 )
 [node name="Feet_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0 )
 shape = SubResource( 3 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/crouch = SubResource( 4 )
-
-[node name="SoundWalking" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-bus = "Sound"
-
-[node name="SoundFallingToFloor" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-stream = ExtResource( 2 )
-bus = "Sound"
-
-[node name="StandingArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0 )
-input_ray_pickable = false
-monitorable = false
-collision_layer = 1024
-collision_mask = 1024
-
-[node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
-shape = SubResource( 5 )
-
-[node name="HealTimer" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
-[node name="CutsceneTimer" type="Timer" parent="."]
-process_mode = 0
-wait_time = 0.5
-one_shot = true
-
-[node name="OxygenTimer" type="Timer" parent="."]
-
-[node name="PoisonTimer" type="Timer" parent="."]
-
-[node name="StunTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="AttackTimer" type="Timer" parent="."]
-process_mode = 0
-wait_time = 1.4
-
-[node name="MeleeDamageArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06667, 0.993718 )
-input_ray_pickable = false
-monitorable = false
-collision_mask = 7
-
-[node name="CollisionShape" type="CollisionShape" parent="MeleeDamageArea"]
-shape = SubResource( 6 )
-
-[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
-[connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
-[connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
-[connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
-[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
-[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
-[connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
-[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

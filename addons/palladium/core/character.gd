@@ -5,8 +5,6 @@ signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
 
-const OXYGEN_DECREASE_RATE = 5
-const POISON_LETHALITY_RATE = 1
 const GRAVITY_DEFAULT = 6.2
 const GRAVITY_UNDERWATER = 0.2
 const MAX_SPEED = 3
@@ -27,25 +25,9 @@ const NONCHAR_COLLISION_RANGE_MAX = 5.9
 const MAX_SLOPE_ANGLE_RAD = deg2rad(60)
 const AXIS_VALUE_THRESHOLD = 0.15
 
-const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
-
-enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE, SOUND_WALK_MINOTAUR}
-
 export var model_path = ""
 
-onready var oxygen_timer = $OxygenTimer
-onready var poison_timer = $PoisonTimer
-onready var stun_timer = $StunTimer
-onready var standing_area = $StandingArea
-onready var visibility_notifier = $VisibilityNotifier
-onready var sound_player_walking = $SoundWalking
-onready var sound = {
-	SoundId.SOUND_WALK_NONE : null,
-	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
-	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
-	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg"),
-	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg")
-}
+onready var character_nodes = $character_nodes
 
 var vel = Vector3()
 var gravity = GRAVITY_DEFAULT
@@ -59,13 +41,13 @@ var has_floor_collision = true
 
 func _ready():
 	var model_container = get_node("Model")
-	var placeholder = get_node("placeholder")
-	placeholder.visible = false  # placeholder.queue_free() breaks directional shadows for some weird reason :/
-	var model = load(model_path).instance()
+	var model = model_container.get_child(0)  #load(model_path).instance()
 	game_state.connect("player_underwater", self, "set_underwater")
 	model.connect("character_dead", self, "_on_character_dead")
-	model_container.add_child(model)
 	game_state.register_player(self)
+
+func set_sound_walk(mode):
+	character_nodes.set_sound_walk(mode)
 
 ### Use target ###
 
@@ -77,7 +59,7 @@ func use(player_node, camera_node):
 			return false
 		hud.inventory.visible = false
 		item.used(player_node, self)
-		use_weapon(item)
+		character_nodes.use_weapon(item)
 		return true
 	return false
 
@@ -85,15 +67,6 @@ func item_is_weapon(item):
 	if not item:
 		return false
 	return DB.is_weapon_stun(item.item_id)
-
-func use_weapon(item):
-	if not item:
-		return
-	if DB.is_weapon_stun(item.item_id):
-		var weapon_data = DB.get_weapon_stun_data(item.item_id)
-		game_state.play_sound(PLDGameState.SoundId.SNAKE_HISS)
-		common_utils.set_pause_scene(self, true)
-		stun_timer.start(weapon_data.stun_duration)
 
 func add_highlight(player_node):
 	var hud = game_state.get_hud()
@@ -124,7 +97,7 @@ func activate():
 	get_model().activate()
 
 func is_visible_to_player():
-	return visibility_notifier.is_on_screen()
+	return character_nodes.is_visible_to_player()
 
 func is_hidden():
 	return is_hidden
@@ -135,7 +108,7 @@ func set_hidden(enable):
 	if has_node("UpperBody_CollisionShape"):
 		$UpperBody_CollisionShape.disabled = enable
 	$Body_CollisionShape.disabled = enable
-	$StandingArea/CollisionShape.disabled = enable
+	character_nodes.enable_areas(not enable)
 	var is_player = is_player()
 	if is_player:
 		var companions = game_state.get_companions()
@@ -175,7 +148,7 @@ func set_look_transition(force = false):
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
-	$CutsceneTimer.start()
+	character_nodes.start_cutscene_timer()
 
 func stop_cutscene():
 	get_model().stop_cutscene()
@@ -199,10 +172,9 @@ func is_player_controlled():
 	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
 
 func sit_down():
-	if $AnimationPlayer.is_playing():
+	if not character_nodes.sit_down():
 		return
 	get_model().sit_down()
-	$AnimationPlayer.play("crouch")
 	var is_player = is_player()
 	if is_player:
 		var companions = game_state.get_companions()
@@ -215,18 +187,10 @@ func sit_down():
 		if hud:
 			hud.set_crouch_indicator(true)
 
-func is_low_ceiling():
-	# Make sure you've set proper collision layer bit for ceiling
-	return standing_area.get_overlapping_bodies().size() > 0
-
 func stand_up():
-	if $AnimationPlayer.is_playing():
-		return
-	if is_low_ceiling():
-		# I.e. if the player is crouching and something is above the head, do not allow to stand up.
+	if not character_nodes.stand_up():
 		return
 	get_model().stand_up()
-	$AnimationPlayer.play_backwards("crouch")
 	var is_player = is_player()
 	if is_player:
 		var companions = game_state.get_companions()
@@ -262,11 +226,6 @@ func set_sprinting(enable):
 		var companions = game_state.get_companions()
 		for companion in companions:
 			companion.set_sprinting(enable)
-
-func set_sound_walk(mode):
-	sound_player_walking.stop()
-	sound_player_walking.stream = sound[mode] if sound.has(mode) else null
-	sound_player_walking.set_unit_db(0)
 
 ### Player/target following ###
 
@@ -413,19 +372,9 @@ func do_process(delta, in_party, is_player):
 	if is_cutscene() or is_dying() or is_dead():
 		has_floor_collision = true
 		return
-	if is_low_ceiling() and not is_crouching and has_floor_collision():
+	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
-	var is_underwater = game_state.is_underwater(get_name_hint())
-	if is_underwater and oxygen_timer.is_stopped():
-		oxygen_timer.start()
-	elif not is_underwater and not oxygen_timer.is_stopped():
-		oxygen_timer.stop()
-		game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
-	var is_poisoned = game_state.is_poisoned(get_name_hint())
-	if is_poisoned and poison_timer.is_stopped():
-		poison_timer.start()
-	elif not is_poisoned and not poison_timer.is_stopped():
-		poison_timer.stop()
+	character_nodes.check_states()
 	var movement_data = get_movement_data(in_party, is_player)
 	update_state(movement_data, in_party)
 	var movement_process_data = process_movement(delta, movement_data.get_dir())
@@ -433,38 +382,8 @@ func do_process(delta, in_party, is_player):
 	var is_moving = movement_process_data.is_walking
 	var is_rotating = process_rotation(not is_moving and is_player)
 	if is_moving or is_rotating:
-		if not sound_player_walking.is_playing():
-			sound_player_walking.play()
-		sound_player_walking.pitch_scale = 2 if is_sprinting else 1
+		character_nodes.play_walking_sound(is_sprinting)
 		get_model().walk(movement_data.get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
 	else:
-		sound_player_walking.stop()
+		character_nodes.stop_walking_sound()
 		get_model().look(movement_data.get_rotation_angle_to_target_deg())
-
-func _on_HealTimer_timeout():
-	if is_player():
-		game_state.set_health(get_name_hint(), game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
-
-func _on_CutsceneTimer_timeout():
-	set_look_transition(true)
-
-func _on_OxygenTimer_timeout():
-	if oxygen_timer.is_stopped():
-		return
-	game_state.set_oxygen(get_name_hint(), game_state.player_oxygen_current - OXYGEN_DECREASE_RATE, game_state.player_oxygen_max)
-
-func _on_PoisonTimer_timeout():
-	if poison_timer.is_stopped():
-		return
-	game_state.set_health(get_name_hint(), game_state.player_health_current - POISON_LETHALITY_RATE, game_state.player_health_max)
-
-func _on_StunTimer_timeout():
-	common_utils.set_pause_scene(self, false)
-
-func _on_VisibilityNotifier_screen_entered():
-	emit_signal("visibility_to_player_changed", self, false, true)
-	if is_in_party():
-		move_and_collide(GRAVITY_DEFAULT * Vector3.DOWN)
-
-func _on_VisibilityNotifier_screen_exited():
-	emit_signal("visibility_to_player_changed", self, true, false)

@@ -19,9 +19,9 @@ func do_init(is_loaded):
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
-	player.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS if player_in_grass else PLDPlayer.SoundId.SOUND_WALK_SAND)
+	player.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS if player_in_grass else PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
 	game_state.change_music_to(game_state.MusicId.OUTSIDE)
-	player_female.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS if female_in_grass else PLDPlayer.SoundId.SOUND_WALK_SAND)
+	player_female.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS if female_in_grass else PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
 	var boat_area = get_node("BoatArea")
 	if boat_area and boat_area.overlaps_body(player) and boat_area.overlaps_body(player_female):
 		_on_BoatArea_body_entered(player)
@@ -64,11 +64,11 @@ func _on_meeting_started(player, target, initiator):
 func _on_AreaGrass_body_entered(body):
 	if body.is_in_group("party"):
 		if not $TunnelArea.overlaps_body(body):
-			body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
+			body.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS)
 
 func _on_AreaGrass_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
-		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_SAND)
+		body.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
 
 func _on_StumpArea_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
@@ -93,10 +93,10 @@ func _on_BoatArea_body_entered(body):
 
 func _on_TunnelArea_body_entered(body):
 	if body.is_in_group("party"):
-		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_CONCRETE)
+		body.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_CONCRETE)
 		body.set_pathfinding_enabled(false)
 
 func _on_TunnelArea_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
-		body.set_sound_walk(PLDPlayer.SoundId.SOUND_WALK_GRASS)
+		body.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS)
 		body.set_pathfinding_enabled(true)

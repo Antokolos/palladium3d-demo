@@ -213,4 +213,4 @@ func _physics_process(delta):
 	.do_process(delta, in_party, is_player)
 	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
-		$SoundFallingToFloor.play()
+		character_nodes.play_sound_falling_to_floor()
