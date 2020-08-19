@@ -374,7 +374,6 @@ func do_process(delta, in_party, is_player):
 		return
 	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
-	character_nodes.check_states()
 	var movement_data = get_movement_data(in_party, is_player)
 	update_state(movement_data, in_party)
 	var movement_process_data = process_movement(delta, movement_data.get_dir())

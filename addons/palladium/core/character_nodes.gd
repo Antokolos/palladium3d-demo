@@ -32,6 +32,23 @@ onready var sound = {
 
 var injury_rate = 20
 
+func _ready():
+	game_state.connect("player_underwater", self, "_on_player_underwater")
+	game_state.connect("player_poisoned", self, "_on_player_poisoned")
+
+func _on_player_underwater(player, enable):
+	if enable and oxygen_timer.is_stopped():
+		oxygen_timer.start()
+	elif not enable and not oxygen_timer.is_stopped():
+		oxygen_timer.stop()
+		game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
+
+func _on_player_poisoned(player, enable):
+	if enable and poison_timer.is_stopped():
+		poison_timer.start()
+	elif not enable and not poison_timer.is_stopped():
+		poison_timer.stop()
+
 func sit_down():
 	if animation_player.is_playing():
 		return false
@@ -60,19 +77,6 @@ func stop_walking_sound():
 
 func play_sound_falling_to_floor():
 	sound_player_falling_to_floor.play()
-
-func check_states():
-	var is_underwater = game_state.is_underwater(character.get_name_hint())
-	if is_underwater and oxygen_timer.is_stopped():
-		oxygen_timer.start()
-	elif not is_underwater and not oxygen_timer.is_stopped():
-		oxygen_timer.stop()
-		game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
-	var is_poisoned = game_state.is_poisoned(character.get_name_hint())
-	if is_poisoned and poison_timer.is_stopped():
-		poison_timer.start()
-	elif not is_poisoned and not poison_timer.is_stopped():
-		poison_timer.stop()
 
 func set_sound_walk(mode):
 	sound_player_walking.stop()
