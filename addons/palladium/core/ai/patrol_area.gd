@@ -26,7 +26,7 @@ func _on_patrolling_changed(player_node, previous_state, new_state):
 
 func _on_arrived_to(player_node, target_node):
 	var next_target = get_next_target()
-	agent.set_target_node(next_target if next_target else target_node)
+	agent.set_target_node(next_target if next_target else target_node, false)
 
 func get_next_target():
 	if waypoints.empty():
@@ -68,7 +68,7 @@ func do_patrol():
 	if not wp_data.waypoint:
 		return
 	waypoint_idx = wp_data.waypoint_idx
-	agent.set_target_node(wp_data.waypoint)
+	agent.set_target_node(wp_data.waypoint, false)
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():

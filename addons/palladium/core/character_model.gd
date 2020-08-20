@@ -57,7 +57,7 @@ func ragdoll_stop():
 func set_simple_mode(sm):
 	simple_mode = sm
 	if simple_mode:
-		look(0)
+		look()
 
 func can_do_rest_shot():
 	return not is_rest_active() and not is_in_speak_mode() and not is_sitting()
@@ -145,14 +145,12 @@ func set_transition(t):
 		transition = t
 		animation_tree.set("parameters/Transition/current", t)
 
-func look(look_angle_deg):
-	rotate_head(look_angle_deg)
+func look():
 	set_transition(TRANSITION_LOOK)
 	if can_do_rest_shot() and rest_timer.is_stopped():
 		rest_timer.start(REST_POSE_CHANGE_TIME_S)
 
-func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
-	rotate_head(look_angle_deg)
+func walk(is_crouching = false, is_sprinting = false):
 	set_transition(TRANSITION_CROUCH if is_crouching else (TRANSITION_RUN if is_sprinting else TRANSITION_WALK))
 	rest_timer.stop()
 	stop_rest_shot()

@@ -106,8 +106,11 @@ func reset_movement_and_rotation():
 func get_target_node():
 	return target_node
 
-func set_target_node(node):
+func set_target_node(node, update_navpath = true):
 	target_node = node
+	if target_node and update_navpath:
+		var current_position = get_global_transform().origin
+		update_navpath(current_position, target_node.get_global_transform().origin)
 
 func get_preferred_target():
 	return target_node if not is_in_party() else (game_state.get_companion() if is_player() else game_state.get_player())

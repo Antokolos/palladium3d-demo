@@ -97,8 +97,8 @@ func get_lips_transition_by_phoneme(phoneme):
 		_:
 			return -1
 
-func walk(look_angle_deg, is_crouching = false, is_sprinting = false):
-	.walk(look_angle_deg, is_crouching, is_sprinting)
+func walk(is_crouching = false, is_sprinting = false):
+	.walk(is_crouching, is_sprinting)
 	stop_speak_shot()
 
 func can_do_speak_shot():

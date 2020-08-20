@@ -15,6 +15,7 @@ onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
 onready var stun_timer = $StunTimer
 onready var attack_timer = $AttackTimer
+onready var rest_timer = $RestTimer
 
 onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
@@ -127,6 +128,13 @@ func stop_attack():
 		attack_timer.stop()
 		character.stop_cutscene()
 
+func start_rest_timer():
+	if rest_timer.is_stopped():
+		rest_timer.start()
+
+func stop_rest_timer():
+	rest_timer.stop()
+
 func enable_areas(enable):
 	standing_area.get_node("CollisionShape").disabled = not enable
 	melee_damage_area.get_node("CollisionShape").disabled = not enable
@@ -165,6 +173,9 @@ func _on_AttackTimer_timeout():
 		game_state.set_health(DB.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
 	else:
 		character.stop_cutscene()
+
+func _on_RestTimer_timeout():
+	character.get_model().look()
 
 func _on_VisibilityNotifier_screen_entered():
 	character.emit_signal("visibility_to_player_changed", character, false, true)

@@ -138,7 +138,7 @@ func set_aggressive(enable):
 		set_patrolling(false)
 
 func rest():
-	get_model().look(0)
+	get_model().look()
 
 func set_look_transition(force = false):
 	if force \
@@ -246,13 +246,23 @@ func process_rotation(need_to_update_collisions):
 	angle_rad_y = 0
 	return true
 
+func invoke_physics_pass():
+	has_floor_collision = false
+	vel = move_and_slide_with_snap(
+		vel,
+		get_snap(),
+		Vector3.UP,
+		true,
+		4,
+		MAX_SLOPE_ANGLE_RAD,
+		is_in_party()
+	)
+
 func get_snap():
 	return Vector3.UP
 
 func is_need_to_use_physics():
-	if has_path():
-		return false
-	if is_player_controlled() or (is_in_party() and is_visible_to_player()) or is_aggressive():
+	if is_player_controlled() or not has_floor_collision():
 		return true
 	return false
 
@@ -305,7 +315,7 @@ func process_movement(delta, dir):
 		)
 	else:
 		vel = move_without_physics(hvel, delta)
-		return { "is_walking" : vel.length() >= MIN_MOVEMENT, "collides_floor" : true }
+		return { "is_walking" : vel.length() >= MIN_MOVEMENT, "collides_floor" : has_floor_collision() }
 	
 	var is_walking = vel.length() >= MIN_MOVEMENT
 	
@@ -331,6 +341,7 @@ func process_movement(delta, dir):
 		if not character.is_movement_disabled() and not character.is_player_controlled():
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
+			character.invoke_physics_pass()
 
 	if nonchar_collision and pathfinding_enabled and not is_player_controlled():
 		var v = get_out_vec(nonchar_collision.normal) * NONCHAR_PUSH_STRENGTH
@@ -382,12 +393,16 @@ func do_process(delta, in_party, is_player):
 	has_floor_collision = movement_process_data.collides_floor
 	var is_moving = movement_process_data.is_walking
 	var is_rotating = process_rotation(not is_moving and is_player)
-	if is_moving or is_rotating:
-		if is_moving:
-			character_nodes.play_walking_sound(is_sprinting)
-		if is_visible_to_player():
-			get_model().walk(movement_data.get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
+	if is_moving:
+		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
-		if is_visible_to_player():
-			get_model().look(movement_data.get_rotation_angle_to_target_deg())
+	if not is_visible_to_player():
+		return
+	var model = get_model()
+	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
+	if is_moving or is_rotating:
+		character_nodes.stop_rest_timer()
+		model.walk(is_crouching, is_sprinting)
+	else:
+		character_nodes.start_rest_timer()
