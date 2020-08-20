@@ -70,7 +70,9 @@ func start_cutscene_timer():
 func play_walking_sound(is_sprinting):
 	if not sound_player_walking.is_playing():
 		sound_player_walking.play()
-	sound_player_walking.pitch_scale = 2 if is_sprinting else 1
+	var new_pitch_scale = 2 if is_sprinting else 1
+	if new_pitch_scale != sound_player_walking.pitch_scale:
+		sound_player_walking.pitch_scale = new_pitch_scale
 
 func stop_walking_sound():
 	sound_player_walking.stop()

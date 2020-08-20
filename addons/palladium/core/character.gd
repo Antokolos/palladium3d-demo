@@ -250,6 +250,8 @@ func get_snap():
 	return Vector3.UP
 
 func is_need_to_use_physics():
+	if has_path():
+		return false
 	if is_player_controlled() or (is_in_party() and is_visible_to_player()) or is_aggressive():
 		return true
 	return false
@@ -381,8 +383,11 @@ func do_process(delta, in_party, is_player):
 	var is_moving = movement_process_data.is_walking
 	var is_rotating = process_rotation(not is_moving and is_player)
 	if is_moving or is_rotating:
-		character_nodes.play_walking_sound(is_sprinting)
-		get_model().walk(movement_data.get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
+		if is_moving:
+			character_nodes.play_walking_sound(is_sprinting)
+		if is_visible_to_player():
+			get_model().walk(movement_data.get_rotation_angle_to_target_deg(), is_crouching, is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
-		get_model().look(movement_data.get_rotation_angle_to_target_deg())
+		if is_visible_to_player():
+			get_model().look(movement_data.get_rotation_angle_to_target_deg())
