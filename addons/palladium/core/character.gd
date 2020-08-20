@@ -238,8 +238,6 @@ func reset_rotation():
 	get_model_holder().set_rotation_degrees(Vector3(0, 0, 0))
 
 func process_rotation(need_to_update_collisions):
-	if need_to_update_collisions:
-		move_and_collide(Vector3.ZERO)
 	if angle_rad_y == 0 or is_dying():
 		return false
 	self.rotate_y(angle_rad_y)

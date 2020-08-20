@@ -104,6 +104,8 @@ func process_rotation(need_to_update_collisions):
 	var result = .process_rotation(need_to_update_collisions)
 	if angle_rad_x == 0:
 		return result
+	if need_to_update_collisions:
+		move_and_collide(Vector3.ZERO)
 	rotation_helper.rotate_x(angle_rad_x)
 	get_model_holder().rotate_x(angle_rad_x)
 	upper_body_shape.rotate_x(angle_rad_x)
