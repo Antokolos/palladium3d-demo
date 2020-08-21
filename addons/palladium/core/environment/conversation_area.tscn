@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/palladium/core/environment/conversation_area.gd" type="Script" id=1]
+
+[node name="conversation_area" type="Area"]
+script = ExtResource( 1 )
+conversations = {
+"bandit": "",
+"father": "",
+"female": "",
+"player": ""
+}
+[connection signal="body_entered" from="." to="." method="_on_conversation_area_body_entered"]

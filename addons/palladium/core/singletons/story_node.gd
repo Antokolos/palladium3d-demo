@@ -109,7 +109,7 @@ func check_story_not_finished(storiesDirectoryPath : String, storyPath : String)
 			result = result and (story.can_continue or not story.current_choices.empty())
 	return result
 
-func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : bool) -> void:
+func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : bool, repeatable : bool) -> void:
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
 			_inkStory.erase(locale)
@@ -127,6 +127,8 @@ func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : 
 			load_save_or_reset(0, locale, path, palladiumStory)
 			storiesByLocale[storyPath] = palladiumStory
 			_inkStory[locale] = palladiumStory
+		if repeatable:
+			_inkStory[locale].reset_state()
 
 func _observe_variable(variable_name, new_value) -> void:
 	game_state.story_vars[variable_name] = new_value

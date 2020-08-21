@@ -13,6 +13,9 @@ func _init(inkstory, chatdriven : bool):
 	_storylog = Dictionary()
 	_chatdriven = chatdriven
 
+func reset_state():
+	_inkstory.reset_state()
+
 func get_ink_story():
 	return _inkstory
 

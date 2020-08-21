@@ -31,16 +31,20 @@ func change_stretch_ratio(conversation):
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
-func start_area_cutscene(conversation_name, cutscene_node = null):
+func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false):
 	var player = game_state.get_player()
-	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
+	if conversation_is_in_progress():
+		return
+	if repeatable or conversation_is_not_finished(conversation_name):
 		player.rest()
-		start_conversation(player, conversation_name, null, null, true, cutscene_node)
+		start_conversation(player, conversation_name, null, null, true, cutscene_node, repeatable)
 
-func start_area_conversation(conversation_name):
+func start_area_conversation(conversation_name, repeatable = false):
 	var player = game_state.get_player()
-	if not conversation_is_in_progress() and conversation_is_not_finished(conversation_name):
-		start_conversation(player, conversation_name)
+	if conversation_is_in_progress():
+		return
+	if repeatable or conversation_is_not_finished(conversation_name):
+		start_conversation(player, conversation_name, null, null, false, null, repeatable)
 
 func stop_conversation(player):
 	if not conversation_is_in_progress():
@@ -106,12 +110,12 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 		story_state_cache[cp] = cp_story
 	return story_node.check_story_not_finished("res://ink-scripts", cp_story)
 
-func init_story(conversation_name, target_name_hint = null):
+func init_story(conversation_name, target_name_hint = null, repeatable = false):
 	var locale = TranslationServer.get_locale()
 	var f = File.new()
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
-	story_node.load_story("res://ink-scripts", cp if exists_cp else "Default.ink.json", false)
+	story_node.load_story("res://ink-scripts", cp if exists_cp else "Default.ink.json", false, repeatable)
 	story_node.init_variables()
 	return story_node
 
@@ -129,7 +133,7 @@ func arrange_meeting(player, target, initiator, is_cutscene = false, cutscene_no
 		return true
 	return false
 
-func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null):
+func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null, repeatable = false):
 	if self.conversation_name == conversation_name:
 		return
 	if is_cutscene:
@@ -146,7 +150,7 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	var conversation = hud.conversation
 	conversation.visible = true
 	max_choice = 0
-	var story = init_story(conversation_name, target.name_hint if target else null)
+	var story = init_story(conversation_name, target.name_hint if target else null, repeatable)
 	clear_actors_and_texts(player, conversation)
 	story_proceed(player)
 

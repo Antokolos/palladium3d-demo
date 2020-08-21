@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/character_nodes.gd"
 }, {
+"base": "Area",
+"class": "PLDConversationArea",
+"language": "GDScript",
+"path": "res://addons/palladium/core/environment/conversation_area.gd"
+}, {
 "base": "Node",
 "class": "PLDConversationManager",
 "language": "GDScript",
@@ -164,6 +169,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
 }, {
+"base": "PLDUsable",
+"class": "PLDReadable",
+"language": "GDScript",
+"path": "res://addons/palladium/core/environment/readable.gd"
+}, {
 "base": "Spatial",
 "class": "PLDRiddle",
 "language": "GDScript",
@@ -231,6 +241,7 @@ _global_script_class_icons={
 "PLDCharacter": "",
 "PLDCharacterModel": "",
 "PLDCharacterNodes": "",
+"PLDConversationArea": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
 "PLDDoor": "",
@@ -251,6 +262,7 @@ _global_script_class_icons={
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
+"PLDReadable": "",
 "PLDRiddle": "",
 "PLDRoomEnabler": "",
 "PLDShaderCache": "",
