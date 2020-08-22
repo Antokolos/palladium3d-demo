@@ -20,7 +20,7 @@ func _on_conversation_area_body_entered(body):
 		return
 	if not is_conversation_enabled():
 		return
-	if body.is_in_group("party"):
+	if body.is_in_group("party") and not game_state.is_loading():
 		for name_hint in conversations.keys():
 			var conversation = conversations[name_hint]
 			if not conversation.empty() and game_state.party[name_hint]:

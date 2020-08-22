@@ -165,12 +165,12 @@ func pause_game(enable):
 	get_tree().paused = enable
 
 func set_surge(player, enable):
-	if player and player.get_instance_id() != game_state.get_player().get_instance_id():
+	if player and not player.equals(game_state.get_player()):
 		return
 	surge_effect.visible = enable
 
 func set_underwater(player, enable):
-	if player and player.get_instance_id() != game_state.get_player().get_instance_id():
+	if player and not player.equals(game_state.get_player()):
 		return
 	underwater_effect.visible = enable
 

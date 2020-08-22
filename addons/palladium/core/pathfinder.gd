@@ -55,8 +55,11 @@ func get_name_hint():
 func is_in_party():
 	return game_state.is_in_party(name_hint)
 
+func equals(obj):
+	return obj and (obj.get_instance_id() == self.get_instance_id())
+
 func is_player():
-	return game_state.get_player().get_instance_id() == self.get_instance_id()
+	return equals(game_state.get_player())
 
 func is_activated():
 	# Checking is_physics_processing() because node can be paused

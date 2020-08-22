@@ -108,7 +108,7 @@ func get_possible_attack_target():
 	if not character.is_activated():
 		return null
 	for body in melee_damage_area.get_overlapping_bodies():
-		if body.get_instance_id() == get_instance_id():
+		if character.equals(body):
 			continue
 		if body.is_in_group("party"):
 			return body

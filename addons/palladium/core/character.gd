@@ -87,7 +87,7 @@ func get_model():
 ### States ###
 
 func set_underwater(player, enable):
-	if player and (player.get_instance_id() != get_instance_id()):
+	if player and not equals(player):
 		return
 	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
 	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED

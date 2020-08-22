@@ -27,7 +27,7 @@ func ray_action(ray, player_node, camera_node):
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())
 		var body = ray.get_collider()
-		if body.get_instance_id() == player_node.get_instance_id():
+		if player_node.equals(body):
 			pass
 		elif body_is_usable(body, collision_vec.length()):
 			body.use(player_node, camera_node)
@@ -78,7 +78,7 @@ func ray_highlight(ray, player_node):
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())
 		var body = ray.get_collider()
-		if body.get_instance_id() == player_node.get_instance_id():
+		if player_node.equals(body):
 			return switch_highlight(player_node, null, 0)
 		else:
 			return switch_highlight(player_node, body, collision_vec.length())

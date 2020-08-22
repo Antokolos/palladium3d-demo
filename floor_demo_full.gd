@@ -340,10 +340,10 @@ func _on_arrived_to(player_node, target_node):
 	var female = game_state.get_character(DB.FEMALE_NAME_HINT)
 	var piid = get_node("PlayerIntermediatePosition").get_instance_id()
 	var pa3id = get_node("PositionApata3").get_instance_id()
-	if tid == piid and player.get_instance_id() == player_node.get_instance_id():
+	if tid == piid and player.equals(player_node):
 		player.set_target_node(get_node("PlayerSavePosition"))
 		return
-	elif tid == pa3id and female.get_instance_id() == player_node.get_instance_id():
+	elif tid == pa3id and female.equals(player_node):
 		female.set_target_node(get_node("FemaleSavePosition"))
 		return
 	var bandit = game_state.get_character(DB.BANDIT_NAME_HINT)
