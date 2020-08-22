@@ -31,8 +31,8 @@ func add_highlight(player_node):
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):
-			return "E: " + get_use_action_text()
+			return "E: " + get_use_action_text(player_node)
 	return ""
 
-func get_use_action_text():
+func get_use_action_text(player_node):
 	return tr("ACTION_USE")
