@@ -21,7 +21,7 @@ func use(player_node, camera_node):
 	if Engine.editor_hint:
 		return
 	for name_hint in conversations.keys():
-		if conversations[name_hint].empty() or not game_state.party[name_hint]:
+		if conversations[name_hint].empty() or not game_state.is_in_party(name_hint):
 			continue
 		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
 		for i in range(conversations_for_name.size()):
@@ -40,7 +40,7 @@ func add_highlight(player_node):
 	if Engine.editor_hint:
 		return ""
 	for name_hint in conversations.keys():
-		if conversations[name_hint].empty() or not game_state.party[name_hint]:
+		if conversations[name_hint].empty() or not game_state.is_in_party(name_hint):
 			continue
 		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
 		for i in range(conversations_for_name.size()):
