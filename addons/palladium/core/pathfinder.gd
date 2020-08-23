@@ -302,7 +302,7 @@ func update_state(data : PLDMovementData, in_party):
 		if rest_state != rest_state_new:
 			rest_state = rest_state_new
 			emit_signal("rest_state_changed", self, rest_state, rest_state_new)
-	if data.has_signal():
+	if data.has_sgnl():
 		emit_signal(data.get_signal(), self, target_node)
 
 func _on_character_dead(player):

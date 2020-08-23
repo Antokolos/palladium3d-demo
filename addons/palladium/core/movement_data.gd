@@ -43,7 +43,7 @@ func has_rotation_angle():
 func has_rotation_angle_to_target_deg():
 	return data.has("rotation_angle_to_target_deg")
 
-func has_signal():
+func has_sgnl():
 	return data.has("sgnl")
 
 func get_dir():
@@ -62,7 +62,7 @@ func get_rotation_angle_to_target_deg():
 	return data["rotation_angle_to_target_deg"] if has_rotation_angle_to_target_deg() else 0
 
 func get_signal():
-	return data["sgnl"] if has_signal() else null
+	return data["sgnl"] if has_sgnl() else null
 
 func clear_dir():
 	data.erase("dir")
