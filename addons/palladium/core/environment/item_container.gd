@@ -8,7 +8,6 @@ export var path_collision_closed = "closed_door"
 export var path_collision_opened = "opened_door"
 export var path_animation_player = "apatha_chest/apatha_chest_armature_lid/AnimationPlayer"
 export var path_animation_player_base = "apatha_chest/apatha_chest_armature_base/AnimationPlayer"
-export var path_door_mesh = ""
 export var surface_idx_door = 0
 export var anim_name = "Armature.010Action.003"
 
@@ -17,7 +16,6 @@ onready var animation_player_base = get_node(path_animation_player_base) if has_
 var blocker_node
 var collision_closed
 var collision_opened
-onready var door_mesh = get_node(path_door_mesh)
 
 func _ready():
 	animation_player.connect("animation_finished", self, "_on_animation_finished")
