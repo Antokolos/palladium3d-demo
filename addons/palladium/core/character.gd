@@ -231,6 +231,9 @@ func set_sprinting(enable):
 
 func reset_movement():
 	.reset_movement()
+	vel.x = 0
+	vel.y = 0
+	vel.z = 0
 	set_sprinting(false)
 
 func reset_rotation():

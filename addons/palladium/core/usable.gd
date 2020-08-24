@@ -8,6 +8,12 @@ const USE_DISTANCE_COMMON = 2
 export(int) var use_distance = USE_DISTANCE_COMMON
 export(DB.UsableIds) var usable_id = DB.UsableIds.NONE
 
+func _ready():
+	game_state.register_usable(self)
+
+func get_usable_id():
+	return usable_id
+
 func get_use_distance():
 	return use_distance
 

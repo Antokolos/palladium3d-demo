@@ -67,6 +67,7 @@ var party = DB.PARTY_DEFAULT.duplicate(true)
 var underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
 var poisoned = DB.POISONED_DEFAULT.duplicate(true)
 var player_paths = {}
+var usable_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 var inventory = DB.INVENTORY_DEFAULT.duplicate(true)
 var quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -102,6 +103,7 @@ func _ready():
 
 func cleanup_paths():
 	player_paths.clear()
+	usable_paths.clear()
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
@@ -160,6 +162,11 @@ func get_characters():
 		if character_node:
 			result.append(character_node)
 	return result
+
+func get_usable(usable_id):
+	if not usable_id or usable_id == DB.UsableIds.NONE:
+		return null
+	return get_node(usable_paths[usable_id])
 
 func get_level():
 	var viewport = get_viewport()
@@ -506,6 +513,12 @@ func register_player(player):
 	player.set_look_transition()
 	emit_signal("player_registered", player)
 
+func register_usable(usable):
+	var usable_id = usable.get_usable_id()
+	if not usable_id or usable_id == DB.UsableIds.NONE:
+		return
+	usable_paths[usable_id] = usable.get_path()
+
 func save_slot_exists(slot):
 	var f = File.new()
 	return f.file_exists("user://saves/slot_%d/state.json" % slot)
@@ -538,6 +551,7 @@ func load_state(slot):
 
 	party = d.party if ("party" in d) else DB.PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
+	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
 	
 	underwater = d.underwater if ("underwater" in d) else DB.UNDERWATER_DEFAULT.duplicate(true)
 	poisoned = d.poisoned if ("poisoned" in d) else DB.POISONED_DEFAULT.duplicate(true)
@@ -623,6 +637,7 @@ func save_state(slot):
 			}
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
+	# usable_paths should not be saved, it must be recreated on level startup via register_usable()
 	var d = {
 		"scene_path" : scene_path,
 		"player_name_hint" : player_name_hint,
