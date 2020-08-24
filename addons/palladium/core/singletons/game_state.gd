@@ -163,10 +163,16 @@ func get_characters():
 			result.append(character_node)
 	return result
 
-func get_usable(usable_id):
+func get_usable_path(usable_id):
 	if not usable_id or usable_id == DB.UsableIds.NONE:
 		return null
-	return get_node(usable_paths[usable_id])
+	return usable_paths[usable_id]
+
+func get_usable(usable_id):
+	var usable_path = get_usable_path(usable_id)
+	if not usable_path:
+		return null
+	return get_node(usable_path)
 
 func get_level():
 	var viewport = get_viewport()

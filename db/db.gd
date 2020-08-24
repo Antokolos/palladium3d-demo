@@ -168,7 +168,8 @@ enum ButtonActivatorIds {
 }
 
 enum UsableIds {
-	NONE = 0
+	NONE = 0,
+	BARN_LOCK = 10
 }
 
 enum TakableIds {

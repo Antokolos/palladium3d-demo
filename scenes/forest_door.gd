@@ -3,20 +3,21 @@ extends PLDUsable
 const STATE_OPENED = 1
 
 onready var anim_player = get_parent().get_node("forest_door_armature001/AnimationPlayer")
-onready var barn_lock_node = get_parent().get_node("barn_lock")
 
 func _ready():
 	restore_state()
 
 func use(player_node, camera_node):
+	var barn_lock_path = game_state.get_usable_path(DB.UsableIds.BARN_LOCK)
 	if anim_player.is_playing() \
 		or game_state.get_multistate_state(get_path()) == STATE_OPENED \
-		or game_state.get_multistate_state(barn_lock_node.get_path()) != BarnLock.STATE_OPENED:
+		or game_state.get_multistate_state(barn_lock_path) != BarnLock.STATE_OPENED:
 		return
 	door_open(true, true)
 
 func add_highlight(player_node):
-	if game_state.get_multistate_state(barn_lock_node.get_path()) == BarnLock.STATE_OPENED:
+	var barn_lock_path = game_state.get_usable_path(DB.UsableIds.BARN_LOCK)
+	if game_state.get_multistate_state(barn_lock_path) == BarnLock.STATE_OPENED:
 		return "E: " + tr("ACTION_OPEN")
 	return ""
 
