@@ -9,6 +9,8 @@ export(int) var use_distance = USE_DISTANCE_COMMON
 export(DB.UsableIds) var usable_id = DB.UsableIds.NONE
 
 func _ready():
+	if Engine.editor_hint:
+		return
 	game_state.register_usable(self)
 
 func get_usable_id():
