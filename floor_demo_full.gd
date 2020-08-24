@@ -333,9 +333,14 @@ func _on_door_state_changed(door_id, opened):
 				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
 
 func _on_arrived_to(player_node, target_node):
+	var tid = target_node.get_instance_id()
+	var oid = get_node("OutPosition").get_instance_id()
+	if tid == oid and not player_node.is_in_party():
+		player_node.set_target_node(null)
+		player_node.set_hidden(true)
+		player_node.deactivate()
 	if game_state.story_vars.apata_chest_rigid <= 0:
 		return
-	var tid = target_node.get_instance_id()
 	var player = game_state.get_character(DB.PLAYER_NAME_HINT)
 	var female = game_state.get_character(DB.FEMALE_NAME_HINT)
 	var piid = get_node("PlayerIntermediatePosition").get_instance_id()
