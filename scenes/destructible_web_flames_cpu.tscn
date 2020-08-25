@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/palladium/shaders/spark_fire.tres" type="Material" id=1]
+
+[sub_resource type="QuadMesh" id=1]
+material = ExtResource( 1 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.48823 ), 0.0, 0.0, 0, 0, Vector2( 0.424702, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.53223 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.859259 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.366211, 0, 1 )
+
+[node name="flames" type="CPUParticles"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.563024, -0.899987, -0.524992 )
+visible = false
+emitting = false
+amount = 48
+speed_scale = 1.3
+randomness = 1.0
+draw_order = 2
+mesh = SubResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_rotate_y = true
+spread = 20.0
+gravity = Vector3( 0, 0, 1 )
+initial_velocity = 0.8
+angular_velocity = 30.0
+angular_velocity_random = 1.0
+linear_accel = 1.0
+radial_accel = 1.0
+radial_accel_random = 1.0
+tangential_accel = 1.0
+damping = 0.6
+damping_random = 1.0
+angle = 360.0
+angle_random = 1.0
+scale_amount = 2.5
+scale_amount_curve = SubResource( 2 )
+color_ramp = SubResource( 3 )

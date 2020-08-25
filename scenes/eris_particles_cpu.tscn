@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/palladium/shaders/fog.tres" type="Material" id=1]
+
+[sub_resource type="QuadMesh" id=1]
+material = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.25, 0.5, 0.75, 1 )
+colors = PoolColorArray( 0.678431, 1, 0.768627, 0, 0.427451, 1, 0.588235, 0.25098, 0.427451, 1, 0.588235, 0.501961, 0.427451, 1, 0.588235, 0.25098, 0.678431, 1, 0.768627, 0 )
+
+[node name="eris_particles" type="CPUParticles"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0 )
+emitting = false
+amount = 10
+lifetime = 5.0
+draw_order = 2
+mesh = SubResource( 1 )
+emission_shape = 2
+emission_box_extents = Vector3( 3, 12, 0.2 )
+spread = 1.0
+gravity = Vector3( 0, 0, -0.5 )
+initial_velocity = 0.75
+angular_velocity = 0.75
+tangential_accel = 1.2
+damping = 1.6
+scale_amount = 6.0
+color_ramp = SubResource( 2 )

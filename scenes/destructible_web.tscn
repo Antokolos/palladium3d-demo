@@ -1,51 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/destructible_web.gd" type="Script" id=1]
 [ext_resource path="res://scenes/spider_web_1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/spider_web_2.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.wav" type="AudioStream" id=4]
 [ext_resource path="res://sound/environment/331621__hykenfreak__flame-ignition.wav" type="AudioStream" id=5]
-[ext_resource path="res://addons/palladium/shaders/spark_fire.tres" type="Material" id=6]
+[ext_resource path="res://scenes/destructible_web_flames.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1, 3.42372, 3.95893 )
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.859259 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 0.366211, 0, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 0.48823 ), 0.0, 0.0, 0, 0, Vector2( 0.424702, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.53223 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-emission_shape = 1
-emission_sphere_radius = 1.0
-flag_rotate_y = true
-spread = 20.0
-gravity = Vector3( 0, 0, 1 )
-initial_velocity = 0.8
-angular_velocity = 30.0
-angular_velocity_random = 1.0
-linear_accel = 1.0
-radial_accel = 1.0
-radial_accel_random = 1.0
-tangential_accel = 1.0
-damping = 0.6
-damping_random = 1.0
-angle = 360.0
-angle_random = 1.0
-scale = 2.5
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
-
-[sub_resource type="QuadMesh" id=7]
-material = ExtResource( 6 )
 
 [node name="destructible_web" type="RigidBody" groups=[
 "restorable_state",
@@ -76,14 +39,5 @@ process_mode = 0
 wait_time = 1.3
 one_shot = true
 
-[node name="flames" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.563024, -0.899987, -0.524992 )
-visible = false
-amount = 48
-speed_scale = 1.3
-randomness = 1.0
-visibility_aabb = AABB( -3, -3, -3, 6, 6, 6 )
-draw_order = 2
-process_material = SubResource( 6 )
-draw_pass_1 = SubResource( 7 )
+[node name="flames" parent="." instance=ExtResource( 6 )]
 [connection signal="timeout" from="DestroyTimer" to="." method="_on_DestroyTimer_timeout"]
