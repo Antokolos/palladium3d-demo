@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/palladium/core/environment/torch_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/torch_wall.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/palladium/core/environment/torch_fire.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/palladium/core/environment/torch_fire_cpu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/palladium/core/environment/torch_light.tscn" type="PackedScene" id=4]
 [ext_resource path="res://sound/environment/torch_fire.ogg" type="AudioStream" id=5]
 [ext_resource path="res://sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.wav" type="AudioStream" id=6]
