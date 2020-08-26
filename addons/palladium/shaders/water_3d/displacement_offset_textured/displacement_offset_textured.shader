@@ -14,6 +14,7 @@ uniform vec2 texture_scale = vec2(8.0, 4.0);
 
 uniform sampler2D normalmap : hint_normal;
 uniform float refraction = 0.05;
+uniform bool use_proximity_fade = true;
 uniform float proximity_fade_distance = 1.1;
 
 float height(vec2 pos, float time) {
@@ -48,15 +49,19 @@ void fragment() {
 	
 	/* It seems that refraction cannot be used together with proximity fade under GLES2 :( */
 	// Refraction
-	vec3 ref_normal = normalize( mix(NORMAL,TANGENT * NORMALMAP.x + BINORMAL * NORMALMAP.y + NORMAL * NORMALMAP.z,NORMALMAP_DEPTH) );
-	vec2 ref_ofs = SCREEN_UV - ref_normal.xy * refraction;
-	EMISSION += textureLod(SCREEN_TEXTURE,ref_ofs,ROUGHNESS * 8.0).rgb * (1.0 - ALPHA);
-	ALBEDO *= ALPHA;
-	ALPHA = 1.0;
+	if (!OUTPUT_IS_SRGB || !use_proximity_fade) {
+		vec3 ref_normal = normalize( mix(NORMAL,TANGENT * NORMALMAP.x + BINORMAL * NORMALMAP.y + NORMAL * NORMALMAP.z,NORMALMAP_DEPTH) );
+		vec2 ref_ofs = SCREEN_UV - ref_normal.xy * refraction;
+		EMISSION += textureLod(SCREEN_TEXTURE,ref_ofs,ROUGHNESS * 8.0).rgb * (1.0 - ALPHA);
+		ALBEDO *= ALPHA;
+		ALPHA = 1.0;
+	}
 	
 	// Proximity fade
-	float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
-	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex*2.0-1.0,1.0);
-	world_pos.xyz/=world_pos.w;
-	ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+	if (use_proximity_fade) {
+		float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
+		vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex*2.0-1.0,1.0);
+		world_pos.xyz/=world_pos.w;
+		ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+	}
 }

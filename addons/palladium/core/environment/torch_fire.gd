@@ -3,6 +3,7 @@ extends Spatial
 onready var flames = $flames
 onready var smoke = $smoke
 onready var simple_mode = false
+onready var extinguish_timer = $ExtinguishTimer
 
 func is_simple_mode():
 	return simple_mode
@@ -25,14 +26,17 @@ func set_simple_mode(enable):
 			_:
 				set_quality_optimal()
 
+func is_cpu_particles():
+	return flames is CPUParticles or smoke is CPUParticles
+
 func enable(enable):
 	flames.emitting = enable
 	smoke.emitting = enable
 	if not enable:
-		if $ExtinguishTimer.is_stopped():
-			$ExtinguishTimer.start()
+		if extinguish_timer.is_stopped() and is_cpu_particles():
+			extinguish_timer.start()
 	else:
-		$ExtinguishTimer.stop()
+		extinguish_timer.stop()
 		visible = true
 		flames.restart()
 		smoke.restart()

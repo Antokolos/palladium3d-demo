@@ -11,7 +11,6 @@ _data = [ Vector2( 0, 0.211965 ), 0.0, 0.0, 0, 0, Vector2( 0.556474, 0.607965 ),
 
 [node name="water_particles" type="CPUParticles"]
 transform = Transform( 0.996096, -3.85877e-009, -0.0882784, -0.0882784, -4.35407e-008, -0.996096, 0, 1, -4.37114e-008, -1.32562, 3.0709, -0.0323716 )
-emitting = false
 amount = 64
 lifetime = 0.6
 speed_scale = 0.35

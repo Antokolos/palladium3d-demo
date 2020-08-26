@@ -18,9 +18,11 @@ func _ready():
 func get_cacheable_items(scn):
 	var result = []
 	if scn is MeshInstance:
-		result.append({"mesh" : scn, "particles": null})
+		result.append({"mesh" : scn, "particles": null, "particles_cpu": null})
 	elif scn is Particles:
-		result.append({"mesh" : null, "particles": scn})
+		result.append({"mesh" : null, "particles": scn, "particles_cpu": null})
+	elif scn is CPUParticles:
+		result.append({"mesh" : null, "particles": null, "particles_cpu": scn})
 
 	for ch in scn.get_children():
 		var items = get_cacheable_items(ch)
@@ -104,6 +106,7 @@ func add_material_meshes(pos, scn):
 	for item in items:
 		var mesh = item["mesh"]
 		var particles = item["particles"]
+		var particles_cpu = item["particles_cpu"]
 		if mesh:
 			# Adding materials from MeshInstance's surfaces, if any
 			var sc = mesh.get_surface_material_count()
@@ -148,6 +151,13 @@ func add_material_meshes(pos, scn):
 			var rid = pmat.get_rid().get_id()
 			if not rids.has(rid):
 				rids[rid] = make_particles(pos, particles.duplicate(Node.DUPLICATE_USE_INSTANCING))
+				self.add_child(rids[rid])
+				pos = next_pos(pos)
+		elif particles_cpu:
+			var pmat = particles_cpu.mesh.material
+			var rid = pmat.get_rid().get_id()
+			if not rids.has(rid):
+				rids[rid] = make_particles(pos, particles_cpu.duplicate(Node.DUPLICATE_USE_INSTANCING))
 				self.add_child(rids[rid])
 				pos = next_pos(pos)
 	return pos
