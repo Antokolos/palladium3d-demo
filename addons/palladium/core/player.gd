@@ -83,6 +83,8 @@ func become_player():
 		get_cam().rebuild_exceptions(self)
 		return
 	var player = game_state.get_player()
+	player.deactivate()
+	deactivate()
 	var rotation_helper = get_node("Rotation_Helper")
 	var camera_container = rotation_helper.get_node("Camera")
 	var player_rotation_helper = player.get_node("Rotation_Helper")
@@ -94,11 +96,14 @@ func become_player():
 	player_model.set_simple_mode(false)
 	var model = get_model()
 	model.set_simple_mode(true)
-	player.reset_rotation()
 	game_state.set_player_name_hint(get_name_hint())
 	game_state.set_underwater(self, game_state.is_underwater(get_name_hint()))
 	game_state.set_poisoned(self, game_state.is_poisoned(get_name_hint()))
 	camera.rebuild_exceptions(self)
+	player.reset_movement_and_rotation()
+	reset_movement_and_rotation()
+	player.activate()
+	activate()
 
 func process_rotation(need_to_update_collisions):
 	var result = .process_rotation(need_to_update_collisions)

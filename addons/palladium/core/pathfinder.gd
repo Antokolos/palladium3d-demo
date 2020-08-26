@@ -189,7 +189,7 @@ func follow(in_party, current_transform, next_position):
 				return data \
 					.clear_dir() \
 					.with_rest_state(true) \
-					.with_signal("arrived_to_boundary")
+					.with_signal("arrived_to_boundary", [target_node])
 		data.with_rest_state(false)
 	else:
 		if in_party:
@@ -199,7 +199,7 @@ func follow(in_party, current_transform, next_position):
 				return data \
 					.clear_dir() \
 					.with_rest_state(true) \
-					.with_signal("arrived_to")
+					.with_signal("arrived_to", [target_node])
 	return data
 
 func update_navpath(pstart, pend):
@@ -302,8 +302,7 @@ func update_state(data : PLDMovementData, in_party):
 		if rest_state != rest_state_new:
 			rest_state = rest_state_new
 			emit_signal("rest_state_changed", self, rest_state, rest_state_new)
-	if data.has_sgnl():
-		emit_signal(data.get_signal(), self, target_node)
+	data.emit_sgnl_if_exists(self)
 
 func _on_character_dead(player):
 	deactivate()

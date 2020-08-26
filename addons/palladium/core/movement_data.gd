@@ -24,8 +24,9 @@ func with_rotation_angle_to_target_deg(rotation_angle_to_target_deg):
 	data["rotation_angle_to_target_deg"] = rotation_angle_to_target_deg
 	return self
 
-func with_signal(sgnl):
+func with_signal(sgnl, params):
 	data["sgnl"] = sgnl
+	data["sgnl_params"] = params
 	return self
 
 func has_dir():
@@ -61,8 +62,15 @@ func get_rotation_angle():
 func get_rotation_angle_to_target_deg():
 	return data["rotation_angle_to_target_deg"] if has_rotation_angle_to_target_deg() else 0
 
-func get_signal():
-	return data["sgnl"] if has_sgnl() else null
+func emit_sgnl_if_exists(obj):
+	if not has_sgnl():
+		return null
+	var args = []
+	args.append(data["sgnl"])
+	args.append(obj)
+	for a in data["sgnl_params"]:
+		args.append(a)
+	return obj.callv("emit_signal", args)
 
 func clear_dir():
 	data.erase("dir")
