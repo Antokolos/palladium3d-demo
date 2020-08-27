@@ -2,7 +2,6 @@
 
 [ext_resource path="res://addons/palladium/undersky.tres" type="PanoramaSky" id=1]
 
-
 [resource]
 background_mode = 2
 background_sky = ExtResource( 1 )

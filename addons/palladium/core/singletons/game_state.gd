@@ -345,7 +345,7 @@ func get_quick_items_count():
 			result = result + 1
 	return result
 
-func take(item_id, item_path = null):
+func take(item_id, item_path = null, count = 1):
 	if not is_item_registered(item_id):
 		push_error("Unknown item_id: " + str(item_id))
 		return
@@ -355,25 +355,25 @@ func take(item_id, item_path = null):
 	for quick_item in quick_items:
 		if not quick_item.item_id or quick_item.item_id == DB.TakableIds.NONE:
 			quick_item.item_id = item_id
-			quick_item.count = 1
+			quick_item.count = count
 			emit_signal("item_taken", item_id, quick_item.count, item_path)
 			return
 		if item_id == quick_item.item_id:
-			quick_item.count = quick_item.count + 1
+			quick_item.count = quick_item.count + count
 			emit_signal("item_taken", item_id, quick_item.count, item_path)
 			return
 		maxpos = maxpos + 1
 	if maxpos < DB.MAX_QUICK_ITEMS:
-		quick_items.append({ "item_id" : item_id, "count" : 1 })
-		emit_signal("item_taken", item_id, 1, item_path)
+		quick_items.append({ "item_id" : item_id, "count" : count })
+		emit_signal("item_taken", item_id, count, item_path)
 		return
 	for item in inventory:
 		if item_id == item.item_id:
-			item.count = item.count + 1
+			item.count = item.count + count
 			emit_signal("item_taken", item_id, item.count, item_path)
 			return
-	inventory.append({ "item_id" : item_id, "count" : 1 })
-	emit_signal("item_taken", item_id, 1, item_path)
+	inventory.append({ "item_id" : item_id, "count" : count })
+	emit_signal("item_taken", item_id, count, item_path)
 	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
 
 func remove(item_id, count = 1):
