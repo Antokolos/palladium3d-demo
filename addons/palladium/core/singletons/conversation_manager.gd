@@ -39,6 +39,12 @@ func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = f
 		player.rest()
 		start_conversation(player, conversation_name, null, null, true, cutscene_node, repeatable)
 
+func start_area_conversation_with_companion(conversations_map, repeatable = false):
+	for name_hint in conversations_map.keys():
+		if game_state.is_in_party(name_hint):
+			start_area_conversation(conversations_map[name_hint], repeatable)
+			return
+
 func start_area_conversation(conversation_name, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():

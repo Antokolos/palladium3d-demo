@@ -46,7 +46,10 @@ func use_takable(player_node, takable, parent, was_taken):
 				DB.PedestalIds.ERIS_FLAT:
 					if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED:
 						get_door("door_8").close()
-						conversation_manager.start_area_conversation("015-1_EridaTrap" if game_state.party[DB.FEMALE_NAME_HINT] else "021-1_EridaTrapMax")
+						conversation_manager.start_area_conversation_with_companion({
+							DB.FEMALE_NAME_HINT : "015-1_EridaTrap",
+							DB.BANDIT_NAME_HINT : "021-1_EridaTrapMax"
+						})
 						game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.ACTIVE
 						game_state.set_poisoned(player_node, true)
 						erida_trap_activate()
@@ -90,7 +93,10 @@ func check_demo_finish():
 		if not statue.is_present():
 			return
 	get_door("door_demo").open()
-	conversation_manager.start_area_conversation("019_DemoFinishedXenia" if game_state.party[DB.FEMALE_NAME_HINT] else "022-1_DemoFinishedMax")
+	conversation_manager.start_area_conversation_with_companion({
+		DB.FEMALE_NAME_HINT : "019_DemoFinishedXenia",
+		DB.BANDIT_NAME_HINT : "022-1_DemoFinishedMax"
+	})
 
 func use_pedestal(player_node, pedestal, inventory_item, child_item):
 	var item_id = inventory_item.item_id
@@ -135,13 +141,19 @@ func use_button_activator(player_node, button_activator):
 				var postaments = get_tree().get_nodes_in_group("erida_postaments")
 				for postament in postaments:
 					if not postament.is_state_correct():
-						conversation_manager.start_area_conversation("015-2_EridaError" if game_state.party[DB.FEMALE_NAME_HINT] else "021-2_EridaErrorMax")
+						conversation_manager.start_area_conversation_with_companion({
+							DB.FEMALE_NAME_HINT : "015-2_EridaError",
+							DB.BANDIT_NAME_HINT : "021-2_EridaErrorMax"
+						})
 						erida_trap_increase_sound_volume()
 						$EridaButtonWrong.play()
 						return
 				$EridaButtonCorrect.play()
 				get_door("door_7").open()
-				conversation_manager.start_area_conversation("016_EridaDone" if game_state.party[DB.FEMALE_NAME_HINT] else "021-3_EridaDoneMax")
+				conversation_manager.start_area_conversation_with_companion({
+					DB.FEMALE_NAME_HINT : "016_EridaDone",
+					DB.BANDIT_NAME_HINT : "021-3_EridaDoneMax"
+				})
 				game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.DISABLED
 				game_state.set_poisoned(player_node, false)
 				erida_trap_deactivate()
@@ -235,18 +247,27 @@ func _on_ChooseCompanionArea_body_entered(body):
 			bandit.set_target_node(get_node("OutPosition"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
 		elif game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.DISABLED:
-			conversation_manager.start_area_conversation("018_CorridorTalk" if game_state.party[DB.FEMALE_NAME_HINT] else "022_CorridorTalkMax")
+			conversation_manager.start_area_conversation_with_companion({
+				DB.FEMALE_NAME_HINT : "018_CorridorTalk",
+				DB.BANDIT_NAME_HINT : "022_CorridorTalkMax"
+			})
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
 		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.DISABLED:
-			conversation_manager.start_area_conversation("014_BeforeErida" if game_state.party[DB.FEMALE_NAME_HINT] else "020_BeforeEridaMax")
-		elif game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.DISABLED and game_state.party[DB.FEMALE_NAME_HINT]:
+			conversation_manager.start_area_conversation_with_companion({
+				DB.FEMALE_NAME_HINT : "014_BeforeErida",
+				DB.BANDIT_NAME_HINT : "020_BeforeEridaMax"
+			})
+		elif game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.DISABLED and game_state.is_in_party(DB.FEMALE_NAME_HINT):
 			conversation_manager.start_area_conversation("017_CorridorTraps")
 
 func _on_BeginEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		conversation_manager.start_area_conversation("015_BeginErida" if game_state.party[DB.FEMALE_NAME_HINT] else "021_BeginEridaMax")
+		conversation_manager.start_area_conversation_with_companion({
+			DB.FEMALE_NAME_HINT : "015_BeginErida",
+			DB.BANDIT_NAME_HINT : "021_BeginEridaMax"
+		})
 
 func _on_AresRoomArea_body_entered(body):
 	if body.is_in_group("party") and game_state.is_in_party(DB.FEMALE_NAME_HINT):
