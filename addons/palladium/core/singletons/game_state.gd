@@ -233,6 +233,10 @@ func execute_custom_action(event, item):
 				play_sound(SoundId.LYRE_CORRECT)
 				if story_vars.in_lyre_area:
 					emit_signal("item_used", item.item_id, null)
+				conversation_manager.start_area_conversation_with_companion({
+					DB.FEMALE_NAME_HINT : "076_Mouse_running" if story_vars.in_lyre_area else "075_Nothing_is_happening",
+					DB.BANDIT_NAME_HINT : "087_Mouse_started_running" if story_vars.in_lyre_area else "086-1_Nothing_is_happening"
+				})
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):
