@@ -15,8 +15,9 @@ func _ready():
 	get_tree().call_group("hideouts", "connect_signals", self)
 
 func use_usable(player_node, usable):
-	if not usable is PLDHideout:
-		return
+	pass
+
+func use_hideout(player_node, usable):
 	set_sprinting(false)
 	set_aggressive(false)
 	character_nodes.stop_attack()

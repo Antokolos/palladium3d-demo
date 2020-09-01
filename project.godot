@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
 }, {
+"base": "PLDUsable",
+"class": "PLDDiscussable",
+"language": "GDScript",
+"path": "res://addons/palladium/core/environment/discussable.gd"
+}, {
 "base": "Spatial",
 "class": "PLDDoor",
 "language": "GDScript",
@@ -109,7 +114,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/ui/hud.gd"
 }, {
-"base": "PLDUsable",
+"base": "PLDDiscussable",
 "class": "PLDHideout",
 "language": "GDScript",
 "path": "res://addons/palladium/core/environment/hideout.gd"
@@ -173,11 +178,6 @@ _global_script_classes=[ {
 "class": "PLDPlayerModel",
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
-}, {
-"base": "PLDUsable",
-"class": "PLDReadable",
-"language": "GDScript",
-"path": "res://addons/palladium/core/environment/readable.gd"
 }, {
 "base": "Spatial",
 "class": "PLDRiddle",
@@ -249,6 +249,7 @@ _global_script_class_icons={
 "PLDConversationArea": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
+"PLDDiscussable": "",
 "PLDDoor": "",
 "PLDDoorHinged": "",
 "PLDEnemy": "",
@@ -268,7 +269,6 @@ _global_script_class_icons={
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
-"PLDReadable": "",
 "PLDRiddle": "",
 "PLDRoomEnabler": "",
 "PLDShaderCache": "",
