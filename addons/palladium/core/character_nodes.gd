@@ -93,6 +93,7 @@ func use_weapon(item):
 		var weapon_data = DB.get_weapon_stun_data(item.item_id)
 		if weapon_data.stun_duration > 0:
 			game_state.play_sound(PLDGameState.SoundId.SNAKE_HISS)
+			character.inc_stuns_count()
 			common_utils.set_pause_scene(character, true)
 			stun_timer.start(weapon_data.stun_duration)
 

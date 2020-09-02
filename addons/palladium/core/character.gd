@@ -37,6 +37,8 @@ var is_patrolling = false
 var is_aggressive = false
 var is_crouching = false
 var is_sprinting = false
+var relationship = 0
+var stuns_count = 0
 var has_floor_collision = true
 
 func _ready():
@@ -226,6 +228,21 @@ func set_sprinting(enable):
 		var companions = game_state.get_companions()
 		for companion in companions:
 			companion.set_sprinting(enable)
+
+func get_relationship():
+	return relationship
+
+func set_relationship(relationship):
+	self.relationship = relationship
+
+func get_stuns_count():
+	return stuns_count
+
+func set_stuns_count(stuns_count):
+	self.stuns_count = stuns_count
+
+func inc_stuns_count():
+	stuns_count = stuns_count + 1
 
 ### Player/target following ###
 

@@ -8,6 +8,7 @@ const ACTION_KEY_DEFAULT = "ACTION_DISCUSS"
 export(Dictionary) var conversations = {}
 export(Dictionary) var action_keys = {}
 export(NodePath) var cutscene_node_path = null
+export(bool) var repeatable = true
 
 onready var cutscene_node = get_node(cutscene_node_path) if cutscene_node_path and has_node(cutscene_node_path) else null
 
@@ -41,6 +42,8 @@ func is_conversation_finished_or_not_applicable(player_node):
 		for i in range(conversations_for_name.size()):
 			if not is_conversation_enabled(player_node, name_hint, i):
 				continue
+			if repeatable:
+				return false
 			var conversation = conversations_for_name[i]
 			return conversation_manager.conversation_is_finished(conversation)
 	return true
@@ -58,9 +61,9 @@ func use(player_node, camera_node):
 				continue
 			var conversation = conversations_for_name[i]
 			if cutscene_node:
-				conversation_manager.start_area_cutscene(conversation, cutscene_node, true)
+				conversation_manager.start_area_cutscene(conversation, cutscene_node, repeatable)
 			else:
-				conversation_manager.start_area_conversation(conversation, true)
+				conversation_manager.start_area_conversation(conversation, repeatable)
 			return
 
 func add_highlight(player_node):

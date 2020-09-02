@@ -591,6 +591,12 @@ func load_state(slot):
 			if ("is_crouching" in dd and dd.is_crouching):
 				character.is_crouching = dd.is_crouching
 			
+			if ("relationship" in dd):
+				character.relationship = dd.relationship
+			
+			if ("stuns_count" in dd):
+				character.stuns_count = dd.stuns_count
+			
 			character.set_look_transition()
 			set_underwater(character, is_underwater(name_hint))
 			set_poisoned(character, is_poisoned(name_hint))
@@ -643,7 +649,9 @@ func save_state(slot):
 				] ,
 				"origin" : [o.x, o.y, o.z],
 				"target_path" : t.get_path() if t else null,
-				"is_crouching" : character.is_crouching
+				"is_crouching" : character.is_crouching,
+				"relationship" : character.relationship,
+				"stuns_count" : character.stuns_count
 			}
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
