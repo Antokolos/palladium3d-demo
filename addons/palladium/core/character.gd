@@ -166,8 +166,8 @@ func rest():
 
 func set_look_transition(force = false):
 	if force \
-		or conversation_manager.meeting_is_in_progress(name_hint, DB.PLAYER_NAME_HINT) \
-		or conversation_manager.meeting_is_finished(name_hint, DB.PLAYER_NAME_HINT):
+		or conversation_manager.meeting_is_in_progress(name_hint, CHARS.PLAYER_NAME_HINT) \
+		or conversation_manager.meeting_is_finished(name_hint, CHARS.PLAYER_NAME_HINT):
 		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
 
 func play_cutscene(cutscene_id):

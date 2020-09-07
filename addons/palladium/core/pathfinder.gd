@@ -20,7 +20,7 @@ const ALIGNMENT_RANGE = 0.2
 const USE_DISTANCE_COMMON = 2
 
 export(int) var use_distance = USE_DISTANCE_COMMON
-export var name_hint = DB.PLAYER_NAME_HINT
+export var name_hint = CHARS.PLAYER_NAME_HINT
 export(NodePath) var navigation_path = NodePath("..")
 
 onready var navigation_node = get_node(navigation_path) if navigation_path and has_node(navigation_path) else null

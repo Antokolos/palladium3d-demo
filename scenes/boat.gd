@@ -5,7 +5,7 @@ func _ready():
 	restore_state()
 
 func restore_state():
-	if conversation_manager.meeting_is_finished(DB.FEMALE_NAME_HINT, DB.PLAYER_NAME_HINT):
+	if conversation_manager.meeting_is_finished(CHARS.FEMALE_NAME_HINT, CHARS.PLAYER_NAME_HINT):
 		queue_free()
 
 func _on_meeting_finished(player, target, initiator):

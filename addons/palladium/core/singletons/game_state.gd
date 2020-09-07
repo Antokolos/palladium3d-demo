@@ -60,7 +60,7 @@ var characters_transition_data = {}
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
 var is_transition = false
-var player_name_hint = DB.PLAYER_NAME_HINT
+var player_name_hint = CHARS.PLAYER_NAME_HINT
 var player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
@@ -106,7 +106,7 @@ func cleanup_paths():
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
-	player_name_hint = DB.PLAYER_NAME_HINT
+	player_name_hint = CHARS.PLAYER_NAME_HINT
 	player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 	player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
@@ -214,7 +214,7 @@ func execute_custom_action(event, item):
 				result = true
 				item.remove()
 				var player = game_state.get_player()
-				if is_in_party(DB.FEMALE_NAME_HINT):
+				if is_in_party(CHARS.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
 			DB.TakableIds.ENVELOPE:
 				result = true
@@ -229,8 +229,8 @@ func execute_custom_action(event, item):
 				if story_vars.in_lyre_area:
 					emit_signal("item_used", item.item_id, null)
 				conversation_manager.start_area_conversation_with_companion({
-					DB.FEMALE_NAME_HINT : "076_Mouse_running" if story_vars.in_lyre_area else "075_Nothing_is_happening",
-					DB.BANDIT_NAME_HINT : "087_Mouse_started_running" if story_vars.in_lyre_area else "086-1_Nothing_is_happening"
+					CHARS.FEMALE_NAME_HINT : "076_Mouse_running" if story_vars.in_lyre_area else "075_Nothing_is_happening",
+					CHARS.BANDIT_NAME_HINT : "087_Mouse_started_running" if story_vars.in_lyre_area else "086-1_Nothing_is_happening"
 				})
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
@@ -431,7 +431,7 @@ func set_player_name_hint(name_hint):
 	player_name_hint = name_hint
 
 func kill_party():
-	set_health(DB.PLAYER_NAME_HINT, 0, player_health_max)
+	set_health(CHARS.PLAYER_NAME_HINT, 0, player_health_max)
 
 func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters
@@ -595,14 +595,14 @@ func load_state(slot):
 
 	scene_path = d.scene_path if ("scene_path" in d) else DB.SCENE_PATH_DEFAULT
 	
-	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else DB.PLAYER_NAME_HINT
+	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else CHARS.PLAYER_NAME_HINT
 	player_health_current = int(d.player_health_current) if ("player_health_current" in d) else DB.PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else DB.PLAYER_HEALTH_MAX_DEFAULT
 	player_oxygen_current = int(d.player_oxygen_current) if ("player_oxygen_current" in d) else DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 	player_oxygen_max = int(d.player_oxygen_max) if ("player_oxygen_max" in d) else DB.PLAYER_OXYGEN_MAX_DEFAULT
 
-	emit_signal("health_changed", DB.PLAYER_NAME_HINT, player_health_current, player_health_max)
-	emit_signal("oxygen_changed", DB.PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
+	emit_signal("health_changed", CHARS.PLAYER_NAME_HINT, player_health_current, player_health_max)
+	emit_signal("oxygen_changed", CHARS.PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
 
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()

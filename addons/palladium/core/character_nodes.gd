@@ -175,7 +175,7 @@ func _on_AttackTimer_timeout():
 	if not character.is_activated():
 		return
 	if get_possible_attack_target():
-		game_state.set_health(DB.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
+		game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
 	else:
 		character.stop_cutscene()
 

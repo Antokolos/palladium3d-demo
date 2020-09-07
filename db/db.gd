@@ -10,7 +10,6 @@ const PLAYER_HEALTH_MAX_DEFAULT = 100
 const SUFFOCATION_DAMAGE_RATE = 10
 const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
 const PLAYER_OXYGEN_MAX_DEFAULT = 100
-const PLAYER_NAME_HINT = "player"
 
 static func lookup_takable_from_int(item_id : int):
 	for takable_id in TakableIds:
@@ -85,8 +84,6 @@ static func get_weapon_stun_data(takable_id):
 #}
 
 ### GAME-SPECIFIC PART ###
-const FEMALE_NAME_HINT = "female"
-const BANDIT_NAME_HINT = "bandit"
 
 const STORY_VARS_DEFAULT = {
 	"flashlight_on" : false,
