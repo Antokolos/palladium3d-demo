@@ -30,13 +30,14 @@ export var model_path = ""
 onready var character_nodes = $character_nodes
 
 var vel = Vector3()
-var gravity = GRAVITY_DEFAULT
 
 var is_hidden = false
 var is_patrolling = false
 var is_aggressive = false
 var is_crouching = false
 var is_sprinting = false
+var is_underwater = false
+var is_poisoned = false
 var relationship = 0
 var stuns_count = 0
 var has_floor_collision = true
@@ -44,9 +45,13 @@ var has_floor_collision = true
 func _ready():
 	var model_container = get_node("Model")
 	var model = model_container.get_child(0)  #load(model_path).instance()
-	game_state.connect("player_underwater", self, "set_underwater")
+	game_state.connect("player_underwater", self, "_on_player_underwater")
+	game_state.connect("player_poisoned", self, "_on_player_poisoned")
 	model.connect("character_dead", self, "_on_character_dead")
 	game_state.register_player(self)
+
+func get_gravity():
+	return GRAVITY_UNDERWATER if is_underwater else GRAVITY_DEFAULT
 
 func set_sound_walk(mode):
 	character_nodes.set_sound_walk(mode)
@@ -88,11 +93,28 @@ func get_model():
 
 ### States ###
 
-func set_underwater(player, enable):
+func is_underwater():
+	return is_underwater
+
+func set_underwater(enable):
+	is_underwater = enable
+	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
+
+func _on_player_underwater(player, enable):
 	if player and not equals(player):
 		return
-	gravity = GRAVITY_UNDERWATER if enable else GRAVITY_DEFAULT
-	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
+	set_underwater(enable)
+
+func is_poisoned():
+	return is_poisoned
+
+func set_poisoned(enable):
+	is_poisoned = enable
+
+func _on_player_poisoned(player, enable):
+	if player and not equals(player):
+		return
+	set_poisoned(enable)
 
 func activate():
 	.activate()
@@ -296,7 +318,7 @@ func process_movement(delta, dir):
 		target.y = 0
 	target = target.normalized()
 
-	vel.y -= delta * gravity
+	vel.y -= delta * get_gravity()
 
 	if is_sprinting:
 		target *= MAX_SPRINT_SPEED
@@ -395,9 +417,9 @@ func has_floor_collision():
 	return has_floor_collision or is_on_floor()
 
 func can_jump():
-	return has_floor_collision() or game_state.is_underwater(get_name_hint())
+	return has_floor_collision() or is_underwater()
 
-func do_process(delta, in_party, is_player):
+func do_process(delta, is_player):
 	if not is_activated():
 		return
 	if is_cutscene() or is_dying() or is_dead():
@@ -405,8 +427,8 @@ func do_process(delta, in_party, is_player):
 		return
 	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
-	var movement_data = get_movement_data(in_party, is_player)
-	update_state(movement_data, in_party)
+	var movement_data = get_movement_data(is_player)
+	update_state(movement_data)
 	var movement_process_data = process_movement(delta, movement_data.get_dir())
 	has_floor_collision = movement_process_data.collides_floor
 	var is_moving = movement_process_data.is_walking

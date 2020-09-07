@@ -10,6 +10,7 @@ const TagSeparator = ":"
 const TagParts : int = 2
 const PARTY_VAR_PREFIX : String = "party_"
 const CUTSCENE_VAR_PREFIX : String = "cutscene_"
+const RELATIONSHIP_VAR_PREFIX : String = "relationship_"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
@@ -135,25 +136,28 @@ func _observe_variable(variable_name, new_value) -> void:
 
 func _observe_party(variable_name, new_value) -> void:
 	var v : bool = int(new_value) > 0
-	var party = game_state.party
 	var name_hint = variable_name.substr(PARTY_VAR_PREFIX.length(), variable_name.length())
-	if v and not party[name_hint]:
+	if v and not game_state.is_in_party(name_hint):
 		game_state.join_party(name_hint)
-	elif not v and party[name_hint]:
+	elif not v and game_state.is_in_party(name_hint):
 		game_state.leave_party(name_hint)
 
 func _observe_cutscene(variable_name, new_value) -> void:
 	var v : int = int(new_value)
-	var party = game_state.party
 	var name_hint = variable_name.substr(CUTSCENE_VAR_PREFIX.length(), variable_name.length())
 	var character = game_state.get_character(name_hint)
 	character.play_cutscene(v)
 
+func _observe_relationship(variable_name, new_value) -> void:
+	var v : int = int(new_value)
+	var name_hint = variable_name.substr(RELATIONSHIP_VAR_PREFIX.length(), variable_name.length())
+	var character = game_state.get_character(name_hint)
+	character.set_relationship(v)
+
 func init_variables() -> void:
 	var storyVars : Dictionary = game_state.story_vars
-	var party : Dictionary = game_state.party
 	var keys = storyVars.keys()
-	var party_keys = party.keys()
+	var party_keys = game_state.get_name_hints()
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
 			var palladiumStory : PLDStory = _inkStory[locale]
@@ -164,16 +168,21 @@ func init_variables() -> void:
 					story.remove_variable_observer(self, "_observe_variable", key)
 					story.observe_variable(key, self, "_observe_variable")
 			for party_key in party_keys:
-				var story_key : String = PARTY_VAR_PREFIX + party_key;
-				var cutscene_key : String = CUTSCENE_VAR_PREFIX + party_key;
+				var story_key : String = PARTY_VAR_PREFIX + party_key
+				var cutscene_key : String = CUTSCENE_VAR_PREFIX + party_key
+				var relationship_key : String = RELATIONSHIP_VAR_PREFIX + party_key
 				if story.variables_state.global_variable_exists_with_name(story_key):
-					story.variables_state.set(story_key, party[party_key])
+					story.variables_state.set(story_key, game_state.is_in_party(party_key))
 					story.remove_variable_observer(self, "_observe_party", story_key)
 					story.observe_variable(story_key, self, "_observe_party")
 				if story.variables_state.global_variable_exists_with_name(cutscene_key):
-					story.variables_state.set(cutscene_key, 0)  # No cutscene by default, the cutscene will be activated during dialogue if it will be set to  value > 0
+					story.variables_state.set(cutscene_key, 0)  # No cutscene by default, the cutscene will be activated during dialogue if it will be set to value > 0
 					story.remove_variable_observer(self, "_observe_cutscene", cutscene_key)
 					story.observe_variable(cutscene_key, self, "_observe_cutscene")
+				if story.variables_state.global_variable_exists_with_name(relationship_key):
+					story.variables_state.set(relationship_key, game_state.get_character(party_key).get_relationship())
+					story.remove_variable_observer(self, "_observe_relationship", relationship_key)
+					story.observe_variable(relationship_key, self, "_observe_relationship")
 
 func reset() -> void:
 	for locale in AvailableLocales:

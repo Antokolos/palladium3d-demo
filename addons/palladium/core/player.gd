@@ -23,6 +23,8 @@ func _ready():
 		get_cam_holder().add_child(camera)
 		camera.rebuild_exceptions(self)
 		game_state.set_player_name_hint(get_name_hint())
+		if not game_state.is_loading() and not game_state.is_transition():
+			join_party()
 	get_model().set_simple_mode(initial_player)
 	activate()
 
@@ -72,12 +74,6 @@ func set_simple_mode(enable):
 func remove_item_from_hand():
 	get_model().remove_item_from_hand()
 
-func join_party():
-	game_state.join_party(get_name_hint())
-
-func leave_party():
-	game_state.leave_party(get_name_hint())
-
 func become_player():
 	if is_player():
 		get_cam().rebuild_exceptions(self)
@@ -97,8 +93,8 @@ func become_player():
 	var model = get_model()
 	model.set_simple_mode(true)
 	game_state.set_player_name_hint(get_name_hint())
-	game_state.set_underwater(self, game_state.is_underwater(get_name_hint()))
-	game_state.set_poisoned(self, game_state.is_poisoned(get_name_hint()))
+	game_state.set_underwater(self, is_underwater())
+	game_state.set_poisoned(self, is_poisoned())
 	camera.rebuild_exceptions(self)
 	player.reset_movement_and_rotation()
 	reset_movement_and_rotation()
@@ -197,9 +193,9 @@ func _input(event):
 				elif event.is_action_released("movement_sprint"):
 					set_sprinting(false)
 
-func get_movement_data(in_party, is_player):
+func get_movement_data(is_player):
 	if is_player \
-		and in_party \
+		and is_in_party() \
 		and input_movement_vector.length_squared() > 0 \
 		and not is_movement_disabled() \
 		and not cutscene_manager.is_cutscene():
@@ -210,14 +206,13 @@ func get_movement_data(in_party, is_player):
 			dir_input += cam_xform.basis.x.normalized() * n.x
 			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
 	else:
-		return .get_movement_data(in_party, is_player)
+		return .get_movement_data(is_player)
 
 func _physics_process(delta):
 	if not is_activated():
 		return
-	var in_party = is_in_party()
 	var is_player = is_player()
-	.do_process(delta, in_party, is_player)
+	.do_process(delta, is_player)
 	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
 		character_nodes.play_sound_falling_to_floor()

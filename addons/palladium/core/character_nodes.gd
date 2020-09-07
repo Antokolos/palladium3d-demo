@@ -38,6 +38,8 @@ func _ready():
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
 
 func _on_player_underwater(player, enable):
+	if player and not player.equals(character):
+		return
 	if enable and oxygen_timer.is_stopped():
 		oxygen_timer.start()
 	elif not enable and not oxygen_timer.is_stopped():
@@ -45,6 +47,8 @@ func _on_player_underwater(player, enable):
 		game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
 
 func _on_player_poisoned(player, enable):
+	if player and not player.equals(character):
+		return
 	if enable and poison_timer.is_stopped():
 		poison_timer.start()
 	elif not enable and not poison_timer.is_stopped():

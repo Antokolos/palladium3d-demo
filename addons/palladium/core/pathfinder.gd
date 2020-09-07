@@ -26,6 +26,7 @@ export(NodePath) var navigation_path = NodePath("..")
 onready var navigation_node = get_node(navigation_path) if navigation_path and has_node(navigation_path) else null
 
 var activated = false
+var in_party = false
 var rest_state = true
 var pathfinding_enabled = true
 var target_node = null
@@ -53,7 +54,20 @@ func get_name_hint():
 	return name_hint
 
 func is_in_party():
-	return game_state.is_in_party(name_hint)
+	return in_party
+
+func set_in_party(in_party):
+	self.in_party = in_party
+
+func join_party():
+	clear_path()
+	set_in_party(true)
+	reset_movement_and_rotation()
+
+func leave_party():
+	clear_path()
+	set_in_party(false)
+	reset_movement_and_rotation()
 
 func equals(obj):
 	return obj and (obj.get_instance_id() == self.get_instance_id())
@@ -116,7 +130,7 @@ func set_target_node(node, update_navpath = true):
 		update_navpath(current_position, target_node.get_global_transform().origin)
 
 func get_preferred_target():
-	return target_node if not is_in_party() else (game_state.get_companion() if is_player() else game_state.get_player())
+	return target_node if not in_party else (game_state.get_companion() if is_player() else game_state.get_player())
 
 func get_target_position():
 	var t = get_preferred_target()
@@ -144,7 +158,7 @@ func get_rotation_angle(cur_dir, target_dir):
 	else:
 		return sgn * acos(dot)
 
-func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next_position) -> PLDMovementData:
+func get_follow_parameters(node_to_follow_pos, current_transform, next_position) -> PLDMovementData:
 	var was_moving = not rest_state
 	var current_position = current_transform.origin
 	var cur_dir = current_transform.basis.xform(Z_DIR)
@@ -169,9 +183,9 @@ func get_follow_parameters(in_party, node_to_follow_pos, current_transform, next
 	else:
 		return data.with_rest_state(true)
 
-func follow(in_party, current_transform, next_position):
+func follow(current_transform, next_position):
 	var was_moving = not is_rest_state()
-	var data = get_follow_parameters(in_party, game_state.get_player().get_global_transform().origin, current_transform, next_position)
+	var data = get_follow_parameters(game_state.get_player().get_global_transform().origin, current_transform, next_position)
 	var d = data.get_distance()
 	
 	if not path.empty():
@@ -218,7 +232,7 @@ func get_navpath(pstart, pend):
 func has_path():
 	return not path.empty()
 
-func build_path(target_position, in_party):
+func build_path(target_position):
 	var current_position = get_global_transform().origin
 	var mov_vec = target_position - current_position
 	mov_vec.y = 0
@@ -272,7 +286,7 @@ func get_distance_to_character(character):
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
 
-func get_movement_data(in_party, is_player):
+func get_movement_data(is_player):
 	var data = PLDMovementData.new().with_rest_state(rest_state)
 	if not is_activated():
 		return data
@@ -282,14 +296,14 @@ func get_movement_data(in_party, is_player):
 	var current_transform = get_global_transform()
 	if not is_player or not in_party:
 		var current_position = current_transform.origin
-		build_path(target_position, in_party)
-		return follow(in_party, current_transform, path.front() if path.size() > 0 else target_position)
+		build_path(target_position)
+		return follow(current_transform, path.front() if path.size() > 0 else target_position)
 	elif is_player and cutscene_manager.is_cutscene():
-		return get_follow_parameters(in_party, target_position, current_transform, target_position)
+		return get_follow_parameters(target_position, current_transform, target_position)
 	
 	return data
 
-func update_state(data : PLDMovementData, in_party):
+func update_state(data : PLDMovementData):
 	if data.has_rotation_angle():
 		angle_rad_y = 0
 		if not in_party or not is_rest_state():

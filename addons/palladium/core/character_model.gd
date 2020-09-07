@@ -70,6 +70,9 @@ func do_rest_shot(shot_idx):
 func stop_rest_shot():
 	animation_tree.set("parameters/RestShot/active", false)
 
+func stop_speaking():
+	pass
+
 func is_rest_active():
 	return animation_tree.get("parameters/RestShot/active")
 

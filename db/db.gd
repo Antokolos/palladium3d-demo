@@ -36,17 +36,6 @@ static func get_weapon_stun_data(takable_id):
 	return WEAPONS_STUN[takable_id] if is_weapon_stun(takable_id) else null
 
 ### CODE THAT MUST BE INCLUDED IN THE GAME-SPECIFIC PART ###
-#const PARTY_DEFAULT = {
-#	PLAYER_NAME_HINT : true
-#}
-
-#const UNDERWATER_DEFAULT = {
-#	PLAYER_NAME_HINT : false
-#}
-
-#const POISONED_DEFAULT = {
-#	PLAYER_NAME_HINT : false
-#}
 
 #const STORY_VARS_DEFAULT = {
 #	"flashlight_on" : false
@@ -99,31 +88,11 @@ static func get_weapon_stun_data(takable_id):
 const FEMALE_NAME_HINT = "female"
 const BANDIT_NAME_HINT = "bandit"
 
-const PARTY_DEFAULT = {
-	PLAYER_NAME_HINT : true,
-	FEMALE_NAME_HINT : false,
-	BANDIT_NAME_HINT : false
-}
-
-const UNDERWATER_DEFAULT = {
-	PLAYER_NAME_HINT : false,
-	FEMALE_NAME_HINT : false,
-	BANDIT_NAME_HINT : false
-}
-
-const POISONED_DEFAULT = {
-	PLAYER_NAME_HINT : false,
-	FEMALE_NAME_HINT : false,
-	BANDIT_NAME_HINT : false
-}
-
 const STORY_VARS_DEFAULT = {
 	"flashlight_on" : false,
 	"is_game_start" : true,
 	"in_lyre_area" : false,
 	"apata_chest_rigid" : 0,
-	"relationship_female" : 0,
-	"relationship_bandit" : 0,
 	"apata_trap_stage" : PLDGameState.TrapStages.ARMED,
 	"erida_trap_stage" : PLDGameState.TrapStages.ARMED
 }

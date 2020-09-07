@@ -13,7 +13,7 @@ export(bool) var repeatable = true
 onready var cutscene_node = get_node(cutscene_node_path) if cutscene_node_path and has_node(cutscene_node_path) else null
 
 func _ready():
-	for name_hint in DB.PARTY_DEFAULT.keys():
+	for name_hint in game_state.get_name_hints():
 		if not conversations.has(name_hint):
 			conversations[name_hint] = ""
 		if not action_keys.has(name_hint):

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/minotaur_walk_reverb_short.ogg-9bb412c13798889c706dea70b980e52f.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/minotaur_walk_reverb_short.ogg"
+dest_files=[ "res://.import/minotaur_walk_reverb_short.ogg-9bb412c13798889c706dea70b980e52f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

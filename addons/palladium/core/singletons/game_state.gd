@@ -56,16 +56,15 @@ const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_DIALOGUE_2" : true
 }
 
+var characters_transition_data = {}
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
+var is_transition = false
 var player_name_hint = DB.PLAYER_NAME_HINT
 var player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 var player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
-var party = DB.PARTY_DEFAULT.duplicate(true)
-var underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
-var poisoned = DB.POISONED_DEFAULT.duplicate(true)
 var player_paths = {}
 var usable_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
@@ -112,9 +111,6 @@ func reset_variables():
 	player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 	player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 	player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
-	party = DB.PARTY_DEFAULT.duplicate(true)
-	underwater = DB.UNDERWATER_DEFAULT.duplicate(true)
-	poisoned = DB.POISONED_DEFAULT.duplicate(true)
 	story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = DB.INVENTORY_DEFAULT.duplicate(true)
 	quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -140,10 +136,17 @@ func get_companion(name_hint = null):
 		return companions[0] if companions.size() > 0 else null
 	return get_node(player_paths[name_hint]) if has_character(name_hint) else null
 
+func get_name_hints():
+	var name_hints = []
+	for name_hint in player_paths.keys():
+		name_hints.append(name_hint)
+	return name_hints
+
 func get_companions():
 	var result = []
-	for name_hint in party.keys():
-		if party[name_hint] and name_hint != player_name_hint:
+	for character in get_characters():
+		var name_hint = character.get_name_hint()
+		if character.is_in_party() and name_hint != player_name_hint:
 			var companion_node = get_node(player_paths[name_hint]) if has_character(name_hint) else null
 			if companion_node:
 				result.append(companion_node)
@@ -157,7 +160,7 @@ func get_character(name_hint):
 
 func get_characters():
 	var result = []
-	for name_hint in party.keys():
+	for name_hint in get_name_hints():
 		var character_node = get_node(player_paths[name_hint]) if has_character(name_hint) else null
 		if character_node:
 			result.append(character_node)
@@ -186,21 +189,13 @@ func is_bright():
 	var level = get_level()
 	return level.is_bright() if level else false
 
-func is_underwater(name_hint):
-	return underwater.has(name_hint) and underwater[name_hint]
-
-func is_poisoned(name_hint):
-	return poisoned.has(name_hint) and poisoned[name_hint]
-
 func set_surge(player, enable):
 	emit_signal("player_surge", player, enable)
 
 func set_underwater(player, enable):
-	underwater[player.get_name_hint()] = enable
 	emit_signal("player_underwater", player, enable)
 
 func set_poisoned(player, enable):
-	poisoned[player.get_name_hint()] = enable
 	emit_signal("player_poisoned", player, enable)
 
 func _on_cutscene_finished(player, cutscene_id):
@@ -275,8 +270,10 @@ func handle_player_highlight(initiator, target):
 	var item = hud.get_active_item()
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
-func change_scene(scene_path):
+func change_scene(scene_path, is_transition = false):
 	self.scene_path = scene_path
+	self.is_transition = is_transition
+	characters_transition_data = get_characters_data(false) if is_transition else {}
 	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
 
 func initiate_load(slot):
@@ -298,6 +295,9 @@ func initiate_load(slot):
 
 func is_loading():
 	return slot_to_load_from >= 0
+
+func is_transition():
+	return is_transition
 
 func finish_load():
 	if is_loading():
@@ -503,24 +503,24 @@ func set_message_state(message_key, state):
 		messages[message_key] = state
 
 func is_in_party(name_hint):
-	return party[name_hint] if party.has(name_hint) else false
+	var character = get_character(name_hint)
+	return character and character.is_in_party()
 
 func join_party(name_hint):
 	var character = get_character(name_hint)
-	character.clear_path()
-	party[name_hint] = true
-	character.reset_movement_and_rotation()
+	character.join_party()
 
 func leave_party(name_hint):
 	var character = get_character(name_hint)
-	character.clear_path()
-	party[name_hint] = false
-	character.reset_movement_and_rotation()
+	character.leave_party()
 
 func register_player(player):
-	player_paths[player.name_hint] = player.get_path()
+	var name_hint = player.get_name_hint()
+	player_paths[name_hint] = player.get_path()
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	player.set_look_transition()
+	if characters_transition_data.has(name_hint):
+		set_character_data(characters_transition_data[name_hint], player)
 	emit_signal("player_registered", player)
 
 func register_usable(usable):
@@ -532,6 +532,51 @@ func register_usable(usable):
 func save_slot_exists(slot):
 	var f = File.new()
 	return f.file_exists("user://saves/slot_%d/state.json" % slot)
+
+func set_characters_data(characters_data):
+	for name_hint in characters_data.keys():
+		var dd = characters_data[name_hint]
+		var character = get_character(name_hint)
+		set_character_data(dd, character)
+
+func set_character_data(dd, character):
+	var character_coords = {
+		"basis" : character.get_transform().basis,
+		"origin" : character.get_transform().origin
+	}
+	if ("basis" in dd and (typeof(dd.basis) == TYPE_ARRAY)):
+		var bx = Vector3(dd.basis[0][0], dd.basis[0][1], dd.basis[0][2])
+		var by = Vector3(dd.basis[1][0], dd.basis[1][1], dd.basis[1][2])
+		var bz = Vector3(dd.basis[2][0], dd.basis[2][1], dd.basis[2][2])
+		character_coords.basis = Basis(bx, by, bz)
+	
+	if ("origin" in dd and (typeof(dd.origin) == TYPE_ARRAY)):
+		character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
+	
+	character.set_transform(Transform(character_coords.basis, character_coords.origin))
+	
+	if ("in_party" in dd):
+		character.set_in_party(dd.in_party)
+	
+	if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
+		character.set_target_node(get_node(dd.target_path))
+	
+	if ("is_crouching" in dd and dd.is_crouching):
+		character.is_crouching = dd.is_crouching
+	
+	if ("is_underwater" in dd):
+		set_underwater(character, dd.is_underwater)
+	
+	if ("is_poisoned" in dd):
+		set_poisoned(character, dd.is_poisoned)
+	
+	if ("relationship" in dd):
+		character.relationship = dd.relationship
+	
+	if ("stuns_count" in dd):
+		character.stuns_count = dd.stuns_count
+	
+	character.set_look_transition()
 
 func load_state(slot):
 	var hud = get_hud()
@@ -559,47 +604,11 @@ func load_state(slot):
 	emit_signal("health_changed", DB.PLAYER_NAME_HINT, player_health_current, player_health_max)
 	emit_signal("oxygen_changed", DB.PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
 
-	party = d.party if ("party" in d) else DB.PARTY_DEFAULT.duplicate(true)
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
 	
-	underwater = d.underwater if ("underwater" in d) else DB.UNDERWATER_DEFAULT.duplicate(true)
-	poisoned = d.poisoned if ("poisoned" in d) else DB.POISONED_DEFAULT.duplicate(true)
-	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
-		for name_hint in d.characters.keys():
-			var dd = d.characters[name_hint]
-			var character = get_character(name_hint)
-			var character_coords = {
-				"basis" : character.get_transform().basis,
-				"origin" : character.get_transform().origin
-			}
-			if ("basis" in dd and (typeof(dd.basis) == TYPE_ARRAY)):
-				var bx = Vector3(dd.basis[0][0], dd.basis[0][1], dd.basis[0][2])
-				var by = Vector3(dd.basis[1][0], dd.basis[1][1], dd.basis[1][2])
-				var bz = Vector3(dd.basis[2][0], dd.basis[2][1], dd.basis[2][2])
-				character_coords.basis = Basis(bx, by, bz)
-			
-			if ("origin" in dd and (typeof(dd.origin) == TYPE_ARRAY)):
-				character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
-			
-			character.set_transform(Transform(character_coords.basis, character_coords.origin))
-			
-			if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
-				character.set_target_node(get_node(dd.target_path))
-			
-			if ("is_crouching" in dd and dd.is_crouching):
-				character.is_crouching = dd.is_crouching
-			
-			if ("relationship" in dd):
-				character.relationship = dd.relationship
-			
-			if ("stuns_count" in dd):
-				character.stuns_count = dd.stuns_count
-			
-			character.set_look_transition()
-			set_underwater(character, is_underwater(name_hint))
-			set_poisoned(character, is_poisoned(name_hint))
+		set_characters_data(d.characters)
 
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
@@ -626,6 +635,37 @@ func autosave_create():
 func autosave_restore():
 	return initiate_load(0)
 
+func get_characters_data(full_save):
+	var characters = {}
+	for character in get_characters():
+		var name_hint = character.get_name_hint()
+		characters[name_hint] = get_character_data(character, full_save)
+	return characters
+
+func get_character_data(character, full_save):
+	var p = character.is_in_party()
+	var result = {
+		"in_party" : p,
+		"is_crouching" : character.is_crouching(),
+		"is_underwater" : character.is_underwater(),
+		"is_poisoned" : character.is_poisoned(),
+		"relationship" : character.get_relationship(),
+		"stuns_count" : character.get_stuns_count()
+	}
+	if not full_save:
+		return result
+	var t = character.get_target_node()
+	var b = t.get_transform().basis if t and not p else character.get_transform().basis
+	var o = t.get_transform().origin if t and not p else character.get_transform().origin
+	result["basis"] = [
+		[b.x.x, b.x.y, b.x.z],
+		[b.y.x, b.y.y, b.y.z],
+		[b.z.x, b.z.y, b.z.z]
+	]
+	result["origin"] = [o.x, o.y, o.z]
+	result["target_path"] = t.get_path() if t else null
+	return result
+
 func save_state(slot):
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/state.json" % slot, File.WRITE)
@@ -633,26 +673,7 @@ func save_state(slot):
 	
 	story_node.save_all(slot)
 	
-	var characters = {}
-	for name_hint in party.keys():
-		var character = get_character(name_hint)
-		if character:
-			var t = character.get_target_node()
-			var p = is_in_party(name_hint)
-			var b = t.get_transform().basis if t and not p else character.get_transform().basis
-			var o = t.get_transform().origin if t and not p else character.get_transform().origin
-			characters[name_hint] = {
-				"basis" : [
-					[b.x.x, b.x.y, b.x.z],
-					[b.y.x, b.y.y, b.y.z],
-					[b.z.x, b.z.y, b.z.z]
-				] ,
-				"origin" : [o.x, o.y, o.z],
-				"target_path" : t.get_path() if t else null,
-				"is_crouching" : character.is_crouching,
-				"relationship" : character.relationship,
-				"stuns_count" : character.stuns_count
-			}
+	var characters = get_characters_data(true)
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
 	# usable_paths should not be saved, it must be recreated on level startup via register_usable()
@@ -663,9 +684,6 @@ func save_state(slot):
 		"player_health_max" : player_health_max,
 		"player_oxygen_current" : player_oxygen_current,
 		"player_oxygen_max" : player_oxygen_max,
-		"party" : party,
-		"underwater" : underwater,
-		"poisoned" : poisoned,
 		"characters" : characters,
 		"story_vars" : story_vars,
 		"inventory" : inventory,

@@ -110,7 +110,7 @@ func set_states(player):
 		set_sprinting(false)
 
 func _physics_process(delta):
-	.do_process(delta, false, false)
+	.do_process(delta, false)
 	if not is_activated():
 		return
 	set_states(get_nearest_party_member())
