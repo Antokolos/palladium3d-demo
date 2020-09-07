@@ -140,6 +140,7 @@ enum UsableIds {
 
 enum TakableIds {
 	NONE = 0,
+	CELL_PHONE = 5,
 	COIN = 10,
 	FLASK_EMPTY = 20,
 	FLASK_HEALING = 30,
@@ -161,12 +162,14 @@ enum TakableIds {
 
 const INVENTORY_DEFAULT = []
 const QUICK_ITEMS_DEFAULT = [
+	{ "item_id" : TakableIds.CELL_PHONE, "count" : 1 },
 	{ "item_id" : TakableIds.ISLAND_MAP, "count" : 1 },
 	{ "item_id" : TakableIds.FLASK_EMPTY, "count" : 1 },
 	{ "item_id" : TakableIds.BUN, "count" : 1 }
 ]
 
 const ITEMS = {
+	TakableIds.CELL_PHONE : { "item_nam" : "cell_phone", "item_image" : "cell_phone.png", "model_path" : "res://assets/cell_phone.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.COIN : { "item_nam" : "coin", "item_image" : "coin.png", "model_path" : "res://assets/coin.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_EMPTY : { "item_nam" : "flask_empty", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_HEALING : { "item_nam" : "flask_healing", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "can_give" : false, "custom_actions" : ["item_preview_action_1"] },

@@ -13,6 +13,8 @@ func use(player_node, camera_node):
 		or game_state.get_multistate_state(get_path()) == STATE_OPENED \
 		or game_state.get_multistate_state(barn_lock_path) != BarnLock.STATE_OPENED:
 		return
+	if game_state.has_item(DB.TakableIds.ISLAND_MAP_2):
+		game_state.remove(DB.TakableIds.ISLAND_MAP_2)
 	door_open(true, true)
 
 func add_highlight(player_node):

@@ -124,6 +124,10 @@ func reset_variables():
 func get_hud():
 	return get_node("/root/HUD/hud")
 
+func get_active_item():
+	var hud = game_state.get_hud()
+	return hud.get_active_item() if hud else null
+
 func get_viewport():
 	return get_node("/root/HUD/ViewportContainer/Viewport")
 
@@ -224,6 +228,8 @@ func execute_custom_action(event, item):
 			DB.TakableIds.LYRE_SNAKE, DB.TakableIds.LYRE_SPIDER:
 				play_sound(SoundId.LYRE_WRONG)
 				kill_party()
+			DB.TakableIds.AIR_TANK:
+				game_state.set_oxygen(CHARS.PLAYER_NAME_HINT, game_state.player_oxygen_max, game_state.player_oxygen_max)
 			DB.TakableIds.LYRE_RAT:
 				play_sound(SoundId.LYRE_CORRECT)
 				if story_vars.in_lyre_area:

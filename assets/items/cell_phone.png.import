@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/cell_phone.png-ada62b22637e77a2b0df2a6f17a9ffd1.image"
+
+[deps]
+
+source_file="res://assets/items/cell_phone.png"
+dest_files=[ "res://.import/cell_phone.png-ada62b22637e77a2b0df2a6f17a9ffd1.image" ]
+
+[params]
+
