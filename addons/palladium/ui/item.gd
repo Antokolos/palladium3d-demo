@@ -55,6 +55,9 @@ func set_item_data(item_id, item_count):
 func is_empty():
 	return not item_id or item_id == DB.TakableIds.NONE
 
+func has_item_id(item_id):
+	return self.item_id and self.item_id == item_id
+
 func clear_item():
 	self.item_id = null
 	self.item_image = null

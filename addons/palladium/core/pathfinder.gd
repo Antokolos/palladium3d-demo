@@ -87,6 +87,7 @@ func activate():
 	var rest_state_prev = rest_state
 	activated = true
 	rest_state = false
+	reset_movement_and_rotation()
 	if activated_prev != activated:
 		emit_signal("activated_changed", self, activated_prev, activated)
 	if rest_state_prev != rest_state:

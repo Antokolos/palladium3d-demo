@@ -96,8 +96,6 @@ func become_player():
 	game_state.set_underwater(self, is_underwater())
 	game_state.set_poisoned(self, is_poisoned())
 	camera.rebuild_exceptions(self)
-	player.reset_movement_and_rotation()
-	reset_movement_and_rotation()
 	player.activate()
 	activate()
 
@@ -126,7 +124,7 @@ func get_snap():
 	return Vector3.ZERO if is_in_jump else Vector3.UP
 
 func _input(event):
-	if not is_player():
+	if not is_player() or not is_activated():
 		return
 	var hud = game_state.get_hud()
 	var conversation = hud.conversation
