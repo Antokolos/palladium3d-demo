@@ -26,12 +26,17 @@ func action(player_node, camera_node):
 		return
 	inst.action(player_node, camera_node)
 
-func walk_initiate():
+func walk_initiate(player_node, camera_node):
 	if not inst is PLDItemInUse:
 		return
-	inst.walk_initiate()
+	inst.walk_initiate(player_node, camera_node)
 
-func walk_stop():
+func walk_stop(player_node, camera_node):
 	if not inst is PLDItemInUse:
 		return
-	inst.walk_stop()
+	inst.walk_stop(player_node, camera_node)
+
+func process_rotation(player_node, camera_node):
+	if not inst is PLDItemInUse:
+		return
+	inst.process_rotation(player_node, camera_node)

@@ -202,18 +202,20 @@ func get_movement_data(is_player):
 			var n = input_movement_vector.normalized()
 			dir_input += -cam_xform.basis.z.normalized() * n.y
 			dir_input += cam_xform.basis.x.normalized() * n.x
-			get_cam().walk_initiate()
+			get_cam().walk_initiate(self)
 			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
 	else:
 		if is_player:
-			get_cam().walk_stop()
+			get_cam().walk_stop(self)
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):
 	if not is_activated():
 		return
 	var is_player = is_player()
-	.do_process(delta, is_player)
+	var d = .do_process(delta, is_player)
+	if is_player and d.is_rotating:
+		get_cam().process_rotation(self)
 	if has_floor_collision() and is_in_jump:
 		is_in_jump = false
 		character_nodes.play_sound_falling_to_floor()

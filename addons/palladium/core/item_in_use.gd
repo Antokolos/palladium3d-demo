@@ -24,7 +24,7 @@ func action(player_node, camera_node):
 	item_player.play(item_action_anim)
 	hand_player.play(hand_action_anim)
 
-func walk_initiate():
+func walk_initiate(player_node, camera_node):
 	if is_walking:
 		return
 	is_walking = true
@@ -33,10 +33,16 @@ func walk_initiate():
 	if hand_walking_anim and not hand_walking_anim.empty():
 		hand_player.play(hand_walking_anim)
 
-func walk_stop():
+func walk_stop(player_node, camera_node):
 	if not is_walking:
 		return
 	is_walking = false
+
+func process_rotation(player_node, camera_node):
+	pass
+
+func is_walking():
+	return is_walking
 
 func _on_hand_player_animation_finished(anim_name):
 	pass

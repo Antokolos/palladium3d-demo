@@ -420,29 +420,31 @@ func can_jump():
 	return has_floor_collision() or is_underwater()
 
 func do_process(delta, is_player):
+	var d = { "is_moving" : false, "is_rotating" : false }
 	if not is_activated():
-		return
+		return d
 	if is_cutscene() or is_dying() or is_dead():
 		has_floor_collision = true
-		return
+		return d
 	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
 	var movement_process_data = process_movement(delta, movement_data.get_dir())
 	has_floor_collision = movement_process_data.collides_floor
-	var is_moving = movement_process_data.is_walking
-	var is_rotating = process_rotation(not is_moving and is_player)
-	if is_moving:
+	d.is_moving = movement_process_data.is_walking
+	d.is_rotating = process_rotation(not d.is_moving and is_player)
+	if d.is_moving:
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
 	if not is_visible_to_player():
-		return
+		return d
 	var model = get_model()
 	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
-	if is_moving or is_rotating:
+	if d.is_moving or d.is_rotating:
 		character_nodes.stop_rest_timer()
 		model.walk(is_crouching, is_sprinting)
 	else:
 		character_nodes.start_rest_timer()
+	return d

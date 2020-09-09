@@ -112,11 +112,14 @@ func change_culling():
 func activate_item_use(item):
 	item_use.activate_item(item)
 
-func walk_initiate():
-	item_use.walk_initiate()
+func walk_initiate(player_node):
+	item_use.walk_initiate(player_node, self)
 
-func walk_stop():
-	item_use.walk_stop()
+func walk_stop(player_node):
+	item_use.walk_stop(player_node, self)
+
+func process_rotation(player_node):
+	item_use.process_rotation(player_node, self)
 
 func restore_state():
 	if game_state.story_vars.flashlight_on:
