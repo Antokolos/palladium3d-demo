@@ -1,7 +1,6 @@
 extends Spatial
 
-export var text_en = "Text"
-export var text_ru = "Текст"
+export var text = "Text"
 export var width = 1
 export var height = 1
 export var pixels_size = 800
@@ -22,10 +21,8 @@ func _ready():
 	label.get("custom_fonts/font").set_size(font_size)
 	label.set("custom_colors/font_color", font_color)
 	#label.set("custom_colors/font_color_shadow", font_color_shadow)
-	match (settings.language):
-		settings.LANGUAGE_EN:
-			label.text = text_en
-		settings.language_RU:
-			label.text = text_ru
-		_:
-			label.text = text_en
+	set_text(text)
+
+func set_text(text):
+	self.text = text
+	label.text = tr(text)

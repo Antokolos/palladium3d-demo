@@ -202,8 +202,11 @@ func get_movement_data(is_player):
 			var n = input_movement_vector.normalized()
 			dir_input += -cam_xform.basis.z.normalized() * n.y
 			dir_input += cam_xform.basis.x.normalized() * n.x
+			get_cam().walk_initiate()
 			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
 	else:
+		if is_player:
+			get_cam().walk_stop()
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):

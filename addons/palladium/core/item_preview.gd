@@ -26,35 +26,36 @@ func is_opened():
 	return item_holder_node.get_child_count() > 0
 
 func open_preview(item, hud, flashlight):
-	if item:
-		self.item = item
-		self.hud = hud
-		self.flashlight = flashlight
-		self.inst = item.get_model_instance()
-		for ch in item_holder_node.get_children():
-			ch.queue_free()
-		common_utils.shadow_casting_enable(inst, false)
-		item_holder_node.add_child(inst)
-		var aabb = item.get_aabb(inst)
-		var vm = min(vmin(coord_div(MAX_SIZE, aabb.size)), MAX_SIZE.x)
-		inst.scale_object_local(Vector3(vm, vm, vm))
-		hud.inventory.visible = false
-		#hud.dimmer.visible = true
-		flashlight_visible = flashlight.is_visible_in_tree()
-		flashlight.show()
-		var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
-		label_close_node.text = common_utils.get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
-		var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
-		for ch in custom_actions_node.get_children():
-			ch.queue_free()
-		custom_actions = game_state.get_custom_actions(item)
-		for act in custom_actions:
-			var ch = label_close_node.duplicate(0)
-			ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
-			custom_actions_node.add_child(ch)
-		get_tree().paused = true
-		hud.show_game_ui(false)
-		hud.actions_panel.show()
+	if not item:
+		return
+	self.item = item
+	self.hud = hud
+	self.flashlight = flashlight
+	self.inst = item.get_model_instance()
+	for ch in item_holder_node.get_children():
+		ch.queue_free()
+	common_utils.shadow_casting_enable(inst, false)
+	item_holder_node.add_child(inst)
+	var aabb = item.get_aabb(inst)
+	var vm = min(vmin(coord_div(MAX_SIZE, aabb.size)), MAX_SIZE.x)
+	inst.scale_object_local(Vector3(vm, vm, vm))
+	hud.inventory.visible = false
+	#hud.dimmer.visible = true
+	flashlight_visible = flashlight.is_visible_in_tree()
+	flashlight.show()
+	var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
+	label_close_node.text = common_utils.get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
+	var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
+	for ch in custom_actions_node.get_children():
+		ch.queue_free()
+	custom_actions = game_state.get_custom_actions(item)
+	for act in custom_actions:
+		var ch = label_close_node.duplicate(0)
+		ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
+		custom_actions_node.add_child(ch)
+	get_tree().paused = true
+	hud.show_game_ui(false)
+	hud.actions_panel.show()
 
 func _input(event):
 	if item_holder_node.get_child_count() > 0:

@@ -10,6 +10,7 @@ var item_id = null
 var item_image = null
 var item_count = 1
 var model_path = null
+var model_use_path = null
 var is_quick_item = false
 
 func _ready():
@@ -39,6 +40,7 @@ func set_item_data(item_id, item_count):
 	self.item_count = item_count
 	self.item_image = item_data.item_image
 	self.model_path = item_data.model_path
+	self.model_use_path = item_data.model_use_path
 	var image_file = "res://assets/items/%s" % item_image
 	var image = load(image_file)
 	var texture = ImageTexture.new()
@@ -62,6 +64,7 @@ func clear_item():
 	self.item_id = null
 	self.item_image = null
 	self.model_path = null
+	self.model_use_path = null
 	get_node("ItemBox/TextureRect").texture = null
 	get_node("ItemBox/LabelDesc").text = ""
 
@@ -99,6 +102,10 @@ func get_aabb(inst):
 
 func get_model_instance():
 	var instance = load(model_path) if model_path else null
+	return instance.instance() if instance else null
+
+func get_model_use_instance():
+	var instance = load(model_use_path) if model_use_path else null
 	return instance.instance() if instance else null
 
 func remove():

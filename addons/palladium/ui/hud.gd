@@ -344,11 +344,22 @@ func set_active_item(item_idx):
 		select_active_item()
 	return valid
 
+func activate_item_use(item):
+	var player = game_state.get_player()
+	if not player:
+		return
+	var cam = player.get_cam()
+	if not cam:
+		return
+	cam.activate_item_use(item)
+
 func select_active_quick_item():
 	var items = quick_items_panel.get_children()
 	if items.empty():
 		return
 	var idx = 0
+	if active_quick_item_idx < items.size():
+		activate_item_use(items[active_quick_item_idx])
 	for item in items:
 		var is_active = idx == active_quick_item_idx
 		items[idx].set_selected(is_active)

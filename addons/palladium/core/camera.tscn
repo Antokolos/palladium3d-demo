@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/palladium/env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=2]
@@ -6,8 +6,9 @@
 [ext_resource path="res://addons/palladium/core/use_point.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/palladium/core/shader_cache.gd" type="Script" id=5]
 [ext_resource path="res://addons/palladium/core/item_preview.gd" type="Script" id=6]
-[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=7]
-[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=8]
+[ext_resource path="res://addons/palladium/core/item_use.gd" type="Script" id=7]
+[ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=8]
+[ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=9]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.05, 0.05, 0.05 )
@@ -58,6 +59,12 @@ script = ExtResource( 6 )
 
 [node name="item_holder" type="Spatial" parent="viewpoint/item_preview"]
 
+[node name="item_use" type="Spatial" parent="viewpoint"]
+script = ExtResource( 7 )
+
+[node name="item_holder" type="Spatial" parent="viewpoint/item_use"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250116, 0, 0.5 )
+
 [node name="Flashlight" type="Spatial" parent="."]
 transform = Transform( -1, -8.74228e-008, 0, 8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.8 )
 visible = false
@@ -84,9 +91,9 @@ shadow_bias = 0.3
 omni_range = 1.5
 
 [node name="AudioStreamFlashlightOn" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 8 )
 bus = "Sound"
 
 [node name="AudioStreamFlashlightOff" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 9 )
 bus = "Sound"

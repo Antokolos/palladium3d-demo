@@ -3,6 +3,7 @@ extends Spatial
 onready var ray_items = $RayCastItems
 onready var ray_characters = $RayCastCharacters
 var action_body = null
+var use_distance = 0
 
 func rebuild_exceptions(player_node):
 	ray_items.clear_exceptions()
@@ -75,12 +76,14 @@ func highlight(player_node):
 
 func ray_highlight(ray, player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
+	var body = null
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())
-		var body = ray.get_collider()
-		if player_node.equals(body):
-			return switch_highlight(player_node, null, 0)
-		else:
-			return switch_highlight(player_node, body, collision_vec.length())
+		body = ray.get_collider()
+		use_distance = 0 if player_node.equals(body) else collision_vec.length()
 	else:
-		return switch_highlight(player_node, null, 0)
+		use_distance = 0
+	return switch_highlight(player_node, body, use_distance)
+
+func get_use_distance():
+	return use_distance

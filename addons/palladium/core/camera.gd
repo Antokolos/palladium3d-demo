@@ -13,6 +13,7 @@ onready var env_high = preload("res://addons/palladium/env_high.tres")
 onready var culling_rays = get_node("culling_rays") if has_node("culling_rays") else null
 onready var shader_cache = get_node("viewpoint/shader_cache") if has_node("viewpoint/shader_cache") else null
 onready var item_preview = get_node("viewpoint/item_preview") if has_node("viewpoint/item_preview") else null
+onready var item_use = get_node("viewpoint/item_use") if has_node("viewpoint/item_use") else null
 
 var sky_outside
 var sky_inside
@@ -32,6 +33,9 @@ func rebuild_exceptions(player_node):
 
 func enable_use(enable):
 	use_point.enable(enable)
+
+func get_use_distance():
+	return use_point.get_use_distance()
 
 # Settings applied in the following way will be loaded after game restart
 # see https://github.com/godotengine/godot/issues/30087
@@ -105,6 +109,15 @@ func change_culling():
 	if culling_rays:
 		self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
 
+func activate_item_use(item):
+	item_use.activate_item(item)
+
+func walk_initiate():
+	item_use.walk_initiate()
+
+func walk_stop():
+	item_use.walk_stop()
+
 func restore_state():
 	if game_state.story_vars.flashlight_on:
 		flashlight.show()
@@ -143,4 +156,5 @@ func _input(event):
 				item_preview.open_preview(item, hud, flashlight)
 	elif event.is_action_pressed("action"):
 		use_point.action(player, self)
+		item_use.action(player, self)
 		get_tree().set_input_as_handled()
