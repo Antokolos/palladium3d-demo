@@ -4,6 +4,7 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx;
 
 // Proximity fade
 uniform float proximity_fade_distance = 0.5;

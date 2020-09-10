@@ -31,6 +31,8 @@ func _on_conversation_area_body_entered(body):
 			if not is_conversation_enabled(name_hint, i):
 				continue
 			var conversation = conversations_for_name[i]
+			if conversation_manager.conversation_is_finished(conversation):
+				continue
 			if cutscene_node:
 				conversation_manager.start_area_cutscene(conversation, cutscene_node, repeatable)
 			else:
