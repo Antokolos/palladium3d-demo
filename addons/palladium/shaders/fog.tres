@@ -4,7 +4,7 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
-render_mode blend_mix,cull_disabled,diffuse_burley,specular_schlick_ggx;
+render_mode blend_add,cull_disabled,diffuse_burley,specular_schlick_ggx;
 
 // Proximity fade
 uniform float proximity_fade_distance = 0.5;
@@ -14,6 +14,7 @@ uniform vec2 normalmap_scale = vec2(0.5, 0.5);
 uniform sampler2D normalmap : hint_normal;
 
 uniform bool is_billboard = true;
+uniform vec4 base_color : hint_color = vec4(0.678, 1.0, 0.768, 1.0);
 
 void vertex() {
 	// Particle billboard mode
@@ -25,7 +26,7 @@ void vertex() {
 }
 
 void fragment() {
-	ALBEDO = COLOR.rgb;
+	ALBEDO = COLOR.rgb * base_color.rgb;
 	METALLIC = 0.0;
 	ROUGHNESS = 0.9;
 	NORMALMAP = texture(normalmap, UV * normalmap_scale).rgb;
@@ -38,7 +39,7 @@ void fragment() {
 		ALPHA = 0.0;
 	} else {
 		// If it is inside the circle, the ALPHA is determined by how far from the center it is
-		ALPHA = circ * COLOR.a;
+		ALPHA = circ * COLOR.a * base_color.a;
 	}
 	
 	// Proximity fade
@@ -49,8 +50,10 @@ void fragment() {
 }"
 
 [resource]
+render_priority = 1
 shader = SubResource( 1 )
 shader_param/proximity_fade_distance = 0.5
 shader_param/normalmap_scale = Vector2( 0.5, 0.5 )
 shader_param/is_billboard = true
+shader_param/base_color = Color( 0.678, 1, 0.768, 1 )
 shader_param/normalmap = ExtResource( 1 )

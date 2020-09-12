@@ -1,0 +1,45 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://addons/palladium/shaders/water_3d/textures/water_normal.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode blend_mix,cull_disabled,diffuse_burley,specular_schlick_ggx;
+
+// Proximity fade
+uniform float proximity_fade_distance = 2;
+
+// Normalmap params
+uniform vec2 normalmap_scale = vec2(0.5, 0.5);
+uniform sampler2D normalmap : hint_normal;
+uniform float normalmap_time_scale = 0.013;
+
+uniform vec4 base_color : hint_color;
+
+void vertex() {
+}
+
+void fragment() {
+	vec2 normalmap_offset = UV * normalmap_scale;
+	normalmap_offset += TIME * normalmap_time_scale;
+
+	ALBEDO = COLOR.rgb * base_color.rgb;
+	METALLIC = 0.0;
+	ROUGHNESS = 0.9;
+	SPECULAR = 0.5;
+	NORMALMAP = texture(normalmap, normalmap_offset).rgb;
+	
+	// Proximity fade
+	float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex*2.0-1.0,1.0);
+	world_pos.xyz/=world_pos.w;
+	ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/proximity_fade_distance = 2.0
+shader_param/normalmap_scale = Vector2( 0.5, 0.5 )
+shader_param/normalmap_time_scale = 0.013
+shader_param/base_color = Color( 0.678431, 1, 0.768627, 1 )
+shader_param/normalmap = ExtResource( 1 )
