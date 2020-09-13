@@ -5,7 +5,7 @@ const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
 const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
 
-enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE, SOUND_WALK_MINOTAUR}
+enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_WATER, SOUND_WALK_SWIM, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE, SOUND_WALK_MINOTAUR}
 
 onready var character = get_parent()
 
@@ -26,12 +26,15 @@ onready var sound_player_falling_to_floor = $SoundFallingToFloor
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
 	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
+	SoundId.SOUND_WALK_WATER : load(SOUND_PATH_TEMPLATE % "water_steps.ogg"),
+	SoundId.SOUND_WALK_SWIM : load(SOUND_PATH_TEMPLATE % "man_swimming.ogg"),
 	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
 	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg"),
 	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg")
 }
 
 var injury_rate = 20
+var walk_sound_ids = [ SoundId.SOUND_WALK_NONE ]
 
 func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
@@ -85,10 +88,26 @@ func stop_walking_sound():
 func play_sound_falling_to_floor():
 	sound_player_falling_to_floor.play()
 
-func set_sound_walk(mode):
+func set_sound_walk(mode, replace_existing = true):
+	if replace_existing:
+		walk_sound_ids[0] = mode
+	else:
+		walk_sound_ids.push_front(mode)
 	sound_player_walking.stop()
 	sound_player_walking.stream = sound[mode] if sound.has(mode) else null
 	sound_player_walking.set_unit_db(0)
+
+func set_underwater(enable):
+	if enable:
+		if walk_sound_ids[0] != SoundId.SOUND_WALK_SWIM:
+			set_sound_walk(SoundId.SOUND_WALK_SWIM, false)
+		game_state.change_music_to(PLDGameState.MusicId.UNDERWATER, false)
+	else:
+		if walk_sound_ids[0] == SoundId.SOUND_WALK_SWIM:
+			walk_sound_ids.pop_front()
+		if walk_sound_ids[0] != SoundId.SOUND_WALK_NONE:
+			set_sound_walk(walk_sound_ids[0])
+		game_state.restore_music()
 
 func use_weapon(item):
 	if not item:

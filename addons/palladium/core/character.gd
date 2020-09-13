@@ -99,6 +99,7 @@ func is_underwater():
 func set_underwater(enable):
 	is_underwater = enable
 	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
+	character_nodes.set_underwater(enable)
 
 func _on_player_underwater(player, enable):
 	if player and not equals(player):

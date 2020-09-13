@@ -77,11 +77,13 @@ var takables = TAKABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
 
-enum MusicId {LOADING, OUTSIDE, EXPLORE, MINOTAUR}
+enum MusicId {NONE, LOADING, OUTSIDE, UNDERWATER, EXPLORE, MINOTAUR}
 const MUSIC_PATH_TEMPLATE = "res://music/%s"
 onready var music = {
+	MusicId.NONE : null,
 	MusicId.LOADING : load(MUSIC_PATH_TEMPLATE % "loading.ogg"),
-	MusicId.OUTSIDE : load(MUSIC_PATH_TEMPLATE % "underwater.ogg"),
+	MusicId.OUTSIDE : load(MUSIC_PATH_TEMPLATE % "outside.ogg"),
+	MusicId.UNDERWATER : load(MUSIC_PATH_TEMPLATE % "underwater.ogg"),
 	MusicId.EXPLORE : null,
 	MusicId.MINOTAUR : load(MUSIC_PATH_TEMPLATE % "sinkingisland.ogg")
 }
@@ -95,6 +97,7 @@ onready var sound = {
 }
 
 var current_music = null
+var music_ids = [ MusicId.NONE ]
 
 func _ready():
 	cleanup_paths()
@@ -312,11 +315,23 @@ func finish_load():
 		return true
 	return false
 
-func change_music_to(music_id):
+func change_music_to(music_id, replace_existing = true):
+	if not music[music_id]:
+		stop_music()
+		return
+	if replace_existing:
+		music_ids[0] = music_id
+	else:
+		music_ids.push_front(music_id)
 	if current_music != music_id:
 		current_music = music_id
 		$MusicPlayer.stream = music[music_id]
 		$MusicPlayer.play()
+
+func restore_music():
+	if music_ids.size() > 1:
+		music_ids.pop_front()
+		change_music_to(music_ids[0])
 
 func play_sound(sound_id, is_loop = false):
 	var stream = sound[sound_id]
@@ -330,6 +345,7 @@ func play_sound(sound_id, is_loop = false):
 func stop_music():
 	$MusicPlayer.stop()
 	current_music = null
+	music_ids = [ MusicId.NONE ]
 
 func is_item_registered(item_id):
 	return DB.ITEMS.has(item_id)
