@@ -3,11 +3,16 @@
 [ext_resource path="res://addons/palladium/core/environment/conversation_area.gd" type="Script" id=1]
 
 [node name="conversation_area" type="Area"]
+input_ray_pickable = false
+monitorable = false
 script = ExtResource( 1 )
 conversations = {
 "bandit": "",
 "father": "",
 "female": "",
-"player": ""
+"minotaur": "",
+"player": "",
+"skeleton": ""
 }
+cutscene_node_path = null
 [connection signal="body_entered" from="." to="." method="_on_conversation_area_body_entered"]

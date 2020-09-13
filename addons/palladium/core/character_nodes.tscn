@@ -113,6 +113,7 @@ one_shot = true
 [node name="AttackTimer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 1.4
+one_shot = true
 
 [node name="RestTimer" type="Timer" parent="."]
 process_mode = 0
