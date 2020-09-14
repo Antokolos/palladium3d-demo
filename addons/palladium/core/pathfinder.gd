@@ -321,3 +321,6 @@ func update_state(data : PLDMovementData):
 
 func _on_character_dead(player):
 	deactivate()
+
+func _on_character_dying(player):
+	pass

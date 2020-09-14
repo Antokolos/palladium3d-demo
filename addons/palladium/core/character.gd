@@ -43,11 +43,11 @@ var stuns_count = 0
 var has_floor_collision = true
 
 func _ready():
-	var model_container = get_node("Model")
-	var model = model_container.get_child(0)  #load(model_path).instance()
+	var model = get_model()
 	game_state.connect("player_underwater", self, "_on_player_underwater")
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
 	model.connect("character_dead", self, "_on_character_dead")
+	model.connect("character_dying", self, "_on_character_dying")
 	game_state.register_player(self)
 
 func get_gravity():
@@ -435,7 +435,7 @@ func do_process(delta, is_player):
 	has_floor_collision = movement_process_data.collides_floor
 	d.is_moving = movement_process_data.is_walking
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
-	if d.is_moving:
+	if d.is_moving and not character_nodes.is_attacking():
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()

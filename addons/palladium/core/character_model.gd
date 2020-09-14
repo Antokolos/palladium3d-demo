@@ -3,6 +3,7 @@ class_name PLDCharacterModel
 
 signal cutscene_finished(player, cutscene_id)
 signal character_dead(player)
+signal character_dying(player)
 
 const CUTSCENE_EMPTY = 0
 
@@ -168,7 +169,10 @@ func _process(delta):
 		if was_dying and is_dead():
 			var player = get_node("../..")
 			emit_signal("character_dead", player)
-		was_dying = is_dying()
+		elif not was_dying and is_dying():
+			var player = get_node("../..")
+			emit_signal("character_dying", player)
+			was_dying = true
 
 func get_shot_idx(shots_max):
 	var shot_span = 1.0 / shots_max
