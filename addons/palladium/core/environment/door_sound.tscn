@@ -4,16 +4,12 @@
 [ext_resource path="res://sound/environment/243699__ertfelda__hidden-wall-opening.wav" type="AudioStream" id=2]
 [ext_resource path="res://sound/environment/labyrinth_6_statue.ogg" type="AudioStream" id=3]
 
-
-
-
-
-
 [node name="door_sound" type="Spatial"]
 script = ExtResource( 1 )
+door_sound_stream = ExtResource( 2 )
+stop_sound_stream = ExtResource( 3 )
 
 [node name="door_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
 bus = "Sound"
 
 [node name="stop_sound" type="AudioStreamPlayer" parent="."]

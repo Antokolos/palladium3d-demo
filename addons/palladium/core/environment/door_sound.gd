@@ -3,6 +3,8 @@ extends Spatial
 onready var door_sound = get_node("door_sound")
 onready var stop_sound = get_node("stop_sound")
 
+export(AudioStream) var door_sound_stream = null
+export(AudioStream) var stop_sound_stream = null
 export var max_attenuation = 39
 export var min_attenuation = 3
 export var min_dist = 1
@@ -13,6 +15,8 @@ var is_closing = false
 
 func _ready():
 	origin.y = 0
+	door_sound.stream = door_sound_stream
+	stop_sound.stream = stop_sound_stream
 	set_attenuation(min_attenuation)
 
 func play(is_closing):

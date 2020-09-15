@@ -72,6 +72,10 @@ static func get_weapon_stun_data(takable_id):
 #	NONE = 0
 #}
 
+#enum UseTargetIds {
+#	NONE = 0
+#}
+
 #const INVENTORY_DEFAULT = []
 #const QUICK_ITEMS_DEFAULT = []
 
@@ -158,6 +162,10 @@ enum TakableIds {
 	ERIDA = 150,
 	ARES = 160,
 	TUBE_BREATH = 170
+}
+
+enum UseTargetIds {
+	NONE = 0
 }
 
 const INVENTORY_DEFAULT = []

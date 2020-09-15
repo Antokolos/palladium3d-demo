@@ -1,8 +1,14 @@
 extends PLDUsable
 class_name PLDUseTarget
 
+signal use_use_target(player_node, use_target, item, result)
+
+export(DB.UseTargetIds) var use_target_id = DB.UseTargetIds.NONE
 export var remove_on_use = true
 export var matched_item_names : PoolStringArray = PoolStringArray()
+
+func connect_signals(target):
+	connect("use_use_target", target, "use_use_target")
 
 func use(player_node, camera_node):
 	var hud = game_state.get_hud()
@@ -12,7 +18,9 @@ func use(player_node, camera_node):
 			return
 		hud.inventory.visible = false
 		item.used(player_node, self)
-		if use_action(player_node, item) and remove_on_use:
+		var result = use_action(player_node, item)
+		emit_signal("use_use_target", player_node, self, item, result)
+		if result and remove_on_use:
 			item.remove()
 
 func use_action(player_node, item):
