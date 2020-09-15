@@ -422,10 +422,9 @@ func can_jump():
 
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
-	if not is_activated():
-		return d
-	if is_cutscene() or is_dying() or is_dead():
-		has_floor_collision = true
+	if not is_activated() or is_movement_disabled():
+		character_nodes.stop_walking_sound()
+		has_floor_collision = false
 		return d
 	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
@@ -435,7 +434,7 @@ func do_process(delta, is_player):
 	has_floor_collision = movement_process_data.collides_floor
 	d.is_moving = movement_process_data.is_walking
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
-	if d.is_moving and not character_nodes.is_attacking():
+	if d.is_moving:
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()

@@ -140,7 +140,7 @@ func get_possible_attack_target():
 	return null
 
 func is_attacking():
-	return not attack_timer.is_stopped()
+	return not attack_timer.is_stopped() or character.get_model().is_attacking()
 
 func attack_start(possible_attack_target):
 	if not character.is_activated():

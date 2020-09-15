@@ -31,6 +31,7 @@ export var main_skeleton = "Female_palladium_armature"
 
 export var rest_shots_max = 2
 export var ragdoll_enabled = false
+export(PoolIntArray) var attack_cutscene_ids = PoolIntArray()
 
 onready var animation_tree = $AnimationTree
 onready var transition = animation_tree.get("parameters/Transition/current")
@@ -100,11 +101,23 @@ func is_dead():
 func is_taking_damage():
 	return animation_tree.get("parameters/DamageShot/active")
 
+func get_cutscene_id():
+	return animation_tree.get("parameters/CutsceneTransition/current")
+
 func is_cutscene():
 	if animation_tree.get("parameters/LookTransition/current") > LOOK_TRANSITION_SQUATTING:
 		return true
-	var cutscene_empty = animation_tree.get("parameters/CutsceneTransition/current") == CUTSCENE_EMPTY
+	var cutscene_empty = get_cutscene_id() == CUTSCENE_EMPTY
 	return not cutscene_empty and animation_tree.get("parameters/CutsceneShot/active")
+
+func is_attacking():
+	if not is_cutscene():
+		return false
+	var cutscene_id = get_cutscene_id()
+	for attack_cutscene_id in attack_cutscene_ids:
+		if attack_cutscene_id == cutscene_id:
+			return true
+	return false
 
 func set_look_transition(look_transition):
 	animation_tree.set("parameters/LookTransition/current", look_transition)
@@ -162,7 +175,7 @@ func walk(is_crouching = false, is_sprinting = false):
 func _process(delta):
 	if not simple_mode:
 		if not is_cutscene():
-			var cutscene_id = animation_tree.get("parameters/CutsceneTransition/current")
+			var cutscene_id = get_cutscene_id()
 			if cutscene_id > CUTSCENE_EMPTY:
 				var player = get_node("../..")
 				emit_signal("cutscene_finished", player, cutscene_id)
