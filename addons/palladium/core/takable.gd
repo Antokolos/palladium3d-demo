@@ -22,7 +22,7 @@ func use(player_node, camera_node):
 #		# Cannot be taken by the main player if Apata's trap has not been activated yet
 #		return false
 	var was_taken = is_present()
-	game_state.take(takable_id, get_path())
+	game_state.take(takable_id, 1, get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 

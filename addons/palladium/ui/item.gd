@@ -108,6 +108,9 @@ func get_model_use_instance():
 	var instance = load(model_use_path) if model_use_path else null
 	return instance.instance() if instance else null
 
+func get_item_count():
+	return item_count
+
 func remove():
 	game_state.remove(item_id)
 

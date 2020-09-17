@@ -217,6 +217,12 @@ func execute_custom_action(event, item):
 	var result = false
 	if event.is_action_pressed("item_preview_action_1"):
 		match item.item_id:
+			DB.TakableIds.FLASK_HEALING:
+				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current + game_state.player_health_max / 2, game_state.player_health_max)
+				var last_flask = (item.get_item_count() == 1)
+				item.remove()
+				if last_flask:
+					take(DB.TakableIds.FLASK_EMPTY)
 			DB.TakableIds.BUN:
 				result = true
 				item.remove()
@@ -371,7 +377,7 @@ func get_quick_items_count():
 			result = result + 1
 	return result
 
-func take(item_id, item_path = null, count = 1):
+func take(item_id, count = 1, item_path = null):
 	if not is_item_registered(item_id):
 		push_error("Unknown item_id: " + str(item_id))
 		return

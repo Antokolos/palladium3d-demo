@@ -16,7 +16,7 @@ func connect_signals(target):
 func use(player_node, camera_node):
 	if not is_present():
 		return false
-	game_state.take(takable_id, get_path(), count)
+	game_state.take(takable_id, count, get_path())
 	emit_signal("use_lootable", player_node, self)
 	return true
 
