@@ -37,6 +37,7 @@ onready var animation_tree = $AnimationTree
 onready var transition = animation_tree.get("parameters/Transition/current")
 onready var rest_timer = $RestTimer
 
+var look_angle_tgt_deg = 0
 var look_angle_cur_deg = 0
 var simple_mode = false
 var was_dying = false
@@ -141,10 +142,18 @@ func normalize_angle(look_angle_deg):
 
 func rotate_head(look_angle_deg):
 	var la = normalize_angle(look_angle_deg)
-	if la < look_angle_cur_deg - ROTATE_HEAD_ANGLE_TOLERANCE_DEG \
-		or la > look_angle_cur_deg + ROTATE_HEAD_ANGLE_TOLERANCE_DEG:
-		look_angle_cur_deg = la
-		animation_tree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (la / 45.0))
+	if la < look_angle_tgt_deg - ROTATE_HEAD_ANGLE_TOLERANCE_DEG \
+		or la > look_angle_tgt_deg + ROTATE_HEAD_ANGLE_TOLERANCE_DEG:
+		look_angle_tgt_deg = la
+
+func process_head_rotation():
+	if look_angle_tgt_deg < look_angle_cur_deg - ROTATE_HEAD_ANGLE_TOLERANCE_DEG:
+		look_angle_cur_deg = look_angle_cur_deg - ROTATE_HEAD_ANGLE_TOLERANCE_DEG
+	elif look_angle_tgt_deg > look_angle_cur_deg + ROTATE_HEAD_ANGLE_TOLERANCE_DEG:
+		look_angle_cur_deg = look_angle_cur_deg + ROTATE_HEAD_ANGLE_TOLERANCE_DEG
+	else:
+		return
+	animation_tree.set("parameters/Blend2_Head/blend_amount", 0.5 + 0.5 * (look_angle_cur_deg / 45.0))
 
 func take_damage(fatal):
 	var alive = not is_dead()
@@ -173,6 +182,7 @@ func walk(is_crouching = false, is_sprinting = false):
 	stop_rest_shot()
 
 func _process(delta):
+	process_head_rotation()
 	if not simple_mode:
 		if not is_cutscene():
 			var cutscene_id = get_cutscene_id()

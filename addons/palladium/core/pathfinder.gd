@@ -159,62 +159,88 @@ func get_rotation_angle(cur_dir, target_dir):
 	else:
 		return sgn * acos(dot)
 
-func get_follow_parameters(node_to_follow_pos, current_transform, next_position) -> PLDMovementData:
-	var was_moving = not rest_state
+func is_zero_rotation(rotation_angle):
+	return rotation_angle > -ROTATION_ANGLE_MIN_RAD and rotation_angle < ROTATION_ANGLE_MIN_RAD
+
+func get_follow_parameters(target, current_transform, next_position) -> PLDMovementData:
+	var was_moving = not is_rest_state()
 	var current_position = current_transform.origin
 	var cur_dir = current_transform.basis.xform(Z_DIR)
 	var next_dir = next_position - current_position
-	var data : PLDMovementData = PLDMovementData.new().with_dir(next_dir).with_distance(next_dir.length())
+	var data : PLDMovementData = PLDMovementData.new()
+	var d = next_dir.length()
+	data.with_distance(d)
+	var need_moving = (d > ALIGNMENT_RANGE)
+	if need_moving:
+		data.with_dir(next_dir)
 	cur_dir.y = 0
 	next_dir.y = 0
 	
-	var preferred_target = get_preferred_target()
-	if preferred_target:
-		var t = preferred_target.get_global_transform()
+	if target:
+		var t = target.get_global_transform()
 		var target_position = t.origin
-		var mov_vec = target_position - current_position if was_moving else node_to_follow_pos - current_position
+		var mov_vec = target_position - current_position
 		mov_vec.y = 0
 		var rotation_angle = get_rotation_angle(cur_dir, next_dir) \
-								if in_party or data.get_distance() > ALIGNMENT_RANGE \
-								else get_rotation_angle(cur_dir, t.basis.xform(Z_DIR))
+							if in_party or need_moving \
+							else get_rotation_angle(cur_dir, t.basis.xform(Z_DIR))
 		return data \
-			.with_rest_state(rotation_angle > -ROTATION_ANGLE_MIN_RAD and rotation_angle < ROTATION_ANGLE_MIN_RAD) \
+			.with_rest_state(not need_moving and is_zero_rotation(rotation_angle)) \
 			.with_rotation_angle(rotation_angle) \
 			.with_rotation_angle_to_target_deg(rad2deg(get_rotation_angle(cur_dir, mov_vec)))
 	else:
 		return data.with_rest_state(true)
 
+func is_arrived_to_boundary(tgt):
+	var sc = get_slide_count()
+	if sc <= 0:
+		return false
+	for i in range(sc):
+		if get_slide_collision(i).collider_id == tgt.get_instance_id():
+			return true
+	return false
+
 func follow(current_transform, next_position):
 	var was_moving = not is_rest_state()
-	var data = get_follow_parameters(game_state.get_player().get_global_transform().origin, current_transform, next_position)
+	var current_actor = conversation_manager.get_current_actor()
+	var data = get_follow_parameters(
+		current_actor
+			if current_actor and not equals(current_actor)
+			else get_preferred_target(),
+		current_transform,
+		next_position
+	)
 	var d = data.get_distance()
+	var zero_rotation = is_zero_rotation(data.get_rotation_angle())
 	
-	if not path.empty():
+	if not in_party \
+		and d > ALIGNMENT_RANGE \
+		and target_node \
+		and zero_rotation \
+		and is_arrived_to_boundary(target_node):
+		return data \
+			.clear_dir() \
+			.with_rest_state(true) \
+			.with_signal("arrived_to_boundary", [target_node])
+	elif not path.empty():
 		data.with_rest_state(false)
 		if d <= ALIGNMENT_RANGE:
 			path.pop_front()
 			data.clear_dir()
 	elif in_party and d > FOLLOW_RANGE:
 		data.with_rest_state(false)
-	elif (in_party and d > CLOSEUP_RANGE and was_moving) \
-		or (not in_party and d > ALIGNMENT_RANGE):
-		if was_moving and not in_party and target_node and angle_rad_y == 0 and get_slide_count() > 0:
-			var collision = get_slide_collision(0)
-			if collision.collider_id == target_node.get_instance_id():
-				return data \
-					.clear_dir() \
-					.with_rest_state(true) \
-					.with_signal("arrived_to_boundary", [target_node])
+	elif in_party and d > CLOSEUP_RANGE and was_moving:
 		data.with_rest_state(false)
 	else:
 		if in_party:
-			data.clear_dir().with_rest_state(true)
-		else:
-			if was_moving and target_node and angle_rad_y == 0 and d <= ALIGNMENT_RANGE:
-				return data \
-					.clear_dir() \
-					.with_rest_state(true) \
-					.with_signal("arrived_to", [target_node])
+			if not cutscene_manager.is_cutscene():
+				data.clear_rotation_angle()
+			return data.clear_dir().with_rest_state(zero_rotation)
+		elif was_moving and target_node and zero_rotation and d <= ALIGNMENT_RANGE:
+			return data \
+				.clear_dir() \
+				.with_rest_state(true) \
+				.with_signal("arrived_to", [target_node])
 	return data
 
 func update_navpath(pstart, pend):
@@ -295,12 +321,9 @@ func get_movement_data(is_player):
 	if not target_position:
 		return data
 	var current_transform = get_global_transform()
-	if not is_player or not in_party:
-		var current_position = current_transform.origin
+	if not is_player or not in_party or cutscene_manager.is_cutscene():
 		build_path(target_position)
 		return follow(current_transform, path.front() if path.size() > 0 else target_position)
-	elif is_player and cutscene_manager.is_cutscene():
-		return get_follow_parameters(target_position, current_transform, target_position)
 	
 	return data
 

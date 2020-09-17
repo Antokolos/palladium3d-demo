@@ -110,7 +110,9 @@ func change_culling():
 		self.far = culling_rays.get_max_distance(self.get_global_transform().origin)
 
 func activate_item_use(item):
-	item_use.activate_item(item)
+	# TODO: eliminate use cases when item_use is null
+	if item_use:
+		item_use.activate_item(item)
 
 func walk_initiate(player_node):
 	item_use.walk_initiate(player_node, self)

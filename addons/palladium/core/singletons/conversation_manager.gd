@@ -14,6 +14,7 @@ var target
 var initiator
 var is_finalizing
 var max_choice = 0
+var current_actor_name = null
 
 var story_state_cache = {}
 
@@ -64,6 +65,7 @@ func stop_conversation(player):
 	conversation_name = null
 	target = null
 	initiator = null
+	current_actor_name = null
 	#is_finalizing = false -- this had some troubles with the lipsync_manager, it is better to not touch it now
 	var hud = game_state.get_hud()
 	hud.conversation.visible = false
@@ -174,8 +176,8 @@ func clear_actors_and_texts(player, conversation):
 		conversation_actor.text = ""
 	else:
 		conversation_text.text = cur_text
-		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
-		conversation_actor.text = tr(actor_name) + ": "
+		current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
+		conversation_actor.text = tr(current_actor_name) + ": "
 
 func move_current_text_to_prev(conversation):
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -211,11 +213,11 @@ func story_choose(player, idx):
 			if is_finalizing:
 				stop_conversation(player)
 				return
-			var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
-			conversation_actor.text = tr(actor_name) + ": " if actor_name else ""
+			current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
+			conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name else ""
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
-				var character = game_state.get_character(actor_name)
+				var character = game_state.get_character(current_actor_name)
 				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
 			change_stretch_ratio(conversation)
 		conversation.visible = settings.need_subtitles() or not has_sound
@@ -241,8 +243,8 @@ func story_proceed(player):
 		var tags_dict = story_node.get_current_tags()
 		var tags = tags_dict[TranslationServer.get_locale()]
 		is_finalizing = tags and tags.has("finalizer")
-		var actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
-		conversation_actor.text = tr(actor_name) + ": " if actor_name and not conversation_text.text.empty() else ""
+		current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
+		conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
 		has_voiceover = vtags and vtags.has("voiceover")
 		if has_voiceover:
@@ -250,7 +252,7 @@ func story_proceed(player):
 			# To get more correct representation of English phonemes, you can use 'transcription' tag in the Ink file
 			# TODO: Alternatively, code for lipsync autocreation from English text should be written
 			var text = texts["ru"] #get_vvalue(texts)
-			var character = game_state.get_companion(actor_name)
+			var character = game_state.get_companion(current_actor_name)
 			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
 		change_stretch_ratio(conversation)
 	var can_continue = not is_finalizing and story_node.can_continue()
@@ -279,6 +281,9 @@ func display_choices(conversation, choices):
 		c.text = str(i) + ". " + choices[i - 1] if i <= choices.size() else ""
 		i += 1
 	max_choice = choices.size()
+
+func get_current_actor():
+	return game_state.get_character(current_actor_name) if current_actor_name else null
 
 func _on_AutocloseTimer_timeout():
 	var player = game_state.get_player()
