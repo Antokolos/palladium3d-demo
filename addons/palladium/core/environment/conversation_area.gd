@@ -14,15 +14,18 @@ func _ready():
 	for name_hint in CHARS.get_all_name_hints():
 		if not conversations.has(name_hint):
 			conversations[name_hint] = ""
+	if Engine.editor_hint:
+		return
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 
 func is_conversation_enabled(name_hint, conversation_idx):
 	return true
 
 func _on_conversation_area_body_entered(body):
 	if Engine.editor_hint:
-		return
+		return false
 	if not body.is_in_group("party") or game_state.is_loading():
-		return
+		return false
 	for name_hint in conversations.keys():
 		if conversations[name_hint].empty() or not game_state.is_in_party(name_hint):
 			continue
@@ -37,4 +40,20 @@ func _on_conversation_area_body_entered(body):
 				conversation_manager.start_area_cutscene(conversation, cutscene_node, repeatable)
 			else:
 				conversation_manager.start_area_conversation(conversation, repeatable)
-			return
+			return true
+	return false
+
+func do_when_conversation_finished(name_hint, conversation_name):
+	pass
+
+func _on_conversation_finished(player, conversation_name, target, initiator):
+	if Engine.editor_hint:
+		return
+	for name_hint in conversations.keys():
+		if conversations[name_hint].empty():
+			continue
+		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
+		for conversation in conversations_for_name:
+			if conversation == conversation_name:
+				do_when_conversation_finished(name_hint, conversation_name)
+				return

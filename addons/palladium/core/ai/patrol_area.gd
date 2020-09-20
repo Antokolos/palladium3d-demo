@@ -12,7 +12,7 @@ func _ready():
 	if agent:
 		agent.connect("patrolling_changed", self, "_on_patrolling_changed")
 		agent.connect("arrived_to", self, "_on_arrived_to")
-	connect("body_entered", self, "_on_patrol_area_body_entered")
+	#connect("body_entered", self, "_on_patrol_area_body_entered")
 	#connect("body_exited", self, "_on_patrol_area_body_exited")
 	for ch in get_children():
 		if ch is Position3D:
@@ -77,10 +77,10 @@ func _on_patrol_area_body_entered(body):
 			return
 		agent.activate()
 
-#func _on_patrol_area_body_exited(body):
-#	if not agent:
-#		push_warning("Error calling _on_patrol_area_body_exited() for patrol area: agent path is incorrect")
-#		return
-#	if body.is_in_group("party") and body.is_player() and not agent.is_aggressive():
-#		agent.set_target_node(null)
-#		agent.deactivate()
+func _on_patrol_area_body_exited(body):
+	if not agent:
+		push_warning("Error calling _on_patrol_area_body_exited() for patrol area: agent path is incorrect")
+		return
+	if body.is_in_group("party") and body.is_player() and not agent.is_aggressive():
+		agent.set_target_node(null)
+		agent.deactivate()

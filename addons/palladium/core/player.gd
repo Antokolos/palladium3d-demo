@@ -152,18 +152,30 @@ func _input(event):
 				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v) if nonzero else 0
 		else:
 			if event.is_action_pressed("movement_forward") \
-				or event.is_action_released("movement_backward"):
-				input_movement_vector.y += 1
+				and input_movement_vector.y == 0:
+				input_movement_vector.y = 1
+			elif event.is_action_released("movement_forward") \
+				and input_movement_vector.y == 1:
+				input_movement_vector.y = 0
 			elif event.is_action_pressed("movement_backward") \
-				or event.is_action_released("movement_forward"):
-				input_movement_vector.y -= 1
+				and input_movement_vector.y == 0:
+				input_movement_vector.y = -1
+			elif event.is_action_released("movement_backward") \
+				and input_movement_vector.y == -1:
+				input_movement_vector.y = 0
 			
 			if event.is_action_pressed("movement_left") \
-				or event.is_action_released("movement_right"):
-				input_movement_vector.x -= 1
+				and input_movement_vector.x == 0:
+				input_movement_vector.x = -1
+			elif event.is_action_released("movement_left") \
+				and input_movement_vector.x == -1:
+				input_movement_vector.x = 0
 			elif event.is_action_pressed("movement_right") \
-				or event.is_action_released("movement_left"):
-				input_movement_vector.x += 1
+				and input_movement_vector.x == 0:
+				input_movement_vector.x = 1
+			elif event.is_action_released("movement_right") \
+				and input_movement_vector.x == 1:
+				input_movement_vector.x = 0
 			
 			if event.is_action_pressed("cam_up"):
 				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
@@ -205,8 +217,9 @@ func get_movement_data(is_player):
 			get_cam().walk_initiate(self)
 			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
 	else:
-		if is_player:
-			get_cam().walk_stop(self)
+		var cam = get_cam()
+		if is_player and cam:
+			cam.walk_stop(self)
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):

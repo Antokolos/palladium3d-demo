@@ -15,6 +15,7 @@ const MOUSE_SENSITIVITY = 0.1 #0.05
 const KEY_LOOK_SPEED_FACTOR = 30
 
 const FOLLOW_RANGE = 3
+const INTEREST_RANGE = 2.5
 const CLOSEUP_RANGE = 2
 const ALIGNMENT_RANGE = 0.2
 const USE_DISTANCE_COMMON = 2
@@ -30,6 +31,7 @@ var in_party = false
 var rest_state = true
 var pathfinding_enabled = true
 var target_node = null
+var point_of_interest = null
 var path = []
 
 var angle_rad_y = 0
@@ -130,6 +132,18 @@ func set_target_node(node, update_navpath = true):
 		var current_position = get_global_transform().origin
 		update_navpath(current_position, target_node.get_global_transform().origin)
 
+func clear_target_node():
+	return set_target_node(null)
+
+func get_point_of_interest():
+	return point_of_interest
+
+func set_point_of_interest(point_of_interest):
+	self.point_of_interest = point_of_interest
+
+func clear_point_of_interest():
+	set_point_of_interest(null)
+
 func get_preferred_target():
 	return target_node if not in_party else (game_state.get_companion() if is_player() else game_state.get_player())
 
@@ -204,16 +218,22 @@ func follow(current_transform, next_position):
 	var was_moving = not is_rest_state()
 	var current_actor = conversation_manager.get_current_actor()
 	var data = get_follow_parameters(
-		current_actor
-			if current_actor and not equals(current_actor)
-			else get_preferred_target(),
+		point_of_interest if point_of_interest else (
+			current_actor
+				if current_actor and not equals(current_actor)
+				else get_preferred_target()
+		),
 		current_transform,
-		next_position
+		point_of_interest.get_global_transform().origin
+			if point_of_interest
+			else next_position
 	)
 	var d = data.get_distance()
 	var zero_rotation = is_zero_rotation(data.get_rotation_angle())
 	
-	if not in_party \
+	if point_of_interest and d <= INTEREST_RANGE:
+		return data.clear_dir().with_rest_state(zero_rotation)
+	elif not in_party \
 		and d > ALIGNMENT_RANGE \
 		and target_node \
 		and zero_rotation \
