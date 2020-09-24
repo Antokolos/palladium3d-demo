@@ -217,9 +217,8 @@ func get_movement_data(is_player):
 			get_cam().walk_initiate(self)
 			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
 	else:
-		var cam = get_cam()
-		if is_player and cam:
-			cam.walk_stop(self)
+		if is_player and not cutscene_manager.is_cutscene():
+			get_cam().walk_stop(self)
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):

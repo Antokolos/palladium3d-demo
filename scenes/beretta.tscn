@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/beretta.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/beretta.gd" type="Script" id=2]
+[ext_resource path="res://scenes/beretta_shell.tscn" type="PackedScene" id=3]
+
+[node name="beretta" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="beretta_shell" parent="." index="1" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.183632, 0.0759292 )
+
+[editable path="beretta_shell"]

@@ -1,13 +1,11 @@
 extends PLDCharacter
 class_name PLDEnemy
 
-signal attack_started(enemy, target)
-
-const MAX_HITS = 3
 const TOO_FAR_RANGE = 10
 const AGGRESSION_RANGE = 11
 const STOP_CHASING_RANGE = 12
 
+export var max_hits = 0
 var party_members_cache = []
 var hits = 0
 
@@ -18,9 +16,8 @@ func use_usable(player_node, usable):
 	pass
 
 func use_hideout(player_node, usable):
-	set_sprinting(false)
 	set_aggressive(false)
-	character_nodes.stop_attack()
+	stop_attack()
 
 ### Use target ###
 
@@ -43,7 +40,7 @@ func add_highlight(player_node):
 func hit(hit_direction_node):
 	if not is_activated():
 		return
-	elif hits > MAX_HITS:
+	elif max_hits > 0 and hits > max_hits:
 		take_damage(true, hit_direction_node)
 	else:
 		take_damage(false, hit_direction_node)
@@ -93,8 +90,7 @@ func take_damage(fatal, hit_direction_node):
 		character_nodes.enable_areas(false)
 
 func set_states(player):
-	if player.is_hidden():
-		set_sprinting(false)
+	if player.is_hidden() or get_relationship() >= 0:
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(player)
@@ -115,8 +111,10 @@ func _physics_process(delta):
 		return
 	set_states(get_nearest_party_member())
 	if not is_aggressive():
+		var target = get_target_node()
+		if target and not target.get_parent() is PLDPatrolArea:
+			return
 		if not is_patrolling():
-			set_sprinting(false)
 			set_patrolling(true)
 		return
-	character_nodes.handle_attack()
+	handle_attack()

@@ -4,6 +4,7 @@ class_name PLDCharacter
 signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
+signal attack_started(enemy, target)
 
 const GRAVITY_DEFAULT = 6.2
 const GRAVITY_UNDERWATER = 0.2
@@ -16,6 +17,7 @@ const ACCEL= 1.5
 const DEACCEL= 16
 const SPRINT_ACCEL = 4.5
 const MIN_MOVEMENT = 0.01
+const SPRINTING_DISTANCE_THRESHOLD = 10
 
 const PUSH_STRENGTH = 10
 const PUSH_BACK_STRENGTH = 30
@@ -24,8 +26,6 @@ const NONCHAR_COLLISION_RANGE_MAX = 5.9
 
 const MAX_SLOPE_ANGLE_RAD = deg2rad(60)
 const AXIS_VALUE_THRESHOLD = 0.15
-
-export var model_path = ""
 
 onready var character_nodes = $character_nodes
 
@@ -55,6 +55,36 @@ func get_gravity():
 
 func set_sound_walk(mode):
 	character_nodes.set_sound_walk(mode)
+
+func set_sound_attack(mode):
+	character_nodes.set_sound_attack(mode)
+
+func set_sound_miss(mode):
+	character_nodes.set_sound_miss(mode)
+
+func handle_attack():
+	var possible_attack_target = character_nodes.get_possible_attack_target()
+	if possible_attack_target:
+		attack_start(possible_attack_target)
+	else:
+		stop_attack()
+
+func attack_start(possible_attack_target, attack_anim_idx = -1):
+	if not is_attacking():
+		set_sprinting(false)
+		emit_signal("attack_started", self, possible_attack_target)
+		set_point_of_interest(possible_attack_target)
+		get_model().attack(attack_anim_idx)
+		character_nodes.attack_start()
+
+func stop_attack():
+	if is_attacking():
+		clear_point_of_interest()
+		character_nodes.stop_attack()
+		stop_cutscene()
+
+func is_attacking():
+	return character_nodes.is_attacking() or get_model().is_attacking()
 
 ### Use target ###
 
@@ -162,6 +192,14 @@ func set_aggressive(enable):
 	if enable:
 		set_patrolling(false)
 
+func set_target_node(node, update_navpath = true):
+	.set_target_node(node, update_navpath)
+	if not node or is_player_controlled():
+		return
+	var cp = get_global_transform().origin
+	var tp = node.get_global_transform().origin
+	set_sprinting(cp.distance_to(tp) > SPRINTING_DISTANCE_THRESHOLD)
+
 func rest():
 	get_model().look()
 
@@ -177,9 +215,6 @@ func play_cutscene(cutscene_id):
 
 func stop_cutscene():
 	get_model().stop_cutscene()
-
-func is_cutscene():
-	return get_model().is_cutscene()
 
 func is_dying():
 	return get_model().is_dying()
@@ -422,7 +457,8 @@ func can_jump():
 
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
-	if not is_activated() or is_movement_disabled():
+	var poi = get_point_of_interest()
+	if not poi and (not is_activated() or is_movement_disabled()):
 		character_nodes.stop_walking_sound()
 		has_floor_collision = false
 		return d

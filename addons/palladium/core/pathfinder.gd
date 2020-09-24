@@ -130,7 +130,8 @@ func set_target_node(node, update_navpath = true):
 	target_node = node
 	if target_node and update_navpath:
 		var current_position = get_global_transform().origin
-		update_navpath(current_position, target_node.get_global_transform().origin)
+		var target_position = target_node.get_global_transform().origin
+		update_navpath(current_position, target_position)
 
 func clear_target_node():
 	return set_target_node(null)

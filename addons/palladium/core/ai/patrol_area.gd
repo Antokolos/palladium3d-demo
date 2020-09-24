@@ -7,8 +7,10 @@ onready var agent : PLDCharacter = get_node(agent_path) if agent_path and has_no
 
 var waypoints = []
 var waypoint_idx = 0
+var first_run = true
 
 func _ready():
+	first_run = true
 	if agent:
 		agent.connect("patrolling_changed", self, "_on_patrolling_changed")
 		agent.connect("arrived_to", self, "_on_arrived_to")
@@ -25,8 +27,15 @@ func _on_patrolling_changed(player_node, previous_state, new_state):
 		agent.set_target_node(null)
 
 func _on_arrived_to(player_node, target_node):
+	var p = target_node.get_parent()
+	if not p:
+		return
+	if p.get_instance_id() != get_instance_id():
+		# If target node is not a child of the current patrol area, do nothing
+		return
 	var next_target = get_next_target()
 	agent.set_target_node(next_target if next_target else target_node, false)
+	agent.set_sprinting(false)
 
 func get_next_target():
 	if waypoints.empty():
@@ -64,11 +73,16 @@ func do_patrol():
 	if not agent:
 		push_warning("Error calling do_patrol() for patrol area: agent path is incorrect")
 		return
-	var wp_data = get_closest_waypoint(agent)
+	var wp_data = {
+		"waypoint" : waypoints[0],
+		"waypoint_idx" : 0
+	} if first_run else get_closest_waypoint(agent)
 	if not wp_data.waypoint:
 		return
 	waypoint_idx = wp_data.waypoint_idx
 	agent.set_target_node(wp_data.waypoint, false)
+	agent.set_sprinting(first_run)
+	first_run = false
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():

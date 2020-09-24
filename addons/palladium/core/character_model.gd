@@ -87,11 +87,16 @@ func play_cutscene(cutscene_id):
 	animation_tree.set("parameters/CutsceneShot/active", true)
 
 func stop_cutscene():
+	var cutscene_id = get_cutscene_id()
 	animation_tree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
 	animation_tree.set("parameters/CutsceneShot/active", false)
+	emit_cutscene_finished(cutscene_id)
 
 func is_movement_disabled():
-	return is_cutscene() or is_dead() or is_taking_damage()
+	return is_looped_cutscene() \
+			or is_cutscene() \
+			or is_dead() \
+			or is_taking_damage()
 
 func is_dying():
 	return is_taking_damage() and animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
@@ -105,9 +110,10 @@ func is_taking_damage():
 func get_cutscene_id():
 	return animation_tree.get("parameters/CutsceneTransition/current")
 
+func is_looped_cutscene():
+	return animation_tree.get("parameters/LookTransition/current") > LOOK_TRANSITION_SQUATTING
+
 func is_cutscene():
-	if animation_tree.get("parameters/LookTransition/current") > LOOK_TRANSITION_SQUATTING:
-		return true
 	var cutscene_empty = get_cutscene_id() == CUTSCENE_EMPTY
 	return not cutscene_empty and animation_tree.get("parameters/CutsceneShot/active")
 
@@ -181,14 +187,29 @@ func walk(is_crouching = false, is_sprinting = false):
 	rest_timer.stop()
 	stop_rest_shot()
 
+func attack(attack_anim_idx = -1):
+	var s = attack_cutscene_ids.size()
+# TODO: Check it is OK
+#	if is_movement_disabled() or s == 0:
+	if s == 0:
+		return false
+	play_cutscene(
+		attack_cutscene_ids[get_shot_idx(s)]
+			if attack_anim_idx < 0
+			else attack_anim_idx
+	)
+	return true
+
+func emit_cutscene_finished(cutscene_id):
+	if cutscene_id > CUTSCENE_EMPTY:
+		var player = get_node("../..")
+		emit_signal("cutscene_finished", player, cutscene_id)
+
 func _process(delta):
 	process_head_rotation()
 	if not simple_mode:
 		if not is_cutscene():
-			var cutscene_id = get_cutscene_id()
-			if cutscene_id > CUTSCENE_EMPTY:
-				var player = get_node("../..")
-				emit_signal("cutscene_finished", player, cutscene_id)
+			emit_cutscene_finished(get_cutscene_id())
 		if was_dying and is_dead():
 			var player = get_node("../..")
 			emit_signal("character_dead", player)

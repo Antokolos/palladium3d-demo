@@ -5,7 +5,19 @@ const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
 const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
 
-enum SoundId {SOUND_WALK_NONE, SOUND_WALK_SAND, SOUND_WALK_WATER, SOUND_WALK_SWIM, SOUND_WALK_GRASS, SOUND_WALK_CONCRETE, SOUND_WALK_SKELETON, SOUND_WALK_MINOTAUR}
+enum SoundId {
+	SOUND_WALK_NONE,
+	SOUND_WALK_SAND,
+	SOUND_WALK_WATER,
+	SOUND_WALK_SWIM,
+	SOUND_WALK_GRASS,
+	SOUND_WALK_CONCRETE,
+	SOUND_WALK_SKELETON,
+	SOUND_WALK_MINOTAUR,
+	SOUND_ATTACK_GUNSHOT,
+	SOUND_ATTACK_SWOOSH,
+	SOUND_ATTACK_AXE_ON_STONE
+}
 
 onready var character = get_parent()
 
@@ -24,6 +36,7 @@ onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
 onready var sound_player_falling_to_floor = $SoundFallingToFloor
 onready var sound_player_attack = $SoundAttack
+onready var sound_player_miss = $SoundMiss
 onready var sound = {
 	SoundId.SOUND_WALK_NONE : null,
 	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
@@ -32,7 +45,10 @@ onready var sound = {
 	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
 	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg"),
 	SoundId.SOUND_WALK_SKELETON : load(SOUND_PATH_TEMPLATE % "skeleton_walk.ogg"),
-	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg")
+	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg"),
+	SoundId.SOUND_ATTACK_GUNSHOT : load(SOUND_PATH_TEMPLATE % "Labyrinth_gunshot.wav"),
+	SoundId.SOUND_ATTACK_SWOOSH : load(SOUND_PATH_TEMPLATE % "sword_swing.ogg"),
+	SoundId.SOUND_ATTACK_AXE_ON_STONE : load(SOUND_PATH_TEMPLATE % "pickaxe3.ogg")
 }
 
 var injury_rate = 20
@@ -41,6 +57,7 @@ var walk_sound_ids = [ SoundId.SOUND_WALK_NONE ]
 func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
+	character.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 
 func _on_player_underwater(player, enable):
 	if player and not player.equals(character):
@@ -99,6 +116,16 @@ func set_sound_walk(mode, replace_existing = true):
 	sound_player_walking.stream = sound[mode] if sound.has(mode) else null
 	sound_player_walking.set_unit_db(0)
 
+func set_sound_attack(mode):
+	sound_player_attack.stop()
+	sound_player_attack.stream = sound[mode] if sound.has(mode) else null
+	sound_player_attack.set_unit_db(0)
+
+func set_sound_miss(mode):
+	sound_player_miss.stop()
+	sound_player_miss.stream = sound[mode] if sound.has(mode) else null
+	sound_player_miss.set_unit_db(0)
+
 func set_underwater(enable):
 	if enable:
 		if walk_sound_ids[0] != SoundId.SOUND_WALK_SWIM:
@@ -122,13 +149,6 @@ func use_weapon(item):
 			common_utils.set_pause_scene(character, true)
 			stun_timer.start(weapon_data.stun_duration)
 
-func handle_attack():
-	var possible_attack_target = get_possible_attack_target()
-	if possible_attack_target:
-		attack_start(possible_attack_target)
-	else:
-		stop_attack()
-
 func get_possible_attack_target():
 	if not character.is_activated():
 		return null
@@ -140,21 +160,24 @@ func get_possible_attack_target():
 	return null
 
 func is_attacking():
-	return not attack_timer.is_stopped() or character.get_model().is_attacking()
+	return not attack_timer.is_stopped()
 
-func attack_start(possible_attack_target):
-	if not character.is_activated():
-		return
+func play_attack_sound():
+	sound_player_attack.play()
+
+func play_sound_miss():
+	sound_player_miss.play()
+
+func attack_start():
+# TODO: Check it is OK
+#	if not character.is_activated():
+#		return
 	if not is_attacking():
-		character.set_sprinting(false)
-		character.emit_signal("attack_started", character, possible_attack_target)
-		character.get_model().attack()
 		attack_timer.start()
 
 func stop_attack():
 	if is_attacking():
 		attack_timer.stop()
-		character.stop_cutscene()
 
 func start_rest_timer():
 	if rest_timer.is_stopped():
@@ -194,14 +217,23 @@ func _on_PoisonTimer_timeout():
 func _on_StunTimer_timeout():
 	common_utils.set_pause_scene(character, false)
 
+func _on_cutscene_finished(player, cutscene_id):
+	# TODO: maybe check that cutscene_id is attack cutscene???
+	if is_attacking():
+		attack_timer.stop()
+		_on_AttackTimer_timeout()
+
 func _on_AttackTimer_timeout():
-	if not character.is_activated():
-		return
+# TODO: Check it is OK
+#	if not character.is_activated():
+#		return
 	if get_possible_attack_target():
-		sound_player_attack.play()
+		play_attack_sound()
 		game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
 	else:
-		character.stop_cutscene()
+		play_sound_miss()
+		#character.stop_cutscene()
+	character.clear_point_of_interest()
 
 func _on_RestTimer_timeout():
 	character.get_model().look()
