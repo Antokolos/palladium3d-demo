@@ -11,6 +11,7 @@ const TagParts : int = 2
 const PARTY_VAR_PREFIX : String = "party_"
 const CUTSCENE_VAR_PREFIX : String = "cutscene_"
 const RELATIONSHIP_VAR_PREFIX : String = "relationship_"
+const MORALE_VAR_PREFIX : String = "morale_"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
@@ -154,6 +155,12 @@ func _observe_relationship(variable_name, new_value) -> void:
 	var character = game_state.get_character(name_hint)
 	character.set_relationship(v)
 
+func _observe_morale(variable_name, new_value) -> void:
+	var v : int = int(new_value)
+	var name_hint = variable_name.substr(MORALE_VAR_PREFIX.length(), variable_name.length())
+	var character = game_state.get_character(name_hint)
+	character.set_morale(v)
+
 func init_variables() -> void:
 	var storyVars : Dictionary = game_state.story_vars
 	var keys = storyVars.keys()
@@ -171,6 +178,7 @@ func init_variables() -> void:
 				var story_key : String = PARTY_VAR_PREFIX + party_key
 				var cutscene_key : String = CUTSCENE_VAR_PREFIX + party_key
 				var relationship_key : String = RELATIONSHIP_VAR_PREFIX + party_key
+				var morale_key : String = MORALE_VAR_PREFIX + party_key
 				if story.variables_state.global_variable_exists_with_name(story_key):
 					story.variables_state.set(story_key, game_state.is_in_party(party_key))
 					story.remove_variable_observer(self, "_observe_party", story_key)
@@ -183,6 +191,10 @@ func init_variables() -> void:
 					story.variables_state.set(relationship_key, game_state.get_character(party_key).get_relationship())
 					story.remove_variable_observer(self, "_observe_relationship", relationship_key)
 					story.observe_variable(relationship_key, self, "_observe_relationship")
+				if story.variables_state.global_variable_exists_with_name(morale_key):
+					story.variables_state.set(morale_key, game_state.get_character(party_key).get_morale())
+					story.remove_variable_observer(self, "_observe_morale", morale_key)
+					story.observe_variable(morale_key, self, "_observe_morale")
 
 func reset() -> void:
 	for locale in AvailableLocales:

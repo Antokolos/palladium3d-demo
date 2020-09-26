@@ -90,7 +90,9 @@ func stop_cutscene():
 	var cutscene_id = get_cutscene_id()
 	animation_tree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
 	animation_tree.set("parameters/CutsceneShot/active", false)
-	emit_cutscene_finished(cutscene_id)
+	if cutscene_id > CUTSCENE_EMPTY:
+		var player = get_node("../..")
+		emit_signal("cutscene_finished", player, cutscene_id)
 
 func is_movement_disabled():
 	return is_looped_cutscene() \
@@ -200,16 +202,11 @@ func attack(attack_anim_idx = -1):
 	)
 	return true
 
-func emit_cutscene_finished(cutscene_id):
-	if cutscene_id > CUTSCENE_EMPTY:
-		var player = get_node("../..")
-		emit_signal("cutscene_finished", player, cutscene_id)
-
 func _process(delta):
 	process_head_rotation()
 	if not simple_mode:
 		if not is_cutscene():
-			emit_cutscene_finished(get_cutscene_id())
+			stop_cutscene()
 		if was_dying and is_dead():
 			var player = get_node("../..")
 			emit_signal("character_dead", player)

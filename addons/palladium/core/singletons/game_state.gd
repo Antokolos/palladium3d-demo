@@ -207,7 +207,6 @@ func set_poisoned(player, enable):
 
 func _on_cutscene_finished(player, cutscene_id):
 	player.set_look_transition(true)
-	player.stop_cutscene()
 
 func get_custom_actions(item):
 	var item_record = get_registered_item_data(item.item_id)
@@ -601,6 +600,9 @@ func set_character_data(dd, character):
 	if ("relationship" in dd):
 		character.relationship = dd.relationship
 	
+	if ("morale" in dd):
+		character.morale = dd.morale
+	
 	if ("stuns_count" in dd):
 		character.stuns_count = dd.stuns_count
 	
@@ -678,6 +680,7 @@ func get_character_data(character, full_save):
 		"is_underwater" : character.is_underwater(),
 		"is_poisoned" : character.is_poisoned(),
 		"relationship" : character.get_relationship(),
+		"morale" : character.get_morale(),
 		"stuns_count" : character.get_stuns_count()
 	}
 	if not full_save:

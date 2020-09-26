@@ -196,13 +196,16 @@ func get_follow_parameters(target, current_transform, next_position) -> PLDMovem
 		var target_position = t.origin
 		var mov_vec = target_position - current_position
 		mov_vec.y = 0
-		var rotation_angle = get_rotation_angle(cur_dir, next_dir) \
-							if in_party or need_moving \
-							else get_rotation_angle(cur_dir, t.basis.xform(Z_DIR))
+		var ratt = get_rotation_angle(cur_dir, mov_vec)
+		var ra = (
+			get_rotation_angle(cur_dir, next_dir)
+				if not point_of_interest and (in_party or need_moving)
+				else ratt
+		)
 		return data \
-			.with_rest_state(not need_moving and is_zero_rotation(rotation_angle)) \
-			.with_rotation_angle(rotation_angle) \
-			.with_rotation_angle_to_target_deg(rad2deg(get_rotation_angle(cur_dir, mov_vec)))
+			.with_rest_state(not need_moving and is_zero_rotation(ra)) \
+			.with_rotation_angle(ra) \
+			.with_rotation_angle_to_target_deg(rad2deg(ratt))
 	else:
 		return data.with_rest_state(true)
 
@@ -225,16 +228,14 @@ func follow(current_transform, next_position):
 				else get_preferred_target()
 		),
 		current_transform,
-		point_of_interest.get_global_transform().origin
-			if point_of_interest
+		target_node.get_global_transform().origin
+			if target_node and point_of_interest
 			else next_position
 	)
 	var d = data.get_distance()
 	var zero_rotation = is_zero_rotation(data.get_rotation_angle())
 	
-	if point_of_interest and d <= INTEREST_RANGE:
-		return data.clear_dir().with_rest_state(zero_rotation)
-	elif not in_party \
+	if not in_party \
 		and d > ALIGNMENT_RANGE \
 		and target_node \
 		and zero_rotation \

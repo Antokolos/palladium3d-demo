@@ -7,13 +7,14 @@ onready var agent : PLDCharacter = get_node(agent_path) if agent_path and has_no
 
 var waypoints = []
 var waypoint_idx = 0
-var first_run = true
+var first_hit = true
 
 func _ready():
-	first_run = true
+	first_hit = true
 	if agent:
 		agent.connect("patrolling_changed", self, "_on_patrolling_changed")
 		agent.connect("arrived_to", self, "_on_arrived_to")
+		agent.connect("take_damage", self, "_on_take_damage")
 	#connect("body_entered", self, "_on_patrol_area_body_entered")
 	#connect("body_exited", self, "_on_patrol_area_body_exited")
 	for ch in get_children():
@@ -21,6 +22,8 @@ func _ready():
 			waypoints.append(ch)
 
 func _on_patrolling_changed(player_node, previous_state, new_state):
+	if agent.get_morale() < 0:
+		return
 	if new_state:
 		do_patrol()
 	else:
@@ -34,8 +37,22 @@ func _on_arrived_to(player_node, target_node):
 		# If target node is not a child of the current patrol area, do nothing
 		return
 	var next_target = get_next_target()
+	agent.set_morale(0)
 	agent.set_target_node(next_target if next_target else target_node, false)
 	agent.set_sprinting(false)
+
+func _on_take_damage(player_node, fatal, hit_direction_node):
+	var wp_data = {
+		"farthest_wp" : waypoints[0],
+		"farthest_wp_idx" : 0
+	} if first_hit else get_waypoint_data(agent)
+	first_hit = false
+	if not wp_data.farthest_wp:
+		return
+	waypoint_idx = wp_data.farthest_wp_idx
+	agent.set_morale(-1)
+	agent.set_target_node(wp_data.farthest_wp)
+	agent.set_sprinting(true)
 
 func get_next_target():
 	if waypoints.empty():
@@ -50,39 +67,47 @@ func get_next_target():
 		return null
 	return waypoints[waypoint_idx]
 
-func get_closest_waypoint(node_to):
+func get_waypoint_data(node_to):
 	if not node_to:
-		push_warning("Error calling get_closest_waypoint() for patrol area: no node specified")
+		push_warning("Error calling get_waypoint_data() for patrol area: no node specified")
 		return { "waypoint" : null, "waypoint_idx" : -1 }
 	if waypoints.empty():
-		push_warning("Error calling get_closest_waypoint() for patrol area: no waypoints specified")
+		push_warning("Error calling get_waypoint_data() for patrol area: no waypoints specified")
 		return { "waypoint" : null, "waypoint_idx" : -1 }
-	var result = waypoints[0]
-	var result_idx = 0
+	var closest_wp = waypoints[0]
+	var closest_wp_idx = 0
+	var farthest_wp = waypoints[0]
+	var farthest_wp_idx = 0
 	var origin = node_to.get_global_transform().origin
-	var min_distance = origin.distance_squared_to(result.get_global_transform().origin)
+	var min_distance = origin.distance_squared_to(closest_wp.get_global_transform().origin)
+	var max_distance = 0
 	var idx = 0
 	for wp in waypoints:
-		if origin.distance_squared_to(wp.get_global_transform().origin) < min_distance:
-			result = wp
-			result_idx = idx
+		var d = origin.distance_squared_to(wp.get_global_transform().origin)
+		if d < min_distance:
+			closest_wp = wp
+			closest_wp_idx = idx
+		if d > max_distance:
+			farthest_wp = wp
+			farthest_wp_idx = idx
 		idx = idx + 1
-	return { "waypoint" : result, "waypoint_idx" : result_idx }
+	return {
+		"closest_wp" : closest_wp,
+		"closest_wp_idx" : closest_wp_idx,
+		"farthest_wp" : farthest_wp,
+		"farthest_wp_idx" : farthest_wp_idx
+	}
 
 func do_patrol():
 	if not agent:
 		push_warning("Error calling do_patrol() for patrol area: agent path is incorrect")
 		return
-	var wp_data = {
-		"waypoint" : waypoints[0],
-		"waypoint_idx" : 0
-	} if first_run else get_closest_waypoint(agent)
-	if not wp_data.waypoint:
+	var wp_data = get_waypoint_data(agent)
+	if not wp_data.closest_wp:
 		return
-	waypoint_idx = wp_data.waypoint_idx
-	agent.set_target_node(wp_data.waypoint, false)
-	agent.set_sprinting(first_run)
-	first_run = false
+	waypoint_idx = wp_data.closest_wp_idx
+	agent.set_target_node(wp_data.closest_wp)
+	agent.set_sprinting(false)
 
 func _on_patrol_area_body_entered(body):
 	if body.is_in_group("party") and body.is_player():

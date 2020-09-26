@@ -25,8 +25,9 @@ func use(player_node, camera_node):
 	if not is_activated():
 		return false
 	var u = .use(player_node, camera_node)
-	if not u and can_be_attacked():
-		hit(camera_node)
+	var attacker = get_possible_attacker()
+	if not u and attacker:
+		attacker.attack_start(self)
 	return true
 
 func add_highlight(player_node):
@@ -35,7 +36,12 @@ func add_highlight(player_node):
 	var h = .add_highlight(player_node)
 	if not h.empty():
 		return h
-	return "E: Shoot" if can_be_attacked() else ""
+	var attacker = get_possible_attacker()
+	if player_node.equals(attacker):
+		return "E: Shoot"
+	elif attacker:
+		return "E: Shout"
+	return ""
 
 func hit(hit_direction_node):
 	if not is_activated():
@@ -78,19 +84,10 @@ func get_preferred_target():
 		return null
 	return get_nearest_party_member() if is_aggressive() else .get_preferred_target()
 
-func take_damage(fatal, hit_direction_node):
-	if not is_activated() or is_dying():
-		return
-	stop_cutscene()
-	get_model().take_damage(fatal)
-	push_back(get_push_vec(hit_direction_node))
-	if fatal:
-		$Body_CollisionShape.disabled = true
-		$Feet_CollisionShape.disabled = false
-		character_nodes.enable_areas(false)
-
 func set_states(player):
-	if player.is_hidden() or get_relationship() >= 0:
+	if player.is_hidden() \
+		or get_relationship() >= 0 \
+		or get_morale() < 0:
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(player)

@@ -31,6 +31,7 @@ onready var rest_timer = $RestTimer
 
 onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
+onready var ranged_damage_raycast = $RangedDamageRayCast
 
 onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
@@ -58,6 +59,8 @@ func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
 	character.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
+	melee_damage_area.monitoring = character.has_melee_attack()
+	ranged_damage_raycast.enabled = character.has_ranged_attack()
 
 func _on_player_underwater(player, enable):
 	if player and not player.equals(character):
@@ -149,14 +152,22 @@ func use_weapon(item):
 			common_utils.set_pause_scene(character, true)
 			stun_timer.start(weapon_data.stun_duration)
 
-func get_possible_attack_target():
+func get_possible_attack_target(update_collisions):
 	if not character.is_activated():
 		return null
-	for body in melee_damage_area.get_overlapping_bodies():
-		if character.equals(body):
-			continue
-		if body.is_in_group("party"):
-			return body
+	if character.has_melee_attack():
+		for body in melee_damage_area.get_overlapping_bodies():
+			if character.equals(body):
+				continue
+			if body.is_in_group("party") or body.is_in_group("enemies"):
+				return body
+	if character.has_ranged_attack():
+		if update_collisions:
+			ranged_damage_raycast.force_raycast_update()
+		if ranged_damage_raycast.is_colliding():
+			var body = ranged_damage_raycast.get_collider()
+			if body.is_in_group("party") or body.is_in_group("enemies"):
+				return body
 	return null
 
 func is_attacking():
@@ -227,9 +238,13 @@ func _on_AttackTimer_timeout():
 # TODO: Check it is OK
 #	if not character.is_activated():
 #		return
-	if get_possible_attack_target():
+	var attack_target = get_possible_attack_target(true)
+	if attack_target:
 		play_attack_sound()
-		game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
+		if attack_target.is_in_group("party"):
+			game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
+		elif attack_target.is_in_group("enemies"):
+			attack_target.hit(null)
 	else:
 		play_sound_miss()
 		#character.stop_cutscene()

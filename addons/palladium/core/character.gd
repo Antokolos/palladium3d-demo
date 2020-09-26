@@ -4,7 +4,8 @@ class_name PLDCharacter
 signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
-signal attack_started(enemy, target)
+signal attack_started(player_node, target)
+signal take_damage(player_node, fatal, hit_direction_node)
 
 const GRAVITY_DEFAULT = 6.2
 const GRAVITY_UNDERWATER = 0.2
@@ -27,6 +28,9 @@ const NONCHAR_COLLISION_RANGE_MAX = 5.9
 const MAX_SLOPE_ANGLE_RAD = deg2rad(60)
 const AXIS_VALUE_THRESHOLD = 0.15
 
+export var has_ranged_attack = false
+export var has_melee_attack = false
+
 onready var character_nodes = $character_nodes
 
 var vel = Vector3()
@@ -39,6 +43,7 @@ var is_sprinting = false
 var is_underwater = false
 var is_poisoned = false
 var relationship = 0
+var morale = 0
 var stuns_count = 0
 var has_floor_collision = true
 
@@ -62,8 +67,14 @@ func set_sound_attack(mode):
 func set_sound_miss(mode):
 	character_nodes.set_sound_miss(mode)
 
+func has_ranged_attack():
+	return has_ranged_attack
+
+func has_melee_attack():
+	return has_melee_attack
+
 func handle_attack():
-	var possible_attack_target = character_nodes.get_possible_attack_target()
+	var possible_attack_target = character_nodes.get_possible_attack_target(false)
 	if possible_attack_target:
 		attack_start(possible_attack_target)
 	else:
@@ -85,6 +96,21 @@ func stop_attack():
 
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
+
+func hit(hit_direction_node):
+	pass
+
+func take_damage(fatal, hit_direction_node):
+	if not is_activated() or is_dying():
+		return
+	emit_signal("take_damage", self, fatal, hit_direction_node)
+	stop_cutscene()
+	get_model().take_damage(fatal)
+	push_back(get_push_vec(hit_direction_node))
+	if fatal:
+		$Body_CollisionShape.disabled = true
+		$Feet_CollisionShape.disabled = false
+		character_nodes.enable_areas(false)
 
 ### Use target ###
 
@@ -268,8 +294,8 @@ func is_crouching():
 func toggle_crouch():
 	stand_up() if is_crouching else sit_down()
 
-func can_be_attacked():
-	return false
+func get_possible_attacker():
+	return null
 
 func can_run():
 	return true
@@ -292,6 +318,12 @@ func get_relationship():
 
 func set_relationship(relationship):
 	self.relationship = relationship
+
+func get_morale():
+	return morale
+
+func set_morale(morale):
+	self.morale = morale
 
 func get_stuns_count():
 	return stuns_count

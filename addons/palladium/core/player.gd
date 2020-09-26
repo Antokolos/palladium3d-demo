@@ -26,6 +26,8 @@ func _ready():
 		if not game_state.is_loading() and not game_state.is_transition():
 			join_party()
 	get_model().set_simple_mode(initial_player)
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.connect("attack_started", self, "_on_enemy_attack_started")
 	activate()
 
 func reset_movement():
@@ -122,6 +124,11 @@ func process_rotation(need_to_update_collisions):
 
 func get_snap():
 	return Vector3.ZERO if is_in_jump else Vector3.UP
+
+func _on_enemy_attack_started(player_node, target):
+	if is_player_controlled() or not is_in_party():
+		return
+	set_point_of_interest(player_node)
 
 func _input(event):
 	if not is_player() or not is_activated():
