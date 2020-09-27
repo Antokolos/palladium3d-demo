@@ -238,6 +238,7 @@ func _on_AttackTimer_timeout():
 # TODO: Check it is OK
 #	if not character.is_activated():
 #		return
+	var last_attack_target = character.get_last_attack_target()
 	var attack_target = get_possible_attack_target(true)
 	if attack_target:
 		play_attack_sound()
@@ -245,8 +246,12 @@ func _on_AttackTimer_timeout():
 			game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
 		elif attack_target.is_in_group("enemies"):
 			attack_target.hit(null)
+		if last_attack_target and attack_target.get_instance_id() != last_attack_target.get_instance_id():
+			last_attack_target.miss(null)
 	else:
 		play_sound_miss()
+		if last_attack_target:
+			last_attack_target.miss(null)
 		#character.stop_cutscene()
 	character.clear_point_of_interest()
 

@@ -46,6 +46,7 @@ var relationship = 0
 var morale = 0
 var stuns_count = 0
 var has_floor_collision = true
+var last_attack_target = null
 
 func _ready():
 	var model = get_model()
@@ -83,6 +84,7 @@ func handle_attack():
 func attack_start(possible_attack_target, attack_anim_idx = -1):
 	if not is_attacking():
 		set_sprinting(false)
+		set_last_attack_target(possible_attack_target)
 		emit_signal("attack_started", self, possible_attack_target)
 		set_point_of_interest(possible_attack_target)
 		get_model().attack(attack_anim_idx)
@@ -90,14 +92,24 @@ func attack_start(possible_attack_target, attack_anim_idx = -1):
 
 func stop_attack():
 	if is_attacking():
-		clear_point_of_interest()
-		character_nodes.stop_attack()
 		stop_cutscene()
+		character_nodes.stop_attack()
+		clear_point_of_interest()
+		last_attack_target = null
+
+func set_last_attack_target(last_attack_target):
+	self.last_attack_target = last_attack_target
+
+func get_last_attack_target():
+	return last_attack_target
 
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
 
 func hit(hit_direction_node):
+	pass
+
+func miss(hit_direction_node):
 	pass
 
 func take_damage(fatal, hit_direction_node):

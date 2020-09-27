@@ -15,8 +15,8 @@ func _ready():
 		agent.connect("patrolling_changed", self, "_on_patrolling_changed")
 		agent.connect("arrived_to", self, "_on_arrived_to")
 		agent.connect("take_damage", self, "_on_take_damage")
-	#connect("body_entered", self, "_on_patrol_area_body_entered")
-	#connect("body_exited", self, "_on_patrol_area_body_exited")
+	connect("body_entered", self, "_on_patrol_area_body_entered")
+	connect("body_exited", self, "_on_patrol_area_body_exited")
 	for ch in get_children():
 		if ch is Position3D:
 			waypoints.append(ch)
@@ -85,9 +85,11 @@ func get_waypoint_data(node_to):
 	for wp in waypoints:
 		var d = origin.distance_squared_to(wp.get_global_transform().origin)
 		if d < min_distance:
+			min_distance = d
 			closest_wp = wp
 			closest_wp_idx = idx
 		if d > max_distance:
+			max_distance = d
 			farthest_wp = wp
 			farthest_wp_idx = idx
 		idx = idx + 1
@@ -114,12 +116,16 @@ func _on_patrol_area_body_entered(body):
 		if not agent:
 			push_warning("Error calling _on_patrol_area_body_entered() for patrol area: agent path is incorrect")
 			return
-		agent.activate()
+		if agent.get_relationship() < 0:
+			agent.activate()
+			do_patrol()
 
 func _on_patrol_area_body_exited(body):
 	if not agent:
 		push_warning("Error calling _on_patrol_area_body_exited() for patrol area: agent path is incorrect")
 		return
 	if body.is_in_group("party") and body.is_player() and not agent.is_aggressive():
-		agent.set_target_node(null)
-		agent.deactivate()
+		if not agent.is_aggressive() \
+			and agent.get_relationship() < 0:
+			agent.set_target_node(null)
+			agent.deactivate()
