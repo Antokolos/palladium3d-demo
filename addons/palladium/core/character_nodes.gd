@@ -32,6 +32,7 @@ onready var rest_timer = $RestTimer
 onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
 onready var ranged_damage_raycast = $RangedDamageRayCast
+onready var rays_to_characters = $RaysToCharacters
 
 onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
@@ -78,6 +79,54 @@ func _on_player_poisoned(player, enable):
 		poison_timer.start()
 	elif not enable and not poison_timer.is_stopped():
 		poison_timer.stop()
+
+func get_rays_to_characters():
+	return rays_to_characters
+
+func get_rays_to_characters_pos():
+	return get_rays_to_characters().get_global_transform().origin
+
+func get_ray_to_character_name(another_character):
+	return "ray_" + another_character.get_name_hint()
+
+func get_ray_to_character(another_character):
+	var ray_name = get_ray_to_character_name(another_character)
+	return rays_to_characters.get_node(ray_name) \
+			if rays_to_characters.has_node(ray_name) \
+			else null
+
+func add_ray_to_character(another_character):
+	var ray_name = get_ray_to_character_name(another_character)
+	if rays_to_characters.has_node(ray_name):
+		return null
+	var r = RayCast.new()
+	r.set_name(ray_name)
+	r.enabled = another_character.is_activated()
+	r.set_collision_mask_bit(1, true)
+	r.set_collision_mask_bit(2, true)
+	r.set_collision_mask_bit(10, true)
+	r.set_collision_mask_bit(13, true)
+	rays_to_characters.add_child(r)
+	update_ray_to_character(another_character, r)
+	return r
+
+func update_ray_to_character(another_character, ray = null):
+	var r = ray if ray else get_ray_to_character(another_character)
+	if r:
+		r.cast_to = r.to_local(another_character.get_rays_to_characters_pos())
+		return true
+	return false
+
+func has_obstacles_between(another_character):
+	var r = get_ray_to_character(another_character)
+	return r and r.is_colliding()
+
+func enable_rays_to_character(another_character, enable):
+	var r = get_ray_to_character(another_character)
+	if r:
+		r.enabled = enable
+		return true
+	return false
 
 func sit_down():
 	if animation_player.is_playing():
@@ -202,7 +251,7 @@ func enable_areas(enable):
 	melee_damage_area.get_node("CollisionShape").disabled = not enable
 
 func is_visible_to_player():
-	return visibility_notifier.is_on_screen()
+	return visibility_notifier.is_on_screen() and not has_obstacles_between(game_state.get_player())
 
 func is_low_ceiling():
 	# Make sure you've set proper collision layer bit for ceiling

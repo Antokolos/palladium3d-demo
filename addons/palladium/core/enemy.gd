@@ -91,14 +91,15 @@ func set_states(player):
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(player)
-	if is_aggressive() and (dtp > TOO_FAR_RANGE or player.is_sprinting()):
+	var is_aggressive = is_aggressive()
+	if is_aggressive and (dtp > TOO_FAR_RANGE or player.is_sprinting()):
 		set_sprinting(true)
-	if dtp < AGGRESSION_RANGE:
-		if not is_aggressive():
-			# Run at the player when aggression was just triggered
-			set_sprinting(true)
+	if not is_aggressive \
+		and dtp < AGGRESSION_RANGE \
+		and not has_obstacles_between(player):
+		set_sprinting(true)
 		set_aggressive(true)
-	elif dtp > STOP_CHASING_RANGE:
+	elif is_aggressive and dtp > STOP_CHASING_RANGE:
 		set_aggressive(false)
 		set_sprinting(false)
 

@@ -16,6 +16,7 @@ const KEY_LOOK_SPEED_FACTOR = 30
 
 const FOLLOW_RANGE = 3
 const CLOSEUP_RANGE = 2
+const POINT_BLANK_RANGE = 1.2
 const ALIGNMENT_RANGE = 0.2
 const USE_DISTANCE_COMMON = 2
 
@@ -181,12 +182,13 @@ func get_follow_parameters(target, current_transform, next_position) -> PLDMovem
 	var current_position = current_transform.origin
 	var cur_dir = current_transform.basis.xform(Z_DIR)
 	var next_dir = next_position - current_position
+	var horz_dir = next_dir
+	horz_dir.y = 0
 	var data : PLDMovementData = PLDMovementData.new()
 	var d = next_dir.length()
-	data.with_distance(d)
-	var need_moving = (d > ALIGNMENT_RANGE)
+	var need_moving = d > ALIGNMENT_RANGE and horz_dir.length() > ALIGNMENT_RANGE
 	if need_moving:
-		data.with_dir(next_dir)
+		data.with_distance(d).with_dir(next_dir)
 	cur_dir.y = 0
 	next_dir.y = 0
 	

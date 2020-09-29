@@ -188,6 +188,11 @@ func _on_player_poisoned(player, enable):
 func activate():
 	.activate()
 	get_model().activate()
+	enable_rays_to_characters(true)
+
+func deactivate():
+	.deactivate()
+	enable_rays_to_characters(false)
 
 func is_visible_to_player():
 	return character_nodes.is_visible_to_player()
@@ -381,9 +386,16 @@ func invoke_physics_pass():
 func get_snap():
 	return Vector3.UP
 
-func is_need_to_use_physics():
+func is_need_to_use_physics(characters):
+	if not is_visible_to_player():
+		return false
 	if is_player_controlled() or not has_floor_collision():
 		return true
+	for character in characters:
+		if equals(character):
+			continue
+		if get_distance_to_character(character) < POINT_BLANK_RANGE:
+			return true
 	return false
 
 func move_without_physics(hvel, delta):
@@ -391,9 +403,9 @@ func move_without_physics(hvel, delta):
 		global_translate(hvel * delta)
 	return hvel
 
-func process_movement(delta, dir):
-	var is_need_to_use_physics = is_need_to_use_physics()
+func process_movement(delta, dir, characters):
 	var target = Vector3.ZERO if is_movement_disabled() else dir
+	var is_need_to_use_physics = is_need_to_use_physics(characters)
 	if is_need_to_use_physics:
 		target.y = 0
 	target = target.normalized()
@@ -442,7 +454,6 @@ func process_movement(delta, dir):
 	var sc = get_slide_count()
 	var character_collisions = []
 	var nonchar_collision = null
-	var characters = [] if sc == 0 else game_state.get_characters()
 	var collides_floor = false
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
@@ -499,18 +510,40 @@ func has_floor_collision():
 func can_jump():
 	return has_floor_collision() or is_underwater()
 
+func get_rays_to_characters_pos():
+	return character_nodes.get_rays_to_characters_pos()
+
+func add_ray_to_character(another_character):
+	return character_nodes.add_ray_to_character(another_character)
+
+func update_ray_to_character(another_character, ray = null):
+	return character_nodes.update_ray_to_character(another_character, ray)
+
+func has_obstacles_between(another_character):
+	return character_nodes.has_obstacles_between(another_character)
+
+func enable_rays_to_character(another_character, enable):
+	return character_nodes.enable_rays_to_character(another_character, enable)
+
+func enable_rays_to_characters(enable):
+	var characters = game_state.get_characters()
+	for character in characters:
+		enable_rays_to_character(character, enable)
+		character.enable_rays_to_character(self, enable)
+
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
 	var poi = get_point_of_interest()
 	if not poi and (not is_activated() or is_movement_disabled()):
 		character_nodes.stop_walking_sound()
-		has_floor_collision = false
+		has_floor_collision = true
 		return d
 	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
 		sit_down()
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
-	var movement_process_data = process_movement(delta, movement_data.get_dir())
+	var characters = game_state.get_characters()
+	var movement_process_data = process_movement(delta, movement_data.get_dir(), characters)
 	has_floor_collision = movement_process_data.collides_floor
 	d.is_moving = movement_process_data.is_walking
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
@@ -518,6 +551,11 @@ func do_process(delta, is_player):
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
+	for character in characters:
+		if equals(character):
+			continue
+		if not update_ray_to_character(character):
+			add_ray_to_character(character)
 	if not is_visible_to_player():
 		return d
 	var model = get_model()
