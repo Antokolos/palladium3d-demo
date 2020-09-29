@@ -100,7 +100,6 @@ navmesh = SubResource( 1 )
 
 [node name="player" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 1.1231, 9.89974, 73.1896 )
-model_path = "res://scenes/male.tscn"
 
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/palladium/player"]
 
@@ -109,7 +108,6 @@ model_path = "res://scenes/male.tscn"
 [node name="player_female" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.276566, 9.84315, 73.1262 )
 name_hint = "female"
-model_path = "res://scenes/female.tscn"
 initial_player = false
 
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/palladium/player_female"]
@@ -119,7 +117,7 @@ initial_player = false
 [node name="player_bandit" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7614, 2.2922, 0 )
 name_hint = "bandit"
-model_path = "res://scenes/bandit.tscn"
+can_hide = false
 initial_player = false
 
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/palladium/player_bandit"]

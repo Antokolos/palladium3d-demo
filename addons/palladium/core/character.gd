@@ -30,6 +30,7 @@ const AXIS_VALUE_THRESHOLD = 0.15
 
 export var has_ranged_attack = false
 export var has_melee_attack = false
+export var can_hide = true
 
 onready var character_nodes = $character_nodes
 
@@ -73,6 +74,9 @@ func has_ranged_attack():
 
 func has_melee_attack():
 	return has_melee_attack
+
+func can_hide():
+	return can_hide
 
 func handle_attack():
 	var possible_attack_target = character_nodes.get_possible_attack_target(false)
