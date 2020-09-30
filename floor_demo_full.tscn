@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/core/environment/room_enabler.tscn" type="PackedScene" id=2]
@@ -80,6 +80,8 @@
 [ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=78]
 [ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=79]
 [ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=80]
+[ext_resource path="res://addons/palladium/core/environment/conversation_area.tscn" type="PackedScene" id=81]
+[ext_resource path="res://scenes/conversation_area_palladium.gd" type="Script" id=82]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -113,6 +115,9 @@ extents = Vector3( 4.97818, 2.86632, 5.99325 )
 
 [sub_resource type="BoxShape" id=11]
 extents = Vector3( 2.04657, 1, 1.35013 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 4.23775, 2, 2.08874 )
 
 [node name="floor_demo_full" type="Spatial" groups=[
 "restorable_state",
@@ -838,6 +843,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 4.03199, 1.19035, 29.9398 )
 
 [node name="last_trap_floor" parent="." instance=ExtResource( 76 )]
+usable_id = 100
 
 [node name="last_trap_postament" parent="." instance=ExtResource( 77 )]
 visible = false
@@ -850,6 +856,31 @@ transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899,
 visible = false
 
 [node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 80 )]
+
+[node name="conversation_area_palladium" parent="." instance=ExtResource( 81 )]
+transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 0.732417, 3.27982, 30.6924 )
+script = ExtResource( 82 )
+conversations = {
+"bandit": "173_Metallic_tube",
+"father": "",
+"female": "174_This_inscription_wasn't",
+"minotaur": "",
+"player": "",
+"skeleton": ""
+}
+cutscene_node_path = NodePath("PositionCamera")
+
+[node name="CollisionShape" type="CollisionShape" parent="conversation_area_palladium"]
+shape = SubResource( 12 )
+
+[node name="PositionCamera" type="Position3D" parent="conversation_area_palladium"]
+transform = Transform( 0.00151398, 0.449004, -0.893528, 0.00638483, 0.893507, 0.449004, 0.999978, -0.00638481, -0.00151407, -4.11073, 0.957338, 0.402145 )
+
+[node name="PositionCompanion" type="Position3D" parent="conversation_area_palladium"]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.559672, -2.02729, 1.92109 )
+
+[node name="PositionPlayer" type="Position3D" parent="conversation_area_palladium"]
+transform = Transform( 1, 0, -5.58794e-009, 0, 1, 0, 5.58794e-009, 0, 1, 0.436014, -2.027, -3.37814 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]

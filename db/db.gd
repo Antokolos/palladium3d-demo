@@ -139,7 +139,8 @@ enum ButtonActivatorIds {
 
 enum UsableIds {
 	NONE = 0,
-	BARN_LOCK = 10
+	BARN_LOCK = 10,
+	LAST_TRAP_FLOOR = 100
 }
 
 enum TakableIds {
@@ -161,7 +162,8 @@ enum TakableIds {
 	HERMES = 140,
 	ERIDA = 150,
 	ARES = 160,
-	TUBE_BREATH = 170
+	TUBE_BREATH = 170,
+	ATHENA = 430
 }
 
 enum UseTargetIds {
@@ -195,6 +197,7 @@ const ITEMS = {
 	TakableIds.ERIDA : { "item_nam" : "statue_erida", "item_image" : "statue_erida.png", "model_path" : "res://assets/statue_erida.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.TUBE_BREATH : { "item_nam" : "tube_breath", "item_image" : "tube_breath.png", "model_path" : "res://assets/tube_breath.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
+	TakableIds.ATHENA : { "item_nam" : "statue_athena", "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 }
 
 const WEAPONS_STUN = {}

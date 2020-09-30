@@ -7,6 +7,10 @@ onready var erida_trap_sound_2 = get_node("Erida_room/EridaTrapSound2")
 onready var erida_trap_sound_3 = get_node("Erida_room/EridaTrapSound3")
 onready var erida_trap_sound_4 = get_node("Erida_room/EridaTrapSound4")
 onready var eris_particles = get_node("Erida_room/eris_particles")
+onready var last_trap_postament = get_node("last_trap_postament")
+onready var last_trap_spikes = get_node("last_trap_spikes")
+onready var zheleznoe_uho = get_node("4_Zheleznoe_uho")
+onready var floor_demo_blocks_floor = get_node("floor_demo_blocks_floor")
 
 func _ready():
 	restore_state()
@@ -61,6 +65,8 @@ func use_takable(player_node, takable, parent, was_taken):
 					door.open()
 					if not was_opened:
 						game_state.autosave_create()
+		DB.TakableIds.ATHENA:
+			last_trap_show()
 
 func erida_trap_activate():
 	erida_trap_sound_1.play()
@@ -86,6 +92,18 @@ func erida_trap_deactivate():
 	erida_trap_sound_3.stop()
 	erida_trap_sound_4.stop()
 	eris_particles.emitting = false
+
+func last_trap_show():
+	last_trap_postament.visible = true
+	last_trap_spikes.visible = true
+	zheleznoe_uho.visible = true
+	floor_demo_blocks_floor.visible = false
+
+func last_trap_hide():
+	last_trap_postament.visible = false
+	last_trap_spikes.visible = false
+	zheleznoe_uho.visible = false
+	floor_demo_blocks_floor.visible = true
 
 func check_demo_finish():
 	var statues = get_tree().get_nodes_in_group("demo_finish_statues")
@@ -132,6 +150,9 @@ func use_pedestal(player_node, pedestal, inventory_item, child_item):
 			check_demo_finish()
 		DB.PedestalIds.DEMO_HERMES:
 			check_demo_finish()
+		DB.PedestalIds.ZEUS_ATHENA:
+			if item_id == DB.TakableIds.ATHENA:
+				last_trap_hide()
 
 func use_button_activator(player_node, button_activator):
 	var activator_id = button_activator.activator_id
@@ -386,3 +407,7 @@ func restore_state():
 		erida_trap_activate()
 	else:
 		erida_trap_deactivate()
+	if game_state.has_item(DB.TakableIds.ATHENA):
+		last_trap_show()
+	else:
+		last_trap_hide()

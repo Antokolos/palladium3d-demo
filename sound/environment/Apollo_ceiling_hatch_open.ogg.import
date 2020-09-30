@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Apollo_ceiling_hatch_open.ogg-f6dcac7291445f9e34f18cefd5ebdf10.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Apollo_ceiling_hatch_open.ogg"
+dest_files=[ "res://.import/Apollo_ceiling_hatch_open.ogg-f6dcac7291445f9e34f18cefd5ebdf10.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

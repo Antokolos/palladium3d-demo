@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Hebe_Jar_hand.ogg-0200b8dc27b464182eebe5af747d35d2.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Hebe_Jar_hand.ogg"
+dest_files=[ "res://.import/Hebe_Jar_hand.ogg-0200b8dc27b464182eebe5af747d35d2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

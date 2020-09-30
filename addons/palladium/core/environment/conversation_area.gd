@@ -17,6 +17,8 @@ func _ready():
 	if Engine.editor_hint:
 		return
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
+	cutscene_manager.connect("camera_borrowed", self, "_on_camera_borrowed")
+	cutscene_manager.connect("camera_restored", self, "_on_camera_restored")
 
 func is_conversation_enabled(name_hint, conversation_idx):
 	return true
@@ -57,3 +59,9 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 			if conversation == conversation_name:
 				do_when_conversation_finished(name_hint, conversation_name)
 				return
+
+func _on_camera_borrowed(player_node, camera_node):
+	pass
+
+func _on_camera_restored(player_node, camera_node):
+	pass
