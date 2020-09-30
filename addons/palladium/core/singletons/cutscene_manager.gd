@@ -1,8 +1,8 @@
 extends Node
 class_name PLDCutsceneManager
 
-signal camera_borrowed(player_node, cutscene_node)
-signal camera_restored(player_node, cutscene_node)
+signal camera_borrowed(player_node, cutscene_node, conversation_name, target)
+signal camera_restored(player_node, cutscene_node, conversation_name, target)
 
 var cutscene_node = null
 var conversation_name = null
@@ -27,9 +27,11 @@ func start_cutscene(player, cutscene_node, conversation_name = null, target = nu
 	borrow_camera(player, cutscene_node)
 
 func stop_cutscene(player):
+	var conversation_name_prev = self.conversation_name
+	var target_prev = self.target
 	self.conversation_name = null
 	self.target = null
-	restore_camera(player)
+	restore_camera(player, conversation_name_prev, target_prev)
 
 func borrow_camera(player, cutscene_node):
 	is_cutscene = true
@@ -47,9 +49,9 @@ func borrow_camera(player, cutscene_node):
 	player.set_simple_mode(false)
 	player_camera_holder.remove_child(camera)
 	cutscene_node.add_child(camera)
-	emit_signal("camera_borrowed", player, cutscene_node)
+	emit_signal("camera_borrowed", player, cutscene_node, conversation_name, target)
 
-func restore_camera(player):
+func restore_camera(player, conversation_name_prev = null, target_prev = null):
 	var player_camera_holder = player.get_cam_holder()
 	var camera = cutscene_node.get_child(0) if cutscene_node else player_camera_holder.get_child(0)
 	if cutscene_node:
@@ -58,7 +60,7 @@ func restore_camera(player):
 		cutscene_node.remove_child(camera)
 		player_camera_holder.add_child(camera)
 		camera.enable_use(true)
-		emit_signal("camera_restored", player, cutscene_node)
+		emit_signal("camera_restored", player, cutscene_node, conversation_name_prev, target_prev)
 		cutscene_node = null
 	camera.enable_use(true)
 	game_state.get_hud().show_game_ui(true)

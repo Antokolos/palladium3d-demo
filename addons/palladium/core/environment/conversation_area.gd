@@ -48,6 +48,12 @@ func _on_conversation_area_body_entered(body):
 func do_when_conversation_finished(name_hint, conversation_name):
 	pass
 
+func do_when_camera_borrowed(player_node, cutscene_node, name_hint, conversation_name):
+	pass
+
+func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):
+	pass
+
 func _on_conversation_finished(player, conversation_name, target, initiator):
 	if Engine.editor_hint:
 		return
@@ -60,8 +66,34 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 				do_when_conversation_finished(name_hint, conversation_name)
 				return
 
-func _on_camera_borrowed(player_node, camera_node):
-	pass
+func _on_camera_borrowed(player_node, cutscene_node, conversation_name, target):
+	if Engine.editor_hint:
+		return
+	if not self.cutscene_node or not cutscene_node:
+		return
+	if self.cutscene_node.get_instance_id() != cutscene_node.get_instance_id():
+		return
+	for name_hint in conversations.keys():
+		if conversations[name_hint].empty():
+			continue
+		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
+		for conversation in conversations_for_name:
+			if conversation == conversation_name:
+				do_when_camera_borrowed(player_node, cutscene_node, name_hint, conversation_name)
+				return
 
-func _on_camera_restored(player_node, camera_node):
-	pass
+func _on_camera_restored(player_node, cutscene_node, conversation_name, target):
+	if Engine.editor_hint:
+		return
+	if not self.cutscene_node or not cutscene_node:
+		return
+	if self.cutscene_node.get_instance_id() != cutscene_node.get_instance_id():
+		return
+	for name_hint in conversations.keys():
+		if conversations[name_hint].empty():
+			continue
+		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
+		for conversation in conversations_for_name:
+			if conversation == conversation_name:
+				do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name)
+				return
