@@ -47,6 +47,7 @@ var relationship = 0
 var morale = 0
 var stuns_count = 0
 var has_floor_collision = true
+var force_physics = false
 var last_attack_target = null
 
 func _ready():
@@ -391,6 +392,8 @@ func get_snap():
 	return Vector3.UP
 
 func is_need_to_use_physics(characters):
+	if force_physics:
+		return true
 	if not is_visible_to_player():
 		return false
 	if is_player_controlled() or not has_floor_collision():
@@ -438,7 +441,7 @@ func process_movement(delta, dir, characters):
 	vel.z = hvel.z
 	
 	if is_need_to_use_physics:
-		if vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
+		if not force_physics and vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
 			return { "is_walking" : false, "collides_floor" : true }
 		vel = move_and_slide_with_snap(
 			vel,
@@ -510,6 +513,12 @@ func push_back(push_vec):
 
 func has_floor_collision():
 	return has_floor_collision or is_on_floor()
+
+func is_force_physics():
+	return force_physics
+
+func set_force_physics(force_physics):
+	self.force_physics = force_physics
 
 func can_jump():
 	return has_floor_collision() or is_underwater()

@@ -1,5 +1,175 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/last_trap_spikes.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/last_trap_spikes.gd" type="Script" id=2]
 
-[node name="last_trap_spikes" index="0" instance=ExtResource( 1 )]
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.16028, 1.92756, 2.24031 )
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 1.95232, 2.69226, 3.08729 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.16028, 1.92756, 2.24031 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "spikes_off"
+length = 6.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikesBody/CollisionSpikes2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 30.9871 ), Vector3( 0.355817, -0.955723, 29.7792 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpikesBody/CollisionSpikes1:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 32.6244 ), Vector3( 0.355817, -0.955723, 33.8269 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "spikes_on"
+length = 6.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikesBody/CollisionSpikes2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 29.7792 ), Vector3( 0.355817, -0.955723, 30.9871 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpikesBody/CollisionSpikes1:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 33.8269 ), Vector3( 0.355817, -0.955723, 32.6244 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "steps_up"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("FloorBody:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.0143553, 1.98794 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.25, -5.384, 31.638 ), Vector3( 0.25, -2.88792, 32.7202 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FloorBody:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.0143553, 1.98794 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -35.6311, 0, 0 ) ]
+}
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 2.5019, 1, 2.38396 )
+
+[node name="last_trap_spikes" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="ceiling_slab_1014" parent="Armature033" index="1"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_moving003" parent="ceiling_armat005" index="1"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_spikes008" parent="ceiling_armat005" index="2"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_moving002" parent="ceiling_armat004" index="1"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_spikes007" parent="ceiling_armat004" index="2"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_slab_1013" parent="." index="3"]
+extra_cull_margin = 10.0
+
+[node name="ceiling_slab_1012" parent="." index="4"]
+extra_cull_margin = 10.0
+
+[node name="StaticBody" type="StaticBody" parent="." index="5"]
+
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.73952, -0.955723, 31.9239 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40487, -0.955723, 31.9239 )
+shape = SubResource( 2 )
+
+[node name="FloorBody" type="RigidBody" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -5.384, 31.638 )
+collision_layer = 5
+collision_mask = 5
+mode = 3
+continuous_cd = true
+
+[node name="CollisionShape" type="CollisionShape" parent="FloorBody" index="0"]
+shape = SubResource( 1 )
+
+[node name="SpikesBody" type="RigidBody" parent="." index="7"]
+mode = 3
+continuous_cd = true
+
+[node name="CollisionSpikes1" type="CollisionShape" parent="SpikesBody" index="0"]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.355817, -0.955723, 33.8269 )
+shape = SubResource( 3 )
+
+[node name="CollisionSpikes2" type="CollisionShape" parent="SpikesBody" index="1"]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.355817, -0.955723, 29.7792 )
+shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
+anims/spikes_off = SubResource( 4 )
+anims/spikes_on = SubResource( 5 )
+anims/steps_up = SubResource( 6 )
+
+[node name="Position3D" type="Position3D" parent="." index="9"]
+transform = Transform( -0.908096, 0, -0.418763, 0, 1, 0, 0.418763, 0, -0.908096, 0.486032, -2.7294, 31.8066 )
+
+[node name="Area" type="Area" parent="." index="10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.822027, -3.07132, 32.1169 )
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area" index="0"]
+shape = SubResource( 7 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]

@@ -12,11 +12,14 @@ func do_when_conversation_finished(name_hint, conversation_name):
 			var companion = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 			companion.join_party()
 		CHARS.FEMALE_NAME_HINT:
-			pass
+			var companion = game_state.get_character(CHARS.FEMALE_NAME_HINT)
+			companion.set_force_physics(true)
+			companion.invoke_physics_pass()
 
 func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):
 	if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 		game_state.get_usable(DB.UsableIds.LAST_TRAP_FLOOR).activate()
+		get_node("../last_trap_spikes").activate()
 
 func _on_conversation_area_body_entered(body):
 	if Engine.editor_hint:
