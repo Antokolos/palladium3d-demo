@@ -17,7 +17,7 @@ func do_when_conversation_finished(name_hint, conversation_name):
 			companion.invoke_physics_pass()
 
 func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):
-	if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+	if name_hint == CHARS.FEMALE_NAME_HINT:
 		game_state.get_usable(DB.UsableIds.LAST_TRAP_FLOOR).activate()
 		get_node("../last_trap_spikes").activate()
 
