@@ -11,8 +11,7 @@ onready var player_processing = $PlayerProcessing
 func _ready():
 	postament_anim_player.connect("animation_finished", self, "_on_postament_animation_finished")
 	player_processing.connect("finished", self, "_on_player_processing_finished")
-	postament_anim_player.play("postament_180")
-	hatch_anim_player.play("Armature.034Action")
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 
 func can_take_palladium():
 	return palladium_real.visible \
@@ -38,8 +37,16 @@ func add_highlight(player_node):
 		return h
 	return ("E: " + tr("ACTION_TAKE")) if can_take_palladium() else ""
 
+func _on_conversation_finished(player, conversation_name, target, initiator):
+	match conversation_name:
+		"174-1_Are_you_alright":
+			postament_anim_player.play("postament_180")
+			hatch_anim_player.play("Armature.034Action")
+
 func _on_postament_animation_finished(anim_name):
-	if anim_name == "postament_moves_down":
+	if anim_name == "postament_180":
+		conversation_manager.start_area_conversation("175_Andreas_what_is_that_sound")
+	elif anim_name == "postament_moves_down":
 		if palladium_fake.visible:
 			hatch_anim_player.play_backwards("Armature.034Action")
 			player_hatch.play()

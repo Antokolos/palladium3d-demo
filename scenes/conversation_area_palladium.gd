@@ -19,7 +19,6 @@ func do_when_conversation_finished(name_hint, conversation_name):
 func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):
 	if name_hint == CHARS.FEMALE_NAME_HINT:
 		game_state.get_usable(DB.UsableIds.LAST_TRAP_FLOOR).activate()
-		get_node("../last_trap_spikes").activate()
 
 func _on_conversation_area_body_entered(body):
 	if Engine.editor_hint:
