@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Hebe_Jar_hand.ogg-0200b8dc27b464182eebe5af747d35d2.o
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

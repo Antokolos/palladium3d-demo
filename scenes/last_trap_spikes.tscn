@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/last_trap_spikes.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/last_trap_spikes.gd" type="Script" id=2]
@@ -42,7 +42,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "spikes_on"
-length = 6.2
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpikesBody/CollisionSpikes2:translation")
 tracks/0/interp = 1
@@ -50,10 +50,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 6.2 ),
+"times": PoolRealArray( 0, 0.8 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0.355817, -0.955723, 29.7792 ), Vector3( 0.355817, -0.955723, 30.9871 ) ]
+"values": [ Vector3( 0.355817, -0.955723, 29.7792 ), Vector3( 0.355817, -0.955723, 29.9 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("SpikesBody/CollisionSpikes1:translation")
@@ -62,14 +62,68 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 6.2 ),
+"times": PoolRealArray( 0, 0.8 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0.355817, -0.955723, 33.8269 ), Vector3( 0.355817, -0.955723, 32.6244 ) ]
+"values": [ Vector3( 0.355817, -0.955723, 33.8269 ), Vector3( 0.355817, -0.955723, 33.6612 ) ]
 }
 
 [sub_resource type="Animation" id=6]
-resource_name = "steps_up"
+resource_name = "spikes_on_2"
+length = 3.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikesBody/CollisionSpikes2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 29.9 ), Vector3( 0.355817, -0.955723, 30.436 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpikesBody/CollisionSpikes1:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 33.6612 ), Vector3( 0.355817, -0.955723, 32.926 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikesBody/CollisionSpikes2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 30.4297 ), Vector3( 0.355817, -0.955723, 30.6559 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpikesBody/CollisionSpikes1:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.355817, -0.955723, 32.9347 ), Vector3( 0.355817, -0.955723, 32.6244 ) ]
+}
+
+[sub_resource type="Animation" id=8]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("FloorBody:translation")
@@ -96,10 +150,10 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( -35.6311, 0, 0 ) ]
 }
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 2.5019, 1, 2.38396 )
 
-[node name="last_trap_spikes" index="0" instance=ExtResource( 1 )]
+[node name="last_trap_spikes" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="ceiling_slab_1014" parent="Armature033" index="1"]
@@ -135,8 +189,8 @@ shape = SubResource( 1 )
 
 [node name="FloorBody" type="RigidBody" parent="." index="6"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -5.384, 31.638 )
-collision_layer = 5
-collision_mask = 5
+collision_layer = 4
+collision_mask = 4
 mode = 3
 continuous_cd = true
 
@@ -158,7 +212,9 @@ shape = SubResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 anims/spikes_off = SubResource( 4 )
 anims/spikes_on = SubResource( 5 )
-anims/steps_up = SubResource( 6 )
+anims/spikes_on_2 = SubResource( 6 )
+anims/spikes_on_3 = SubResource( 7 )
+anims/steps_up = SubResource( 8 )
 
 [node name="Position3D" type="Position3D" parent="." index="9"]
 transform = Transform( -0.908096, 0, -0.418763, 0, 1, 0, 0.418763, 0, -0.908096, 0.486032, -2.7294, 31.8066 )
@@ -169,7 +225,7 @@ input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Area" index="0"]
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]

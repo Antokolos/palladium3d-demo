@@ -140,7 +140,8 @@ enum ButtonActivatorIds {
 enum UsableIds {
 	NONE = 0,
 	BARN_LOCK = 10,
-	LAST_TRAP_FLOOR = 100
+	LAST_TRAP_FLOOR = 100,
+	LAST_TRAP_POSTAMENT = 110
 }
 
 enum TakableIds {
@@ -163,11 +164,13 @@ enum TakableIds {
 	ERIDA = 150,
 	ARES = 160,
 	TUBE_BREATH = 170,
-	ATHENA = 430
+	ATHENA = 430,
+	PALLADIUM = 440
 }
 
 enum UseTargetIds {
-	NONE = 0
+	NONE = 0,
+	LAST_TRAP_POSTAMENT = 5
 }
 
 const INVENTORY_DEFAULT = []
@@ -198,6 +201,7 @@ const ITEMS = {
 	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.TUBE_BREATH : { "item_nam" : "tube_breath", "item_image" : "tube_breath.png", "model_path" : "res://assets/tube_breath.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ATHENA : { "item_nam" : "statue_athena", "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
+	TakableIds.PALLADIUM: { "item_nam" : "palladium", "item_image" : "Palladium_real.png", "model_path" : "res://assets/Palladium_real.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 }
 
 const WEAPONS_STUN = {}

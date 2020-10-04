@@ -4,24 +4,30 @@ onready var pocket_book = get_node("pocket_book")
 
 func do_init(is_loaded):
 	if not game_state.story_vars.is_game_start and not is_loaded:
-		var player_basis = $PositionPlayer.get_transform().basis
-		var player_origin = $PositionPlayer.get_transform().origin
-		var companion_basis = $PositionCompanion.get_transform().basis
-		var companion_origin = $PositionCompanion.get_transform().origin
-		player.set_transform(Transform(player_basis, player_origin))
-		player_female.set_transform(Transform(companion_basis, companion_origin))
+		player.teleport($PositionPlayer)
+		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+			player_female.teleport($PositionCompanion)
+			player_bandit.teleport($PositionOut)
+			player_bandit.deactivate()
+		elif game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
+			player_bandit.teleport($PositionCompanion)
+			player_female.teleport($PositionOut)
+			player_female.deactivate()
 	if game_state.story_vars.is_game_start:
 		game_state.story_vars.is_game_start = false
 	if conversation_manager.meeting_is_finished(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)
 	game_state.connect("item_used", self, "on_item_used")
+	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
+	var bandit_in_grass = $AreaGrass.overlaps_body(player_bandit)
 	player.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS if player_in_grass else PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
 	game_state.change_music_to(game_state.MusicId.OUTSIDE)
 	player_female.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS if female_in_grass else PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
+	player_bandit.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS if bandit_in_grass else PLDCharacterNodes.SoundId.SOUND_WALK_SAND)
 	var boat_area = get_node("BoatArea")
 	if boat_area and boat_area.overlaps_body(player) and boat_area.overlaps_body(player_female):
 		_on_BoatArea_body_entered(player)
@@ -55,6 +61,52 @@ func on_item_used(item_id, target):
 			else:
 				var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT)
 				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
+
+func do_final_tween():
+	var tween = $FinalCutsceneTween
+	tween.interpolate_property(
+		$PositionFinalCutscene,
+		"translation",
+		$PositionFinalCutscene.get_global_transform().origin,
+		$PositionFinalCutscene2.get_global_transform().origin,
+		22,
+		Tween.TRANS_LINEAR,
+		Tween.EASE_IN_OUT
+	)
+	tween.start()
+
+func _on_shader_cache_processed():
+	if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+		if game_state.has_item(DB.TakableIds.ATHENA) \
+			or game_state.has_item(DB.TakableIds.PALLADIUM):
+			if player_female.get_relationship() > 0:
+				conversation_manager.start_area_cutscene(
+					"171_Why_are_you_so_sad",
+					$PositionFinalCutscene
+				)
+			else:
+				cutscene_manager.borrow_camera(player, $PositionFinalCutscene)
+			player.set_target_node($PositionPlayer2)
+			player.set_force_physics(true)
+			player_female.set_target_node($PositionCompanion2)
+			player_female.set_force_physics(true)
+			player.leave_party()
+			player_female.leave_party()
+			do_final_tween()
+	elif game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
+		if game_state.has_item(DB.TakableIds.ATHENA) \
+			or game_state.has_item(DB.TakableIds.PALLADIUM):
+			conversation_manager.start_area_cutscene(
+				"172_We_made_a_great_team",
+				$PositionFinalCutscene
+			)
+			player.set_target_node($PositionPlayer2)
+			player.set_force_physics(true)
+			player_bandit.set_target_node($PositionCompanion2)
+			player_bandit.set_force_physics(true)
+			player.leave_party()
+			player_bandit.leave_party()
+			do_final_tween()
 
 func _on_meeting_started(player, target, initiator):
 	remove_pocket_book()
@@ -100,3 +152,10 @@ func _on_TunnelArea_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
 		body.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_GRASS)
 		body.set_pathfinding_enabled(true)
+
+func _on_FinalCutsceneTween_tween_completed(object, key):
+	if player_female.get_relationship() == 0:
+		conversation_manager.start_area_cutscene(
+			"171-1_I_would_not_leave_you",
+			$PositionFinalCutscene
+		)

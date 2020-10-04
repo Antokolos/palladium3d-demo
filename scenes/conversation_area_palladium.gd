@@ -14,6 +14,7 @@ func do_when_conversation_finished(name_hint, conversation_name):
 		CHARS.FEMALE_NAME_HINT:
 			var companion = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 			companion.set_force_physics(true)
+			player.set_force_physics(true)
 			companion.invoke_physics_pass()
 
 func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):

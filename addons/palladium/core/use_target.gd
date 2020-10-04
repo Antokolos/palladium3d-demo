@@ -8,6 +8,7 @@ export var remove_on_use = true
 export var matched_item_names : PoolStringArray = PoolStringArray()
 
 func connect_signals(target):
+	.connect_signals(target)
 	connect("use_use_target", target, "use_use_target")
 
 func use(player_node, camera_node):

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Apollo_ceiling_hatch_open.ogg-f6dcac7291445f9e34f18c
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

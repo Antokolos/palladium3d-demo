@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/last_trap_postament.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/last_trap_postament.gd" type="Script" id=2]
 [ext_resource path="res://sound/environment/243699__ertfelda__hidden-wall-opening.wav" type="AudioStream" id=3]
 [ext_resource path="res://sound/environment/Apollo_ceiling_hatch_open.ogg" type="AudioStream" id=4]
 [ext_resource path="res://sound/environment/Hebe_Jar_hand.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/environment/Aphrodita_slabs_choir.ogg" type="AudioStream" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.5, 2, 0.473 )
@@ -18,10 +19,15 @@ visible = false
 transform = Transform( 0.00678556, 0, 0.0505792, 0, 0.0510324, 0, -0.0505792, 0, 0.00678556, 0.0183141, 1.43534, -0.0045948 )
 visible = false
 
-[node name="last_trap_postament" type="RigidBody" parent="." index="5"]
+[node name="last_trap_postament" type="RigidBody" parent="." index="5" groups=[
+"restorable_state",
+"use_targets",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23391, 2.07994, 30.8077 )
 mode = 1
 script = ExtResource( 2 )
+usable_id = 110
+use_target_id = 5
 matched_item_names = PoolStringArray( "statue_athena" )
 
 [node name="CollisionShape" type="CollisionShape" parent="last_trap_postament" index="0"]
@@ -38,4 +44,8 @@ bus = "Sound"
 
 [node name="PlayerProcessing" type="AudioStreamPlayer3D" parent="last_trap_postament" index="3"]
 stream = ExtResource( 5 )
+bus = "Sound"
+
+[node name="PlayerPalladium" type="AudioStreamPlayer3D" parent="last_trap_postament" index="4"]
+stream = ExtResource( 6 )
 bus = "Sound"
