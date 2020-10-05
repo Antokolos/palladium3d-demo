@@ -11,11 +11,11 @@ VAR party_bandit = true
 Когда ловушка сработает, времени на болтовню не будет.	# actor:bandit # voiceover:23_kogda_lovushka_srabotaet.ogg
 Очевидно, что в каждой комнате есть загадка. Скорее всего это общий принцип. Зная правила, сможем выиграть.	# actor:female # voiceover:226_ochevidno_v_kazhdoy_komnate.ogg
 Не хочу плясать под чью-то древнюю дудку. Буду действовать по-своему.	# actor:bandit # voiceover:24_ne_hochu_plyasat.ogg
-* 	[Идти с Ксенией.]
+* 	(companion_xenia) [Идти с Ксенией.]
 	Ксения, пойдём вместе. Макс, присоединяйся.	# actor:player # voiceover:130_Xenia_poydom_vmeste.ogg
 	Я решил, пойду один. Когда найду золото, обещаю не забирать всё. Оставлю и вам немного.	# actor:bandit # voiceover:25_ya_poydu_odin.ogg
 	~ party_bandit = false
-* 	[Идти с Максом.]
+* 	(companion_max) [Идти с Максом.]
 	Твой подход, Макс, мне кажется надёжнее, но я не могу позволить Ксении идти одной.	# actor:player # voiceover:131_tvoy_podhod_Max_mne.ogg
 	Если хочешь, Андреас, отправляйся с Максом. Ты не обязан меня охранять. Мне ещё нужно посмотреть Парфенон и Кносский дворец.	# actor:female # voiceover:227_esli_hochesh_Andreas_otpravlaysa.ogg
 	Разве тебе не любопытно какие загадки  скрывает этот лабиринт? Ты сейчас делаешь вид что уйдёшь, а сама будешь идти за нами.	# actor:player # voiceover:132_razve_tebe_ne_lubopytno.ogg
@@ -23,3 +23,15 @@ VAR party_bandit = true
 	Позвоню, обещаю.	# actor:player # voiceover:133_pozvonu_obeshayu.ogg
 	Удачи. Вам обоим.	# actor:female # voiceover:229_udachi_vam_oboim.ogg
 	~ party_female = false
+* 	[Идти одному.]
+	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player 
+	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female 
+	Андреас, ты уверен, что один справишься?	# actor:bandit 
+	* * 	[Идти с Ксенией.]
+		-> companion_xenia
+	* * 	[Идти с Максом.]
+		-> companion_max
+	* * 	[Идти одному.]
+		Я решил, пойду один.	# actor:player 
+		~ party_bandit = false
+		~ party_female = false

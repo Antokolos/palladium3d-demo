@@ -11,11 +11,11 @@ I'm sure we can come to an agreement.	# actor:player # voiceover:470_i'm_sure_we
 When the trap is triggered, there will be no time to debate.	# actor:bandit # voiceover:23_when_the_trap_is_triggered.ogg
 Apparently every room has a riddle. It seems likely given what we've seen so far. We can win by playing by the rules.	# actor:female # voiceover:546_apparently_every_room_has.ogg
 I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	# actor:bandit # voiceover:24_dance_to_pipe.ogg
-*	[Choose Xenia.]
+*	(companion_xenia) [Choose Xenia.]
 	Xenia, let's go together. Max, come with us.	# actor:player # voiceover:471_Xenia_let's_go_together.ogg
 	I've decided to go alone. When I find gold, I promise not to take all for myself; I'll leave something for you.	# actor:bandit # voiceover:25_decided_to_go_alone.ogg
 	~ party_bandit = false
-*	[Choose Max.]
+*	(companion_max) [Choose Max.]
 	Max, I like your approach better, but I can't let Xenia go alone.	# actor:player # voiceover:472_Max_i_like_your_approach.ogg
 	Andreas, go with Max if you want. You don't have to babysit me. I still need to look at Parthenon and Knossos.	# actor:female # voiceover:547_Andreas_go_with_Max.ogg
 	Don't you want to know what secrets this maze is hiding? Oh — I bet you’re just going to pretend that you're leaving but will be following us instead.	# actor:player # voiceover:473_don't_you_want_to.ogg
@@ -23,3 +23,15 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 	I'll give you a call, I promise.	# actor:player # voiceover:474_i'll_give_you_a_call.ogg
 	Good luck to you both.	# actor:female # voiceover:549_good_luck_to_you_both.ogg
 	~ party_female = false
+* 	[Идти одному.]
+	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player 
+	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female 
+	Андреас, ты уверен, что один справишься?	# actor:bandit 
+	* * 	[Идти с Ксенией.]
+		-> companion_xenia
+	* * 	[Идти с Максом.]
+		-> companion_max
+	* * 	[Идти одному.]
+		Я решил, пойду один.	# actor:player 
+		~ party_bandit = false
+		~ party_female = false
