@@ -229,7 +229,7 @@ func get_movement_data(is_player):
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):
-	if not is_activated():
+	if not is_activated() or is_hidden():
 		return
 	var is_player = is_player()
 	var d = .do_process(delta, is_player)

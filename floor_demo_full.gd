@@ -340,6 +340,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator):
 	match conversation_name:
 		"005_ApataInscriptions":
 			bandit.teleport(get_node("BanditPosition"))
+			bandit.activate()
 			conversation_manager.arrange_meeting(player, player, bandit, true, get_node("InscriptionsPosition"))
 		"009_ApataTrap":
 			get_door("door_0").close() # Close the door if it is not already closed
@@ -378,7 +379,6 @@ func _on_arrived_to(player_node, target_node):
 	var tid = target_node.get_instance_id()
 	var oid = get_node("OutPosition").get_instance_id()
 	if tid == oid and not player_node.is_in_party():
-		player_node.set_target_node(null)
 		player_node.set_hidden(true)
 		player_node.deactivate()
 	if game_state.story_vars.apata_chest_rigid <= 0:

@@ -244,6 +244,9 @@ func set_target_node(node, update_navpath = true):
 	.set_target_node(node, update_navpath)
 	if not node or is_player_controlled():
 		return
+	if not is_in_party() and get_morale() >= 0:
+		set_sprinting(false)
+		return
 	var cp = get_global_transform().origin
 	var tp = node.get_global_transform().origin
 	set_sprinting(cp.distance_to(tp) > SPRINTING_DISTANCE_THRESHOLD)
@@ -547,7 +550,7 @@ func enable_rays_to_characters(enable):
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
 	var poi = get_point_of_interest()
-	if not poi and (not is_activated() or is_movement_disabled()):
+	if not poi and (not is_activated() or is_movement_disabled() or is_hidden()):
 		character_nodes.stop_walking_sound()
 		has_floor_collision = true
 		return d

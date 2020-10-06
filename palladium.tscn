@@ -105,6 +105,9 @@ transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 1.123
 
 [node name="male" parent="ViewportContainer/Viewport/palladium/player/Model" instance=ExtResource( 9 )]
 
+[node name="PositionPlayer" type="Position3D" parent="ViewportContainer/Viewport/palladium"]
+transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 1.1231, 9.89974, 73.1896 )
+
 [node name="player_female" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.276566, 9.84315, 73.1262 )
 name_hint = "female"
@@ -113,6 +116,9 @@ initial_player = false
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/palladium/player_female"]
 
 [node name="female" parent="ViewportContainer/Viewport/palladium/player_female/Model" instance=ExtResource( 10 )]
+
+[node name="PositionCompanion" type="Position3D" parent="ViewportContainer/Viewport/palladium"]
+transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.276566, 9.84315, 73.1262 )
 
 [node name="player_bandit" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7614, 2.2922, 0 )
@@ -134,6 +140,9 @@ backpack_rest_animations = {
 backpack_cutscene_animations = {
 2: "bandit_backpack_points_ceiling"
 }
+
+[node name="PositionOut" type="Position3D" parent="ViewportContainer/Viewport/palladium"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7614, 2.2922, 0 )
 
 [node name="rat" parent="ViewportContainer/Viewport/palladium" groups=[
 "moving",

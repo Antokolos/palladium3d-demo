@@ -759,7 +759,7 @@ shape = SubResource( 7 )
 transform = Transform( -4.35223e-008, 0.0929206, -0.995674, 4.06169e-009, 0.995674, 0.0929206, 1, 0, -4.37114e-008, 1.8185, 3.71403, 26.5125 )
 
 [node name="OutPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200223, 9.89932, 73.3017 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571505, 9.89932, 73.3017 )
 
 [node name="BeforeEridaArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.92702, 2.202, 37.4223 )

@@ -3,6 +3,16 @@ extends PLDLevel
 var player_toggle_enable = true
 
 func do_init(is_loaded):
+	if not game_state.story_vars.is_game_start and not is_loaded:
+		player.teleport($PositionPlayer)
+		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+			player_female.teleport($PositionCompanion)
+			player_bandit.teleport($PositionOut)
+			player_bandit.deactivate()
+		elif game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
+			player_bandit.teleport($PositionCompanion)
+			player_female.teleport($PositionOut)
+			player_female.deactivate()
 	game_state.stop_music()
 	player.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_CONCRETE)
 	player_female.set_sound_walk(PLDCharacterNodes.SoundId.SOUND_WALK_CONCRETE)
