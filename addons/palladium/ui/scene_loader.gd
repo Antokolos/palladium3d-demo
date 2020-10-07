@@ -7,7 +7,7 @@ var loader = null
 func _ready():
 	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	game_state.change_music_to(game_state.MusicId.LOADING)
+	MEDIA.change_music_to(MEDIA.MusicId.LOADING)
 	loader = ResourceLoader.load_interactive(game_state.scene_path)
 
 func _exit_tree():

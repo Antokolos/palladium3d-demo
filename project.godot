@@ -303,6 +303,7 @@ config/auto_accept_quit=false
 
 [autoload]
 
+MEDIA="*res://addons/palladium/core/singletons/media.tscn"
 CHARS="*res://db/chars.gd"
 DB="*res://db/db.gd"
 common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"

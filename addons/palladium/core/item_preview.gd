@@ -61,7 +61,7 @@ func _input(event):
 	if item_holder_node.get_child_count() > 0:
 		if event.is_action_pressed("item_preview_toggle") or event.is_action_pressed("ui_tablet_toggle"):
 			close_preview()
-		elif game_state.execute_custom_action(event, item):
+		elif DB.execute_custom_action(event, item):
 			close_preview()
 		elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			if event is InputEventMouseMotion:

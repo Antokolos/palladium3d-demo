@@ -3,21 +3,6 @@ class_name PLDCharacterNodes
 
 const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
-const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
-
-enum SoundId {
-	SOUND_WALK_NONE,
-	SOUND_WALK_SAND,
-	SOUND_WALK_WATER,
-	SOUND_WALK_SWIM,
-	SOUND_WALK_GRASS,
-	SOUND_WALK_CONCRETE,
-	SOUND_WALK_SKELETON,
-	SOUND_WALK_MINOTAUR,
-	SOUND_ATTACK_GUNSHOT,
-	SOUND_ATTACK_SWOOSH,
-	SOUND_ATTACK_AXE_ON_STONE
-}
 
 onready var character = get_parent()
 
@@ -39,22 +24,9 @@ onready var sound_player_walking = $SoundWalking
 onready var sound_player_falling_to_floor = $SoundFallingToFloor
 onready var sound_player_attack = $SoundAttack
 onready var sound_player_miss = $SoundMiss
-onready var sound = {
-	SoundId.SOUND_WALK_NONE : null,
-	SoundId.SOUND_WALK_SAND : load(SOUND_PATH_TEMPLATE % "161815__dasdeer__sand-walk.ogg"),
-	SoundId.SOUND_WALK_WATER : load(SOUND_PATH_TEMPLATE % "water_steps.ogg"),
-	SoundId.SOUND_WALK_SWIM : load(SOUND_PATH_TEMPLATE % "man_swimming.ogg"),
-	SoundId.SOUND_WALK_GRASS : load(SOUND_PATH_TEMPLATE % "400123__harrietniamh__footsteps-on-grass.ogg"),
-	SoundId.SOUND_WALK_CONCRETE : load(SOUND_PATH_TEMPLATE % "336598__inspectorj__footsteps-concrete-a.ogg"),
-	SoundId.SOUND_WALK_SKELETON : load(SOUND_PATH_TEMPLATE % "skeleton_walk.ogg"),
-	SoundId.SOUND_WALK_MINOTAUR : load(SOUND_PATH_TEMPLATE % "minotaur_walk_reverb_short.ogg"),
-	SoundId.SOUND_ATTACK_GUNSHOT : load(SOUND_PATH_TEMPLATE % "Labyrinth_gunshot.wav"),
-	SoundId.SOUND_ATTACK_SWOOSH : load(SOUND_PATH_TEMPLATE % "sword_swing.ogg"),
-	SoundId.SOUND_ATTACK_AXE_ON_STONE : load(SOUND_PATH_TEMPLATE % "pickaxe3.ogg")
-}
 
 var injury_rate = 20
-var walk_sound_ids = [ SoundId.SOUND_WALK_NONE ]
+var walk_sound_ids = [ CHARS.SoundId.SOUND_WALK_NONE ]
 
 func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
@@ -165,30 +137,30 @@ func set_sound_walk(mode, replace_existing = true):
 	else:
 		walk_sound_ids.push_front(mode)
 	sound_player_walking.stop()
-	sound_player_walking.stream = sound[mode] if sound.has(mode) else null
+	sound_player_walking.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
 	sound_player_walking.set_unit_db(0)
 
 func set_sound_attack(mode):
 	sound_player_attack.stop()
-	sound_player_attack.stream = sound[mode] if sound.has(mode) else null
+	sound_player_attack.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
 	sound_player_attack.set_unit_db(0)
 
 func set_sound_miss(mode):
 	sound_player_miss.stop()
-	sound_player_miss.stream = sound[mode] if sound.has(mode) else null
+	sound_player_miss.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
 	sound_player_miss.set_unit_db(0)
 
 func set_underwater(enable):
 	if enable:
-		if walk_sound_ids[0] != SoundId.SOUND_WALK_SWIM:
-			set_sound_walk(SoundId.SOUND_WALK_SWIM, false)
-		game_state.change_music_to(PLDGameState.MusicId.UNDERWATER, false)
+		if walk_sound_ids[0] != CHARS.SoundId.SOUND_WALK_SWIM:
+			set_sound_walk(CHARS.SoundId.SOUND_WALK_SWIM, false)
+		MEDIA.change_music_to(MEDIA.MusicId.UNDERWATER, false)
 	else:
-		if walk_sound_ids[0] == SoundId.SOUND_WALK_SWIM:
+		if walk_sound_ids[0] == CHARS.SoundId.SOUND_WALK_SWIM:
 			walk_sound_ids.pop_front()
-		if walk_sound_ids[0] != SoundId.SOUND_WALK_NONE:
+		if walk_sound_ids[0] != CHARS.SoundId.SOUND_WALK_NONE:
 			set_sound_walk(walk_sound_ids[0])
-		game_state.restore_music()
+		MEDIA.restore_music()
 
 func use_weapon(item):
 	if not item:
@@ -196,7 +168,7 @@ func use_weapon(item):
 	if DB.is_weapon_stun(item.item_id):
 		var weapon_data = DB.get_weapon_stun_data(item.item_id)
 		if weapon_data.stun_duration > 0:
-			game_state.play_sound(PLDGameState.SoundId.SNAKE_HISS)
+			MEDIA.play_sound(MEDIA.SoundId.SNAKE_HISS)
 			character.inc_stuns_count()
 			common_utils.set_pause_scene(character, true)
 			stun_timer.start(weapon_data.stun_duration)

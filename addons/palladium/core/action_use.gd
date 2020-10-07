@@ -48,7 +48,7 @@ func action(player_node, camera_node):
 	var event = InputEventAction.new()
 	event.set_action(custom_actions[0])
 	event.set_pressed(true)
-	game_state.execute_custom_action(event, item)
+	DB.execute_custom_action(event, item)
 
 func switch_highlight(player_node, body, distance_to_body):
 	if action_body:

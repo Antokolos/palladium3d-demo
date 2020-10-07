@@ -77,28 +77,6 @@ var takables = TAKABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
 
-enum MusicId {NONE, LOADING, OUTSIDE, UNDERWATER, EXPLORE, MINOTAUR}
-const MUSIC_PATH_TEMPLATE = "res://music/%s"
-onready var music = {
-	MusicId.NONE : null,
-	MusicId.LOADING : load(MUSIC_PATH_TEMPLATE % "loading.ogg"),
-	MusicId.OUTSIDE : load(MUSIC_PATH_TEMPLATE % "outside.ogg"),
-	MusicId.UNDERWATER : load(MUSIC_PATH_TEMPLATE % "underwater.ogg"),
-	MusicId.EXPLORE : null,
-	MusicId.MINOTAUR : load(MUSIC_PATH_TEMPLATE % "sinkingisland.ogg")
-}
-
-enum SoundId {LYRE_CORRECT, LYRE_WRONG, SNAKE_HISS}
-const SOUND_PATH_TEMPLATE = "res://sound/environment/%s"
-onready var sound = {
-	SoundId.LYRE_CORRECT : load(SOUND_PATH_TEMPLATE % "Apollo_lyre_good_2.ogg"),
-	SoundId.LYRE_WRONG : load(SOUND_PATH_TEMPLATE % "Apollo_bad_lyre_sound.ogg"),
-	SoundId.SNAKE_HISS : load(SOUND_PATH_TEMPLATE % "Labyrinth_snake_hiss.ogg")
-}
-
-var current_music = null
-var music_ids = [ MusicId.NONE ]
-
 func _ready():
 	cleanup_paths()
 	reset_variables()
@@ -212,50 +190,6 @@ func get_custom_actions(item):
 	var item_record = get_registered_item_data(item.item_id)
 	return item_record.custom_actions.duplicate() if item_record else []
 
-func execute_custom_action(event, item):
-	var result = false
-	if event.is_action_pressed("item_preview_action_1"):
-		match item.item_id:
-			DB.TakableIds.FLASK_HEALING:
-				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current + game_state.player_health_max / 2, game_state.player_health_max)
-				var last_flask = (item.get_item_count() == 1)
-				item.remove()
-				if last_flask:
-					take(DB.TakableIds.FLASK_EMPTY)
-			DB.TakableIds.BUN:
-				result = true
-				item.remove()
-				var player = game_state.get_player()
-				if is_in_party(CHARS.FEMALE_NAME_HINT):
-					conversation_manager.start_conversation(player, "BunEaten")
-			DB.TakableIds.ENVELOPE:
-				result = true
-				item.remove()
-				take(DB.TakableIds.BARN_LOCK_KEY)
-				take(DB.TakableIds.ISLAND_MAP_2)
-			DB.TakableIds.LYRE_SNAKE, DB.TakableIds.LYRE_SPIDER:
-				play_sound(SoundId.LYRE_WRONG)
-				kill_party()
-			DB.TakableIds.AIR_TANK:
-				game_state.set_oxygen(CHARS.PLAYER_NAME_HINT, game_state.player_oxygen_max, game_state.player_oxygen_max)
-			DB.TakableIds.LYRE_RAT:
-				play_sound(SoundId.LYRE_CORRECT)
-				if story_vars.in_lyre_area:
-					emit_signal("item_used", item.item_id, null)
-				conversation_manager.start_area_conversation_with_companion({
-					CHARS.FEMALE_NAME_HINT : "076_Mouse_running" if story_vars.in_lyre_area else "075_Nothing_is_happening",
-					CHARS.BANDIT_NAME_HINT : "087_Mouse_started_running" if story_vars.in_lyre_area else "086-1_Nothing_is_happening"
-				})
-	elif event.is_action_pressed("item_preview_action_2"):
-		pass
-	elif event.is_action_pressed("item_preview_action_3"):
-		pass
-	elif event.is_action_pressed("item_preview_action_4"):
-		pass
-	else:
-		return false
-	return result
-
 func shader_cache_processed():
 	emit_signal("shader_cache_processed")
 
@@ -319,38 +253,6 @@ func finish_load():
 		slot_to_load_from = -1
 		return true
 	return false
-
-func change_music_to(music_id, replace_existing = true):
-	if not music[music_id]:
-		stop_music()
-		return
-	if replace_existing:
-		music_ids[0] = music_id
-	else:
-		music_ids.push_front(music_id)
-	if current_music != music_id:
-		current_music = music_id
-		$MusicPlayer.stream = music[music_id]
-		$MusicPlayer.play()
-
-func restore_music():
-	if music_ids.size() > 1:
-		music_ids.pop_front()
-		change_music_to(music_ids[0])
-
-func play_sound(sound_id, is_loop = false):
-	var stream = sound[sound_id]
-	if stream is AudioStreamOGGVorbis:
-		stream.set_loop(is_loop)
-	elif stream is AudioStreamSample:
-		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_FORWARD if is_loop else AudioStreamSample.LoopMode.LOOP_DISABLED)
-	$SoundPlayer.stream = stream
-	$SoundPlayer.play()
-
-func stop_music():
-	$MusicPlayer.stop()
-	current_music = null
-	music_ids = [ MusicId.NONE ]
 
 func is_item_registered(item_id):
 	return DB.ITEMS.has(item_id)

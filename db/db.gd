@@ -87,6 +87,22 @@ static func get_weapon_stun_data(takable_id):
 #	TakableIds.MEDUSA_HEAD : { "stun_duration" : 5 }
 #}
 
+#func execute_custom_action(event, item):
+#	var result = false
+#	if event.is_action_pressed("item_preview_action_1"):
+#		match item.item_id:
+#			_:
+#				pass
+#	elif event.is_action_pressed("item_preview_action_2"):
+#		pass
+#	elif event.is_action_pressed("item_preview_action_3"):
+#		pass
+#	elif event.is_action_pressed("item_preview_action_4"):
+#		pass
+#	else:
+#		return false
+#	return result
+
 ### GAME-SPECIFIC PART ###
 
 const STORY_VARS_DEFAULT = {
@@ -205,3 +221,34 @@ const ITEMS = {
 }
 
 const WEAPONS_STUN = {}
+
+func execute_custom_action(event, item):
+	var result = false
+	if event.is_action_pressed("item_preview_action_1"):
+		match item.item_id:
+			DB.TakableIds.FLASK_HEALING:
+				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current + game_state.player_health_max / 2, game_state.player_health_max)
+				var last_flask = (item.get_item_count() == 1)
+				item.remove()
+				if last_flask:
+					game_state.take(DB.TakableIds.FLASK_EMPTY)
+			DB.TakableIds.BUN:
+				result = true
+				item.remove()
+				var player = game_state.get_player()
+				if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+					conversation_manager.start_conversation(player, "BunEaten")
+			DB.TakableIds.ENVELOPE:
+				result = true
+				item.remove()
+				game_state.take(DB.TakableIds.BARN_LOCK_KEY)
+				game_state.take(DB.TakableIds.ISLAND_MAP_2)
+	elif event.is_action_pressed("item_preview_action_2"):
+		pass
+	elif event.is_action_pressed("item_preview_action_3"):
+		pass
+	elif event.is_action_pressed("item_preview_action_4"):
+		pass
+	else:
+		return false
+	return result
