@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/752_Andreas_ty_uveren_chto_odin.ogg-8faea044dc8b73f685c9173801905bcb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/752_Andreas_ty_uveren_chto_odin.ogg"
+dest_files=[ "res://.import/752_Andreas_ty_uveren_chto_odin.ogg-8faea044dc8b73f685c9173801905bcb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

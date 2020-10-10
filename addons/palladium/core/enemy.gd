@@ -27,8 +27,11 @@ func use(player_node, camera_node):
 	var u = .use(player_node, camera_node)
 	var attacker = get_possible_attacker()
 	if not u and attacker:
-		attacker.attack_start(self)
+		ask_for_attack(attacker)
 	return true
+
+func ask_for_attack(attacker):
+	attacker.attack_start(self)
 
 func add_highlight(player_node):
 	if not is_activated() or is_dying():

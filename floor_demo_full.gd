@@ -20,6 +20,7 @@ func _ready():
 	var chest = get_node("Apata_room/apata_chest")
 	chest.connect("was_translated", self, "_on_ChestArea_body_exited")
 	$destructible_web.connect("web_destroyed", self, "_on_web_destroyed")
+	get_tree().call_group("lootables", "connect_signals", self)
 	get_tree().call_group("takables", "connect_signals", self)
 	get_tree().call_group("pedestals", "connect_signals", self)
 	get_tree().call_group("button_activators", "connect_signals", self)
@@ -28,6 +29,12 @@ func _ready():
 
 func get_door(door_path):
 	return doors.get_node(door_path)
+
+func use_lootable(player_node, lootable):
+	var takable_id = lootable.takable_id
+	match takable_id:
+		DB.TakableIds.COIN:
+			conversation_manager.start_area_conversation("193_some_gold_after_all")
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id

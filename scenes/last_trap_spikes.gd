@@ -71,7 +71,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			else:
 				companion.set_relationship(0)
 				last_trap_postament.return_palladium(false)
-				conversation_manager.start_area_conversation("175-6_How_are_you")
+				conversation_manager.start_area_conversation("192_Xenia_are_you_alright")
 
 func _on_Area_body_entered(body):
 	if not body.is_in_group("party"):

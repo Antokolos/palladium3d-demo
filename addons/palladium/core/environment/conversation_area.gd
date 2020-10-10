@@ -29,7 +29,9 @@ func _on_conversation_area_body_entered(body):
 	if not body.is_in_group("party") or game_state.is_loading():
 		return false
 	for name_hint in conversations.keys():
-		if conversations[name_hint].empty() or not game_state.is_in_party(name_hint):
+		if conversations[name_hint].empty() \
+			or not game_state.is_in_party(CHARS.PLAYER_NAME_HINT) \
+			or not game_state.is_in_party(name_hint):
 			continue
 		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
 		for i in range(conversations_for_name.size()):

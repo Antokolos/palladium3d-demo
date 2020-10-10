@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://addons/palladium/core/takable.gd" type="Script" id=1]
+[ext_resource path="res://scenes/statue_ares.gd" type="Script" id=1]
 [ext_resource path="res://assets/statue_ares.escn" type="PackedScene" id=2]
 [ext_resource path="res://sound/environment/labyrinth_6_statue.ogg" type="AudioStream" id=3]
 

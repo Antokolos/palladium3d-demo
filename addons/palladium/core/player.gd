@@ -100,6 +100,7 @@ func become_player():
 	camera.rebuild_exceptions(self)
 	player.activate()
 	activate()
+	emit_signal("player_changed", self, player)
 
 func process_rotation(need_to_update_collisions):
 	var result = .process_rotation(need_to_update_collisions)

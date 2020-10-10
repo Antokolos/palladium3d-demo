@@ -1,6 +1,7 @@
 extends PLDPathfinder
 class_name PLDCharacter
 
+signal player_changed(player_new, player_prev)
 signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
@@ -48,6 +49,7 @@ var morale = 0
 var stuns_count = 0
 var has_floor_collision = true
 var force_physics = false
+var force_visibility = false
 var last_attack_target = null
 
 func _ready():
@@ -523,6 +525,12 @@ func is_force_physics():
 func set_force_physics(force_physics):
 	self.force_physics = force_physics
 
+func is_force_visibility():
+	return force_visibility
+
+func set_force_visibility(force_visibility):
+	self.force_visibility = force_visibility
+
 func can_jump():
 	return has_floor_collision() or is_underwater()
 
@@ -572,7 +580,7 @@ func do_process(delta, is_player):
 			continue
 		if not update_ray_to_character(character):
 			add_ray_to_character(character)
-	if not is_visible_to_player():
+	if not is_visible_to_player() and not force_visibility:
 		return d
 	var model = get_model()
 	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
