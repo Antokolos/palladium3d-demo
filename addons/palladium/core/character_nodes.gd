@@ -62,6 +62,8 @@ func get_ray_to_character_name(another_character):
 	return "ray_" + another_character.get_name_hint()
 
 func get_ray_to_character(another_character):
+	if not another_character:
+		return null
 	var ray_name = get_ray_to_character_name(another_character)
 	return rays_to_characters.get_node(ray_name) \
 			if rays_to_characters.has_node(ray_name) \

@@ -53,16 +53,18 @@ func borrow_camera(player, cutscene_node):
 
 func restore_camera(player, conversation_name_prev = null, target_prev = null):
 	var player_camera_holder = player.get_cam_holder()
-	var camera = cutscene_node.get_child(0) if cutscene_node else player_camera_holder.get_child(0)
-	if cutscene_node:
+	var cutscene_cam = get_cam()
+	if cutscene_cam:
 		player.reset_movement_and_rotation()
 		player.set_simple_mode(true)
-		cutscene_node.remove_child(camera)
-		player_camera_holder.add_child(camera)
-		camera.enable_use(true)
+		cutscene_node.remove_child(cutscene_cam)
+		player_camera_holder.add_child(cutscene_cam)
+		cutscene_cam.enable_use(true)
 		emit_signal("camera_restored", player, cutscene_node, conversation_name_prev, target_prev)
-		cutscene_node = null
-	camera.enable_use(true)
+	elif player_camera_holder and player_camera_holder.get_child_count() > 0:
+		var camera = player_camera_holder.get_child(0)
+		camera.enable_use(true)
+	cutscene_node = null
 	game_state.get_hud().show_game_ui(true)
 	is_cutscene = false
 

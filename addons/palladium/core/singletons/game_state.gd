@@ -39,6 +39,8 @@ enum TakableState {
 	ABSENT = 2
 }
 
+const COLOR_WHITE = Color(1, 1, 1, 1)
+const COLOR_BLACK = Color(0, 0, 0, 0)
 const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
@@ -60,7 +62,7 @@ var characters_transition_data = {}
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
 var is_transition = false
-var player_name_hint = CHARS.PLAYER_NAME_HINT
+var player_name_hint = ""
 var player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
@@ -87,7 +89,7 @@ func cleanup_paths():
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
-	player_name_hint = CHARS.PLAYER_NAME_HINT
+	player_name_hint = ""
 	player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 	player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
@@ -102,8 +104,12 @@ func reset_variables():
 	multistates = MULTISTATES_DEFAULT.duplicate(true)
 	messages = MESSAGES_DEFAULT.duplicate(true)
 
+func get_game_window_parent():
+	return get_node("/root/HUD") if has_node("/root/HUD") else null
+
 func get_hud():
-	return get_node("/root/HUD/hud")
+	var gwp = get_game_window_parent()
+	return gwp.get_node("hud") if gwp and gwp.has_node("hud") else null
 
 func get_active_item():
 	var hud = game_state.get_hud()
@@ -225,11 +231,37 @@ func handle_player_highlight(initiator, target):
 	var item = hud.get_active_item()
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
-func change_scene(scene_path, is_transition = false):
+func change_scene(scene_path, is_transition = false, fade_out = false):
 	self.scene_path = scene_path
 	self.is_transition = is_transition
 	characters_transition_data = get_characters_data(false) if is_transition else {}
-	get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+	var gwp = get_game_window_parent() if fade_out else null
+	if gwp:
+		change_modulation(gwp, COLOR_WHITE, COLOR_BLACK)
+	else:
+		get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
+
+func change_modulation(node, color_start, color_end):
+	var tween = $ModulationTween
+	tween.interpolate_property(
+		node,
+		"modulate",
+		color_start,
+		color_end,
+		1.5,
+		Tween.TRANS_LINEAR,
+		Tween.EASE_IN_OUT
+	)
+	tween.start()
+
+func _on_ModulationTween_tween_completed(object, key):
+	var gwp = get_game_window_parent()
+	if not gwp:
+		return
+	if object.get_instance_id() == gwp.get_instance_id() \
+		and key == ":modulate" \
+		and object.get("modulate") == COLOR_BLACK:
+		get_tree().change_scene("res://addons/palladium/ui/scene_loader.tscn")
 
 func initiate_load(slot):
 	var f = File.new()
@@ -470,15 +502,23 @@ func save_slot_exists(slot):
 	return f.file_exists("user://saves/slot_%d/state.json" % slot)
 
 func set_characters_data(characters_data):
+	var movement_datas = []
 	for name_hint in characters_data.keys():
 		var dd = characters_data[name_hint]
 		var character = get_character(name_hint)
-		set_character_data(dd, character)
+		movement_datas.append({
+			"character" : character,
+			"movement_data" : set_character_data(dd, character)
+		})
+		if name_hint == player_name_hint:
+			character.become_player()
+	return movement_datas
 
 func set_character_data(dd, character):
+	var movement_data = null
 	var character_coords = {
-		"basis" : character.get_transform().basis,
-		"origin" : character.get_transform().origin
+		"basis" : character.get_global_transform().basis,
+		"origin" : character.get_global_transform().origin
 	}
 	if ("basis" in dd and (typeof(dd.basis) == TYPE_ARRAY)):
 		var bx = Vector3(dd.basis[0][0], dd.basis[0][1], dd.basis[0][2])
@@ -489,13 +529,29 @@ func set_character_data(dd, character):
 	if ("origin" in dd and (typeof(dd.origin) == TYPE_ARRAY)):
 		character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
 	
-	character.set_transform(Transform(character_coords.basis, character_coords.origin))
+	character.set_global_transform(Transform(character_coords.basis, character_coords.origin))
+	
+	if ("activated" in dd):
+		if dd.activated:
+			character.activate()
+		else:
+			character.deactivate()
+	
+	if ("pathfinding_enabled" in dd):
+		character.set_pathfinding_enabled(dd.pathfinding_enabled)
 	
 	if ("in_party" in dd):
 		character.set_in_party(dd.in_party)
 	
 	if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
-		character.set_target_node(get_node(dd.target_path))
+		var target_node = get_node(dd.target_path)
+		character.set_target_node(target_node)
+		movement_data = (
+			PLDMovementData.new() \
+			.clear_dir() \
+			.with_rest_state(true) \
+			.with_signal("arrived_to", [target_node])
+		)
 	
 	if ("is_crouching" in dd and dd.is_crouching):
 		character.is_crouching = dd.is_crouching
@@ -515,10 +571,38 @@ func set_character_data(dd, character):
 	if ("stuns_count" in dd):
 		character.stuns_count = dd.stuns_count
 	
+	if ("is_hidden" in dd):
+		character.set_hidden(dd.is_hidden)
+	
+	if ("is_sprinting" in dd):
+		character.set_sprinting(dd.is_sprinting)
+	
+	if ("force_physics" in dd):
+		character.set_force_physics(dd.force_physics)
+	
+	if ("force_no_physics" in dd):
+		character.set_force_no_physics(dd.force_no_physics)
+	
+	if ("force_visibility" in dd):
+		character.set_force_visibility(dd.force_visibility)
+	
+	if ("is_patrolling" in dd):
+		character.set_patrolling(dd.is_patrolling)
+	
+	if ("is_aggressive" in dd):
+		character.set_aggressive(dd.is_aggressive)
+	
+	if ("dead" in dd) and dd.dead:
+		# Should be the last or at least after character.set_hidden(),
+		# because character.set_hidden() modifies the same collisions
+		character.kill()
+	
 	character.set_look_transition()
+	return movement_data
 
 func load_state(slot):
 	var hud = get_hud()
+	var movement_datas = []
 	story_node.reload_all_saves(slot)
 	
 	var f = File.new()
@@ -547,7 +631,7 @@ func load_state(slot):
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
-		set_characters_data(d.characters)
+		movement_datas = set_characters_data(d.characters)
 
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
@@ -560,6 +644,9 @@ func load_state(slot):
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
 	get_tree().call_group("restorable_state", "restore_state")
+	for md in movement_datas:
+		if md.character and md.movement_data:
+			md.character.update_state(md.movement_data)
 
 # Because item_ids are saved as ints but should be enums
 func sanitize_items(items):
@@ -583,20 +670,32 @@ func get_characters_data(full_save):
 
 func get_character_data(character, full_save):
 	var p = character.is_in_party()
+	
 	var result = {
+		"activated" : character.is_activated(),
+		"dead" : character.is_dead(),
+		"pathfinding_enabled" : character.is_pathfinding_enabled(),
 		"in_party" : p,
 		"is_crouching" : character.is_crouching(),
 		"is_underwater" : character.is_underwater(),
 		"is_poisoned" : character.is_poisoned(),
 		"relationship" : character.get_relationship(),
 		"morale" : character.get_morale(),
-		"stuns_count" : character.get_stuns_count()
+		"stuns_count" : character.get_stuns_count(),
+		"is_hidden" : character.is_hidden(),
+		"is_sprinting" : character.is_sprinting(),
+		"force_physics" : character.is_force_physics(),
+		"force_no_physics" : character.is_force_no_physics(),
+		"force_visibility" : character.is_force_visibility(),
+		"is_patrolling" : character.is_patrolling(),
+		"is_aggressive" : character.is_aggressive()
 	}
+	
 	if not full_save:
 		return result
 	var t = character.get_target_node()
-	var b = t.get_transform().basis if t and not p else character.get_transform().basis
-	var o = t.get_transform().origin if t and not p else character.get_transform().origin
+	var b = t.get_global_transform().basis if t and not p else character.get_global_transform().basis
+	var o = t.get_global_transform().origin if t and not p else character.get_global_transform().origin
 	result["basis"] = [
 		[b.x.x, b.x.y, b.x.z],
 		[b.y.x, b.y.y, b.y.z],

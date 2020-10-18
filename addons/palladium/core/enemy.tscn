@@ -27,7 +27,6 @@ collision_layer = 4096
 collision_mask = 14343
 script = ExtResource( 1 )
 name_hint = "skeleton"
-model_path = "res://scenes/greek_skeleton.tscn"
 
 [node name="character_nodes" parent="." instance=ExtResource( 2 )]
 

@@ -41,9 +41,9 @@ func add_highlight(player_node):
 		return h
 	var attacker = get_possible_attacker()
 	if player_node.equals(attacker):
-		return "E: Shoot"
+		return "E: " + tr("ACTION_SHOOT")
 	elif attacker:
-		return "E: Shout"
+		return "E: " + tr("ACTION_SHOOT")
 	return ""
 
 func hit(hit_direction_node):

@@ -20,6 +20,7 @@ func do_init(is_loaded):
 	get_tree().call_group("takables", "connect_signals", self)
 	game_state.connect("item_used", self, "on_item_used")
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
@@ -94,8 +95,7 @@ func _on_shader_cache_processed():
 			player_female.leave_party()
 			do_final_tween()
 	elif game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
-		if game_state.has_item(DB.TakableIds.ATHENA) \
-			or game_state.has_item(DB.TakableIds.PALLADIUM):
+		if game_state.has_item(DB.TakableIds.GOLDEN_BAR):
 			conversation_manager.start_area_cutscene(
 				"172_We_made_a_great_team",
 				$PositionFinalCutscene
@@ -159,3 +159,23 @@ func _on_FinalCutsceneTween_tween_completed(object, key):
 			"171-1_I_would_not_leave_you",
 			$PositionFinalCutscene
 		)
+
+func _on_conversation_finished(player, conversation_name, target, initiator):
+	match conversation_name:
+		"171-1_I_would_not_leave_you":
+			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+			game_state.change_scene("res://ending_2.tscn", false, true)
+		"171_Why_are_you_so_sad":
+			if game_state.has_item(DB.TakableIds.PALLADIUM):
+				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+				game_state.change_scene("res://ending_1.tscn", false, true)
+			else:
+				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+				game_state.change_scene("res://ending_2.tscn", false, true)
+		"172_We_made_a_great_team":
+			if game_state.has_item(DB.TakableIds.ATHENA):
+				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+				game_state.change_scene("res://ending_4.tscn", false, true)
+			else:
+				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+				game_state.change_scene("res://ending_3.tscn", false, true)

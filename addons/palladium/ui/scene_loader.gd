@@ -5,6 +5,13 @@ onready var label = get_node("VBoxContainer/HBoxContainer/VBoxContainer/Progress
 var loader = null
 
 func _ready():
+	if SCENES.DATA.has(game_state.scene_path):
+		var scene_data = SCENES.DATA.get(game_state.scene_path)
+		if scene_data.has("progress") and not scene_data.progress:
+			get_tree().change_scene(game_state.scene_path)
+			return
+		if scene_data.has("splash"):
+			set_texture(scene_data.splash)
 	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	MEDIA.change_music_to(MEDIA.MusicId.LOADING)

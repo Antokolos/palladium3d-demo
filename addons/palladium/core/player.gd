@@ -18,17 +18,15 @@ var angle_rad_x = 0
 var is_in_jump = false
 
 func _ready():
-	if initial_player:
-		var camera = load("res://addons/palladium/core/camera.tscn").instance()
-		get_cam_holder().add_child(camera)
-		camera.rebuild_exceptions(self)
-		game_state.set_player_name_hint(get_name_hint())
-		if not game_state.is_loading() and not game_state.is_transition():
-			join_party()
-	get_model().set_simple_mode(initial_player)
+	if is_player() or (
+			initial_player \
+			and not game_state.is_loading() \
+			and not game_state.is_transition()
+		):
+			become_player()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.connect("attack_started", self, "_on_enemy_attack_started")
-	activate()
+	#activate() -- restored from save
 
 func reset_movement():
 	.reset_movement()
@@ -38,17 +36,10 @@ func reset_movement():
 func reset_rotation():
 	.reset_rotation()
 	angle_rad_x = 0
-	rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
-	upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
-
-### Getting character's parts ###
-
-func get_cam_holder():
-	return get_node("Rotation_Helper/Camera")
-
-func get_cam():
-	var cutscene_cam = cutscene_manager.get_cam()
-	return cutscene_cam if cutscene_cam else get_cam_holder().get_node("camera")
+	if rotation_helper:
+		rotation_helper.set_rotation_degrees(Vector3(0, 0, 0))
+	if upper_body_shape:
+		upper_body_shape.set_rotation_degrees(Vector3(-90, 0, 0))
 
 ### Use target ###
 
@@ -75,32 +66,6 @@ func set_simple_mode(enable):
 
 func remove_item_from_hand():
 	get_model().remove_item_from_hand()
-
-func become_player():
-	if is_player():
-		get_cam().rebuild_exceptions(self)
-		return
-	var player = game_state.get_player()
-	player.deactivate()
-	deactivate()
-	var rotation_helper = get_node("Rotation_Helper")
-	var camera_container = rotation_helper.get_node("Camera")
-	var player_rotation_helper = player.get_node("Rotation_Helper")
-	var player_camera_container = player_rotation_helper.get_node("Camera")
-	var camera = player_camera_container.get_child(0)
-	player_camera_container.remove_child(camera)
-	camera_container.add_child(camera)
-	var player_model = player.get_model()
-	player_model.set_simple_mode(false)
-	var model = get_model()
-	model.set_simple_mode(true)
-	game_state.set_player_name_hint(get_name_hint())
-	game_state.set_underwater(self, is_underwater())
-	game_state.set_poisoned(self, is_poisoned())
-	camera.rebuild_exceptions(self)
-	player.activate()
-	activate()
-	emit_signal("player_changed", self, player)
 
 func process_rotation(need_to_update_collisions):
 	var result = .process_rotation(need_to_update_collisions)

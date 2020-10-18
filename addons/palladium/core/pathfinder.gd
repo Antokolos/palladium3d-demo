@@ -62,6 +62,7 @@ func set_in_party(in_party):
 	self.in_party = in_party
 
 func join_party():
+	activate()
 	clear_path()
 	set_in_party(true)
 	reset_movement_and_rotation()
@@ -157,6 +158,9 @@ func teleport(node_to):
 		clear_path()
 		set_global_transform(node_to.get_global_transform())
 		reset_movement_and_rotation()
+
+func is_pathfinding_enabled():
+	return pathfinding_enabled
 
 func set_pathfinding_enabled(enabled):
 	pathfinding_enabled = enabled

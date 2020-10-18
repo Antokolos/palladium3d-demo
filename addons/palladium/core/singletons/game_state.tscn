@@ -5,3 +5,6 @@
 [node name="game_state" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )
+
+[node name="ModulationTween" type="Tween" parent="."]
+[connection signal="tween_completed" from="ModulationTween" to="." method="_on_ModulationTween_tween_completed"]

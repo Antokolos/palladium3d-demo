@@ -57,7 +57,15 @@ func set_active(active):
 
 func _physics_process(delta):
 	var player = game_state.get_player()
+	if not player:
+		enable_raycasts(false)
+		enable_room()
+		return
 	var camera = player.get_cam()
+	if not camera:
+		enable_raycasts(false)
+		enable_room()
+		return
 	var origin = camera.get_global_transform().origin
 	var need_enable = get_aabb().has_point(to_local(origin))
 	if not active or not player or need_enable:

@@ -303,6 +303,7 @@ config/auto_accept_quit=false
 
 [autoload]
 
+SCENES="*res://db/scenes.gd"
 MEDIA="*res://addons/palladium/core/singletons/media.tscn"
 CHARS="*res://db/chars.gd"
 DB="*res://db/db.gd"

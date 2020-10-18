@@ -174,6 +174,16 @@ func take_damage(fatal):
 	if alive and fatal:
 		animation_tree.set("parameters/AliveTransition/current", ALIVE_TRANSITION_DEAD)
 
+func kill():
+	var alive = not is_dead()
+	if not alive:
+		# "You cannot kill me, I'm not alive" :)
+		return
+	if ragdoll_enabled:
+		ragdoll_start()
+	else:
+		animation_tree.set("parameters/AliveTransition/current", ALIVE_TRANSITION_DEAD)
+
 func set_transition(t):
 	if transition != t:
 		transition = t

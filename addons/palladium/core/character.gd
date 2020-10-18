@@ -49,6 +49,7 @@ var morale = 0
 var stuns_count = 0
 var has_floor_collision = true
 var force_physics = false
+var force_no_physics = false
 var force_visibility = false
 var last_attack_target = null
 
@@ -127,9 +128,17 @@ func take_damage(fatal, hit_direction_node):
 	get_model().take_damage(fatal)
 	push_back(get_push_vec(hit_direction_node))
 	if fatal:
-		$Body_CollisionShape.disabled = true
-		$Feet_CollisionShape.disabled = false
-		character_nodes.enable_areas(false)
+		disable_collisions_and_interaction()
+
+func kill():
+	get_model().kill()
+	disable_collisions_and_interaction()
+
+func disable_collisions_and_interaction():
+	$Body_CollisionShape.disabled = true
+	$UpperBody_CollisionShape.disabled = true
+	$Feet_CollisionShape.disabled = false
+	character_nodes.enable_areas(false)
 
 ### Use target ###
 
@@ -166,7 +175,59 @@ func get_model_holder():
 func get_model():
 	return get_model_holder().get_child(0)
 
+func get_cam_holder():
+	return get_node("Rotation_Helper/Camera")
+
+func get_cam():
+	var cutscene_cam = cutscene_manager.get_cam()
+	var cam_holder = get_cam_holder()
+	return (
+		cutscene_cam
+			if cutscene_cam
+			else
+				cam_holder.get_child(0)
+				if cam_holder and cam_holder.get_child_count() > 0
+				else null
+	)
+
 ### States ###
+
+func become_player():
+	if not is_activated():
+		activate()
+	if not is_in_party():
+		join_party()
+	var model = get_model()
+	model.set_simple_mode(true)
+	var player = game_state.get_player()
+	deactivate()
+	if not player or is_player():
+		var cam = get_cam()
+		if not cam:
+			cam = load("res://addons/palladium/core/camera.tscn").instance()
+			get_cam_holder().add_child(cam)
+		cam.rebuild_exceptions(self)
+	else:
+		player.deactivate()
+		var cam_holder = get_cam_holder()
+		var player_cam_holder = player.get_cam_holder()
+		var cutscene_cam = cutscene_manager.get_cam()
+		var camera = player_cam_holder.get_child(0) if player_cam_holder.get_child_count() > 0 else null
+		if camera:
+			player_cam_holder.remove_child(camera)
+			cam_holder.add_child(camera)
+			camera.rebuild_exceptions(self)
+		elif cutscene_cam:
+			cutscene_cam.rebuild_exceptions(self)
+			cutscene_manager.stop_cutscene(self)
+		var player_model = player.get_model()
+		player_model.set_simple_mode(false)
+		player.activate()
+	game_state.set_player_name_hint(get_name_hint())
+	game_state.set_underwater(self, is_underwater())
+	game_state.set_poisoned(self, is_poisoned())
+	activate()
+	emit_signal("player_changed", self, player)
 
 func is_underwater():
 	return is_underwater
@@ -399,6 +460,8 @@ func get_snap():
 func is_need_to_use_physics(characters):
 	if force_physics:
 		return true
+	if force_no_physics:
+		return false
 	if not is_visible_to_player():
 		return false
 	if is_player_controlled() or not has_floor_collision():
@@ -446,17 +509,16 @@ func process_movement(delta, dir, characters):
 	vel.z = hvel.z
 	
 	if is_need_to_use_physics:
-		if not force_physics and vel.y <= 0.0 and hvel.length() < MIN_MOVEMENT and has_floor_collision():
-			return { "is_walking" : false, "collides_floor" : true }
-		vel = move_and_slide_with_snap(
-			vel,
-			get_snap(),
-			Vector3.UP,
-			true,
-			4,
-			MAX_SLOPE_ANGLE_RAD,
-			is_in_party()
-		)
+		if force_physics or vel.y > 0.0 or hvel.length() >= MIN_MOVEMENT or not has_floor_collision():
+			vel = move_and_slide_with_snap(
+				vel,
+				get_snap(),
+				Vector3.UP,
+				true,
+				4,
+				MAX_SLOPE_ANGLE_RAD,
+				is_in_party()
+			)
 	else:
 		vel = move_without_physics(hvel, delta)
 		return { "is_walking" : vel.length() >= MIN_MOVEMENT, "collides_floor" : has_floor_collision() }
@@ -484,6 +546,7 @@ func process_movement(delta, dir, characters):
 		if not character.is_movement_disabled() and not character.is_player_controlled():
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
+			vel = vel - character.vel
 			character.invoke_physics_pass()
 
 	if nonchar_collision and pathfinding_enabled and not is_player_controlled():
@@ -524,6 +587,12 @@ func is_force_physics():
 
 func set_force_physics(force_physics):
 	self.force_physics = force_physics
+
+func is_force_no_physics():
+	return force_no_physics
+
+func set_force_no_physics(force_no_physics):
+	self.force_no_physics = force_no_physics
 
 func is_force_visibility():
 	return force_visibility
