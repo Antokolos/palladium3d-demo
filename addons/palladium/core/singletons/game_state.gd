@@ -232,9 +232,9 @@ func handle_player_highlight(initiator, target):
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
 func change_scene(scene_path, is_transition = false, fade_out = false):
+	characters_transition_data = get_characters_data() if is_transition else {}
 	self.scene_path = scene_path
 	self.is_transition = is_transition
-	characters_transition_data = get_characters_data(false) if is_transition else {}
 	var gwp = get_game_window_parent() if fade_out else null
 	if gwp:
 		change_modulation(gwp, COLOR_WHITE, COLOR_BLACK)
@@ -504,8 +504,10 @@ func save_slot_exists(slot):
 func set_characters_data(characters_data):
 	var movement_datas = []
 	for name_hint in characters_data.keys():
-		var dd = characters_data[name_hint]
 		var character = get_character(name_hint)
+		if not character:
+			continue
+		var dd = characters_data[name_hint]
 		movement_datas.append({
 			"character" : character,
 			"movement_data" : set_character_data(dd, character)
@@ -520,14 +522,27 @@ func set_character_data(dd, character):
 		"basis" : character.get_global_transform().basis,
 		"origin" : character.get_global_transform().origin
 	}
-	if ("basis" in dd and (typeof(dd.basis) == TYPE_ARRAY)):
-		var bx = Vector3(dd.basis[0][0], dd.basis[0][1], dd.basis[0][2])
-		var by = Vector3(dd.basis[1][0], dd.basis[1][1], dd.basis[1][2])
-		var bz = Vector3(dd.basis[2][0], dd.basis[2][1], dd.basis[2][2])
-		character_coords.basis = Basis(bx, by, bz)
 	
-	if ("origin" in dd and (typeof(dd.origin) == TYPE_ARRAY)):
-		character_coords.origin = Vector3(dd.origin[0], dd.origin[1], dd.origin[2])
+	if dd["positions"].has(scene_path):
+		var ddd = dd["positions"][scene_path]
+		if ("basis" in ddd and (typeof(ddd.basis) == TYPE_ARRAY)):
+			var bx = Vector3(ddd.basis[0][0], ddd.basis[0][1], ddd.basis[0][2])
+			var by = Vector3(ddd.basis[1][0], ddd.basis[1][1], ddd.basis[1][2])
+			var bz = Vector3(ddd.basis[2][0], ddd.basis[2][1], ddd.basis[2][2])
+			character_coords.basis = Basis(bx, by, bz)
+		
+		if ("origin" in ddd and (typeof(ddd.origin) == TYPE_ARRAY)):
+			character_coords.origin = Vector3(ddd.origin[0], ddd.origin[1], ddd.origin[2])
+		
+		if ("target_path" in ddd and ddd.target_path and has_node(ddd.target_path)):
+			var target_node = get_node(ddd.target_path)
+			character.set_target_node(target_node)
+			movement_data = (
+				PLDMovementData.new() \
+				.clear_dir() \
+				.with_rest_state(true) \
+				.with_signal("arrived_to", [target_node])
+			)
 	
 	character.set_global_transform(Transform(character_coords.basis, character_coords.origin))
 	
@@ -542,16 +557,6 @@ func set_character_data(dd, character):
 	
 	if ("in_party" in dd):
 		character.set_in_party(dd.in_party)
-	
-	if ("target_path" in dd and dd.target_path and has_node(dd.target_path)):
-		var target_node = get_node(dd.target_path)
-		character.set_target_node(target_node)
-		movement_data = (
-			PLDMovementData.new() \
-			.clear_dir() \
-			.with_rest_state(true) \
-			.with_signal("arrived_to", [target_node])
-		)
 	
 	if ("is_crouching" in dd and dd.is_crouching):
 		character.is_crouching = dd.is_crouching
@@ -632,6 +637,7 @@ func load_state(slot):
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		movement_datas = set_characters_data(d.characters)
+		characters_transition_data = d.characters
 
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
@@ -661,14 +667,21 @@ func autosave_create():
 func autosave_restore():
 	return initiate_load(0)
 
-func get_characters_data(full_save):
+func get_characters_data():
 	var characters = {}
 	for character in get_characters():
 		var name_hint = character.get_name_hint()
-		characters[name_hint] = get_character_data(character, full_save)
+		characters[name_hint] = get_character_data(character)
+	for name_hint in characters_transition_data.keys():
+		if characters.has(name_hint):
+			for pk in characters[name_hint]["positions"].keys():
+				if pk != scene_path:
+					characters[name_hint]["positions"][pk] = characters_transition_data[name_hint]["positions"][pk]
+		else:
+			characters[name_hint] = characters_transition_data[name_hint]
 	return characters
 
-func get_character_data(character, full_save):
+func get_character_data(character):
 	var p = character.is_in_party()
 	
 	var result = {
@@ -688,21 +701,20 @@ func get_character_data(character, full_save):
 		"force_no_physics" : character.is_force_no_physics(),
 		"force_visibility" : character.is_force_visibility(),
 		"is_patrolling" : character.is_patrolling(),
-		"is_aggressive" : character.is_aggressive()
+		"is_aggressive" : character.is_aggressive(),
+		"positions" : { scene_path : {}}
 	}
 	
-	if not full_save:
-		return result
 	var t = character.get_target_node()
 	var b = t.get_global_transform().basis if t and not p else character.get_global_transform().basis
 	var o = t.get_global_transform().origin if t and not p else character.get_global_transform().origin
-	result["basis"] = [
+	result["positions"][scene_path]["basis"] = [
 		[b.x.x, b.x.y, b.x.z],
 		[b.y.x, b.y.y, b.y.z],
 		[b.z.x, b.z.y, b.z.z]
 	]
-	result["origin"] = [o.x, o.y, o.z]
-	result["target_path"] = t.get_path() if t else null
+	result["positions"][scene_path]["origin"] = [o.x, o.y, o.z]
+	result["positions"][scene_path]["target_path"] = t.get_path() if t else null
 	return result
 
 func save_state(slot):
@@ -712,7 +724,7 @@ func save_state(slot):
 	
 	story_node.save_all(slot)
 	
-	var characters = get_characters_data(true)
+	var characters = get_characters_data()
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
 	# usable_paths should not be saved, it must be recreated on level startup via register_usable()
