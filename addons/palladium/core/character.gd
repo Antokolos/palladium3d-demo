@@ -473,8 +473,18 @@ func is_need_to_use_physics(characters):
 			return true
 	return false
 
-func move_without_physics(hvel, delta):
-	if hvel.length() >= MIN_MOVEMENT:
+func has_movement(v, fc):
+	return (
+		v.x >= MIN_MOVEMENT \
+			or v.x <= -MIN_MOVEMENT \
+			or v.z >= MIN_MOVEMENT \
+			or v.z <= -MIN_MOVEMENT \
+			or v.y > 0 \
+			or not fc
+	)
+
+func move_without_physics(hvel, fc, delta):
+	if has_movement(hvel, fc):
 		global_translate(hvel * delta)
 	return hvel
 
@@ -509,7 +519,7 @@ func process_movement(delta, dir, characters):
 	vel.z = hvel.z
 	
 	if is_need_to_use_physics:
-		if force_physics or vel.y > 0.0 or hvel.length() >= MIN_MOVEMENT or not has_floor_collision():
+		if force_physics or has_movement(vel, has_floor_collision()):
 			vel = move_and_slide_with_snap(
 				vel,
 				get_snap(),
@@ -520,10 +530,9 @@ func process_movement(delta, dir, characters):
 				is_in_party()
 			)
 	else:
-		vel = move_without_physics(hvel, delta)
-		return { "is_walking" : vel.length() >= MIN_MOVEMENT, "collides_floor" : has_floor_collision() }
-	
-	var is_walking = vel.length() >= MIN_MOVEMENT
+		var fc = has_floor_collision()
+		vel = move_without_physics(hvel, fc, delta)
+		return { "is_walking" : has_movement(vel, fc), "collides_floor" : fc }
 	
 	var sc = get_slide_count()
 	var character_collisions = []
@@ -560,7 +569,7 @@ func process_movement(delta, dir, characters):
 		path.push_front(start_position)
 		if DRAW_PATH:
 			draw_path()
-	return { "is_walking" : is_walking, "collides_floor" : collides_floor }
+	return { "is_walking" : has_movement(vel, collides_floor), "collides_floor" : collides_floor }
 
 func get_out_vec(normal):
 	var n = normal
