@@ -54,6 +54,9 @@ func _integrate_forces(state):
 		state.set_linear_velocity(run_dir)
 	state.set_angular_velocity(Vector3.ZERO)
 
+func is_retreating():
+	return retreating
+
 func rest():
 	rat.rest()
 
