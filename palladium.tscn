@@ -184,8 +184,8 @@ shape = SubResource( 2 )
 
 [node name="StaticBodyFloor" type="StaticBody" parent="ViewportContainer/Viewport/palladium"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0126543, 0 )
-collision_layer = 7
-collision_mask = 7
+collision_layer = 4
+collision_mask = 15375
 
 [node name="Demo" type="CollisionShape" parent="ViewportContainer/Viewport/palladium/StaticBodyFloor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.360972, 0.998835, 32.3138 )

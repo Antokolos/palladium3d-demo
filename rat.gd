@@ -1,7 +1,6 @@
-extends RigidBody
+extends PLDTakable
+class_name TakableRat
 
-export var floor_path = "../StaticBodyFloor"
-onready var exclusions = [get_node(floor_path), self]
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
 
 const SAFE_RANGE = 6
@@ -19,6 +18,8 @@ func can_move_without_collision(motion):
 	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
+	if not is_present():
+		return
 	var player = game_state.get_player()
 	if not player:
 		return
@@ -45,7 +46,7 @@ func _integrate_forces(state):
 		param.collision_mask = self.collision_mask
 		param.set_shape($CollisionShape.shape)
 		param.transform = current_transform
-		param.exclude = exclusions
+		#param.exclude = [ self ]
 		param.margin = 0.001 # When almost collided
 		var motion = space_state.cast_motion(param, run_dir.normalized())
 		if not can_move_without_collision(motion):

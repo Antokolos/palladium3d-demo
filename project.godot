@@ -238,6 +238,11 @@ _global_script_classes=[ {
 "class": "StatuesPostament",
 "language": "GDScript",
 "path": "res://scenes/statues_postament.gd"
+}, {
+"base": "PLDTakable",
+"class": "TakableRat",
+"language": "GDScript",
+"path": "res://rat.gd"
 } ]
 _global_script_class_icons={
 "ApataChest": "",
@@ -285,7 +290,8 @@ _global_script_class_icons={
 "PLDUsable": "",
 "PLDUseTarget": "",
 "PLDViewportHacks": "",
-"StatuesPostament": ""
+"StatuesPostament": "",
+"TakableRat": ""
 }
 
 [application]

@@ -14,11 +14,15 @@ extents = Vector3( 0.198305, 0.0804571, 0.0747947 )
 extents = Vector3( 2.6, 2, 2.6 )
 
 [node name="rat" type="RigidBody"]
+collision_layer = 8
+collision_mask = 2
 physics_material_override = SubResource( 1 )
 can_sleep = false
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource( 1 )
+use_distance = 4.1
+takable_id = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0 )

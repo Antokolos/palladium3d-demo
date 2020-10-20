@@ -3,9 +3,9 @@ class_name PLDUsable
 
 signal use_usable(player_node, usable)
 
-const USE_DISTANCE_COMMON = 2
+const USE_DISTANCE_COMMON = 2.1
 
-export(int) var use_distance = USE_DISTANCE_COMMON
+export(float) var use_distance = USE_DISTANCE_COMMON
 export(DB.UsableIds) var usable_id = DB.UsableIds.NONE
 
 func _ready():

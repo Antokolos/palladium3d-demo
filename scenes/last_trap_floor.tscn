@@ -7,6 +7,8 @@
 extents = Vector3( 2.02533, 0.186694, 2.00619 )
 
 [node name="last_trap_floor" type="RigidBody"]
+collision_layer = 4
+collision_mask = 15375
 mode = 1
 script = ExtResource( 1 )
 
