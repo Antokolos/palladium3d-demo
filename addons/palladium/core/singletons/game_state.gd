@@ -196,7 +196,7 @@ func set_underwater(player, enable):
 func set_poisoned(player, enable):
 	emit_signal("player_poisoned", player, enable)
 
-func _on_cutscene_finished(player, cutscene_id):
+func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	player.set_look_transition(true)
 
 func get_custom_actions(item):

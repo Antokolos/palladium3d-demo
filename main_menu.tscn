@@ -32,18 +32,6 @@
 [ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=30]
 [ext_resource path="res://addons/palladium/ui/menu_hud.tscn" type="PackedScene" id=31]
 
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 7, 2 )
 
@@ -203,6 +191,8 @@ bus = "Sound"
 
 [node name="StaticBodyFloor" type="StaticBody" parent="ViewportContainer/Viewport/main_menu"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0267782, 0 )
+collision_layer = 4
+collision_mask = 15375
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/main_menu/StaticBodyFloor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.764866, 1.0711, -2.08213 )

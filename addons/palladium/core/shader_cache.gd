@@ -1,7 +1,6 @@
 extends Spatial
 class_name PLDShaderCache
 
-const SHADER_CACHE_ENABLED = true
 const SHADER_CACHE_HIDING_ENABLED = true
 const STEP = 0.005
 const HALFROW = 20
@@ -12,8 +11,8 @@ var skeleton_paths = {}
 var character_skeleton_paths = {}
 
 func _ready():
+	settings.connect("shader_cache_enabled_changed", self, "refresh")
 	#refresh() -- will be called on settings ready
-	pass
 
 func get_cacheable_items(scn):
 	var result = []
@@ -47,6 +46,8 @@ func make_skeleton(pos, skeleton):
 	for skeleton_child in skeleton.get_children():
 		if skeleton_child is VisualInstance:
 			aabb = aabb.merge(skeleton_child.get_aabb())
+		if skeleton_child is PLDBoneAttachment:
+			skeleton_child.queue_free()
 	skeleton.set_scale(get_scale_from_aabb(aabb))
 	for ch in skeleton.get_children():
 		if ch is AnimationPlayer:
@@ -184,7 +185,7 @@ func _process(delta):
 			stage = stage + 1
 			# Show all items for one frame
 		_:
-			if SHADER_CACHE_HIDING_ENABLED:
+			if settings.shader_cache_enabled and SHADER_CACHE_HIDING_ENABLED:
 				for rid in rids.keys():
 					var a = rids[rid]
 					#a.visible = false
@@ -204,5 +205,5 @@ func _process(delta):
 			get_tree().call_group("room_enablers", "set_active", true)
 			stage = 0
 
-func refresh():
-	stage = 1 if SHADER_CACHE_ENABLED else 3
+func refresh(shader_cache_enabled):
+	stage = 1 if shader_cache_enabled else 3

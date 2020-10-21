@@ -3,6 +3,8 @@ extends Node
 signal language_changed(ID)
 signal quality_changed(ID)
 signal resolution_changed(ID)
+signal cutoff_enabled_changed(enabled)
+signal shader_cache_enabled_changed(enabled)
 
 const AA_8X = 3
 const AA_4X = 2
@@ -37,7 +39,8 @@ const TABLET_VERTICAL = 0
 
 var tablet_orientation = TABLET_HORIZONTAL
 var performance_stats = false
-var cutoff_enabled = true
+var cutoff_enabled = false
+var shader_cache_enabled = true
 var vsync = true
 var fullscreen = true
 var quality = QUALITY_OPT
@@ -91,6 +94,9 @@ func load_settings():
 	if ("cutoff_enabled" in d):
 		cutoff_enabled = bool(d.cutoff_enabled)
 
+	if ("shader_cache_enabled" in d):
+		shader_cache_enabled = bool(d.shader_cache_enabled)
+	
 	if ("vsync" in d):
 		vsync = bool(d.vsync)
 
@@ -136,6 +142,7 @@ func save_settings():
 		"tablet_orientation" : tablet_orientation,
 		"performance_stats" : performance_stats,
 		"cutoff_enabled" : cutoff_enabled,
+		"shader_cache_enabled" : shader_cache_enabled,
 		"vsync" : vsync,
 		"fullscreen" : fullscreen,
 		"quality" : quality,
@@ -192,6 +199,14 @@ func set_vsync(vs):
 func set_fullscreen(fs):
 	OS.set_window_fullscreen(fs)
 	fullscreen = fs
+
+func set_cutoff_enabled(ce):
+	cutoff_enabled = ce
+	emit_signal("cutoff_enabled_changed", ce)
+
+func set_shader_cache_enabled(sce):
+	shader_cache_enabled = sce
+	emit_signal("shader_cache_enabled_changed", sce)
 
 func set_subtitles(s):
 	subtitles = s

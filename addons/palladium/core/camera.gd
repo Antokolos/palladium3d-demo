@@ -96,7 +96,7 @@ func change_quality(quality):
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 2)
 	set_inside(game_state.is_inside(), game_state.is_bright())
 	if shader_cache:
-		shader_cache.refresh()
+		shader_cache.refresh(settings.shader_cache_enabled)
 
 func set_inside(inside, bright):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)

@@ -21,14 +21,6 @@
 [ext_resource path="res://addons/palladium/assets/ui/close-button-pressed.png" type="Texture" id=19]
 [ext_resource path="res://addons/palladium/assets/ui/close-button-hover.png" type="Texture" id=20]
 
-
-
-
-
-
-
-
-
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
 corner_radius_top_left = 30
@@ -188,6 +180,38 @@ margin_bottom = 19.0
 text = "SETTINGS_FULLSCREEN"
 
 [node name="Fullscreen" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen"]
+margin_left = 70.0
+margin_right = 94.0
+margin_bottom = 24.0
+
+[node name="HCutoffEnabled" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 52.0
+margin_right = 577.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled"]
+margin_top = 5.0
+margin_right = 66.0
+margin_bottom = 19.0
+text = "SETTINGS_CUTOFF_ENABLED"
+
+[node name="CutoffEnabled" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled"]
+margin_left = 70.0
+margin_right = 94.0
+margin_bottom = 24.0
+
+[node name="HShaderCacheEnabled" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 52.0
+margin_right = 577.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled"]
+margin_top = 5.0
+margin_right = 66.0
+margin_bottom = 19.0
+text = "SETTINGS_SHADER_CACHE_ENABLED"
+
+[node name="ShaderCacheEnabled" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled"]
 margin_left = 70.0
 margin_right = 94.0
 margin_bottom = 24.0
@@ -972,6 +996,8 @@ texture_hover = ExtResource( 20 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled/CutoffEnabled" to="." method="_on_CutoffEnabled_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled" to="." method="_on_ShaderCacheEnabled_pressed"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/Quality" to="." method="_on_Quality_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]

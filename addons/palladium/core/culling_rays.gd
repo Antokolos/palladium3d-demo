@@ -7,6 +7,14 @@ const DISTANCE_COEFF = 0.2
 
 const MIN_DIFF = 0.2
 
+func _ready():
+	settings.connect("cutoff_enabled_changed", self, "enable_raycasts")
+	init()
+
+func enable_raycasts(enabled):
+	for r in get_children():
+		r.enabled = enabled
+
 func create_raycast(x, y, z):
 	var r = RayCast.new()
 	r.enabled = settings.cutoff_enabled
@@ -18,15 +26,10 @@ func create_raycast(x, y, z):
 func add_raycast(x, y, z):
 	add_child(create_raycast(x, y, z))
 
-func _ready():
-	init()
-
 func get_length_limit():
 	return get_camera_limit()
 
 func init():
-	if not settings.cutoff_enabled:
-		return
 	var z = -get_length_limit()
 	var width_limit = get_length_limit() * tan(deg2rad(CAMERA_FOV_DEGREES / 2.0))
 	var height_limit = width_limit

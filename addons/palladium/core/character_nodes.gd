@@ -1,6 +1,7 @@
 extends Spatial
 class_name PLDCharacterNodes
 
+const FRIENDLY_FIRE_ENABLED = false
 const OXYGEN_DECREASE_RATE = 5
 const POISON_LETHALITY_RATE = 1
 
@@ -251,11 +252,11 @@ func _on_PoisonTimer_timeout():
 func _on_StunTimer_timeout():
 	common_utils.set_pause_scene(character, false)
 
-func _on_cutscene_finished(player, cutscene_id):
-	# TODO: maybe check that cutscene_id is attack cutscene???
-	if is_attacking():
+func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
+	if is_attacking() and player_model.is_attack_cutscene(cutscene_id):
 		attack_timer.stop()
-		_on_AttackTimer_timeout()
+		if not was_active:
+			_on_AttackTimer_timeout()
 
 func _on_AttackTimer_timeout():
 # TODO: Check it is OK
@@ -266,7 +267,9 @@ func _on_AttackTimer_timeout():
 	if attack_target:
 		play_attack_sound()
 		if attack_target.is_in_group("party"):
-			game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
+			if FRIENDLY_FIRE_ENABLED \
+				or not character.is_in_group("party"):
+				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
 		elif attack_target.is_in_group("enemies"):
 			attack_target.hit(null)
 		if last_attack_target and attack_target.get_instance_id() != last_attack_target.get_instance_id():

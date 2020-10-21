@@ -325,7 +325,7 @@ func _on_player_registered(player):
 	player.connect("arrived_to", self, "_on_arrived_to")
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 
-func _on_cutscene_finished(player, cutscene_id):
+func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	match player.name_hint:
 		CHARS.FEMALE_NAME_HINT:
 			match cutscene_id:

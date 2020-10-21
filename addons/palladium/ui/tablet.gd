@@ -23,6 +23,8 @@ onready var load_game_app = apps.get_node("load_game_app")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
+onready var cutoff_enabled = settings_app.get_node("VBoxContainer/HCutoffEnabled/CutoffEnabled")
+onready var shader_cache_enabled = settings_app.get_node("VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled")
 onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
 onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolution")
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
@@ -53,6 +55,12 @@ func _ready():
 
 	fullscreen.pressed = settings.fullscreen
 	_on_Fullscreen_pressed()
+
+	cutoff_enabled.pressed = settings.cutoff_enabled
+	_on_CutoffEnabled_pressed()
+
+	shader_cache_enabled.pressed = settings.shader_cache_enabled
+	_on_ShaderCacheEnabled_pressed()
 
 	quality.add_item("Normal", settings.QUALITY_NORM)
 	quality.add_item("Optimal", settings.QUALITY_OPT)
@@ -332,6 +340,14 @@ func _on_Vsync_pressed():
 func _on_Fullscreen_pressed():
 	var fs = fullscreen.is_pressed() if fullscreen else settings.fullscreen
 	settings.set_fullscreen(fs)
+
+func _on_CutoffEnabled_pressed():
+	var ce = cutoff_enabled.is_pressed() if cutoff_enabled else settings.cutoff_enabled
+	settings.set_cutoff_enabled(ce)
+
+func _on_ShaderCacheEnabled_pressed():
+	var sce = shader_cache_enabled.is_pressed() if shader_cache_enabled else settings.shader_cache_enabled
+	settings.set_shader_cache_enabled(sce)
 
 func _on_Quality_item_selected(ID):
 	settings.set_quality(ID)

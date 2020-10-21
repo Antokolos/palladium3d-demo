@@ -1,7 +1,7 @@
 extends Spatial
 class_name PLDCharacterModel
 
-signal cutscene_finished(player, cutscene_id)
+signal cutscene_finished(player, player_model, cutscene_id, was_active)
 signal character_dead(player)
 signal character_dying(player)
 
@@ -88,11 +88,12 @@ func play_cutscene(cutscene_id):
 
 func stop_cutscene():
 	var cutscene_id = get_cutscene_id()
+	var was_active = animation_tree.get("parameters/CutsceneShot/active")
 	animation_tree.set("parameters/CutsceneTransition/current", CUTSCENE_EMPTY)
 	animation_tree.set("parameters/CutsceneShot/active", false)
 	if cutscene_id > CUTSCENE_EMPTY:
 		var player = get_node("../..")
-		emit_signal("cutscene_finished", player, cutscene_id)
+		emit_signal("cutscene_finished", player, self, cutscene_id, was_active)
 
 func is_movement_disabled():
 	return is_looped_cutscene() \
@@ -123,6 +124,9 @@ func is_attacking():
 	if not is_cutscene():
 		return false
 	var cutscene_id = get_cutscene_id()
+	return is_attack_cutscene(cutscene_id)
+
+func is_attack_cutscene(cutscene_id):
 	for attack_cutscene_id in attack_cutscene_ids:
 		if attack_cutscene_id == cutscene_id:
 			return true
