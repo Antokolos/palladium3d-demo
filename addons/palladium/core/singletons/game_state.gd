@@ -107,6 +107,11 @@ func reset_variables():
 func get_game_window_parent():
 	return get_node("/root/HUD") if has_node("/root/HUD") else null
 
+func play_video_cutscene(video_file_name):
+	var gwp = get_game_window_parent()
+	if gwp and gwp.has_node("video_cutscene"):
+		gwp.get_node("video_cutscene").play(video_file_name)
+
 func get_hud():
 	var gwp = get_game_window_parent()
 	return gwp.get_node("hud") if gwp and gwp.has_node("hud") else null
