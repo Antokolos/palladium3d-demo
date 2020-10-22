@@ -568,13 +568,13 @@ func set_character_data(dd, character):
 		set_poisoned(character, dd.is_poisoned)
 	
 	if ("relationship" in dd):
-		character.relationship = dd.relationship
+		character.relationship = int(dd.relationship)
 	
 	if ("morale" in dd):
-		character.morale = dd.morale
+		character.morale = int(dd.morale)
 	
 	if ("stuns_count" in dd):
-		character.stuns_count = dd.stuns_count
+		character.stuns_count = int(dd.stuns_count)
 	
 	if ("is_hidden" in dd):
 		character.set_hidden(dd.is_hidden)

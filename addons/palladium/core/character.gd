@@ -6,6 +6,8 @@ signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
 signal attack_started(player_node, target)
+signal stun_started(player_node, weapon)
+signal stun_finished(player_node)
 signal take_damage(player_node, fatal, hit_direction_node)
 
 const GRAVITY_DEFAULT = 6.2
@@ -44,9 +46,9 @@ var is_crouching = false
 var is_sprinting = false
 var is_underwater = false
 var is_poisoned = false
-var relationship = 0
-var morale = 0
-var stuns_count = 0
+var relationship : int = 0
+var morale : int = 0
+var stuns_count : int = 0
 var has_floor_collision = true
 var force_physics = false
 var force_no_physics = false
@@ -401,22 +403,22 @@ func set_sprinting(enable):
 		for companion in companions:
 			companion.set_sprinting(enable)
 
-func get_relationship():
+func get_relationship() -> int:
 	return relationship
 
-func set_relationship(relationship):
+func set_relationship(relationship : int):
 	self.relationship = relationship
 
-func get_morale():
+func get_morale() -> int:
 	return morale
 
-func set_morale(morale):
+func set_morale(morale : int):
 	self.morale = morale
 
-func get_stuns_count():
+func get_stuns_count() -> int:
 	return stuns_count
 
-func set_stuns_count(stuns_count):
+func set_stuns_count(stuns_count : int):
 	self.stuns_count = stuns_count
 
 func inc_stuns_count():

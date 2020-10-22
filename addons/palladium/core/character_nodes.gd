@@ -174,6 +174,7 @@ func use_weapon(item):
 			MEDIA.play_sound(MEDIA.SoundId.SNAKE_HISS)
 			character.inc_stuns_count()
 			common_utils.set_pause_scene(character, true)
+			character.emit_signal("stun_started", character, item)
 			stun_timer.start(weapon_data.stun_duration)
 
 func get_possible_attack_target(update_collisions):
@@ -251,6 +252,7 @@ func _on_PoisonTimer_timeout():
 
 func _on_StunTimer_timeout():
 	common_utils.set_pause_scene(character, false)
+	character.emit_signal("stun_finished", character)
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	if is_attacking() and player_model.is_attack_cutscene(cutscene_id):
