@@ -32,6 +32,6 @@ VAR party_bandit = true
 	* * 	[Идти с Максом.]
 		-> companion_max
 	* * 	[Идти одному.]
-		Я решил, пойду один.	# actor:player # voiceover:.ogg
+		Я решил, пойду один.	# actor:player # voiceover:986_ya_reshil_poydu_odin.ogg
 		~ party_bandit = false
 		~ party_female = false

@@ -341,7 +341,7 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 					player.set_target_node(get_node("PositionApata2"))
 					return
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 	var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 	match conversation_name:

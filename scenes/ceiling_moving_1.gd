@@ -91,7 +91,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			# Instantly kills the player if the ceiling is at its lowest point
 			game_state.kill_party()
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
 		"010-2-2_CeilingStopped":
 			$DeactivationTimer.start()

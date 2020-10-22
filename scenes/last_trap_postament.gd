@@ -62,7 +62,7 @@ func add_highlight(player_node):
 		return h
 	return ("E: " + tr("ACTION_TAKE")) if can_take_palladium() else ""
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
 		"174-1_Are_you_alright":
 			postament_anim_player.play("postament_180")

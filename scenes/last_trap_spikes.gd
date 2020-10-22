@@ -25,7 +25,7 @@ func activate():
 	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, SPIKES_SPEED)
 	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
 		"175_Andreas_what_is_that_sound":
 			activate()

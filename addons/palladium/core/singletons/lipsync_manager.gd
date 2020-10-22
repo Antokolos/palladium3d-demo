@@ -11,7 +11,7 @@ const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	stop_sound_and_lipsync()
 
 func stop_sound_and_lipsync():

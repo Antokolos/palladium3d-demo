@@ -160,7 +160,7 @@ func _on_FinalCutsceneTween_tween_completed(object, key):
 			$PositionFinalCutscene
 		)
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
 		"171-1_I_would_not_leave_you":
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)

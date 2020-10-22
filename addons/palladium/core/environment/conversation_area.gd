@@ -56,7 +56,7 @@ func do_when_camera_borrowed(player_node, cutscene_node, name_hint, conversation
 func do_when_camera_restored(player_node, cutscene_node, name_hint, conversation_name):
 	pass
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	if Engine.editor_hint:
 		return
 	for name_hint in conversations.keys():

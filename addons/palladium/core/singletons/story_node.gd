@@ -12,6 +12,7 @@ const PARTY_VAR_PREFIX : String = "party_"
 const CUTSCENE_VAR_PREFIX : String = "cutscene_"
 const RELATIONSHIP_VAR_PREFIX : String = "relationship_"
 const MORALE_VAR_PREFIX : String = "morale_"
+const RESULT_VAR_NAME : String = "result"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
@@ -22,6 +23,8 @@ var _inkStory = Dictionary()
 # The key is the locale name, the value is the Dictionary whose key is the story path and the value is the story itself.
 # In C# it was Dictionary<String, Dictionary<String, PLDStory>>
 var _inkStories = Dictionary()
+
+var last_result : int = 0
 
 func _ready():
 	call_deferred("_add_runtime")
@@ -161,6 +164,13 @@ func _observe_morale(variable_name, new_value) -> void:
 	var character = game_state.get_character(name_hint)
 	character.set_morale(v)
 
+func _observe_result(variable_name, new_value) -> void:
+	var v : int = int(new_value)
+	last_result = v
+
+func get_last_result() -> int:
+	return last_result
+
 func init_variables() -> void:
 	var storyVars : Dictionary = game_state.story_vars
 	var keys = storyVars.keys()
@@ -169,6 +179,10 @@ func init_variables() -> void:
 		if _inkStory.has(locale):
 			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
+			if story.variables_state.global_variable_exists_with_name(RESULT_VAR_NAME):
+				story.variables_state.set(RESULT_VAR_NAME, 0)
+				story.remove_variable_observer(self, "_observe_result", RESULT_VAR_NAME)
+				story.observe_variable(RESULT_VAR_NAME, self, "_observe_result")
 			for key in keys:
 				if story.variables_state.global_variable_exists_with_name(key):
 					story.variables_state.set(key, storyVars[key])

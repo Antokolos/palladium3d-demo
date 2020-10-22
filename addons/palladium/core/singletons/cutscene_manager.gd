@@ -12,7 +12,7 @@ var is_cutscene = false
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 
-func _on_conversation_finished(player, conversation_name, target, initiator):
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	if not self.target and target:
 		return
 	if self.target and not target:

@@ -7,7 +7,7 @@ const MEETING_CONVERSATION_TEMPLATE = "%s%%s" % MEETING_CONVERSATION_PREFIX
 signal meeting_started(player, target, initiator)
 signal conversation_started(player, conversation_name, target, initiator)
 signal meeting_finished(player, target, initiator)
-signal conversation_finished(player, conversation_name, target, initiator)
+signal conversation_finished(player, conversation_name, target, initiator, last_result)
 
 var conversation_name
 var target
@@ -73,7 +73,7 @@ func stop_conversation(player):
 	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
 		emit_signal("meeting_finished", player, target_prev, initiator_prev)
 	player.get_cam().enable_use(true)
-	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev)
+	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev, story_node.get_last_result())
 
 func conversation_is_in_progress(conversation_name = null, target_name_hint = null):
 	if not conversation_name:
