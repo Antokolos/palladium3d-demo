@@ -18,25 +18,39 @@ enum TrapStages {
 	ACTIVE = 2,
 	PAUSED = 3
 }
+
 enum DoorState {
 	DEFAULT = 0,
 	OPENED = 1,
 	CLOSED = 2
 }
+
 enum LightState {
 	DEFAULT = 0,
 	ON = 1,
 	OFF = 2
 }
+
 enum ContainerState {
 	DEFAULT = 0,
 	OPENED = 1,
 	CLOSED = 2
 }
+
 enum TakableState {
 	DEFAULT = 0,
 	PRESENT = 1,
 	ABSENT = 2
+}
+
+enum ActivatableState {
+	DEFAULT = 0,
+	ACTIVATED = 1,
+	DEACTIVATED = 2,
+	PAUSED = 3,
+	ACTIVATED_FOREVER = 4,
+	DEACTIVATED_FOREVER = 5,
+	PAUSED_FOREVER = 6
 }
 
 const COLOR_WHITE = Color(1, 1, 1, 1)
@@ -45,6 +59,7 @@ const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
 const TAKABLES_DEFAULT = {}
+const ACTIVATABLES_DEFAULT = {}
 const MULTISTATES_DEFAULT = {}
 const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_MOVE" : true,
@@ -69,6 +84,7 @@ var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 var player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
 var player_paths = {}
 var usable_paths = {}
+var activatable_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 var inventory = DB.INVENTORY_DEFAULT.duplicate(true)
 var quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -76,6 +92,7 @@ var doors = DOORS_DEFAULT.duplicate(true)
 var lights = LIGHTS_DEFAULT.duplicate(true)
 var containers = CONTAINERS_DEFAULT.duplicate(true)
 var takables = TAKABLES_DEFAULT.duplicate(true)
+var activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
 
@@ -86,6 +103,7 @@ func _ready():
 func cleanup_paths():
 	player_paths.clear()
 	usable_paths.clear()
+	activatable_paths.clear()
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
@@ -101,6 +119,7 @@ func reset_variables():
 	lights = LIGHTS_DEFAULT.duplicate(true)
 	containers = CONTAINERS_DEFAULT.duplicate(true)
 	takables = TAKABLES_DEFAULT.duplicate(true)
+	activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 	multistates = MULTISTATES_DEFAULT.duplicate(true)
 	messages = MESSAGES_DEFAULT.duplicate(true)
 
@@ -169,9 +188,20 @@ func get_usable_path(usable_id):
 
 func get_usable(usable_id):
 	var usable_path = get_usable_path(usable_id)
-	if not usable_path:
+	if not usable_path or not has_node(usable_path):
 		return null
 	return get_node(usable_path)
+
+func get_activatable_path(activatable_id):
+	if not activatable_id or activatable_id == DB.ActivatableIds.NONE:
+		return null
+	return activatable_paths[activatable_id]
+
+func get_activatable(activatable_id):
+	var activatable_path = get_activatable_path(activatable_id)
+	if not activatable_path or not has_node(activatable_path):
+		return null
+	return get_node(activatable_path)
 
 func get_level():
 	var viewport = get_viewport()
@@ -460,6 +490,15 @@ func get_takable_state(takable_path):
 func set_takable_state(takable_path, absent):
 	takables[scene_path + ":" + takable_path] = absent
 
+func get_activatable_state(activatable_path):
+	var id = scene_path + ":" + activatable_path
+	if not activatables.has(id):
+		return ActivatableState.DEFAULT
+	return activatables[id]
+
+func set_activatable_state(activatable_path, state):
+	activatables[scene_path + ":" + activatable_path] = state
+
 func get_multistate_state(multistate_path):
 	var id = scene_path + ":" + multistate_path
 	return multistates[id] if multistates.has(id) else 0
@@ -501,6 +540,12 @@ func register_usable(usable):
 	if not usable_id or usable_id == DB.UsableIds.NONE:
 		return
 	usable_paths[usable_id] = usable.get_path()
+
+func register_activatable(activatable):
+	var activatable_id = activatable.get_activatable_id()
+	if not activatable_id or activatable_id == DB.ActivatableIds.NONE:
+		return
+	activatable_paths[activatable_id] = activatable.get_path()
 
 func save_slot_exists(slot):
 	var f = File.new()
@@ -639,6 +684,7 @@ func load_state(slot):
 
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
+	# activatable_paths should not be loaded, it must be recreated on level startup via register_activatable()
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		movement_datas = set_characters_data(d.characters)
@@ -651,6 +697,7 @@ func load_state(slot):
 	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
 	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT.duplicate(true)
+	activatables = d.activatables if ("activatables" in d) else ACTIVATABLES_DEFAULT.duplicate(true)
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
@@ -733,6 +780,7 @@ func save_state(slot):
 	
 	# player_paths should not be saved, it must be recreated on level startup via register_player()
 	# usable_paths should not be saved, it must be recreated on level startup via register_usable()
+	# activatable_paths should not be loaded, it must be recreated on level startup via register_activatable()
 	var d = {
 		"scene_path" : scene_path,
 		"player_name_hint" : player_name_hint,
@@ -748,6 +796,7 @@ func save_state(slot):
 		"lights" : lights,
 		"containers" : containers,
 		"takables" : takables,
+		"activatables" : activatables,
 		"multistates" : multistates,
 		"messages" : messages
 	}

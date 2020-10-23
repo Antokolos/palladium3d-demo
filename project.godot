@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/male_model.gd"
 }, {
+"base": "Spatial",
+"class": "PLDActivatable",
+"language": "GDScript",
+"path": "res://addons/palladium/core/activatable.gd"
+}, {
 "base": "BoneAttachment",
 "class": "PLDBoneAttachment",
 "language": "GDScript",
@@ -256,6 +261,7 @@ _global_script_class_icons={
 "DestructibleWeb": "",
 "FemaleModel": "",
 "MaleModel": "",
+"PLDActivatable": "",
 "PLDBoneAttachment": "",
 "PLDButtonActivator": "",
 "PLDCamera": "",

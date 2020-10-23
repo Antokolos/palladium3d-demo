@@ -1,4 +1,4 @@
-extends Spatial
+extends PLDActivatable
 
 const SPIKES_SPEED = 0.2
 
@@ -18,12 +18,17 @@ func use_use_target(player_node, use_target, item, result):
 		DB.UseTargetIds.LAST_TRAP_POSTAMENT:
 			get_node("ceiling_armat005/AnimationPlayer").play_backwards("trap_final_1.001")
 			get_node("ceiling_armat004/AnimationPlayer").play_backwards("trap_final_1")
-			get_node("AnimationPlayer").play("spikes_off")
+			deactivate()
 
 func activate():
+	.activate()
 	get_node("ceiling_armat005/AnimationPlayer").play("trap_final_1.001", -1, SPIKES_SPEED)
 	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, SPIKES_SPEED)
 	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
+
+func deactivate():
+	.deactivate()
+	get_node("AnimationPlayer").play("spikes_off")
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:

@@ -1,4 +1,4 @@
-extends Spatial
+extends PLDActivatable
 
 const SPEED_DOWN = 0.6
 
@@ -43,6 +43,7 @@ func activate_partial():
 	$PartialActivationTimer.start()
 
 func activate():
+	.activate()
 	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.ACTIVE
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
@@ -50,12 +51,14 @@ func activate():
 	ceiling_sound_play()
 
 func pause():
+	.pause()
 	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.PAUSED
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
 	ceiling_sound_stop()
 
 func deactivate():
+	.deactivate()
 	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.DISABLED
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
@@ -63,6 +66,7 @@ func deactivate():
 	ceiling_sound_play()
 
 func restore_state():
+	.restore_state()
 	if is_active():
 		activate()
 	elif game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.PAUSED:

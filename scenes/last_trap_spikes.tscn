@@ -153,7 +153,10 @@ tracks/1/keys = {
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 2.5019, 1, 2.38396 )
 
-[node name="last_trap_spikes" instance=ExtResource( 1 )]
+[node name="last_trap_spikes" index="0" groups=[
+"activatables",
+"restorable_state",
+] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="ceiling_slab_1014" parent="Armature033" index="1"]

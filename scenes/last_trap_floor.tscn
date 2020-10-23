@@ -11,6 +11,7 @@ collision_layer = 4
 collision_mask = 15375
 mode = 1
 script = ExtResource( 1 )
+activatable_id = 10
 
 [node name="last_trap_floor" parent="." instance=ExtResource( 2 )]
 

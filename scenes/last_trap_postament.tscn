@@ -10,7 +10,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.5, 2, 0.473 )
 
-[node name="last_trap_postament" instance=ExtResource( 1 )]
+[node name="last_trap_postament" index="0" instance=ExtResource( 1 )]
 
 [node name="Palladium_fake" parent="postament_armature" index="1"]
 visible = false
@@ -20,13 +20,13 @@ transform = Transform( 0.00678556, 0, 0.0505792, 0, 0.0510324, 0, -0.0505792, 0,
 visible = false
 
 [node name="last_trap_postament" type="RigidBody" parent="." index="5" groups=[
-"restorable_state",
 "use_targets",
+"restorable_state",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23391, 2.07994, 30.8077 )
 mode = 1
 script = ExtResource( 2 )
-usable_id = 110
+usable_id = 100
 use_target_id = 5
 matched_item_names = PoolStringArray( "statue_athena" )
 

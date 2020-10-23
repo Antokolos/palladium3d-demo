@@ -68,6 +68,10 @@ static func get_weapon_stun_data(takable_id):
 #	NONE = 0
 #}
 
+#enum ActivatableIds {
+#	NONE = 0
+#}
+
 #enum TakableIds {
 #	NONE = 0
 #}
@@ -156,8 +160,12 @@ enum ButtonActivatorIds {
 enum UsableIds {
 	NONE = 0,
 	BARN_LOCK = 10,
-	LAST_TRAP_FLOOR = 100,
-	LAST_TRAP_POSTAMENT = 110
+	LAST_TRAP_POSTAMENT = 100
+}
+
+enum ActivatableIds {
+	NONE = 0,
+	LAST_TRAP_FLOOR = 10
 }
 
 enum TakableIds {
