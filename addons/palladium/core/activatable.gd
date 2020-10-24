@@ -15,6 +15,9 @@ func get_activatable_id():
 func get_activatable_state():
 	return game_state.get_activatable_state(get_path())
 
+func is_untouched():
+	return get_activatable_state() == PLDGameState.ActivatableState.DEFAULT
+
 func is_activated():
 	var state = get_activatable_state()
 	match state:

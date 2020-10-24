@@ -713,6 +713,8 @@ func load_state(slot):
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
+	# Should restore state of all activatables before other restorable_state nodes
+	get_tree().call_group("activatables", "restore_state")
 	get_tree().call_group("restorable_state", "restore_state")
 	for md in movement_datas:
 		if md.character and md.movement_data:

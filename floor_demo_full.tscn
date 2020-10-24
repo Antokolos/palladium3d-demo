@@ -843,7 +843,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
 transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 4.03199, 1.19035, 29.9398 )
 
 [node name="last_trap_floor" parent="." instance=ExtResource( 76 )]
-usable_id = 100
 
 [node name="last_trap_postament" parent="." instance=ExtResource( 77 )]
 visible = false
