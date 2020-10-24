@@ -31,9 +31,6 @@ func ceiling_sound_stop():
 	ceiling_sound_4.stop()
 	ceiling_sound_5.stop()
 
-func is_active():
-	return game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ACTIVE
-
 func get_ceiling_speed():
 	# Move the ceiling faster if the player decides to move the chest
 	return SPEED_DOWN if game_state.story_vars.apata_chest_rigid == 0 else 3 * SPEED_DOWN
@@ -44,7 +41,6 @@ func activate_partial():
 
 func activate():
 	.activate()
-	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.ACTIVE
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, speed)
@@ -52,38 +48,37 @@ func activate():
 
 func pause():
 	.pause()
-	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.PAUSED
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
 	ceiling_sound_stop()
 
-func deactivate():
-	.deactivate()
-	game_state.story_vars.apata_trap_stage = PLDGameState.TrapStages.DISABLED
+func deactivate_forever():
+	.deactivate_forever()
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
 	ceiling_sound_play()
 
 func restore_state():
-	.restore_state()
-	if is_active():
+	if is_activated():
 		activate()
-	elif game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.PAUSED:
+	elif is_paused():
 		activate()
 		get_node("ceiling_armat000/AnimationPlayer").seek(20, true)
 		get_node("AnimationPlayer").seek(20, true)
 		pause()
+	else:
+		.restore_state()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.DISABLED:
+	if is_deactivated():
 		ceiling_sound_stop()
 		if ( \
 			conversation_manager.conversation_is_finished("010-2-3_CeilingUp") \
 			or conversation_manager.conversation_is_in_progress("010-2-3_CeilingUp")
 		):
 			conversation_manager.start_area_conversation("010-2-4_ApataDoneMax")
-	elif game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ACTIVE:
+	elif is_activated():
 		if conversation_manager.conversation_is_finished("010-2-1_ChestMoved"):
 			var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 			var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
@@ -101,12 +96,12 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			$DeactivationTimer.start()
 
 func _on_DeactivationTimer_timeout():
-	deactivate()
+	deactivate_forever()
 	conversation_manager.start_area_conversation("010-2-3_CeilingUp")
 
 func _physics_process(delta):
 	chest_shape.disabled = game_state.story_vars.apata_chest_rigid != 0
-	if not is_active():
+	if not is_activated():
 		does_damage = false
 		return
 	for body in damage_area.get_overlapping_bodies():

@@ -182,7 +182,9 @@ func get_characters():
 	return result
 
 func get_usable_path(usable_id):
-	if not usable_id or usable_id == DB.UsableIds.NONE:
+	if not usable_id \
+		or usable_id == DB.UsableIds.NONE \
+		or not usable_paths.has(usable_id):
 		return null
 	return usable_paths[usable_id]
 
@@ -193,7 +195,9 @@ func get_usable(usable_id):
 	return get_node(usable_path)
 
 func get_activatable_path(activatable_id):
-	if not activatable_id or activatable_id == DB.ActivatableIds.NONE:
+	if not activatable_id \
+		or activatable_id == DB.ActivatableIds.NONE \
+		or not activatable_paths.has(activatable_id):
 		return null
 	return activatable_paths[activatable_id]
 
@@ -482,6 +486,8 @@ func set_container_state(container_path, opened):
 	containers[scene_path + ":" + container_path] = opened
 
 func get_takable_state(takable_path):
+	if not takable_path:
+		return null
 	var id = scene_path + ":" + takable_path
 	if not takables.has(id):
 		return TakableState.DEFAULT
@@ -490,7 +496,13 @@ func get_takable_state(takable_path):
 func set_takable_state(takable_path, absent):
 	takables[scene_path + ":" + takable_path] = absent
 
+func get_activatable_state_by_id(activatable_id):
+	var path = get_activatable_path(activatable_id)
+	return get_activatable_state(path)
+
 func get_activatable_state(activatable_path):
+	if not activatable_path:
+		return null
 	var id = scene_path + ":" + activatable_path
 	if not activatables.has(id):
 		return ActivatableState.DEFAULT

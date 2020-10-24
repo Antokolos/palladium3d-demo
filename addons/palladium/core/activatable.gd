@@ -12,21 +12,55 @@ func _ready():
 func get_activatable_id():
 	return activatable_id
 
+func get_activatable_state():
+	return game_state.get_activatable_state(get_path())
+
+func is_activated():
+	var state = get_activatable_state()
+	match state:
+		PLDGameState.ActivatableState.ACTIVATED:
+			return true
+		PLDGameState.ActivatableState.ACTIVATED_FOREVER:
+			return true
+		_:
+			return false
+
 func activate():
 	if not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.ACTIVATED)
 
+func is_deactivated():
+	var state = get_activatable_state()
+	match state:
+		PLDGameState.ActivatableState.DEACTIVATED:
+			return true
+		PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+			return true
+		_:
+			return false
+
 func deactivate():
 	if not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.DEACTIVATED)
+
+func is_paused():
+	var state = get_activatable_state()
+	match state:
+		PLDGameState.ActivatableState.PAUSED:
+			return true
+		PLDGameState.ActivatableState.PAUSED_FOREVER:
+			return true
+		_:
+			return false
 
 func pause():
 	if not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED)
 
 func is_final_destination():
-	var state = game_state.get_activatable_state(get_path())
+	var state = get_activatable_state()
 	match state:
+		PLDGameState.ActivatableState.DEFAULT, \
 		PLDGameState.ActivatableState.ACTIVATED, \
 		PLDGameState.ActivatableState.DEACTIVATED, \
 		PLDGameState.ActivatableState.PAUSED:
@@ -52,7 +86,7 @@ func pause_forever():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED_FOREVER)
 
 func restore_state():
-	var state = game_state.get_activatable_state(get_path())
+	var state = get_activatable_state()
 	match state:
 		PLDGameState.ActivatableState.DEFAULT:
 			pass

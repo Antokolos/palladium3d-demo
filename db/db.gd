@@ -114,7 +114,6 @@ const STORY_VARS_DEFAULT = {
 	"is_game_start" : true,
 	"in_lyre_area" : false,
 	"apata_chest_rigid" : 0,
-	"apata_trap_stage" : PLDGameState.TrapStages.ARMED,
 	"erida_trap_stage" : PLDGameState.TrapStages.ARMED
 }
 
@@ -165,7 +164,9 @@ enum UsableIds {
 
 enum ActivatableIds {
 	NONE = 0,
-	LAST_TRAP_FLOOR = 10
+	LAST_TRAP_FLOOR = 10,
+	APATA_TRAP = 20,
+	ERIDA_TRAP = 30
 }
 
 enum TakableIds {

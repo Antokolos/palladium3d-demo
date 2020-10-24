@@ -18,17 +18,12 @@ func connect_signals(target):
 	connect("use_takable", target, "use_takable")
 
 func use(player_node, camera_node):
-#	if takable_id == DB.TakableIds.APATA and player_node.is_player() and game_state.story_vars.apata_trap_stage == game_state.ApataTrapStages.ARMED:
-#		# Cannot be taken by the main player if Apata's trap has not been activated yet
-#		return false
 	var was_taken = is_present()
 	game_state.take(takable_id, 1, get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 
 func add_highlight(player_node):
-#	if takable_id == DB.TakableIds.APATA and game_state.story_vars.apata_trap_stage == game_state.ApataTrapStages.ARMED:
-#		return ""
 	return "E: " + tr("ACTION_TAKE") if is_present() else ""
 
 func _on_item_taken(item_id, cnt, item_path):

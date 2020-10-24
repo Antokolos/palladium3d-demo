@@ -128,7 +128,7 @@ func use_pedestal(player_node, pedestal, inventory_item, child_item):
 	var pedestal_id = pedestal.pedestal_id
 	match pedestal_id:
 		DB.PedestalIds.APATA:
-			if game_state.story_vars.apata_trap_stage != PLDGameState.TrapStages.ACTIVE:
+			if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) != PLDGameState.ActivatableState.ACTIVATED:
 				return
 			if game_state.story_vars.apata_chest_rigid < 0:
 				return
@@ -149,7 +149,7 @@ func use_pedestal(player_node, pedestal, inventory_item, child_item):
 				return
 			conversation_manager.start_area_conversation("010-1-4_ApataDoneXenia")
 			get_door("door_4").open()
-			get_node("Apata_room/ceiling_moving_1").deactivate()
+			game_state.get_activatable(DB.ActivatableIds.APATA_TRAP).deactivate_forever()
 			get_node("Apata_room/door_3").close()
 		DB.PedestalIds.ERIDA_LOCK:
 			get_door("door_8").open()
@@ -221,7 +221,7 @@ func check_muses_correct(base):
 	return check_pedestal(pedestal_history, DB.TakableIds.CLIO)
 
 func _on_AreaApata_body_entered(body):
-	if game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ARMED and body.is_in_group("party") and body.is_player():
+	if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT and body.is_in_group("party") and body.is_player():
 		var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 		female.teleport(get_node("PositionApata"))
 		var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
@@ -237,7 +237,7 @@ func _on_ApataTakeTimer_timeout():
 	apata_statue.use(female, null)
 
 func _on_AreaMuses_body_entered(body):
-	if game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.PAUSED and body.is_in_group("party") and body.is_player():
+	if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.PAUSED and body.is_in_group("party") and body.is_player():
 		conversation_manager.start_area_conversation("010-1-1_Statuettes")
 
 func _on_AreaApataDone_body_entered(body):
@@ -268,7 +268,7 @@ func _on_web_destroyed(web):
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.DISABLED:
+		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
 			var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
@@ -282,7 +282,7 @@ func _on_ChooseCompanionArea_body_entered(body):
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.DISABLED:
+		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			conversation_manager.start_area_conversation_with_companion({
 				CHARS.FEMALE_NAME_HINT : "014_BeforeErida",
 				CHARS.BANDIT_NAME_HINT : "020_BeforeEridaMax"
@@ -302,7 +302,7 @@ func _on_AresRoomArea_body_entered(body):
 		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
-	if game_state.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ACTIVE and not game_state.is_loading():
+	if game_state.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.ACTIVATED and not game_state.is_loading():
 		game_state.story_vars.apata_chest_rigid = -1
 		var player = game_state.get_player()
 		cutscene_manager.restore_camera(player)
@@ -334,7 +334,7 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 						var p = game_state.get_player()
 						cutscene_manager.restore_camera(p)
 						cutscene_manager.borrow_camera(p, get_node("ApataDoorPosition"))
-					if game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ARMED:
+					if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT:
 						get_door("door_0").close()
 						get_node("Apata_room/ceiling_moving_1").ceiling_sound_play()
 					player.remove_item_from_hand()
@@ -377,7 +377,7 @@ func _on_meeting_finished(player, target, initiator):
 func _on_door_state_changed(door_id, opened):
 	match door_id:
 		DB.DoorIds.APATA_TRAP_INNER:
-			if not opened and game_state.story_vars.apata_trap_stage == PLDGameState.TrapStages.ARMED and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+			if not opened and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 				var player = game_state.get_player()
 				cutscene_manager.restore_camera(player)
 				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
