@@ -2,11 +2,6 @@ extends Spatial
 
 export var doors_path = "../../doors/floor_demo_full"
 onready var doors = get_node(doors_path)
-onready var erida_trap_sound_1 = get_node("Erida_room/EridaTrapSound1")
-onready var erida_trap_sound_2 = get_node("Erida_room/EridaTrapSound2")
-onready var erida_trap_sound_3 = get_node("Erida_room/EridaTrapSound3")
-onready var erida_trap_sound_4 = get_node("Erida_room/EridaTrapSound4")
-onready var eris_particles = get_node("Erida_room/eris_particles")
 onready var last_trap_postament = get_node("last_trap_postament")
 onready var last_trap_spikes = get_node("last_trap_spikes")
 onready var zheleznoe_uho = get_node("4_Zheleznoe_uho")
@@ -55,15 +50,14 @@ func use_takable(player_node, takable, parent, was_taken):
 		DB.TakableIds.ERIDA:
 			match pedestal_id:
 				DB.PedestalIds.ERIS_FLAT:
-					if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED:
+					var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
+					if erida_trap and erida_trap.is_untouched():
 						get_door("door_8").close()
+						erida_trap.activate()
 						conversation_manager.start_area_conversation_with_companion({
 							CHARS.FEMALE_NAME_HINT : "015-1_EridaTrap",
 							CHARS.BANDIT_NAME_HINT : "021-1_EridaTrapMax"
 						})
-						game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.ACTIVE
-						game_state.set_poisoned(player_node, true)
-						erida_trap_activate()
 		DB.TakableIds.ARES:
 			match pedestal_id:
 				DB.PedestalIds.ARES_FLAT:
@@ -74,31 +68,6 @@ func use_takable(player_node, takable, parent, was_taken):
 						game_state.autosave_create()
 		DB.TakableIds.ATHENA:
 			last_trap_show()
-
-func erida_trap_activate():
-	erida_trap_sound_1.play()
-	erida_trap_sound_2.play()
-	erida_trap_sound_3.play()
-	erida_trap_sound_4.play()
-	eris_particles.emitting = true
-	eris_particles.restart()
-
-func erida_trap_increase_sound_volume():
-	var v1 = erida_trap_sound_1.get_unit_db()
-	erida_trap_sound_1.set_unit_db(v1 / 2)
-	var v2 = erida_trap_sound_2.get_unit_db()
-	erida_trap_sound_2.set_unit_db(v2 / 2)
-	var v3 = erida_trap_sound_3.get_unit_db()
-	erida_trap_sound_3.set_unit_db(v3 / 2)
-	var v4 = erida_trap_sound_4.get_unit_db()
-	erida_trap_sound_4.set_unit_db(v4 / 2)
-
-func erida_trap_deactivate():
-	erida_trap_sound_1.stop()
-	erida_trap_sound_2.stop()
-	erida_trap_sound_3.stop()
-	erida_trap_sound_4.stop()
-	eris_particles.emitting = false
 
 func last_trap_show():
 	last_trap_postament.visible = true
@@ -165,7 +134,8 @@ func use_button_activator(player_node, button_activator):
 	var activator_id = button_activator.activator_id
 	match activator_id:
 		DB.ButtonActivatorIds.ERIDA:
-			if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ACTIVE:
+			var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
+			if erida_trap and erida_trap.is_activated():
 				var postaments = get_tree().get_nodes_in_group("erida_postaments")
 				for postament in postaments:
 					if not postament.is_state_correct():
@@ -173,7 +143,7 @@ func use_button_activator(player_node, button_activator):
 							CHARS.FEMALE_NAME_HINT : "015-2_EridaError",
 							CHARS.BANDIT_NAME_HINT : "021-2_EridaErrorMax"
 						})
-						erida_trap_increase_sound_volume()
+						erida_trap.increase_sound_volume()
 						$EridaButtonWrong.play()
 						return
 				$EridaButtonCorrect.play()
@@ -182,9 +152,7 @@ func use_button_activator(player_node, button_activator):
 					CHARS.FEMALE_NAME_HINT : "016_EridaDone",
 					CHARS.BANDIT_NAME_HINT : "021-3_EridaDoneMax"
 				})
-				game_state.story_vars.erida_trap_stage = PLDGameState.TrapStages.DISABLED
-				game_state.set_poisoned(player_node, false)
-				erida_trap_deactivate()
+				erida_trap.deactivate_forever()
 
 func hope_on_apata_pedestal(pedestal):
 	for ch in pedestal.get_children():
@@ -268,13 +236,13 @@ func _on_web_destroyed(web):
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+		if game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEFAULT and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
 			var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 			bandit.set_target_node(get_node("OutPosition"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
-		elif game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.DISABLED:
+		elif game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			conversation_manager.start_area_conversation_with_companion({
 				CHARS.FEMALE_NAME_HINT : "018_CorridorTalk",
 				CHARS.BANDIT_NAME_HINT : "022_CorridorTalkMax"
@@ -282,12 +250,12 @@ func _on_ChooseCompanionArea_body_entered(body):
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ARMED and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+		if game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEFAULT and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			conversation_manager.start_area_conversation_with_companion({
 				CHARS.FEMALE_NAME_HINT : "014_BeforeErida",
 				CHARS.BANDIT_NAME_HINT : "020_BeforeEridaMax"
 			})
-		elif game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.DISABLED and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+		elif game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 			conversation_manager.start_area_conversation("017_CorridorTraps")
 
 func _on_BeginEridaArea_body_entered(body):
@@ -410,10 +378,6 @@ func _on_arrived_to(player_node, target_node):
 		chest.do_push()
 
 func restore_state():
-	if game_state.story_vars.erida_trap_stage == PLDGameState.TrapStages.ACTIVE:
-		erida_trap_activate()
-	else:
-		erida_trap_deactivate()
 	if game_state.has_item(DB.TakableIds.ATHENA):
 		last_trap_show()
 	else:

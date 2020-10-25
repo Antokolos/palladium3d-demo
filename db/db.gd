@@ -113,8 +113,7 @@ const STORY_VARS_DEFAULT = {
 	"flashlight_on" : false,
 	"is_game_start" : true,
 	"in_lyre_area" : false,
-	"apata_chest_rigid" : 0,
-	"erida_trap_stage" : PLDGameState.TrapStages.ARMED
+	"apata_chest_rigid" : 0
 }
 
 enum LightIds {

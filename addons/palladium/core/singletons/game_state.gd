@@ -12,13 +12,6 @@ signal item_used(player_node, target, item_id)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
 
-enum TrapStages {
-	ARMED = 0,
-	DISABLED = 1,
-	ACTIVE = 2,
-	PAUSED = 3
-}
-
 enum DoorState {
 	DEFAULT = 0,
 	OPENED = 1,

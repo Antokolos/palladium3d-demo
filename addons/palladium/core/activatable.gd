@@ -2,6 +2,7 @@ extends Spatial
 class_name PLDActivatable
 
 export(DB.ActivatableIds) var activatable_id = DB.ActivatableIds.NONE
+export(bool) var activated_by_default = false
 
 func _ready():
 	if Engine.editor_hint:
@@ -92,7 +93,10 @@ func restore_state():
 	var state = get_activatable_state()
 	match state:
 		PLDGameState.ActivatableState.DEFAULT:
-			pass
+			if activated_by_default:
+				activate()
+			else:
+				deactivate()
 		PLDGameState.ActivatableState.ACTIVATED:
 			activate()
 		PLDGameState.ActivatableState.DEACTIVATED:
