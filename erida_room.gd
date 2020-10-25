@@ -6,8 +6,8 @@ onready var erida_trap_sound_3 = get_node("EridaTrapSound3")
 onready var erida_trap_sound_4 = get_node("EridaTrapSound4")
 onready var eris_particles = get_node("eris_particles")
 
-func activate():
-	.activate()
+func activate(and_change_state = true):
+	.activate(and_change_state)
 	erida_trap_sound_1.play()
 	erida_trap_sound_2.play()
 	erida_trap_sound_3.play()
@@ -16,12 +16,12 @@ func activate():
 	eris_particles.restart()
 	game_state.set_poisoned(game_state.get_player(), true)
 
-func activate_forever():
-	.activate_forever()
-	activate()
+func activate_forever(and_change_state = true):
+	.activate_forever(and_change_state)
+	activate(and_change_state)
 
-func deactivate():
-	.deactivate()
+func deactivate(and_change_state = true):
+	.deactivate(and_change_state)
 	erida_trap_sound_1.stop()
 	erida_trap_sound_2.stop()
 	erida_trap_sound_3.stop()
@@ -29,9 +29,9 @@ func deactivate():
 	eris_particles.emitting = false
 	game_state.set_poisoned(game_state.get_player(), false)
 
-func deactivate_forever():
-	.deactivate_forever()
-	deactivate()
+func deactivate_forever(and_change_state = true):
+	.deactivate_forever(and_change_state)
+	deactivate(and_change_state)
 
 func increase_sound_volume():
 	var v1 = erida_trap_sound_1.get_unit_db()

@@ -89,6 +89,18 @@ var activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
 
+static func process_activatables(source):
+	var result = {}
+	for sk in source.keys():
+		result[sk] = lookup_activatable_state_from_int(source[sk])
+	return result
+
+static func lookup_activatable_state_from_int(state : int):
+	for activatable_state in ActivatableState:
+		if state == ActivatableState[activatable_state]:
+			return ActivatableState[activatable_state]
+	return ActivatableState.DEFAULT
+
 func _ready():
 	cleanup_paths()
 	reset_variables()
@@ -702,7 +714,7 @@ func load_state(slot):
 	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
 	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT.duplicate(true)
-	activatables = d.activatables if ("activatables" in d) else ACTIVATABLES_DEFAULT.duplicate(true)
+	activatables = process_activatables(d.activatables) if ("activatables" in d) else ACTIVATABLES_DEFAULT.duplicate(true)
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	

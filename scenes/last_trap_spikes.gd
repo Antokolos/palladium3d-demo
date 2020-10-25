@@ -20,14 +20,14 @@ func use_use_target(player_node, use_target, item, result):
 			get_node("ceiling_armat004/AnimationPlayer").play_backwards("trap_final_1")
 			deactivate()
 
-func activate():
-	.activate()
+func activate(and_change_state = true):
+	.activate(and_change_state)
 	get_node("ceiling_armat005/AnimationPlayer").play("trap_final_1.001", -1, SPIKES_SPEED)
 	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, SPIKES_SPEED)
 	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
 
-func deactivate():
-	.deactivate()
+func deactivate(and_change_state = true):
+	.deactivate(and_change_state)
 	get_node("AnimationPlayer").play("spikes_off")
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):

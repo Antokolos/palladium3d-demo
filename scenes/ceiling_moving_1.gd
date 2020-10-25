@@ -38,21 +38,21 @@ func activate_partial():
 	activate()
 	$PartialActivationTimer.start()
 
-func activate():
-	.activate()
+func activate(and_change_state = true):
+	.activate(and_change_state)
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, speed)
 	ceiling_sound_play()
 
-func pause():
-	.pause()
+func pause(and_change_state = true):
+	.pause(and_change_state)
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
 	ceiling_sound_stop()
 
-func deactivate_forever():
-	.deactivate_forever()
+func deactivate_forever(and_change_state = true):
+	.deactivate_forever(and_change_state)
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
@@ -60,12 +60,12 @@ func deactivate_forever():
 
 func restore_state():
 	if is_activated():
-		activate()
+		activate(false)
 	elif is_paused():
-		activate()
+		activate(false)
 		get_node("ceiling_armat000/AnimationPlayer").seek(20, true)
 		get_node("AnimationPlayer").seek(20, true)
-		pause()
+		pause(false)
 	else:
 		.restore_state()
 

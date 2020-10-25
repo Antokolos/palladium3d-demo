@@ -16,11 +16,7 @@ func get_activatable_state():
 	return game_state.get_activatable_state(get_path())
 
 func is_untouched():
-	var state = get_activatable_state()
-	return (
-		state == PLDGameState.ActivatableState.DEFAULT
-		or (state == default_state and not is_final_destination())
-	)
+	return get_activatable_state() == PLDGameState.ActivatableState.DEFAULT
 
 func is_activated():
 	var state = get_activatable_state()
@@ -32,8 +28,8 @@ func is_activated():
 		_:
 			return false
 
-func activate():
-	if not is_final_destination():
+func activate(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.ACTIVATED)
 
 func is_deactivated():
@@ -46,8 +42,8 @@ func is_deactivated():
 		_:
 			return false
 
-func deactivate():
-	if not is_final_destination():
+func deactivate(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.DEACTIVATED)
 
 func is_paused():
@@ -60,8 +56,8 @@ func is_paused():
 		_:
 			return false
 
-func pause():
-	if not is_final_destination():
+func pause(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED)
 
 func is_final_destination():
@@ -80,16 +76,16 @@ func is_final_destination():
 			push_warning("Unknown activatable state: " + str(state))
 			return false
 
-func activate_forever():
-	if not is_final_destination():
+func activate_forever(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.ACTIVATED_FOREVER)
 
-func deactivate_forever():
-	if not is_final_destination():
+func deactivate_forever(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.DEACTIVATED_FOREVER)
 
-func pause_forever():
-	if not is_final_destination():
+func pause_forever(and_change_state = true):
+	if and_change_state and not is_final_destination():
 		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED_FOREVER)
 
 func restore_state():
@@ -104,16 +100,16 @@ func restore_from_state(state):
 			else:
 				restore_from_state(default_state)
 		PLDGameState.ActivatableState.ACTIVATED:
-			activate()
+			activate(false)
 		PLDGameState.ActivatableState.DEACTIVATED:
-			deactivate()
+			deactivate(false)
 		PLDGameState.ActivatableState.PAUSED:
-			pause()
+			pause(false)
 		PLDGameState.ActivatableState.ACTIVATED_FOREVER:
-			activate_forever()
+			activate_forever(false)
 		PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
-			deactivate_forever()
+			deactivate_forever(false)
 		PLDGameState.ActivatableState.PAUSED_FOREVER:
-			pause_forever()
+			pause_forever(false)
 		_:
 			push_warning("Unknown activatable state: " + str(state))
