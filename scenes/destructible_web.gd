@@ -5,9 +5,6 @@ signal web_destroyed(web)
 
 const STATE_DESTROYED = 1
 
-func _ready():
-	restore_state()
-
 func use(player_node, camera_node):
 	if game_state.get_multistate_state(get_path()) == STATE_DESTROYED:
 		return

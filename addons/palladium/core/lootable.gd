@@ -7,7 +7,6 @@ export(DB.TakableIds) var takable_id = DB.TakableIds.NONE
 export(int) var count = 1
 
 func _ready():
-	restore_state()
 	game_state.connect("item_taken", self, "_on_item_taken")
 
 func connect_signals(target):

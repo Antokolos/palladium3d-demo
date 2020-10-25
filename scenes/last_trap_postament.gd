@@ -23,7 +23,6 @@ func _ready():
 	postament_anim_player.connect("animation_finished", self, "_on_postament_animation_finished")
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	player_palladium.connect("finished", self, "_on_player_palladium_finished")
-	restore_state()
 
 func can_take_palladium():
 	return (

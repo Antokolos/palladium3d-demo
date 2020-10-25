@@ -4,9 +4,6 @@ const STATE_OPENED = 1
 
 onready var anim_player = get_parent().get_node("forest_door_armature001/AnimationPlayer")
 
-func _ready():
-	restore_state()
-
 func use(player_node, camera_node):
 	var barn_lock_path = game_state.get_usable_path(DB.UsableIds.BARN_LOCK)
 	if anim_player.is_playing() \

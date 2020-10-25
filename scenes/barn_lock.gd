@@ -3,9 +3,6 @@ class_name BarnLock
 
 const STATE_OPENED = 1
 
-func _ready():
-	restore_state()
-
 func use_action(player_node, item):
 	game_state.set_multistate_state(get_path(), STATE_OPENED)
 	$AudioStreamPlayer.play()

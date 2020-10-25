@@ -8,7 +8,8 @@ func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")
 
 func _on_item_taken(takable_id, count, item_path):
-	if main_skeleton == "Female_palladium_armature" and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT: # Apply only to female model and only when the trap is still armed
+	var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
+	if main_skeleton == "Female_palladium_armature" and apata_trap and apata_trap.is_untouched(): # Apply only to female model and only when the trap is still armed
 		if takable_id == DB.TakableIds.APATA:
 			var att = get_node("Female_palladium_armature/RightHandAttachment/Position3D")
 			var item = load("res://assets/statue_4.escn").instance() #load(game_state.ITEMS[item_id].model_path).instance()

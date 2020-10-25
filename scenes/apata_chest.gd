@@ -5,9 +5,6 @@ signal was_translated(chest)
 
 const TRANSLATE_OFFSET = Vector3(0, 0, -2)
 
-func _ready():
-	restore_state()
-
 func open(with_sound = true, speed_scale = 0.4):
 	.open(with_sound, speed_scale)
 	if with_sound:

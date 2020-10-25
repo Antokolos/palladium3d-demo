@@ -2,13 +2,12 @@ extends Spatial
 class_name PLDActivatable
 
 export(DB.ActivatableIds) var activatable_id = DB.ActivatableIds.NONE
-export(bool) var activated_by_default = false
+export(PLDGameState.ActivatableState) var default_state = PLDGameState.ActivatableState.DEACTIVATED
 
 func _ready():
 	if Engine.editor_hint:
 		return
 	game_state.register_activatable(self)
-	restore_state()
 
 func get_activatable_id():
 	return activatable_id
@@ -17,7 +16,11 @@ func get_activatable_state():
 	return game_state.get_activatable_state(get_path())
 
 func is_untouched():
-	return get_activatable_state() == PLDGameState.ActivatableState.DEFAULT
+	var state = get_activatable_state()
+	return (
+		state == PLDGameState.ActivatableState.DEFAULT
+		or (state == default_state and not is_final_destination())
+	)
 
 func is_activated():
 	var state = get_activatable_state()
@@ -91,12 +94,15 @@ func pause_forever():
 
 func restore_state():
 	var state = get_activatable_state()
+	restore_from_state(state)
+
+func restore_from_state(state):
 	match state:
 		PLDGameState.ActivatableState.DEFAULT:
-			if activated_by_default:
-				activate()
+			if default_state == PLDGameState.ActivatableState.DEFAULT:
+				push_error("Activatable default state is set to Default")
 			else:
-				deactivate()
+				restore_from_state(default_state)
 		PLDGameState.ActivatableState.ACTIVATED:
 			activate()
 		PLDGameState.ActivatableState.DEACTIVATED:

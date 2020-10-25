@@ -16,9 +16,6 @@ onready var torch_light = get_node("torch_wall/torch_light")
 onready var raycast = get_node("RayCast")
 var screen_entered = false
 
-func _ready():
-	restore_state()
-
 func is_active():
 	var ls = game_state.get_light_state(get_path())
 	return (ls == game_state.LightState.DEFAULT and initially_active) or (ls == game_state.LightState.ON)

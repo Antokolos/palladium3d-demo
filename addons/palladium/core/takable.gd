@@ -10,7 +10,6 @@ export var exclusive = true
 onready var initially_present = visible
 
 func _ready():
-	restore_state()
 	game_state.connect("item_taken", self, "_on_item_taken")
 	game_state.connect("item_removed", self, "_on_item_removed")
 

@@ -15,7 +15,6 @@ var does_damage = false
 
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
-	restore_state()
 
 func ceiling_sound_play():
 	ceiling_sound_1.play()

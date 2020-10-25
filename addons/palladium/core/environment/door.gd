@@ -22,7 +22,6 @@ func _ready():
 	anim_player.connect("animation_finished", self, "_on_animation_finished")
 	if lock_sound_player:
 		lock_sound_player.connect("finished", self, "_on_lock_sound_finished")
-	restore_state()
 
 func _on_animation_finished(anim_name):
 	emit_signal("door_state_changed", door_id, is_opened())

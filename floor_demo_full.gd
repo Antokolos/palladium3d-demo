@@ -8,7 +8,6 @@ onready var zheleznoe_uho = get_node("4_Zheleznoe_uho")
 onready var floor_demo_blocks_floor = get_node("floor_demo_blocks_floor")
 
 func _ready():
-	restore_state()
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
 	conversation_manager.connect("conversation_started", self, "_on_conversation_started")
@@ -189,7 +188,11 @@ func check_muses_correct(base):
 	return check_pedestal(pedestal_history, DB.TakableIds.CLIO)
 
 func _on_AreaApata_body_entered(body):
-	if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT and body.is_in_group("party") and body.is_player():
+	var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
+	if apata_trap \
+		and apata_trap.is_untouched() \
+		and body.is_in_group("party") \
+		and body.is_player():
 		var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 		female.teleport(get_node("PositionApata"))
 		var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
@@ -236,7 +239,10 @@ func _on_web_destroyed(web):
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEFAULT and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+		var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
+		if erida_trap \
+			and erida_trap.is_untouched() \
+			and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
 			var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
@@ -250,7 +256,10 @@ func _on_ChooseCompanionArea_body_entered(body):
 
 func _on_BeforeEridaArea_body_entered(body):
 	if body.is_in_group("party"):
-		if game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEFAULT and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+		var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
+		if erida_trap \
+			and erida_trap.is_untouched() \
+			and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			conversation_manager.start_area_conversation_with_companion({
 				CHARS.FEMALE_NAME_HINT : "014_BeforeErida",
 				CHARS.BANDIT_NAME_HINT : "020_BeforeEridaMax"
@@ -302,7 +311,8 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 						var p = game_state.get_player()
 						cutscene_manager.restore_camera(p)
 						cutscene_manager.borrow_camera(p, get_node("ApataDoorPosition"))
-					if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT:
+					var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
+					if apata_trap and apata_trap.is_untouched():
 						get_door("door_0").close()
 						get_node("Apata_room/ceiling_moving_1").ceiling_sound_play()
 					player.remove_item_from_hand()
@@ -345,7 +355,11 @@ func _on_meeting_finished(player, target, initiator):
 func _on_door_state_changed(door_id, opened):
 	match door_id:
 		DB.DoorIds.APATA_TRAP_INNER:
-			if not opened and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEFAULT and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+			var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
+			if not opened \
+				and apata_trap \
+				and apata_trap.is_untouched() \
+				and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 				var player = game_state.get_player()
 				cutscene_manager.restore_camera(player)
 				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
