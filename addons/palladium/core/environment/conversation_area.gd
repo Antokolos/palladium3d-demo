@@ -40,12 +40,16 @@ func _on_conversation_area_body_entered(body):
 			var conversation = conversations_for_name[i]
 			if conversation_manager.conversation_is_finished(conversation):
 				continue
+			do_before_conversation_started(name_hint, conversation)
 			if cutscene_node:
 				conversation_manager.start_area_cutscene(conversation, cutscene_node, repeatable)
 			else:
 				conversation_manager.start_area_conversation(conversation, repeatable)
 			return true
 	return false
+
+func do_before_conversation_started(name_hint, conversation_name):
+	pass
 
 func do_when_conversation_finished(name_hint, conversation_name):
 	pass

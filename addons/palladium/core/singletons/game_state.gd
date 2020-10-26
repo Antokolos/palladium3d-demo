@@ -67,6 +67,7 @@ const MESSAGES_DEFAULT = {
 }
 
 var characters_transition_data = {}
+var saving_disabled = false
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
 var is_transition = false
@@ -531,6 +532,12 @@ func set_message_state(message_key, state):
 	if messages.has(message_key):
 		messages[message_key] = state
 
+func is_saving_disabled():
+	return saving_disabled
+
+func set_saving_disabled(saving_disabled):
+	self.saving_disabled = saving_disabled
+
 func is_in_party(name_hint):
 	var character = get_character(name_hint)
 	return character and character.is_in_party()
@@ -789,6 +796,10 @@ func get_character_data(character):
 	return result
 
 func save_state(slot):
+	
+	if saving_disabled:
+		return
+	
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/state.json" % slot, File.WRITE)
 	assert( not error )

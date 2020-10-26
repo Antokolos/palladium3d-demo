@@ -156,13 +156,14 @@ func activate(mode):
 		desktop_container_load.visible = true
 		desktop_container_quit.visible = true
 	else:
+		var can_load = hud.has_game_ui() and not cutscene_manager.is_cutscene()
 		desktop_container_chat.visible = true
 		desktop_container_credits.visible = false
 		desktop_container_map.visible = false
 		desktop_container_documents.visible = false
 		desktop_container_settings.visible = true
-		desktop_container_save.visible = hud.has_game_ui() and not cutscene_manager.is_cutscene()
-		desktop_container_load.visible = hud.has_game_ui() and not cutscene_manager.is_cutscene()
+		desktop_container_save.visible = can_load and not game_state.is_saving_disabled()
+		desktop_container_load.visible = can_load
 		desktop_container_quit.visible = true
 	match mode:
 		ActivationMode.CHAT:

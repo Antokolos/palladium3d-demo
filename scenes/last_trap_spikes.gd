@@ -18,7 +18,7 @@ func use_use_target(player_node, use_target, item, result):
 		DB.UseTargetIds.LAST_TRAP_POSTAMENT:
 			get_node("ceiling_armat005/AnimationPlayer").play_backwards("trap_final_1.001")
 			get_node("ceiling_armat004/AnimationPlayer").play_backwards("trap_final_1")
-			deactivate()
+			deactivate_forever()
 
 func activate(and_change_state = true):
 	.activate(and_change_state)
@@ -26,9 +26,9 @@ func activate(and_change_state = true):
 	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, SPIKES_SPEED)
 	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
 
-func deactivate(and_change_state = true):
-	.deactivate(and_change_state)
-	get_node("AnimationPlayer").play("spikes_off")
+func deactivate_forever(and_change_state = true):
+	.deactivate_forever(and_change_state)
+	get_node("AnimationPlayer").play("spikes_off", -1, SPIKES_SPEED)
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
@@ -54,7 +54,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			get_node("ceiling_armat004/AnimationPlayer").stop(false)
 			conversation_manager.start_area_conversation("175-1_Spikes_are_close")
 		"spikes_on_3":
-			get_node("AnimationPlayer").play("spikes_off", -1, SPIKES_SPEED)
+			deactivate_forever()
 			conversation_manager.start_area_conversation("175-1-1_Spikes_are_back")
 		"spikes_off":
 			get_node("Armature033/AnimationPlayer").play("last_trap_steps")
