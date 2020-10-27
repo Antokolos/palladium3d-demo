@@ -3,15 +3,18 @@ class_name PLDStory
 
 # type of variable: "res://addons/inkgd/runtime/story.gd"
 var _inkstory
+# Path to story file
+var _storypath : String
 # Story log by locale
 var _storylog : Dictionary
 # Story choices can be chosen in chat
 var _chatdriven : bool
 
-func _init(inkstory, chatdriven : bool):
+func _init(inkstory, storypath : String, chatdriven : bool):
 	_inkstory = inkstory
 	_storylog = Dictionary()
 	_chatdriven = chatdriven
+	_storypath = storypath
 
 func reset_state():
 	_inkstory.reset_state()
@@ -19,8 +22,8 @@ func reset_state():
 func get_ink_story():
 	return _inkstory
 
-func set_ink_story(inkstory):
-	_inkstory = inkstory
+func get_story_path():
+	return _storypath
 
 func get_story_log():
 	return _storylog

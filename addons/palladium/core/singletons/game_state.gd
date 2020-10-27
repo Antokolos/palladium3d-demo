@@ -690,8 +690,11 @@ func load_state(slot):
 	if (error):
 		print("no state to load.")
 		return
-
-	var d = parse_json( f.get_as_text() )
+	
+	var t = f.get_as_text()
+	f.close()
+	
+	var d = parse_json(t)
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
 

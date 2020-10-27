@@ -24,6 +24,17 @@ var _inkStory = Dictionary()
 # In C# it was Dictionary<String, Dictionary<String, PLDStory>>
 var _inkStories = Dictionary()
 
+# Contains saved states for all ink stories for all locales.
+# The key is the locale name, the value is the Dictionary whose key is the story path and the value is the story state as json.
+# This map is updated when the game is saved.
+var _inkStoriesStates = Dictionary()
+
+# Contains stories that were changed during the current session.
+# The key is the locale name, the value is the Dictionary whose key is the story path and the value is the corresponding story.
+# States of these stories should be converted to json before save.
+# This map will be cleared when the game is saved.
+var _currentSessionStories = Dictionary()
+
 var last_result : int = 0
 
 func _ready():
@@ -35,8 +46,9 @@ func _exit_tree():
 func _add_runtime():
 	InkRuntime.init(get_tree().root)
 	for locale in AvailableLocales:
-		var storiesByLocale = Dictionary() # new Dictionary<String, PLDStory>();
-		_inkStories[locale] = storiesByLocale
+		_inkStories[locale] = Dictionary() # new Dictionary<String, PLDStory>();
+		_inkStoriesStates[locale] = Dictionary()
+		_currentSessionStories[locale] = Dictionary()
 	make_slot_dirs(0)
 	make_slot_dirs(1)
 	make_slot_dirs(2)
@@ -50,12 +62,9 @@ func _remove_runtime():
 
 func make_slot_dirs(i : int) -> void:
 	var dir : Directory = Directory.new()
-	var basePath : String = "user://saves/slot_%d/ink-scripts/" % i
-	dir.make_dir_recursive(basePath)
 	for locale in AvailableLocales:
-		dir.make_dir_recursive(basePath + ("%s/player" % locale))
-		dir.make_dir_recursive(basePath + ("%s/female" % locale))
-		dir.make_dir_recursive(basePath + ("%s/bandit" % locale))
+		var basePath : String = "user://saves/slot_%d/ink-scripts/%s" % [ i, locale ]
+		dir.make_dir_recursive(basePath)
 
 func build_stories_cache(storiesDirectoryPath : String) -> void:
 	for locale in AvailableLocales:
@@ -79,7 +88,7 @@ func build_stories_cache_for_locale(storiesDirectoryPath : String, locale : Stri
 			var story = load_story_from_file(storyPath)
 			# TODO: restore story log from save
 			var chatDriven : bool = false # TODO: restore chatDriven from save
-			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
 			load_save_or_reset(0, locale, storyPath, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
@@ -108,7 +117,7 @@ func check_story_not_finished(storiesDirectoryPath : String, storyPath : String)
 			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
 			var story = load_story_from_file(path) # Story
 			var chatDriven : bool = false # TODO: restore chatDriven from save
-			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
 			load_save_or_reset(0, locale, path, palladiumStory)
 			storiesByLocale[storyPath] = palladiumStory
 			result = result and (story.can_continue or not story.current_choices.empty())
@@ -128,12 +137,14 @@ func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : 
 		else:
 			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
 			var story = load_story_from_file(path) # Story
-			var palladiumStory : PLDStory = PLDStory.new(story, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
 			load_save_or_reset(0, locale, path, palladiumStory)
 			storiesByLocale[storyPath] = palladiumStory
 			_inkStory[locale] = palladiumStory
 		if repeatable:
 			_inkStory[locale].reset_state()
+			_inkStoriesStates[locale][storyPath] = ""
+		_currentSessionStories[locale][storyPath] = _inkStory[locale]
 
 func _observe_variable(variable_name, new_value) -> void:
 	game_state.story_vars[variable_name] = new_value
@@ -216,6 +227,7 @@ func reset() -> void:
 			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			story.reset_state()
+			_inkStoriesStates[locale][palladiumStory.get_story_path()] = ""
 
 func get_slot_caption_file_path(slot : int) -> String:
 	return "user://saves/slot_%d/caption" % slot
@@ -230,8 +242,8 @@ func get_slot_caption(slot : int) -> String:
 		slotCaptionFile.close()
 	return result;
 
-func get_save_file_path(slot : int, locale : String, storyPath : String) -> String:
-	return "user://saves/slot_%d/ink-scripts/%s/%s.sav" % [ slot, locale, storyPath ]
+func get_save_file_path(slot : int, locale : String) -> String:
+	return "user://saves/slot_%d/ink-scripts/%s/story_states.sav" % [ slot, locale ]
 
 func get_month_as_string(m):
 	match m:
@@ -265,18 +277,18 @@ func get_month_as_string(m):
 func datetime_as_string(dt):
 	return "%0*d %s %d, %0*d:%0*d:%0*d" % [2, dt.day, get_month_as_string(dt.month), dt.year, 2, dt.hour, 2, dt.minute, 2, dt.second]
 
-# Saves all stories from the _inkStories dictionary. Each one will create its own file in the user's profile folder.
+# Saves all stories from the _inkStories dictionary.
 func save_all(slot : int) -> void:
-	for locale in _inkStories:
-		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
-		for path in storiesByLocale:
-			var palladiumStory : PLDStory = storiesByLocale[path]
-			var story = palladiumStory.get_ink_story() # Story
-			var savedJson : String = story.state.to_json()
-			var saveFile : File = File.new()
-			saveFile.open(get_save_file_path(slot, locale, path), File.WRITE)
-			saveFile.store_string(savedJson)
-			saveFile.close()
+	for locale in AvailableLocales:
+		for path in _currentSessionStories[locale]:
+			var palladiumStory = _currentSessionStories[locale][path]
+			var story = palladiumStory.get_ink_story()
+			_inkStoriesStates[locale][path] = story.state.to_json()
+		_currentSessionStories[locale].clear()
+		var saveFile : File = File.new()
+		saveFile.open(get_save_file_path(slot, locale), File.WRITE)
+		saveFile.store_string(to_json(_inkStoriesStates[locale]))
+		saveFile.close()
 	var slotCaptionFile : File = File.new()
 	slotCaptionFile.open(get_slot_caption_file_path(slot), File.WRITE)
 	slotCaptionFile.store_string(datetime_as_string(OS.get_datetime()))
@@ -284,21 +296,30 @@ func save_all(slot : int) -> void:
 
 func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PLDStory) -> bool:
 	var story = palladiumStory.get_ink_story() # Story
-	var saveFile : File = File.new()
-	var saveFilePath : String = get_save_file_path(slot, locale, path)
-	if saveFile.file_exists(saveFilePath):
-		saveFile.open(saveFilePath, File.READ)
-		var savedJson : String = saveFile.get_as_text()
-		saveFile.close();
-		story.state.load_json(savedJson)
-		return true
-	else:
-		story.reset_state()
+	if _inkStoriesStates[locale].empty():
+		var saveFile : File = File.new()
+		var saveFilePath : String = get_save_file_path(slot, locale)
+		if saveFile.file_exists(saveFilePath):
+			saveFile.open(saveFilePath, File.READ)
+			var savedJson : String = saveFile.get_as_text()
+			saveFile.close()
+			var d = parse_json(savedJson)
+			if (typeof(d) == TYPE_DICTIONARY):
+				_inkStoriesStates[locale] = d
+	if _inkStoriesStates[locale].has(path):
+		var story_state = _inkStoriesStates[locale][path]
+		if story_state and not story_state.empty():
+			story.state.load_json(story_state)
+			return true
+	story.reset_state()
+	_inkStoriesStates[locale][path] = ""
 	return false
 
 # Reloads state of all stories from the _inkStories dictionary from the save file.
 func reload_all_saves(slot : int) -> void:
-	for locale in _inkStories:
+	for locale in AvailableLocales:
+		_currentSessionStories[locale].clear()
+		_inkStoriesStates[locale].clear()
 		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		for path in storiesByLocale:
 			var palladiumStory : PLDStory = storiesByLocale[path]
