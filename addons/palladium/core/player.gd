@@ -26,6 +26,8 @@ func _ready():
 			become_player()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.connect("attack_started", self, "_on_enemy_attack_started")
+		enemy.connect("attack_stopped", self, "_on_enemy_attack_stopped")
+		enemy.connect("attack_finished", self, "_on_enemy_attack_finished")
 	#activate() -- restored from save
 
 func reset_movement():
@@ -95,6 +97,24 @@ func _on_enemy_attack_started(player_node, target):
 	if is_player_controlled() or not is_in_party():
 		return
 	set_point_of_interest(player_node)
+
+func _on_enemy_attack_stopped(player_node, target):
+	if is_player_controlled() or not is_in_party():
+		return
+	var poi = get_point_of_interest()
+	if poi \
+		and player_node \
+		and poi.get_instance_id() == player_node.get_instance_id():
+		clear_point_of_interest()
+
+func _on_enemy_attack_finished(player_node, target, previous_target):
+	if is_player_controlled() or not is_in_party():
+		return
+	var poi = get_point_of_interest()
+	if poi \
+		and player_node \
+		and poi.get_instance_id() == player_node.get_instance_id():
+		clear_point_of_interest()
 
 func _input(event):
 	if not is_player() or not is_activated():

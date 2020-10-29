@@ -281,6 +281,7 @@ func _on_AttackTimer_timeout():
 		if last_attack_target:
 			last_attack_target.miss(null)
 		#character.stop_cutscene()
+	character.emit_signal("attack_finished", self, attack_target, last_attack_target)
 	character.clear_point_of_interest()
 
 func _on_RestTimer_timeout():

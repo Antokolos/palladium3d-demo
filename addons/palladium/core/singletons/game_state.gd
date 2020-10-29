@@ -440,8 +440,14 @@ func set_quick_item(pos, item_id):
 			return
 		idx = idx + 1
 
+func get_player_name_hint():
+	return player_name_hint
+
 func set_player_name_hint(name_hint):
 	player_name_hint = name_hint
+
+func player_name_is(name_hint):
+	return player_name_hint == name_hint
 
 func kill_party():
 	set_health(CHARS.PLAYER_NAME_HINT, 0, player_health_max)
@@ -674,7 +680,7 @@ func set_character_data(dd, character):
 	if ("dead" in dd) and dd.dead:
 		# Should be the last or at least after character.set_hidden(),
 		# because character.set_hidden() modifies the same collisions
-		character.kill()
+		character.kill_on_load()
 	
 	character.set_look_transition()
 	return movement_data

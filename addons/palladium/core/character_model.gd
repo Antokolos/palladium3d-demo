@@ -169,14 +169,16 @@ func process_head_rotation():
 
 func take_damage(fatal):
 	var alive = not is_dead()
-	if alive and ragdoll_enabled and fatal:
-		ragdoll_start()
-		return
 	var dt = DAMAGE_TRANSITION_JUMPSCARE if not alive else DAMAGE_TRANSITION_FATAL if fatal else DAMAGE_TRANSITION_NORMAL
 	animation_tree.set("parameters/DamageTransition/current", dt)
 	animation_tree.set("parameters/DamageShot/active", true)
 	if alive and fatal:
-		animation_tree.set("parameters/AliveTransition/current", ALIVE_TRANSITION_DEAD)
+		kill()
+
+func kill_on_load():
+	kill()
+	var player = get_node("../..")
+	emit_signal("character_dead", player)
 
 func kill():
 	var alive = not is_dead()

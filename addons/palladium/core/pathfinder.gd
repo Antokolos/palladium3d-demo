@@ -241,7 +241,7 @@ func follow(current_transform, next_position):
 		),
 		current_transform,
 		target_node.get_global_transform().origin
-			if target_node and point_of_interest
+			if target_node and point_of_interest and target_node.get_instance_id() == point_of_interest.get_instance_id()
 			else next_position
 	)
 	var d = data.get_distance()
@@ -377,7 +377,8 @@ func update_state(data : PLDMovementData):
 	data.emit_sgnl_if_exists(self)
 
 func _on_character_dead(player):
-	deactivate()
+	if equals(player):
+		deactivate()
 
 func _on_character_dying(player):
 	pass

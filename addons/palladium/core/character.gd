@@ -6,6 +6,8 @@ signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
 signal attack_started(player_node, target)
+signal attack_stopped(player_node, target)
+signal attack_finished(player_node, target, previous_target)
 signal stun_started(player_node, weapon)
 signal stun_finished(player_node)
 signal take_damage(player_node, fatal, hit_direction_node)
@@ -104,6 +106,7 @@ func stop_attack():
 	if is_attacking():
 		stop_cutscene()
 		character_nodes.stop_attack()
+		emit_signal("attack_stopped", self, last_attack_target)
 		clear_point_of_interest()
 		last_attack_target = null
 
@@ -131,6 +134,10 @@ func take_damage(fatal, hit_direction_node):
 	push_back(get_push_vec(hit_direction_node))
 	if fatal:
 		disable_collisions_and_interaction()
+
+func kill_on_load():
+	get_model().kill_on_load()
+	disable_collisions_and_interaction()
 
 func kill():
 	get_model().kill()
@@ -254,6 +261,11 @@ func _on_player_poisoned(player, enable):
 	if player and not equals(player):
 		return
 	set_poisoned(enable)
+
+func _on_character_dead(player):
+	if equals(player):
+		stop_attack()
+	._on_character_dead(player)
 
 func activate():
 	.activate()
