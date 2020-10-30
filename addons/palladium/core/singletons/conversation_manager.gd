@@ -116,14 +116,14 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
 		cp_story = cp if exists_cp else "Default.ink.json"
 		story_state_cache[cp] = cp_story
-	return story_node.check_story_not_finished("res://ink-scripts", cp_story)
+	return story_node.check_story_not_finished(cp_story)
 
 func init_story(conversation_name, target_name_hint = null, repeatable = false):
 	var locale = TranslationServer.get_locale()
 	var f = File.new()
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
-	story_node.load_story("res://ink-scripts", cp if exists_cp else "Default.ink.json", false, repeatable)
+	story_node.load_story(cp if exists_cp else "Default.ink.json", false, repeatable)
 	story_node.init_variables()
 	return story_node
 

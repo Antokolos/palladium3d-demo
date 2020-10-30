@@ -4,6 +4,7 @@ class_name PLDStoryNode
 var InkRuntime = load("res://addons/inkgd/runtime.gd")
 var Story = load("res://addons/inkgd/runtime/story.gd")
 
+const INK_SCRIPTS_DIR = "res://ink-scripts"
 # Available translations of the stories.
 const AvailableLocales = ["en", "ru"]
 const TagSeparator = ":"
@@ -55,7 +56,7 @@ func _add_runtime():
 	make_slot_dirs(3)
 	make_slot_dirs(4)
 	make_slot_dirs(5)
-	build_stories_cache("res://ink-scripts")
+	build_stories_cache(-1, INK_SCRIPTS_DIR)
 
 func _remove_runtime():
 	InkRuntime.deinit(get_tree().root)
@@ -66,13 +67,14 @@ func make_slot_dirs(i : int) -> void:
 		var basePath : String = "user://saves/slot_%d/ink-scripts/%s" % [ i, locale ]
 		dir.make_dir_recursive(basePath)
 
-func build_stories_cache(storiesDirectoryPath : String) -> void:
+func build_stories_cache(slot : int, storiesDirectoryPath : String) -> void:
 	for locale in AvailableLocales:
 		if not _inkStories.has(locale):
 			continue
-		build_stories_cache_for_locale(storiesDirectoryPath, locale, "", _inkStories[locale])
+		_inkStories[locale].clear()
+		build_stories_cache_for_locale(slot, storiesDirectoryPath, locale, "", _inkStories[locale])
 
-func build_stories_cache_for_locale(storiesDirectoryPath : String, locale : String, subPath : String, storiesByLocale : Dictionary) -> void:
+func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, locale : String, subPath : String, storiesByLocale : Dictionary) -> void:
 	var dir : Directory = Directory.new()
 	var basePath : String = storiesDirectoryPath + "/" + locale + ("" if subPath.empty() else "/" + subPath)
 	dir.open(basePath)
@@ -82,14 +84,14 @@ func build_stories_cache_for_locale(storiesDirectoryPath : String, locale : Stri
 		if file == "":
 			break
 		elif dir.current_is_dir():
-			build_stories_cache_for_locale(storiesDirectoryPath, locale, file, storiesByLocale)
+			build_stories_cache_for_locale(slot, storiesDirectoryPath, locale, file, storiesByLocale)
 		elif file.ends_with(".ink.json"):
-			var storyPath = basePath + "/" + file
+			var storyPath : String = basePath + "/" + file
 			var story = load_story_from_file(storyPath)
 			# TODO: restore story log from save
 			var chatDriven : bool = false # TODO: restore chatDriven from save
 			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
-			load_save_or_reset(0, locale, storyPath, palladiumStory)
+			load_save_or_reset(slot, locale, storyPath, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
 
@@ -102,8 +104,8 @@ func load_story_from_file(path : String): # Story
 		file.close()
 	return Story.new(text)
 
-# Very similar to LoadStory, but does not change the _inkStory
-func check_story_not_finished(storiesDirectoryPath : String, storyPath : String) -> bool:
+# Very similar to load_story(), but does not change the _inkStory
+func check_story_not_finished(storyPath : String) -> bool:
 	var result : bool = true
 	for locale in AvailableLocales:
 		if not _inkStories.has(locale):
@@ -114,16 +116,11 @@ func check_story_not_finished(storiesDirectoryPath : String, storyPath : String)
 			var story = ps.get_ink_story() # Story
 			result = result and (story.can_continue or not story.current_choices.empty())
 		else:
-			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
-			var story = load_story_from_file(path) # Story
-			var chatDriven : bool = false # TODO: restore chatDriven from save
-			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
-			load_save_or_reset(0, locale, path, palladiumStory)
-			storiesByLocale[storyPath] = palladiumStory
-			result = result and (story.can_continue or not story.current_choices.empty())
+			push_error("Story '%s' for locale '%s' was not found in cache")
+			return true
 	return result
 
-func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : bool, repeatable : bool) -> void:
+func load_story(storyPath : String, chatDriven : bool, repeatable : bool) -> void:
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
 			_inkStory.erase(locale)
@@ -135,12 +132,8 @@ func load_story(storiesDirectoryPath : String, storyPath : String, chatDriven : 
 			cachedPalladiumStory.set_chat_driven(chatDriven)
 			_inkStory[locale] = cachedPalladiumStory
 		else:
-			var path : String = storiesDirectoryPath + "/" + locale + "/" + storyPath
-			var story = load_story_from_file(path) # Story
-			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
-			load_save_or_reset(0, locale, path, palladiumStory)
-			storiesByLocale[storyPath] = palladiumStory
-			_inkStory[locale] = palladiumStory
+			push_error("Story '%s' for locale '%s' was not found in cache")
+			return
 		if repeatable:
 			_inkStory[locale].reset_state()
 			_inkStoriesStates[locale][storyPath] = ""
@@ -296,21 +289,22 @@ func save_all(slot : int) -> void:
 
 func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PLDStory) -> bool:
 	var story = palladiumStory.get_ink_story() # Story
-	if _inkStoriesStates[locale].empty():
-		var saveFile : File = File.new()
-		var saveFilePath : String = get_save_file_path(slot, locale)
-		if saveFile.file_exists(saveFilePath):
-			saveFile.open(saveFilePath, File.READ)
-			var savedJson : String = saveFile.get_as_text()
-			saveFile.close()
-			var d = parse_json(savedJson)
-			if (typeof(d) == TYPE_DICTIONARY):
-				_inkStoriesStates[locale] = d
-	if _inkStoriesStates[locale].has(path):
-		var story_state = _inkStoriesStates[locale][path]
-		if story_state and not story_state.empty():
-			story.state.load_json(story_state)
-			return true
+	if slot >= 0:
+		if _inkStoriesStates[locale].empty():
+			var saveFile : File = File.new()
+			var saveFilePath : String = get_save_file_path(slot, locale)
+			if saveFile.file_exists(saveFilePath):
+				saveFile.open(saveFilePath, File.READ)
+				var savedJson : String = saveFile.get_as_text()
+				saveFile.close()
+				var d = parse_json(savedJson)
+				if (typeof(d) == TYPE_DICTIONARY):
+					_inkStoriesStates[locale] = d
+		if _inkStoriesStates[locale].has(path):
+			var story_state = _inkStoriesStates[locale][path]
+			if story_state and not story_state.empty():
+				story.state.load_json(story_state)
+				return true
 	story.reset_state()
 	_inkStoriesStates[locale][path] = ""
 	return false
