@@ -52,11 +52,12 @@ func pause(and_change_state = true):
 	ceiling_sound_stop()
 
 func deactivate_forever(and_change_state = true):
+	if not is_final_destination():
+		var speed = get_ceiling_speed()
+		get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
+		get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
+		ceiling_sound_play()
 	.deactivate_forever(and_change_state)
-	var speed = get_ceiling_speed()
-	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
-	get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
-	ceiling_sound_play()
 
 func restore_state():
 	if is_activated():

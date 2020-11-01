@@ -353,7 +353,9 @@ collision_mask = 2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5129, 0, -2.82846 )
 collision_mask = 2
 
-[node name="Erida_room" type="Spatial" parent="."]
+[node name="Erida_room" type="Spatial" parent="." groups=[
+"restorable_state",
+]]
 script = ExtResource( 37 )
 activatable_id = 30
 
