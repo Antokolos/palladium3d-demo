@@ -15,19 +15,13 @@ onready var player_bandit = get_node(player_bandit_path) if has_node(player_band
 func _ready():
 	settings.set_reverb(is_inside)
 	if not is_loadable:
+		game_state.restore_states()
 		do_init(false)
-		restore_state()
 		return
 	var is_loaded = game_state.finish_load()
 	do_init(is_loaded)
-	restore_state()
 	if not is_loaded:
 		game_state.autosave_create()
-
-func restore_state():
-	# Should restore state of all activatables before other restorable_state nodes
-	get_tree().call_group("activatables", "restore_state")
-	get_tree().call_group("restorable_state", "restore_state")
 
 func do_init(is_loaded):
 	# Override in children instead of _ready()

@@ -3,7 +3,7 @@ class_name ApataChest
 
 signal was_translated(chest)
 
-const TRANSLATE_OFFSET = Vector3(0, 0, -2)
+const TRANSLATE_OFFSET = Vector3(0, 0, -1.6)
 
 func open(with_sound = true, speed_scale = 0.4):
 	.open(with_sound, speed_scale)

@@ -616,7 +616,7 @@ func set_character_data(dd, character):
 		
 		if ("target_path" in ddd and ddd.target_path and has_node(ddd.target_path)):
 			var target_node = get_node(ddd.target_path)
-			character.set_target_node(target_node)
+			character.set_target_node(target_node, false)
 			movement_data = (
 				PLDMovementData.new() \
 				.clear_dir() \
@@ -685,6 +685,11 @@ func set_character_data(dd, character):
 	character.set_look_transition()
 	return movement_data
 
+func restore_states():
+	# Should restore state of all activatables before other restorable_state nodes
+	get_tree().call_group("activatables", "restore_state")
+	get_tree().call_group("restorable_state", "restore_state")
+
 func load_state(slot):
 	var hud = get_hud()
 	var movement_datas = []
@@ -734,9 +739,7 @@ func load_state(slot):
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
-	# Should restore state of all activatables before other restorable_state nodes
-	get_tree().call_group("activatables", "restore_state")
-	get_tree().call_group("restorable_state", "restore_state")
+	restore_states()
 	for md in movement_datas:
 		if md.character and md.movement_data:
 			md.character.update_state(md.movement_data)
