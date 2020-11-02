@@ -144,6 +144,13 @@ func get_point_of_interest():
 func set_point_of_interest(point_of_interest):
 	self.point_of_interest = point_of_interest
 
+func clear_poi_if_it_is(node):
+	if not node:
+		return
+	var poi = get_point_of_interest()
+	if poi and poi.get_instance_id() == node.get_instance_id():
+		clear_point_of_interest()
+
 func clear_point_of_interest():
 	set_point_of_interest(null)
 

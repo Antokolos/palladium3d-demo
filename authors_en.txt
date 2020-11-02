@@ -10,6 +10,12 @@
 
 [b]Special thanks for English text proofreading: Christine Ewert[/b]
 
+[b]Voiceover[/b]
+Leonidas: [url=https://vk.com/d13v12]Roman Orfeev[/url]
+Andreas: Anton Kolosov
+Xenia: Olga Kolosova
+Max: Sergey Sevostianov
+
 [b]Fonts[/b]
 [url=https://www.1001fonts.com/roboto-font.html]Roboto Font Family[/url] by Christian Robertson, Font data copyright Google 2014, [url=http://www.apache.org/licenses/LICENSE-2.0]Apache License[/url]
 [url=https://www.1001fonts.com/forum-font.html]Forum Regular[/url] Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>, [url=http://scripts.sil.org/OFL]OFL[/url]

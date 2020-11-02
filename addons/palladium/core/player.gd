@@ -101,20 +101,12 @@ func _on_enemy_attack_started(player_node, target):
 func _on_enemy_attack_stopped(player_node, target):
 	if is_player_controlled() or not is_in_party():
 		return
-	var poi = get_point_of_interest()
-	if poi \
-		and player_node \
-		and poi.get_instance_id() == player_node.get_instance_id():
-		clear_point_of_interest()
+	clear_poi_if_it_is(player_node)
 
 func _on_enemy_attack_finished(player_node, target, previous_target):
 	if is_player_controlled() or not is_in_party():
 		return
-	var poi = get_point_of_interest()
-	if poi \
-		and player_node \
-		and poi.get_instance_id() == player_node.get_instance_id():
-		clear_point_of_interest()
+	clear_poi_if_it_is(player_node)
 
 func _input(event):
 	if not is_player() or not is_activated():

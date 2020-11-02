@@ -265,6 +265,7 @@ func _on_player_poisoned(player, enable):
 func _on_character_dead(player):
 	if equals(player):
 		stop_attack()
+	clear_poi_if_it_is(player)
 	._on_character_dead(player)
 
 func activate():
