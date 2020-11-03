@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1133_a_ya_ved_prosil.ogg-7c5d990d405735a161cdd7ca2ffd10f4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/1133_a_ya_ved_prosil.ogg"
+dest_files=[ "res://.import/1133_a_ya_ved_prosil.ogg-7c5d990d405735a161cdd7ca2ffd10f4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

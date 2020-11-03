@@ -52,6 +52,7 @@ const DOORS_DEFAULT = {}
 const LIGHTS_DEFAULT = {}
 const CONTAINERS_DEFAULT = {}
 const TAKABLES_DEFAULT = {}
+const LOOTABLES_DEFAULT = {}
 const ACTIVATABLES_DEFAULT = {}
 const MULTISTATES_DEFAULT = {}
 const MESSAGES_DEFAULT = {
@@ -86,6 +87,7 @@ var doors = DOORS_DEFAULT.duplicate(true)
 var lights = LIGHTS_DEFAULT.duplicate(true)
 var containers = CONTAINERS_DEFAULT.duplicate(true)
 var takables = TAKABLES_DEFAULT.duplicate(true)
+var lootables = LOOTABLES_DEFAULT.duplicate(true)
 var activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
@@ -101,6 +103,13 @@ static func lookup_activatable_state_from_int(state : int):
 		if state == ActivatableState[activatable_state]:
 			return ActivatableState[activatable_state]
 	return ActivatableState.DEFAULT
+
+# Because item_ids are saved as ints but should be enums
+static func sanitize_items(items):
+	var result = []
+	for item in items:
+		result.append({ "item_id" : DB.lookup_takable_from_int(item.item_id) if item.item_id else null, "count" : int(item.count) })
+	return result
 
 func _ready():
 	cleanup_paths()
@@ -125,6 +134,7 @@ func reset_variables():
 	lights = LIGHTS_DEFAULT.duplicate(true)
 	containers = CONTAINERS_DEFAULT.duplicate(true)
 	takables = TAKABLES_DEFAULT.duplicate(true)
+	lootables = LOOTABLES_DEFAULT.duplicate(true)
 	activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 	multistates = MULTISTATES_DEFAULT.duplicate(true)
 	messages = MESSAGES_DEFAULT.duplicate(true)
@@ -336,6 +346,8 @@ func finish_load():
 		load_state(slot_to_load_from)
 		slot_to_load_from = -1
 		return true
+	else:
+		restore_states()
 	return false
 
 func is_item_registered(item_id):
@@ -507,6 +519,15 @@ func get_takable_state(takable_path):
 
 func set_takable_state(takable_path, absent):
 	takables[scene_path + ":" + takable_path] = absent
+
+func get_lootable_count(lootable_path):
+	if not lootable_path:
+		return null
+	var id = scene_path + ":" + lootable_path
+	return lootables[id] if lootables.has(id) else 0
+
+func set_lootable_count(lootable_path, count):
+	lootables[scene_path + ":" + lootable_path] = count
 
 func get_activatable_state_by_id(activatable_id):
 	var path = get_activatable_path(activatable_id)
@@ -688,6 +709,7 @@ func set_character_data(dd, character):
 func restore_states():
 	# Should restore state of all activatables before other restorable_state nodes
 	get_tree().call_group("activatables", "restore_state")
+	get_tree().call_group("lootables", "restore_state")
 	get_tree().call_group("restorable_state", "restore_state")
 
 func load_state(slot):
@@ -735,6 +757,7 @@ func load_state(slot):
 	lights = d.lights if ("lights" in d) else LIGHTS_DEFAULT.duplicate(true)
 	containers = d.containers if ("containers" in d) else CONTAINERS_DEFAULT.duplicate(true)
 	takables = d.takables if ("takables" in d) else TAKABLES_DEFAULT.duplicate(true)
+	lootables = d.lootables if ("lootables" in d) else LOOTABLES_DEFAULT.duplicate(true)
 	activatables = process_activatables(d.activatables) if ("activatables" in d) else ACTIVATABLES_DEFAULT.duplicate(true)
 	multistates = d.multistates if ("multistates" in d) else MULTISTATES_DEFAULT.duplicate(true)
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
@@ -743,13 +766,6 @@ func load_state(slot):
 	for md in movement_datas:
 		if md.character and md.movement_data:
 			md.character.update_state(md.movement_data)
-
-# Because item_ids are saved as ints but should be enums
-func sanitize_items(items):
-	var result = []
-	for item in items:
-		result.append({ "item_id" : DB.lookup_takable_from_int(item.item_id) if item.item_id else null, "count" : int(item.count) })
-	return result
 
 func autosave_create():
 	return save_state(0)
@@ -838,6 +854,7 @@ func save_state(slot):
 		"lights" : lights,
 		"containers" : containers,
 		"takables" : takables,
+		"lootables" : lootables,
 		"activatables" : activatables,
 		"multistates" : multistates,
 		"messages" : messages
