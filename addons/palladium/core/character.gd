@@ -5,6 +5,7 @@ signal player_changed(player_new, player_prev)
 signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
+signal crouching_changed(player_node, previous_state, new_state)
 signal attack_started(player_node, target)
 signal attack_stopped(player_node, target)
 signal attack_finished(player_node, target, previous_target)
@@ -371,10 +372,7 @@ func sit_down():
 			companion.sit_down()
 	is_sprinting = false
 	is_crouching = true
-	if is_player:
-		var hud = game_state.get_hud()
-		if hud:
-			hud.set_crouch_indicator(true)
+	emit_signal("crouching_changed", self, false, true)
 
 func stand_up():
 	if not character_nodes.stand_up():
@@ -386,10 +384,7 @@ func stand_up():
 		for companion in companions:
 			companion.stand_up()
 	is_crouching = false
-	if is_player:
-		var hud = game_state.get_hud()
-		if hud:
-			hud.set_crouch_indicator(false)
+	emit_signal("crouching_changed", self, true, false)
 
 func is_crouching():
 	return is_crouching

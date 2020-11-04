@@ -581,6 +581,7 @@ func register_player(player):
 	var name_hint = player.get_name_hint()
 	player_paths[name_hint] = player.get_path()
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
+	player.connect("crouching_changed", get_hud(), "on_crouching_changed")
 	player.set_look_transition()
 	if characters_transition_data.has(name_hint):
 		set_character_data(characters_transition_data[name_hint], player)
@@ -659,8 +660,11 @@ func set_character_data(dd, character):
 	if ("in_party" in dd):
 		character.set_in_party(dd.in_party)
 	
-	if ("is_crouching" in dd and dd.is_crouching):
-		character.is_crouching = dd.is_crouching
+	if ("is_crouching" in dd):
+		if dd.is_crouching and not character.is_crouching():
+			character.sit_down()
+		elif not dd.is_crouching and character.is_crouching():
+			character.stand_up()
 	
 	if ("is_underwater" in dd):
 		set_underwater(character, dd.is_underwater)

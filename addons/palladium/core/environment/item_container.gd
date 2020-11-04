@@ -33,7 +33,7 @@ func _on_base_animation_finished(anim_name):
 
 func is_opened():
 	var cs = game_state.get_container_state(get_path())
-	return (cs == game_state.ContainerState.DEFAULT and initially_opened) or (cs == game_state.ContainerState.OPENED)
+	return (cs == PLDGameState.ContainerState.DEFAULT and initially_opened) or (cs == PLDGameState.ContainerState.OPENED)
 
 func open(with_sound = true, speed_scale = 1.0):
 	if blocker_node and blocker_node.opened:
@@ -65,11 +65,11 @@ func add_highlight(player_node):
 
 func restore_state():
 	var state = game_state.get_container_state(get_path())
-	if state == game_state.ContainerState.DEFAULT:
+	if state == PLDGameState.ContainerState.DEFAULT:
 		if initially_opened:
 			open(false)
 		return
-	if state == game_state.ContainerState.OPENED:
+	if state == PLDGameState.ContainerState.OPENED:
 		open(false)
 	else:
 		close(false)

@@ -150,6 +150,10 @@ func on_oxygen_changed(name_hint, oxygen_current, oxygen_max):
 	oxygen_progress.value = oxygen_current
 	oxygen_progress.max_value = oxygen_max
 
+func on_crouching_changed(player_node, previous_state, new_state):
+	if player_node and player_node.is_player():
+		set_crouch_indicator(new_state)
+
 func on_language_changed(ID):
 	select_active_item()
 	select_active_quick_item()
@@ -213,7 +217,9 @@ func show_tablet(is_show):
 		settings.save_settings()
 
 func set_crouch_indicator(crouch):
-	indicator_crouch.set("texture", tex_crouch_on if crouch else tex_crouch_off)
+	# TODO: indicator_crouch can be null when loading the game from save, because hud is not initialized yet, maybe this code should be refactored
+	if indicator_crouch:
+		indicator_crouch.set("texture", tex_crouch_on if crouch else tex_crouch_off)
 
 func cleanup_panel(panel):
 	var ui_items = panel.get_children()
@@ -385,6 +391,7 @@ func get_active_item():
 
 func restore_state():
 	synchronize_items()
+	set_crouch_indicator(game_state.get_player().is_crouching())
 
 func _on_Inventory_visibility_changed():
 	set_quick_items_dimmed(inventory.is_visible_in_tree())
