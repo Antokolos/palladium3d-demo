@@ -1,6 +1,8 @@
 extends Spatial
 class_name PLDActivatable
 
+signal state_changed(activatable, previous_state, new_state)
+
 export(DB.ActivatableIds) var activatable_id = DB.ActivatableIds.NONE
 export(PLDGameState.ActivatableState) var default_state = PLDGameState.ActivatableState.DEACTIVATED
 
@@ -28,9 +30,15 @@ func is_activated():
 		_:
 			return false
 
+func change_state(new_state):
+	var path = get_path()
+	var previous_state = game_state.get_activatable_state(path)
+	game_state.set_activatable_state(get_path(), new_state)
+	emit_signal("state_changed", self, previous_state, new_state)
+
 func activate(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.ACTIVATED)
+		change_state(PLDGameState.ActivatableState.ACTIVATED)
 
 func is_deactivated():
 	var state = get_activatable_state()
@@ -44,7 +52,7 @@ func is_deactivated():
 
 func deactivate(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.DEACTIVATED)
+		change_state(PLDGameState.ActivatableState.DEACTIVATED)
 
 func is_paused():
 	var state = get_activatable_state()
@@ -58,7 +66,7 @@ func is_paused():
 
 func pause(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED)
+		change_state(PLDGameState.ActivatableState.PAUSED)
 
 func is_final_destination():
 	var state = get_activatable_state()
@@ -78,15 +86,15 @@ func is_final_destination():
 
 func activate_forever(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.ACTIVATED_FOREVER)
+		change_state(PLDGameState.ActivatableState.ACTIVATED_FOREVER)
 
 func deactivate_forever(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.DEACTIVATED_FOREVER)
+		change_state(PLDGameState.ActivatableState.DEACTIVATED_FOREVER)
 
 func pause_forever(and_change_state = true):
 	if and_change_state and not is_final_destination():
-		game_state.set_activatable_state(get_path(), PLDGameState.ActivatableState.PAUSED_FOREVER)
+		change_state(PLDGameState.ActivatableState.PAUSED_FOREVER)
 
 func restore_state():
 	var state = get_activatable_state()

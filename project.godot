@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/female_model.gd"
 }, {
+"base": "ColorRect",
+"class": "GodotCredits",
+"language": "GDScript",
+"path": "res://addons/godot-credits/GodotCredits.gd"
+}, {
 "base": "PLDPlayerModel",
 "class": "MaleModel",
 "language": "GDScript",
@@ -194,7 +199,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
 }, {
-"base": "Spatial",
+"base": "PLDActivatable",
 "class": "PLDRiddle",
 "language": "GDScript",
 "path": "res://addons/palladium/core/environment/riddle.gd"
@@ -260,6 +265,7 @@ _global_script_class_icons={
 "BarnLock": "",
 "DestructibleWeb": "",
 "FemaleModel": "",
+"GodotCredits": "",
 "MaleModel": "",
 "PLDActivatable": "",
 "PLDBoneAttachment": "",
@@ -344,7 +350,7 @@ window/size/height=1080
 
 [editor_plugins]
 
-enabled=PoolStringArray( "inkgd", "palladium" )
+enabled=PoolStringArray( "godot-credits", "inkgd", "palladium" )
 
 [importer_defaults]
 
