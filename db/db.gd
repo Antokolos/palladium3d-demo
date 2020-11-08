@@ -209,7 +209,7 @@ const QUICK_ITEMS_DEFAULT = [
 
 const ITEMS = {
 	TakableIds.CELL_PHONE : { "item_nam" : "cell_phone", "item_image" : "cell_phone.png", "model_path" : "res://assets/cell_phone.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
-	TakableIds.RAT : { "item_nam" : "rat", "item_image" : "coin.png", "model_path" : "res://scenes/rat_grey.tscn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	TakableIds.RAT : { "item_nam" : "rat", "item_image" : "rat.png", "model_path" : "res://scenes/rat_grey.tscn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.COIN : { "item_nam" : "coin", "item_image" : "coin.png", "model_path" : "res://assets/coin.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_EMPTY : { "item_nam" : "flask_empty", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_HEALING : { "item_nam" : "flask_healing", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
