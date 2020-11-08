@@ -4,11 +4,13 @@ class_name PLDRoomEnabler
 const REMOVE_FROM_TREE = false
 
 export var room_path = "../room"
+var raycasts_cache = []
 var room_children = []
 var screen_entered = false
 var active = false
 
 func _ready():
+	raycasts_cache.clear()
 	set_active(false)
 	connect("screen_entered", self, "_on_VisibilityEnabler_screen_entered")
 	connect("screen_exited", self, "_on_VisibilityEnabler_screen_exited")
@@ -21,6 +23,8 @@ func _on_VisibilityEnabler_screen_exited():
 	enable_raycasts(false)
 
 func get_raycasts():
+	if not raycasts_cache.empty():
+		return raycasts_cache
 	var result = []
 	for ch in get_children():
 		if ch is RayCast:
@@ -28,6 +32,7 @@ func get_raycasts():
 		for r in ch.get_children():
 			if r is RayCast:
 				result.append(r)
+	raycasts_cache = result
 	return result
 
 func enable_raycasts(enable):
