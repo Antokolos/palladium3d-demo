@@ -59,7 +59,7 @@ func _on_AudioStreamLighter_finished():
 	$AudioStreamBurning.play()
 
 func _physics_process(delta):
-	if not screen_entered or not torch_light.visible or persistent:
+	if not torch_light.visible or persistent:
 		raycast.enabled = false
 		return
 	var player = game_state.get_player()
@@ -70,10 +70,10 @@ func _physics_process(delta):
 		var rl = ray_vec.length()
 		var is_far_away = rl > DISTANCE_TO_CAMERA_MAX
 		var is_outside_camera = rl > camera.far
-		self.visible = persistent or ray_vec.x < 0
-		raycast.enabled = screen_entered and not is_outside_camera
+		raycast.enabled = not is_outside_camera
 		if raycast.enabled:
 			raycast.cast_to = ray_vec
+		self.visible = persistent or screen_entered or (raycast.enabled and not raycast.is_colliding())
 		if torch_fire.is_simple_mode():
 			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
 				torch_fire.set_simple_mode(false)

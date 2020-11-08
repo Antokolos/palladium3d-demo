@@ -1,5 +1,7 @@
 extends Label
 
+const COUNT_TORCHES = false
+
 func _physics_process(delta):
 	if not settings.performance_stats:
 		visible = false
@@ -17,11 +19,12 @@ func _physics_process(delta):
 	var viewport_size = viewport.size if viewport else Vector2(0, 0)
 	var active_torches = 0
 	var inactive_torches = 0
-	for t in get_tree().get_nodes_in_group("torches"):
-		if t.is_visible_in_tree():
-			active_torches = active_torches + 1
-		else:
-			inactive_torches = inactive_torches + 1
+	if COUNT_TORCHES:
+		for t in get_tree().get_nodes_in_group("torches"):
+			if t.is_visible_in_tree():
+				active_torches = active_torches + 1
+			else:
+				inactive_torches = inactive_torches + 1
 	var stats = [
 	"FPS: %d" % Performance.get_monitor(Performance.TIME_FPS),
 	"\nRender objects: %d" % Performance.get_monitor(Performance.RENDER_OBJECTS_IN_FRAME),
