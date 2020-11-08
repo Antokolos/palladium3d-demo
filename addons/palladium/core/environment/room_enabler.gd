@@ -20,8 +20,18 @@ func _on_VisibilityEnabler_screen_exited():
 	screen_entered = false
 	enable_raycasts(false)
 
+func get_raycasts():
+	var result = []
+	for ch in get_children():
+		if ch is RayCast:
+			result.append(ch)
+		for r in ch.get_children():
+			if r is RayCast:
+				result.append(r)
+	return result
+
 func enable_raycasts(enable):
-	for raycast in get_children():
+	for raycast in get_raycasts():
 		raycast.enabled = enable
 
 func get_room_node():
@@ -75,11 +85,13 @@ func _physics_process(delta):
 	if not screen_entered:
 		disable_room()
 		return
-	for raycast in get_children():
+	for raycast in get_raycasts():
+		var notifier = raycast.get_parent()
+		var is_on_screen = notifier.is_on_screen()
 		var ray_vec = raycast.to_local(origin)
 		var is_outside_camera = ray_vec.length() > camera.far
 		if raycast.enabled:
 			raycast.cast_to = ray_vec
-			need_enable = need_enable or not raycast.is_colliding()
-		raycast.enabled = not is_outside_camera
+			need_enable = need_enable or (is_on_screen and not raycast.is_colliding())
+		raycast.enabled = not is_outside_camera and is_on_screen
 	enable_room() if need_enable else disable_room()

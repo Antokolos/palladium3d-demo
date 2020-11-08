@@ -8,6 +8,7 @@ const DISTANCE_TO_CAMERA_MAX = 36
 export(DB.LightIds) var light_id = DB.LightIds.NONE
 export var initially_active = true
 export var persistent = false
+export var show_if_on_screen = false
 
 onready var sound_lighter = $AudioStreamLighter
 onready var sound_burning = $AudioStreamBurning
@@ -73,7 +74,11 @@ func _physics_process(delta):
 		raycast.enabled = not is_outside_camera
 		if raycast.enabled:
 			raycast.cast_to = ray_vec
-		self.visible = persistent or screen_entered or (raycast.enabled and not raycast.is_colliding())
+		self.visible = (
+			persistent
+				or (show_if_on_screen and screen_entered)
+				or (raycast.enabled and not raycast.is_colliding())
+		)
 		if torch_fire.is_simple_mode():
 			if raycast.enabled and not raycast.is_colliding() and not is_far_away:
 				torch_fire.set_simple_mode(false)

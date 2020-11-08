@@ -1,6 +1,6 @@
 extends Label
 
-const COUNT_TORCHES = false
+const COUNT_TORCHES = true
 
 func _physics_process(delta):
 	if not settings.performance_stats:
