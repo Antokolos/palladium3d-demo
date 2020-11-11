@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/773_spetsializatsya_ne_glavnoe.ogg-2089d94af2c67eecebb7cb459fa45d4c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/773_spetsializatsya_ne_glavnoe.ogg"
+dest_files=[ "res://.import/773_spetsializatsya_ne_glavnoe.ogg-2089d94af2c67eecebb7cb459fa45d4c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

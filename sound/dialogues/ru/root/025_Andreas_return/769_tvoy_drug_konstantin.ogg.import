@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/769_tvoy_drug_konstantin.ogg-5fb97ef8329691034af354a02dace6a3.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/769_tvoy_drug_konstantin.ogg"
+dest_files=[ "res://.import/769_tvoy_drug_konstantin.ogg-5fb97ef8329691034af354a02dace6a3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

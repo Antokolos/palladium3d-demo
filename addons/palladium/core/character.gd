@@ -650,8 +650,6 @@ func do_process(delta, is_player):
 		character_nodes.stop_walking_sound()
 		has_floor_collision = true
 		return d
-	if character_nodes.is_low_ceiling() and not is_crouching and has_floor_collision():
-		sit_down()
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
 	var characters = game_state.get_characters()
@@ -663,11 +661,23 @@ func do_process(delta, is_player):
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
+	var player_is_crouching = false
 	for character in characters:
+		if character.is_player_controlled():
+			player_is_crouching = character.is_crouching()
 		if equals(character):
 			continue
 		if not update_ray_to_character(character):
 			add_ray_to_character(character)
+	if has_floor_collision():
+		var low_ceiling = character_nodes.is_low_ceiling()
+		if low_ceiling and not is_crouching:
+			sit_down()
+		elif not low_ceiling \
+			and is_crouching \
+			and not player_is_crouching \
+			and is_in_party():
+			stand_up() 
 	if not is_visible_to_player() and not force_visibility:
 		return d
 	var model = get_model()

@@ -27,3 +27,8 @@ func add_highlight(player_node):
 			if brick_not_taken()
 			else ("" if zeus_body.cell_phone_applied() else "E: " + tr("ACTION_PUT_GB")))
 	)
+
+func restore_state():
+	if game_state.has_item(DB.TakableIds.GOLDEN_BAR):
+		get_brick_node().visible = false
+		.use(game_state.get_player(), null)

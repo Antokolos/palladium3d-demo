@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1185_proshu_odumaysa.ogg-987143f9ecea7dc558dd9d7e1917dbbb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/024_Phone/1185_proshu_odumaysa.ogg"
+dest_files=[ "res://.import/1185_proshu_odumaysa.ogg-987143f9ecea7dc558dd9d7e1917dbbb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

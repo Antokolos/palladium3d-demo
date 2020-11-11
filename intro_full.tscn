@@ -1,0 +1,73 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://addons/palladium/ui/game_window.gd" type="Script" id=1]
+[ext_resource path="res://addons/palladium/ui/viewport.tscn" type="PackedScene" id=2]
+[ext_resource path="res://intro_full.gd" type="Script" id=3]
+[ext_resource path="res://scenes/intro_room_walls.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/intro_room_furniture.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/intro_room_plant.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/intro_door_1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/intro_door_2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/father.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/male_intro.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/male_bag.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/intro_phone.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/camera_intro.tscn" type="PackedScene" id=13]
+[ext_resource path="res://addons/palladium/ui/hud.tscn" type="PackedScene" id=14]
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = ExtResource( 1 )
+
+[node name="Viewport" parent="ViewportContainer" instance=ExtResource( 2 )]
+size = Vector2( 1920, 1080 )
+
+[node name="intro_full" type="Navigation" parent="ViewportContainer/Viewport"]
+script = ExtResource( 3 )
+is_inside = false
+is_loadable = false
+
+[node name="intro_room_walls" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 4 )]
+
+[node name="intro_room_furniture" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 5 )]
+
+[node name="intro_room_plant" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 6 )]
+
+[node name="intro_door_1" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 7 )]
+
+[node name="intro_door_2" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 8 )]
+
+[node name="father" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 9 )]
+
+[node name="male_intro" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 10 )]
+
+[node name="male_bag" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 11 )]
+
+[node name="intro_phone" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 12 )]
+
+[node name="camera_intro" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 13 )]
+
+[node name="OmniLight" type="OmniLight" parent="ViewportContainer/Viewport/intro_full"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55065, 1.94982, 0.590713 )
+light_cull_mask = 4293918723
+omni_range = 3.08534
+
+[node name="DirectionalLight" type="DirectionalLight" parent="ViewportContainer/Viewport/intro_full"]
+transform = Transform( 0.988851, 0.0571693, -0.137499, 0.134972, -0.734163, 0.665423, -0.062905, -0.676562, -0.733694, 0, 1.80866, -3.68359 )
+light_color = Color( 0.815686, 0.627451, 0.32549, 1 )
+light_energy = 0.65
+light_cull_mask = 4293918723
+shadow_enabled = true
+
+[node name="hud" parent="." instance=ExtResource( 14 )]
+cutscene_mode = true

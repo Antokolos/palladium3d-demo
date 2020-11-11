@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/768_otets_eto_zhe_otkrytie.ogg-eb7771be9e069d732fb58e76881518d1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/768_otets_eto_zhe_otkrytie.ogg"
+dest_files=[ "res://.import/768_otets_eto_zhe_otkrytie.ogg-eb7771be9e069d732fb58e76881518d1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

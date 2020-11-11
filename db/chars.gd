@@ -37,6 +37,7 @@ const SOUND = {
 	SoundId.SOUND_ATTACK_AXE_ON_STONE : preload("res://sound/environment/pickaxe3.ogg")
 }
 
+var FATHER_NAME_HINT = "father"
 var PLAYER_NAME_HINT = "player"
 var FEMALE_NAME_HINT = "female"
 var BANDIT_NAME_HINT = "bandit"

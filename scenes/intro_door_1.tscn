@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/intro_door_1.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/intro_door_1.gd" type="Script" id=2]
+
+[node name="intro_door_1" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Door" parent="Armature001" index="1"]
+cast_shadow = 0
+
+[node name="DoorFrame" parent="." index="1"]
+cast_shadow = 0

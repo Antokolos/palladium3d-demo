@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1183_da_on_umny.ogg-88342ad28afe7b4a67cd7e0d8d1ea508.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/024_Phone/1183_da_on_umny.ogg"
+dest_files=[ "res://.import/1183_da_on_umny.ogg-88342ad28afe7b4a67cd7e0d8d1ea508.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

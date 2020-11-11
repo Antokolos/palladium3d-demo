@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1186_Andreas_ya_ne_zametil.ogg-d80ccf6fbb0813f6b9b568c97f9ef61e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/1186_Andreas_ya_ne_zametil.ogg"
+dest_files=[ "res://.import/1186_Andreas_ya_ne_zametil.ogg-d80ccf6fbb0813f6b9b568c97f9ef61e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

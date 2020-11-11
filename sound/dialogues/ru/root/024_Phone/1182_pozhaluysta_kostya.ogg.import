@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1182_pozhaluysta_kostya.ogg-dedfb63be8e132023acdcdd67450618d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/024_Phone/1182_pozhaluysta_kostya.ogg"
+dest_files=[ "res://.import/1182_pozhaluysta_kostya.ogg-dedfb63be8e132023acdcdd67450618d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

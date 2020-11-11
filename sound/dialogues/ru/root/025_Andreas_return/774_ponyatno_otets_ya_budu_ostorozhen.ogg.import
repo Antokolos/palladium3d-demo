@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/774_ponyatno_otets_ya_budu_ostorozhen.ogg-5846ffe307bb1a06736a441061005db2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/774_ponyatno_otets_ya_budu_ostorozhen.ogg"
+dest_files=[ "res://.import/774_ponyatno_otets_ya_budu_ostorozhen.ogg-5846ffe307bb1a06736a441061005db2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

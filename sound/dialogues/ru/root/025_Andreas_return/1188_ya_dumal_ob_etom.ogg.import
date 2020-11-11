@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1188_ya_dumal_ob_etom.ogg-31fc4c9b772536e6537a28f9687e4c7f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/1188_ya_dumal_ob_etom.ogg"
+dest_files=[ "res://.import/1188_ya_dumal_ob_etom.ogg-31fc4c9b772536e6537a28f9687e4c7f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

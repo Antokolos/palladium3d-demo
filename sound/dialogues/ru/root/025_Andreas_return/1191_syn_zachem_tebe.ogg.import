@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1191_syn_zachem_tebe.ogg-13a1f087c77fad428ec07f6ba812a04d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/1191_syn_zachem_tebe.ogg"
+dest_files=[ "res://.import/1191_syn_zachem_tebe.ogg-13a1f087c77fad428ec07f6ba812a04d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

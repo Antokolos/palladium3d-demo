@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1184_chto_zapisi.ogg-484aded2702c7fb87a974b332e4bf97d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/024_Phone/1184_chto_zapisi.ogg"
+dest_files=[ "res://.import/1184_chto_zapisi.ogg-484aded2702c7fb87a974b332e4bf97d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

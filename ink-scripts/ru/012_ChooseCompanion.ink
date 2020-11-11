@@ -24,8 +24,8 @@ VAR party_bandit = true
 	Удачи. Вам обоим.	# actor:female # voiceover:229_udachi_vam_oboim.ogg
 	~ party_female = false
 * 	[Идти одному.]
-	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player # voiceover:.ogg
-	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female # voiceover:.ogg
+	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player # voiceover:986_ya_reshil_poydu_odin.ogg
+	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female # voiceover:andreas_tolko_ya.ogg
 	Андреас, ты уверен, что один справишься?	# actor:bandit # voiceover:752_Andreas_ty_uveren_chto_odin.ogg 
 	* * 	[Идти с Ксенией.]
 		-> companion_xenia

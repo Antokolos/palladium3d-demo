@@ -72,6 +72,7 @@ func leave_party():
 	clear_path()
 	set_in_party(false)
 	reset_movement_and_rotation()
+	update_navpath_to_target()
 
 func equals(obj):
 	return obj and (obj.get_instance_id() == self.get_instance_id())
@@ -130,7 +131,11 @@ func get_target_node():
 
 func set_target_node(node, update_navpath = true):
 	target_node = node
-	if target_node and update_navpath:
+	if update_navpath:
+		update_navpath_to_target()
+
+func update_navpath_to_target():
+	if target_node:
 		var current_position = get_global_transform().origin
 		var target_position = target_node.get_global_transform().origin
 		update_navpath(current_position, target_position)

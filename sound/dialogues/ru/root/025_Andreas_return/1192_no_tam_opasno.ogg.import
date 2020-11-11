@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1192_no_tam_opasno.ogg-ec93d86cee4a99b19fd19aa8435f7c91.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/1192_no_tam_opasno.ogg"
+dest_files=[ "res://.import/1192_no_tam_opasno.ogg-ec93d86cee4a99b19fd19aa8435f7c91.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
