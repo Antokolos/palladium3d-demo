@@ -180,18 +180,21 @@ func init_variables() -> void:
 	var keys = storyVars.keys()
 	var party_keys = game_state.get_name_hints()
 	for locale in AvailableLocales:
+		var is_current_locale = (locale == TranslationServer.get_locale())
 		if _inkStory.has(locale):
 			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			if story.variables_state.global_variable_exists_with_name(RESULT_VAR_NAME):
 				story.variables_state.set(RESULT_VAR_NAME, 0)
 				story.remove_variable_observer(self, "_observe_result", RESULT_VAR_NAME)
-				story.observe_variable(RESULT_VAR_NAME, self, "_observe_result")
+				if is_current_locale:
+					story.observe_variable(RESULT_VAR_NAME, self, "_observe_result")
 			for key in keys:
 				if story.variables_state.global_variable_exists_with_name(key):
 					story.variables_state.set(key, storyVars[key])
 					story.remove_variable_observer(self, "_observe_variable", key)
-					story.observe_variable(key, self, "_observe_variable")
+					if is_current_locale:
+						story.observe_variable(key, self, "_observe_variable")
 			for party_key in party_keys:
 				var story_key : String = PARTY_VAR_PREFIX + party_key
 				var cutscene_key : String = CUTSCENE_VAR_PREFIX + party_key
@@ -200,19 +203,23 @@ func init_variables() -> void:
 				if story.variables_state.global_variable_exists_with_name(story_key):
 					story.variables_state.set(story_key, game_state.is_in_party(party_key))
 					story.remove_variable_observer(self, "_observe_party", story_key)
-					story.observe_variable(story_key, self, "_observe_party")
+					if is_current_locale:
+						story.observe_variable(story_key, self, "_observe_party")
 				if story.variables_state.global_variable_exists_with_name(cutscene_key):
 					story.variables_state.set(cutscene_key, 0)  # No cutscene by default, the cutscene will be activated during dialogue if it will be set to value > 0
 					story.remove_variable_observer(self, "_observe_cutscene", cutscene_key)
-					story.observe_variable(cutscene_key, self, "_observe_cutscene")
+					if is_current_locale:
+						story.observe_variable(cutscene_key, self, "_observe_cutscene")
 				if story.variables_state.global_variable_exists_with_name(relationship_key):
 					story.variables_state.set(relationship_key, game_state.get_character(party_key).get_relationship())
 					story.remove_variable_observer(self, "_observe_relationship", relationship_key)
-					story.observe_variable(relationship_key, self, "_observe_relationship")
+					if is_current_locale:
+						story.observe_variable(relationship_key, self, "_observe_relationship")
 				if story.variables_state.global_variable_exists_with_name(morale_key):
 					story.variables_state.set(morale_key, game_state.get_character(party_key).get_morale())
 					story.remove_variable_observer(self, "_observe_morale", morale_key)
-					story.observe_variable(morale_key, self, "_observe_morale")
+					if is_current_locale:
+						story.observe_variable(morale_key, self, "_observe_morale")
 
 func reset() -> void:
 	for locale in AvailableLocales:

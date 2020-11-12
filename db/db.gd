@@ -91,6 +91,21 @@ static func get_weapon_stun_data(takable_id):
 #	TakableIds.MEDUSA_HEAD : { "stun_duration" : 5 }
 #}
 
+#func execute_give_item_action(player, target):
+#	if not player or not target:
+#		return false
+#	var hud = game_state.get_hud()
+#	var item = hud.get_active_item()
+#	if not item:
+#		return false
+#	match item.item_id:
+#		_:
+#			return false
+#	hud.inventory.visible = false
+#	item.used(player, target)
+#	item.remove()
+#	return true
+
 #func execute_custom_action(event, item):
 #	var result = false
 #	if event.is_action_pressed("item_preview_action_1"):
@@ -233,6 +248,23 @@ const ITEMS = {
 }
 
 const WEAPONS_STUN = {}
+
+func execute_give_item_action(player, target):
+	if not player or not target:
+		return false
+	var hud = game_state.get_hud()
+	var item = hud.get_active_item()
+	if not item:
+		return false
+	match item.item_id:
+		DB.TakableIds.BUN:
+			conversation_manager.start_conversation(player, "Bun", target)
+		_:
+			return false
+	hud.inventory.visible = false
+	item.used(player, target)
+	item.remove()
+	return true
 
 func execute_custom_action(event, item):
 	var result = false

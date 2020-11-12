@@ -239,6 +239,10 @@ func become_player():
 	activate()
 	emit_signal("player_changed", self, player)
 
+func join_party():
+	.join_party()
+	set_sprinting(false)
+
 func is_underwater():
 	return is_underwater
 

@@ -3,6 +3,7 @@ Andreas, aren't you going to criticize me?	# actor:female # voiceover:535_Andrea
 Do you want me to?	# actor:player # voiceover:463_do_you_want_me_too.ogg
 No, but it was my mistake grabbing the statue.	# actor:female # voiceover:536_no_but_it_was_my_mistake.ogg
 * 	[А я ведь просил ничего не трогать!]
+	~ relationship_female = relationship_female - 1
 	А я ведь просил ничего не трогать! # actor:player # voiceover:.ogg
 	-> hermes_continue
 * 	[I would have taken it eventually anyway.]

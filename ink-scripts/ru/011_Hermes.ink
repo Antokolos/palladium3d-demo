@@ -3,6 +3,7 @@ VAR relationship_female = 0
 Ты этого хочешь?	# actor:player # voiceover:122_ty_etogo_hochesh.ogg
 Нет, но я же виновата, схватила статуэтку.	# actor:female # voiceover:223_net_no_ya_zhe_vinovata.ogg
 * 	[А я ведь просил ничего не трогать!]
+	~ relationship_female = relationship_female - 1
 	А я ведь просил ничего не трогать! # actor:player # voiceover:1133_a_ya_ved_prosil.ogg
 	-> hermes_continue
 * 	[Эту статуэтку всё равно пришлось бы взять.]

@@ -266,14 +266,7 @@ func handle_conversation(player, target, initiator):
 		return
 	if not target.is_in_party():
 		return
-	var hud = get_hud()
-	var item = hud.get_active_item()
-	if item and item.item_id == DB.TakableIds.BUN:
-		hud.inventory.visible = false
-		item.used(player, target)
-		item.remove()
-		conversation_manager.start_conversation(player, "Bun", target)
-	else:
+	if not DB.execute_give_item_action(player, target):
 		conversation_manager.start_conversation(player, "Conversation", target)
 
 func can_be_given(item):

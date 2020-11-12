@@ -22,6 +22,7 @@ func do_init(is_loaded):
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
+	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
 	var player_in_grass = $AreaGrass.overlaps_body(player)
 	var female_in_grass = $AreaGrass.overlaps_body(player_female)
 	var bandit_in_grass = $AreaGrass.overlaps_body(player_bandit)
@@ -110,8 +111,11 @@ func _on_shader_cache_processed():
 
 func _on_meeting_started(player, target, initiator):
 	remove_pocket_book()
-	player_female.set_target_node(get_node("PositionBoat"))
 	player_female.play_cutscene(FemaleModel.FEMALE_CUTSCENE_STAND_UP_STUMP)
+
+func _on_meeting_finished(player, target, initiator):
+	if not player_female.is_in_party():
+		player_female.set_target_node(get_node("PositionBoat"))
 
 func _on_AreaGrass_body_entered(body):
 	if body.is_in_group("party"):
