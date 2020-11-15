@@ -88,12 +88,21 @@ func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, l
 		elif file.ends_with(".ink.json"):
 			var storyPath : String = basePath + "/" + file
 			var story = load_story_from_file(storyPath)
+			bind_external_functions(story)
 			# TODO: restore story log from save
 			var chatDriven : bool = false # TODO: restore chatDriven from save
 			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
 			load_save_or_reset(slot, locale, storyPath, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
+
+func bind_external_functions(story):
+	story.bind_external_function("is_untouched", game_state, "_is_untouched")
+	story.bind_external_function("is_activated", game_state, "_is_activated")
+	story.bind_external_function("is_deactivated", game_state, "_is_deactivated")
+	story.bind_external_function("is_paused", game_state, "_is_paused")
+	story.bind_external_function("is_final_destination", game_state, "_is_final_destination")
+	story.bind_external_function("is_actual", game_state, "_is_actual")
 
 func load_story_from_file(path : String): # Story
 	var text : String = ""

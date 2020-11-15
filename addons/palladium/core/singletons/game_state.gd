@@ -537,6 +537,55 @@ func get_activatable_state(activatable_path):
 func set_activatable_state(activatable_path, state):
 	activatables[scene_path + ":" + activatable_path] = state
 
+func _is_untouched(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	return get_activatable_state_by_id(id) == ActivatableState.DEFAULT
+
+func _is_activated(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	match get_activatable_state_by_id(id):
+		ActivatableState.ACTIVATED, ActivatableState.ACTIVATED_FOREVER:
+			return true
+		_:
+			return false
+
+func _is_deactivated(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	match get_activatable_state_by_id(id):
+		ActivatableState.DEACTIVATED, ActivatableState.DEACTIVATED_FOREVER:
+			return true
+		_:
+			return false
+
+func _is_paused(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	match get_activatable_state_by_id(id):
+		ActivatableState.PAUSED, ActivatableState.PAUSED_FOREVER:
+			return true
+		_:
+			return false
+
+func _is_final_destination(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	match get_activatable_state_by_id(id):
+		ActivatableState.ACTIVATED_FOREVER, ActivatableState.DEACTIVATED_FOREVER, ActivatableState.PAUSED_FOREVER:
+			return true
+		_:
+			return false
+
+func _is_actual(activatable_id : int):
+	return not _is_untouched(activatable_id) and not _is_final_destination(activatable_id)
+
 func get_multistate_state(multistate_path):
 	var id = scene_path + ":" + multistate_path
 	return multistates[id] if multistates.has(id) else 0

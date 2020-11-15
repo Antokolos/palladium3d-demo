@@ -11,6 +11,12 @@ const SUFFOCATION_DAMAGE_RATE = 10
 const PLAYER_OXYGEN_CURRENT_DEFAULT = 100
 const PLAYER_OXYGEN_MAX_DEFAULT = 100
 
+static func lookup_activatable_from_int(activatable_id : int):
+	for id in ActivatableIds:
+		if activatable_id == ActivatableIds[id]:
+			return ActivatableIds[id]
+	return ActivatableIds.NONE
+
 static func lookup_takable_from_int(item_id : int):
 	for takable_id in TakableIds:
 		if item_id == TakableIds[takable_id]:
