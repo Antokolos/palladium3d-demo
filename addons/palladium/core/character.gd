@@ -6,6 +6,7 @@ signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
 signal crouching_changed(player_node, previous_state, new_state)
+signal floor_collision_changed(player_node, previous_state, new_state)
 signal attack_started(player_node, target)
 signal attack_stopped(player_node, target)
 signal attack_finished(player_node, target, previous_target)
@@ -453,11 +454,10 @@ func process_rotation(need_to_update_collisions):
 	if angle_rad_y == 0 or is_dying():
 		return false
 	self.rotate_y(angle_rad_y)
-	angle_rad_y = 0
 	return true
 
 func invoke_physics_pass():
-	has_floor_collision = false
+	set_has_floor_collision(false)
 	vel = move_and_slide_with_snap(
 		vel,
 		get_snap(),
@@ -647,18 +647,35 @@ func enable_rays_to_characters(enable):
 		enable_rays_to_character(character, enable)
 		character.enable_rays_to_character(self, enable)
 
+func set_has_floor_collision(fc):
+	var fc_prev = has_floor_collision
+	has_floor_collision = fc
+	if fc_prev != fc:
+		emit_signal(
+			"floor_collision_changed",
+			self,
+			fc_prev,
+			fc
+		)
+		if is_player():
+			var characters = game_state.get_characters()
+			for character in characters:
+				if equals(character):
+					continue
+				character.invoke_physics_pass()
+
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
 	var poi = get_point_of_interest()
 	if not poi and (not is_activated() or is_movement_disabled() or is_hidden()):
 		character_nodes.stop_walking_sound()
-		has_floor_collision = true
+		set_has_floor_collision(true)
 		return d
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
 	var characters = game_state.get_characters()
 	var movement_process_data = process_movement(delta, movement_data.get_dir(), characters)
-	has_floor_collision = movement_process_data.collides_floor
+	set_has_floor_collision(movement_process_data.collides_floor)
 	d.is_moving = movement_process_data.is_walking
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
 	if d.is_moving:

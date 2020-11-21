@@ -1,5 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/tube_breath.escn" type="PackedScene" id=1]
+[ext_resource path="res://addons/palladium/core/takable.gd" type="Script" id=1]
+[ext_resource path="res://assets/tube_breath.escn" type="PackedScene" id=2]
 
-[node name="tube_breath" index="0" instance=ExtResource( 1 )]
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.0220631, 0.858397, 0.0179382 )
+
+[node name="tube_breath" type="RigidBody"]
+mode = 1
+script = ExtResource( 1 )
+takable_id = 170
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0728793, 0 )
+shape = SubResource( 1 )
+
+[node name="tube_breath" parent="." instance=ExtResource( 2 )]

@@ -1,9 +1,9 @@
 extends PLDGameWindow
-class_name PLDViewportHacks
+class_name PLDViewportHack
 
 # See https://github.com/godotengine/godot/issues/17326
-func _input(event):
-	._input(event)
+func do_input(event):
+	.do_input(event)
 	if event is InputEventMouse:
 		var mouseEvent = event.duplicate()
 		var viewport_size = $Viewport.size

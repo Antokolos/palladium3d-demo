@@ -310,7 +310,7 @@ nodes/walk/node = SubResource( 46 )
 nodes/walk/position = Vector2( 200, -260 )
 nodes/walk_squat/node = SubResource( 47 )
 nodes/walk_squat/position = Vector2( 100, -20 )
-node_connections = [ "output", 0, "DamageShot", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "RestTransition", 0, "alt_rest1", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
+node_connections = [ "output", 0, "DamageShot", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "RestTransition", 0, "alt_rest1", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right" ]
 
 [node name="male" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -319,7 +319,10 @@ rest_shots_max = 1
 speak_shots_max = 3
 
 [node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
-transform = Transform( 1, -0.000696557, 0.000236958, -3.57069e-006, -0.326455, -0.945213, 0.000735793, 0.945213, -0.326454, 0.0402129, 15.1618, -0.450366 )
+transform = Transform( 1, -0.000573464, 0.000192573, -1.13808e-006, -0.319866, -0.947463, 0.000604978, 0.947463, -0.319865, 0.0401793, 15.1643, -0.465616 )
+
+[node name="backpack" parent="Male_palladium/spine01BoneAttachment/backpack_Armature" index="0"]
+layers = 2049
 
 [node name="Male_palladium:Body" parent="Male_palladium" index="2"]
 layers = 3
@@ -332,6 +335,9 @@ layers = 3
 
 [node name="Male_palladium:High-poly" parent="Male_palladium" index="5"]
 layers = 3
+
+[node name="Male_palladium:Male_casualsuit06" parent="Male_palladium" index="6"]
+layers = 2049
 
 [node name="Male_palladium:Short02" parent="Male_palladium" index="8"]
 layers = 3

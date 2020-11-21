@@ -290,7 +290,7 @@ func _on_RestTimer_timeout():
 func _on_VisibilityNotifier_screen_entered():
 	character.emit_signal("visibility_to_player_changed", character, false, true)
 	if character.is_in_party():
-		character.move_and_collide(PLDCharacter.GRAVITY_DEFAULT * Vector3.DOWN)
+		character.invoke_physics_pass()
 
 func _on_VisibilityNotifier_screen_exited():
 	character.emit_signal("visibility_to_player_changed", character, true, false)

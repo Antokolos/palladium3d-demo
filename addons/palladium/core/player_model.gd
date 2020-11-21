@@ -16,13 +16,6 @@ onready var speech_timer = get_node("SpeechTimer")
 var speech_states = []
 var speech_idx = 0
 
-func toggle_head(enable):
-	var sk = get_node(main_skeleton)
-	for m in sk.get_children():
-		if m is MeshInstance:
-			if m.get_layer_mask_bit(1):
-				m.set_layer_mask_bit(0, enable)
-
 func set_simple_mode(sm):
 	.set_simple_mode(sm)
 	toggle_head(not sm)

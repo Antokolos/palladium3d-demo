@@ -87,7 +87,6 @@ func process_rotation(need_to_update_collisions):
 	get_model_holder().rotation_degrees = model_rot
 	shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
 	upper_body_shape.rotation_degrees = shape_rot
-	angle_rad_x = 0
 	return true
 
 func get_snap():
@@ -108,6 +107,12 @@ func _on_enemy_attack_finished(player_node, target, previous_target):
 		return
 	clear_poi_if_it_is(player_node)
 
+func is_joypad_look(event):
+	if not event is InputEventJoypadMotion:
+		return false
+	var a = event.get_axis()
+	return a == JOY_AXIS_2 or a == JOY_AXIS_3
+
 func _input(event):
 	if not is_player() or not is_activated():
 		return
@@ -126,15 +131,18 @@ func _input(event):
 			conversation_manager.story_choose(self, 3)
 	if is_in_party() and not cutscene_manager.is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY)
+			angle_rad_x = deg2rad(event.relative.y * MOUSE_SENSITIVITY * settings.get_yaxis_coeff())
 			angle_rad_y = deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1)
-		elif event is InputEventJoypadMotion:
+			process_rotation(true)
+			angle_rad_x = 0
+			angle_rad_y = 0
+		elif is_joypad_look(event):
 			var v = event.get_axis_value()
 			var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD
 			if event.get_axis() == JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -v) if nonzero else 0
 			if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
-				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v) if nonzero else 0
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v * settings.get_yaxis_coeff()) if nonzero else 0
 		else:
 			if event.is_action_pressed("movement_forward") \
 				and input_movement_vector.y == 0:
@@ -163,9 +171,9 @@ func _input(event):
 				input_movement_vector.x = 0
 			
 			if event.is_action_pressed("cam_up"):
-				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1 * settings.get_yaxis_coeff())
 			elif event.is_action_pressed("cam_down"):
-				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+				angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * settings.get_yaxis_coeff())
 			elif event.is_action_released("cam_up") or event.is_action_released("cam_down"):
 				angle_rad_x = 0
 			

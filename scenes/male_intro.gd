@@ -1,5 +1,6 @@
 extends Spatial
 
+signal crouching_changed(player_node, previous_state, new_state)
 signal cutscene_finished(player, player_model, cutscene_id, was_active)
 
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10

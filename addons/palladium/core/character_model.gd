@@ -141,13 +141,34 @@ func is_standing():
 func is_sitting():
 	return animation_tree.get("parameters/LookTransition/current") == LOOK_TRANSITION_SQUATTING
 
+func toggle_head(enable):
+	var sk = get_node(main_skeleton)
+	for m in sk.get_children():
+		if m is MeshInstance:
+			if m.get_layer_mask_bit(1):
+				m.set_layer_mask_bit(0, enable)
+	if enable:
+		toggle_unwanted_meshes(sk, true)
+
+func toggle_unwanted_meshes(root, enable):
+	for m in root.get_children():
+		if m is MeshInstance:
+			if m.get_layer_mask_bit(11):
+				m.set_layer_mask_bit(0, enable)
+		else:
+			toggle_unwanted_meshes(m, enable)
+
 func stand_up():
 	if not is_standing():
 		animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
+		if simple_mode:
+			toggle_unwanted_meshes(get_node(main_skeleton), true)
 
 func sit_down():
 	if not is_sitting():
 		animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
+		if simple_mode:
+			toggle_unwanted_meshes(get_node(main_skeleton), false)
 
 func normalize_angle(look_angle_deg):
 	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)

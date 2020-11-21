@@ -43,6 +43,7 @@ var cutoff_enabled = false
 var shader_cache_enabled = true
 var vsync = true
 var fullscreen = true
+var invert_yaxis = false
 var quality = QUALITY_OPT
 var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
@@ -102,6 +103,9 @@ func load_settings():
 
 	if ("fullscreen" in d):
 		fullscreen = bool(d.fullscreen)
+	
+	if ("invert_yaxis" in d):
+		invert_yaxis = bool(d.invert_yaxis)
 
 	if ("quality" in d):
 		quality = int(d.quality)
@@ -145,6 +149,7 @@ func save_settings():
 		"shader_cache_enabled" : shader_cache_enabled,
 		"vsync" : vsync,
 		"fullscreen" : fullscreen,
+		"invert_yaxis" : invert_yaxis,
 		"quality" : quality,
 		"resolution" : resolution,
 		"aa_quality" : aa_quality,
@@ -200,6 +205,12 @@ func set_fullscreen(fs):
 	OS.set_window_fullscreen(fs)
 	fullscreen = fs
 
+func set_invert_yaxis(enabled):
+	invert_yaxis = enabled
+
+func get_yaxis_coeff():
+	return -1.0 if invert_yaxis else 1.0
+
 func set_cutoff_enabled(ce):
 	cutoff_enabled = ce
 	emit_signal("cutoff_enabled_changed", ce)
@@ -239,5 +250,4 @@ func _ready():
 	set_speech_volume(speech_volume)
 	set_vsync(vsync)
 	set_fullscreen(fullscreen)
-	set_subtitles(subtitles)
 	set_resolution(resolution)

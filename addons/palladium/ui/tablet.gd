@@ -23,6 +23,7 @@ onready var load_game_app = apps.get_node("load_game_app")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
+onready var invert_yaxis = settings_app.get_node("VBoxContainer/HInvertYAxis/InvertYAxis")
 onready var cutoff_enabled = settings_app.get_node("VBoxContainer/HCutoffEnabled/CutoffEnabled")
 onready var shader_cache_enabled = settings_app.get_node("VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled")
 onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
@@ -55,6 +56,9 @@ func _ready():
 
 	fullscreen.pressed = settings.fullscreen
 	_on_Fullscreen_pressed()
+
+	invert_yaxis.pressed = settings.invert_yaxis
+	_on_InvertYAxis_pressed()
 
 	cutoff_enabled.pressed = settings.cutoff_enabled
 	_on_CutoffEnabled_pressed()
@@ -341,6 +345,10 @@ func _on_Vsync_pressed():
 func _on_Fullscreen_pressed():
 	var fs = fullscreen.is_pressed() if fullscreen else settings.fullscreen
 	settings.set_fullscreen(fs)
+
+func _on_InvertYAxis_pressed():
+	var enabled = invert_yaxis.is_pressed() if invert_yaxis else settings.invert_yaxis
+	settings.set_invert_yaxis(enabled)
 
 func _on_CutoffEnabled_pressed():
 	var ce = cutoff_enabled.is_pressed() if cutoff_enabled else settings.cutoff_enabled

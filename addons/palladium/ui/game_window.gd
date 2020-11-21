@@ -10,6 +10,9 @@ onready var viewport = get_viewport()
 var in_focus = true
 
 func _input(event):
+	do_input(event)
+
+func do_input(event):
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		return
 	if event is InputEventJoypadMotion:
@@ -19,10 +22,11 @@ func _input(event):
 			rel_pos.x = MOUSE_SENSITIVITY * v if nonzero else 0
 		if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
 			rel_pos.y = MOUSE_SENSITIVITY * v if nonzero else 0
-	if not event is InputEventMouseButton \
-		and event.is_action_pressed("action") \
-		and (not get_tree().paused or game_state.get_hud().is_tablet_visible()):
-		click_the_left_mouse_button()
+	if not event is InputEventMouseButton and event.is_action_pressed("action"):
+		if not get_tree().paused \
+			or game_state.get_hud().is_tablet_visible() \
+			or game_state.get_hud().is_quit_dialog_visible():
+			click_the_left_mouse_button()
 
 func _notification(what):
 	match what:

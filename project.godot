@@ -245,7 +245,7 @@ _global_script_classes=[ {
 "path": "res://addons/palladium/core/use_target.gd"
 }, {
 "base": "PLDGameWindow",
-"class": "PLDViewportHacks",
+"class": "PLDViewportHack",
 "language": "GDScript",
 "path": "res://addons/palladium/ui/viewport_hack.gd"
 }, {
@@ -307,7 +307,7 @@ _global_script_class_icons={
 "PLDTakable": "",
 "PLDUsable": "",
 "PLDUseTarget": "",
-"PLDViewportHacks": "",
+"PLDViewportHack": "",
 "StatuesPostament": "",
 "TakableRat": ""
 }

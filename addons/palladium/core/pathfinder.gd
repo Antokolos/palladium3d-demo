@@ -374,8 +374,8 @@ func get_movement_data(is_player):
 	return data
 
 func update_state(data : PLDMovementData):
+	angle_rad_y = 0
 	if data.has_rotation_angle():
-		angle_rad_y = 0
 		if not in_party or not is_rest_state():
 			if data.get_rotation_angle() > ROTATION_ANGLE_MIN_RAD:
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)

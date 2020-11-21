@@ -65,7 +65,7 @@ func _input(event):
 			close_preview()
 		elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			if event is InputEventMouseMotion:
-				item_holder_node.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
+				item_holder_node.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * settings.get_yaxis_coeff()))
 				item_holder_node.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
 				angle_rad_x = 0
 				angle_rad_y = 0
@@ -75,12 +75,12 @@ func _input(event):
 				if event.get_axis() == JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
 					angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v) if nonzero else 0
 				if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
-					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v) if nonzero else 0
+					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * v * settings.get_yaxis_coeff()) if nonzero else 0
 			else:
 				if event.is_action_pressed("cam_up"):
-					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1 * settings.get_yaxis_coeff())
 				elif event.is_action_pressed("cam_down"):
-					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+					angle_rad_x = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * settings.get_yaxis_coeff())
 				elif event.is_action_released("cam_up") or event.is_action_released("cam_down"):
 					angle_rad_x = 0
 				

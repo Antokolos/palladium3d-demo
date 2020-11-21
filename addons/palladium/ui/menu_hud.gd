@@ -20,6 +20,9 @@ func is_menu_hud():
 func is_tablet_visible():
 	return tablet.visible
 
+func is_quit_dialog_visible():
+	return get_node("quit_dialog").visible
+
 func pause_game(enable):
 	dimmer.visible = enable
 	get_tree().paused = enable
