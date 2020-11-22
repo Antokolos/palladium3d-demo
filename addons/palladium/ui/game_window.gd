@@ -2,7 +2,7 @@ extends ViewportContainer
 class_name PLDGameWindow
 
 const AXIS_VALUE_THRESHOLD = 0.15
-const MOUSE_SENSITIVITY = 30
+const JOY_SENSITIVITY = 30
 
 onready var rel_pos = Vector2(0, 0)
 onready var viewport = get_viewport()
@@ -19,9 +19,9 @@ func do_input(event):
 		var v = event.get_axis_value()
 		var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD
 		if event.get_axis() == JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
-			rel_pos.x = MOUSE_SENSITIVITY * v if nonzero else 0
+			rel_pos.x = JOY_SENSITIVITY * v if nonzero else 0
 		if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
-			rel_pos.y = MOUSE_SENSITIVITY * v if nonzero else 0
+			rel_pos.y = JOY_SENSITIVITY * v if nonzero else 0
 	if not event is InputEventMouseButton and event.is_action_pressed("action"):
 		if not get_tree().paused \
 			or game_state.get_hud().is_tablet_visible() \

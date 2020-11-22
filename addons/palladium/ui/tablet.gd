@@ -1,6 +1,8 @@
 extends Control
 class_name PLDTablet
 
+const SENS_FORMAT = "%0.2f"
+
 onready var tablet_panel = get_node("TabletPanel")
 onready var home_button = get_node("TabletPanel/HomeButton")
 onready var desktop = get_node("TabletPanel/TabletScreen/desktop")
@@ -32,6 +34,8 @@ onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
 onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
 onready var subtitles = settings_app.get_node("VBoxContainer/HSubtitles/Subtitles")
+onready var sensitivity_coef_node = settings_app.get_node("VBoxContainer/HSensitivityCoef/VBoxContainer/SensitivityCoef")
+onready var sensitivity_coef_label_node = settings_app.get_node("VBoxContainer/HSensitivityCoef/VBoxContainer/Label")
 onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVolume/MasterVolume")
 onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
@@ -65,6 +69,9 @@ func _ready():
 
 	shader_cache_enabled.pressed = settings.shader_cache_enabled
 	_on_ShaderCacheEnabled_pressed()
+
+	sensitivity_coef_node.value = log(settings.sensitivity_coef)
+	_on_SensitivityCoef_value_changed(sensitivity_coef_node.value)
 
 	quality.add_item("Normal", settings.QUALITY_NORM)
 	quality.add_item("Optimal", settings.QUALITY_OPT)
@@ -349,6 +356,11 @@ func _on_Fullscreen_pressed():
 func _on_InvertYAxis_pressed():
 	var enabled = invert_yaxis.is_pressed() if invert_yaxis else settings.invert_yaxis
 	settings.set_invert_yaxis(enabled)
+
+func _on_SensitivityCoef_value_changed(value):
+	var v = pow(10.0, value)
+	settings.set_sensitivity_coef(v)
+	sensitivity_coef_label_node.text = SENS_FORMAT % v
 
 func _on_CutoffEnabled_pressed():
 	var ce = cutoff_enabled.is_pressed() if cutoff_enabled else settings.cutoff_enabled

@@ -6,6 +6,9 @@ signal resolution_changed(ID)
 signal cutoff_enabled_changed(enabled)
 signal shader_cache_enabled_changed(enabled)
 
+const BASE_SENSITIVITY = 0.1
+const SENSITIVITY_COEF_DEFAULT = 1.0
+
 const AA_8X = 3
 const AA_4X = 2
 const AA_2X = 1
@@ -44,6 +47,7 @@ var shader_cache_enabled = true
 var vsync = true
 var fullscreen = true
 var invert_yaxis = false
+var sensitivity_coef = SENSITIVITY_COEF_DEFAULT
 var quality = QUALITY_OPT
 var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
@@ -97,15 +101,18 @@ func load_settings():
 
 	if ("shader_cache_enabled" in d):
 		shader_cache_enabled = bool(d.shader_cache_enabled)
-	
+
 	if ("vsync" in d):
 		vsync = bool(d.vsync)
 
 	if ("fullscreen" in d):
 		fullscreen = bool(d.fullscreen)
-	
+
 	if ("invert_yaxis" in d):
 		invert_yaxis = bool(d.invert_yaxis)
+
+	if ("sensitivity_coef" in d):
+		sensitivity_coef = float(d.sensitivity_coef)
 
 	if ("quality" in d):
 		quality = int(d.quality)
@@ -150,6 +157,7 @@ func save_settings():
 		"vsync" : vsync,
 		"fullscreen" : fullscreen,
 		"invert_yaxis" : invert_yaxis,
+		"sensitivity_coef" : sensitivity_coef,
 		"quality" : quality,
 		"resolution" : resolution,
 		"aa_quality" : aa_quality,
@@ -210,6 +218,12 @@ func set_invert_yaxis(enabled):
 
 func get_yaxis_coeff():
 	return -1.0 if invert_yaxis else 1.0
+
+func set_sensitivity_coef(val):
+	sensitivity_coef = val
+
+func get_sensitivity():
+	return BASE_SENSITIVITY * sensitivity_coef
 
 func set_cutoff_enabled(ce):
 	cutoff_enabled = ce

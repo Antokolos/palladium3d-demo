@@ -11,7 +11,6 @@ const Z_DIR = Vector3(0, 0, 1)
 const DRAW_PATH = false
 
 const ROTATION_ANGLE_MIN_RAD = 0.1
-const MOUSE_SENSITIVITY = 0.1 #0.05
 const KEY_LOOK_SPEED_FACTOR = 30
 
 const MAX_RANGE = 10
@@ -378,9 +377,9 @@ func update_state(data : PLDMovementData):
 	if data.has_rotation_angle():
 		if not in_party or not is_rest_state():
 			if data.get_rotation_angle() > ROTATION_ANGLE_MIN_RAD:
-				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY)
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * settings.get_sensitivity())
 			elif data.get_rotation_angle() < -ROTATION_ANGLE_MIN_RAD:
-				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * MOUSE_SENSITIVITY * -1)
+				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * settings.get_sensitivity() * -1)
 	if data.has_rest_state(): 
 		var rest_state_new = data.get_rest_state()
 		if rest_state != rest_state_new:
