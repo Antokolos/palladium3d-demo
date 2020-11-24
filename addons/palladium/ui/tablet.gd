@@ -1,6 +1,7 @@
 extends Control
 class_name PLDTablet
 
+const EULER_CONSTANT = exp(1.0)
 const SENS_FORMAT = "%0.2f"
 
 onready var tablet_panel = get_node("TabletPanel")
@@ -70,7 +71,7 @@ func _ready():
 	shader_cache_enabled.pressed = settings.shader_cache_enabled
 	_on_ShaderCacheEnabled_pressed()
 
-	sensitivity_coef_node.value = log(settings.sensitivity_coef)
+	sensitivity_coef_node.value = log(settings.sensitivity_coef) * log(EULER_CONSTANT)
 	_on_SensitivityCoef_value_changed(sensitivity_coef_node.value)
 
 	quality.add_item("Normal", settings.QUALITY_NORM)

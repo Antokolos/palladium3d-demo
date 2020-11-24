@@ -218,6 +218,7 @@ func show_tablet(is_show):
 		tablet.visible = false
 		pause_game(false)
 		settings.save_settings()
+		settings.save_input()
 
 func set_crouch_indicator(crouch):
 	# TODO: indicator_crouch can be null when loading the game from save, because hud is not initialized yet, maybe this code should be refactored

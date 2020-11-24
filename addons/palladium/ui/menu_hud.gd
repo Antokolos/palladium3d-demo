@@ -35,6 +35,7 @@ func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 		tablet.visible = false
 		pause_game(false)
 		settings.save_settings()
+		settings.save_input()
 
 func _unhandled_input(event):
 	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle"):

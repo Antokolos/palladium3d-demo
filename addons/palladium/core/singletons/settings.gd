@@ -40,6 +40,14 @@ const RESOLUTION_480 = 0
 const TABLET_HORIZONTAL = 1
 const TABLET_VERTICAL = 0
 
+enum InputType {
+	NONE = 0,
+	KEY = 1,
+	JOYPAD_BUTTON = 2,
+	JOYPAD_MOTION = 3,
+	MOUSE_BUTTON = 4
+}
+
 var tablet_orientation = TABLET_HORIZONTAL
 var performance_stats = false
 var cutoff_enabled = false
@@ -171,6 +179,74 @@ func save_settings():
 	}
 	f.store_line( to_json(d) )
 
+func load_input():
+	var f = File.new()
+	var error = f.open("user://input.json", File.READ)
+
+	if (error):
+		print("no input controls file to load.")
+		return
+
+	var result = parse_json(f.get_line())
+	if typeof(result) == TYPE_DICTIONARY:
+		if typeof(result[result.keys()[0]]) == TYPE_ARRAY:
+			print("Loading input map...")
+		else:
+			print("unexpected input map format")
+	else:
+		print("unexpected input map format")
+	for action in result.keys():
+		InputMap.erase_action(action)
+		for i in range(result[action].size()):
+			var event
+			var type = i
+			var id = i + 1
+			if i % 2 == 0:
+				if result[action][type] == InputType.KEY:
+					event = InputEventKey.new()
+					event.scancode = result[action][id]
+				elif result[action][type] == InputType.JOYPAD_BUTTON:
+					event = InputEventJoypadButton.new()
+					event.button_index = result[action][id]
+				elif result[action][type] == InputType.JOYPAD_MOTION:
+					event = InputEventJoypadMotion.new()
+					event.axis = result[action][id][0]
+					event.axis_value = result[action][id][1]
+				elif result[action][type] == InputType.MOUSE_BUTTON:
+					event = InputEventMouseButton.new()
+					event.factor = 1.0
+					event.button_index = result[action][id]
+					event.pressed = false
+					event.doubleclick = false
+				if !InputMap.has_action(action):
+					InputMap.add_action(action)
+				InputMap.action_add_event(action, event)
+
+func save_input():
+	var f = File.new()
+	var error = f.open("user://input.json", File.WRITE)
+	assert( not error )
+	
+	var inputStorage = {}
+	for action in InputMap.get_actions():
+		for event in InputMap.get_action_list(action):
+			if !inputStorage.has(action):
+				inputStorage[action] = []
+			if event is InputEventKey:
+				inputStorage[action].append(InputType.KEY)
+				inputStorage[action].append(event.get_scancode_with_modifiers())
+			elif event is InputEventJoypadButton:
+				inputStorage[action].append(InputType.JOYPAD_BUTTON)
+				inputStorage[action].append(event.button_index)
+			elif event is InputEventJoypadMotion:
+				inputStorage[action].append(InputType.JOYPAD_MOTION)
+				inputStorage[action].append([ event.axis, event.axis_value ])
+			elif event is InputEventMouseButton:
+				inputStorage[action].append(InputType.MOUSE_BUTTON)
+				inputStorage[action].append(event.button_index)
+	var json = to_json(inputStorage)
+	f.store_string(json)
+
 func set_language(lang_id):
 	language = lang_id
 	match lang_id:
@@ -258,6 +334,7 @@ func set_reverb(enable):
 
 func _ready():
 	load_settings()
+	load_input()
 	set_master_volume(master_volume)
 	set_music_volume(music_volume)
 	set_sound_volume(sound_volume)
