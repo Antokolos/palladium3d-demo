@@ -12,81 +12,25 @@ onready var scroll_container = get_node("VBoxContainer/HInputActions/ScrollConta
 onready var scrollbar = scroll_container.get_v_scrollbar()
 onready var controls = scroll_container.get_node("GridContainer")
 
+var last_selected_label = null
+
 func set_key_text(control, act):
 	if act is InputEventKey:
 		control.get_node("Label").set_text(act.as_text())
 
-func joy_button_to_string(button_index):
-	match button_index:
-		JOY_XBOX_A, JOY_SONY_X, JOY_DS_B:
-			return "XBOX A | PS X | Nintendo B"
-		JOY_XBOX_B, JOY_SONY_CIRCLE, JOY_DS_A:
-			return "XBOX B | PS circle | Nintendo A"
-		JOY_XBOX_X, JOY_SONY_SQUARE, JOY_DS_Y:
-			return "XBOX X | PS square | Nintendo Y"
-		JOY_XBOX_Y, JOY_SONY_TRIANGLE, JOY_DS_X:
-			return "XBOX Y | PS triangle | Nintendo X"
-		JOY_L:
-			return "Joypad Left Shoulder Button"
-		JOY_R:
-			return "Joypad Right Shoulder Button"
-		JOY_L2:
-			return "Joypad Left Trigger"
-		JOY_R2:
-			return "Joypad Right Trigger"
-		JOY_L3:
-			return "Joypad Left Stick Click"
-		JOY_R3:
-			return "Joypad Right Stick Click"
-		JOY_SELECT:
-			return "Joypad Button Select, Nintendo -"
-		JOY_START:
-			return "Joypad Button Start, Nintendo +"
-		JOY_DPAD_UP:
-			return "Joypad DPad Up"
-		JOY_DPAD_DOWN:
-			return "Joypad DPad Down"
-		JOY_DPAD_LEFT:
-			return "Joypad DPad Left"
-		JOY_DPAD_RIGHT:
-			return "Joypad DPad Right"
-		_:
-			return "Joypad Button"
-
-func joy_axis_to_string(axis, axis_value):
-	match axis:
-		JOY_AXIS_0:  # Joypad Left Stick Horizontal Axis
-			return "Left Stick " + ("Left" if axis_value < 0 else "Right")
-		JOY_AXIS_1:  # Joypad Left Stick Vertical Axis
-			return "Left Stick " + ("Up" if axis_value < 0 else "Down")
-		JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
-			return "Right Stick " + ("Left" if axis_value < 0 else "Right")
-		JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
-			return "Right Stick " + ("Up" if axis_value < 0 else "Down")
-	return "Stick " + ("-" if axis_value < 0 else "+")
-
-func mouse_button_to_string(button_index):
-	match button_index:
-		BUTTON_LEFT:
-			return "Left Mouse Button"
-		BUTTON_RIGHT:
-			return "Right Mouse Button"
-		BUTTON_MIDDLE:
-			return "Middle Mouse Button"
-
 func set_joypad_text(control, act):
 	if act is InputEventJoypadButton:
 		var button_index = act.get_button_index()
-		control.get_node("Label").set_text(joy_button_to_string(button_index))
+		control.get_node("Label").set_text(common_utils.joy_button_to_string(button_index))
 	if act is InputEventJoypadMotion:
 		var axis = act.get_axis()
 		var axis_value = act.get_axis_value()
-		control.get_node("Label").set_text(joy_axis_to_string(axis, axis_value))
+		control.get_node("Label").set_text(common_utils.joy_axis_to_string(axis, axis_value))
 
 func set_mouse_button_text(control, act):
 	if act is InputEventMouseButton:
 		var button_index = act.get_button_index()
-		control.get_node("Label").set_text(mouse_button_to_string(button_index))
+		control.get_node("Label").set_text(common_utils.mouse_button_to_string(button_index))
 
 func _input(event):
 	if not scroll_container.is_visible_in_tree():
@@ -103,8 +47,31 @@ func _input(event):
 			scroll_container.scroll_vertical = 0
 		scroll_container.update()
 
+func _on_label_gui_input(event : InputEvent, action_name, action_key, input_types, label_container):
+	if event is InputEventMouseMotion:
+		var label = label_container.get_node("Label")
+		if not last_selected_label \
+			or last_selected_label.get_instance_id() != label.get_instance_id():
+			if last_selected_label:
+				last_selected_label.set("custom_colors/font_color", Color.white)
+			last_selected_label = label
+			label.set("custom_colors/font_color", Color.red)
+	elif event.is_action_pressed("action"):
+		$input_dialog.show_input_dialog(self, action_name, action_key, input_types)
+
 func refresh():
+	last_selected_label = null
 	for ch in controls.get_children():
+		if ch.is_connected(
+			"gui_input",
+			self,
+			"_on_label_gui_input"
+		):
+			ch.disconnect(
+				"gui_input",
+				self,
+				"_on_label_gui_input"
+			)
 		ch.queue_free()
 	var actions = InputMap.get_actions()
 	actions.sort()
@@ -117,7 +84,19 @@ func refresh():
 		var list = InputMap.get_action_list(action)
 		var label_action_new = label_action.duplicate(0)
 		var label_key_new = label_key.duplicate(0)
+		label_key_new.connect(
+			"gui_input",
+			self,
+			"_on_label_gui_input",
+			[action, action_key, [ PLDSettings.InputType.KEY ], label_key_new]
+		)
 		var label_joy_new = label_joy.duplicate(0)
+		label_joy_new.connect(
+			"gui_input",
+			self,
+			"_on_label_gui_input",
+			[action, action_key, [ PLDSettings.InputType.JOYPAD_BUTTON, PLDSettings.InputType.JOYPAD_MOTION ], label_joy_new]
+		)
 		var label_mouse_button_new = label_mouse_button.duplicate(0)
 		if need_modulate:
 			label_action_new.set_self_modulate(COLOR_MODULATE)

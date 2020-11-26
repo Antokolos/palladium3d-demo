@@ -79,6 +79,9 @@ func equals(obj):
 func is_player():
 	return equals(game_state.get_player())
 
+func is_player_controlled():
+	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
+
 func is_activated():
 	# Checking is_physics_processing() because node can be paused
 	return activated and is_physics_processing()
@@ -373,7 +376,8 @@ func get_movement_data(is_player):
 	return data
 
 func update_state(data : PLDMovementData):
-	angle_rad_y = 0
+	if not is_player_controlled():
+		angle_rad_y = 0
 	if data.has_rotation_angle():
 		if not in_party or not is_rest_state():
 			if data.get_rotation_angle() > ROTATION_ANGLE_MIN_RAD:

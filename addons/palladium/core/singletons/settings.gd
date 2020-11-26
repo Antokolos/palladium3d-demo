@@ -1,4 +1,5 @@
 extends Node
+class_name PLDSettings
 
 signal language_changed(ID)
 signal quality_changed(ID)
@@ -196,31 +197,54 @@ func load_input():
 	else:
 		print("unexpected input map format")
 	for action in result.keys():
-		InputMap.erase_action(action)
 		for i in range(result[action].size()):
 			var event
 			var type = i
 			var id = i + 1
 			if i % 2 == 0:
+				if !InputMap.has_action(action):
+					InputMap.add_action(action)
 				if result[action][type] == InputType.KEY:
+					erase_action_event_of_type(action, InputType.KEY)
 					event = InputEventKey.new()
 					event.scancode = result[action][id]
 				elif result[action][type] == InputType.JOYPAD_BUTTON:
+					erase_action_event_of_type(action, InputType.JOYPAD_BUTTON)
 					event = InputEventJoypadButton.new()
 					event.button_index = result[action][id]
 				elif result[action][type] == InputType.JOYPAD_MOTION:
+					erase_action_event_of_type(action, InputType.JOYPAD_MOTION)
 					event = InputEventJoypadMotion.new()
 					event.axis = result[action][id][0]
 					event.axis_value = result[action][id][1]
 				elif result[action][type] == InputType.MOUSE_BUTTON:
+					erase_action_event_of_type(action, InputType.MOUSE_BUTTON)
 					event = InputEventMouseButton.new()
 					event.factor = 1.0
 					event.button_index = result[action][id]
 					event.pressed = false
 					event.doubleclick = false
-				if !InputMap.has_action(action):
-					InputMap.add_action(action)
 				InputMap.action_add_event(action, event)
+
+func erase_action_event_of_type(action, type):
+	for ev in InputMap.get_action_list(action):
+		match type:
+			InputType.KEY:
+				if ev is InputEventKey:
+					InputMap.action_erase_event(action, ev)
+					return
+			InputType.JOYPAD_BUTTON:
+				if ev is InputEventJoypadButton:
+					InputMap.action_erase_event(action, ev)
+					return
+			InputType.JOYPAD_MOTION:
+				if ev is InputEventJoypadMotion:
+					InputMap.action_erase_event(action, ev)
+					return
+			InputType.MOUSE_BUTTON:
+				if ev is InputEventMouseButton:
+					InputMap.action_erase_event(action, ev)
+					return
 
 func save_input():
 	var f = File.new()

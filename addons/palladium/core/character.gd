@@ -363,9 +363,6 @@ func is_taking_damage():
 func is_movement_disabled():
 	return get_model().is_movement_disabled()
 
-func is_player_controlled():
-	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
-
 func sit_down():
 	if not character_nodes.sit_down():
 		return

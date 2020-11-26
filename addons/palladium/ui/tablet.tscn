@@ -1,25 +1,26 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://addons/palladium/ui/tablet.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/ui/chat.gd" type="Script" id=2]
 [ext_resource path="res://addons/palladium/ui/controls.gd" type="Script" id=3]
-[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://scenes/authors.tscn" type="PackedScene" id=5]
-[ext_resource path="res://addons/palladium/assets/ui/lightblue_equirectangular.png" type="Texture" id=6]
-[ext_resource path="res://addons/palladium/assets/ui/chat.png" type="Texture" id=7]
-[ext_resource path="res://addons/palladium/assets/ui/credits.png" type="Texture" id=8]
-[ext_resource path="res://addons/palladium/assets/ui/80-80_white.png" type="Texture" id=9]
-[ext_resource path="res://addons/palladium/assets/ui/gear.png" type="Texture" id=10]
-[ext_resource path="res://addons/palladium/assets/ui/controls.png" type="Texture" id=11]
-[ext_resource path="res://addons/palladium/assets/ui/save.png" type="Texture" id=12]
-[ext_resource path="res://addons/palladium/assets/ui/load.png" type="Texture" id=13]
-[ext_resource path="res://addons/palladium/assets/ui/exit.png" type="Texture" id=14]
-[ext_resource path="res://addons/palladium/assets/ui/home-button.png" type="Texture" id=15]
-[ext_resource path="res://addons/palladium/assets/ui/home-button-pressed.png" type="Texture" id=16]
-[ext_resource path="res://addons/palladium/assets/ui/home-button-hover.png" type="Texture" id=17]
-[ext_resource path="res://addons/palladium/assets/ui/close-button.png" type="Texture" id=18]
-[ext_resource path="res://addons/palladium/assets/ui/close-button-pressed.png" type="Texture" id=19]
-[ext_resource path="res://addons/palladium/assets/ui/close-button-hover.png" type="Texture" id=20]
+[ext_resource path="res://addons/palladium/ui/input_dialog.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://scenes/authors.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/palladium/assets/ui/lightblue_equirectangular.png" type="Texture" id=7]
+[ext_resource path="res://addons/palladium/assets/ui/chat.png" type="Texture" id=8]
+[ext_resource path="res://addons/palladium/assets/ui/credits.png" type="Texture" id=9]
+[ext_resource path="res://addons/palladium/assets/ui/80-80_white.png" type="Texture" id=10]
+[ext_resource path="res://addons/palladium/assets/ui/gear.png" type="Texture" id=11]
+[ext_resource path="res://addons/palladium/assets/ui/controls.png" type="Texture" id=12]
+[ext_resource path="res://addons/palladium/assets/ui/save.png" type="Texture" id=13]
+[ext_resource path="res://addons/palladium/assets/ui/load.png" type="Texture" id=14]
+[ext_resource path="res://addons/palladium/assets/ui/exit.png" type="Texture" id=15]
+[ext_resource path="res://addons/palladium/assets/ui/home-button.png" type="Texture" id=16]
+[ext_resource path="res://addons/palladium/assets/ui/home-button-pressed.png" type="Texture" id=17]
+[ext_resource path="res://addons/palladium/assets/ui/home-button-hover.png" type="Texture" id=18]
+[ext_resource path="res://addons/palladium/assets/ui/close-button.png" type="Texture" id=19]
+[ext_resource path="res://addons/palladium/assets/ui/close-button-pressed.png" type="Texture" id=20]
+[ext_resource path="res://addons/palladium/assets/ui/close-button-hover.png" type="Texture" id=21]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.752941, 0.752941, 0.752941, 1 )
@@ -43,7 +44,7 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 2048, 1024 )
 
 [node name="tablet" type="Control"]
@@ -259,6 +260,7 @@ rect_min_size = Vector2( 280, 0 )
 min_value = -0.3
 max_value = 1.0
 step = 0.01
+ticks_on_borders = false
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSensitivityCoef/VBoxContainer"]
 margin_top = 20.0
@@ -396,6 +398,7 @@ custom_constants/separation = 20
 margin_right = 280.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 280, 0 )
+ticks_on_borders = false
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume"]
 margin_left = 300.0
@@ -414,7 +417,7 @@ custom_constants/separation = 20
 margin_right = 280.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 280, 0 )
-ticks_on_borders = true
+ticks_on_borders = false
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume"]
 margin_left = 300.0
@@ -433,6 +436,7 @@ custom_constants/separation = 20
 margin_right = 280.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 280, 0 )
+ticks_on_borders = false
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume"]
 margin_left = 300.0
@@ -451,7 +455,7 @@ custom_constants/separation = 20
 margin_right = 280.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 280, 0 )
-ticks_on_borders = true
+ticks_on_borders = false
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume"]
 margin_left = 300.0
@@ -461,7 +465,6 @@ margin_bottom = 15.0
 text = "SETTINGS_VOLUME_SPEECH"
 
 [node name="controls_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -519,6 +522,7 @@ align = 1
 valign = 1
 
 [node name="LabelJoy" type="PanelContainer" parent="TabletPanel/TabletScreen/apps/controls_app/VBoxContainer/GridContainer"]
+editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -580,6 +584,12 @@ size_flags_vertical = 3
 custom_constants/hseparation = 10
 columns = 4
 
+[node name="input_dialog" parent="TabletPanel/TabletScreen/apps/controls_app" instance=ExtResource( 4 )]
+margin_left = -153.0
+margin_top = -111.0
+margin_right = -153.0
+margin_bottom = -111.0
+
 [node name="save_game_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
 editor/display_folded = true
 visible = false
@@ -606,7 +616,7 @@ alignment = 1
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Caption"]
 margin_right = 40.0
 margin_bottom = 14.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 text = "TABLET_SAVE_GAME_CAPTION"
 align = 1
 
@@ -701,7 +711,7 @@ alignment = 1
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/load_game_app/VBoxContainer/Caption"]
 margin_right = 602.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 text = "TABLET_LOAD_GAME_CAPTION"
 align = 1
 
@@ -783,7 +793,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 330, 0 )
 text = "EMPTY_SLOT"
 
-[node name="credits" parent="TabletPanel/TabletScreen/apps" instance=ExtResource( 5 )]
+[node name="credits" parent="TabletPanel/TabletScreen/apps" instance=ExtResource( 6 )]
 visible = false
 
 [node name="desktop" type="Panel" parent="TabletPanel/TabletScreen"]
@@ -823,7 +833,7 @@ margin_left = 24.0
 margin_right = 104.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 7 )
+texture_normal = ExtResource( 8 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VChatContainer"]
@@ -850,7 +860,7 @@ margin_left = 23.0
 margin_right = 103.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 8 )
+texture_normal = ExtResource( 9 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VCreditsContainer"]
@@ -876,7 +886,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 9 )
+texture_normal = ExtResource( 10 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VMapContainer"]
@@ -902,7 +912,7 @@ alignment = 1
 margin_right = 80.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 9 )
+texture_normal = ExtResource( 10 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VDocumentsContainer"]
@@ -929,7 +939,7 @@ margin_left = 26.0
 margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 10 )
+texture_normal = ExtResource( 11 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSettingsContainer"]
@@ -956,7 +966,7 @@ margin_left = 24.0
 margin_right = 104.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 11 )
+texture_normal = ExtResource( 12 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VControlsGameContainer"]
@@ -984,7 +994,7 @@ margin_left = 23.0
 margin_right = 103.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 12 )
+texture_normal = ExtResource( 13 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VSaveGameContainer"]
@@ -1012,7 +1022,7 @@ margin_left = 26.0
 margin_right = 106.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 13 )
+texture_normal = ExtResource( 14 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VLoadGameContainer"]
@@ -1039,7 +1049,7 @@ margin_left = 24.0
 margin_right = 104.0
 margin_bottom = 80.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 14 )
+texture_normal = ExtResource( 15 )
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/desktop/GridContainer/VQuitGameContainer"]
@@ -1059,17 +1069,17 @@ margin_left = -40.0
 margin_top = -20.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 15 )
-texture_pressed = ExtResource( 16 )
-texture_hover = ExtResource( 17 )
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
 
 [node name="CloseButton" type="TextureButton" parent="TabletPanel"]
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_hover = ExtResource( 20 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+texture_hover = ExtResource( 21 )
 [connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]

@@ -1,0 +1,104 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/palladium/ui/input_dialog.gd" type="Script" id=2]
+
+[node name="input_dialog" type="WindowDialog" groups=[
+"input_dialog",
+]]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+window_title = "DIALOG_INPUT_TITLE"
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_constants/separation = 50
+alignment = 1
+
+[node name="LabelActionName" type="Label" parent="VBoxContainer"]
+margin_left = 833.0
+margin_top = 480.0
+margin_right = 1086.0
+margin_bottom = 512.0
+size_flags_horizontal = 4
+align = 1
+valign = 1
+
+[node name="LabelWhatToDo" type="Label" parent="VBoxContainer"]
+margin_left = 833.0
+margin_top = 480.0
+margin_right = 1086.0
+margin_bottom = 512.0
+size_flags_horizontal = 4
+align = 1
+valign = 1
+
+[node name="LabelResult" type="Label" parent="VBoxContainer"]
+margin_left = 833.0
+margin_top = 480.0
+margin_right = 1086.0
+margin_bottom = 512.0
+size_flags_horizontal = 4
+align = 1
+valign = 1
+
+[node name="TestButton" type="TextureButton" parent="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_left = 777.0
+margin_top = 562.0
+margin_right = 1143.0
+margin_bottom = 600.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_constants/separation = 30
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 173.0
+margin_bottom = 38.0
+focus_neighbour_left = NodePath("../ClearButton")
+focus_neighbour_top = NodePath("../ClearButton")
+focus_neighbour_right = NodePath("../CancelButton")
+focus_neighbour_bottom = NodePath("../CancelButton")
+focus_next = NodePath("../CancelButton")
+focus_previous = NodePath("../ClearButton")
+disabled = true
+text = "BUTTON_APPLY"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 203.0
+margin_right = 366.0
+margin_bottom = 38.0
+focus_neighbour_left = NodePath("../ApplyButton")
+focus_neighbour_top = NodePath("../ApplyButton")
+focus_neighbour_right = NodePath("../ClearButton")
+focus_neighbour_bottom = NodePath("../ClearButton")
+focus_next = NodePath("../ClearButton")
+focus_previous = NodePath("../ApplyButton")
+text = "BUTTON_CANCEL"
+
+[node name="ClearButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 203.0
+margin_right = 366.0
+margin_bottom = 38.0
+focus_neighbour_left = NodePath("../CancelButton")
+focus_neighbour_top = NodePath("../CancelButton")
+focus_neighbour_right = NodePath("../ApplyButton")
+focus_neighbour_bottom = NodePath("../ApplyButton")
+focus_next = NodePath("../ApplyButton")
+focus_previous = NodePath("../CancelButton")
+text = "BUTTON_CLEAR"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ApplyButton" to="." method="_on_ApplyButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ClearButton" to="." method="_on_ClearButton_pressed"]

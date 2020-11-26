@@ -20,7 +20,10 @@ func _notification(what):
 			no_button.grab_focus()
 
 func _input(event):
-	if visible and event.is_action_pressed("ui_tablet_toggle") or event.is_action_pressed("ui_cancel"):
+	if not visible:
+		return
+	if event.is_action_pressed("ui_tablet_toggle") or event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
 		_on_NoButton_pressed()
 
 func _on_YesButton_pressed():

@@ -209,6 +209,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/environment/room_enabler.gd"
 }, {
+"base": "Node",
+"class": "PLDSettings",
+"language": "GDScript",
+"path": "res://addons/palladium/core/singletons/settings.gd"
+}, {
 "base": "Spatial",
 "class": "PLDShaderCache",
 "language": "GDScript",
@@ -300,6 +305,7 @@ _global_script_class_icons={
 "PLDPlayerModel": "",
 "PLDRiddle": "",
 "PLDRoomEnabler": "",
+"PLDSettings": "",
 "PLDShaderCache": "",
 "PLDStory": "",
 "PLDStoryNode": "",

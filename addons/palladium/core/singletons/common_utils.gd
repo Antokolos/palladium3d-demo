@@ -1,5 +1,68 @@
 extends Node
 
+func joy_button_to_string(button_index):
+	match button_index:
+		JOY_XBOX_A, JOY_SONY_X, JOY_DS_B:
+			return "XBOX A | PS X | Nintendo B"
+		JOY_XBOX_B, JOY_SONY_CIRCLE, JOY_DS_A:
+			return "XBOX B | PS circle | Nintendo A"
+		JOY_XBOX_X, JOY_SONY_SQUARE, JOY_DS_Y:
+			return "XBOX X | PS square | Nintendo Y"
+		JOY_XBOX_Y, JOY_SONY_TRIANGLE, JOY_DS_X:
+			return "XBOX Y | PS triangle | Nintendo X"
+		JOY_L:
+			return "Joypad Left Shoulder Button"
+		JOY_R:
+			return "Joypad Right Shoulder Button"
+		JOY_L2:
+			return "Joypad Left Trigger"
+		JOY_R2:
+			return "Joypad Right Trigger"
+		JOY_L3:
+			return "Joypad Left Stick Click"
+		JOY_R3:
+			return "Joypad Right Stick Click"
+		JOY_SELECT:
+			return "Joypad Button Select, Nintendo -"
+		JOY_START:
+			return "Joypad Button Start, Nintendo +"
+		JOY_DPAD_UP:
+			return "Joypad DPad Up"
+		JOY_DPAD_DOWN:
+			return "Joypad DPad Down"
+		JOY_DPAD_LEFT:
+			return "Joypad DPad Left"
+		JOY_DPAD_RIGHT:
+			return "Joypad DPad Right"
+		_:
+			return "Joypad Button"
+
+func joy_axis_to_string(axis, axis_value):
+	match axis:
+		JOY_AXIS_0:  # Joypad Left Stick Horizontal Axis
+			return "Left Stick " + ("Left" if axis_value < 0 else "Right")
+		JOY_AXIS_1:  # Joypad Left Stick Vertical Axis
+			return "Left Stick " + ("Up" if axis_value < 0 else "Down")
+		JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
+			return "Right Stick " + ("Left" if axis_value < 0 else "Right")
+		JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
+			return "Right Stick " + ("Up" if axis_value < 0 else "Down")
+	return "Stick " + ("-" if axis_value < 0 else "+")
+
+func mouse_button_to_string(button_index):
+	match button_index:
+		BUTTON_LEFT:
+			return "Left Mouse Button"
+		BUTTON_RIGHT:
+			return "Right Mouse Button"
+		BUTTON_MIDDLE:
+			return "Middle Mouse Button"
+
+# log() in Godot is actually a NATURAL logarithm
+# This method returns a 10-based logarithm
+func log10(x):
+	return log(x) / log(10.0)
+
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:
 	if node is Timer:
