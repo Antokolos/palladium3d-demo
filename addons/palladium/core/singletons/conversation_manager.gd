@@ -227,9 +227,9 @@ func story_choose(player, idx):
 		story_proceed(player)
 
 func proceed_story_immediately(player):
-	if $AudioStreamPlayer.is_playing():
-		$AudioStreamPlayer.stop()
-		story_proceed(player)
+	if lipsync_manager.is_speaking():
+		lipsync_manager.stop_sound_and_lipsync()
+	story_proceed(player)
 
 func story_proceed(player):
 	var conversation = game_state.get_hud().conversation

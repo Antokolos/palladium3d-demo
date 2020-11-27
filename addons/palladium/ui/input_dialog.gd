@@ -42,6 +42,8 @@ func get_what_to_do_text(itypes):
 				return tr("DIALOG_INPUT_KEY")
 			PLDSettings.InputType.JOYPAD_BUTTON, PLDSettings.InputType.JOYPAD_MOTION:
 				return tr("DIALOG_INPUT_JOY")
+			PLDSettings.InputType.MOUSE_BUTTON:
+				return tr("DIALOG_INPUT_MOUSE")
 	return ""
 
 func enable_buttons():
@@ -86,6 +88,11 @@ func _input(event):
 							captured_event = event
 							label_result.text = common_utils.joy_axis_to_string(a, v)
 							enable_buttons()
+				PLDSettings.InputType.MOUSE_BUTTON:
+					if event is InputEventMouseButton:
+						captured_event = event
+						label_result.text = common_utils.mouse_button_to_string(event.get_button_index())
+						enable_buttons()
 
 func _on_ApplyButton_pressed():
 	if captured_event:

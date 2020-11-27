@@ -2,12 +2,6 @@
 
 [ext_resource path="res://addons/palladium/core/singletons/lipsync_manager.gd" type="Script" id=1]
 
-
-
-
-
-
-
 [node name="lipsync_manager" type="Node"]
 script = ExtResource( 1 )
 

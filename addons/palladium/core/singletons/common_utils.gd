@@ -52,11 +52,25 @@ func joy_axis_to_string(axis, axis_value):
 func mouse_button_to_string(button_index):
 	match button_index:
 		BUTTON_LEFT:
-			return "Left Mouse Button"
+			return "Left Button"
 		BUTTON_RIGHT:
-			return "Right Mouse Button"
+			return "Right Button"
 		BUTTON_MIDDLE:
-			return "Middle Mouse Button"
+			return "Middle Button"
+		BUTTON_WHEEL_UP:
+			return "Mouse wheel up"
+		BUTTON_WHEEL_DOWN:
+			return "Mouse wheel down"
+		BUTTON_WHEEL_LEFT:
+			return "Mouse wheel left"
+		BUTTON_WHEEL_RIGHT:
+			return "Mouse wheel right"
+		BUTTON_XBUTTON1:
+			return "Extra Button 1"
+		BUTTON_XBUTTON2:
+			return "Extra Button 2"
+		_:
+			return "Extended button " + str(button_index)
 
 # log() in Godot is actually a NATURAL logarithm
 # This method returns a 10-based logarithm

@@ -98,6 +98,12 @@ func refresh():
 			[action, action_key, [ PLDSettings.InputType.JOYPAD_BUTTON, PLDSettings.InputType.JOYPAD_MOTION ], label_joy_new]
 		)
 		var label_mouse_button_new = label_mouse_button.duplicate(0)
+		label_mouse_button_new.connect(
+			"gui_input",
+			self,
+			"_on_label_gui_input",
+			[action, action_key, [ PLDSettings.InputType.MOUSE_BUTTON ], label_mouse_button_new]
+		)
 		if need_modulate:
 			label_action_new.set_self_modulate(COLOR_MODULATE)
 			label_key_new.set_self_modulate(COLOR_MODULATE)

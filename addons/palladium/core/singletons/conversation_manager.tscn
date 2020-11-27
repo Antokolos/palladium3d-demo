@@ -2,14 +2,6 @@
 
 [ext_resource path="res://addons/palladium/core/singletons/conversation_manager.gd" type="Script" id=1]
 
-
-
-
-
-
-
-
-
 [node name="conversation_manager" type="Node"]
 script = ExtResource( 1 )
 

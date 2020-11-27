@@ -14,6 +14,9 @@ func _ready():
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	stop_sound_and_lipsync()
 
+func is_speaking():
+	return $AudioStreamPlayer.is_playing()
+
 func stop_sound_and_lipsync():
 	for character_speaker in game_state.get_characters():
 		character_speaker.get_model().stop_speaking()
