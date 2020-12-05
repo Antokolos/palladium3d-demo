@@ -153,12 +153,18 @@ func _input(event):
 	if not player or player.is_hidden():
 		return
 	if event.is_action_pressed("item_preview_toggle"):
+		if item_preview.is_opened():
+			return
 		var hud = game_state.get_hud()
-		if hud and not item_preview.is_opened():
-			var item = hud.get_active_item()
-			if item:
-				game_state.get_hud().main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
-				item_preview.open_preview(item, hud, flashlight)
+		if not hud:
+			return
+		if hud.is_in_conversation():
+			return 
+		var item = hud.get_active_item()
+		if not item:
+			return
+		hud.main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
+		item_preview.open_preview(item, hud, flashlight)
 	elif event.is_action_pressed("action"):
 		use_point.action(player, self)
 		item_use.action(player, self)

@@ -164,12 +164,18 @@ func is_menu_hud():
 func is_tablet_visible():
 	return tablet.visible
 
+func is_in_conversation():
+	return conversation.visible or conversation_manager.conversation_is_in_progress()
+
 func is_quit_dialog_visible():
 	return get_node("quit_dialog").visible
 
-func pause_game(enable):
-	dimmer.visible = enable
+func pause_game(enable, with_dimmer = true):
+	dimmer.visible = with_dimmer and enable
 	get_tree().paused = enable
+	var player = game_state.get_player()
+	if player:
+		player.reset_movement()
 
 func set_surge(player, enable):
 	if player and not player.equals(game_state.get_player()):
@@ -425,7 +431,7 @@ func _input(event):
 			set_active_item(4)
 		elif event.is_action_pressed("active_item_6"):
 			set_active_item(5)
-	elif not conversation.visible:
+	elif not is_in_conversation():
 		if event.is_action_pressed("active_item_back"):
 			set_active_quick_item(active_quick_item_idx - 1)
 		elif event.is_action_pressed("active_item_next"):

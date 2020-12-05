@@ -23,7 +23,6 @@ func body_is_usable(body, distance_to_body):
 func ray_action(ray, player_node, camera_node):
 	if not ray.enabled:
 		return false
-	
 	ray.force_raycast_update()
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())
@@ -36,6 +35,8 @@ func ray_action(ray, player_node, camera_node):
 	return false
 
 func action(player_node, camera_node):
+	if game_state.get_hud().is_in_conversation():
+		return
 	if ray_action(ray_items, player_node, camera_node) \
 		or ray_action(ray_characters, player_node, camera_node):
 		return
@@ -69,6 +70,8 @@ func switch_highlight(player_node, body, distance_to_body):
 		return common_utils.get_action_key("action") + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 
 func highlight(player_node):
+	if game_state.get_hud().is_in_conversation():
+		return ""
 	if player_node.is_hidden():
 		return "E: " + tr("ACTION_UNHIDE")
 	var text_ray_items = ray_highlight(ray_items, player_node)

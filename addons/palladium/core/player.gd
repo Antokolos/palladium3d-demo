@@ -46,18 +46,12 @@ func reset_rotation():
 ### Use target ###
 
 func use(player_node, camera_node):
-	if conversation_manager.conversation_is_in_progress():
-		return false
 	var u = .use(player_node, camera_node)
 	if not u:
 		game_state.handle_conversation(player_node, self, player_node)
 	return true
 
 func add_highlight(player_node):
-	var hud = game_state.get_hud()
-	var conversation = hud.conversation
-	if conversation.visible:
-		return ""
 	var h = .add_highlight(player_node)
 	return game_state.handle_player_highlight(player_node, self) if h.empty() else h
 

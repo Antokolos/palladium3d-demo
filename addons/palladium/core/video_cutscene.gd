@@ -6,7 +6,7 @@ func _ready():
 	visible = false
 
 func play(video_file_name):
-	get_tree().paused = true
+	game_state.get_hud().pause_game(true, false)
 	visible = true
 	var stream = VideoStreamWebm.new()
 	stream.set_file(video_file_name)
@@ -15,4 +15,4 @@ func play(video_file_name):
 
 func _on_VideoPlayer_finished():
 	visible = false
-	get_tree().paused = false
+	game_state.get_hud().pause_game(false, false)

@@ -52,7 +52,7 @@ func open_preview(item, hud, flashlight):
 		var ch = label_close_node.duplicate(0)
 		ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
 		custom_actions_node.add_child(ch)
-	get_tree().paused = true
+	hud.pause_game(true, false)
 	hud.show_game_ui(false)
 	hud.actions_panel.show()
 
@@ -105,6 +105,6 @@ func close_preview():
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
 			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
 	custom_actions.clear()
-	get_tree().paused = false
+	game_state.get_hud().pause_game(false, false)
 	if not flashlight_visible:
 		flashlight.hide()

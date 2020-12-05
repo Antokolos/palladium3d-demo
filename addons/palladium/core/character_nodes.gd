@@ -135,13 +135,20 @@ func play_sound_falling_to_floor():
 	sound_player_falling_to_floor.play()
 
 func set_sound_walk(mode, replace_existing = true):
+	if walk_sound_ids[0] == mode and not replace_existing:
+		return
 	if replace_existing:
 		walk_sound_ids[0] = mode
 	else:
 		walk_sound_ids.push_front(mode)
 	sound_player_walking.stop()
-	sound_player_walking.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
+	sound_player_walking.stream = CHARS.SOUND[mode] if mode != CHARS.SoundId.SOUND_WALK_NONE and CHARS.SOUND.has(mode) else null
 	sound_player_walking.set_unit_db(0)
+
+func restore_sound_walk_from(mode):
+	if walk_sound_ids.size() > 1 and walk_sound_ids[0] == mode:
+		walk_sound_ids.pop_front()
+		set_sound_walk(walk_sound_ids[0])
 
 func set_sound_attack(mode):
 	sound_player_attack.stop()
@@ -155,15 +162,11 @@ func set_sound_miss(mode):
 
 func set_underwater(enable):
 	if enable:
-		if walk_sound_ids[0] != CHARS.SoundId.SOUND_WALK_SWIM:
-			set_sound_walk(CHARS.SoundId.SOUND_WALK_SWIM, false)
+		set_sound_walk(CHARS.SoundId.SOUND_WALK_SWIM, false)
 		MEDIA.change_music_to(MEDIA.MusicId.UNDERWATER, false)
 	else:
-		if walk_sound_ids[0] == CHARS.SoundId.SOUND_WALK_SWIM:
-			walk_sound_ids.pop_front()
-		if walk_sound_ids[0] != CHARS.SoundId.SOUND_WALK_NONE:
-			set_sound_walk(walk_sound_ids[0])
-		MEDIA.restore_music()
+		restore_sound_walk_from(CHARS.SoundId.SOUND_WALK_SWIM)
+		MEDIA.restore_music_from(MEDIA.MusicId.UNDERWATER)
 
 func use_weapon(item):
 	if not item:

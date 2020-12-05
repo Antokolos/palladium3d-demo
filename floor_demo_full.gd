@@ -28,7 +28,8 @@ func use_lootable(player_node, lootable):
 	var takable_id = lootable.takable_id
 	match takable_id:
 		DB.TakableIds.COIN:
-			conversation_manager.start_area_conversation("193_some_gold_after_all")
+			if game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
+				conversation_manager.start_area_conversation("193_some_gold_after_all")
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id

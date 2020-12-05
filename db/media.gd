@@ -17,24 +17,24 @@ const SOUND = {
 	SoundId.SNAKE_HISS : preload("res://sound/environment/Labyrinth_snake_hiss.ogg")
 }
 
-var current_music = null
 var music_ids = [ MusicId.NONE ]
 
 func change_music_to(music_id, replace_existing = true):
-	if not MUSIC[music_id]:
-		stop_music()
+	if music_ids[0] == music_id and not replace_existing:
 		return
 	if replace_existing:
 		music_ids[0] = music_id
 	else:
 		music_ids.push_front(music_id)
-	if current_music != music_id:
-		current_music = music_id
+	if music_id == MEDIA.MusicId.NONE or not MUSIC[music_id]:
+		$MusicPlayer.stream = null
+		stop_music()
+	else:
 		$MusicPlayer.stream = MUSIC[music_id]
 		$MusicPlayer.play()
 
-func restore_music():
-	if music_ids.size() > 1:
+func restore_music_from(music_id):
+	if music_ids.size() > 1 and music_ids[0] == music_id:
 		music_ids.pop_front()
 		change_music_to(music_ids[0])
 
@@ -49,5 +49,4 @@ func play_sound(sound_id, is_loop = false):
 
 func stop_music():
 	$MusicPlayer.stop()
-	current_music = null
 	music_ids = [ MusicId.NONE ]

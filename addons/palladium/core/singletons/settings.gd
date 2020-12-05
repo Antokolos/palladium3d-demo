@@ -194,9 +194,12 @@ func load_input():
 			print("Loading input map...")
 		else:
 			print("unexpected input map format")
+			return
 	else:
 		print("unexpected input map format")
+		return
 	for action in result.keys():
+		InputMap.erase_action(action)
 		for i in range(result[action].size()):
 			var event
 			var type = i

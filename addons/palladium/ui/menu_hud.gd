@@ -23,8 +23,8 @@ func is_tablet_visible():
 func is_quit_dialog_visible():
 	return get_node("quit_dialog").visible
 
-func pause_game(enable):
-	dimmer.visible = enable
+func pause_game(enable, with_dimmer = true):
+	dimmer.visible = with_dimmer and enable
 	get_tree().paused = enable
 
 func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
