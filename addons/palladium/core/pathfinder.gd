@@ -251,7 +251,11 @@ func follow(current_transform, next_position):
 		point_of_interest if point_of_interest else (
 			current_actor
 				if current_actor and not equals(current_actor)
-				else get_preferred_target()
+				else (
+					get_preferred_target()
+						if was_moving
+						else null
+				)
 		),
 		current_transform,
 		target_node.get_global_transform().origin

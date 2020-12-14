@@ -88,9 +88,9 @@ func _on_shader_cache_processed():
 				)
 			else:
 				cutscene_manager.borrow_camera(player, $PositionFinalCutscene)
-			player.set_target_node($PositionPlayer2)
+			player.set_target_node($PositionPlayer2, true, true)
 			player.set_force_physics(true)
-			player_female.set_target_node($PositionCompanion2)
+			player_female.set_target_node($PositionCompanion2, true, true)
 			player_female.set_force_physics(true)
 			player.leave_party()
 			player_female.leave_party()
@@ -101,9 +101,9 @@ func _on_shader_cache_processed():
 				"172_We_made_a_great_team",
 				$PositionFinalCutscene
 			)
-			player.set_target_node($PositionPlayer2)
+			player.set_target_node($PositionPlayer2, true, true)
 			player.set_force_physics(true)
-			player_bandit.set_target_node($PositionCompanion2)
+			player_bandit.set_target_node($PositionCompanion2, true, true)
 			player_bandit.set_force_physics(true)
 			player.leave_party()
 			player_bandit.leave_party()

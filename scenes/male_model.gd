@@ -2,6 +2,9 @@ extends PLDPlayerModel
 class_name MaleModel
 
 const PLAYER_CUTSCENE_PUSHES_CHEST = 1
+const PLAYER_CUTSCENE_HANDSHAKE_BANDIT = 2
+const PLAYER_CUTSCENE_HANDSHAKE_FEMALE = 3
+const PLAYER_CUTSCENE_KISS = 4
 
 func _ready():
 	pass

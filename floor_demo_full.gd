@@ -36,7 +36,7 @@ func use_takable(player_node, takable, parent, was_taken):
 	var pedestal_id = parent.pedestal_id if parent is PLDPedestal else DB.PedestalIds.NONE
 	match takable_id:
 		DB.TakableIds.APATA:
-			pass # door_0 is now closed a little bit later, when FEMALE_TAKES_APATA cutscene or corresponding dialogue is ended
+			pass # door_0 is now closed a little bit later, when FEMALE_CUTSCENE_TAKES_APATA cutscene or corresponding dialogue is ended
 		DB.TakableIds.HERMES:
 			match pedestal_id:
 				DB.PedestalIds.ERIDA_LOCK:
@@ -200,7 +200,7 @@ func _on_AreaApata_body_entered(body):
 		bandit.teleport(get_node("BanditSavePosition"))
 		body.teleport(get_node("PlayerTeleportPosition"))
 		get_node("ApataTakeTimer").start()
-		female.play_cutscene(FemaleModel.FEMALE_TAKES_APATA)
+		female.play_cutscene(FemaleModel.FEMALE_CUTSCENE_TAKES_APATA)
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_ApataTakeTimer_timeout():
@@ -307,7 +307,7 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	match player.name_hint:
 		CHARS.FEMALE_NAME_HINT:
 			match cutscene_id:
-				FemaleModel.FEMALE_TAKES_APATA:
+				FemaleModel.FEMALE_CUTSCENE_TAKES_APATA:
 					if conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 						var p = game_state.get_player()
 						cutscene_manager.restore_camera(p)

@@ -2,7 +2,9 @@ extends PLDPlayerModel
 class_name FemaleModel
 
 const FEMALE_CUTSCENE_STAND_UP_STUMP = 1
-const FEMALE_TAKES_APATA = 2
+const FEMALE_CUTSCENE_TAKES_APATA = 2
+const FEMALE_CUTSCENE_SHAKES_HAND = 3
+const FEMALE_CUTSCENE_KISS = 4
 
 func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")

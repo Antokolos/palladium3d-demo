@@ -324,9 +324,12 @@ func set_aggressive(enable):
 	if enable:
 		set_patrolling(false)
 
-func set_target_node(node, update_navpath = true):
+func set_target_node(node, update_navpath = true, force_no_sprinting = false):
 	.set_target_node(node, update_navpath)
 	if not node or is_player_controlled():
+		return
+	if force_no_sprinting:
+		set_sprinting(false)
 		return
 	if not is_in_party() and get_morale() >= 0:
 		set_sprinting(false)
@@ -455,9 +458,10 @@ func process_rotation(need_to_update_collisions):
 
 func invoke_physics_pass():
 	set_has_floor_collision(false)
-	vel = move_and_slide_with_snap(
-		vel,
-		get_snap(),
+	var v = Vector3()
+	v.y = vel.y
+	move_and_slide(
+		v,
 		Vector3.UP,
 		true,
 		4,
