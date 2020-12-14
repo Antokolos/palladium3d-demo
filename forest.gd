@@ -170,16 +170,18 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 			game_state.change_scene("res://ending_2.tscn", false, true)
 		"171_Why_are_you_so_sad":
+			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+			$FinalCutsceneTimer.start()
+			yield($FinalCutsceneTimer, "timeout")
 			if game_state.has_item(DB.TakableIds.PALLADIUM):
-				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 				game_state.change_scene("res://ending_1.tscn", false, true)
 			else:
-				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 				game_state.change_scene("res://ending_2.tscn", false, true)
 		"172_We_made_a_great_team":
+			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
+			$FinalCutsceneTimer.start()
+			yield($FinalCutsceneTimer, "timeout")
 			if game_state.has_item(DB.TakableIds.ATHENA):
-				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 				game_state.change_scene("res://ending_4.tscn", false, true)
 			else:
-				cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 				game_state.change_scene("res://ending_3.tscn", false, true)
