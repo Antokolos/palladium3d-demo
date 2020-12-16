@@ -7,7 +7,6 @@ const POISON_LETHALITY_RATE = 1
 
 onready var character = get_parent()
 
-onready var animation_player = $AnimationPlayer
 onready var cutscene_timer = $CutsceneTimer
 onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
@@ -102,21 +101,6 @@ func enable_rays_to_character(another_character, enable):
 		r.enabled = enable
 		return true
 	return false
-
-func sit_down():
-	if animation_player.is_playing():
-		return false
-	animation_player.play("crouch")
-	return true
-
-func stand_up():
-	if is_low_ceiling():
-		# I.e. if the player is crouching and something is above the head, do not allow to stand up.
-		return false
-	if animation_player.is_playing():
-		return false
-	animation_player.play_backwards("crouch")
-	return true
 
 func start_cutscene_timer():
 	cutscene_timer.start()

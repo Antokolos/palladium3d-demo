@@ -40,6 +40,7 @@ export var has_melee_attack = false
 export var can_hide = true
 
 onready var character_nodes = $character_nodes
+onready var animation_player = $AnimationPlayer
 
 var vel = Vector3()
 
@@ -135,21 +136,22 @@ func take_damage(fatal, hit_direction_node):
 	get_model().take_damage(fatal)
 	push_back(get_push_vec(hit_direction_node))
 	if fatal:
-		disable_collisions_and_interaction()
+		enable_collisions_and_interaction(false)
 
 func kill_on_load():
 	get_model().kill_on_load()
-	disable_collisions_and_interaction()
+	enable_collisions_and_interaction(false)
 
 func kill():
 	get_model().kill()
-	disable_collisions_and_interaction()
+	enable_collisions_and_interaction(false)
 
-func disable_collisions_and_interaction():
-	$Body_CollisionShape.disabled = true
-	$UpperBody_CollisionShape.disabled = true
-	$Feet_CollisionShape.disabled = false
-	character_nodes.enable_areas(false)
+func enable_collisions_and_interaction(enable, with_feet = false):
+	if has_node("UpperBody_CollisionShape"):
+		$UpperBody_CollisionShape.disabled = not enable
+	$Body_CollisionShape.disabled = not enable
+	$Feet_CollisionShape.disabled = with_feet and not enable
+	character_nodes.enable_areas(enable)
 
 ### Use target ###
 
@@ -292,10 +294,7 @@ func is_hidden():
 func set_hidden(enable):
 	is_hidden = enable
 	visible = not enable
-	if has_node("UpperBody_CollisionShape"):
-		$UpperBody_CollisionShape.disabled = enable
-	$Body_CollisionShape.disabled = enable
-	character_nodes.enable_areas(not enable)
+	enable_collisions_and_interaction(not enable)
 	var is_player = is_player()
 	if is_player:
 		var companions = game_state.get_companions()
@@ -366,8 +365,14 @@ func is_taking_damage():
 func is_movement_disabled():
 	return get_model().is_movement_disabled()
 
+func sit_down_change_collisions():
+	if animation_player.is_playing():
+		return false
+	animation_player.play("crouch")
+	return true
+
 func sit_down():
-	if not character_nodes.sit_down():
+	if not sit_down_change_collisions():
 		return
 	get_model().sit_down()
 	var is_player = is_player()
@@ -379,8 +384,17 @@ func sit_down():
 	is_crouching = true
 	emit_signal("crouching_changed", self, false, true)
 
+func stand_up_change_collisions():
+	if character_nodes.is_low_ceiling():
+		# I.e. if the player is crouching and something is above the head, do not allow to stand up.
+		return false
+	if animation_player.is_playing():
+		return false
+	animation_player.play_backwards("crouch")
+	return true
+
 func stand_up():
-	if not character_nodes.stand_up():
+	if not stand_up_change_collisions():
 		return
 	get_model().stand_up()
 	var is_player = is_player()

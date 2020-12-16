@@ -1,70 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/palladium/core/character_nodes.gd" type="Script" id=1]
 [ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
 
-[sub_resource type="Animation" id=1]
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Rotation_Helper:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 1.52, 0 ), Vector3( 0, 0.52, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Body_CollisionShape:translation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 1.1, 0 ), Vector3( 0, 0.6, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Body_CollisionShape:shape:height")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.2, 0.2 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../UpperBody_CollisionShape:translation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 1.5, 0 ), Vector3( 0, 0.75, 0 ) ]
-}
-
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=1]
 resource_local_to_scene = true
 extents = Vector3( 0.161138, 1, 0.146487 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.879759, 1, 0.502388 )
 
 [node name="character_nodes" type="Spatial"]
 script = ExtResource( 1 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/crouch = SubResource( 1 )
 
 [node name="SoundWalking" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
@@ -91,7 +38,7 @@ collision_layer = 1024
 collision_mask = 1024
 
 [node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="MeleeDamageArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06667, 0.993718 )
@@ -100,7 +47,7 @@ monitorable = false
 collision_mask = 7
 
 [node name="CollisionShape" type="CollisionShape" parent="MeleeDamageArea"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="RaysToCharacters" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )

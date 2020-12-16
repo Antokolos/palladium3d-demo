@@ -20,6 +20,8 @@ func do_init(is_loaded):
 	get_tree().call_group("takables", "connect_signals", self)
 	game_state.connect("item_used", self, "on_item_used")
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
+	player.connect("arrived_to", self, "_on_arrived_to")
+	player_female.connect("arrived_to", self, "_on_arrived_to")
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
@@ -170,8 +172,10 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 			game_state.change_scene("res://ending_2.tscn", false, true)
 		"171_Why_are_you_so_sad":
+			set_player_final_position()
+			set_player_female_final_position()
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
-			$FinalCutsceneTimer.start()
+			$FinalCutsceneTimer.start(8 if player_female.get_relationship() >= 6 else 5)
 			yield($FinalCutsceneTimer, "timeout")
 			if game_state.has_item(DB.TakableIds.PALLADIUM):
 				game_state.change_scene("res://ending_1.tscn", false, true)
@@ -185,3 +189,22 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 				game_state.change_scene("res://ending_4.tscn", false, true)
 			else:
 				game_state.change_scene("res://ending_3.tscn", false, true)
+
+func set_player_final_position():
+	player.set_force_physics(false)
+	player.set_force_no_physics(true)
+	player.enable_collisions_and_interaction(false, true)
+	player.teleport($PositionPlayer2)
+
+func set_player_female_final_position():
+	player_female.set_force_physics(false)
+	player_female.set_force_no_physics(true)
+	player_female.enable_collisions_and_interaction(false, true)
+	player_female.teleport($PositionCompanion2)
+
+func _on_arrived_to(player_node, target_node):
+	var tid = target_node.get_instance_id()
+	if player.equals(player_node) and tid == $PositionPlayer2.get_instance_id():
+		set_player_final_position()
+	elif player_female.equals(player_node) and tid == $PositionCompanion2.get_instance_id():
+		set_player_female_final_position()
