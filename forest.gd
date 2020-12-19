@@ -182,6 +182,8 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			else:
 				game_state.change_scene("res://ending_2.tscn", false, true)
 		"172_We_made_a_great_team":
+			set_player_final_position()
+			set_player_bandit_final_position()
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 			$FinalCutsceneTimer.start()
 			yield($FinalCutsceneTimer, "timeout")
@@ -202,9 +204,17 @@ func set_player_female_final_position():
 	player_female.enable_collisions_and_interaction(false, true)
 	player_female.teleport($PositionCompanion2)
 
+func set_player_bandit_final_position():
+	player_bandit.set_force_physics(false)
+	player_bandit.set_force_no_physics(true)
+	player_bandit.enable_collisions_and_interaction(false, true)
+	player_bandit.teleport($PositionCompanion2)
+
 func _on_arrived_to(player_node, target_node):
 	var tid = target_node.get_instance_id()
 	if player.equals(player_node) and tid == $PositionPlayer2.get_instance_id():
 		set_player_final_position()
 	elif player_female.equals(player_node) and tid == $PositionCompanion2.get_instance_id():
 		set_player_female_final_position()
+	elif player_bandit.equals(player_node) and tid == $PositionCompanion2.get_instance_id():
+		set_player_bandit_final_position()

@@ -18,7 +18,8 @@ func attack(attack_anim_idx = -1):
 		pistol.shoot()
 
 func restore_state():
-	if conversation_manager.conversation_is_finished("136_What_is_that_noise"):
+	if conversation_manager.conversation_is_finished("136_What_is_that_noise") \
+		and conversation_manager.conversation_is_not_finished("146_Ugly_mug"):
 		take_gun()
 	else:
 		remove_gun()
