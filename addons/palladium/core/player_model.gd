@@ -3,14 +3,14 @@ class_name PLDPlayerModel
 
 const PHRASE_WITH_ANIM_LEN_THRESHOLD = 10
 
-export var backpack_animation_player_path = ""
+export(NodePath) var backpack_animation_player_path = null
 export var backpack_speak_animations = {}
 export var backpack_rest_animations = {}
 export var backpack_cutscene_animations = {}
 
 export var speak_shots_max = 2
 
-onready var backpack_animation_player = get_node(backpack_animation_player_path) if not backpack_animation_player_path.empty() else null
+onready var backpack_animation_player = get_node(backpack_animation_player_path) if backpack_animation_player_path and has_node(backpack_animation_player_path) else null
 onready var speech_timer = get_node("SpeechTimer")
 
 var speech_states = []
@@ -21,10 +21,11 @@ func set_simple_mode(sm):
 	toggle_head(not sm)
 
 func do_rest_shot(shot_idx):
-	.do_rest_shot(shot_idx)
-	if can_do_rest_shot():
+	if .do_rest_shot(shot_idx):
 		if backpack_animation_player and backpack_rest_animations.has(shot_idx):
 			backpack_animation_player.play(backpack_rest_animations[shot_idx])
+		return true
+	return false
 
 func is_speak_active():
 	return $AnimationTree.get("parameters/SpeakShot/active")

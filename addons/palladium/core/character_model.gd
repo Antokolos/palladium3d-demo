@@ -69,6 +69,8 @@ func do_rest_shot(shot_idx):
 	if can_do_rest_shot():
 		animation_tree.set("parameters/RestTransition/current", shot_idx)
 		animation_tree.set("parameters/RestShot/active", true)
+		return true
+	return false
 
 func stop_rest_shot():
 	animation_tree.set("parameters/RestShot/active", false)

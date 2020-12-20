@@ -15,6 +15,7 @@ var initiator
 var is_finalizing
 var max_choice = 0
 var current_actor_name = null
+var previous_actor_name = null
 
 var story_state_cache = {}
 
@@ -66,6 +67,7 @@ func stop_conversation(player):
 	target = null
 	initiator = null
 	current_actor_name = null
+	previous_actor_name = null
 	#is_finalizing = false -- this had some troubles with the lipsync_manager, it is better to not touch it now
 	var hud = game_state.get_hud()
 	hud.conversation.visible = false
@@ -176,6 +178,7 @@ func clear_actors_and_texts(player, conversation):
 		conversation_actor.text = ""
 	else:
 		conversation_text.text = cur_text
+		previous_actor_name = current_actor_name
 		current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 		conversation_actor.text = tr(current_actor_name) + ": "
 
@@ -213,6 +216,7 @@ func story_choose(player, idx):
 			if is_finalizing:
 				stop_conversation(player)
 				return
+			previous_actor_name = current_actor_name
 			current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 			conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name else ""
 			var vtags = get_vvalue(tags_dict)
@@ -243,6 +247,7 @@ func story_proceed(player):
 		var tags_dict = story_node.get_current_tags()
 		var tags = tags_dict[TranslationServer.get_locale()]
 		is_finalizing = tags and tags.has("finalizer")
+		previous_actor_name = current_actor_name
 		current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 		conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name and not conversation_text.text.empty() else ""
 		var vtags = get_vvalue(tags_dict)
@@ -284,6 +289,9 @@ func display_choices(conversation, choices):
 
 func get_current_actor():
 	return game_state.get_character(current_actor_name) if current_actor_name else null
+
+func get_previous_actor():
+	return game_state.get_character(previous_actor_name) if previous_actor_name else null
 
 func _on_AutocloseTimer_timeout():
 	var player = game_state.get_player()

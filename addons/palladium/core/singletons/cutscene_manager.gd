@@ -64,8 +64,13 @@ func restore_camera(player, conversation_name_prev = null, target_prev = null):
 	elif player_camera_holder and player_camera_holder.get_child_count() > 0:
 		var camera = player_camera_holder.get_child(0)
 		camera.enable_use(true)
-	cutscene_node = null
 	game_state.get_hud().show_game_ui(true)
+	clear_cutscene_node()
+
+# When borrowing camera in game, you should always use restore_camera()
+# But sometimes it is needed to just clear cutscene node (for example, if your game is finished with a cutscene)
+func clear_cutscene_node():
+	cutscene_node = null
 	is_cutscene = false
 
 func get_cam():

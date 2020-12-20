@@ -160,7 +160,7 @@ func _on_TunnelArea_body_exited(body):
 		body.set_pathfinding_enabled(true)
 
 func _on_FinalCutsceneTween_tween_completed(object, key):
-	if player_female.get_relationship() == 0:
+	if player_female.is_in_party() and player_female.get_relationship() == 0:
 		conversation_manager.start_area_cutscene(
 			"171-1_I_would_not_leave_you",
 			$PositionFinalCutscene

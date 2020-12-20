@@ -247,14 +247,15 @@ func is_arrived_to_boundary(tgt):
 func follow(current_transform, next_position):
 	var was_moving = not is_rest_state()
 	var current_actor = conversation_manager.get_current_actor()
+	var previous_actor = conversation_manager.get_previous_actor()
 	var data = get_follow_parameters(
 		point_of_interest if point_of_interest else (
 			current_actor
 				if current_actor and not equals(current_actor)
 				else (
-					get_preferred_target()
-						if was_moving
-						else null
+					previous_actor
+						if previous_actor and not equals(previous_actor)
+						else get_preferred_target()
 				)
 		),
 		current_transform,
