@@ -3,6 +3,7 @@ This is the demo version of our game Palladium. This demo contains all basic gam
 ![Palladium maze](https://nlbproject.com/files/pmaze.png)
 
 # License
+
 Anything related to the game code in this demo is MIT-licensed. Feel free to use it in your projects.
 
 Anything inside the assets folder is proprietary. Some files can be freely downloaded elsewhere, for example the fonts or textures from https://www.textures.com, some files are our own work for the game and can be used only with our permission.
