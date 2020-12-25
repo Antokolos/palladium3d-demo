@@ -346,6 +346,9 @@ func set_look_transition(force = false):
 		or conversation_manager.meeting_is_finished(name_hint, CHARS.PLAYER_NAME_HINT):
 		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
 
+func is_cutscene(cutscene_id = -1):
+	return get_model().is_cutscene(cutscene_id)
+
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
 	character_nodes.start_cutscene_timer()

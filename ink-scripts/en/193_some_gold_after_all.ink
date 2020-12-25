@@ -1,3 +1,3 @@
-О, тут всё-таки есть золото! # actor:bandit # voiceover:.ogg
-Вероятно, эти монеты могут быть частью какой-то загадки. # actor:player # voiceover:.ogg
-Ну, если они нигде не пригодятся, то потом поделим. # actor:bandit # voiceover:.ogg
+Oh, there is some gold after all! # actor:bandit # voiceover:.ogg
+These coins might be a part of some riddle, you know. # actor:player # voiceover:.ogg
+Well, if we don’t end up needing them for something, we shall split them later. # actor:bandit # voiceover:.ogg

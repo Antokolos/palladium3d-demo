@@ -50,9 +50,11 @@ func start_area_conversation_with_companion(conversations_map, repeatable = fals
 func start_area_conversation(conversation_name, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
-		return
+		return false
 	if repeatable or conversation_is_not_finished(conversation_name):
 		start_conversation(player, conversation_name, null, null, false, null, repeatable)
+		return true
+	return false
 
 func stop_conversation(player):
 	if not conversation_is_in_progress():

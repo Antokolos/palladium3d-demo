@@ -128,6 +128,7 @@ func _input(event):
 			angle_rad_x = deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff())
 			angle_rad_y = deg2rad(event.relative.x * settings.get_sensitivity() * -1)
 			process_rotation(true)
+			get_cam().process_rotation(self)
 			angle_rad_x = 0
 			angle_rad_y = 0
 		elif is_joypad_look(event):

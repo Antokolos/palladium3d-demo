@@ -118,9 +118,13 @@ func get_cutscene_id():
 func is_looped_cutscene():
 	return animation_tree.get("parameters/LookTransition/current") > LOOK_TRANSITION_SQUATTING
 
-func is_cutscene():
-	var cutscene_empty = get_cutscene_id() == CUTSCENE_EMPTY
-	return not cutscene_empty and animation_tree.get("parameters/CutsceneShot/active")
+func is_cutscene(cutscene_id = -1):
+	var cid = get_cutscene_id()
+	return (
+		cid != CUTSCENE_EMPTY
+		and (cutscene_id == -1 or cid == cutscene_id)
+		and animation_tree.get("parameters/CutsceneShot/active")
+	)
 
 func is_attacking():
 	if not is_cutscene():
@@ -249,6 +253,7 @@ func _process(delta):
 		if was_dying and is_dead():
 			var player = get_node("../..")
 			emit_signal("character_dead", player)
+			was_dying = false
 		elif not was_dying and is_dying():
 			var player = get_node("../..")
 			emit_signal("character_dying", player)
