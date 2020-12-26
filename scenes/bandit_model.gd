@@ -13,6 +13,9 @@ const TRANSITION_WITH_GUN = 1
 
 onready var pistol = get_node("Bandit_armature/PistolAttachment/Position3D/beretta")
 
+func _ready():
+	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
+
 func attack(attack_anim_idx = -1):
 	if .attack(attack_anim_idx):
 		pistol.shoot()
@@ -24,10 +27,20 @@ func restore_state():
 	else:
 		remove_gun()
 
+func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
+	match conversation_name:
+		"136_What_is_that_noise":
+			take_gun()
+		"146_Ugly_mug":
+			remove_gun()
+
 func take_gun():
 	play_cutscene(BANDIT_CUTSCENE_GRABS_GUN)
 	$AnimationTree.set("parameters/LookTypeTransition/current", TRANSITION_WITH_GUN)
 	$AnimationTree.set("parameters/WalkTypeTransition/current", TRANSITION_WITH_GUN)
+	var pt = $PistolTimer
+	pt.start()
+	yield(pt, "timeout")
 	pistol.visible = true
 
 func remove_gun():
