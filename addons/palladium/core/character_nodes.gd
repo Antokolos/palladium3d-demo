@@ -163,6 +163,8 @@ func use_weapon(item):
 			common_utils.set_pause_scene(character, true)
 			character.emit_signal("stun_started", character, item)
 			stun_timer.start(weapon_data.stun_duration)
+		else:
+			game_state.get_hud().queue_popup_message(tr("MESSAGE_NOTHING_HAPPENS"))
 
 func get_possible_attack_target(update_collisions):
 	if not character.is_activated():

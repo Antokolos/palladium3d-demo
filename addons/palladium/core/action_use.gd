@@ -41,7 +41,7 @@ func action(player_node, camera_node):
 		or ray_action(ray_characters, player_node, camera_node):
 		return
 	var item = game_state.get_hud().get_active_item()
-	if not item:
+	if not item or item.is_weapon():
 		return
 	var custom_actions = game_state.get_custom_actions(item)
 	if custom_actions.empty():
@@ -62,7 +62,7 @@ func switch_highlight(player_node, body, distance_to_body):
 		return hint_message
 	else:
 		var item = game_state.get_hud().get_active_item()
-		if not item:
+		if not item or item.is_weapon():
 			return ""
 		var custom_actions = game_state.get_custom_actions(item)
 		if custom_actions.empty():

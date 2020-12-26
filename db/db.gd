@@ -275,6 +275,7 @@ func execute_give_item_action(player, target):
 func execute_custom_action(event, item):
 	var result = false
 	if event.is_action_pressed("item_preview_action_1"):
+		result = true
 		match item.item_id:
 			DB.TakableIds.RAT:
 				item.remove()
@@ -296,16 +297,16 @@ func execute_custom_action(event, item):
 				if last_flask:
 					game_state.take(DB.TakableIds.FLASK_EMPTY)
 			DB.TakableIds.BUN:
-				result = true
 				item.remove()
 				var player = game_state.get_player()
 				if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
 			DB.TakableIds.ENVELOPE:
-				result = true
 				item.remove()
 				game_state.take(DB.TakableIds.BARN_LOCK_KEY)
 				game_state.take(DB.TakableIds.ISLAND_MAP_2)
+			_:
+				result = false
 	elif event.is_action_pressed("item_preview_action_2"):
 		pass
 	elif event.is_action_pressed("item_preview_action_3"):

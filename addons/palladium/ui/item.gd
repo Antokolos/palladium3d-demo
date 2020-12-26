@@ -57,6 +57,9 @@ func set_item_data(item_id, item_count):
 func is_empty():
 	return not item_id or item_id == DB.TakableIds.NONE
 
+func is_weapon():
+	return DB.is_weapon_stun(item_id)
+
 func has_item_id(item_id):
 	return self.item_id and self.item_id == item_id
 

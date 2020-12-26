@@ -110,6 +110,7 @@
 "CONVERSATION_END","[END CONVERSATION]","[ЗАВЕРШИТЬ РАЗГОВОР]"
 "MESSAGE_PLEASE_WAIT","Please wait…","Подождите, пожалуйста…"
 "MESSAGE_ITEM_TAKEN","You have taken the item: %s","Вы взяли предмет: %s"
+"MESSAGE_NOTHING_HAPPENS","Nothing happens","Ничего не происходит"
 "MESSAGE_CONTROLS_MOVE","Use %s to move, use %s to run","Используйте %s для движения, %s для бега"
 "MESSAGE_CONTROLS_ITEMS","Use %s to switch to the next item, %s to switch to the previous item","Используйте %s, чтобы сделать активным следующий предмет, %s – предыдущий"
 "MESSAGE_CONTROLS_ITEMS_KEYS","You can also use %s-%s keys to quickly switch between items","Вы можете также использовать клавиши %s-%s для быстрого переключения между предметами"

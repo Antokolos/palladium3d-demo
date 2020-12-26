@@ -170,7 +170,7 @@ func use(player_node, camera_node):
 func item_is_weapon(item):
 	if not item:
 		return false
-	return DB.is_weapon_stun(item.item_id)
+	return item.is_weapon()
 
 func add_highlight(player_node):
 	var hud = game_state.get_hud()
