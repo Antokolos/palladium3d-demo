@@ -26,6 +26,19 @@ func all_party_members_can_hide():
 			return false
 	return true
 
+func get_enemy_holder():
+	return $enemy_holder
+
+func get_hidden_player():
+	return hidden_player
+
+func unhide_player():
+	if not hidden_player:
+		return
+	hidden_player.set_hidden(false)
+	cutscene_manager.restore_camera(hidden_player)
+	hidden_player = null
+
 func add_highlight(player_node):
 	if Engine.editor_hint:
 		return ""
@@ -37,7 +50,5 @@ func _input(event):
 	if Engine.editor_hint:
 		return
 	if hidden_player and event.is_action_pressed("action"):
-		hidden_player.set_hidden(false)
-		cutscene_manager.restore_camera(hidden_player)
-		hidden_player = null
+		unhide_player()
 		get_tree().set_input_as_handled()

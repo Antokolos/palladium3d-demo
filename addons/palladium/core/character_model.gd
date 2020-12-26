@@ -88,6 +88,9 @@ func play_cutscene(cutscene_id):
 	animation_tree.set("parameters/CutsceneTransition/current", cutscene_id)
 	animation_tree.set("parameters/CutsceneShot/active", true)
 
+func play_jumpscare(hideout):
+	pass
+
 func stop_cutscene():
 	var cutscene_id = get_cutscene_id()
 	var was_active = animation_tree.get("parameters/CutsceneShot/active")

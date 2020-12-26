@@ -353,6 +353,9 @@ func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
 	character_nodes.start_cutscene_timer()
 
+func play_jumpscare(hideout):
+	get_model().play_jumpscare(hideout)
+
 func stop_cutscene():
 	get_model().stop_cutscene()
 

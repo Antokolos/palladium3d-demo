@@ -460,7 +460,7 @@ func kill_party():
 func set_health(name_hint, health_current, health_max):
 	# TODO: use name_hint to set health for different characters
 	if health_current <= 0:
-		get_tree().change_scene("res://addons/palladium/ui/game_over.tscn")
+		change_scene("res://addons/palladium/ui/game_over.tscn", false, true)
 		return
 	player_health_current = health_current if health_current < health_max else health_max
 	player_health_max = health_max
