@@ -27,7 +27,7 @@ func show_input_dialog(controls_app, action_name, action_key, input_types):
 	disable_buttons()
 	captured_event = null
 	label_result.text = ""
-	popup_centered_ratio(0.4)
+	popup_centered_ratio(0.5)
 
 func _notification(what):
 	match what:
@@ -49,7 +49,8 @@ func get_what_to_do_text(itypes):
 func enable_buttons():
 	apply_button.disabled = false
 	cancel_button.disabled = false
-	clear_button.disabled = false
+	if action_name != "action":
+		clear_button.disabled = false
 
 func disable_buttons():
 	apply_button.disabled = true

@@ -1,5 +1,13 @@
 extends Node
 
+const APP_STEAM_ID = 1137270
+
+func _ready():
+	if Steam.restartAppIfNecessary(APP_STEAM_ID):
+		return
+	if not Steam.steamInit():
+		return
+
 func joy_button_to_string(button_index):
 	match button_index:
 		JOY_XBOX_A, JOY_SONY_X, JOY_DS_B:
@@ -118,14 +126,27 @@ func is_event_cancel_action(event):
 		return false
 	return event.is_action_pressed("ui_cancel")
 
+func set_achievement(achievement_name):
+	if not is_steam_running():
+		return null
+	return Steam.setAchievement(achievement_name)
+
+func store_stats():
+	if not is_steam_running():
+		return null
+	return Steam.storeStats()
+
 func open_url(url):
-	# TODO: replace with call to GodotSteam
-	OS.shell_open(url)
+	if is_steam_running():
+		Steam.activateGameOverlayToWebPage(url)
+	else:
+		OS.shell_open(url)
 
 func open_store_page(steam_appid):
-	# TODO: replace with call to GodotSteam
-	open_url("https://store.steampowered.com/app/%d" % steam_appid)
+	if is_steam_running():
+		Steam.activateGameOverlayToStore(steam_appid)
+	else:
+		open_url("https://store.steampowered.com/app/%d" % steam_appid)
 
 func is_steam_running():
-	# TODO: replace with call to GodotSteam
-	return true
+	return Steam.isSteamRunning()
