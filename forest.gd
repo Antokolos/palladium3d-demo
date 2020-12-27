@@ -195,19 +195,19 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 func set_player_final_position():
 	player.set_force_physics(false)
 	player.set_force_no_physics(true)
-	player.enable_collisions_and_interaction(false, true)
+	player.enable_collisions_and_interaction(false)
 	player.teleport($PositionPlayer2)
 
 func set_player_female_final_position():
 	player_female.set_force_physics(false)
 	player_female.set_force_no_physics(true)
-	player_female.enable_collisions_and_interaction(false, true)
+	player_female.enable_collisions_and_interaction(false)
 	player_female.teleport($PositionCompanion2)
 
 func set_player_bandit_final_position():
 	player_bandit.set_force_physics(false)
 	player_bandit.set_force_no_physics(true)
-	player_bandit.enable_collisions_and_interaction(false, true)
+	player_bandit.enable_collisions_and_interaction(false)
 	player_bandit.teleport($PositionCompanion2)
 
 func _on_arrived_to(player_node, target_node):

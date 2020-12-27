@@ -146,11 +146,11 @@ func kill():
 	get_model().kill()
 	enable_collisions_and_interaction(false)
 
-func enable_collisions_and_interaction(enable, with_feet = false):
+func enable_collisions_and_interaction(enable):
 	if has_node("UpperBody_CollisionShape"):
 		$UpperBody_CollisionShape.disabled = not enable
 	$Body_CollisionShape.disabled = not enable
-	$Feet_CollisionShape.disabled = with_feet and not enable
+	$Feet_CollisionShape.disabled = not enable
 	character_nodes.enable_areas(enable)
 
 ### Use target ###
@@ -292,9 +292,15 @@ func is_hidden():
 	return is_hidden
 
 func set_hidden(enable):
-	is_hidden = enable
+	if is_hidden and not enable:
+		enable_collisions_and_interaction(true)
+		is_hidden = false
+	elif not is_hidden and enable:
+		is_hidden = true
+		enable_collisions_and_interaction(false)
+	else:
+		return
 	visible = not enable
-	enable_collisions_and_interaction(not enable)
 	var is_player = is_player()
 	if is_player:
 		var companions = game_state.get_companions()

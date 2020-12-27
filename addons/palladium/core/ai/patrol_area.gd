@@ -124,7 +124,7 @@ func _on_patrol_area_body_exited(body):
 	if not agent:
 		push_warning("Error calling _on_patrol_area_body_exited() for patrol area: agent path is incorrect")
 		return
-	if body.is_in_group("party") and body.is_player() and not agent.is_aggressive():
+	if body.is_in_group("party") and body.is_player() and not body.is_hidden():
 		if not agent.is_aggressive() \
 			and agent.get_relationship() < 0:
 			agent.set_target_node(null)
