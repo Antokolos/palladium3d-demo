@@ -2,7 +2,7 @@ tool
 extends PLDDiscussable
 class_name PLDHideout
 
-signal use_hideout(player_node, usable)
+signal use_hideout(player_node, hideout)
 
 var hidden_player = null
 

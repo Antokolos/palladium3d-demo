@@ -15,7 +15,7 @@ func _ready():
 func use_usable(player_node, usable):
 	pass
 
-func use_hideout(player_node, usable):
+func use_hideout(player_node, hideout):
 	set_aggressive(false)
 	stop_attack()
 
