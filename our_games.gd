@@ -6,7 +6,6 @@ onready var main_panel = get_node("VBoxContainer/HBoxContainer/PanelContainer")
 onready var site_url_node = main_panel.get_node("VBoxContainer/HBoxAuthor/SiteUrl")
 onready var tab_node = main_panel.get_node("VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer")
 onready var back_node = main_panel.get_node("VBoxContainer/HBoxControls/Back")
-onready var button_open_node = main_panel.get_node("VBoxContainer/GameActions/ButtonOpen")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -26,7 +25,6 @@ func _on_SiteUrl_meta_clicked(meta):
 
 func select_tab(tab_index):
 	tab_node.set("current_tab", tab_index)
-	button_open_node.visible = common_utils.is_steam_running()
 
 func _on_ABOUT_CAPTION_IKE_pressed():
 	select_tab(0)

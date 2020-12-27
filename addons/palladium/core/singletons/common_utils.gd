@@ -1,13 +1,14 @@
 extends Node
 
 const APP_STEAM_ID = 1137270
+onready var _steam = Engine.get_singleton("Steam") if Engine.has_singleton("Steam") else null
 
 func _ready():
-	if not Steam:
+	if not _steam:
 		return
-	if Steam.restartAppIfNecessary(APP_STEAM_ID):
+	if _steam.restartAppIfNecessary(APP_STEAM_ID):
 		return
-	if not Steam.steamInit():
+	if not _steam.steamInit():
 		return
 
 func joy_button_to_string(button_index):
@@ -131,24 +132,24 @@ func is_event_cancel_action(event):
 func set_achievement(achievement_name):
 	if not is_steam_running():
 		return null
-	return Steam.setAchievement(achievement_name)
+	return _steam.setAchievement(achievement_name)
 
 func store_stats():
 	if not is_steam_running():
 		return null
-	return Steam.storeStats()
+	return _steam.storeStats()
 
 func open_url(url):
 	if is_steam_running():
-		Steam.activateGameOverlayToWebPage(url)
+		_steam.activateGameOverlayToWebPage(url)
 	else:
 		OS.shell_open(url)
 
 func open_store_page(steam_appid):
 	if is_steam_running():
-		Steam.activateGameOverlayToStore(steam_appid)
+		_steam.activateGameOverlayToStore(steam_appid)
 	else:
 		open_url("https://store.steampowered.com/app/%d" % steam_appid)
 
 func is_steam_running():
-	return Steam and Steam.isSteamRunning()
+	return _steam and _steam.isSteamRunning()
