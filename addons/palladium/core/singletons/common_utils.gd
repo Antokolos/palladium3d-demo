@@ -3,6 +3,8 @@ extends Node
 const APP_STEAM_ID = 1137270
 
 func _ready():
+	if not Steam:
+		return
 	if Steam.restartAppIfNecessary(APP_STEAM_ID):
 		return
 	if not Steam.steamInit():
@@ -149,4 +151,4 @@ func open_store_page(steam_appid):
 		open_url("https://store.steampowered.com/app/%d" % steam_appid)
 
 func is_steam_running():
-	return Steam.isSteamRunning()
+	return Steam and Steam.isSteamRunning()
