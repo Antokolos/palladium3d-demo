@@ -236,7 +236,8 @@ func _on_AreaDeadEnd2_body_entered(body):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_web_destroyed(web):
-	conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
+	if web.get_usable_id() == DB.UsableIds.WEB_APATA:
+		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):

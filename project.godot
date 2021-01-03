@@ -1675,5 +1675,5 @@ quality/filters/use_nearest_mipmap_filter=true
 limits/buffers/immediate_buffer_size_kb=4096
 quality/voxel_cone_tracing/high_quality=false
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://addons/palladium/env_high.tres"
 quality/dynamic_fonts/use_oversampling=false

@@ -179,7 +179,8 @@ enum ButtonActivatorIds {
 enum UsableIds {
 	NONE = 0,
 	BARN_LOCK = 10,
-	LAST_TRAP_POSTAMENT = 100
+	LAST_TRAP_POSTAMENT = 100,
+	WEB_APATA = 120
 }
 
 enum ActivatableIds {

@@ -25,7 +25,7 @@ VAR party_bandit = true
 	~ party_female = false
 * 	[Идти одному.]
 	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player # voiceover:986_ya_reshil_poydu_odin.ogg
-	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female # voiceover:andreas_tolko_ya.ogg
+	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female # voiceover:1844_Andreas_tolko_ya.ogg
 	Андреас, ты уверен, что один справишься?	# actor:bandit # voiceover:752_Andreas_ty_uveren_chto_odin.ogg 
 	* * 	[Идти с Ксенией.]
 		-> companion_xenia
