@@ -13,6 +13,9 @@ onready var desktop_container_map = desktop_containers.get_node("VMapContainer")
 onready var desktop_container_documents = desktop_containers.get_node("VDocumentsContainer")
 onready var desktop_container_settings = desktop_containers.get_node("VSettingsContainer")
 onready var desktop_container_save = desktop_containers.get_node("VSaveGameContainer")
+onready var save_button = desktop_container_save.get_node("HContainer/SaveGameButton")
+onready var save_button_label = desktop_container_save.get_node("Label")
+onready var save_button_label_disabled = desktop_container_save.get_node("LabelDisabled")
 onready var desktop_container_load = desktop_containers.get_node("VLoadGameContainer")
 onready var desktop_container_quit = desktop_containers.get_node("VQuitGameContainer")
 onready var apps = get_node("TabletPanel/TabletScreen/apps")
@@ -173,7 +176,15 @@ func activate(mode):
 		desktop_container_map.visible = false
 		desktop_container_documents.visible = false
 		desktop_container_settings.visible = true
-		desktop_container_save.visible = can_load and not game_state.is_saving_disabled()
+		desktop_container_save.visible = can_load
+		if game_state.is_saving_disabled():
+			save_button.disabled = true
+			save_button_label.visible = false
+			save_button_label_disabled.visible = true
+		else:
+			save_button.disabled = false
+			save_button_label.visible = true
+			save_button_label_disabled.visible = false
 		desktop_container_load.visible = can_load
 		desktop_container_quit.visible = true
 	match mode:
