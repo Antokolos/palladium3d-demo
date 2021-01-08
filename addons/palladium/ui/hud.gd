@@ -210,16 +210,16 @@ func _process(delta):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			show_tablet(false)
 		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			show_tablet(true)
 	# ----------------------------------
 	
 	process_popup_messages(delta)
 
-func show_tablet(is_show):
+func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 	if is_show:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause_game(true)
-		tablet.activate(PLDTablet.ActivationMode.DESKTOP)
+		tablet.activate(activation_mode)
 	else:
 		tablet.visible = false
 		pause_game(false)

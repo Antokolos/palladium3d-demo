@@ -1,27 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/palladium/ui/game_over.gd" type="Script" id=1]
-[ext_resource path="res://addons/palladium/assets/fonts/roboto.bold.ttf" type="DynamicFontData" id=2]
-
-
-
-
-
+[ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/palladium/ui/game_over.gd" type="Script" id=2]
+[ext_resource path="res://addons/palladium/assets/fonts/roboto.bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 96
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [node name="game_over" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 1 )
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -42,24 +36,145 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 50
 alignment = 1
 
 [node name="Label" type="Label" parent="ColorRect/HBoxContainer/VBoxContainer"]
-margin_top = 402.0
+margin_top = 202.0
 margin_right = 1920.0
-margin_bottom = 553.0
+margin_bottom = 353.0
 custom_fonts/font = SubResource( 1 )
-text = "GAME OVER"
+text = "GAME_OVER_CAPTION"
 align = 1
 valign = 1
 
-[node name="TryAgainButton" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer"]
-margin_left = 752.0
-margin_top = 557.0
-margin_right = 1167.0
-margin_bottom = 677.0
-size_flags_horizontal = 4
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer"]
+margin_top = 403.0
+margin_right = 1920.0
+margin_bottom = 789.0
+custom_constants/separation = 18
+alignment = 1
+
+[node name="Caption" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 50.0
+alignment = 1
+
+[node name="Label" type="Label" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Caption"]
+margin_left = 756.0
+margin_right = 1163.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 4 )
+text = "TABLET_LOAD_GAME"
+align = 1
+
+[node name="Slot0" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 68.0
+margin_right = 1920.0
+margin_bottom = 106.0
+alignment = 1
+
+[node name="ButtonSlot0" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot0"]
+margin_left = 660.0
+margin_right = 1260.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 600, 0 )
+text = "AUTOSAVE_SLOT"
+
+[node name="Slot1" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 124.0
+margin_right = 1920.0
+margin_bottom = 162.0
+alignment = 1
+
+[node name="ButtonSlot1" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot1"]
+margin_left = 795.0
+margin_right = 1125.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot2" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 180.0
+margin_right = 1920.0
+margin_bottom = 218.0
+alignment = 1
+
+[node name="ButtonSlot2" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot2"]
+margin_left = 795.0
+margin_right = 1125.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot3" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 236.0
+margin_right = 1920.0
+margin_bottom = 274.0
+alignment = 1
+
+[node name="ButtonSlot3" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot3"]
+margin_left = 795.0
+margin_right = 1125.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot4" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 292.0
+margin_right = 1920.0
+margin_bottom = 330.0
+alignment = 1
+
+[node name="ButtonSlot4" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot4"]
+margin_left = 795.0
+margin_right = 1125.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="Slot5" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer"]
+margin_top = 348.0
+margin_right = 1920.0
+margin_bottom = 386.0
+alignment = 1
+
+[node name="ButtonSlot5" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot5"]
+margin_left = 795.0
+margin_right = 1125.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 330, 0 )
+text = "EMPTY_SLOT"
+
+[node name="HBoxLower" type="HBoxContainer" parent="ColorRect/HBoxContainer/VBoxContainer"]
+margin_top = 839.0
+margin_right = 1920.0
+margin_bottom = 877.0
+size_flags_horizontal = 3
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Try again"
-[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]
+custom_constants/separation = 20
+alignment = 1
+
+[node name="ButtonMainMenu" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/HBoxLower"]
+margin_left = 660.0
+margin_right = 950.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 290, 0 )
+custom_colors/font_color = Color( 0.6, 0.8, 0.2, 1 )
+text = "BUTTON_MAIN_MENU"
+
+[node name="ButtonQuit" type="Button" parent="ColorRect/HBoxContainer/VBoxContainer/HBoxLower"]
+margin_left = 970.0
+margin_right = 1260.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 290, 0 )
+custom_colors/font_color = Color( 0.6, 0.8, 0.2, 1 )
+text = "BUTTON_QUIT"
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot0/ButtonSlot0" to="." method="_on_ButtonSlot0_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSlot1_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSlot2_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSlot3_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot4/ButtonSlot4" to="." method="_on_ButtonSlot4_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot5/ButtonSlot5" to="." method="_on_ButtonSlot5_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/HBoxLower/ButtonMainMenu" to="." method="_on_ButtonMainMenu_pressed"]
+[connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/HBoxLower/ButtonQuit" to="." method="_on_ButtonQuit_pressed"]

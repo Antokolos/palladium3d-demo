@@ -45,6 +45,8 @@
 "TABLET_LOAD_GAME","Load game","Загрузить игру"
 "TABLET_QUIT_GAME","Quit game","Выйти из игры"
 "TABLET_EMPTY_SLOT","EMPTY SLOT","ПУСТОЙ СЛОТ"
+"GAME_OVER_CAPTION","You died","Вы погибли"
+"TRY_AGAIN_CAPTION","Try again","Попробовать ещё раз"
 "MAIN_MENU_JOY_HINT","Use right stick to move the cursor, button A to select","Используйте правый стик для движения курсора, кнопку A для выбора"
 "INPUT_MAP_ACTION","Action","Действие"
 "INPUT_MAP_ACTIVE_ITEM_1","Select item 1","Выбор предмета 1"

@@ -89,8 +89,8 @@ func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, l
 			var storyPath : String = basePath + "/" + file
 			var story = load_story_from_file(storyPath)
 			bind_external_functions(story)
-			# TODO: restore story log from save
-			var chatDriven : bool = false # TODO: restore chatDriven from save
+			# TODO: Probably we need to support multiple chat driven stories?
+			var chatDriven : bool = (file == "Chat.ink.json")
 			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
 			load_save_or_reset(slot, locale, storyPath, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
@@ -254,6 +254,9 @@ func get_slot_caption(slot : int) -> String:
 func get_save_file_path(slot : int, locale : String) -> String:
 	return "user://saves/slot_%d/ink-scripts/%s/story_states.sav" % [ slot, locale ]
 
+func get_story_log_path(slot : int, story_name : String, locale : String) -> String:
+	return "user://saves/slot_%d/ink-scripts/%s/%s.log" % [ slot, locale, story_name ]
+
 func get_month_as_string(m):
 	match m:
 		1:
@@ -293,6 +296,11 @@ func save_all(slot : int) -> void:
 			var palladiumStory = _currentSessionStories[locale][path]
 			var story = palladiumStory.get_ink_story()
 			_inkStoriesStates[locale][path] = story.state.to_json()
+			if palladiumStory.is_chat_driven():
+				var storyLogFile : File = File.new()
+				storyLogFile.open(get_story_log_path(slot, path, locale), File.WRITE)
+				storyLogFile.store_string(palladiumStory.get_story_log()[locale])
+				storyLogFile.close()
 		_currentSessionStories[locale].clear()
 		var saveFile : File = File.new()
 		saveFile.open(get_save_file_path(slot, locale), File.WRITE)
@@ -306,6 +314,16 @@ func save_all(slot : int) -> void:
 func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PLDStory) -> bool:
 	var story = palladiumStory.get_ink_story() # Story
 	if slot >= 0:
+		if palladiumStory.is_chat_driven():
+			var storyLogFile : File = File.new()
+			var storyLogFilePath : String = get_story_log_path(slot, path, locale)
+			if storyLogFile.file_exists(storyLogFilePath):
+				storyLogFile.open(storyLogFilePath, File.READ)
+				var story_log = palladiumStory.get_story_log()
+				if story_log.has(locale):
+					story_log.erase(locale)
+				story_log[locale] = storyLogFile.get_as_text()
+				storyLogFile.close()
 		if _inkStoriesStates[locale].empty():
 			var saveFile : File = File.new()
 			var saveFilePath : String = get_save_file_path(slot, locale)
@@ -344,15 +362,18 @@ func can_continue() -> bool:
 				return false
 	return true
 
-func update_log(palladiumStory : PLDStory, locale : String, text : String, choiceResponse : bool) -> void:
+func update_log(palladiumStory : PLDStory, locale : String, tags : Dictionary, text : String, choiceResponse : bool) -> void:
 	var fullLog : String = ""
 	var story_log = palladiumStory.get_story_log()
 	if story_log.has(locale):
 		fullLog = story_log[locale]
 		story_log.erase(locale)
-	var currentLog : String = "[right]" if choiceResponse else ""
-	currentLog += str(OS.get_datetime()) + "\n";
-	currentLog += text + ("[/right]\n" if choiceResponse else "\n")
+	var has_actor = tags and tags.has("actor")
+	var currentLog : String = "[right]" if choiceResponse else ("" if has_actor else "[center]")
+	if has_actor:
+		var actor = tr(tags["actor"])
+		currentLog += "[color=yellow]%s[/color]\t[color=green]%s[/color]\n" % [ actor, datetime_as_string(OS.get_datetime()) ]
+	currentLog += text + ("[/right]\n" if choiceResponse else ("\n" if has_actor else "[/center]\n"))
 	fullLog += currentLog;
 	story_log[locale] = fullLog
 
@@ -364,7 +385,9 @@ func continue(choiceResponse : bool) -> Dictionary: # Dictionary<String, String>
 			var story = palladiumStory.get_ink_story() # Story
 			var text : String = story.continue()
 			result[loc] = text
-			update_log(palladiumStory, loc, text, choiceResponse)
+			var tags_dict = get_current_tags()
+			var tags = tags_dict[loc]
+			update_log(palladiumStory, loc, tags, text, choiceResponse)
 	return result
 
 func current_text(locale : String) -> String:

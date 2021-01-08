@@ -230,7 +230,7 @@ const QUICK_ITEMS_DEFAULT = [
 ]
 
 const ITEMS = {
-	TakableIds.CELL_PHONE : { "item_nam" : "cell_phone", "item_image" : "cell_phone.png", "model_path" : "res://assets/cell_phone.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
+	TakableIds.CELL_PHONE : { "item_nam" : "cell_phone", "item_image" : "cell_phone.png", "model_path" : "res://assets/cell_phone.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.RAT : { "item_nam" : "rat", "item_image" : "rat.png", "model_path" : "res://scenes/rat_grey.tscn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.COIN : { "item_nam" : "coin", "item_image" : "coin.png", "model_path" : "res://assets/coin.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_EMPTY : { "item_nam" : "flask_empty", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
@@ -278,7 +278,9 @@ func execute_custom_action(event, item):
 	if event.is_action_pressed("item_preview_action_1"):
 		result = true
 		match item.item_id:
-			DB.TakableIds.RAT:
+			TakableIds.CELL_PHONE:
+				game_state.get_hud().show_tablet(true, PLDTablet.ActivationMode.CHAT)
+			TakableIds.RAT:
 				item.remove()
 				var rat = load("res://rat.tscn").instance()
 				var pl = game_state.get_player().get_model()
@@ -291,18 +293,18 @@ func execute_custom_action(event, item):
 				var origin = pl_origin + shift * 2
 				rat.set_global_transform(Transform(basis, origin))
 				game_state.get_level().add_child(rat)
-			DB.TakableIds.FLASK_HEALING:
+			TakableIds.FLASK_HEALING:
 				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current + game_state.player_health_max / 2, game_state.player_health_max)
 				var last_flask = (item.get_item_count() == 1)
 				item.remove()
 				if last_flask:
 					game_state.take(DB.TakableIds.FLASK_EMPTY)
-			DB.TakableIds.BUN:
+			TakableIds.BUN:
 				item.remove()
 				var player = game_state.get_player()
 				if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 					conversation_manager.start_conversation(player, "BunEaten")
-			DB.TakableIds.ENVELOPE:
+			TakableIds.ENVELOPE:
 				item.remove()
 				game_state.take(DB.TakableIds.BARN_LOCK_KEY)
 				game_state.take(DB.TakableIds.ISLAND_MAP_2)

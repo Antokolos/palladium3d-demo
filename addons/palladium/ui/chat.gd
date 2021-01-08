@@ -6,38 +6,52 @@ onready var info_label = get_node('VBoxContainer/InfoLabel')
 var in_choice = false
 var max_choice = 0
 
-func _ready():
+func load_chat():
 	story_node.load_story("Chat.ink.json", true, false)
 	story_node.init_variables()
-
-func load_chat():
 	chat_window.bbcode_text = story_node.current_log(TranslationServer.get_locale())
 	if story_node.chat_driven() and story_node.can_choose():
 		display_choices()
+	continue_story(0)
 
 func _input(event):
 	if self.is_visible_in_tree():
 		if not story_node.chat_driven():
 			return
-		
-		if story_node.can_continue() and event.is_action_pressed("dialogue_next"):
-			story_proceed(false)
-			if story_node.can_choose():
-				display_choices()
-		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_1"):
-			story_choose(0)
-		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_2"):
-			story_choose(1)
-		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_3"):
-			story_choose(2)
-		elif story_node.can_choose() and event.is_action_pressed("dialogue_option_4"):
-			story_choose(3)
+		continue_story(get_option_number(event))
+
+func get_option_number(event):
+	if event.is_action_pressed("dialogue_next"):
+		return 0
+	elif event.is_action_pressed("dialogue_option_1"):
+		return 1
+	elif event.is_action_pressed("dialogue_option_2"):
+		return 2
+	elif event.is_action_pressed("dialogue_option_3"):
+		return 3
+	elif event.is_action_pressed("dialogue_option_4"):
+		return 4
+	else:
+		return -1
+
+func continue_story(option_number):
+	if option_number < 0:
+		return
+	if story_node.can_continue() and option_number == 0:
+		story_proceed(false)
+		if story_node.can_choose():
+			display_choices()
+	elif story_node.can_choose() and option_number > 0:
+		story_choose(option_number - 1)
 
 func story_proceed(choice_response):
 	story_node.continue(choice_response)
 	chat_window.bbcode_text = story_node.current_log(TranslationServer.get_locale())
 	info_label.text = "...typing..." if story_node.can_continue() else ""
 	in_choice = false
+	if story_node.can_continue():
+		# TODO: Create a phrase timer so that next phrase appear after delay, simulating real typing
+		continue_story(0)
 
 func story_choose(idx):
 	if idx < max_choice:
