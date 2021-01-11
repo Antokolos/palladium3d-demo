@@ -27,8 +27,13 @@ func activate(and_change_state = true):
 	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
 
 func deactivate_forever(and_change_state = true):
+	var is_final_destination = .is_final_destination()
 	.deactivate_forever(and_change_state)
-	get_node("AnimationPlayer").play("spikes_off", -1, SPIKES_SPEED)
+	if is_final_destination:
+		get_node("Armature033/AnimationPlayer").play("last_trap_steps")
+		get_node("AnimationPlayer").play("steps_up")
+	else:
+		get_node("AnimationPlayer").play("spikes_off", -1, SPIKES_SPEED)
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
@@ -66,17 +71,15 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			player.set_force_physics(false)
 			var last_trap_postament = game_state.get_usable(DB.UsableIds.LAST_TRAP_POSTAMENT)
 			if conversation_manager.conversation_is_not_finished("175-1_Spikes_are_close"):
-				companion.set_relationship(companion.get_relationship() + 2)
-				last_trap_postament.return_palladium(true)
 				conversation_manager.start_area_conversation("175-4_Andreas_thanks")
 			elif conversation_manager.conversation_is_not_finished("175-1-1_Spikes_are_back"):
-				companion.set_relationship(companion.get_relationship() + 1)
-				last_trap_postament.return_palladium(false)
+				last_trap_postament.return_fake_palladium()
 				conversation_manager.start_area_conversation("175-2_You_gave_away")
 			else:
 				companion.set_relationship(0)
-				last_trap_postament.return_palladium(false)
+				last_trap_postament.return_fake_palladium()
 				conversation_manager.start_area_conversation("192_Xenia_are_you_alright")
+			game_state.set_saving_disabled(false)
 
 func _on_Area_body_entered(body):
 	if not body.is_in_group("party"):

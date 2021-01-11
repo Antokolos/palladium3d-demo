@@ -394,7 +394,7 @@ func _on_arrived_to(player_node, target_node):
 		chest.do_push()
 
 func restore_state():
-	if game_state.has_item(DB.TakableIds.ATHENA):
+	if game_state.has_item(DB.TakableIds.ATHENA) or game_state.get_activatable_state_by_id(DB.ActivatableIds.LAST_TRAP_FLOOR) == PLDGameState.ActivatableState.ACTIVATED:
 		last_trap_show()
 	else:
 		last_trap_hide()

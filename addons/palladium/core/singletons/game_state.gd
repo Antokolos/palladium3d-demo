@@ -588,10 +588,10 @@ func _is_actual(activatable_id : int):
 
 func get_multistate_state(multistate_path):
 	var id = scene_path + ":" + multistate_path
-	return multistates[id] if multistates.has(id) else 0
+	return int(multistates[id]) if multistates.has(id) else 0
 
-func set_multistate_state(multistate_path, state):
-	multistates[scene_path + ":" + multistate_path] = state
+func set_multistate_state(multistate_path, state : int):
+	multistates[scene_path + ":" + multistate_path] = int(state)
 
 func get_message_state(message_key):
 	return messages[message_key] if messages.has(message_key) else true
