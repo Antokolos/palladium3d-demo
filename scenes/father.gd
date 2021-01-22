@@ -159,5 +159,8 @@ func is_crouching():
 func stop_cutscene():
 	pass
 
+func reset_movement():
+	pass
+
 func put_phone_down():
 	$AnimationTree.set("parameters/Transition/current", 1)

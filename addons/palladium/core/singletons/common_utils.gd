@@ -129,10 +129,13 @@ func is_event_cancel_action(event):
 		return false
 	return event.is_action_pressed("ui_cancel")
 
-func set_achievement(achievement_name):
+func set_achievement(achievement_name, and_store_stats = true):
 	if not is_steam_running():
 		return null
-	return _steam.setAchievement(achievement_name)
+	var result = _steam.setAchievement(achievement_name)
+	if and_store_stats:
+		store_stats()
+	return result
 
 func store_stats():
 	if not is_steam_running():

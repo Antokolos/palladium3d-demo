@@ -6,7 +6,6 @@ const AGGRESSION_RANGE = 11
 const STOP_CHASING_RANGE = 12
 
 export var max_hits = 0
-var party_members_cache = []
 var hits = 0
 
 func _ready():
@@ -61,45 +60,27 @@ func activate():
 	set_sprinting(false)
 	character_nodes.start_cutscene_timer()
 
-func get_party_members():
-	if party_members_cache.empty():
-		party_members_cache = get_tree().get_nodes_in_group("party")
-	return party_members_cache
-
-func get_nearest_party_member():
-	var party = get_party_members()
-	var tgt = null
-	var dist_squared_min
-	var origin = get_global_transform().origin
-	for ch in party:
-		var dist_squared_cur = origin.distance_squared_to(ch.get_global_transform().origin)
-		if not tgt:
-			tgt = ch
-			dist_squared_min = dist_squared_cur
-			continue
-		if dist_squared_cur < dist_squared_min:
-			dist_squared_min = dist_squared_cur
-			tgt = ch
-	return tgt
-
 func get_preferred_target():
 	if not is_activated():
 		return null
-	return get_nearest_party_member() if is_aggressive() else .get_preferred_target()
+	return get_aggression_target() if is_aggressive() else .get_preferred_target()
 
-func set_states(player):
-	if player.is_hidden() \
+func set_states():
+	set_states_for_character(get_nearest_party_member())
+
+func set_states_for_character(character):
+	if character.is_hidden() \
 		or get_relationship() >= 0 \
 		or get_morale() < 0:
 		set_aggressive(false)
 		return
-	var dtp = get_distance_to_character(player)
+	var dtp = get_distance_to_character(character)
 	var is_aggressive = is_aggressive()
-	if is_aggressive and (dtp > TOO_FAR_RANGE or player.is_sprinting()):
+	if is_aggressive and (dtp > TOO_FAR_RANGE or character.is_sprinting()):
 		set_sprinting(true)
 	if not is_aggressive \
 		and dtp < AGGRESSION_RANGE \
-		and not has_obstacles_between(player):
+		and not has_obstacles_between(character):
 		set_sprinting(true)
 		set_aggressive(true)
 	elif is_aggressive and dtp > STOP_CHASING_RANGE:
@@ -110,7 +91,7 @@ func _physics_process(delta):
 	.do_process(delta, false)
 	if not is_activated():
 		return
-	set_states(get_nearest_party_member())
+	set_states()
 	if not is_aggressive():
 		var target = get_target_node()
 		if target and not target.get_parent() is PLDPatrolArea:

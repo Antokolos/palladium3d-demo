@@ -15,16 +15,7 @@ onready var shader_cache = get_node("viewpoint/shader_cache") if has_node("viewp
 onready var item_preview = get_node("viewpoint/item_preview") if has_node("viewpoint/item_preview") else null
 onready var item_use = get_node("viewpoint/item_use") if has_node("viewpoint/item_use") else null
 
-var sky_outside
-var sky_inside
-
 func _ready():
-	sky_outside = PanoramaSky.new()
-	sky_outside.panorama = load("res://addons/palladium/assets/cape_hill_4k.hdr")
-	sky_outside.radiance_size = Sky.RADIANCE_SIZE_32
-	sky_inside = PanoramaSky.new()
-	sky_inside.panorama = load("res://addons/palladium/assets/ui/undersky5.png")
-	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
 
@@ -101,8 +92,9 @@ func change_quality(quality):
 func set_inside(inside, bright):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
 	environment.set_bg_color(Color(1, 1, 1) if bright else Color(0, 0, 0))
-	environment.set("background_sky", sky_inside if inside else sky_outside)
+	environment.set("background_sky", game_state.sky_inside if inside else game_state.sky_outside)
 	environment.set("background_energy", 0.3 if bright else (0.04 if inside else 0.25))
+	environment.set("background_sky_rotation_degrees", game_state.sky_rotation_degrees)
 	environment.set("ambient_light_energy", 0.3 if bright else (0.04 if inside else 0.25))
 
 func change_culling():

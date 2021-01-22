@@ -175,6 +175,9 @@ func is_crouching():
 func stop_cutscene():
 	pass
 
+func reset_movement():
+	pass
+
 func start():
 	$AnimationTree.active = true
 	walks_intro()

@@ -353,6 +353,7 @@ gdscript/warnings/enable=false
 
 window/size/width=1920
 window/size/height=1080
+mouse_cursor/custom_image="res://addons/palladium/assets/images/feather.png"
 
 [editor_plugins]
 

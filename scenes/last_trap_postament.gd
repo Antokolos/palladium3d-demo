@@ -48,6 +48,7 @@ func use(player_node, camera_node):
 	if palladium_real.visible:
 		palladium_real.visible = false
 		game_state.take(DB.TakableIds.PALLADIUM)
+		common_utils.set_achievement("ANCIENT_TREASURE")
 		set_state(STATE_FINISHED_REAL)
 	elif palladium_fake.visible:
 		palladium_fake.visible = false

@@ -86,13 +86,14 @@ func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, l
 		elif dir.current_is_dir():
 			build_stories_cache_for_locale(slot, storiesDirectoryPath, locale, file, storiesByLocale)
 		elif file.ends_with(".ink.json"):
+			var storyName : String = ("" if subPath.empty() else subPath + "/") + file
 			var storyPath : String = basePath + "/" + file
 			var story = load_story_from_file(storyPath)
 			bind_external_functions(story)
 			# TODO: Probably we need to support multiple chat driven stories?
 			var chatDriven : bool = (file == "Chat.ink.json")
-			var palladiumStory : PLDStory = PLDStory.new(story, storyPath, chatDriven)
-			load_save_or_reset(slot, locale, storyPath, palladiumStory)
+			var palladiumStory : PLDStory = PLDStory.new(story, storiesDirectoryPath, locale, storyName, chatDriven)
+			load_save_or_reset(slot, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
 
@@ -145,7 +146,7 @@ func load_story(storyPath : String, chatDriven : bool, repeatable : bool) -> voi
 			return
 		if repeatable:
 			_inkStory[locale].reset_state()
-			_inkStoriesStates[locale][storyPath] = ""
+			_inkStoriesStates[locale][storyPath].story_state = ""
 		_currentSessionStories[locale][storyPath] = _inkStory[locale]
 
 func _observe_variable(variable_name, new_value) -> void:
@@ -236,7 +237,13 @@ func reset() -> void:
 			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
 			story.reset_state()
-			_inkStoriesStates[locale][palladiumStory.get_story_path()] = ""
+			_inkStoriesStates[locale][palladiumStory.get_story_name()].story_state = ""
+
+func increase_visit_count():
+	for locale in AvailableLocales:
+		if _inkStory.has(locale):
+			var palladiumStory : PLDStory = _inkStory[locale]
+			_inkStoriesStates[locale][palladiumStory.get_story_name()].visit_count += 1
 
 func get_slot_caption_file_path(slot : int) -> String:
 	return "user://saves/slot_%d/caption" % slot
@@ -295,7 +302,7 @@ func save_all(slot : int) -> void:
 		for path in _currentSessionStories[locale]:
 			var palladiumStory = _currentSessionStories[locale][path]
 			var story = palladiumStory.get_ink_story()
-			_inkStoriesStates[locale][path] = story.state.to_json()
+			_inkStoriesStates[locale][path].story_state = story.state.to_json()
 			if palladiumStory.is_chat_driven():
 				var storyLogFile : File = File.new()
 				storyLogFile.open(get_story_log_path(slot, path, locale), File.WRITE)
@@ -311,8 +318,12 @@ func save_all(slot : int) -> void:
 	slotCaptionFile.store_string(datetime_as_string(OS.get_datetime()))
 	slotCaptionFile.close()
 
-func load_save_or_reset(slot : int, locale : String, path : String, palladiumStory : PLDStory) -> bool:
+func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
+	var locale = palladiumStory.get_locale()
+	var path = palladiumStory.get_story_path()
+	var story_name = palladiumStory.get_story_name()
 	var story = palladiumStory.get_ink_story() # Story
+	var visit_count = 0
 	if slot >= 0:
 		if palladiumStory.is_chat_driven():
 			var storyLogFile : File = File.new()
@@ -334,13 +345,17 @@ func load_save_or_reset(slot : int, locale : String, path : String, palladiumSto
 				var d = parse_json(savedJson)
 				if (typeof(d) == TYPE_DICTIONARY):
 					_inkStoriesStates[locale] = d
-		if _inkStoriesStates[locale].has(path):
-			var story_state = _inkStoriesStates[locale][path]
+		if _inkStoriesStates[locale].has(story_name):
+			var story_state = _inkStoriesStates[locale][story_name].story_state
+			visit_count = _inkStoriesStates[locale][story_name].visit_count
 			if story_state and not story_state.empty():
 				story.state.load_json(story_state)
 				return true
 	story.reset_state()
-	_inkStoriesStates[locale][path] = ""
+	_inkStoriesStates[locale][story_name] = {
+		"story_state" : "",
+		"visit_count" : visit_count
+	}
 	return false
 
 # Reloads state of all stories from the _inkStories dictionary from the save file.
@@ -351,7 +366,7 @@ func reload_all_saves(slot : int) -> void:
 		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		for path in storiesByLocale:
 			var palladiumStory : PLDStory = storiesByLocale[path]
-			load_save_or_reset(slot, locale, path, palladiumStory)
+			load_save_or_reset(slot, palladiumStory)
 
 func can_continue() -> bool:
 	for locale in AvailableLocales:

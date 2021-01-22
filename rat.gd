@@ -12,6 +12,10 @@ const ALIGNMENT_RANGE = 0.2
 var x_dir = Vector3(4, 0, 0)
 var retreating = false
 
+func use(player_node, camera_node):
+	common_utils.set_achievement("RAT_TERROR")
+	return .use(player_node, camera_node)
+
 func can_move_without_collision(motion):
 	# This condition WAS CORRECTED after switching to 3.1, see here:
 	# https://github.com/godotengine/godot/issues/21212

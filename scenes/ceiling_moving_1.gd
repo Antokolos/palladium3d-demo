@@ -112,7 +112,7 @@ func _physics_process(delta):
 
 func _on_DamageTimer_timeout():
 	if does_damage:
-		game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - spikes_injury_rate, game_state.player_health_max)
+		game_state.damage_party(spikes_injury_rate)
 
 func _on_PartialActivationTimer_timeout():
 	pause()

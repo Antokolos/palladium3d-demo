@@ -46,6 +46,14 @@ enum ActivatableState {
 	PAUSED_FOREVER = 6
 }
 
+enum TimeOfDay {
+	MORNING = 0,
+	DAY = 1,
+	EVENING = 2,
+	NIGHT = 3
+}
+
+const SKY_ROTATION_DEGREES_DEFAULT = Vector3(0, 160, 0)
 const COLOR_WHITE = Color(1, 1, 1, 1)
 const COLOR_BLACK = Color(0, 0, 0, 0)
 const DOORS_DEFAULT = {}
@@ -92,6 +100,11 @@ var activatables = ACTIVATABLES_DEFAULT.duplicate(true)
 var multistates = MULTISTATES_DEFAULT.duplicate(true)
 var messages = MESSAGES_DEFAULT.duplicate(true)
 
+var sky_outside
+var sky_inside
+var sky_rotation_degrees = SKY_ROTATION_DEGREES_DEFAULT
+var time_of_day = TimeOfDay.MORNING
+
 static func process_activatables(source):
 	var result = {}
 	for sk in source.keys():
@@ -112,6 +125,12 @@ static func sanitize_items(items):
 	return result
 
 func _ready():
+	sky_outside = PanoramaSky.new()
+	sky_outside.panorama = load("res://addons/palladium/assets/cape_hill_4k.hdr")
+	sky_outside.radiance_size = Sky.RADIANCE_SIZE_32
+	sky_inside = PanoramaSky.new()
+	sky_inside.panorama = load("res://addons/palladium/assets/ui/undersky5.png")
+	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	cleanup_paths()
 	reset_variables()
 
@@ -241,6 +260,23 @@ func is_inside():
 func is_bright():
 	var level = get_level()
 	return level.is_bright() if level else false
+
+func change_sky_panorama(
+	inside,
+	panorama,
+	sky_rotation_degrees = SKY_ROTATION_DEGREES_DEFAULT,
+	time_of_day = TimeOfDay.MORNING
+):
+	var panorama_prev
+	if inside:
+		panorama_prev = sky_inside.panorama
+		sky_inside.panorama = panorama
+	else:
+		panorama_prev = sky_outside.panorama
+		sky_outside.panorama = panorama
+	self.sky_rotation_degrees = sky_rotation_degrees
+	self.time_of_day = time_of_day
+	return panorama_prev
 
 func set_surge(player, enable):
 	emit_signal("player_surge", player, enable)
@@ -453,6 +489,9 @@ func set_player_name_hint(name_hint):
 
 func player_name_is(name_hint):
 	return player_name_hint == name_hint
+
+func damage_party(injury_rate):
+	game_state.set_health(CHARS.PLAYER_NAME_HINT, player_health_current - injury_rate, player_health_max)
 
 func kill_party():
 	set_health(CHARS.PLAYER_NAME_HINT, 0, player_health_max)

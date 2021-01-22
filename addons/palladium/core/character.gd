@@ -90,11 +90,18 @@ func can_hide():
 	return can_hide
 
 func handle_attack():
-	var possible_attack_target = character_nodes.get_possible_attack_target(false)
-	if possible_attack_target:
-		attack_start(possible_attack_target)
-	else:
+	var possible_target = character_nodes.get_possible_attack_target(false)
+	if not possible_target:
 		stop_attack()
+		return
+	var aggression_target = get_aggression_target()
+	if not aggression_target:
+		stop_attack()
+		return
+	if possible_target.get_instance_id() != aggression_target.get_instance_id():
+		stop_attack()
+		return
+	attack_start(possible_target)
 
 func attack_start(possible_attack_target, attack_anim_idx = -1):
 	if not is_attacking():
@@ -328,6 +335,27 @@ func set_aggressive(enable):
 		emit_signal("aggressive_changed", self, is_aggressive_prev, is_aggressive)
 	if enable:
 		set_patrolling(false)
+
+func get_nearest_party_member():
+	var characters = game_state.get_characters()
+	var tgt = null
+	var dist_squared_min
+	var origin = get_global_transform().origin
+	for ch in characters:
+		if not ch.is_in_party():
+			continue
+		var dist_squared_cur = origin.distance_squared_to(ch.get_global_transform().origin)
+		if not tgt:
+			tgt = ch
+			dist_squared_min = dist_squared_cur
+			continue
+		if dist_squared_cur < dist_squared_min:
+			dist_squared_min = dist_squared_cur
+			tgt = ch
+	return tgt
+
+func get_aggression_target():
+	return get_nearest_party_member()
 
 func set_target_node(node, update_navpath = true, force_no_sprinting = false):
 	.set_target_node(node, update_navpath)

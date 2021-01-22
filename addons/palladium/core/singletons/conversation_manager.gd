@@ -62,6 +62,7 @@ func stop_conversation(player):
 		return
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
+	story_node.increase_visit_count()
 	var conversation_name_prev = conversation_name
 	var target_prev = target
 	var initiator_prev = initiator

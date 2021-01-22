@@ -293,12 +293,6 @@ func execute_custom_action(event, item):
 				var origin = pl_origin + shift * 2
 				rat.set_global_transform(Transform(basis, origin))
 				game_state.get_level().add_child(rat)
-			TakableIds.FLASK_HEALING:
-				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current + game_state.player_health_max / 2, game_state.player_health_max)
-				var last_flask = (item.get_item_count() == 1)
-				item.remove()
-				if last_flask:
-					game_state.take(DB.TakableIds.FLASK_EMPTY)
 			TakableIds.BUN:
 				item.remove()
 				var player = game_state.get_player()
