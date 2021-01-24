@@ -353,7 +353,6 @@ gdscript/warnings/enable=false
 
 window/size/width=1920
 window/size/height=1080
-mouse_cursor/custom_image="res://addons/palladium/assets/images/feather.png"
 
 [editor_plugins]
 
@@ -1653,6 +1652,10 @@ ui_tablet_toggle={
 
 translations=PoolStringArray( "res://game_text.en.translation", "res://game_text.ru.translation" )
 locale_filter=[ 0, [ "en", "ru" ] ]
+
+[logging]
+
+file_logging/enable_file_logging=true
 
 [memory]
 
