@@ -327,7 +327,7 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 	if slot >= 0:
 		if palladiumStory.is_chat_driven():
 			var storyLogFile : File = File.new()
-			var storyLogFilePath : String = get_story_log_path(slot, path, locale)
+			var storyLogFilePath : String = get_story_log_path(slot, story_name, locale)
 			if storyLogFile.file_exists(storyLogFilePath):
 				storyLogFile.open(storyLogFilePath, File.READ)
 				var story_log = palladiumStory.get_story_log()

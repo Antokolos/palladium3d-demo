@@ -39,8 +39,6 @@ func continue_story(option_number):
 		return
 	if story_node.can_continue() and option_number == 0:
 		story_proceed(false)
-		if story_node.can_choose():
-			display_choices()
 	elif story_node.can_choose() and option_number > 0:
 		story_choose(option_number - 1)
 
@@ -52,6 +50,10 @@ func story_proceed(choice_response):
 	if story_node.can_continue():
 		# TODO: Create a phrase timer so that next phrase appear after delay, simulating real typing
 		continue_story(0)
+	elif story_node.can_choose():
+		display_choices()
+	else:
+		story_node.increase_visit_count()
 
 func story_choose(idx):
 	if idx < max_choice:
