@@ -129,10 +129,34 @@ func is_event_cancel_action(event):
 		return false
 	return event.is_action_pressed("ui_cancel")
 
+func clear_achievement(achievement_name, and_store_stats = true):
+	if not is_steam_running():
+		return false
+	var result = _steam.clearAchievement(achievement_name)
+	if and_store_stats:
+		store_stats()
+	return result
+
 func set_achievement(achievement_name, and_store_stats = true):
 	if not is_steam_running():
-		return null
+		return false
 	var result = _steam.setAchievement(achievement_name)
+	if and_store_stats:
+		store_stats()
+	return result
+
+func set_achievement_progress(achievement_name, progress_current, progress_max, and_store_stats = true):
+	if not is_steam_running():
+		return false
+	var result = _steam.indicateAchievementProgress(achievement_name, progress_current, progress_max)
+	if and_store_stats:
+		store_stats()
+	return result
+
+func set_stat_int(stat_name, stat_value, and_store_stats = true):
+	if not is_steam_running():
+		return false
+	var result = _steam.setStatInt(stat_name, stat_value)
 	if and_store_stats:
 		store_stats()
 	return result

@@ -88,7 +88,7 @@ func _on_Area_body_entered(body):
 	if not companion.equals(body):
 		var player = game_state.get_character(CHARS.PLAYER_NAME_HINT)
 		if player.equals(body):
-			common_utils.set_achievement("FEEBLE_MINDEDNESS_AND_COURAGE")
+			PREFS.set_achievement("FEEBLE_MINDEDNESS_AND_COURAGE")
 		return
 	companion.leave_party()
 	companion.set_target_node(get_node("Position3D"))

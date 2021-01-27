@@ -333,11 +333,12 @@ config/auto_accept_quit=false
 
 [autoload]
 
+common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
 SCENES="*res://db/scenes.gd"
 MEDIA="*res://addons/palladium/core/singletons/media.tscn"
 CHARS="*res://db/chars.gd"
 DB="*res://db/db.gd"
-common_utils="*res://addons/palladium/core/singletons/common_utils.tscn"
+PREFS="*res://db/prefs.gd"
 settings="*res://addons/palladium/core/singletons/settings.gd"
 game_state="*res://addons/palladium/core/singletons/game_state.tscn"
 lipsync_manager="*res://addons/palladium/core/singletons/lipsync_manager.tscn"
@@ -353,6 +354,7 @@ gdscript/warnings/enable=false
 
 window/size/width=1920
 window/size/height=1080
+mouse_cursor/custom_image="res://addons/palladium/assets/images/feather.png"
 
 [editor_plugins]
 
@@ -1652,10 +1654,6 @@ ui_tablet_toggle={
 
 translations=PoolStringArray( "res://game_text.en.translation", "res://game_text.ru.translation" )
 locale_filter=[ 0, [ "en", "ru" ] ]
-
-[logging]
-
-file_logging/enable_file_logging=true
 
 [memory]
 

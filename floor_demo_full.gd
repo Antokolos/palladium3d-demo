@@ -1,6 +1,21 @@
 extends Spatial
 
 export var doors_path = "../../doors/floor_demo_full"
+
+const INSCRIPTIONS_DIALOGUES = [
+	'005_ApataInscriptions', # Every riddle has a solution, Only two can pass the trials
+	'010-1-2_MusesHint', # Reveal the deception and restore the truth
+	'029_Goddes_will_tame', # When the goddess will tame the wild beast, they will step back
+	'068_Sun_competitors', # Get rid of the Sun's competitors
+	'113_Coin_depicted', # this is the letter "P"
+	'152_A_sign_appeared', # Zeus's children will show the way
+	'157_The_birth_of_Athena', # The birth of Athena
+	'174_This_inscription_wasn\'t', # Name three bird companions of Athena, Hera, and Aphrodite into the iron ear
+	'179-2_Tablets', # Before picking one of the jars, you can check the contents only of one of them. And remember: tablet drawings lie
+	'195_ambrosia_cup_female', # Pour some water in the evening. In the morning the water will become ambrosia.
+	'196_trick_Zeus' # Trick Zeus
+]
+
 onready var doors = get_node(doors_path)
 onready var last_trap_postament = get_node("last_trap_postament")
 onready var last_trap_spikes = get_node("last_trap_spikes")
@@ -37,11 +52,11 @@ func use_takable(player_node, takable, parent, was_taken):
 	match takable_id:
 		DB.TakableIds.APATA:
 			if was_taken:
-				common_utils.set_achievement("APATE")
+				PREFS.set_achievement("APATE")
 			pass # door_0 is now closed a little bit later, when FEMALE_CUTSCENE_TAKES_APATA cutscene or corresponding dialogue is ended
 		DB.TakableIds.HERMES:
 			if was_taken:
-				common_utils.set_achievement("HERMES")
+				PREFS.set_achievement("HERMES")
 			match pedestal_id:
 				DB.PedestalIds.ERIDA_LOCK:
 					get_door("door_8").close()
@@ -53,7 +68,7 @@ func use_takable(player_node, takable, parent, was_taken):
 						game_state.autosave_create()
 		DB.TakableIds.ERIDA:
 			if was_taken:
-				common_utils.set_achievement("ERIS")
+				PREFS.set_achievement("ERIS")
 			match pedestal_id:
 				DB.PedestalIds.ERIS_FLAT:
 					var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
@@ -66,7 +81,7 @@ func use_takable(player_node, takable, parent, was_taken):
 						})
 		DB.TakableIds.ARES:
 			if was_taken:
-				common_utils.set_achievement("ARES")
+				PREFS.set_achievement("ARES")
 			match pedestal_id:
 				DB.PedestalIds.ARES_FLAT:
 					var door = get_door("door_6")
@@ -76,7 +91,7 @@ func use_takable(player_node, takable, parent, was_taken):
 						game_state.autosave_create()
 		DB.TakableIds.ATHENA:
 			if was_taken:
-				common_utils.set_achievement("ANCIENT_ARTIFACT")
+				PREFS.set_achievement("ANCIENT_ARTIFACT")
 			last_trap_show()
 
 func last_trap_show():
@@ -246,7 +261,7 @@ func _on_AreaDeadEnd2_body_entered(body):
 		conversation_manager.start_area_conversation("023_DemoDeadEnd")
 
 func _on_web_destroyed(web):
-	common_utils.set_achievement("COBWEB")
+	PREFS.set_achievement("COBWEB")
 	if web.get_usable_id() == DB.UsableIds.WEB_APATA:
 		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
 
@@ -335,17 +350,13 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 	var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
-	# 5a, 5b -- Каждая загадка имеет решение, только вдвоём...
-	# 10.1 -- Раскрой обман и восстанови истину, театр, астрономия, история
-	# 68, 45, 17 -- Устрани конкурентов Солнца, Афродита, Арес, Аполлон в секторах
-	# 113, 91, 38 -- Ро 100
-	# 152, 131, 3 -- Дети Зевса укажут путь
-	# 157, 136, 8 -- Рождение Афины
-	# 174, 153, 2 -- Назови железному уху трёх птиц
-	# 179, 158 -- Прежде чем выбрать кувшин... и помни, рисунки на табличках ложь
-	# 195, 28 -- Вечером наполни чашу водой, наутро вода станет амброзией
-	# 29, 6, 4 -- Когда богиня усмирит диких животных, они отступят
-	# 163, 142, 14 -- Обмани Зевса
+	for dlg_name in INSCRIPTIONS_DIALOGUES:
+		if dlg_name.casecmp_to(conversation_name) != 0:
+			continue
+		if PREFS.get_achievement("GREEK_LANGUAGE_LOVER", dlg_name) > 0:
+			continue
+		if story_node.visit_count_is_at_least([ dlg_name + ".ink.json"], 1):
+			PREFS.set_achievement("GREEK_LANGUAGE_LOVER", dlg_name)
 	match conversation_name:
 		"005_ApataInscriptions":
 			bandit.teleport(get_node("BanditPosition"))

@@ -120,9 +120,9 @@ func _on_meeting_started(player, target, initiator):
 	if not initiator:
 		return
 	if initiator.get_name_hint() == CHARS.PLAYER_NAME_HINT:
-		common_utils.set_achievement("ATTENTIVENESS")
+		PREFS.set_achievement("ATTENTIVENESS")
 	elif initiator.get_name_hint() == CHARS.FEMALE_NAME_HINT:
-		common_utils.set_achievement("CAREFULNESS")
+		PREFS.set_achievement("CAREFULNESS")
 
 func _on_meeting_finished(player, target, initiator):
 	if not player_female.is_in_party():
@@ -157,7 +157,7 @@ func _on_BoatArea_body_entered(body):
 	if not boatFinished:
 		if conversation_manager.meeting_is_finished(CHARS.FEMALE_NAME_HINT, CHARS.PLAYER_NAME_HINT):
 			conversation_manager.start_conversation(player, "001_Boat")
-			common_utils.set_achievement("ANXIETY")
+			PREFS.set_achievement("ANXIETY")
 
 func _on_TunnelArea_body_entered(body):
 	if body.is_in_group("party"):
@@ -180,7 +180,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 	match conversation_name:
 		"171-1_I_would_not_leave_you":
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
-			common_utils.set_achievement("KNOWLEDGE_IS_POWER")
+			PREFS.set_achievement("KNOWLEDGE_IS_POWER")
 			game_state.change_scene("res://ending_2.tscn", false, true)
 		"171_Why_are_you_so_sad":
 			set_player_final_position()
@@ -188,7 +188,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 			$FinalCutsceneTimer.start(8 if player_female.get_relationship() >= 6 else 5)
 			yield($FinalCutsceneTimer, "timeout")
-			common_utils.set_achievement("KNOWLEDGE_IS_POWER")
+			PREFS.set_achievement("KNOWLEDGE_IS_POWER")
 			if game_state.has_item(DB.TakableIds.PALLADIUM):
 				game_state.change_scene("res://ending_1.tscn", false, true)
 			else:
@@ -199,7 +199,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
 			$FinalCutsceneTimer.start()
 			yield($FinalCutsceneTimer, "timeout")
-			common_utils.set_achievement("POWER_OF_PROGRESS")
+			PREFS.set_achievement("POWER_OF_PROGRESS")
 			if game_state.has_item(DB.TakableIds.ATHENA):
 				game_state.change_scene("res://ending_4.tscn", false, true)
 			else:

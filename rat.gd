@@ -13,7 +13,7 @@ var x_dir = Vector3(4, 0, 0)
 var retreating = false
 
 func use(player_node, camera_node):
-	common_utils.set_achievement("RAT_TERROR")
+	PREFS.set_achievement("RAT_TERROR")
 	return .use(player_node, camera_node)
 
 func can_move_without_collision(motion):

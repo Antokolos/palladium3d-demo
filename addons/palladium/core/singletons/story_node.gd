@@ -245,6 +245,20 @@ func increase_visit_count():
 			var palladiumStory : PLDStory = _inkStory[locale]
 			_inkStoriesStates[locale][palladiumStory.get_story_name()].visit_count += 1
 
+# story_paths is array of Strings
+func visit_count_is_at_least(story_paths : Array, visit_count):
+	for locale in AvailableLocales:
+		if _inkStories.has(locale):
+			for story_path in story_paths:
+				if not _inkStories[locale].has(story_path):
+					push_warning("Story path %s was not found!" % story_path)
+					return false
+				var palladiumStory : PLDStory = _inkStories[locale][story_path]
+				var vc = _inkStoriesStates[locale][palladiumStory.get_story_name()].visit_count
+				if vc < visit_count:
+					return false
+	return true
+
 func get_slot_caption_file_path(slot : int) -> String:
 	return "user://saves/slot_%d/caption" % slot
 

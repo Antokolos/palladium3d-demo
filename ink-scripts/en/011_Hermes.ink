@@ -2,9 +2,9 @@ VAR relationship_female = 0
 Andreas, aren't you going to criticize me?	# actor:female # voiceover:535_Andreas_aren't_you_going.ogg
 Do you want me to?	# actor:player # voiceover:463_do_you_want_me_too.ogg
 No, but it was my mistake grabbing the statue.	# actor:female # voiceover:536_no_but_it_was_my_mistake.ogg
-* 	[А я ведь просил ничего не трогать!]
+* 	[Didn't I tell you not to touch anything?]
 	~ relationship_female = relationship_female - 1
-	А я ведь просил ничего не трогать! # actor:player # voiceover:.ogg
+	Didn't I tell you not to touch anything? # actor:player # voiceover:2027_didn't_i_tell_you_not_to.ogg
 	-> hermes_continue
 * 	[I would have taken it eventually anyway.]
 	~ relationship_female = relationship_female + 1
