@@ -22,14 +22,26 @@ func clear_all_achievements():
 func set_achievement(achievement_id, modification_id = MODIFICATION_ID_DEFAULT):
 	if not achievements.has(achievement_id):
 		push_warning("Cannot set achievement %d: key not found")
-		return
+		return false
 	if not achievements[achievement_id].has(modification_id):
 		achievements[achievement_id][modification_id] = 1
 	else:
 		achievements[achievement_id][modification_id] += 1
 	store_achievement(achievement_id)
-	# TODO: PERFECT_GAME_ACHIEVEMENT_ID
+	if PERFECT_GAME_ACHIEVEMENT_ID:
+		for aid in ACHIEVEMENTS_DATA.keys():
+			var m = 1
+			if ACHIEVEMENTS_DATA[aid].has("stat_id"):
+				var stat_id = ACHIEVEMENTS_DATA[aid]["stat_id"]
+				m = STATS_DATA[stat_id]["stat_max"]
+			var l = achievements[achievement_id].size()
+			if PERFECT_GAME_ACHIEVEMENT_ID.casecmp_to(aid) != 0 and l < m:
+				save_prefs()
+				return false
+		achievements[PERFECT_GAME_ACHIEVEMENT_ID][modification_id] = 1
+		common_utils.set_achievement(PERFECT_GAME_ACHIEVEMENT_ID)
 	save_prefs()
+	return true
 
 func store_achievement(achievement_id):
 	if not achievements.has(achievement_id):

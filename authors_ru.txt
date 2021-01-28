@@ -4,8 +4,8 @@
 
 [b]Сделано с помощью Godot Engine[/b]
 [table=2]
-[cell][img]res://assets/images/200px-Godot_logo.svg.png[/img][/cell]
-[cell][img]res://assets/images/1-52.png[/img][url]https://godotengine.org[/url][/cell]
+[cell][img]res://addons/palladium/assets/images/200px-Godot_logo.svg.png[/img][/cell]
+[cell][img]res://addons/palladium/assets/images/1-52.png[/img][url]https://godotengine.org[/url][/cell]
 [/table]
 
 [b]Благодарность за редактуру английского текста: Christine Ewert[/b]
