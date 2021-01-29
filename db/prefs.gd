@@ -72,6 +72,10 @@ func resend_achievements():
 	for achievement_id in achievements.keys():
 		if achievements[achievement_id].size() > 0:
 			store_achievement(achievement_id)
+		elif CLEAR_ON_SERVER_IF_NOT_IN_PREFS:
+			common_utils.clear_achievement(achievement_id, false)
+	if CLEAR_ON_SERVER_IF_NOT_IN_PREFS:
+		common_utils.store_stats()
 
 func load_prefs():
 	var f = File.new()

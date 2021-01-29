@@ -2,6 +2,7 @@ extends PLDTakable
 class_name TakableRat
 
 onready var rat = get_node("Rotation_Helper/Model/rat_grey")
+onready var rat_area = $RatArea
 
 const SAFE_RANGE = 6
 const SNIFF_RANGE = 5
@@ -60,6 +61,17 @@ func _integrate_forces(state):
 
 func is_retreating():
 	return retreating
+
+func overlaps_rat_area(body):
+	return rat_area.overlaps_body(body)
+
+func make_present():
+	.make_present()
+	set_mode(RigidBody.MODE_RIGID)
+
+func make_absent():
+	set_mode(RigidBody.MODE_STATIC)
+	.make_absent()
 
 func rest():
 	rat.rest()
