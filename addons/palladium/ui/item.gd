@@ -114,8 +114,8 @@ func get_model_use_instance():
 func get_item_count():
 	return item_count
 
-func remove():
-	game_state.remove(item_id)
+func remove(all_items = false):
+	game_state.remove(item_id, item_count if all_items else 1)
 
 func used(player_node, target):
 	emit_signal("used", player_node, target, item_id)

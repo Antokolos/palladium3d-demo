@@ -5,6 +5,7 @@ signal use_use_target(player_node, use_target, item, result)
 
 export(DB.UseTargetIds) var use_target_id = DB.UseTargetIds.NONE
 export var remove_on_use = true
+export var remove_all_items = false
 export var matched_item_names : PoolStringArray = PoolStringArray()
 
 func connect_signals(target):
@@ -21,7 +22,7 @@ func use(player_node, camera_node):
 		item.used(player_node, self)
 		var result = use_action(player_node, item)
 		if result and remove_on_use:
-			item.remove()
+			item.remove(remove_all_items)
 		post_use_action(player_node, item, result)
 		emit_signal("use_use_target", player_node, self, item, result)
 
