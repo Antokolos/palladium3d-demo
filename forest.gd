@@ -146,12 +146,14 @@ func _on_RockArea_body_exited(body):
 		_on_StumpArea_body_exited(body)
 
 func _on_BoatArea_body_entered(body):
-	if not body is PLDPlayer \
+	if not body.is_in_group("party") \
 		or game_state.is_loading() \
-		or not player_female.is_rest_state():
+		or game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 		return
 	var boat_area = get_node("BoatArea")
-	if not boat_area or not boat_area.overlaps_body(player) or not boat_area.overlaps_body(player_female):
+	if not boat_area \
+		or not boat_area.overlaps_body(player) \
+		or not boat_area.overlaps_body(player_female):
 		return
 	var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
 	if not boatFinished:

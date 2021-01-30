@@ -273,9 +273,24 @@ func execute_give_item_action(player, target):
 	item.remove()
 	return true
 
+func can_execute_custom_action(action, item):
+	match action:
+		"item_preview_action_1":
+			match item.item_id:
+				TakableIds.CELL_PHONE:
+					return conversation_manager.conversation_is_not_finished("Chat")
+		"item_preview_action_2":
+			pass
+		"item_preview_action_3":
+			pass
+		"item_preview_action_4":
+			pass
+	return true
+
 func execute_custom_action(event, item):
 	var result = false
-	if event.is_action_pressed("item_preview_action_1"):
+	if event.is_action_pressed("item_preview_action_1") \
+		and can_execute_custom_action("item_preview_action_1", item):
 		result = true
 		match item.item_id:
 			TakableIds.CELL_PHONE:
@@ -304,12 +319,15 @@ func execute_custom_action(event, item):
 				game_state.take(DB.TakableIds.ISLAND_MAP_2)
 			_:
 				result = false
-	elif event.is_action_pressed("item_preview_action_2"):
-		pass
-	elif event.is_action_pressed("item_preview_action_3"):
-		pass
-	elif event.is_action_pressed("item_preview_action_4"):
-		pass
+	elif event.is_action_pressed("item_preview_action_2") \
+		and can_execute_custom_action("item_preview_action_2", item):
+			return false
+	elif event.is_action_pressed("item_preview_action_3") \
+		and can_execute_custom_action("item_preview_action_3", item):
+			return false
+	elif event.is_action_pressed("item_preview_action_4") \
+		and can_execute_custom_action("item_preview_action_4", item):
+			return false
 	else:
 		return false
 	return result

@@ -65,7 +65,7 @@ func switch_highlight(player_node, body, distance_to_body):
 		if not item or item.is_weapon():
 			return ""
 		var custom_actions = game_state.get_custom_actions(item)
-		if custom_actions.empty():
+		if custom_actions.empty() or not DB.can_execute_custom_action(custom_actions[0], item):
 			return ""
 		return common_utils.get_action_key("action") + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 

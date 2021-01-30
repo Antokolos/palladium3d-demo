@@ -49,6 +49,8 @@ func open_preview(item, hud, flashlight):
 		ch.queue_free()
 	custom_actions = game_state.get_custom_actions(item)
 	for act in custom_actions:
+		if not DB.can_execute_custom_action(act, item):
+			continue
 		var ch = label_close_node.duplicate(0)
 		ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
 		custom_actions_node.add_child(ch)
