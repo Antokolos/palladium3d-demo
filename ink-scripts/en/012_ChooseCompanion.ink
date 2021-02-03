@@ -24,7 +24,7 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 	Good luck to you both.	# actor:female # voiceover:549_good_luck_to_you_both.ogg
 	~ party_female = false
 * 	[Идти одному.]
-	Сложный выбор, пойду один, как и планировал с самого начала.	# actor:player 
+	That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
 	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female 
 	Андреас, ты уверен, что один справишься?	# actor:bandit 
 	* * 	[Идти с Ксенией.]

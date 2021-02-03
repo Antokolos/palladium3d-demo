@@ -18,7 +18,7 @@ onready var quick_items_dimmer = main_hud.get_node("QuickItemsDimmer")
 onready var quick_items_panel = main_hud.get_node("QuickItemsDimmer/HBoxQuickItems")
 onready var info_label = main_hud.get_node("HBoxInfo/InfoLabel")
 onready var inventory = get_node("VBoxContainer/Inventory")
-onready var inventory_panel = inventory.get_node("HBoxContainer/InventoryContainer")
+onready var inventory_panel = inventory.get_node("VBoxContainer/InventoryContainer")
 onready var actions_panel = get_node("VBoxContainer/ActionsPanel")
 onready var message_labels = [
 	get_node("HBoxMessages/VBoxContainer/Label"),
