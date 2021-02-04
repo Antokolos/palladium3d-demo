@@ -8,7 +8,6 @@ var achievements = {}
 
 func _ready():
 	load_prefs()
-	resend_achievements()
 
 func clear_all_achievements():
 	achievements.clear()
