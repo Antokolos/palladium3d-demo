@@ -27,6 +27,14 @@ func is_activated():
 			return true
 		PLDGameState.ActivatableState.ACTIVATED_FOREVER:
 			return true
+		PLDGameState.ActivatableState.DEFAULT:
+			match default_state:
+				PLDGameState.ActivatableState.ACTIVATED:
+					return true
+				PLDGameState.ActivatableState.ACTIVATED_FOREVER:
+					return true
+				_:
+					return false 
 		_:
 			return false
 
@@ -47,6 +55,14 @@ func is_deactivated():
 			return true
 		PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			return true
+		PLDGameState.ActivatableState.DEFAULT:
+			match default_state:
+				PLDGameState.ActivatableState.DEACTIVATED:
+					return true
+				PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+					return true
+				_:
+					return false 
 		_:
 			return false
 
@@ -61,6 +77,14 @@ func is_paused():
 			return true
 		PLDGameState.ActivatableState.PAUSED_FOREVER:
 			return true
+		PLDGameState.ActivatableState.DEFAULT:
+			match default_state:
+				PLDGameState.ActivatableState.PAUSED:
+					return true
+				PLDGameState.ActivatableState.PAUSED_FOREVER:
+					return true
+				_:
+					return false 
 		_:
 			return false
 

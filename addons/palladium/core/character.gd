@@ -624,7 +624,8 @@ func process_movement(delta, dir, characters):
 		if not character.is_movement_disabled() and not character.is_player_controlled():
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
-			vel = vel - character.vel
+			if not is_player_controlled():
+				vel = vel - character.vel
 			character.invoke_physics_pass()
 
 	if nonchar_collision and pathfinding_enabled and not is_player_controlled():
@@ -722,13 +723,21 @@ func set_has_floor_collision(fc):
 func do_process(delta, is_player):
 	var d = { "is_moving" : false, "is_rotating" : false }
 	var poi = get_point_of_interest()
+	var player_is_crouching = false
+	var characters = game_state.get_characters()
+	for character in characters:
+		if character.is_player_controlled():
+			player_is_crouching = character.is_crouching()
+		if equals(character):
+			continue
+		if not update_ray_to_character(character):
+			add_ray_to_character(character)
 	if not poi and (not is_activated() or is_movement_disabled() or is_hidden()):
 		character_nodes.stop_walking_sound()
 		set_has_floor_collision(true)
 		return d
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
-	var characters = game_state.get_characters()
 	var movement_process_data = process_movement(delta, movement_data.get_dir(), characters)
 	set_has_floor_collision(movement_process_data.collides_floor)
 	d.is_moving = movement_process_data.is_walking
@@ -737,14 +746,6 @@ func do_process(delta, is_player):
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
-	var player_is_crouching = false
-	for character in characters:
-		if character.is_player_controlled():
-			player_is_crouching = character.is_crouching()
-		if equals(character):
-			continue
-		if not update_ray_to_character(character):
-			add_ray_to_character(character)
 	if has_floor_collision():
 		var low_ceiling = character_nodes.is_low_ceiling()
 		if low_ceiling and not is_crouching:

@@ -15,6 +15,8 @@ func use_usable(player_node, usable):
 	pass
 
 func use_hideout(player_node, hideout):
+	if not is_activated():
+		return
 	set_aggressive(false)
 	stop_attack()
 
