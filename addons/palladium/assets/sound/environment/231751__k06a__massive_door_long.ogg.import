@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/231751__k06a__massive_door_long.ogg-26e917066ae8156bc33d1c12524ef6e8.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/231751__k06a__massive_door_long.ogg"
+dest_files=[ "res://.import/231751__k06a__massive_door_long.ogg-26e917066ae8156bc33d1c12524ef6e8.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
