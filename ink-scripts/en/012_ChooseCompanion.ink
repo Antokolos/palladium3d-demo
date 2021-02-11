@@ -25,13 +25,13 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 	~ party_female = false
 * 	[Идти одному.]
 	That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
-	Андреас, только я знаю древнегреческий язык и мифологию.	# actor:female 
-	Андреас, ты уверен, что один справишься?	# actor:bandit 
-	* * 	[Идти с Ксенией.]
+	Andreas, I'm the only specialist on ancient Greek language and mythology. 	# actor:female # voiceover:2168_Andreas_i'm_the_only.ogg
+	Andreas, are you sure you can do this on your own?	# actor:bandit # voiceover:.ogg
+	* * 	[Go with Xenia.]
 		-> companion_xenia
-	* * 	[Идти с Максом.]
+	* * 	[Go with Max.]
 		-> companion_max
-	* * 	[Идти одному.]
-		Я решил, пойду один.	# actor:player 
+	* * 	[Go alone.]
+		That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
 		~ party_bandit = false
 		~ party_female = false

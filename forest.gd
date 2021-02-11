@@ -122,6 +122,7 @@ func _on_meeting_started(player, target, initiator):
 	if initiator.get_name_hint() == CHARS.PLAYER_NAME_HINT:
 		PREFS.set_achievement("ATTENTIVENESS")
 	elif initiator.get_name_hint() == CHARS.FEMALE_NAME_HINT:
+		MEDIA.play_sound(MEDIA.SoundId.BRANCH_BREAKING)
 		PREFS.set_achievement("CAREFULNESS")
 
 func _on_meeting_finished(player, target, initiator):

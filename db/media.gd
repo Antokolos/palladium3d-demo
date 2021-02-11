@@ -1,6 +1,7 @@
 extends Node
 
 enum MusicId {NONE, LOADING, OUTSIDE, UNDERWATER, EXPLORE, DANGER}
+
 const MUSIC = {
 	MusicId.NONE : null,
 	MusicId.LOADING : preload("res://music/loading.ogg"),
@@ -10,13 +11,18 @@ const MUSIC = {
 	MusicId.DANGER : preload("res://music/sinkingisland.ogg")
 }
 
-enum SoundId {LYRE_CORRECT, LYRE_WRONG, SNAKE_HISS}
+enum SoundId {
+	BRANCH_BREAKING,
+	SNAKE_HISS
+}
+
 const SOUND = {
-	SoundId.LYRE_CORRECT : preload("res://sound/environment/Apollo_lyre_good_2.ogg"),
-	SoundId.LYRE_WRONG : preload("res://sound/environment/Apollo_bad_lyre_sound.ogg"),
+	SoundId.BRANCH_BREAKING : preload("res://addons/palladium/assets/sound/environment/354095__bini-trns__seven-branches-are-breaking-short-close-up-h6.ogg"),
 	SoundId.SNAKE_HISS : preload("res://sound/environment/Labyrinth_snake_hiss.ogg")
 }
 
+onready var music_player = $MusicPlayer
+onready var sound_player = $SoundPlayer
 var music_ids = [ MusicId.NONE ]
 
 func change_music_to(music_id, replace_existing = true):
@@ -27,26 +33,30 @@ func change_music_to(music_id, replace_existing = true):
 	else:
 		music_ids.push_front(music_id)
 	if music_id == MEDIA.MusicId.NONE or not MUSIC[music_id]:
-		$MusicPlayer.stream = null
+		music_player.stream = null
 		stop_music()
 	else:
-		$MusicPlayer.stream = MUSIC[music_id]
-		$MusicPlayer.play()
+		music_player.stream = MUSIC[music_id]
+		music_player.play()
 
 func restore_music_from(music_id):
 	if music_ids.size() > 1 and music_ids[0] == music_id:
 		music_ids.pop_front()
 		change_music_to(music_ids[0])
 
-func play_sound(sound_id, is_loop = false):
+func play_sound(sound_id, is_loop = false, volume_db = 0):
 	var stream = SOUND[sound_id]
 	if stream is AudioStreamOGGVorbis:
 		stream.set_loop(is_loop)
 	elif stream is AudioStreamSample:
 		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_FORWARD if is_loop else AudioStreamSample.LoopMode.LOOP_DISABLED)
-	$SoundPlayer.stream = stream
-	$SoundPlayer.play()
+	sound_player.stream = stream
+	sound_player.set_volume_db(volume_db)
+	sound_player.play()
+
+func stop_sound():
+	sound_player.stop()
 
 func stop_music():
-	$MusicPlayer.stop()
+	music_player.stop()
 	music_ids = [ MusicId.NONE ]

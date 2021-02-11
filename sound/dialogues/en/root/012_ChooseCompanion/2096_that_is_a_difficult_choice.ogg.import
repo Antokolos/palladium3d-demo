@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2096_that_is_a_difficult_choice.ogg-c41bd429c49a693c6f81d4751122da92.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/2096_that_is_a_difficult_choice.ogg"
+dest_files=[ "res://.import/2096_that_is_a_difficult_choice.ogg-c41bd429c49a693c6f81d4751122da92.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

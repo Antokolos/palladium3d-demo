@@ -148,9 +148,11 @@ func set_underwater(enable):
 	if enable:
 		set_sound_walk(CHARS.SoundId.SOUND_WALK_SWIM, false)
 		MEDIA.change_music_to(MEDIA.MusicId.UNDERWATER, false)
+		settings.set_reverb(false)
 	else:
 		restore_sound_walk_from(CHARS.SoundId.SOUND_WALK_SWIM)
 		MEDIA.restore_music_from(MEDIA.MusicId.UNDERWATER)
+		settings.set_reverb(game_state.get_level().is_inside())
 
 func use_weapon(item):
 	if not item:
