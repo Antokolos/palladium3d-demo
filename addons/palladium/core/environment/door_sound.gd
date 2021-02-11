@@ -47,4 +47,5 @@ func _physics_process(delta):
 func _on_door_sound_finished():
 	if is_closing:
 		is_closing = false
-		stop_sound.play()
+		if stop_sound_stream:
+			stop_sound.play()

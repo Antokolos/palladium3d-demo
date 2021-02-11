@@ -68,7 +68,7 @@ func get_preferred_target():
 	return get_aggression_target() if is_aggressive() else .get_preferred_target()
 
 func set_states():
-	set_states_for_character(get_nearest_party_member())
+	set_states_for_character(get_nearest_character(true))
 
 func set_states_for_character(character):
 	if character.is_hidden() \
