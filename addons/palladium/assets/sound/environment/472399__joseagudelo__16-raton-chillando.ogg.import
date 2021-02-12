@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/472399__joseagudelo__16-raton-chillando.ogg-d10cbb80515c98d7d1d8e1b8a3ee4bac.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg"
+dest_files=[ "res://.import/472399__joseagudelo__16-raton-chillando.ogg-d10cbb80515c98d7d1d8e1b8a3ee4bac.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

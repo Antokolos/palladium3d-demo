@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg-f4a78c3df35f13bd8b37e6de02eac894.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg"
+dest_files=[ "res://.import/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg-f4a78c3df35f13bd8b37e6de02eac894.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

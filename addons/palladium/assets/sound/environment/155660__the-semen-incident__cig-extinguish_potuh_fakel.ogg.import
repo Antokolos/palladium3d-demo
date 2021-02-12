@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg-44614681bd00732333cb386525daf77d.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg"
+dest_files=[ "res://.import/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg-44614681bd00732333cb386525daf77d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,20 +1,37 @@
 extends PLDTakable
 class_name TakableRat
 
-onready var rat = get_node("Rotation_Helper/Model/rat_grey")
-onready var rat_area = $RatArea
+signal state_changed(rat, state_new, state_prev)
 
+onready var rat = (
+	get_node("Model").get_child(0)
+		if has_node("Model") and get_node("Model").get_child_count() > 0
+		else null
+)
+
+const RAT_MODEL_ERROR = "Rat model not set"
 const SAFE_RANGE = 6
 const SNIFF_RANGE = 5
 const WARN_RANGE = 3
 const RETREAT_RANGE = 1
 const ALIGNMENT_RANGE = 0.2
 
+enum RatState {
+	REST = 0,
+	REST_SNIFF = 1,
+	SITS_SNIFF = 2,
+	RETREATING = 3
+}
+
+onready var player_sqeak = $PlayerSqueak
+onready var player_rustle = $PlayerRustle
+
 var x_dir = Vector3(4, 0, 0)
-var retreating = false
+var state = RatState.REST
 
 func use(player_node, camera_node):
 	PREFS.set_achievement("RAT_TERROR")
+	MEDIA.play_sound(MEDIA.SoundId.RAT_SQUEAK)
 	return .use(player_node, camera_node)
 
 func can_move_without_collision(motion):
@@ -34,17 +51,24 @@ func _integrate_forces(state):
 	var dir = player_position - current_position
 	var l = dir.length()
 	state.set_linear_velocity(Vector3.ZERO)
+	var retreating = is_retreating()
 	if not retreating and l > SAFE_RANGE:
+		if player_rustle.is_playing():
+			player_rustle.stop()
 		rest()
 	elif not retreating and l > SNIFF_RANGE:
+		if not player_rustle.is_playing():
+			player_rustle.play()
 		rest_sniff()
 	elif not retreating and l > WARN_RANGE:
-		rat.sits_sniff()
+		if not player_rustle.is_playing():
+			player_rustle.play()
+		sits_sniff()
 	elif retreating or l > RETREAT_RANGE:
 		if not retreating:
-			$AudioStreamPlayer3D.play()
-		retreating = true
-		rat.run()
+			player_rustle.stop()
+			player_sqeak.play()
+		run()
 		var run_dir = current_transform.basis.xform(x_dir)
 		var space_state = state.get_space_state()
 		var param = PhysicsShapeQueryParameters.new()
@@ -60,10 +84,14 @@ func _integrate_forces(state):
 	state.set_angular_velocity(Vector3.ZERO)
 
 func is_retreating():
-	return retreating
+	return state == RatState.RETREATING
 
-func overlaps_rat_area(body):
-	return rat_area.overlaps_body(body)
+func is_close_to(body):
+	if not body:
+		return false
+	var rat_origin = get_global_transform().origin
+	var body_origin = body.get_global_transform().origin
+	return rat_origin.distance_to(body_origin) < SAFE_RANGE
 
 func make_present():
 	.make_present()
@@ -74,14 +102,36 @@ func make_absent():
 	.make_absent()
 
 func rest():
-	rat.rest()
+	if state == RatState.REST:
+		return
+	var state_prev = state
+	state = RatState.REST
+	rat.rest() if rat else push_error(RAT_MODEL_ERROR)
+	emit_signal("state_changed", self, state, state_prev)
 
 func rest_sniff():
-	rat.rest_sniff()
+	if state == RatState.REST_SNIFF:
+		return
+	var state_prev = state
+	state = RatState.REST_SNIFF
+	rat.rest_sniff() if rat else push_error(RAT_MODEL_ERROR)
+	emit_signal("state_changed", self, state, state_prev)
+
+func sits_sniff():
+	if state == RatState.SITS_SNIFF:
+		return
+	var state_prev = state
+	state = RatState.SITS_SNIFF
+	rat.sits_sniff() if rat else push_error(RAT_MODEL_ERROR)
+	emit_signal("state_changed", self, state, state_prev)
+
+func run():
+	if state == RatState.RETREATING:
+		return
+	var state_prev = state
+	state = RatState.RETREATING
+	rat.run() if rat else push_error(RAT_MODEL_ERROR)
+	emit_signal("state_changed", self, state, state_prev)
 
 func shadow_casting_enable(enable):
 	common_utils.shadow_casting_enable(self, enable)
-
-func _on_RatArea_body_entered(body):
-	if not retreating and game_state.is_in_party(CHARS.FEMALE_NAME_HINT) and body.is_in_group("party"):
-		conversation_manager.start_area_conversation("007_Rat")

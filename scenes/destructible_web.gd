@@ -17,7 +17,7 @@ func destroy_web(with_effects, update_state):
 	if with_effects:
 		$flames.visible = true
 		$DestroyTimer.start()
-		$AudioStreamLighter.play()
+		MEDIA.play_sound(MEDIA.SoundId.FIRE_LIGHTER)
 		$AudioStreamBurning.play()
 	else:
 		_on_DestroyTimer_timeout()

@@ -262,7 +262,7 @@ _global_script_classes=[ {
 "base": "PLDTakable",
 "class": "TakableRat",
 "language": "GDScript",
-"path": "res://rat.gd"
+"path": "res://addons/palladium/scenes/rat.gd"
 } ]
 _global_script_class_icons={
 "ApataChest": "",

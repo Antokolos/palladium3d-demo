@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/palladium/core/environment/torch_full.gd" type="Script" id=1]
 [ext_resource path="res://scenes/torch_wall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/palladium/core/environment/torch_fire_cpu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/palladium/core/environment/torch_light.tscn" type="PackedScene" id=4]
 [ext_resource path="res://sound/environment/torch_fire.ogg" type="AudioStream" id=5]
-[ext_resource path="res://sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.wav" type="AudioStream" id=6]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.11
@@ -17,8 +16,8 @@ radius = 0.15
 height = 0.8
 
 [node name="torch_full" type="RigidBody" groups=[
-"restorable_state",
 "torches",
+"restorable_state",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.987, 3.964, -3.362 )
 mode = 1
@@ -28,7 +27,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00022006, 0, 0 )
 
 [node name="torch_fire" parent="torch_wall" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.3, 0.3, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.3, 0.3, 0 )
 visible = false
 
 [node name="torch_light" parent="torch_wall" instance=ExtResource( 4 )]
@@ -40,17 +39,13 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -0.298925, 0.146897, -0.00822401 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.298925, 0.146897, -0.00822401 )
 shape = SubResource( 2 )
 
 [node name="AudioStreamBurning" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
 attenuation_model = 1
 max_db = -6.0
-bus = "Sound"
-
-[node name="AudioStreamLighter" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
 bus = "Sound"
 
 [node name="RayCast" type="RayCast" parent="."]
@@ -61,6 +56,5 @@ collision_mask = 2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52761, 0.149422, 0 )
 aabb = AABB( -1.51315, -1.6963, -1.54402, 3.0263, 3.3926, 3.08803 )
 [connection signal="tree_entered" from="." to="." method="_on_torch_full_tree_entered"]
-[connection signal="finished" from="AudioStreamLighter" to="." method="_on_AudioStreamLighter_finished"]
 [connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

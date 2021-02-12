@@ -94,7 +94,7 @@ static func get_weapon_stun_data(takable_id):
 #}
 
 #const WEAPONS_STUN = {
-#	TakableIds.MEDUSA_HEAD : { "stun_duration" : 5 }
+#	TakableIds.MEDUSA_HEAD : { "stun_duration" : 5, "sound_id" : MEDIA.SoundId.SNAKE_HISS }
 #}
 
 #func execute_give_item_action(player, target):
@@ -297,7 +297,13 @@ func execute_custom_action(event, item):
 				game_state.get_hud().show_tablet(true, PLDTablet.ActivationMode.CHAT)
 			TakableIds.RAT:
 				item.remove()
-				var rat = load("res://rat.tscn").instance()
+				var rat = load("res://addons/palladium/scenes/rat.tscn").instance()
+				var rat_model_holder = Spatial.new()
+				rat_model_holder.set_scale(Vector3(1.5, 1.5, 1.5))
+				rat_model_holder.set_name("Model")
+				var rat_model = load("res://scenes/rat_grey.tscn").instance()
+				rat_model_holder.add_child(rat_model)
+				rat.add_child(rat_model_holder)
 				var pl = game_state.get_player().get_model()
 				var pl_origin = pl.get_global_transform().origin
 				var shift = pl.to_global(pl.get_transform().basis.xform(Vector3(0, 0, 1))) - pl_origin

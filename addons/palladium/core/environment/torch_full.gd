@@ -10,7 +10,6 @@ export var initially_active = true
 export var persistent = false
 export var show_if_on_screen = false
 
-onready var sound_lighter = $AudioStreamLighter
 onready var sound_burning = $AudioStreamBurning
 onready var torch_fire = get_node("torch_wall/torch_fire")
 onready var torch_light = get_node("torch_wall/torch_light")
@@ -33,8 +32,10 @@ func enable(active, update):
 func use(player_node, camera_node):
 	var active = not is_active()
 	if active:
-		sound_lighter.play()
+		MEDIA.play_sound(MEDIA.SoundId.FIRE_LIGHTER)
+		sound_burning.play()
 	else:
+		MEDIA.play_sound(MEDIA.SoundId.FIRE_EXTINGUISH)
 		sound_burning.stop()
 	enable(active, true)
 
@@ -55,9 +56,6 @@ func restore_light():
 func restore_state():
 	var active = is_active()
 	enable(active, false)
-
-func _on_AudioStreamLighter_finished():
-	$AudioStreamBurning.play()
 
 func _physics_process(delta):
 	if not torch_light.visible or persistent:

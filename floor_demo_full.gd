@@ -35,6 +35,8 @@ func _ready():
 	get_tree().call_group("button_activators", "connect_signals", self)
 	game_state.connect("player_registered", self, "_on_player_registered")
 	get_door("door_0").connect("door_state_changed", self, "_on_door_state_changed")
+	for rat in get_tree().get_nodes_in_group("rats"):
+		rat.connect("state_changed", self, "_on_rat_state_changed")
 
 func get_door(door_path):
 	return doors.get_node(door_path)
@@ -264,6 +266,10 @@ func _on_web_destroyed(web):
 	PREFS.set_achievement("COBWEB")
 	if web.get_usable_id() == DB.UsableIds.WEB_APATA:
 		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
+
+func _on_rat_state_changed(rat, state_new, state_prev):
+	if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+		conversation_manager.start_area_conversation("007_Rat")
 
 func _on_ChooseCompanionArea_body_entered(body):
 	if body.is_in_group("party"):
