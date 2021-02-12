@@ -417,7 +417,7 @@ nodes/walk_squat/node = SubResource( 61 )
 nodes/walk_squat/position = Vector2( 80, 100 )
 nodes/walk_with_gun/node = SubResource( 62 )
 nodes/walk_with_gun/position = Vector2( -40, -180 )
-node_connections = [ "output", 0, "DamageShot", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "bandit_pushes_chest_start", "CutsceneTransition", 2, "bandit_points_ceiling", "CutsceneTransition", 3, "Animation 2", "CutsceneTransition", 4, "bandit_shoots", "CutsceneTransition", 5, "bandit_shoots_new", "CutsceneTransition", 6, "bandit_shakes_hand", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "Transition", 0, "LookTransition", "Transition", 1, "WalkTypeTransition", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "LookTypeTransition", 0, "look", "LookTypeTransition", 1, "look_with_gun", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "WalkTypeTransition", 0, "walk", "WalkTypeTransition", 1, "walk_with_gun", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "SpeakShot", 0, "LookTypeTransition", "SpeakShot", 1, "SpeakTransition" ]
+node_connections = [ "output", 0, "DamageShot", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "Transition", 0, "LookTransition", "Transition", 1, "WalkTypeTransition", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "RestTransition", 0, "alt_rest1", "RestTransition", 1, "alt_rest2", "RestTransition", 2, "alt_rest3", "RestTransition", 3, "alt_rest4", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "bandit_pushes_chest_start", "CutsceneTransition", 2, "bandit_points_ceiling", "CutsceneTransition", 3, "Animation 2", "CutsceneTransition", 4, "bandit_shoots", "CutsceneTransition", 5, "bandit_shoots_new", "CutsceneTransition", 6, "bandit_shakes_hand", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "SpeakTransition", 3, "alt_speak4", "SpeakTransition", 4, "alt_speak5", "SpeakTransition", 5, "alt_speak6", "SpeakShot", 0, "LookTypeTransition", "SpeakShot", 1, "SpeakTransition", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "LookTypeTransition", 0, "look", "LookTypeTransition", 1, "look_with_gun", "WalkTypeTransition", 0, "walk", "WalkTypeTransition", 1, "walk_with_gun" ]
 
 [node name="bandit" index="0" groups=[
 "restorable_state",
@@ -446,7 +446,7 @@ bones/0/bound_children = [ NodePath("PistolAttachment") ]
 bones/57/bound_children = [ NodePath("spine01BoneAttachment") ]
 
 [node name="spine01BoneAttachment" parent="Bandit_armature" index="1"]
-transform = Transform( 1, 0, 0, 0, -0.341702, -0.939817, 0, 0.939811, -0.341698, 0, 12.8751, -0.404744 )
+transform = Transform( 1, 0, 0, 0, -0.299461, -0.954116, 0, 0.95411, -0.299458, 0, 12.8669, -0.49735 )
 
 [node name="Zed_backpack" parent="Bandit_armature/spine01BoneAttachment/backpack_Armature001" index="1"]
 layers = 2049
@@ -463,6 +463,9 @@ layers = 3
 [node name="Bandit:Male_casualsuit05004" parent="Bandit_armature" index="5"]
 layers = 2049
 
+[node name="Bandit:Male_casualsuit05005" parent="Bandit_armature" index="6"]
+layers = 2049
+
 [node name="Bandit:Male_generic" parent="Bandit_armature" index="7"]
 layers = 3
 
@@ -476,7 +479,7 @@ layers = 3
 layers = 3
 
 [node name="PistolAttachment" parent="Bandit_armature" index="12" instance=ExtResource( 3 )]
-transform = Transform( -0.930305, 0.201172, 0.306696, 0.347218, 0.213545, 0.913147, 0.118206, 0.955996, -0.268513, -2.76574, 9.31919, 0.308241 )
+transform = Transform( -0.930305, 0.201172, 0.306696, 0.347218, 0.213545, 0.913147, 0.118206, 0.955995, -0.268513, -2.76575, 9.19767, 0.201019 )
 bone_name = "wrist.R"
 
 [node name="Position3D" type="Position3D" parent="Bandit_armature/PistolAttachment" index="0"]
