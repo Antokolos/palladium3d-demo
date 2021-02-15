@@ -49,7 +49,7 @@ func open_preview(item, hud, flashlight):
 		ch.queue_free()
 	custom_actions = game_state.get_custom_actions(item)
 	for act in custom_actions:
-		if not DB.can_execute_custom_action(act, item):
+		if not DB.can_execute_custom_action(item, act):
 			continue
 		var ch = label_close_node.duplicate(0)
 		ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
@@ -59,11 +59,21 @@ func open_preview(item, hud, flashlight):
 	hud.actions_panel.show()
 
 func _input(event):
-	if item_holder_node.get_child_count() > 0:
+	if item_holder_node.get_child_count() > 0 and not game_state.is_video_cutscene():
 		if event.is_action_pressed("item_preview_toggle") or event.is_action_pressed("ui_tablet_toggle"):
 			close_preview()
-		elif DB.execute_custom_action(event, item):
+		elif DB.can_execute_custom_action(item, "item_preview_action_1", event):
 			close_preview()
+			DB.execute_custom_action(item, "item_preview_action_1")
+		elif DB.can_execute_custom_action(item, "item_preview_action_2", event):
+			close_preview()
+			DB.execute_custom_action(item, "item_preview_action_2")
+		elif DB.can_execute_custom_action(item, "item_preview_action_3", event):
+			close_preview()
+			DB.execute_custom_action(item, "item_preview_action_3")
+		elif DB.can_execute_custom_action(item, "item_preview_action_4", event):
+			close_preview()
+			DB.execute_custom_action(item, "item_preview_action_4")
 		elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			if event is InputEventMouseMotion:
 				item_holder_node.rotate_x(deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff()))

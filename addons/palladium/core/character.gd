@@ -61,11 +61,9 @@ var force_visibility = false
 var last_attack_target = null
 
 func _ready():
-	var model = get_model()
 	game_state.connect("player_underwater", self, "_on_player_underwater")
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
-	model.connect("character_dead", self, "_on_character_dead")
-	model.connect("character_dying", self, "_on_character_dying")
+	game_state.connect("player_registered", self, "_on_player_registered")
 	game_state.register_player(self)
 
 func get_gravity():
@@ -276,6 +274,26 @@ func _on_player_poisoned(player, enable):
 	if player and not equals(player):
 		return
 	set_poisoned(enable)
+
+func _on_player_registered(player):
+	if not player:
+		push_error("Player not set")
+		return
+	player.connect("aggressive_changed", self, "_on_aggressive_changed")
+	var model = player.get_model()
+	if not model:
+		push_error("Model not set")
+		return
+	model.connect("character_dead", self, "_on_character_dead")
+	model.connect("character_dying", self, "_on_character_dying")
+
+func _on_aggressive_changed(player_node, previous_state, new_state):
+	if new_state:
+		return
+	if equals(player_node) and get_point_of_interest():
+		clear_point_of_interest()
+	else:
+		clear_poi_if_it_is(player_node)
 
 func _on_character_dead(player):
 	if equals(player):
@@ -736,6 +754,9 @@ func do_process(delta, is_player):
 			continue
 		if not update_ray_to_character(character):
 			add_ray_to_character(character)
+		if poi and has_obstacles_between(character):
+			if clear_poi_if_it_is(character):
+				poi = null
 	if not poi and (not is_activated() or is_movement_disabled() or is_hidden()):
 		character_nodes.stop_walking_sound()
 		set_has_floor_collision(true)

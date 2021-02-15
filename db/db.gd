@@ -40,6 +40,19 @@ static func is_weapon_stun(takable_id):
 static func get_weapon_stun_data(takable_id):
 	return WEAPONS_STUN[takable_id] if is_weapon_stun(takable_id) else null
 
+func can_execute_custom_action(item, action = "item_preview_action_1", event = null):
+	var item_data = get_item_data(item.item_id)
+	if not item_data.has("custom_actions"):
+		return false
+	var custom_actions = item_data.custom_actions
+	if not custom_actions:
+		return false
+	if custom_actions.find(action) < 0:
+		return false
+	if event and not event.is_action_pressed(action):
+		return false
+	return item_constraints_satisfied(item, action)
+
 ### CODE THAT MUST BE INCLUDED IN THE GAME-SPECIFIC PART ###
 
 #const STORY_VARS_DEFAULT = {
@@ -112,21 +125,32 @@ static func get_weapon_stun_data(takable_id):
 #	item.remove()
 #	return true
 
-#func execute_custom_action(event, item):
-#	var result = false
-#	if event.is_action_pressed("item_preview_action_1"):
-#		match item.item_id:
-#			_:
-#				pass
-#	elif event.is_action_pressed("item_preview_action_2"):
-#		pass
-#	elif event.is_action_pressed("item_preview_action_3"):
-#		pass
-#	elif event.is_action_pressed("item_preview_action_4"):
-#		pass
-#	else:
-#		return false
-#	return result
+#func item_constraints_satisfied(item, action = "item_preview_action_1"):
+#	match action:
+#		"item_preview_action_1":
+#			match item.item_id:
+#				TakableIds.SOME_ID:
+#					return some_constraint()
+#		"item_preview_action_2":
+#			pass
+#		"item_preview_action_3":
+#			pass
+#		"item_preview_action_4":
+#			pass
+#	return true
+
+#func execute_custom_action(item, action = "item_preview_action_1"):
+#	match action:
+#		"item_preview_action_1":
+#			match item.item_id:
+#				_:
+#					pass
+#		"item_preview_action_2":
+#			pass
+#		"item_preview_action_3":
+#			pass
+#		"item_preview_action_4":
+#			pass
 
 ### GAME-SPECIFIC PART ###
 
@@ -273,7 +297,7 @@ func execute_give_item_action(player, target):
 	item.remove()
 	return true
 
-func can_execute_custom_action(action, item):
+func item_constraints_satisfied(item, action = "item_preview_action_1"):
 	match action:
 		"item_preview_action_1":
 			match item.item_id:
@@ -287,53 +311,37 @@ func can_execute_custom_action(action, item):
 			pass
 	return true
 
-func execute_custom_action(event, item):
-	var result = false
-	if event.is_action_pressed("item_preview_action_1") \
-		and can_execute_custom_action("item_preview_action_1", item):
-		result = true
-		match item.item_id:
-			TakableIds.CELL_PHONE:
-				game_state.get_hud().show_tablet(true, PLDTablet.ActivationMode.CHAT)
-			TakableIds.RAT:
-				item.remove()
-				var rat = load("res://addons/palladium/scenes/rat.tscn").instance()
-				var rat_model_holder = Spatial.new()
-				rat_model_holder.set_scale(Vector3(1.5, 1.5, 1.5))
-				rat_model_holder.set_name("Model")
-				var rat_model = load("res://scenes/rat_grey.tscn").instance()
-				rat_model_holder.add_child(rat_model)
-				rat.add_child(rat_model_holder)
-				var pl = game_state.get_player().get_model()
-				var pl_origin = pl.get_global_transform().origin
-				var shift = pl.to_global(pl.get_transform().basis.xform(Vector3(0, 0, 1))) - pl_origin
-				shift.y = 0
-				shift = shift.normalized()
-				var cross = shift.cross(Vector3(0, 1, 0))
-				var basis = Basis(shift, Vector3(0, 1, 0), cross)
-				var origin = pl_origin + shift * 2
-				rat.set_global_transform(Transform(basis, origin))
-				game_state.get_level().add_child(rat)
-			TakableIds.BUN:
-				item.remove()
-				var player = game_state.get_player()
-				if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-					conversation_manager.start_conversation(player, "BunEaten")
-			TakableIds.ENVELOPE:
-				item.remove()
-				game_state.take(DB.TakableIds.BARN_LOCK_KEY)
-				game_state.take(DB.TakableIds.ISLAND_MAP_2)
-			_:
-				result = false
-	elif event.is_action_pressed("item_preview_action_2") \
-		and can_execute_custom_action("item_preview_action_2", item):
-			return false
-	elif event.is_action_pressed("item_preview_action_3") \
-		and can_execute_custom_action("item_preview_action_3", item):
-			return false
-	elif event.is_action_pressed("item_preview_action_4") \
-		and can_execute_custom_action("item_preview_action_4", item):
-			return false
-	else:
-		return false
-	return result
+func execute_custom_action(item, action = "item_preview_action_1"):
+	match action:
+		"item_preview_action_1":
+			match item.item_id:
+				TakableIds.CELL_PHONE:
+					game_state.get_hud().show_tablet(true, PLDTablet.ActivationMode.CHAT)
+				TakableIds.BUN:
+					item.remove()
+					var player = game_state.get_player()
+					if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
+						conversation_manager.start_conversation(player, "BunEaten")
+				TakableIds.ENVELOPE:
+					item.remove()
+					game_state.take(DB.TakableIds.BARN_LOCK_KEY)
+					game_state.take(DB.TakableIds.ISLAND_MAP_2)
+				TakableIds.RAT:
+					item.remove()
+					var rat = load("res://addons/palladium/scenes/rat.tscn").instance()
+					var rat_model_holder = Spatial.new()
+					rat_model_holder.set_scale(Vector3(1.5, 1.5, 1.5))
+					rat_model_holder.set_name("Model")
+					var rat_model = load("res://scenes/rat_grey.tscn").instance()
+					rat_model_holder.add_child(rat_model)
+					rat.add_child(rat_model_holder)
+					var pl = game_state.get_player().get_model()
+					var pl_origin = pl.get_global_transform().origin
+					var shift = pl.to_global(pl.get_transform().basis.xform(Vector3(0, 0, 1))) - pl_origin
+					shift.y = 0
+					shift = shift.normalized()
+					var cross = shift.cross(Vector3(0, 1, 0))
+					var basis = Basis(shift, Vector3(0, 1, 0), cross)
+					var origin = pl_origin + shift * 2
+					rat.set_global_transform(Transform(basis, origin))
+					game_state.get_level().add_child(rat)

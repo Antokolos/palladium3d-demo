@@ -38,6 +38,6 @@ func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 		settings.save_input()
 
 func _unhandled_input(event):
-	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle"):
+	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():
 		get_tree().set_input_as_handled()
 		show_tablet(true, PLDTablet.ActivationMode.DESKTOP)

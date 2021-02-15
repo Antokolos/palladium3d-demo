@@ -1,4 +1,5 @@
 extends Node
+class_name PLDDBMedia
 
 enum MusicId {NONE, LOADING, OUTSIDE, UNDERWATER, EXPLORE, DANGER}
 

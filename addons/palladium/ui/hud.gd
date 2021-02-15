@@ -205,7 +205,7 @@ func _process(delta):
 	
 	# ----------------------------------
 	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("ui_tablet_toggle"):
+	if Input.is_action_just_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			show_tablet(false)
