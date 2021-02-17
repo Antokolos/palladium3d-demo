@@ -383,6 +383,8 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 		"010-1-1_Statuettes", "015-1_EridaTrap", "021-1_EridaTrapMax":
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_1")
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_2")
+		"019_DemoFinishedXenia", "022-1_DemoFinishedMax":
+			MEDIA.change_music_to(MEDIA.MusicId.BEGINNING)
 
 func _on_meeting_finished(player, target, initiator):
 	if initiator and initiator.name_hint == CHARS.BANDIT_NAME_HINT:

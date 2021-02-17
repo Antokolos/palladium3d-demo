@@ -3,7 +3,7 @@ extends PLDLevel
 var player_toggle_enable = true
 
 func do_init(is_loaded):
-	if not game_state.story_vars.is_game_start and not is_loaded:
+	if not is_loaded:
 		player.teleport($PositionPlayer)
 		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 			player_female.teleport($PositionCompanion)

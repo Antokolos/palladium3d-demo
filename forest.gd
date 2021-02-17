@@ -3,7 +3,7 @@ extends PLDLevel
 onready var pocket_book = get_node("pocket_book")
 
 func do_init(is_loaded):
-	if not game_state.story_vars.is_game_start and not is_loaded:
+	if game_state.current_scene_was_loaded_before() and not is_loaded:
 		player.teleport($PositionPlayer)
 		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 			player_female.teleport($PositionCompanion)
@@ -13,8 +13,6 @@ func do_init(is_loaded):
 			player_bandit.teleport($PositionCompanion)
 			player_female.teleport($PositionOut)
 			player_female.deactivate()
-	if game_state.story_vars.is_game_start:
-		game_state.story_vars.is_game_start = false
 	if conversation_manager.meeting_is_finished(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT):
 		remove_pocket_book()
 	get_tree().call_group("takables", "connect_signals", self)

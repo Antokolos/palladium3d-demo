@@ -76,6 +76,7 @@ const MESSAGES_DEFAULT = {
 }
 
 var characters_transition_data = {}
+var scenes_data = {}
 var saving_disabled = false
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
@@ -320,8 +321,20 @@ func handle_player_highlight(initiator, target):
 	var item = hud.get_active_item()
 	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
 
+func get_current_scene_data():
+	var scene_path = get_tree().current_scene.filename
+	return scenes_data[scene_path] if scenes_data.has(scene_path) else DB.SCENE_DATA_DEFAULT.duplicate(true)
+
+func current_scene_was_loaded_before():
+	return get_current_scene_data().loads_count > 1
+
 func change_scene(scene_path, is_transition = false, fade_out = false):
 	characters_transition_data = get_characters_data() if is_transition else {}
+	if not scenes_data.has(scene_path):
+		scenes_data[scene_path] = DB.SCENE_DATA_DEFAULT.duplicate(true)
+	scenes_data[scene_path].loads_count += 1
+	if is_transition:
+		scenes_data[scene_path].transitions_count += 1
 	self.scene_path = scene_path
 	self.is_transition = is_transition
 	var gwp = get_game_window_parent() if fade_out else null
@@ -367,6 +380,7 @@ func initiate_load(slot):
 	if ("scene_path" in d):
 		reset_variables()
 		slot_to_load_from = slot
+		scenes_data = d.scenes_data if ("scenes_data" in d) else {}
 		change_scene(d.scene_path)
 
 func is_loading():
@@ -809,7 +823,7 @@ func load_state(slot):
 	
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/state.json" % slot, File.READ)
-
+	
 	if (error):
 		print("no state to load.")
 		return
@@ -820,7 +834,7 @@ func load_state(slot):
 	var d = parse_json(t)
 	if (typeof(d) != TYPE_DICTIONARY) or (typeof(d.story_vars) != TYPE_DICTIONARY):
 		return
-
+	
 	scene_path = d.scene_path if ("scene_path" in d) else DB.SCENE_PATH_DEFAULT
 	
 	player_name_hint = d.player_name_hint if ("player_name_hint" in d) else CHARS.PLAYER_NAME_HINT
@@ -828,10 +842,10 @@ func load_state(slot):
 	player_health_max = int(d.player_health_max) if ("player_health_max" in d) else DB.PLAYER_HEALTH_MAX_DEFAULT
 	player_oxygen_current = int(d.player_oxygen_current) if ("player_oxygen_current" in d) else DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 	player_oxygen_max = int(d.player_oxygen_max) if ("player_oxygen_max" in d) else DB.PLAYER_OXYGEN_MAX_DEFAULT
-
+	
 	emit_signal("health_changed", CHARS.PLAYER_NAME_HINT, player_health_current, player_health_max)
 	emit_signal("oxygen_changed", CHARS.PLAYER_NAME_HINT, player_oxygen_current, player_oxygen_max)
-
+	
 	# player_paths should not be loaded, it must be recreated on level startup via register_player()
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
 	# activatable_paths should not be loaded, it must be recreated on level startup via register_activatable()
@@ -839,7 +853,7 @@ func load_state(slot):
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		movement_datas = set_characters_data(d.characters)
 		characters_transition_data = d.characters
-
+	
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
 	quick_items = sanitize_items(d.quick_items) if ("quick_items" in d) else DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -931,6 +945,7 @@ func save_state(slot):
 	# activatable_paths should not be loaded, it must be recreated on level startup via register_activatable()
 	var d = {
 		"scene_path" : scene_path,
+		"scenes_data" : scenes_data,
 		"player_name_hint" : player_name_hint,
 		"player_health_current" : player_health_current,
 		"player_health_max" : player_health_max,

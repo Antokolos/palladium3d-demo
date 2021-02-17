@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bleeding_out2.ogg-afe7b7d72f57830f42ccb78cbad65855.oggstr"
+
+[deps]
+
+source_file="res://music/bleeding_out2.ogg"
+dest_files=[ "res://.import/bleeding_out2.ogg-afe7b7d72f57830f42ccb78cbad65855.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/523389__arpeggio1980__forest-trees-rustling-in-the-wind.ogg-b5c288d40d975c71ccf7a3d77af55e5d.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/523389__arpeggio1980__forest-trees-rustling-in-the-wind.ogg"
+dest_files=[ "res://.import/523389__arpeggio1980__forest-trees-rustling-in-the-wind.ogg-b5c288d40d975c71ccf7a3d77af55e5d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

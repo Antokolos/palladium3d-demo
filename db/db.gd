@@ -5,6 +5,7 @@ extends Node
 const HEALING_RATE = 1
 const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = ""
+const SCENE_DATA_DEFAULT = { "loads_count" : 0, "transitions_count" : 0 }
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
 const PLAYER_HEALTH_MAX_DEFAULT = 100
 const SUFFOCATION_DAMAGE_RATE = 10
@@ -156,7 +157,6 @@ func can_execute_custom_action(item, action = "item_preview_action_1", event = n
 
 const STORY_VARS_DEFAULT = {
 	"flashlight_on" : false,
-	"is_game_start" : true,
 	"in_lyre_area" : false,
 	"apata_chest_rigid" : 0
 }

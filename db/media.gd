@@ -1,7 +1,16 @@
 extends Node
 class_name PLDDBMedia
 
-enum MusicId {NONE, LOADING, OUTSIDE, UNDERWATER, EXPLORE, DANGER}
+enum MusicId {
+	NONE,
+	LOADING,
+	OUTSIDE,
+	UNDERWATER,
+	EXPLORE,
+	DANGER,
+	GAME_OVER,
+	BEGINNING
+}
 
 const MUSIC = {
 	MusicId.NONE : null,
@@ -9,7 +18,9 @@ const MUSIC = {
 	MusicId.OUTSIDE : preload("res://music/outside.ogg"),
 	MusicId.UNDERWATER : preload("res://music/underwater.ogg"),
 	MusicId.EXPLORE : null,
-	MusicId.DANGER : preload("res://music/sinkingisland.ogg")
+	MusicId.DANGER : preload("res://music/sinkingisland.ogg"),
+	MusicId.GAME_OVER : preload("res://music/bleeding_out2.ogg"),
+	MusicId.BEGINNING : preload("res://music/bjs_forest.ogg")
 }
 
 enum SoundId {
@@ -23,7 +34,7 @@ const SOUND = {
 	SoundId.BRANCH_BREAKING : preload("res://addons/palladium/assets/sound/environment/354095__bini-trns__seven-branches-are-breaking-short-close-up-h6.ogg"),
 	SoundId.FIRE_LIGHTER : preload("res://addons/palladium/assets/sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg"),
 	SoundId.FIRE_EXTINGUISH : preload("res://addons/palladium/assets/sound/environment/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg"),
-	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg"),
+	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg")
 }
 
 onready var music_player = $MusicPlayer

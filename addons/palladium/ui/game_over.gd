@@ -3,6 +3,7 @@ extends Control
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	refresh_slot_captions(get_node("ColorRect/HBoxContainer/VBoxContainer"))
+	MEDIA.change_music_to(MEDIA.MusicId.GAME_OVER)
 
 func refresh_slot_captions(base_node):
 	for i in range(0, 6):
