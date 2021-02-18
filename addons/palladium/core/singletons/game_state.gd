@@ -5,7 +5,7 @@ signal shader_cache_processed()
 signal player_registered(player)
 signal player_surge(player, enabled)
 signal player_underwater(player, enabled)
-signal player_poisoned(player, enabled)
+signal player_poisoned(player, enabled, intoxication_rate)
 signal item_taken(item_id, count, item_path)
 signal item_removed(item_id, count)
 signal item_used(player_node, target, item_id)
@@ -290,8 +290,8 @@ func set_surge(player, enable):
 func set_underwater(player, enable):
 	emit_signal("player_underwater", player, enable)
 
-func set_poisoned(player, enable):
-	emit_signal("player_poisoned", player, enable)
+func set_poisoned(player, enable, intoxication_rate):
+	emit_signal("player_poisoned", player, enable, intoxication_rate)
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	player.set_look_transition(true)
@@ -769,8 +769,9 @@ func set_character_data(dd, character):
 	if ("is_underwater" in dd):
 		set_underwater(character, dd.is_underwater)
 	
-	if ("is_poisoned" in dd):
-		set_poisoned(character, dd.is_poisoned)
+	if ("is_poisoned" in dd and "intoxication" in dd):
+		character.intoxication = int(dd.intoxication)
+		set_poisoned(character, dd.is_poisoned, character.intoxication)
 	
 	if ("relationship" in dd):
 		character.relationship = int(dd.relationship)
@@ -902,6 +903,7 @@ func get_character_data(character):
 		"is_crouching" : character.is_crouching(),
 		"is_underwater" : character.is_underwater(),
 		"is_poisoned" : character.is_poisoned(),
+		"intoxication" : character.get_intoxication(),
 		"relationship" : character.get_relationship(),
 		"morale" : character.get_morale(),
 		"stuns_count" : character.get_stuns_count(),

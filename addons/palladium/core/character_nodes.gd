@@ -3,7 +3,6 @@ class_name PLDCharacterNodes
 
 const FRIENDLY_FIRE_ENABLED = false
 const OXYGEN_DECREASE_RATE = 5
-const POISON_LETHALITY_RATE = 1
 
 onready var character = get_parent()
 
@@ -44,7 +43,7 @@ func _on_player_underwater(player, enable):
 		oxygen_timer.stop()
 		game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
 
-func _on_player_poisoned(player, enable):
+func _on_player_poisoned(player, enable, intoxication_rate):
 	if player and not player.equals(character):
 		return
 	if enable and poison_timer.is_stopped():
@@ -239,7 +238,7 @@ func _on_OxygenTimer_timeout():
 func _on_PoisonTimer_timeout():
 	if poison_timer.is_stopped():
 		return
-	game_state.set_health(character.get_name_hint(), game_state.player_health_current - POISON_LETHALITY_RATE, game_state.player_health_max)
+	game_state.set_health(character.get_name_hint(), game_state.player_health_current - character.get_intoxication(), game_state.player_health_max)
 
 func _on_StunTimer_timeout():
 	common_utils.set_pause_scene(character, false)

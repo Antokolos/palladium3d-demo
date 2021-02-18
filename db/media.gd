@@ -27,14 +27,16 @@ enum SoundId {
 	BRANCH_BREAKING,
 	FIRE_LIGHTER,
 	FIRE_EXTINGUISH,
-	RAT_SQUEAK
+	RAT_SQUEAK,
+	OUCH
 }
 
 const SOUND = {
 	SoundId.BRANCH_BREAKING : preload("res://addons/palladium/assets/sound/environment/354095__bini-trns__seven-branches-are-breaking-short-close-up-h6.ogg"),
 	SoundId.FIRE_LIGHTER : preload("res://addons/palladium/assets/sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg"),
 	SoundId.FIRE_EXTINGUISH : preload("res://addons/palladium/assets/sound/environment/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg"),
-	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg")
+	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg"),
+	SoundId.OUCH : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg"),
 }
 
 onready var music_player = $MusicPlayer

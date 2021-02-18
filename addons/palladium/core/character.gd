@@ -51,6 +51,7 @@ var is_crouching = false
 var is_sprinting = false
 var is_underwater = false
 var is_poisoned = false
+var intoxication : int = 0
 var relationship : int = 0
 var morale : int = 0
 var stuns_count : int = 0
@@ -243,7 +244,7 @@ func become_player():
 		player.activate()
 	game_state.set_player_name_hint(get_name_hint())
 	game_state.set_underwater(self, is_underwater())
-	game_state.set_poisoned(self, is_poisoned())
+	game_state.set_poisoned(self, is_poisoned(), get_intoxication())
 	activate()
 	emit_signal("player_changed", self, player)
 
@@ -270,10 +271,17 @@ func is_poisoned():
 func set_poisoned(enable):
 	is_poisoned = enable
 
-func _on_player_poisoned(player, enable):
+func get_intoxication() -> int:
+	return intoxication
+
+func set_intoxication(intoxication : int):
+	self.intoxication = intoxication
+
+func _on_player_poisoned(player, enable, intoxication_rate):
 	if player and not equals(player):
 		return
 	set_poisoned(enable)
+	set_intoxication(intoxication_rate)
 
 func _on_player_registered(player):
 	if not player:

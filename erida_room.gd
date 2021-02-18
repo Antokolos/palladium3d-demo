@@ -14,7 +14,7 @@ func activate(and_change_state = true):
 	erida_trap_sound_4.play()
 	eris_particles.emitting = true
 	eris_particles.restart()
-	game_state.set_poisoned(game_state.get_player(), true)
+	game_state.set_poisoned(game_state.get_player(), true, DB.INTOXICATION_RATE_DEFAULT)
 
 func activate_forever(and_change_state = true):
 	.activate_forever(and_change_state)
@@ -27,7 +27,7 @@ func deactivate(and_change_state = true):
 	erida_trap_sound_3.stop()
 	erida_trap_sound_4.stop()
 	eris_particles.emitting = false
-	game_state.set_poisoned(game_state.get_player(), false)
+	game_state.set_poisoned(game_state.get_player(), false, 0)
 
 func deactivate_forever(and_change_state = true):
 	.deactivate_forever(and_change_state)

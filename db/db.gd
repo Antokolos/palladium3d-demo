@@ -3,6 +3,8 @@ extends Node
 
 ### COMMON PART ###
 const HEALING_RATE = 1
+const INTOXICATION_RATE_DEFAULT = 1
+const INTOXICATION_RATE_STRONG = 5
 const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = ""
 const SCENE_DATA_DEFAULT = { "loads_count" : 0, "transitions_count" : 0 }
