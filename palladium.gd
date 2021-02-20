@@ -3,16 +3,6 @@ extends PLDLevel
 var player_toggle_enable = true
 
 func do_init(is_loaded):
-	if not is_loaded:
-		player.teleport($PositionPlayer)
-		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-			player_female.teleport($PositionCompanion)
-			player_bandit.teleport($PositionOut)
-			player_bandit.deactivate()
-		elif game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
-			player_bandit.teleport($PositionCompanion)
-			player_female.teleport($PositionOut)
-			player_female.deactivate()
 	MEDIA.stop_music()
 	player.set_sound_walk(CHARS.SoundId.SOUND_WALK_CONCRETE)
 	player_female.set_sound_walk(CHARS.SoundId.SOUND_WALK_CONCRETE)
@@ -32,6 +22,25 @@ func do_init(is_loaded):
 	if not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):
 		get_tree().call_group("torches", "enable", false, false)
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
+	if is_loaded:
+		return
+	var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
+	if apata_trap \
+		and apata_trap.is_untouched() \
+		and conversation_manager.meeting_is_finished(CHARS.PLAYER_NAME_HINT, CHARS.BANDIT_NAME_HINT):
+		var floor_demo_full = get_node("NavigationMeshInstance/floor_demo_full")
+		player_female.teleport(floor_demo_full.get_node("PositionApata"))
+		player_bandit.teleport(floor_demo_full.get_node("BanditSavePosition"))
+	else:
+		player.teleport($PositionPlayer)
+		if player_female.is_in_party():
+			player_female.teleport($PositionCompanion)
+			player_bandit.teleport($PositionOut)
+			player_bandit.deactivate()
+		elif player_bandit.is_in_party():
+			player_bandit.teleport($PositionCompanion)
+			player_female.teleport($PositionOut)
+			player_female.deactivate()
 
 func _on_shader_cache_processed():
 	game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_FLASHLIGHT", ["F"])

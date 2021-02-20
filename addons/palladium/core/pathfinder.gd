@@ -119,7 +119,7 @@ func has_collisions():
 	return false
 
 func reset_movement():
-	pass
+	rest_state = true
 
 func reset_rotation():
 	angle_rad_y = 0
