@@ -26,7 +26,7 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 * 	[Идти одному.]
 	That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
 	Andreas, I'm the only specialist on ancient Greek language and mythology. 	# actor:female # voiceover:2168_Andreas_i'm_the_only.ogg
-	Andreas, are you sure you can do this on your own?	# actor:bandit # voiceover:.ogg
+	Andreas, are you sure you can do this on your own?	# actor:bandit # voiceover:2269_Andreas_are_you_sure.ogg
 	* * 	[Go with Xenia.]
 		-> companion_xenia
 	* * 	[Go with Max.]

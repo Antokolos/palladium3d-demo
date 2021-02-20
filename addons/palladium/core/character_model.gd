@@ -156,14 +156,16 @@ func toggle_head(enable):
 		if m is MeshInstance:
 			if m.get_layer_mask_bit(1):
 				m.set_layer_mask_bit(0, enable)
+				m.set_layer_mask_bit(10, enable)
 	if enable:
 		toggle_unwanted_meshes(sk, true)
 
 func toggle_unwanted_meshes(root, enable):
 	for m in root.get_children():
 		if m is MeshInstance:
-			if m.get_layer_mask_bit(11):
+			if m.get_layer_mask_bit(2):
 				m.set_layer_mask_bit(0, enable)
+				m.set_layer_mask_bit(10, enable)
 		else:
 			toggle_unwanted_meshes(m, enable)
 

@@ -265,7 +265,7 @@ const ITEMS = {
 	TakableIds.ISLAND_MAP : { "item_nam" : "island_map", "item_image" : "island_child.png", "model_path" : "res://assets/island_map.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ENVELOPE : { "item_nam" : "envelope", "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.BARN_LOCK_KEY : { "item_nam" : "barn_lock_key", "item_image" : "key.png", "model_path" : "res://assets/barn_lock_key.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
-	TakableIds.ISLAND_MAP_2 : { "item_nam" : "island_map_2", "item_image" : "island_father.png", "model_path" : "res://assets/island_map_2.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
+	TakableIds.ISLAND_MAP_2 : { "item_nam" : "island_map_2", "item_image" : "island_father.png", "model_path" : "res://assets/map_new.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.SPHERE_FOR_POSTAMENT : { "item_nam" : "sphere_for_postament_body", "item_image" : "sphere.png", "model_path" : "res://assets/sphere_for_postament.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.APATA : { "item_nam" : "statue_apata", "item_image" : "statue_apata.png", "model_path" : "res://assets/statue_4.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.URANIA : { "item_nam" : "statue_urania", "item_image" : "statue_urania.png", "model_path" : "res://assets/statue_1.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },

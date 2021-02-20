@@ -331,46 +331,46 @@ nodes/walk/node = SubResource( 49 )
 nodes/walk/position = Vector2( 200, -260 )
 nodes/walk_squat/node = SubResource( 50 )
 nodes/walk_squat/position = Vector2( 100, -20 )
-node_connections = [ "output", 0, "DamageShot", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "CutsceneTransition", 2, "handshake_bandit", "CutsceneTransition", 3, "handshake_female", "CutsceneTransition", 4, "kiss", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "RestTransition", 0, "alt_rest1", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition" ]
+node_connections = [ "output", 0, "DamageShot", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "RestTransition", 0, "alt_rest1", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "DamageShot", 0, "Blend2_Lips", "DamageShot", 1, "damage", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "CutsceneTransition", 2, "handshake_bandit", "CutsceneTransition", 3, "handshake_female", "CutsceneTransition", 4, "kiss", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3" ]
 
-[node name="male" index="0" instance=ExtResource( 1 )]
+[node name="male" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 main_skeleton = "Male_palladium"
 rest_shots_max = 1
 speak_shots_max = 3
 
-[node name="Male_palladium" parent="." index="0"]
-bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
-
 [node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
-transform = Transform( 1, 6.70552e-008, 8.3819e-008, -5.7742e-008, -0.289161, -0.957281, 8.3819e-009, 0.957281, -0.28916, 0.0399999, 15.1748, -0.536099 )
+transform = Transform( 1, -7.31256e-05, 2.33855e-05, 7.71135e-07, -0.293081, -0.956088, 7.6816e-05, 0.956088, -0.29308, 0.0400248, 15.1736, -0.527154 )
 
 [node name="backpack" parent="Male_palladium/spine01BoneAttachment/backpack_Armature" index="1"]
-layers = 2049
+layers = 1029
 
 [node name="Male_palladium:Body" parent="Male_palladium" index="2"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:Eyebrow012" parent="Male_palladium" index="3"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:Eyelashes01" parent="Male_palladium" index="4"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:High-poly" parent="Male_palladium" index="5"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:Male_casualsuit06" parent="Male_palladium" index="6"]
-layers = 2049
+layers = 1029
+
+[node name="Male_palladium:Shoes03" parent="Male_palladium" index="7"]
+layers = 1025
 
 [node name="Male_palladium:Short02" parent="Male_palladium" index="8"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:Teeth_base" parent="Male_palladium" index="9"]
-layers = 3
+layers = 1027
 
 [node name="Male_palladium:Tongue01" parent="Male_palladium" index="10"]
-layers = 3
+layers = 1027
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource( 51 )

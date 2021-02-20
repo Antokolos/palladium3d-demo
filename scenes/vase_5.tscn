@@ -18,3 +18,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.400466, 0 )
 shape = SubResource( 1 )
 
 [node name="vase_5" parent="." instance=ExtResource( 2 )]
+
+[node name="vase_5" parent="vase_5" index="0"]
+layers = 1025
+
+[editable path="vase_5"]

@@ -16,7 +16,7 @@ extents = Vector3( 0.05, 0.05, 0.05 )
 [node name="camera" type="Camera" groups=[
 "restorable_state",
 ]]
-cull_mask = 1025
+cull_mask = 3073
 environment = ExtResource( 1 )
 current = true
 fov = 55.0
@@ -33,7 +33,7 @@ cast_to = Vector3( 0, 0, -23 )
 collision_mask = 2
 
 [node name="Gun_Fire_Points" type="Spatial" parent="."]
-transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, 0, -0.05 )
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.05 )
 
 [node name="View_Point" type="Spatial" parent="Gun_Fire_Points"]
 
@@ -48,7 +48,7 @@ shape = SubResource( 1 )
 [node name="use_point" parent="Gun_Fire_Points" instance=ExtResource( 4 )]
 
 [node name="viewpoint" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-015, 0, -1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-15, 0, -1 )
 
 [node name="shader_cache" type="Spatial" parent="viewpoint"]
 script = ExtResource( 5 )
@@ -66,11 +66,11 @@ script = ExtResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250116, 0, 0.5 )
 
 [node name="Flashlight" type="Spatial" parent="."]
-transform = Transform( -1, -8.74228e-008, 0, 8.74228e-008, -1, 0, 0, 0, 1, 0, 0, -0.8 )
+transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, -0.8 )
 visible = false
 
 [node name="Flashlight" type="SpotLight" parent="Flashlight"]
-transform = Transform( 1, -1.74846e-007, 0, 1.74846e-007, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 0, 0, 0 )
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.2
 light_cull_mask = 4293919745
