@@ -275,9 +275,6 @@ func get_slot_caption(slot : int) -> String:
 func get_save_file_path(slot : int, locale : String) -> String:
 	return "user://saves/slot_%d/ink-scripts/%s/story_states.sav" % [ slot, locale ]
 
-func get_story_log_path(slot : int, story_name : String, locale : String) -> String:
-	return "user://saves/slot_%d/ink-scripts/%s/%s.log" % [ slot, locale, story_name ]
-
 func get_month_as_string(m):
 	match m:
 		1:
@@ -318,10 +315,7 @@ func save_all(slot : int) -> void:
 			var story = palladiumStory.get_ink_story()
 			_inkStoriesStates[locale][path].story_state = story.state.to_json()
 			if palladiumStory.is_chat_driven():
-				var storyLogFile : File = File.new()
-				storyLogFile.open(get_story_log_path(slot, path, locale), File.WRITE)
-				storyLogFile.store_string(palladiumStory.get_story_log()[locale])
-				storyLogFile.close()
+				_inkStoriesStates[locale][path].story_log = palladiumStory.get_story_log()[locale]
 		_currentSessionStories[locale].clear()
 		var saveFile : File = File.new()
 		saveFile.open(get_save_file_path(slot, locale), File.WRITE)
@@ -339,16 +333,6 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 	var story = palladiumStory.get_ink_story() # Story
 	var visit_count = 0
 	if slot >= 0:
-		if palladiumStory.is_chat_driven():
-			var storyLogFile : File = File.new()
-			var storyLogFilePath : String = get_story_log_path(slot, story_name, locale)
-			if storyLogFile.file_exists(storyLogFilePath):
-				storyLogFile.open(storyLogFilePath, File.READ)
-				var story_log = palladiumStory.get_story_log()
-				if story_log.has(locale):
-					story_log.erase(locale)
-				story_log[locale] = storyLogFile.get_as_text()
-				storyLogFile.close()
 		if _inkStoriesStates[locale].empty():
 			var saveFile : File = File.new()
 			var saveFilePath : String = get_save_file_path(slot, locale)
@@ -362,6 +346,11 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 		if _inkStoriesStates[locale].has(story_name):
 			var story_state = _inkStoriesStates[locale][story_name].story_state
 			visit_count = _inkStoriesStates[locale][story_name].visit_count
+			if _inkStoriesStates[locale][story_name].has("story_log"):
+				var story_log = palladiumStory.get_story_log()
+				if story_log.has(locale):
+					story_log.erase(locale)
+				story_log[locale] = _inkStoriesStates[locale][story_name].story_log
 			if story_state and not story_state.empty():
 				story.state.load_json(story_state)
 				return true
@@ -370,6 +359,8 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 		"story_state" : "",
 		"visit_count" : visit_count
 	}
+	if palladiumStory.is_chat_driven():
+		_inkStoriesStates[locale][story_name]["story_log"] = ""
 	return false
 
 # Reloads state of all stories from the _inkStories dictionary from the save file.
