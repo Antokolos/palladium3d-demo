@@ -114,6 +114,10 @@ func stop_speaking():
 	set_transition_lips(0)
 
 func speak_text(phonetic, audio_length):
+	if not phonetic or phonetic.empty():
+		stop_speaking()
+		return
+	#print(phonetic)
 	var states = []
 	var words = phonetic.split(" ", false)
 	for word in words:
@@ -149,6 +153,9 @@ func speak_text(phonetic, audio_length):
 				else:
 					states.append(t)
 		#states.append(0)
+	if states.empty():
+		stop_speaking()
+		return
 	var phoneme_time = audio_length / float(states.size())
 	phoneme_time = floor(phoneme_time * 100) / 100.0
 	speech_timer.wait_time = phoneme_time

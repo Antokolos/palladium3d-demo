@@ -49,9 +49,7 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
 	$AudioStreamPlayer.stream = stream
 	$AudioStreamPlayer.play()
-	if phonetic:
-		#print(phonetic)
-		character.get_model().speak_text(phonetic, length)
+	character.get_model().speak_text(phonetic, length)
 	return true
 
 func letter_vowel(letter):
