@@ -179,4 +179,4 @@ func open_store_page(steam_appid):
 		open_url("https://store.steampowered.com/app/%d" % steam_appid)
 
 func is_steam_running():
-	return _steam and _steam.isSteamRunning()
+	return _steam and _steam.isSteamRunning() and _steam.loggedOn()
