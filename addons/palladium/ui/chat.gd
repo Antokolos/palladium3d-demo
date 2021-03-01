@@ -53,7 +53,7 @@ func story_proceed(choice_response):
 	elif story_node.can_choose():
 		display_choices()
 	else:
-		story_node.increase_visit_count()
+		story_node.increase_visit_count(0)
 
 func story_choose(idx):
 	if idx < max_choice:

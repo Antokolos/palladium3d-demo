@@ -78,7 +78,7 @@ func resend_achievements():
 
 func load_prefs():
 	var f = File.new()
-	var error = f.open("user://prefs.json", File.READ)
+	var error = f.open("user://saves/prefs.json", File.READ)
 
 	if (error):
 		print("no prefs to load.")
@@ -96,7 +96,7 @@ func load_prefs():
 
 func save_prefs():
 	var f = File.new()
-	var error = f.open("user://prefs.json", File.WRITE)
+	var error = f.open("user://saves/prefs.json", File.WRITE)
 	assert( not error )
 	
 	var d = {

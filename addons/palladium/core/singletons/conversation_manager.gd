@@ -17,6 +17,8 @@ var max_choice = 0
 var current_actor_name = null
 var previous_actor_name = null
 
+var last_result : int = 0
+
 var story_state_cache = {}
 
 func _ready():
@@ -24,6 +26,7 @@ func _ready():
 	target = null
 	initiator = null
 	is_finalizing = false
+	last_result = 0
 	story_state_cache.clear()
 
 func change_stretch_ratio(conversation):
@@ -62,7 +65,7 @@ func stop_conversation(player):
 		return
 	if not $AutocloseTimer.is_stopped():
 		$AutocloseTimer.stop()
-	story_node.increase_visit_count()
+	story_node.increase_visit_count(last_result)
 	var conversation_name_prev = conversation_name
 	var target_prev = target
 	var initiator_prev = initiator
@@ -78,7 +81,7 @@ func stop_conversation(player):
 	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
 		emit_signal("meeting_finished", player, target_prev, initiator_prev)
 	player.get_cam().enable_use(true)
-	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev, story_node.get_last_result())
+	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev, last_result)
 
 func conversation_is_in_progress(conversation_name = null, target_name_hint = null):
 	if not conversation_name:
@@ -110,6 +113,9 @@ func conversation_is_finished(conversation_name, target_name_hint = null):
 func conversation_is_not_finished(conversation_name, target_name_hint = null):
 	return check_story_not_finished(conversation_name, target_name_hint)
 
+func conversation_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
+	return check_story_result_was_achieved(conversation_name, target_name_hint, result)
+
 func check_story_not_finished(conversation_name, target_name_hint = null):
 	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var cp_story
@@ -122,6 +128,19 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 		cp_story = cp if exists_cp else "Default.ink.json"
 		story_state_cache[cp] = cp_story
 	return story_node.check_story_not_finished(cp_story)
+
+func check_story_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
+	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
+	var cp_story
+	if story_state_cache.has(cp):
+		cp_story = story_state_cache.get(cp)
+	else:
+		var locale = TranslationServer.get_locale()
+		var f = File.new()
+		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
+		cp_story = cp if exists_cp else "Default.ink.json"
+		story_state_cache[cp] = cp_story
+	return story_node.check_story_result_was_achieved(cp_story, result)
 
 func init_story(conversation_name, target_name_hint = null, repeatable = false):
 	var locale = TranslationServer.get_locale()
@@ -157,6 +176,7 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	self.target = target
 	self.initiator = initiator
 	self.is_finalizing = false
+	self.last_result = 0
 	self.conversation_name = conversation_name
 	var hud = game_state.get_hud()
 	hud.show_game_ui(false)
@@ -195,6 +215,9 @@ func move_current_text_to_prev(conversation):
 	conversation_actor_prev.text = conversation_actor.text
 	conversation_actor.text = ""
 
+func get_last_result() -> int:
+	return last_result
+
 func get_vvalue(dict):
 	return dict["ru"] if settings.vlanguage == settings.VLANGUAGE_RU else (dict["en"] if settings.vlanguage == settings.VLANGUAGE_EN else null)
 
@@ -217,6 +240,7 @@ func story_choose(player, idx):
 			var tags = tags_dict[TranslationServer.get_locale()]
 			is_finalizing = tags and tags.has("finalizer")
 			if is_finalizing:
+				last_result = 0 if tags["finalizer"].empty() else tags["finalizer"].to_int()
 				stop_conversation(player)
 				return
 			previous_actor_name = current_actor_name
@@ -250,6 +274,8 @@ func story_proceed(player):
 		var tags_dict = story_node.get_current_tags()
 		var tags = tags_dict[TranslationServer.get_locale()]
 		is_finalizing = tags and tags.has("finalizer")
+		if is_finalizing:
+			last_result = 0 if tags["finalizer"].empty() else tags["finalizer"].to_int()
 		previous_actor_name = current_actor_name
 		current_actor_name = tags["actor"] if tags and tags.has("actor") else player.name_hint
 		conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name and not conversation_text.text.empty() else ""

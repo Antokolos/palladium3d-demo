@@ -129,6 +129,7 @@ script = ExtResource( 1 )
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.4302, 5.17495, 28.7713 )
 aabb = AABB( -6.39515, -4.746, -12.49, 12.7903, 9.49199, 24.98 )
+room_id = 10
 room_path = "../Apata_room"
 
 [node name="RayCast" type="RayCast" parent="Apata_room_enabler"]
@@ -264,6 +265,7 @@ exclusive = false
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3095, 4.54641, 25.0091 )
 aabb = AABB( -5.66191, -3.87694, -8.20443, 11.3238, 7.75388, 16.4089 )
+room_id = 20
 room_path = "../Hermes_room"
 
 [node name="RayCast" type="RayCast" parent="Hermes_room_enabler"]
@@ -343,6 +345,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2328, 1.23007, 25.0973 )
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.197, 4.66016, 29.4148 )
 aabb = AABB( -6.53067, -4.05388, -11.8878, 13.0613, 8.10776, 23.7755 )
+room_id = 30
 room_path = "../Erida_room"
 
 [node name="RayCast" type="RayCast" parent="Erida_room_enabler"]
@@ -356,6 +359,7 @@ collision_mask = 2
 [node name="Erida_room" type="Spatial" parent="." groups=[
 "restorable_state",
 ]]
+editor/display_folded = true
 script = ExtResource( 37 )
 activatable_id = 30
 
@@ -464,6 +468,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -22.397
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91577, 4.83816, 25.2311 )
 aabb = AABB( -5.61708, -4.18341, -8.02243, 11.2342, 8.36682, 16.0449 )
+room_id = 40
 room_path = "../Ares_room"
 
 [node name="RayCast" type="RayCast" parent="Ares_room_enabler"]
@@ -475,6 +480,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.58078, 0, 1.30258 )
 collision_mask = 2
 
 [node name="Ares_room" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="torch_full10" parent="Ares_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64801, 3.66712, 22.1418 )

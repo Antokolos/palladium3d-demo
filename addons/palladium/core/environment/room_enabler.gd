@@ -3,10 +3,12 @@ class_name PLDRoomEnabler
 
 const REMOVE_FROM_TREE = false
 
+export(DB.RoomIds) var room_id = DB.RoomIds.NONE
 export var room_path = "../room"
 var raycasts_cache = []
 var room_children = []
 var screen_entered = false
+var player_is_in_room = false
 var active = false
 
 func _ready():
@@ -14,6 +16,7 @@ func _ready():
 	set_active(false)
 	connect("screen_entered", self, "_on_VisibilityEnabler_screen_entered")
 	connect("screen_exited", self, "_on_VisibilityEnabler_screen_exited")
+	game_state.register_room_enabler(self)
 
 func _on_VisibilityEnabler_screen_entered():
 	screen_entered = true
@@ -39,8 +42,21 @@ func enable_raycasts(enable):
 	for raycast in get_raycasts():
 		raycast.enabled = enable
 
+func get_room_id():
+	return room_id
+
 func get_room_node():
 	return get_node(room_path)
+
+func is_room_enabled():
+	var room_node = get_room_node()
+	if REMOVE_FROM_TREE:
+		return room_node.get_child_count() > 0
+	else:
+		return room_node.visible
+
+func player_is_in_room():
+	return player_is_in_room
 
 func enable_room():
 	var room_node = get_room_node()
@@ -82,7 +98,8 @@ func _physics_process(delta):
 		enable_room()
 		return
 	var origin = camera.get_global_transform().origin
-	var need_enable = get_aabb().has_point(to_local(origin))
+	player_is_in_room = get_aabb().has_point(to_local(origin))
+	var need_enable = player_is_in_room
 	if not active or not player or need_enable:
 		enable_raycasts(false)
 		enable_room()

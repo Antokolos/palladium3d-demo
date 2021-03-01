@@ -9,7 +9,7 @@ const INSCRIPTIONS_DIALOGUES = [
 	'068_Sun_competitors', # Get rid of the Sun's competitors
 	'113_Coin_depicted', # this is the letter "P"
 	'152_A_sign_appeared', # Zeus's children will show the way
-	'157_The_birth_of_Athena', # The birth of Athena
+	#'157-1_The_birth_of_Athena', # The birth of Athena -- REMOVED
 	'174_This_inscription_wasn\'t', # Name three bird companions of Athena, Hera, and Aphrodite into the iron ear
 	'179-2_Tablets', # Before picking one of the jars, you can check the contents only of one of them. And remember: tablet drawings lie
 	'195_ambrosia_cup_female', # Pour some water in the evening. In the morning the water will become ambrosia.

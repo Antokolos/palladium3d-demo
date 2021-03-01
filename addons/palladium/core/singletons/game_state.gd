@@ -87,6 +87,7 @@ var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
 var player_oxygen_current = DB.PLAYER_OXYGEN_CURRENT_DEFAULT
 var player_oxygen_max = DB.PLAYER_OXYGEN_MAX_DEFAULT
 var player_paths = {}
+var room_enabler_paths = {}
 var usable_paths = {}
 var activatable_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
@@ -137,6 +138,7 @@ func _ready():
 
 func cleanup_paths():
 	player_paths.clear()
+	room_enabler_paths.clear()
 	usable_paths.clear()
 	activatable_paths.clear()
 
@@ -221,6 +223,19 @@ func get_characters():
 		if character_node:
 			result.append(character_node)
 	return result
+
+func get_room_enabler_path(room_id):
+	if not room_id \
+		or room_id == DB.RoomIds.NONE \
+		or not room_enabler_paths.has(room_id):
+		return null
+	return room_enabler_paths[room_id]
+
+func get_room_enabler(room_id):
+	var room_path = get_room_enabler_path(room_id)
+	if not room_path or not has_node(room_path):
+		return null
+	return get_node(room_path)
 
 func get_usable_path(usable_id):
 	if not usable_id \
@@ -595,6 +610,22 @@ func get_activatable_state(activatable_path):
 func set_activatable_state(activatable_path, state):
 	activatables[scene_path + ":" + activatable_path] = state
 
+func _is_room_enabled(room_id):
+	var room_enabler = get_room_enabler(room_id)
+	return room_enabler and room_enabler.is_room_enabled()
+
+func _player_is_in_room(room_id):
+	var room_enabler = get_room_enabler(room_id)
+	return room_enabler and room_enabler.player_is_in_room()
+
+func _is_found(activatable_id : int):
+	var id = DB.lookup_activatable_from_int(activatable_id)
+	if id == DB.ActivatableIds.NONE:
+		return false
+	if not get_activatable_path(activatable_id):
+		return false
+	return true
+
 func _is_untouched(activatable_id : int):
 	var id = DB.lookup_activatable_from_int(activatable_id)
 	if id == DB.ActivatableIds.NONE:
@@ -642,7 +673,9 @@ func _is_final_destination(activatable_id : int):
 			return false
 
 func _is_actual(activatable_id : int):
-	return not _is_untouched(activatable_id) and not _is_final_destination(activatable_id)
+	return _is_found(activatable_id) \
+		and not _is_untouched(activatable_id) \
+		and not _is_final_destination(activatable_id)
 
 func get_multistate_state(multistate_path):
 	var id = scene_path + ":" + multistate_path
@@ -686,6 +719,12 @@ func register_player(player):
 	if characters_transition_data.has(name_hint):
 		set_character_data(characters_transition_data[name_hint], player)
 	emit_signal("player_registered", player)
+
+func register_room_enabler(room_enabler):
+	var room_id = room_enabler.get_room_id()
+	if not room_id or room_id == DB.RoomIds.NONE:
+		return
+	room_enabler_paths[room_id] = room_enabler.get_path()
 
 func register_usable(usable):
 	var usable_id = usable.get_usable_id()

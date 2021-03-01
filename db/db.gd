@@ -78,6 +78,10 @@ func can_execute_custom_action(item, action = "item_preview_action_1", event = n
 #	NONE = 0
 #}
 
+#enum RoomIds {
+#	NONE = 0
+#}
+
 #enum DoorIds {
 #	NONE = 0
 #}
@@ -186,6 +190,14 @@ enum PedestalIds {
 enum ContainerIds {
 	NONE = 0,
 	APATA_CHEST = 10
+}
+
+enum RoomIds {
+	NONE = 0,
+	APATA = 10,
+	HERMES = 20,
+	ERIDA = 30,
+	ARES = 40
 }
 
 enum DoorIds {

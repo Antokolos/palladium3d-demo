@@ -13,7 +13,6 @@ const PARTY_VAR_PREFIX : String = "party_"
 const CUTSCENE_VAR_PREFIX : String = "cutscene_"
 const RELATIONSHIP_VAR_PREFIX : String = "relationship_"
 const MORALE_VAR_PREFIX : String = "morale_"
-const RESULT_VAR_NAME : String = "result"
 
 # Current ink story. In fact it contains the same story for all available locales; user will make choices in all these stories simultaneously.
 # The key is the locale name, the value is the ink story.
@@ -35,8 +34,6 @@ var _inkStoriesStates = Dictionary()
 # States of these stories should be converted to json before save.
 # This map will be cleared when the game is saved.
 var _currentSessionStories = Dictionary()
-
-var last_result : int = 0
 
 func _ready():
 	call_deferred("_add_runtime")
@@ -98,12 +95,15 @@ func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, l
 	dir.list_dir_end()
 
 func bind_external_functions(story):
+	story.bind_external_function("is_room_enabled", game_state, "_is_room_enabled")
+	story.bind_external_function("player_is_in_room", game_state, "_player_is_in_room")
 	story.bind_external_function("is_untouched", game_state, "_is_untouched")
 	story.bind_external_function("is_activated", game_state, "_is_activated")
 	story.bind_external_function("is_deactivated", game_state, "_is_deactivated")
 	story.bind_external_function("is_paused", game_state, "_is_paused")
 	story.bind_external_function("is_final_destination", game_state, "_is_final_destination")
 	story.bind_external_function("is_actual", game_state, "_is_actual")
+	story.bind_external_function("conversation_is_not_finished", conversation_manager, "conversation_is_not_finished")
 
 func load_story_from_file(path : String): # Story
 	var text : String = ""
@@ -129,6 +129,22 @@ func check_story_not_finished(storyPath : String) -> bool:
 			push_error("Story '%s' for locale '%s' was not found in cache")
 			return true
 	return result
+
+func check_story_result_was_achieved(storyPath : String, result : int) -> bool:
+	var achieved : bool = false
+	for locale in AvailableLocales:
+		if not _inkStories.has(locale):
+			continue
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
+		if storiesByLocale.has(storyPath):
+			var ps : PLDStory = storiesByLocale[storyPath]
+			var results = _inkStoriesStates[locale][ps.get_story_name()].results
+			for r in results:
+				achieved = achieved or (r == result)
+		else:
+			push_error("Story '%s' for locale '%s' was not found in cache")
+			return false
+	return achieved
 
 func load_story(storyPath : String, chatDriven : bool, repeatable : bool) -> void:
 	for locale in AvailableLocales:
@@ -178,13 +194,6 @@ func _observe_morale(variable_name, new_value) -> void:
 	var character = game_state.get_character(name_hint)
 	character.set_morale(v)
 
-func _observe_result(variable_name, new_value) -> void:
-	var v : int = int(new_value)
-	last_result = v
-
-func get_last_result() -> int:
-	return last_result
-
 func init_variables() -> void:
 	var storyVars : Dictionary = game_state.story_vars
 	var keys = storyVars.keys()
@@ -194,11 +203,6 @@ func init_variables() -> void:
 		if _inkStory.has(locale):
 			var palladiumStory : PLDStory = _inkStory[locale]
 			var story = palladiumStory.get_ink_story() # Story
-			if story.variables_state.global_variable_exists_with_name(RESULT_VAR_NAME):
-				story.variables_state.set(RESULT_VAR_NAME, 0)
-				story.remove_variable_observer(self, "_observe_result", RESULT_VAR_NAME)
-				if is_current_locale:
-					story.observe_variable(RESULT_VAR_NAME, self, "_observe_result")
 			for key in keys:
 				if story.variables_state.global_variable_exists_with_name(key):
 					story.variables_state.set(key, storyVars[key])
@@ -239,11 +243,20 @@ func reset() -> void:
 			story.reset_state()
 			_inkStoriesStates[locale][palladiumStory.get_story_name()].story_state = ""
 
-func increase_visit_count():
+func increase_visit_count(achieved_result : int):
 	for locale in AvailableLocales:
 		if _inkStory.has(locale):
 			var palladiumStory : PLDStory = _inkStory[locale]
-			_inkStoriesStates[locale][palladiumStory.get_story_name()].visit_count += 1
+			var story_state = _inkStoriesStates[locale][palladiumStory.get_story_name()]
+			story_state.visit_count += 1
+			var found = false
+			for result in story_state.results:
+				# TODO: Here we use "==" instead of find() because results are restored back from save as floats and we are checking the int value. Probably that should be changed.
+				if result == achieved_result:
+					found = true
+					break
+			if not found:
+				story_state.results.append(achieved_result)
 
 # story_paths is array of Strings
 func visit_count_is_at_least(story_paths : Array, visit_count):
@@ -332,6 +345,7 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 	var story_name = palladiumStory.get_story_name()
 	var story = palladiumStory.get_ink_story() # Story
 	var visit_count = 0
+	var results = []
 	if slot >= 0:
 		if _inkStoriesStates[locale].empty():
 			var saveFile : File = File.new()
@@ -344,20 +358,33 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 				if (typeof(d) == TYPE_DICTIONARY):
 					_inkStoriesStates[locale] = d
 		if _inkStoriesStates[locale].has(story_name):
-			var story_state = _inkStoriesStates[locale][story_name].story_state
-			visit_count = _inkStoriesStates[locale][story_name].visit_count
-			if _inkStoriesStates[locale][story_name].has("story_log"):
+			var s = _inkStoriesStates[locale][story_name]
+			var has_story_state = s.has("story_state")
+			var has_visit_count = s.has("visit_count")
+			var has_results = s.has("results")
+			var has_story_log = s.has("story_log")
+			var story_state = s.story_state if has_story_state else null
+			visit_count = s.visit_count if has_visit_count else 0
+			results = s.results if has_results else []
+			if has_story_log:
 				var story_log = palladiumStory.get_story_log()
 				if story_log.has(locale):
 					story_log.erase(locale)
-				story_log[locale] = _inkStoriesStates[locale][story_name].story_log
+				story_log[locale] = s.story_log
 			if story_state and not story_state.empty():
 				story.state.load_json(story_state)
+				if not has_visit_count:
+					s["visit_count"] = visit_count
+				if not has_results:
+					s["results"] = results
+				if not has_story_log and palladiumStory.is_chat_driven():
+					s["story_log"] = ""
 				return true
 	story.reset_state()
 	_inkStoriesStates[locale][story_name] = {
 		"story_state" : "",
-		"visit_count" : visit_count
+		"visit_count" : visit_count,
+		"results" : results
 	}
 	if palladiumStory.is_chat_driven():
 		_inkStoriesStates[locale][story_name]["story_log"] = ""
