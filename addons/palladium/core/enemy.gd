@@ -47,7 +47,7 @@ func add_highlight(player_node):
 		return "E: " + tr("ACTION_SHOOT")
 	return ""
 
-func hit(hit_direction_node):
+func hit(injury_rate, hit_direction_node = null):
 	if not is_activated():
 		return
 	elif max_hits > 0 and hits > max_hits:

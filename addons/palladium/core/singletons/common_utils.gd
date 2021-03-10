@@ -4,12 +4,40 @@ const APP_STEAM_ID = 1137270
 onready var _steam = Engine.get_singleton("Steam") if Engine.has_singleton("Steam") else null
 
 func _ready():
+	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
 	if not _steam:
 		return
 	if _steam.restartAppIfNecessary(APP_STEAM_ID):
 		return
-	if not _steam.steamInit():
-		return
+	_steam.steamInit()
+
+# Returns true if connected joypads are present, false otherwise
+func has_joypads():
+	return Input.get_connected_joypads().size() > 0
+
+func _on_joy_connection_changed(device_id, is_connected):
+	if not has_joypads() and not get_tree().paused:
+		# When the controller is unplugged during gameplay, automatically pause the game
+		toggle_pause_menu()
+
+func show_mouse_cursor_if_needed(show, force = false):
+	if show:
+		Input.set_mouse_mode(
+			Input.MOUSE_MODE_VISIBLE
+				if force or not has_joypads()
+				else Input.MOUSE_MODE_CAPTURED
+		)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func show_mouse_cursor_if_needed_in_game(hud):
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if hud.is_menu_hud() else Input.MOUSE_MODE_CAPTURED)
+
+func toggle_pause_menu():
+	var ev = InputEventAction.new()
+	ev.set_action("ui_tablet_toggle")
+	ev.set_pressed(true)
+	get_tree().input_event(ev)
 
 func joy_button_to_string(button_index):
 	match button_index:

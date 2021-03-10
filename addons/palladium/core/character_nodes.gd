@@ -3,6 +3,7 @@ class_name PLDCharacterNodes
 
 const FRIENDLY_FIRE_ENABLED = false
 const OXYGEN_DECREASE_RATE = 5
+const INJURY_RATE = 20
 
 onready var character = get_parent()
 
@@ -24,7 +25,6 @@ onready var sound_player_falling_to_floor = $SoundFallingToFloor
 onready var sound_player_attack = $SoundAttack
 onready var sound_player_miss = $SoundMiss
 
-var injury_rate = 20
 var walk_sound_ids = [ CHARS.SoundId.SOUND_WALK_NONE ]
 
 func _ready():
@@ -41,7 +41,7 @@ func _on_player_underwater(player, enable):
 		oxygen_timer.start()
 	elif not enable and not oxygen_timer.is_stopped():
 		oxygen_timer.stop()
-		game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_max, game_state.player_oxygen_max)
+		game_state.set_oxygen(character, game_state.player_oxygen_max, game_state.player_oxygen_max)
 
 func _on_player_poisoned(player, enable, intoxication_rate):
 	if player and not player.equals(character):
@@ -225,7 +225,7 @@ func is_low_ceiling():
 
 func _on_HealTimer_timeout():
 	if character.is_player():
-		game_state.set_health(character.get_name_hint(), game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
+		game_state.set_health(character, game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
 
 func _on_CutsceneTimer_timeout():
 	character.set_look_transition(true)
@@ -233,12 +233,12 @@ func _on_CutsceneTimer_timeout():
 func _on_OxygenTimer_timeout():
 	if oxygen_timer.is_stopped():
 		return
-	game_state.set_oxygen(character.get_name_hint(), game_state.player_oxygen_current - OXYGEN_DECREASE_RATE, game_state.player_oxygen_max)
+	game_state.set_oxygen(character, game_state.player_oxygen_current - OXYGEN_DECREASE_RATE, game_state.player_oxygen_max)
 
 func _on_PoisonTimer_timeout():
 	if poison_timer.is_stopped():
 		return
-	game_state.set_health(character.get_name_hint(), game_state.player_health_current - character.get_intoxication(), game_state.player_health_max)
+	game_state.set_health(character, game_state.player_health_current - character.get_intoxication(), game_state.player_health_max)
 
 func _on_StunTimer_timeout():
 	common_utils.set_pause_scene(character, false)
@@ -261,15 +261,15 @@ func _on_AttackTimer_timeout():
 		if attack_target.is_in_group("party"):
 			if FRIENDLY_FIRE_ENABLED \
 				or not character.is_in_group("party"):
-				game_state.set_health(CHARS.PLAYER_NAME_HINT, game_state.player_health_current - injury_rate, game_state.player_health_max)
+				attack_target.hit(INJURY_RATE)
 		elif attack_target.is_in_group("enemies"):
-			attack_target.hit(null)
+			attack_target.hit(INJURY_RATE)
 		if last_attack_target and attack_target.get_instance_id() != last_attack_target.get_instance_id():
-			last_attack_target.miss(null)
+			last_attack_target.miss()
 	else:
 		play_sound_miss()
 		if last_attack_target:
-			last_attack_target.miss(null)
+			last_attack_target.miss()
 		#character.stop_cutscene()
 	character.emit_signal("attack_finished", self, attack_target, last_attack_target)
 	character.clear_point_of_interest()

@@ -61,7 +61,7 @@ func _ready():
 	settings.connect("language_changed", self, "on_language_changed")
 	on_health_changed(CHARS.PLAYER_NAME_HINT, game_state.player_health_current, game_state.player_health_max)
 	on_oxygen_changed(CHARS.PLAYER_NAME_HINT, game_state.player_oxygen_current, game_state.player_oxygen_max)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	common_utils.show_mouse_cursor_if_needed_in_game(self)
 	synchronize_items()
 	select_active_item()
 	select_active_quick_item()
@@ -206,8 +206,7 @@ func _process(delta):
 	# ----------------------------------
 	# Capturing/Freeing the cursor
 	if Input.is_action_just_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if get_tree().paused:
 			show_tablet(false)
 		else:
 			show_tablet(true)
@@ -217,10 +216,11 @@ func _process(delta):
 
 func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 	if is_show:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		common_utils.show_mouse_cursor_if_needed(true)
 		pause_game(true)
 		tablet.activate(activation_mode)
 	else:
+		common_utils.show_mouse_cursor_if_needed(false)
 		tablet.visible = false
 		pause_game(false)
 		settings.save_settings()

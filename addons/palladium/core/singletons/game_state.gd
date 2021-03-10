@@ -525,28 +525,33 @@ func player_name_is(name_hint):
 	return player_name_hint == name_hint
 
 func damage_party(injury_rate):
-	game_state.set_health(CHARS.PLAYER_NAME_HINT, player_health_current - injury_rate, player_health_max)
+	set_health(get_player(), player_health_current - injury_rate, player_health_max)
 
 func kill_party():
-	set_health(CHARS.PLAYER_NAME_HINT, 0, player_health_max)
+	for character in get_characters():
+		if character.is_in_party():
+			character.kill()
 
-func set_health(name_hint, health_current, health_max):
-	# TODO: use name_hint to set health for different characters
+func set_health(character, health_current, health_max):
+	# TODO: use 'character' param to set health for different characters
 	if health_current <= 0:
-		change_scene("res://addons/palladium/ui/game_over.tscn", false, true)
+		character.kill()
 		return
 	player_health_current = health_current if health_current < health_max else health_max
 	player_health_max = health_max
-	emit_signal("health_changed", name_hint, player_health_current, player_health_max)
+	emit_signal("health_changed", character.get_name_hint(), player_health_current, player_health_max)
 
-func set_oxygen(name_hint, oxygen_current, oxygen_max):
-	# TODO: use name_hint to set oxygen for different characters
+func game_over():
+	change_scene("res://addons/palladium/ui/game_over.tscn", false, true)
+
+func set_oxygen(character, oxygen_current, oxygen_max):
+	# TODO: use 'character' param to set oxygen for different characters
 	if oxygen_current < 0:
-		set_health(name_hint, player_health_current - DB.SUFFOCATION_DAMAGE_RATE, player_health_max)
+		set_health(character, player_health_current - DB.SUFFOCATION_DAMAGE_RATE, player_health_max)
 		return
 	player_oxygen_current = oxygen_current if oxygen_current < oxygen_max else oxygen_max
 	player_oxygen_max = oxygen_max
-	emit_signal("oxygen_changed", name_hint, player_oxygen_current, player_oxygen_max)
+	emit_signal("oxygen_changed", character.get_name_hint(), player_oxygen_current, player_oxygen_max)
 
 func get_door_state(door_path):
 	var id = scene_path + ":" + door_path

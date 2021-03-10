@@ -172,6 +172,10 @@ func is_hidden():
 func is_crouching():
 	return false
 
+func play_cutscene(cutscene_id):
+	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
+	$AnimationTree.set("parameters/CutsceneShot/active", true)
+
 func stop_cutscene():
 	pass
 
@@ -186,9 +190,9 @@ func walks_intro():
 	$AnimationTree.set("parameters/Transition/current", 0)
 
 func walks_room():
-	$AnimationTree.set("parameters/Transition/current", 2)
+	$AnimationTree.set("parameters/Transition/current", 3)
 
 func _process(delta):
-	if should_check_cutscene and $AnimationTree.get("parameters/Transition/current") == 3:
+	if should_check_cutscene and $AnimationTree.get("parameters/Transition/current") == 4:
 		should_check_cutscene = false
 		emit_signal("cutscene_finished", self, self, 0, false)

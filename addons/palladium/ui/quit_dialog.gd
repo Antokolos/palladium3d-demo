@@ -9,14 +9,12 @@ func _ready():
 func _notification(what):
 	match what:
 		MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-			if game_state.get_hud().is_tablet_visible():
-				var ev = InputEventAction.new()
-				ev.set_action("ui_tablet_toggle")
-				ev.set_pressed(true)
-				get_tree().input_event(ev)
+			# TODO: check it is OK
+			#if game_state.get_hud().is_tablet_visible():
+			#	common_utils.toggle_pause_menu()
 			popup_centered_ratio(0.3)
 		NOTIFICATION_POST_POPUP:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			common_utils.show_mouse_cursor_if_needed(true)
 			no_button.grab_focus()
 
 func _input(event):
@@ -33,8 +31,7 @@ func _on_NoButton_pressed():
 	visible = false
 	var hud = game_state.get_hud()
 	if not hud.is_tablet_visible():
-		if not hud.is_menu_hud():
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		common_utils.show_mouse_cursor_if_needed_in_game(hud)
 		hud.pause_game(false)
 
 func _on_quit_dialog_about_to_show():

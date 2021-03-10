@@ -44,7 +44,7 @@ func action(player_node, camera_node):
 	if not item or item.is_weapon():
 		return
 	var custom_actions = game_state.get_custom_actions(item)
-	if custom_actions.empty():
+	if custom_actions.empty() or not DB.can_execute_custom_action(item, custom_actions[0]):
 		return
 	DB.execute_custom_action(item, custom_actions[0])
 

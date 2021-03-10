@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2311_son_but_you_are.ogg-4fb852daddcd21a33e235399b08b0b16.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/025_Andreas_return/2311_son_but_you_are.ogg"
+dest_files=[ "res://.import/2311_son_but_you_are.ogg-4fb852daddcd21a33e235399b08b0b16.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

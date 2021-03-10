@@ -12,6 +12,7 @@ onready var desktop_container_credits = desktop_containers.get_node("VCreditsCon
 onready var desktop_container_map = desktop_containers.get_node("VMapContainer")
 onready var desktop_container_documents = desktop_containers.get_node("VDocumentsContainer")
 onready var desktop_container_settings = desktop_containers.get_node("VSettingsContainer")
+onready var settings_button = desktop_container_settings.get_node("HContainer/SettingsButton")
 onready var desktop_container_save = desktop_containers.get_node("VSaveGameContainer")
 onready var save_button = desktop_container_save.get_node("HContainer/SaveGameButton")
 onready var save_button_label = desktop_container_save.get_node("Label")
@@ -24,7 +25,9 @@ onready var credits = apps.get_node("credits")
 onready var settings_app = apps.get_node("settings_app")
 onready var controls_app = apps.get_node("controls_app")
 onready var save_game_app = apps.get_node("save_game_app")
+onready var first_save_slot_button = save_game_app.get_node("VBoxContainer/Slot1/ButtonSlot1")
 onready var load_game_app = apps.get_node("load_game_app")
+onready var autosave_load_button = load_game_app.get_node("VBoxContainer/Slot0/ButtonSlot0")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
@@ -208,9 +211,16 @@ func activate(mode):
 			_on_HomeButton_pressed()
 
 func _unhandled_input(event):
-	if get_tree().paused and event.is_action_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():
+	if not get_tree().paused or game_state.is_video_cutscene():
+		return
+	if event.is_action_pressed("ui_tablet_toggle"):
 		get_tree().set_input_as_handled()
 		hud.show_tablet(false)
+	elif event.is_action_pressed("ui_cancel"):
+		if desktop.visible:
+			_on_CloseButton_pressed()
+		else:
+			_on_HomeButton_pressed()
 
 func hide_everything():
 	for node in apps.get_children():
@@ -220,6 +230,7 @@ func hide_everything():
 func _on_HomeButton_pressed():
 	hide_everything()
 	desktop.show()
+	settings_button.grab_focus()
 
 func _on_CloseButton_pressed():
 	simulate_esc()
@@ -228,19 +239,23 @@ func _on_ChatButton_pressed():
 	hide_everything()
 	chat.load_chat()
 	chat.show()
+	home_button.grab_focus()
 
 func _on_CreditsButton_pressed():
 	hide_everything()
 	credits.activate()
+	home_button.grab_focus()
 
 func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
+	vsync.grab_focus()
 
 func _on_ControlsButton_pressed():
 	hide_everything()
 	controls_app.show()
 	controls_app.refresh()
+	home_button.grab_focus()
 
 func refresh_slot_captions(is_load, base_node):
 	var starting_slot = 0 if is_load else 1
@@ -258,11 +273,13 @@ func _on_SaveGameButton_pressed():
 	hide_everything()
 	save_game_app.show()
 	refresh_slot_captions(false, save_game_app)
+	first_save_slot_button.grab_focus()
 
 func _on_LoadGameButton_pressed():
 	hide_everything()
 	load_game_app.show()
 	refresh_slot_captions(true, load_game_app)
+	autosave_load_button.grab_focus()
 
 func _on_QuitGameButton_pressed():
 	get_tree().notify_group("quit_dialog", MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
@@ -272,12 +289,8 @@ func simulate_esc():
 	# Why not just call hud.show_tablet(false) and set mouse mode to Input.MOUSE_MODE_CAPTURED?
 	# Well, I tried, but I failed, for some reason it didn't work for me and I don't know why.
 	# If you'll simplify this code, please tell me, what am I doing wrong :(
-	var ev = InputEventAction.new()
-	ev.set_action("ui_tablet_toggle")
-	ev.set_pressed(true)
-	get_tree().input_event(ev)
-	if not hud.is_menu_hud():
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	common_utils.toggle_pause_menu()
+	common_utils.show_mouse_cursor_if_needed_in_game(hud)
 
 func save_to_slot(slot):
 	game_state.save_state(slot)

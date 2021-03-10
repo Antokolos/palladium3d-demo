@@ -22,7 +22,8 @@ func do_input(event):
 			rel_pos.x = JOY_SENSITIVITY * v if nonzero else 0
 		if event.get_axis() == JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
 			rel_pos.y = JOY_SENSITIVITY * v if nonzero else 0
-	if not event is InputEventMouseButton and event.is_action_pressed("action"):
+	if not event is InputEventMouseButton \
+		and (event.is_action_pressed("action") or event.is_action_pressed("ui_accept")):
 		if not get_tree().paused \
 			or game_state.get_hud().is_tablet_visible() \
 			or game_state.get_hud().is_quit_dialog_visible():

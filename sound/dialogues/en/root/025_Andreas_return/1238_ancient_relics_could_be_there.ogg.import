@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1238_ancient_relics_could_be_there.ogg-0288d2280a5f64355f46803020cff945.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/025_Andreas_return/1238_ancient_relics_could_be_there.ogg"
+dest_files=[ "res://.import/1238_ancient_relics_could_be_there.ogg-0288d2280a5f64355f46803020cff945.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

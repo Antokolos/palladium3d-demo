@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2305_Constantine_please_1.ogg-7d71da47fb92c25fd081cb3175ee7827.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/024_Phone/2305_Constantine_please_1.ogg"
+dest_files=[ "res://.import/2305_Constantine_please_1.ogg-7d71da47fb92c25fd081cb3175ee7827.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

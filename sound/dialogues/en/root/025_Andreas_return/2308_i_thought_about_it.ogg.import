@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2308_i_thought_about_it.ogg-e3a37180ce9f49d7bc5c307dda293623.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/025_Andreas_return/2308_i_thought_about_it.ogg"
+dest_files=[ "res://.import/2308_i_thought_about_it.ogg-e3a37180ce9f49d7bc5c307dda293623.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

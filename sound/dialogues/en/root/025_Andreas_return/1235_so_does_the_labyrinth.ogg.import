@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1235_so_does_the_labyrinth.ogg-909d3e32c846a466a272002df02f7aaa.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/025_Andreas_return/1235_so_does_the_labyrinth.ogg"
+dest_files=[ "res://.import/1235_so_does_the_labyrinth.ogg-909d3e32c846a466a272002df02f7aaa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

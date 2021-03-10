@@ -8,7 +8,7 @@ onready var tab_node = main_panel.get_node("VBoxContainer/GamesContent/HBoxConta
 onready var back_node = main_panel.get_node("VBoxContainer/HBoxControls/Back")
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	common_utils.show_mouse_cursor_if_needed(true)
 	site_url_node.push_meta(0)
 	site_url_node.append_bbcode("https://nlbproject.com")
 	site_url_node.pop()

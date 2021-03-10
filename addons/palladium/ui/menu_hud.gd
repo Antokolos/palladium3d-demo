@@ -4,15 +4,12 @@ onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
 func _ready():
-	$LabelJoyHint.visible = has_joypads()
+	common_utils.show_mouse_cursor_if_needed_in_game(self)
+	$LabelJoyHint.visible = common_utils.has_joypads()
 	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
 
-# Returns true if connected joypads are present, false otherwise
-func has_joypads():
-	return Input.get_connected_joypads().size() > 0
-
 func _on_joy_connection_changed(device_id, is_connected):
-	$LabelJoyHint.visible = has_joypads()
+	$LabelJoyHint.visible = common_utils.has_joypads()
 
 func is_menu_hud():
 	return true
@@ -29,9 +26,11 @@ func pause_game(enable, with_dimmer = true):
 
 func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 	if is_show:
+		common_utils.show_mouse_cursor_if_needed(true)
 		pause_game(true)
 		tablet.activate(activation_mode)
 	else:
+		common_utils.show_mouse_cursor_if_needed(true, true)
 		tablet.visible = false
 		pause_game(false)
 		settings.save_settings()

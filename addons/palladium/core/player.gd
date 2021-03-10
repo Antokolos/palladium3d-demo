@@ -30,6 +30,15 @@ func _ready():
 		enemy.connect("attack_finished", self, "_on_enemy_attack_finished")
 	#activate() -- restored from save
 
+func hit(injury_rate, hit_direction_node = null):
+	.hit(injury_rate, hit_direction_node)
+	var health_new = game_state.player_health_current - injury_rate
+	if health_new > 0:
+		take_damage(false, hit_direction_node)
+	else:
+		take_damage(true, hit_direction_node)
+	game_state.set_health(self, health_new, game_state.player_health_max)
+
 func reset_movement():
 	.reset_movement()
 	input_movement_vector.x = 0
@@ -85,6 +94,11 @@ func process_rotation(need_to_update_collisions):
 
 func get_snap():
 	return Vector3.ZERO if is_in_jump else Vector3.UP
+
+func _on_character_dead(player):
+	._on_character_dead(player)
+	if equals(player):
+		game_state.game_over()
 
 func _on_enemy_attack_started(player_node, target):
 	if is_player_controlled() or not is_in_party():

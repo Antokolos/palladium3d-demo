@@ -20,13 +20,15 @@ func _ready():
 	settings.connect("quality_changed", self, "change_quality")
 
 func rebuild_exceptions(player_node):
-	use_point.rebuild_exceptions(player_node)
+	if use_point:
+		use_point.rebuild_exceptions(player_node)
 
 func enable_use(enable):
-	use_point.enable(enable)
+	if use_point:
+		use_point.enable(enable)
 
 func get_use_distance():
-	return use_point.get_use_distance()
+	return use_point.get_use_distance() if use_point else 0
 
 # Settings applied in the following way will be loaded after game restart
 # see https://github.com/godotengine/godot/issues/30087
@@ -107,16 +109,19 @@ func activate_item_use(item):
 		item_use.activate_item(item)
 
 func walk_initiate(player_node):
-	item_use.walk_initiate(player_node, self)
+	if item_use:
+		item_use.walk_initiate(player_node, self)
 
 func walk_stop(player_node):
-	item_use.walk_stop(player_node, self)
+	if item_use:
+		item_use.walk_stop(player_node, self)
 
 func process_rotation(player_node):
-	item_use.process_rotation(player_node, self)
+	if item_use:
+		item_use.process_rotation(player_node, self)
 
 func restore_state():
-	if game_state.story_vars.flashlight_on:
+	if flashlight and game_state.story_vars.flashlight_on:
 		flashlight.show()
 
 func _process(delta):
@@ -139,12 +144,13 @@ func _process(delta):
 	change_culling()
 
 func _input(event):
-	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+	if get_tree().paused \
+		or conversation_manager.conversation_is_in_progress():
 		return
 	var player = game_state.get_player()
 	if not player or player.is_hidden():
 		return
-	if event.is_action_pressed("item_preview_toggle"):
+	if item_preview and event.is_action_pressed("item_preview_toggle"):
 		if item_preview.is_opened():
 			return
 		var hud = game_state.get_hud()
@@ -157,7 +163,7 @@ func _input(event):
 			return
 		hud.main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 		item_preview.open_preview(item, hud, flashlight)
-	elif event.is_action_pressed("action"):
+	elif use_point and item_use and event.is_action_pressed("action"):
 		use_point.action(player, self)
 		item_use.action(player, self)
 		get_tree().set_input_as_handled()

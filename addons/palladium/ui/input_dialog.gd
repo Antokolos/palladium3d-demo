@@ -32,7 +32,7 @@ func show_input_dialog(controls_app, action_name, action_key, input_types):
 func _notification(what):
 	match what:
 		NOTIFICATION_POST_POPUP:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) #TODO: check it is neeeded
 			test_button.grab_focus()
 
 func get_what_to_do_text(itypes):

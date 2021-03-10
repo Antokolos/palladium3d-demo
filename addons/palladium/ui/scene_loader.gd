@@ -13,7 +13,7 @@ func _ready():
 		if scene_data.has("splash"):
 			set_texture(scene_data.splash)
 	get_tree().paused = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	common_utils.show_mouse_cursor_if_needed(false)
 	MEDIA.change_music_to(MEDIA.MusicId.LOADING)
 	loader = ResourceLoader.load_interactive(game_state.scene_path)
 

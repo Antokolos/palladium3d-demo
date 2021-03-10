@@ -1,8 +1,15 @@
 extends Control
 
+onready var button_autosave = get_node("ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot0/ButtonSlot0")
+onready var button_main_menu = get_node("ColorRect/HBoxContainer/VBoxContainer/HBoxLower/ButtonMainMenu")
+
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	common_utils.show_mouse_cursor_if_needed(true)
 	refresh_slot_captions(get_node("ColorRect/HBoxContainer/VBoxContainer"))
+	if button_autosave.is_disabled():
+		button_main_menu.grab_focus()
+	else:
+		button_autosave.grab_focus()
 	MEDIA.change_music_to(MEDIA.MusicId.GAME_OVER)
 
 func refresh_slot_captions(base_node):

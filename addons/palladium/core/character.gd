@@ -128,10 +128,10 @@ func get_last_attack_target():
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
 
-func hit(hit_direction_node):
+func hit(injury_rate, hit_direction_node = null):
 	pass
 
-func miss(hit_direction_node):
+func miss(hit_direction_node = null):
 	pass
 
 func take_damage(fatal, hit_direction_node):
@@ -141,16 +141,15 @@ func take_damage(fatal, hit_direction_node):
 	stop_cutscene()
 	get_model().take_damage(fatal)
 	push_back(get_push_vec(hit_direction_node))
-	if fatal:
-		enable_collisions_and_interaction(false)
 
 func kill_on_load():
 	get_model().kill_on_load()
-	enable_collisions_and_interaction(false)
 
 func kill():
-	get_model().kill()
-	enable_collisions_and_interaction(false)
+	if is_player_controlled():
+		game_state.game_over()
+	else:
+		get_model().kill()
 
 func enable_collisions_and_interaction(enable):
 	if has_node("UpperBody_CollisionShape"):
@@ -306,6 +305,7 @@ func _on_aggressive_changed(player_node, previous_state, new_state):
 func _on_character_dead(player):
 	if equals(player):
 		stop_attack()
+		enable_collisions_and_interaction(false)
 	clear_poi_if_it_is(player)
 	._on_character_dead(player)
 
@@ -371,6 +371,8 @@ func get_nearest_character(party_members_only = false):
 		if equals(ch):
 			continue
 		if not ch.is_activated():
+			continue
+		if ch.is_dying():
 			continue
 		if party_members_only and not ch.is_in_party():
 			continue

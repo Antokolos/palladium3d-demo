@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2310_i'm_not_sure.ogg-186cee1b7621290f08e0b41caa700deb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/025_Andreas_return/2310_i'm_not_sure.ogg"
+dest_files=[ "res://.import/2310_i'm_not_sure.ogg-186cee1b7621290f08e0b41caa700deb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

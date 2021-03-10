@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/male_intro.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/male_intro.gd" type="Script" id=2]
@@ -7,18 +7,39 @@
 filter_enabled = true
 filters = [ ".:jaw", ".:levator02.L", ".:levator02.R", ".:levator03.L", ".:levator03.R", ".:levator04.L", ".:levator04.R", ".:levator05.L", ".:levator05.R", ".:levator06.L", ".:levator06.R", ".:oculi01.L", ".:oculi01.R", ".:oculi02.L", ".:oculi02.R", ".:oris01", ".:oris02", ".:oris03.L", ".:oris03.R", ".:oris04.L", ".:oris04.R", ".:oris05", ".:oris06", ".:oris06.L", ".:oris06.R", ".:oris07.L", ".:oris07.R", ".:risorius02.L", ".:risorius02.R", ".:risorius03.L", ".:risorius03.R", ".:special01", ".:special01.002", ".:special01.003", ".:special01.004", ".:special03", ".:special04", ".:temporalis01.L", ".:temporalis01.R", ".:temporalis02.L", ".:temporalis02.R", ".:tongue00", ".:tongue01", ".:tongue02", ".:tongue03", ".:tongue04", ".:tongue05.L", ".:tongue05.R", ".:tongue06.L", ".:tongue06.R", ".:tongue07.L", ".:tongue07.R" ]
 
-[sub_resource type="AnimationNodeTransition" id=2]
-input_count = 4
-input_0/name = "walks_intro"
-input_0/auto_advance = true
-input_1/name = "listening_rest"
-input_1/auto_advance = false
-input_2/name = "walks_room"
-input_2/auto_advance = true
-input_3/name = "talking_rest"
-input_3/auto_advance = false
+[sub_resource type="AnimationNodeOneShot" id=2]
+fadein_time = 0.5
+fadeout_time = 0.5
 
 [sub_resource type="AnimationNodeTransition" id=3]
+input_count = 6
+input_0/name = "empty"
+input_0/auto_advance = false
+input_1/name = "gesture1"
+input_1/auto_advance = false
+input_2/name = "gesture2"
+input_2/auto_advance = false
+input_3/name = "gesture3"
+input_3/auto_advance = false
+input_4/name = "gesture4"
+input_4/auto_advance = false
+input_5/name = "gesture5"
+input_5/auto_advance = false
+
+[sub_resource type="AnimationNodeTransition" id=4]
+input_count = 5
+input_0/name = "walks_intro"
+input_0/auto_advance = true
+input_1/name = "listening_start"
+input_1/auto_advance = true
+input_2/name = "listening_rest"
+input_2/auto_advance = false
+input_3/name = "walks_room"
+input_3/auto_advance = true
+input_4/name = "talking_rest"
+input_4/auto_advance = false
+
+[sub_resource type="AnimationNodeTransition" id=5]
 input_count = 18
 xfade_time = 0.05
 input_0/name = "b0"
@@ -58,142 +79,183 @@ input_16/auto_advance = false
 input_17/name = "b17"
 input_17/auto_advance = false
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "b0"
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "b1"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "b10"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "b11"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "b12"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "b13"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "b14"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "b15"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "b16"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "b17"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "b2"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "b3"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "b4"
 
-[sub_resource type="AnimationNodeAnimation" id=17]
+[sub_resource type="AnimationNodeAnimation" id=19]
 animation = "b5"
 
-[sub_resource type="AnimationNodeAnimation" id=18]
+[sub_resource type="AnimationNodeAnimation" id=20]
 animation = "b6"
 
-[sub_resource type="AnimationNodeAnimation" id=19]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "b7"
 
-[sub_resource type="AnimationNodeAnimation" id=20]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "b8"
 
-[sub_resource type="AnimationNodeAnimation" id=21]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "b9"
 
-[sub_resource type="AnimationNodeAnimation" id=22]
-animation = "male_listening_2"
-
-[sub_resource type="AnimationNodeAnimation" id=23]
-animation = "male_talk_rest.001"
-
 [sub_resource type="AnimationNodeAnimation" id=24]
-animation = "male_walks_intro_3"
+animation = "Male_palladiumAction"
 
 [sub_resource type="AnimationNodeAnimation" id=25]
+animation = "male_gesture_1"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "male_gesture_2"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "male_gesture_3"
+
+[sub_resource type="AnimationNodeAnimation" id=28]
+animation = "male_gesture_4"
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "male_gesture_5"
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "male_listening_3_loop"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "male_listening_3_1"
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "male_talk_rest.001"
+
+[sub_resource type="AnimationNodeAnimation" id=32]
+animation = "male_walks_intro_3"
+
+[sub_resource type="AnimationNodeAnimation" id=33]
 animation = "male_walks_into_fathers_room"
 
-[sub_resource type="AnimationNodeBlendTree" id=26]
-graph_offset = Vector2( 479.627, -317.5 )
+[sub_resource type="AnimationNodeBlendTree" id=34]
+graph_offset = Vector2( 352.812, -305.495 )
 nodes/Blend2_Lips/node = SubResource( 1 )
-nodes/Blend2_Lips/position = Vector2( 1380, 620 )
-nodes/Transition/node = SubResource( 2 )
+nodes/Blend2_Lips/position = Vector2( 2380, 480 )
+nodes/CutsceneShot/node = SubResource( 2 )
+nodes/CutsceneShot/position = Vector2( 1900, 80 )
+nodes/CutsceneTransition/node = SubResource( 3 )
+nodes/CutsceneTransition/position = Vector2( 1640, 280 )
+nodes/Transition/node = SubResource( 4 )
 nodes/Transition/position = Vector2( 1100, -60 )
-nodes/Transition_Lips/node = SubResource( 3 )
+nodes/Transition_Lips/node = SubResource( 5 )
 nodes/Transition_Lips/position = Vector2( 1080, 1060 )
-nodes/b0/node = SubResource( 4 )
+nodes/b0/node = SubResource( 6 )
 nodes/b0/position = Vector2( 760, 220 )
-nodes/b1/node = SubResource( 5 )
+nodes/b1/node = SubResource( 7 )
 nodes/b1/position = Vector2( 760, 340 )
-nodes/b10/node = SubResource( 6 )
+nodes/b10/node = SubResource( 8 )
 nodes/b10/position = Vector2( 760, 1420 )
-nodes/b11/node = SubResource( 7 )
+nodes/b11/node = SubResource( 9 )
 nodes/b11/position = Vector2( 760, 1540 )
-nodes/b12/node = SubResource( 8 )
+nodes/b12/node = SubResource( 10 )
 nodes/b12/position = Vector2( 760, 1660 )
-nodes/b13/node = SubResource( 9 )
+nodes/b13/node = SubResource( 11 )
 nodes/b13/position = Vector2( 760, 1780 )
-nodes/b14/node = SubResource( 10 )
+nodes/b14/node = SubResource( 12 )
 nodes/b14/position = Vector2( 760, 1900 )
-nodes/b15/node = SubResource( 11 )
+nodes/b15/node = SubResource( 13 )
 nodes/b15/position = Vector2( 760, 2020 )
-nodes/b16/node = SubResource( 12 )
+nodes/b16/node = SubResource( 14 )
 nodes/b16/position = Vector2( 760, 2140 )
-nodes/b17/node = SubResource( 13 )
+nodes/b17/node = SubResource( 15 )
 nodes/b17/position = Vector2( 760, 2260 )
-nodes/b2/node = SubResource( 14 )
+nodes/b2/node = SubResource( 16 )
 nodes/b2/position = Vector2( 760, 460 )
-nodes/b3/node = SubResource( 15 )
+nodes/b3/node = SubResource( 17 )
 nodes/b3/position = Vector2( 760, 580 )
-nodes/b4/node = SubResource( 16 )
+nodes/b4/node = SubResource( 18 )
 nodes/b4/position = Vector2( 760, 700 )
-nodes/b5/node = SubResource( 17 )
+nodes/b5/node = SubResource( 19 )
 nodes/b5/position = Vector2( 760, 820 )
-nodes/b6/node = SubResource( 18 )
+nodes/b6/node = SubResource( 20 )
 nodes/b6/position = Vector2( 760, 940 )
-nodes/b7/node = SubResource( 19 )
+nodes/b7/node = SubResource( 21 )
 nodes/b7/position = Vector2( 760, 1060 )
-nodes/b8/node = SubResource( 20 )
+nodes/b8/node = SubResource( 22 )
 nodes/b8/position = Vector2( 760, 1180 )
-nodes/b9/node = SubResource( 21 )
+nodes/b9/node = SubResource( 23 )
 nodes/b9/position = Vector2( 760, 1300 )
-nodes/listening_rest/node = SubResource( 22 )
-nodes/listening_rest/position = Vector2( 720, -220 )
-nodes/output/position = Vector2( 1580, 620 )
-nodes/talking_rest/node = SubResource( 23 )
-nodes/talking_rest/position = Vector2( 680, 20 )
-nodes/walks_intro/node = SubResource( 24 )
-nodes/walks_intro/position = Vector2( 720, -340 )
-nodes/walks_room/node = SubResource( 25 )
-nodes/walks_room/position = Vector2( 620, -100 )
-node_connections = [ "output", 0, "Blend2_Lips", "Transition", 0, "walks_intro", "Transition", 1, "listening_rest", "Transition", 2, "walks_room", "Transition", 3, "talking_rest", "Blend2_Lips", 0, "Transition", "Blend2_Lips", 1, "Transition_Lips", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17" ]
+nodes/empty/node = SubResource( 24 )
+nodes/empty/position = Vector2( 1260, 160 )
+nodes/gesture1/node = SubResource( 25 )
+nodes/gesture1/position = Vector2( 1300, 280 )
+nodes/gesture2/node = SubResource( 26 )
+nodes/gesture2/position = Vector2( 1300, 400 )
+nodes/gesture3/node = SubResource( 27 )
+nodes/gesture3/position = Vector2( 1300, 520 )
+nodes/gesture4/node = SubResource( 28 )
+nodes/gesture4/position = Vector2( 1300, 640 )
+nodes/gesture5/node = SubResource( 29 )
+nodes/gesture5/position = Vector2( 1300, 760 )
+nodes/listening_rest/node = SubResource( 35 )
+nodes/listening_rest/position = Vector2( 660, -160 )
+nodes/listening_start/node = SubResource( 30 )
+nodes/listening_start/position = Vector2( 680, -280 )
+nodes/output/position = Vector2( 2580, 480 )
+nodes/talking_rest/node = SubResource( 31 )
+nodes/talking_rest/position = Vector2( 680, 80 )
+nodes/walks_intro/node = SubResource( 32 )
+nodes/walks_intro/position = Vector2( 680, -400 )
+nodes/walks_room/node = SubResource( 33 )
+nodes/walks_room/position = Vector2( 600, -40 )
+node_connections = [ "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "CutsceneShot", 0, "Transition", "CutsceneShot", 1, "CutsceneTransition", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "gesture1", "CutsceneTransition", 2, "gesture2", "CutsceneTransition", 3, "gesture3", "CutsceneTransition", 4, "gesture4", "CutsceneTransition", 5, "gesture5", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "Transition", 0, "walks_intro", "Transition", 1, "listening_start", "Transition", 2, "listening_rest", "Transition", 3, "walks_room", "Transition", 4, "talking_rest", "output", 0, "Blend2_Lips" ]
 
-[node name="male_intro" instance=ExtResource( 1 )]
+[node name="male_intro" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Male_palladium:Body" parent="Male_palladium" index="1"]
-transform = Transform( 1, -7.45058e-009, -2.98023e-008, 1.49012e-008, 1, -5.58794e-009, -8.9407e-008, -5.58794e-009, 1, 2.38419e-007, 5.96046e-008, 9.53674e-007 )
+transform = Transform( 1, -7.45058e-09, -2.98023e-08, 1.49012e-08, 1, -5.58794e-09, -8.9407e-08, -5.58794e-09, 1, 2.38419e-07, 5.96046e-08, 9.53674e-07 )
 
 [node name="Male_palladium:Male_casualsuit06" parent="Male_palladium" index="5"]
-transform = Transform( 1, -7.45058e-009, -2.98023e-008, 1.49012e-008, 1, -5.58794e-009, -8.9407e-008, -5.58794e-009, 1, 2.38419e-007, 5.96046e-008, 9.53674e-007 )
+transform = Transform( 1, -7.45058e-09, -2.98023e-08, 1.49012e-08, 1, -5.58794e-09, -8.9407e-08, -5.58794e-09, 1, 2.38419e-07, 5.96046e-08, 9.53674e-07 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 26 )
+tree_root = SubResource( 34 )
 anim_player = NodePath("../Male_palladium/AnimationPlayer")
 active = true
 parameters/Blend2_Lips/blend_amount = 1.0
-parameters/Transition/current = 1
+parameters/CutsceneShot/active = false
+parameters/CutsceneTransition/current = 0
+parameters/Transition/current = 2
 parameters/Transition_Lips/current = 0
 
 [node name="SpeechTimer" type="Timer" parent="." index="2"]

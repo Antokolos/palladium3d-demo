@@ -7,7 +7,6 @@
 [ext_resource path="res://addons/palladium/styles/default_font_b.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/palladium/styles/default_font.tres" type="DynamicFont" id=6]
 
-
 [node name="credits" type="TextureRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,13 +19,15 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="HBoxHeader" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1920.0
+margin_left = 794.0
+margin_right = 1126.0
 margin_bottom = 50.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxHeader"]
-margin_left = 794.0
-margin_right = 1126.0
+margin_right = 332.0
 margin_bottom = 50.0
 custom_fonts/font = ExtResource( 2 )
 text = "TABLET_CREDITS"
@@ -44,16 +45,9 @@ alignment = 1
 [node name="MarginStubLeft" type="Control" parent="VBoxContainer/HBoxAuthors"]
 margin_bottom = 1026.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxAuthors"]
+[node name="AuthorsTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxAuthors"]
 margin_left = 16.0
 margin_right = 1904.0
-margin_bottom = 1026.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-scroll_horizontal_enabled = false
-
-[node name="AuthorsTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxAuthors/ScrollContainer"]
-margin_right = 1888.0
 margin_bottom = 1026.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -67,4 +61,4 @@ bbcode_enabled = true
 margin_left = 1920.0
 margin_right = 1920.0
 margin_bottom = 1026.0
-[connection signal="meta_clicked" from="VBoxContainer/HBoxAuthors/ScrollContainer/AuthorsTextLabel" to="." method="_on_AuthorsTextLabel_meta_clicked"]
+[connection signal="meta_clicked" from="VBoxContainer/HBoxAuthors/AuthorsTextLabel" to="." method="_on_AuthorsTextLabel_meta_clicked"]
