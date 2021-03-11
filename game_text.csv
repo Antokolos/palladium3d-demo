@@ -127,6 +127,7 @@
 "MESSAGE_COINS_INSIDE_ADD"," (coins in cup: %d)"," (монет в чаше: %d)"
 "SETTINGS_TABLET_ORIENTATION","Tablet orientation","Ориентация планшета"
 "SETTINGS_VSYNC","Vsync","Vsync"
+"SETTINGS_JOYPAD_TYPE","Joypad type","Тип контроллера"
 "SETTINGS_FULLSCREEN","Fullscreen","Полный экран"
 "SETTINGS_INVERT_YAXIS","Invert Y Axis","Инвертировать ось Y"
 "SETTINGS_CUTOFF_ENABLED","Dynamic camera distance (can help with performance)","Динамическая дальность камеры (может улучшить производительность)"

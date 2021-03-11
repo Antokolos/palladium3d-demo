@@ -192,26 +192,6 @@ func set_quick_items_dimmed(dimmed):
 	panel_style.set("bg_color", COLOR_DIMMED if dimmed else COLOR_TRANSPARENT)
 
 func _process(delta):
-	# ----------------------------------
-	# Inventory on/off
-	if Input.is_action_just_pressed("inventory_toggle") and not conversation_manager.conversation_is_in_progress():
-		if inventory.visible:
-			inventory.visible = false
-			select_active_quick_item()
-		else:
-			inventory.visible = true
-			select_active_item()
-	# ----------------------------------
-	
-	# ----------------------------------
-	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():
-		if get_tree().paused:
-			show_tablet(false)
-		else:
-			show_tablet(true)
-	# ----------------------------------
-	
 	process_popup_messages(delta)
 
 func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
@@ -347,7 +327,7 @@ func select_active_item():
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
 				if inventory.is_visible_in_tree():
-					info_label.text = common_utils.get_action_key("active_item_toggle") + tr("ACTION_TOGGLE_QUICK_ITEM")
+					info_label.text = common_utils.get_input_control("active_item_toggle") + tr("ACTION_TOGGLE_QUICK_ITEM")
 			else:
 				items[idx].set_selected(false)
 				label_key.set("custom_colors/font_color", Color(1, 1, 1))
@@ -407,8 +387,24 @@ func _on_Inventory_visibility_changed():
 	set_quick_items_dimmed(inventory.is_visible_in_tree())
 
 func _input(event):
-	if inventory.is_visible_in_tree():
-		if event.is_action_pressed("active_item_back"):
+	if game_state.is_video_cutscene():
+		return
+	
+	if event.is_action_pressed("ui_tablet_toggle"):
+		get_tree().set_input_as_handled()
+		if get_tree().paused:
+			show_tablet(false)
+		else:
+			show_tablet(true)
+	
+	if is_in_conversation():
+		return
+	
+	if inventory.visible:
+		if event.is_action_pressed("inventory_toggle"):
+			inventory.visible = false
+			select_active_quick_item()
+		elif event.is_action_pressed("active_item_back"):
 			if not set_active_item(active_item_idx - 1):
 				shift_items_right()
 		elif event.is_action_pressed("active_item_next"):
@@ -431,8 +427,11 @@ func _input(event):
 			set_active_item(4)
 		elif event.is_action_pressed("active_item_6"):
 			set_active_item(5)
-	elif not is_in_conversation():
-		if event.is_action_pressed("active_item_back"):
+	else:
+		if event.is_action_pressed("inventory_toggle"):
+			inventory.visible = true
+			select_active_item()
+		elif event.is_action_pressed("active_item_back"):
 			set_active_quick_item(active_quick_item_idx - 1)
 		elif event.is_action_pressed("active_item_next"):
 			set_active_quick_item(active_quick_item_idx + 1)

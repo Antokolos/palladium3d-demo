@@ -42,9 +42,9 @@ func add_highlight(player_node):
 		return h
 	var attacker = get_possible_attacker()
 	if player_node.equals(attacker):
-		return "E: " + tr("ACTION_SHOOT")
+		return common_utils.get_action_input_control() + tr("ACTION_SHOOT")
 	elif attacker:
-		return "E: " + tr("ACTION_SHOOT")
+		return common_utils.get_action_input_control() + tr("ACTION_SHOOT")
 	return ""
 
 func hit(injury_rate, hit_direction_node = null):

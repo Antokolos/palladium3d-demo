@@ -142,7 +142,6 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="HBoxInfo" type="HBoxContainer" parent="VBoxContainer/MainHUD"]
-editor/display_folded = true
 margin_top = 508.0
 margin_right = 1920.0
 margin_bottom = 540.0

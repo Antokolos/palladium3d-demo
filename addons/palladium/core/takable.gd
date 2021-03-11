@@ -23,7 +23,7 @@ func use(player_node, camera_node):
 	return was_taken
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_TAKE") if is_present() else ""
+	return common_utils.get_action_input_control() + tr("ACTION_TAKE") if is_present() else ""
 
 func _on_item_taken(item_id, cnt, item_path):
 	if item_id == takable_id and item_path == get_path():

@@ -11,7 +11,7 @@ func use(player_node, camera_node):
 	destroy_web(true, true)
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_IGNITE")
+	return common_utils.get_action_input_control() + tr("ACTION_IGNITE")
 
 func destroy_web(with_effects, update_state):
 	if with_effects:

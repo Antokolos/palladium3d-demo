@@ -23,9 +23,9 @@ func use(player_node, camera_node):
 func add_highlight(player_node):
 	var zeus_body = game_state.get_usable(DB.UsableIds.ZEUS_POSTAMENT)
 	return (
-		("E: " + tr("ACTION_TAKE")
+		(common_utils.get_action_input_control() + tr("ACTION_TAKE")
 			if brick_not_taken()
-			else ("" if zeus_body.cell_phone_applied() else "E: " + tr("ACTION_PUT_GB")))
+			else ("" if zeus_body.cell_phone_applied() else common_utils.get_action_input_control() + tr("ACTION_PUT_GB")))
 	)
 
 func restore_state():

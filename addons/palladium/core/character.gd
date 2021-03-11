@@ -182,7 +182,7 @@ func add_highlight(player_node):
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_is_weapon(item):
-			return "E: " + tr("ACTION_ATTACK")
+			return common_utils.get_action_input_control() + tr("ACTION_ATTACK")
 	return ""
 
 ### Getting character's parts ###

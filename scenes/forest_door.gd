@@ -17,7 +17,7 @@ func use(player_node, camera_node):
 func add_highlight(player_node):
 	var barn_lock_path = game_state.get_usable_path(DB.UsableIds.BARN_LOCK)
 	if game_state.get_multistate_state(barn_lock_path) == BarnLock.STATE_OPENED:
-		return "E: " + tr("ACTION_OPEN")
+		return common_utils.get_action_input_control() + tr("ACTION_OPEN")
 	return ""
 
 func door_open(with_sound, update_state):

@@ -43,8 +43,8 @@ func add_highlight(player_node):
 	if Engine.editor_hint:
 		return ""
 	if is_conversation_finished_or_not_applicable(player_node):
-		return "E: " + tr("ACTION_HIDE") if all_party_members_can_hide() else ""
-	return "E: " + tr("ACTION_DISCUSS")
+		return common_utils.get_action_input_control() + tr("ACTION_HIDE") if all_party_members_can_hide() else ""
+	return common_utils.get_action_input_control() + tr("ACTION_DISCUSS")
 
 func _input(event):
 	if Engine.editor_hint:

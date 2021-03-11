@@ -26,7 +26,7 @@ func use(player_node, camera_node):
 	emit_signal("use_usable", player_node, self)
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_USE")
+	return common_utils.get_action_input_control() + tr("ACTION_USE")
 
 func remove_highlight(player_node):
 	pass

@@ -19,4 +19,4 @@ func use(player_node, camera_node):
 	animation_player.play(anim_name)
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_PUSH")
+	return common_utils.get_action_input_control() + tr("ACTION_PUSH")

@@ -331,10 +331,10 @@ func can_be_given(item):
 
 func handle_player_highlight(initiator, target):
 	if not target.is_in_party():
-		return "E: " + tr("ACTION_TALK") if conversation_manager.meeting_is_not_finished(target.name_hint, initiator.name_hint) else ""
+		return common_utils.get_action_input_control() + tr("ACTION_TALK") if conversation_manager.meeting_is_not_finished(target.name_hint, initiator.name_hint) else ""
 	var hud = get_hud()
 	var item = hud.get_active_item()
-	return "E: " + tr("ACTION_GIVE") if can_be_given(item) else "E: " + tr("ACTION_TALK")
+	return common_utils.get_action_input_control() + tr("ACTION_GIVE") if can_be_given(item) else common_utils.get_action_input_control() + tr("ACTION_TALK")
 
 func get_current_scene_data():
 	var scene_path = get_tree().current_scene.filename

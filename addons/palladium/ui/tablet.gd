@@ -21,6 +21,7 @@ onready var desktop_container_load = desktop_containers.get_node("VLoadGameConta
 onready var desktop_container_quit = desktop_containers.get_node("VQuitGameContainer")
 onready var apps = get_node("TabletPanel/TabletScreen/apps")
 onready var chat = apps.get_node("chat")
+onready var chat_window = chat.get_node('VBoxContainer/ChatWindow')
 onready var credits = apps.get_node("credits")
 onready var settings_app = apps.get_node("settings_app")
 onready var controls_app = apps.get_node("controls_app")
@@ -29,6 +30,7 @@ onready var first_save_slot_button = save_game_app.get_node("VBoxContainer/Slot1
 onready var load_game_app = apps.get_node("load_game_app")
 onready var autosave_load_button = load_game_app.get_node("VBoxContainer/Slot0/ButtonSlot0")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
+onready var joypad_type = settings_app.get_node("VBoxContainer/HJoypadType/JoypadType")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
 onready var invert_yaxis = settings_app.get_node("VBoxContainer/HInvertYAxis/InvertYAxis")
@@ -60,6 +62,18 @@ func _ready():
 		settings.TABLET_HORIZONTAL:
 			tablet_orientation.select(1)
 	_on_TabletOrientation_item_selected(settings.tablet_orientation)
+
+	joypad_type.add_item("XBOX", settings.JOYPAD_XBOX)
+	joypad_type.add_item("PS", settings.JOYPAD_PS)
+	joypad_type.add_item("NINTENDO", settings.JOYPAD_NINTENDO)
+	match (settings.joypad_type):
+		settings.JOYPAD_XBOX:
+			joypad_type.select(0)
+		settings.JOYPAD_PS:
+			joypad_type.select(1)
+		settings.JOYPAD_NINTENDO:
+			joypad_type.select(2)
+	_on_JoypadType_item_selected(settings.joypad_type)
 
 	vsync.pressed = settings.vsync
 	_on_Vsync_pressed()
@@ -239,7 +253,7 @@ func _on_ChatButton_pressed():
 	hide_everything()
 	chat.load_chat()
 	chat.show()
-	home_button.grab_focus()
+	chat_window.grab_focus()
 
 func _on_CreditsButton_pressed():
 	hide_everything()
@@ -249,7 +263,7 @@ func _on_CreditsButton_pressed():
 func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
-	vsync.grab_focus()
+	joypad_type.grab_focus()
 
 func _on_ControlsButton_pressed():
 	hide_everything()
@@ -368,6 +382,9 @@ func _on_TabletOrientation_item_selected(ID):
 	tablet_panel.update()
 	home_button.update()
 	settings.tablet_orientation = ID
+
+func _on_JoypadType_item_selected(ID):
+	settings.joypad_type = ID
 
 func _on_Vsync_pressed():
 	var vs = vsync.is_pressed() if vsync else settings.vsync

@@ -68,7 +68,7 @@ func add_highlight(player_node):
 	var h = .add_highlight(player_node)
 	if not h.empty():
 		return h
-	return ("E: " + tr("ACTION_TAKE")) if can_take_palladium() else ""
+	return (common_utils.get_action_input_control() + tr("ACTION_TAKE")) if can_take_palladium() else ""
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:

@@ -41,6 +41,10 @@ const RESOLUTION_480 = 0
 const TABLET_HORIZONTAL = 1
 const TABLET_VERTICAL = 0
 
+const JOYPAD_NINTENDO = 2
+const JOYPAD_PS = 1
+const JOYPAD_XBOX = 0
+
 enum InputType {
 	NONE = 0,
 	KEY = 1,
@@ -50,6 +54,7 @@ enum InputType {
 }
 
 var tablet_orientation = TABLET_HORIZONTAL
+var joypad_type = JOYPAD_XBOX
 var performance_stats = false
 var cutoff_enabled = false
 var shader_cache_enabled = true
@@ -101,6 +106,9 @@ func load_settings():
 
 	if ("tablet_orientation" in d):
 		tablet_orientation = int(d.tablet_orientation)
+
+	if ("joypad_type" in d):
+		joypad_type = int(d.joypad_type)
 
 	if ("performance_stats" in d):
 		performance_stats = bool(d.performance_stats)
@@ -160,6 +168,7 @@ func save_settings():
 	
 	var d = {
 		"tablet_orientation" : tablet_orientation,
+		"joypad_type" : joypad_type,
 		"performance_stats" : performance_stats,
 		"cutoff_enabled" : cutoff_enabled,
 		"shader_cache_enabled" : shader_cache_enabled,

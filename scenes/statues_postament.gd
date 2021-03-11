@@ -11,7 +11,7 @@ func use(player_node, camera_node):
 	$SoundRotation.play()
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_TURN")
+	return common_utils.get_action_input_control() + tr("ACTION_TURN")
 
 func is_state_correct():
 	var state = $AnimationTree.get("parameters/Transition/current")

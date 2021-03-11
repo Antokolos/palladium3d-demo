@@ -64,13 +64,13 @@ func switch_highlight(player_node, body, distance_to_body):
 		var custom_actions = game_state.get_custom_actions(item)
 		if custom_actions.empty() or not DB.can_execute_custom_action(item, custom_actions[0]):
 			return ""
-		return common_utils.get_action_key("action") + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
+		return common_utils.get_action_input_control() + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 
 func highlight(player_node):
 	if game_state.get_hud().is_in_conversation():
 		return ""
 	if player_node.is_hidden():
-		return "E: " + tr("ACTION_UNHIDE")
+		return common_utils.get_action_input_control() + tr("ACTION_UNHIDE")
 	var text_ray_items = ray_highlight(ray_items, player_node)
 	return ray_highlight(ray_characters, player_node) if text_ray_items.empty() else text_ray_items
 

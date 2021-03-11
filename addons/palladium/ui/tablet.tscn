@@ -119,6 +119,7 @@ size_flags_vertical = 3
 [node name="ChatWindow" type="RichTextLabel" parent="TabletPanel/TabletScreen/apps/chat/VBoxContainer"]
 margin_right = 577.0
 margin_bottom = 926.0
+focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 15
 bbcode_enabled = true
@@ -137,7 +138,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 20.0
@@ -158,12 +158,31 @@ margin_left = 117.0
 margin_right = 397.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 280, 0 )
+align = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation"]
 margin_top = 3.0
 margin_right = 113.0
 margin_bottom = 17.0
 text = "SETTINGS_TABLET_ORIENTATION"
+
+[node name="HJoypadType" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_right = 577.0
+margin_bottom = 20.0
+custom_constants/separation = 20
+
+[node name="JoypadType" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
+margin_left = 117.0
+margin_right = 397.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 280, 0 )
+align = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
+margin_top = 3.0
+margin_right = 113.0
+margin_bottom = 17.0
+text = "SETTINGS_JOYPAD_TYPE"
 
 [node name="HVsync" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 210.0
@@ -1110,6 +1129,7 @@ texture_pressed = ExtResource( 28 )
 texture_hover = ExtResource( 29 )
 [connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType/JoypadType" to="." method="_on_JoypadType_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HInvertYAxis/InvertYAxis" to="." method="_on_InvertYAxis_pressed"]

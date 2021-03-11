@@ -42,51 +42,91 @@ func toggle_pause_menu():
 func joy_button_to_string(button_index):
 	match button_index:
 		JOY_XBOX_A, JOY_SONY_X, JOY_DS_B:
-			return "XBOX A | PS X | Nintendo B"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_XBOX:
+					return "[A]"
+				PLDSettings.JOYPAD_PS:
+					return "[X]"
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[B]"
+				_:
+					return "[?]"
 		JOY_XBOX_B, JOY_SONY_CIRCLE, JOY_DS_A:
-			return "XBOX B | PS circle | Nintendo A"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_XBOX:
+					return "[B]"
+				PLDSettings.JOYPAD_PS:
+					return "[Circle]"
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[A]"
+				_:
+					return "[?]"
 		JOY_XBOX_X, JOY_SONY_SQUARE, JOY_DS_Y:
-			return "XBOX X | PS square | Nintendo Y"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_XBOX:
+					return "[X]"
+				PLDSettings.JOYPAD_PS:
+					return "[Square]"
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[Y]"
+				_:
+					return "[?]"
 		JOY_XBOX_Y, JOY_SONY_TRIANGLE, JOY_DS_X:
-			return "XBOX Y | PS triangle | Nintendo X"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_XBOX:
+					return "[Y]"
+				PLDSettings.JOYPAD_PS:
+					return "[Triangle]"
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[X]"
+				_:
+					return "[?]"
 		JOY_L:
-			return "Joypad Left Shoulder Button"
+			return "[LS]" # "Joypad Left Shoulder Button"
 		JOY_R:
-			return "Joypad Right Shoulder Button"
+			return "[RS]" # "Joypad Right Shoulder Button"
 		JOY_L2:
-			return "Joypad Left Trigger"
+			return "[LT]" # "Joypad Left Trigger"
 		JOY_R2:
-			return "Joypad Right Trigger"
+			return "[RT]" # "Joypad Right Trigger"
 		JOY_L3:
-			return "Joypad Left Stick Click"
+			return "[LS Click]" # "Joypad Left Stick Click"
 		JOY_R3:
-			return "Joypad Right Stick Click"
+			return "[RS Click]" # "Joypad Right Stick Click"
 		JOY_SELECT:
-			return "Joypad Button Select, Nintendo -"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[-]"
+				_:
+					return "[Select]"
 		JOY_START:
-			return "Joypad Button Start, Nintendo +"
+			match settings.joypad_type:
+				PLDSettings.JOYPAD_NINTENDO:
+					return "[+]"
+				_:
+					return "[Start]"
 		JOY_DPAD_UP:
-			return "Joypad DPad Up"
+			return "DPad Up"
 		JOY_DPAD_DOWN:
-			return "Joypad DPad Down"
+			return "DPad Down"
 		JOY_DPAD_LEFT:
-			return "Joypad DPad Left"
+			return "DPad Left"
 		JOY_DPAD_RIGHT:
-			return "Joypad DPad Right"
+			return "DPad Right"
 		_:
-			return "Joypad Button"
+			return "[?]"
 
 func joy_axis_to_string(axis, axis_value):
 	match axis:
 		JOY_AXIS_0:  # Joypad Left Stick Horizontal Axis
-			return "Left Stick " + ("Left" if axis_value < 0 else "Right")
+			return "[LS " + ("Left]" if axis_value < 0 else "Right]")
 		JOY_AXIS_1:  # Joypad Left Stick Vertical Axis
-			return "Left Stick " + ("Up" if axis_value < 0 else "Down")
+			return "[LS " + ("Up]" if axis_value < 0 else "Down]")
 		JOY_AXIS_2:  # Joypad Right Stick Horizontal Axis
-			return "Right Stick " + ("Left" if axis_value < 0 else "Right")
+			return "[RS " + ("Left]" if axis_value < 0 else "Right]")
 		JOY_AXIS_3:  # Joypad Right Stick Vertical Axis
-			return "Right Stick " + ("Up" if axis_value < 0 else "Down")
-	return "Stick " + ("-" if axis_value < 0 else "+")
+			return "[RS " + ("Up]" if axis_value < 0 else "Down]")
+	return "[Stick " + ("-]" if axis_value < 0 else "+]")
 
 func mouse_button_to_string(button_index):
 	match button_index:
@@ -143,12 +183,23 @@ func shadow_casting_enable(root, enable):
 			ch.set_cast_shadows_setting(s)
 		shadow_casting_enable(ch, enable)
 
-func get_action_key(act):
+func get_input_control(act):
 	var list = InputMap.get_action_list(act)
+	var has_joypads = has_joypads()
 	for action in list:
-		if action is InputEventKey:
+		if not has_joypads and action is InputEventKey:
 			return action.as_text() + ": "
+		elif has_joypads and action is InputEventJoypadButton:
+			var button_index = action.get_button_index()
+			return joy_button_to_string(button_index) + ": "
+		elif has_joypads and action is InputEventJoypadMotion:
+			var axis = action.get_axis()
+			var axis_value = action.get_axis_value()
+			return joy_axis_to_string(axis, axis_value) + ": "
 	return ""
+
+func get_action_input_control():
+	return get_input_control("action")
 
 func is_event_cancel_action(event):
 	var is_key = event is InputEventKey

@@ -61,7 +61,7 @@ func use(player_node, camera_node):
 		open()
 
 func add_highlight(player_node):
-	return "E: " + tr("ACTION_CLOSE") if is_opened() else "E: " + tr("ACTION_OPEN")
+	return common_utils.get_action_input_control() + tr("ACTION_CLOSE") if is_opened() else common_utils.get_action_input_control() + tr("ACTION_OPEN")
 
 func restore_state():
 	var state = game_state.get_container_state(get_path())

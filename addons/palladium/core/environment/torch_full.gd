@@ -40,7 +40,7 @@ func use(player_node, camera_node):
 	enable(active, true)
 
 func add_highlight(player_node):
-	return ("E: " + tr("ACTION_EXTINGUISH") if is_active() else "E: " + tr("ACTION_IGNITE"))
+	return (common_utils.get_action_input_control() + tr("ACTION_EXTINGUISH") if is_active() else common_utils.get_action_input_control() + tr("ACTION_IGNITE"))
 
 func connect_signals(target):
 	connect("state_changed", target, "_on_torch_state_changed")

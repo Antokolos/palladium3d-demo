@@ -43,7 +43,7 @@ func open_preview(item, hud, flashlight):
 	flashlight_visible = flashlight.is_visible_in_tree()
 	flashlight.show()
 	var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
-	label_close_node.text = common_utils.get_action_key("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
+	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
 	var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
 	for ch in custom_actions_node.get_children():
 		ch.queue_free()
@@ -52,7 +52,7 @@ func open_preview(item, hud, flashlight):
 		if not DB.can_execute_custom_action(item, act):
 			continue
 		var ch = label_close_node.duplicate(0)
-		ch.text = common_utils.get_action_key(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
+		ch.text = common_utils.get_input_control(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
 		custom_actions_node.add_child(ch)
 	hud.pause_game(true, false)
 	hud.show_game_ui(false)
