@@ -71,8 +71,11 @@ const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_EXAMINE" : true,
 	"MESSAGE_CONTROLS_FLASHLIGHT" : true,
 	"MESSAGE_CONTROLS_CROUCH" : true,
+	"MESSAGE_CONTROLS_JUMP" : true,
 	"MESSAGE_CONTROLS_DIALOGUE_1" : true,
-	"MESSAGE_CONTROLS_DIALOGUE_2" : true
+	"MESSAGE_CONTROLS_DIALOGUE_2" : true,
+	"MESSAGE_CONTROLS_TOGGLE_ITEM_1" : true,
+	"MESSAGE_CONTROLS_TOGGLE_ITEM_2" : true
 }
 
 var characters_transition_data = {}
@@ -466,7 +469,7 @@ func take(item_id, count = 1, item_path = null):
 			return
 	inventory.append({ "item_id" : item_id, "count" : count })
 	emit_signal("item_taken", item_id, count, item_path)
-	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", ["TAB"])
+	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", [common_utils.get_input_control("inventory_toggle", false)])
 
 func remove(item_id, count = 1):
 	var idx = 0

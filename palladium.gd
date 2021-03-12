@@ -43,7 +43,7 @@ func do_init(is_loaded):
 			player_female.deactivate()
 
 func _on_shader_cache_processed():
-	game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_FLASHLIGHT", ["F"])
+	game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_FLASHLIGHT", [common_utils.get_input_control("flashlight", false)])
 
 func _unhandled_input(event):
 	if not player_toggle_enable:

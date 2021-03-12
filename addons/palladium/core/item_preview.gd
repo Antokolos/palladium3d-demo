@@ -114,8 +114,9 @@ func close_preview():
 		hud.actions_panel.hide()
 		hud.show_game_ui(true)
 		if game_state.get_quick_items_count() > 1:
-			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", ["N", "B"])
-			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", ["1", "6"])
+			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", [common_utils.get_input_control("active_item_next", false), common_utils.get_input_control("active_item_back", false)])
+			if not common_utils.has_joypads():
+				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", [common_utils.get_input_control("active_item_1", false), common_utils.get_input_control("active_item_6", false)])
 	custom_actions.clear()
 	game_state.get_hud().pause_game(false, false)
 	if not flashlight_visible:

@@ -252,9 +252,13 @@ func insert_ui_quick_item(pos):
 func _on_shader_cache_processed():
 	if cutscene_mode:
 		return
-	queue_popup_message("MESSAGE_CONTROLS_MOVE", ["WASD", "Shift"])
+	var wasd = common_utils.get_input_control("movement_forward", false) \
+		+ ", " + common_utils.get_input_control("movement_left", false) \
+		+ ", " + common_utils.get_input_control("movement_backward", false) \
+		+ ", " + common_utils.get_input_control("movement_right", false)
+	queue_popup_message("MESSAGE_CONTROLS_MOVE", [wasd, common_utils.get_input_control("movement_sprint", false)])
 	if game_state.get_quick_items_count() > 0:
-		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", ["Q"])
+		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", [common_utils.get_input_control("item_preview_toggle", false)])
 
 func _on_item_taken(item_id, cnt, item_path):
 	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(DB.get_item_name(item_id))], true, MESSAGE_TIMEOUT_ITEM_S)
@@ -430,6 +434,8 @@ func _input(event):
 	else:
 		if event.is_action_pressed("inventory_toggle"):
 			inventory.visible = true
+			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_TOGGLE_ITEM_1", [common_utils.get_input_control("active_item_toggle", false)])
+			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_TOGGLE_ITEM_2")
 			select_active_item()
 		elif event.is_action_pressed("active_item_back"):
 			set_active_quick_item(active_quick_item_idx - 1)

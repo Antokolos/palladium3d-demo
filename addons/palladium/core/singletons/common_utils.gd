@@ -183,19 +183,20 @@ func shadow_casting_enable(root, enable):
 			ch.set_cast_shadows_setting(s)
 		shadow_casting_enable(ch, enable)
 
-func get_input_control(act):
+func get_input_control(act, with_colon = true):
 	var list = InputMap.get_action_list(act)
 	var has_joypads = has_joypads()
+	var trail = ": " if with_colon else ""
 	for action in list:
 		if not has_joypads and action is InputEventKey:
-			return action.as_text() + ": "
+			return action.as_text() + trail
 		elif has_joypads and action is InputEventJoypadButton:
 			var button_index = action.get_button_index()
-			return joy_button_to_string(button_index) + ": "
+			return joy_button_to_string(button_index) + trail
 		elif has_joypads and action is InputEventJoypadMotion:
 			var axis = action.get_axis()
 			var axis_value = action.get_axis_value()
-			return joy_axis_to_string(axis, axis_value) + ": "
+			return joy_axis_to_string(axis, axis_value) + trail
 	return ""
 
 func get_action_input_control():

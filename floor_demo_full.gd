@@ -379,7 +379,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 		"010-2-1_ChestMoved":
 			bandit.sit_down()
 			female.sit_down()
-			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_CROUCH", ["C"])
+			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_CROUCH", [common_utils.get_input_control("crouch", false)])
 		"010-1-1_Statuettes", "015-1_EridaTrap", "021-1_EridaTrapMax":
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_1")
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_2")
