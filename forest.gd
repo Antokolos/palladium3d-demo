@@ -136,13 +136,13 @@ func _on_AreaGrass_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
 		body.set_sound_walk(CHARS.SoundId.SOUND_WALK_SAND)
 
-func _on_StumpArea_body_entered(body):
-	if body.is_in_group("party") and not game_state.is_loading():
-		game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_JUMP", [common_utils.get_input_control("movement_jump", false)])
-
 func _on_StumpArea_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
 		conversation_manager.arrange_meeting(player, player, player_female)
+
+func _on_RockArea_body_entered(body):
+	if body.is_in_group("party") and not game_state.is_loading():
+		game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_JUMP", [common_utils.get_input_control("movement_jump", false)])
 
 func _on_RockArea_body_exited(body):
 	if game_state.has_item(DB.TakableIds.ENVELOPE) or game_state.has_item(DB.TakableIds.BARN_LOCK_KEY):

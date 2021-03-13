@@ -82,9 +82,9 @@ func joy_button_to_string(button_index):
 				_:
 					return "[?]"
 		JOY_L:
-			return "[LS]" # "Joypad Left Shoulder Button"
+			return "[LB]" # "Joypad Left Shoulder Button"
 		JOY_R:
-			return "[RS]" # "Joypad Right Shoulder Button"
+			return "[RB]" # "Joypad Right Shoulder Button"
 		JOY_L2:
 			return "[LT]" # "Joypad Left Trigger"
 		JOY_R2:
