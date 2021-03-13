@@ -295,7 +295,7 @@ func story_proceed(player):
 	if not can_continue and not can_choose and not has_voiceover:
 		$AutocloseTimer.start()
 	conversation.visible = settings.need_subtitles() or can_choose or not has_voiceover
-	display_choices(conversation, choices)
+	display_choices(conversation, choices, can_choose)
 
 func is_finalizing():
 	return is_finalizing
@@ -308,11 +308,12 @@ func clear_choices(conversation):
 		c.text = ""
 		i += 1
 
-func display_choices(conversation, choices):
+func display_choices(conversation, choices, can_choose):
 	var choice_nodes = conversation.get_node("VBox/VBoxChoices").get_children()
 	var i = 1
 	for c in choice_nodes:
-		c.text = str(i) + ". " + choices[i - 1] if i <= choices.size() else ""
+		var ic = common_utils.get_input_control("dialogue_option_%d" % i, false) if can_choose else common_utils.get_input_control("dialogue_next", false)
+		c.text = (str(i) if ic.empty() else ic) + ". " + choices[i - 1] if i <= choices.size() else ""
 		i += 1
 	max_choice = choices.size()
 

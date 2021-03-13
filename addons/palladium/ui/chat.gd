@@ -11,7 +11,7 @@ func load_chat():
 	story_node.init_variables()
 	chat_window.bbcode_text = story_node.current_log(TranslationServer.get_locale())
 	if story_node.chat_driven() and story_node.can_choose():
-		display_choices()
+		display_choices(true)
 	continue_story(0)
 
 func _input(event):
@@ -51,7 +51,7 @@ func story_proceed(choice_response):
 		# TODO: Create a phrase timer so that next phrase appear after delay, simulating real typing
 		continue_story(0)
 	elif story_node.can_choose():
-		display_choices()
+		display_choices(true)
 	else:
 		story_node.increase_visit_count(0)
 
@@ -60,14 +60,15 @@ func story_choose(idx):
 		story_node.choose(idx)
 		story_proceed(true)
 
-func display_choices():
+func display_choices(can_choose):
 	in_choice = true
 	var ch = story_node.get_choices(TranslationServer.get_locale())
 	var i = 1
 	info_label.text = ""
 	for c in ch:
+		var ic = common_utils.get_input_control("dialogue_option_%d" % i, false) if can_choose else common_utils.get_input_control("dialogue_next", false)
 		chat_window.push_meta(i - 1)
-		chat_window.append_bbcode("[right]%s [%d]" % [c, i] + "[/right]")
+		chat_window.append_bbcode("[right]%s [%s]" % [c, (str(i) if ic.empty() else ic)] + "[/right]")
 		chat_window.pop()
 		i += 1
 	max_choice = i - 1
