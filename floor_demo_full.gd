@@ -350,7 +350,8 @@ func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 						get_door("door_0").close()
 						get_node("Apata_room/ceiling_moving_1").ceiling_sound_play()
 					player.remove_item_from_hand()
-					player.set_target_node(get_node("PositionApata2"))
+					if conversation_manager.conversation_is_not_finished("009_ApataTrap"):
+						player.set_target_node(get_node("PositionApata2"))
 					return
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
@@ -371,11 +372,18 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 		"009_ApataTrap":
 			get_door("door_0").close() # Close the door if it is not already closed
 			get_node("Apata_room/ceiling_moving_1").activate()
-			female.set_target_node(get_node("PositionApata3"))
+			var fsp = get_node("FemaleSavePosition")
+			female.set_target_node(fsp)
 			if game_state.story_vars.apata_chest_rigid > 0:
-				player.set_target_node(get_node("PlayerIntermediatePosition"))
+				female.teleport(fsp)
+				player.teleport(get_node("PlayerSavePosition"))
 				player.leave_party()
-				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
+				bandit.teleport(get_node("BanditSavePosition"))
+				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition2"))
+				bandit.play_cutscene(BanditModel.BANDIT_CUTSCENE_PUSHES_CHEST_START)
+				player.play_cutscene(MaleModel.PLAYER_CUTSCENE_PUSHES_CHEST)
+				var chest = get_node("Apata_room/apata_chest")
+				chest.do_push()
 		"010-2-1_ChestMoved":
 			bandit.sit_down()
 			female.sit_down()
@@ -413,26 +421,6 @@ func _on_arrived_to(player_node, target_node):
 	if tid == oid and not player_node.is_in_party():
 		player_node.set_hidden(true)
 		player_node.deactivate()
-	if game_state.story_vars.apata_chest_rigid <= 0:
-		return
-	var player = game_state.get_character(CHARS.PLAYER_NAME_HINT)
-	var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
-	var piid = get_node("PlayerIntermediatePosition").get_instance_id()
-	var pa3id = get_node("PositionApata3").get_instance_id()
-	if tid == piid and player.equals(player_node):
-		player.set_target_node(get_node("PlayerSavePosition"))
-		return
-	elif tid == pa3id and female.equals(player_node):
-		female.set_target_node(get_node("FemaleSavePosition"))
-		return
-	var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
-	var pid = get_node("PlayerSavePosition").get_instance_id()
-	var bid = get_node("BanditSavePosition").get_instance_id()
-	if (tid == pid or tid == bid) and player.is_rest_state() and bandit.is_rest_state():
-		bandit.play_cutscene(BanditModel.BANDIT_CUTSCENE_PUSHES_CHEST_START)
-		player.play_cutscene(MaleModel.PLAYER_CUTSCENE_PUSHES_CHEST)
-		var chest = get_node("Apata_room/apata_chest")
-		chest.do_push()
 
 func restore_state():
 	if game_state.has_item(DB.TakableIds.ATHENA) or game_state.get_activatable_state_by_id(DB.ActivatableIds.LAST_TRAP_FLOOR) == PLDGameState.ActivatableState.ACTIVATED:

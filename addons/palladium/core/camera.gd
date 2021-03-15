@@ -3,6 +3,7 @@ class_name PLDCamera
 
 onready var flashlight = get_node("Flashlight") if has_node("Flashlight") else null
 onready var flashlight_spot = flashlight.get_node("Flashlight") if flashlight else null
+onready var cutscene_flashlight = get_node("CutsceneFlashlight") if has_node("CutsceneFlashlight") else null
 onready var use_point = get_node("Gun_Fire_Points/use_point") if has_node("Gun_Fire_Points/use_point") else null
 
 onready var env_norm = preload("res://addons/palladium/env_norm.tres")
@@ -26,6 +27,13 @@ func rebuild_exceptions(player_node):
 func enable_use(enable):
 	if use_point:
 		use_point.enable(enable)
+
+func show_cutscene_flashlight(enable):
+	cutscene_flashlight.visible = enable
+	if enable:
+		flashlight.hide()
+	elif flashlight and game_state.story_vars.flashlight_on:
+		flashlight.show()
 
 func get_use_distance():
 	return use_point.get_use_distance() if use_point else 0
@@ -127,7 +135,9 @@ func restore_state():
 func _process(delta):
 	# ----------------------------------
 	# Turning the flashlight on/off
-	if flashlight and Input.is_action_just_pressed("flashlight"):
+	if flashlight \
+		and not cutscene_flashlight.visible \
+		and Input.is_action_just_pressed("flashlight"):
 		if flashlight.is_visible_in_tree():
 			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
@@ -162,7 +172,7 @@ func _input(event):
 		if not item:
 			return
 		hud.main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
-		item_preview.open_preview(item, hud, flashlight)
+		item_preview.open_preview(item, hud, self)
 	elif use_point and item_use and event.is_action_pressed("action"):
 		use_point.action(player, self)
 		item_use.action(player, self)

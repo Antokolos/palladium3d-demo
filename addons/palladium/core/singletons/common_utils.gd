@@ -16,9 +16,13 @@ func has_joypads():
 	return Input.get_connected_joypads().size() > 0
 
 func _on_joy_connection_changed(device_id, is_connected):
-	if not has_joypads() and not get_tree().paused:
-		# When the controller is unplugged during gameplay, automatically pause the game
-		toggle_pause_menu()
+	if not is_connected:
+		if not get_tree().paused:
+			# When the controller is unplugged during gameplay, automatically pause the game
+			toggle_pause_menu()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		var viewport = game_state.get_viewport()
+		viewport.warp_mouse(Vector2(OS.window_size.x / 2, OS.window_size.y / 2))
 
 func show_mouse_cursor_if_needed(show, force = false):
 	if show:

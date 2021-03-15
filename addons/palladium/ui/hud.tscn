@@ -169,14 +169,15 @@ color = Color( 0, 0, 0, 0.501961 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 4
-custom_constants/separation = 30
+size_flags_vertical = 4
 alignment = 1
 
 [node name="VBoxText" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
+editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 4
 alignment = 1
 
 [node name="HBoxTextPrev" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox/VBoxText"]
@@ -210,6 +211,7 @@ valign = 1
 autowrap = true
 
 [node name="HBoxText" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox/VBoxText"]
+editor/display_folded = true
 margin_top = 28.0
 margin_right = 1920.0
 margin_bottom = 64.0
@@ -238,50 +240,52 @@ text = "ConversationText"
 valign = 1
 autowrap = true
 
-[node name="VBoxChoices" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
-editor/display_folded = true
-margin_left = 913.0
-margin_top = 94.0
-margin_right = 1007.0
-margin_bottom = 270.0
+[node name="HBoxChoices" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox"]
+margin_top = 68.0
+margin_right = 1920.0
+margin_bottom = 259.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VBoxLeft" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox/HBoxChoices"]
+margin_right = 637.0
+margin_bottom = 191.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
 
-[node name="Choice1" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
-margin_right = 94.0
-margin_bottom = 32.0
-text = "Choice1"
-
-[node name="Choice2" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
-margin_top = 36.0
-margin_right = 94.0
-margin_bottom = 68.0
-text = "Choice2"
-
-[node name="Choice3" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
-margin_top = 72.0
-margin_right = 94.0
-margin_bottom = 104.0
-text = "Choice3"
-
-[node name="Choice4" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
-margin_top = 108.0
-margin_right = 94.0
-margin_bottom = 140.0
-text = "Choice4"
-
-[node name="Choice5" type="Label" parent="VBoxContainer/Conversation/VBox/VBoxChoices"]
-margin_top = 144.0
-margin_right = 94.0
-margin_bottom = 176.0
-text = "Choice5"
-
-[node name="VBoxFooter" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox"]
-margin_top = 300.0
-margin_right = 1920.0
-margin_bottom = 300.0
+[node name="VBoxChoices" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox/HBoxChoices"]
+margin_left = 641.0
+margin_right = 1278.0
+margin_bottom = 191.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 2
+
+[node name="ChoicesText" type="RichTextLabel" parent="VBoxContainer/Conversation/VBox/HBoxChoices/VBoxChoices"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
+scroll_active = false
+
+[node name="VBoxRight" type="VBoxContainer" parent="VBoxContainer/Conversation/VBox/HBoxChoices"]
+margin_left = 1282.0
+margin_right = 1920.0
+margin_bottom = 191.0
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="HBoxFooter" type="HBoxContainer" parent="VBoxContainer/Conversation/VBox"]
+margin_left = 957.0
+margin_top = 263.0
+margin_right = 962.0
+margin_bottom = 268.0
+rect_min_size = Vector2( 5, 5 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
 
 [node name="Inventory" type="ColorRect" parent="VBoxContainer"]
 visible = false

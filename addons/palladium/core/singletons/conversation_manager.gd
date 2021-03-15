@@ -1,6 +1,8 @@
 extends Node
 class_name PLDConversationManager
 
+const WIDTH_ADD = 2
+const HEIGHT_ADD = 60
 const MEETING_CONVERSATION_PREFIX = "Meeting_"
 const MEETING_CONVERSATION_TEMPLATE = "%s%%s" % MEETING_CONVERSATION_PREFIX
 
@@ -8,6 +10,8 @@ signal meeting_started(player, target, initiator)
 signal conversation_started(player, conversation_name, target, initiator)
 signal meeting_finished(player, target, initiator)
 signal conversation_finished(player, conversation_name, target, initiator, last_result)
+
+onready var autoclose_timer = $AutocloseTimer
 
 var conversation_name
 var target
@@ -63,8 +67,8 @@ func stop_conversation(player):
 	if not conversation_is_in_progress():
 		# Already stopped
 		return
-	if not $AutocloseTimer.is_stopped():
-		$AutocloseTimer.stop()
+	if not autoclose_timer.is_stopped():
+		autoclose_timer.stop()
 	story_node.increase_visit_count(last_result)
 	var conversation_name_prev = conversation_name
 	var target_prev = target
@@ -293,7 +297,11 @@ func story_proceed(player):
 	var can_choose = not is_finalizing and story_node.can_choose()
 	var choices = story_node.get_choices(TranslationServer.get_locale()) if can_choose else ([tr("CONVERSATION_CONTINUE")] if can_continue else [tr("CONVERSATION_END")])
 	if not can_continue and not can_choose and not has_voiceover:
-		$AutocloseTimer.start()
+		if autoclose_timer.is_stopped():
+			autoclose_timer.start()
+		else:
+			stop_conversation(player)
+			return
 	conversation.visible = settings.need_subtitles() or can_choose or not has_voiceover
 	display_choices(conversation, choices, can_choose)
 
@@ -301,21 +309,33 @@ func is_finalizing():
 	return is_finalizing
 
 func clear_choices(conversation):
-	var ch = story_node.get_choices(TranslationServer.get_locale())
-	var choices = conversation.get_node("VBox/VBoxChoices").get_children()
-	var i = 1
-	for c in choices:
-		c.text = ""
-		i += 1
+	var choices_text = conversation.get_node("VBox/HBoxChoices/VBoxChoices/ChoicesText")
+	choices_text.bbcode_text = ""
+	choices_text.visible = false
 
 func display_choices(conversation, choices, can_choose):
-	var choice_nodes = conversation.get_node("VBox/VBoxChoices").get_children()
-	var i = 1
-	for c in choice_nodes:
-		var ic = common_utils.get_input_control("dialogue_option_%d" % i, false) if can_choose else common_utils.get_input_control("dialogue_next", false)
-		c.text = (str(i) if ic.empty() else ic) + ". " + choices[i - 1] if i <= choices.size() else ""
-		i += 1
+	var choices_text = conversation.get_node("VBox/HBoxChoices/VBoxChoices/ChoicesText")
+	var choices_font = choices_text.get_font("normal_font")
 	max_choice = choices.size()
+	choices_text.bbcode_text = ""
+	choices_text.visible = (max_choice > 0)
+	if max_choice == 0:
+		return
+	var max_width = 0
+	var choices_height = 0
+	choices_text.bbcode_text += "[table=1]"
+	for i in range(0, max_choice):
+		var cns = str(i + 1)
+		var ic = common_utils.get_input_control("dialogue_option_%s" % cns, false) if can_choose else common_utils.get_input_control("dialogue_next", false)
+		var ls = choices_font.get_string_size((cns if ic.empty() else ic) + ": " + choices[i])
+		if ls.x > max_width:
+			max_width = ls.x
+		choices_height = choices_height + ls.y
+		choices_text.bbcode_text += "[cell][color=red]" + (cns if ic.empty() else ic) + ":[/color] " + choices[i] + "[/cell]"
+	choices_text.bbcode_text += "[/table]"
+	max_width += WIDTH_ADD
+	choices_height += HEIGHT_ADD
+	choices_text.rect_min_size = Vector2(max_width, choices_height)
 
 func get_current_actor():
 	return game_state.get_character(current_actor_name) if current_actor_name else null

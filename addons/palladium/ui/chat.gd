@@ -68,7 +68,7 @@ func display_choices(can_choose):
 	for c in ch:
 		var ic = common_utils.get_input_control("dialogue_option_%d" % i, false) if can_choose else common_utils.get_input_control("dialogue_next", false)
 		chat_window.push_meta(i - 1)
-		chat_window.append_bbcode("[right]%s [%s]" % [c, (str(i) if ic.empty() else ic)] + "[/right]")
+		chat_window.append_bbcode("[right][color=red]%s:[/color] %s" % [(str(i) if ic.empty() else ic), c] + "[/right]")
 		chat_window.pop()
 		i += 1
 	max_choice = i - 1

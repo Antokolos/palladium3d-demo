@@ -6,8 +6,7 @@ const KEY_LOOK_SPEED_FACTOR = 30
 onready var item_holder_node = get_node("item_holder")
 
 var hud
-var flashlight
-var flashlight_visible
+var camera
 var custom_actions = []
 var inst
 var item
@@ -24,12 +23,12 @@ func coord_div(vec1, vec2):
 func is_opened():
 	return item_holder_node.get_child_count() > 0
 
-func open_preview(item, hud, flashlight):
+func open_preview(item, hud, camera):
 	if not item:
 		return
 	self.item = item
 	self.hud = hud
-	self.flashlight = flashlight
+	self.camera = camera
 	self.inst = item.get_model_instance()
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
@@ -40,8 +39,7 @@ func open_preview(item, hud, flashlight):
 	inst.scale_object_local(Vector3(vm, vm, vm))
 	hud.inventory.visible = false
 	#hud.dimmer.visible = true
-	flashlight_visible = flashlight.is_visible_in_tree()
-	flashlight.show()
+	camera.show_cutscene_flashlight(true)
 	var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
 	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
 	var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
@@ -119,5 +117,4 @@ func close_preview():
 				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", [common_utils.get_input_control("active_item_1", false), common_utils.get_input_control("active_item_6", false)])
 	custom_actions.clear()
 	game_state.get_hud().pause_game(false, false)
-	if not flashlight_visible:
-		flashlight.hide()
+	camera.show_cutscene_flashlight(false)
