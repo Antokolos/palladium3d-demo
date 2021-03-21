@@ -185,6 +185,8 @@ func set_surge(player, enable):
 func set_underwater(player, enable):
 	if player and not player.equals(game_state.get_player()):
 		return
+	if enable:
+		queue_popup_message("MESSAGE_CONTROLS_SWIM_UP", [common_utils.get_input_control("movement_jump")])
 	underwater_effect.visible = enable
 
 func set_quick_items_dimmed(dimmed):
@@ -396,10 +398,9 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_tablet_toggle"):
 		get_tree().set_input_as_handled()
-		if get_tree().paused:
-			show_tablet(false)
-		else:
+		if not get_tree().paused:
 			show_tablet(true)
+			# Tablet hiding via show_tablet(false) is done in tablet.gd
 	
 	if is_in_conversation():
 		return

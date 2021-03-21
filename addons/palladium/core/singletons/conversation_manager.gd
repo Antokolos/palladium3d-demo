@@ -12,6 +12,7 @@ signal meeting_finished(player, target, initiator)
 signal conversation_finished(player, conversation_name, target, initiator, last_result)
 
 onready var autoclose_timer = $AutocloseTimer
+onready var pending_conversation_timer = $PendingConversationTimer
 
 var conversation_name
 var target
@@ -24,6 +25,7 @@ var previous_actor_name = null
 var last_result : int = 0
 
 var story_state_cache = {}
+var pending_area_conversations = []
 
 func _ready():
 	conversation_name = null
@@ -43,6 +45,20 @@ func change_stretch_ratio(conversation):
 func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
+		for conversation in pending_area_conversations:
+			if conversation_name == conversation.conversation_name:
+				return
+		pending_area_conversations.push_back(
+			{
+				"player" : player,
+				"conversation_name" : conversation_name,
+				"target" : null,
+				"initiator" : null,
+				"is_cutscene" : true,
+				"cutscene_node" : cutscene_node,
+				"repeatable" : repeatable
+			}
+		)
 		return
 	if repeatable or conversation_is_not_finished(conversation_name):
 		player.rest()
@@ -57,15 +73,46 @@ func start_area_conversation_with_companion(conversations_map, repeatable = fals
 func start_area_conversation(conversation_name, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
+		for conversation in pending_area_conversations:
+			if conversation_name == conversation.conversation_name:
+				return
+		pending_area_conversations.push_back(
+			{
+				"player" : player,
+				"conversation_name" : conversation_name,
+				"target" : null,
+				"initiator" : null,
+				"is_cutscene" : false,
+				"cutscene_node" : null,
+				"repeatable" : repeatable
+			}
+		)
 		return false
 	if repeatable or conversation_is_not_finished(conversation_name):
 		start_conversation(player, conversation_name, null, null, false, null, repeatable)
 		return true
 	return false
 
+func start_pending_conversation_if_any():
+	if pending_area_conversations.empty():
+		return
+	pending_conversation_timer.start()
+	yield(pending_conversation_timer, "timeout")
+	var c = pending_area_conversations.pop_front()
+	start_conversation(
+		c.player,
+		c.conversation_name,
+		c.target,
+		c.initiator,
+		c.is_cutscene,
+		c.cutscene_node,
+		c.repeatable
+	)
+
 func stop_conversation(player):
 	if not conversation_is_in_progress():
 		# Already stopped
+		start_pending_conversation_if_any()
 		return
 	if not autoclose_timer.is_stopped():
 		autoclose_timer.stop()
@@ -86,6 +133,7 @@ func stop_conversation(player):
 		emit_signal("meeting_finished", player, target_prev, initiator_prev)
 	player.get_cam().enable_use(true)
 	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev, last_result)
+	start_pending_conversation_if_any()
 
 func conversation_is_in_progress(conversation_name = null, target_name_hint = null):
 	if not conversation_name:

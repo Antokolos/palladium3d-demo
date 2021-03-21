@@ -7,6 +7,9 @@ const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "�
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
+const PHRASE_PAUSE_TIMER_SCALE_COEF = 1.1
+
+onready var phrase_pause_timer = $PhrasePauseTimer
 
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
@@ -108,6 +111,8 @@ func _on_AudioStreamPlayer_finished():
 		if ch.size() == 1:
 			$ShortPhraseTimer.start()
 	elif story_node.can_continue():
+		phrase_pause_timer.start(randf() * PHRASE_PAUSE_TIMER_SCALE_COEF)
+		yield(phrase_pause_timer, "timeout")
 		conversation_manager.story_proceed(player)
 	else:
 		conversation_manager.stop_conversation(player)

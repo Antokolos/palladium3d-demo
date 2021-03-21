@@ -72,6 +72,7 @@ const MESSAGES_DEFAULT = {
 	"MESSAGE_CONTROLS_FLASHLIGHT" : true,
 	"MESSAGE_CONTROLS_CROUCH" : true,
 	"MESSAGE_CONTROLS_JUMP" : true,
+	"MESSAGE_CONTROLS_SWIM_UP" : true,
 	"MESSAGE_CONTROLS_DIALOGUE_1" : true,
 	"MESSAGE_CONTROLS_DIALOGUE_2" : true,
 	"MESSAGE_CONTROLS_TOGGLE_ITEM_1" : true,
@@ -324,20 +325,16 @@ func shader_cache_processed():
 func handle_conversation(player, target, initiator):
 	if conversation_manager.arrange_meeting(player, target, initiator):
 		return
+	if DB.execute_give_item_action(player, target):
+		return
 	if not target.is_in_party():
 		return
-	if not DB.execute_give_item_action(player, target):
-		conversation_manager.start_conversation(player, "Conversation", target)
-
-func can_be_given(item):
-	return item and DB.ITEMS[item.item_id] and DB.ITEMS[item.item_id].can_give
+	conversation_manager.start_conversation(player, "Conversation", target)
 
 func handle_player_highlight(initiator, target):
 	if not target.is_in_party():
 		return common_utils.get_action_input_control() + tr("ACTION_TALK") if conversation_manager.meeting_is_not_finished(target.name_hint, initiator.name_hint) else ""
-	var hud = get_hud()
-	var item = hud.get_active_item()
-	return common_utils.get_action_input_control() + tr("ACTION_GIVE") if can_be_given(item) else common_utils.get_action_input_control() + tr("ACTION_TALK")
+	return common_utils.get_action_input_control() + tr("ACTION_TALK")
 
 func get_current_scene_data():
 	var scene_path = get_tree().current_scene.filename
@@ -530,10 +527,12 @@ func player_name_is(name_hint):
 func damage_party(injury_rate):
 	set_health(get_player(), player_health_current - injury_rate, player_health_max)
 
-func kill_party():
+func kill_party(and_finish_the_game = true):
 	for character in get_characters():
 		if character.is_in_party():
 			character.kill()
+	if and_finish_the_game:
+		game_over()
 
 func set_health(character, health_current, health_max):
 	# TODO: use 'character' param to set health for different characters

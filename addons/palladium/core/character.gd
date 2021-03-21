@@ -50,6 +50,7 @@ var is_aggressive = false
 var is_crouching = false
 var is_sprinting = false
 var is_underwater = false
+var is_air_pocket = false  # is_air_pocket flag is not stored in the save file
 var is_poisoned = false
 var intoxication : int = 0
 var relationship : int = 0
@@ -177,12 +178,19 @@ func item_is_weapon(item):
 		return false
 	return item.is_weapon()
 
+func can_be_given(item):
+	if not item:
+		return false
+	return item.can_be_given()
+
 func add_highlight(player_node):
 	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_is_weapon(item):
 			return common_utils.get_action_input_control() + tr("ACTION_ATTACK")
+		if can_be_given(item) and conversation_manager.meeting_is_finished(player_node.get_name_hint(), get_name_hint()):
+			return common_utils.get_action_input_control() + tr("ACTION_GIVE")
 	return ""
 
 ### Getting character's parts ###
@@ -256,8 +264,16 @@ func is_underwater():
 
 func set_underwater(enable):
 	is_underwater = enable
+	if not enable:
+		is_air_pocket = false
 	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
 	character_nodes.set_underwater(enable)
+
+func is_air_pocket():
+	return is_air_pocket
+
+func set_air_pocket(enable):
+	is_air_pocket = enable
 
 func _on_player_underwater(player, enable):
 	if player and not equals(player):
@@ -581,7 +597,7 @@ func has_movement(v, fc):
 			or v.z >= MIN_MOVEMENT \
 			or v.z <= -MIN_MOVEMENT \
 			or v.y > 0 \
-			or not fc
+			or (not is_air_pocket and not fc)
 	)
 
 func move_without_physics(hvel, fc, delta):
@@ -596,7 +612,10 @@ func process_movement(delta, dir, characters):
 		target.y = 0
 	target = target.normalized()
 
-	vel.y -= delta * get_gravity()
+	if is_air_pocket:
+		vel.y = 0
+	else:
+		vel.y -= delta * get_gravity()
 
 	if is_sprinting:
 		target *= MAX_SPRINT_SPEED
@@ -778,9 +797,12 @@ func do_process(delta, is_player):
 	d.is_moving = movement_process_data.is_walking
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
 	if d.is_moving:
+		is_air_pocket = false
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
+	if d.is_rotating:
+		is_air_pocket = false
 	if has_floor_collision():
 		var low_ceiling = character_nodes.is_low_ceiling()
 		if low_ceiling and not is_crouching:

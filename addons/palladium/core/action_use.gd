@@ -55,16 +55,16 @@ func switch_highlight(player_node, body, distance_to_body):
 			ref.remove_highlight(player_node)
 	action_body = weakref(body) if body else null
 	var hint_message = body.add_highlight(player_node) if body_is_usable(body, distance_to_body) else null
-	if hint_message:
-		return hint_message
-	else:
-		var item = game_state.get_hud().get_active_item()
-		if not item or item.is_weapon():
-			return ""
-		var custom_actions = game_state.get_custom_actions(item)
-		if custom_actions.empty() or not DB.can_execute_custom_action(item, custom_actions[0]):
-			return ""
-		return common_utils.get_action_input_control() + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
+	return hint_message if hint_message else ""
+
+func highlight_custom_action():
+	var item = game_state.get_hud().get_active_item()
+	if not item or item.is_weapon():
+		return ""
+	var custom_actions = game_state.get_custom_actions(item)
+	if custom_actions.empty() or not DB.can_execute_custom_action(item, custom_actions[0]):
+		return ""
+	return common_utils.get_action_input_control() + tr(DB.get_item_name(item.item_id) + "_" + custom_actions[0])
 
 func highlight(player_node):
 	if game_state.get_hud().is_in_conversation():
@@ -72,7 +72,12 @@ func highlight(player_node):
 	if player_node.is_hidden():
 		return common_utils.get_action_input_control() + tr("ACTION_UNHIDE")
 	var text_ray_items = ray_highlight(ray_items, player_node)
-	return ray_highlight(ray_characters, player_node) if text_ray_items.empty() else text_ray_items
+	if not text_ray_items.empty():
+		return text_ray_items
+	var text_ray_chars = ray_highlight(ray_characters, player_node)
+	if not text_ray_chars.empty():
+		return text_ray_chars
+	return highlight_custom_action()
 
 func ray_highlight(ray, player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process

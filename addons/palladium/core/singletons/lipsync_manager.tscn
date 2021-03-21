@@ -11,5 +11,8 @@ bus = "Speech"
 [node name="ShortPhraseTimer" type="Timer" parent="."]
 wait_time = 0.01
 one_shot = true
+
+[node name="PhrasePauseTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
 [connection signal="timeout" from="ShortPhraseTimer" to="." method="_on_ShortPhraseTimer_timeout"]

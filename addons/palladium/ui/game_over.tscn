@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/game_over.gd" type="Script" id=2]
-[ext_resource path="res://addons/palladium/assets/fonts/roboto.bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://addons/palladium/assets/images/game_over.png" type="Texture" id=3]
+[ext_resource path="res://addons/palladium/assets/fonts/roboto.bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
 
 [node name="game_over" type="Control"]
 anchor_right = 1.0
@@ -17,12 +18,13 @@ size_flags_vertical = 3
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0, 0, 0, 1 )
+texture = ExtResource( 3 )
+expand = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect"]
 anchor_right = 1.0
@@ -64,7 +66,7 @@ alignment = 1
 margin_left = 756.0
 margin_right = 1163.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 text = "TABLET_LOAD_GAME"
 align = 1
 

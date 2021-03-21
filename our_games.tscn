@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
-[ext_resource path="res://our_games.gd" type="Script" id=2]
-[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://addons/palladium/styles/transparent_panel.tres" type="StyleBox" id=4]
-[ext_resource path="res://addons/palladium/assets/images/about/ike.jpg" type="Texture" id=5]
-[ext_resource path="res://addons/palladium/assets/images/about/nonlin_tq.jpg" type="Texture" id=6]
-[ext_resource path="res://addons/palladium/assets/images/about/advfour.jpg" type="Texture" id=7]
-[ext_resource path="res://addons/palladium/assets/images/about/red_hood.jpg" type="Texture" id=8]
-[ext_resource path="res://addons/palladium/assets/images/about/the_barbarian.jpg" type="Texture" id=9]
-[ext_resource path="res://addons/palladium/assets/images/about/wild_island_quest.jpg" type="Texture" id=10]
+[ext_resource path="res://assets/torches.png" type="Texture" id=2]
+[ext_resource path="res://our_games.gd" type="Script" id=3]
+[ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://addons/palladium/styles/transparent_panel.tres" type="StyleBox" id=5]
+[ext_resource path="res://addons/palladium/assets/images/about/ike.jpg" type="Texture" id=6]
+[ext_resource path="res://addons/palladium/assets/images/about/nonlin_tq.jpg" type="Texture" id=7]
+[ext_resource path="res://addons/palladium/assets/images/about/advfour.jpg" type="Texture" id=8]
+[ext_resource path="res://addons/palladium/assets/images/about/red_hood.jpg" type="Texture" id=9]
+[ext_resource path="res://addons/palladium/assets/images/about/the_barbarian.jpg" type="Texture" id=10]
+[ext_resource path="res://addons/palladium/assets/images/about/wild_island_quest.jpg" type="Texture" id=11]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -17,8 +18,9 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
+texture = ExtResource( 2 )
 stretch_mode = 2
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -60,7 +62,7 @@ alignment = 1
 margin_left = 289.0
 margin_right = 597.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "ABOUT_HEADER"
 
 [node name="HBoxAuthor" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
@@ -157,7 +159,7 @@ size_flags_vertical = 3
 margin_right = 460.0
 margin_bottom = 431.0
 size_flags_horizontal = 3
-custom_styles/panel = ExtResource( 4 )
+custom_styles/panel = ExtResource( 5 )
 tabs_visible = false
 
 [node name="ABOUT_CAPTION_IKE" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer/GamesContent/HBoxContainerInfo/TabContainer"]
@@ -178,7 +180,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 expand = true
 stretch_mode = 6
 
@@ -213,7 +215,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
@@ -248,7 +250,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
 
@@ -283,7 +285,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 
@@ -318,7 +320,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
@@ -352,7 +354,7 @@ margin_bottom = 215.0
 rect_min_size = Vector2( 460, 215 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 

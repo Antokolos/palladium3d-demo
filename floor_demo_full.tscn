@@ -103,7 +103,7 @@ extents = Vector3( 4.68733, 2.29441, 1.21978 )
 extents = Vector3( 3.78506, 1.90136, 3.14294 )
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 4.90392, 3.14005, 3.72118 )
+extents = Vector3( 4.48909, 3.14005, 3.72118 )
 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 4.57794, 2.32469, 3.38208 )
@@ -764,7 +764,7 @@ transform = Transform( -0.754209, 0.233088, -0.613872, -0.0239097, 0.924508, 0.3
 transform = Transform( 0.8531, -0.179516, 0.489892, -0.0239097, 0.924508, 0.380412, -0.521199, -0.336243, 0.784406, 25.4135, 3.76897, 34.763 )
 
 [node name="ChooseCompanionArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.626 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.893 )
 input_ray_pickable = false
 monitorable = false
 

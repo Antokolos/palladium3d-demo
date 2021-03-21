@@ -60,6 +60,11 @@ func is_empty():
 func is_weapon():
 	return DB.is_weapon_stun(item_id)
 
+func can_be_given():
+	if is_empty():
+		return false
+	return DB.ITEMS.has(item_id) and DB.ITEMS[item_id].can_give
+
 func has_item_id(item_id):
 	return self.item_id and self.item_id == item_id
 
