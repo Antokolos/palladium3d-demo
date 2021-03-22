@@ -7,9 +7,15 @@ const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "�
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
-const PHRASE_PAUSE_TIMER_SCALE_COEF = 1.1
+const PHRASE_PAUSE_TIMER_SCALE_COEF = 1.02
+const PHRASE_PAUSE_TIMER_MIN_S = 0.02
 
+onready var audio_stream_player = $AudioStreamPlayer
+onready var short_phrase_timer = $ShortPhraseTimer
 onready var phrase_pause_timer = $PhrasePauseTimer
+
+var current_speaker = null
+var current_phonetic = null
 
 func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
@@ -18,15 +24,21 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 	stop_sound_and_lipsync()
 
 func is_speaking():
-	return $AudioStreamPlayer.is_playing()
+	return audio_stream_player.is_playing() \
+		or not short_phrase_timer.is_stopped() \
+		or not phrase_pause_timer.is_stopped()
 
 func stop_sound_and_lipsync():
 	for character_speaker in game_state.get_characters():
 		character_speaker.get_model().stop_speaking()
-	if $AudioStreamPlayer.is_playing():
-		$AudioStreamPlayer.stop()
-	if not $ShortPhraseTimer.is_stopped():
-		$ShortPhraseTimer.stop()
+	if audio_stream_player.is_playing():
+		audio_stream_player.stop()
+	if not short_phrase_timer.is_stopped():
+		short_phrase_timer.stop()
+	if not phrase_pause_timer.is_stopped():
+		phrase_pause_timer.stop()
+	current_speaker = null
+	current_phonetic = null
 
 func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
@@ -35,7 +47,6 @@ func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	return "res://sound/dialogues/%s/%s/%s/" % [locale, target_name_hint if target_name_hint else "root", conversation_name]
 
 func play_sound_and_start_lipsync(character, conversation_name, target_name_hint, file_name, text = null, transcription = null):
-	var phonetic = transcription if transcription else (text_to_phonetic(text.strip_edges()) if text else null)
 	var conversation_sound_path = get_conversation_sound_path(conversation_name, target_name_hint)
 	if not conversation_sound_path:
 		return false
@@ -49,10 +60,11 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 	else:
 		return false
 	var length = stream.get_length()
-	$ShortPhraseTimer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
-	$AudioStreamPlayer.stream = stream
-	$AudioStreamPlayer.play()
-	character.get_model().speak_text(phonetic, length)
+	short_phrase_timer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
+	audio_stream_player.stream = stream
+	current_speaker = character
+	current_phonetic = transcription if transcription else (text_to_phonetic(text.strip_edges()) if text else null)
+	phrase_pause_timer.start(randf() * PHRASE_PAUSE_TIMER_SCALE_COEF + PHRASE_PAUSE_TIMER_MIN_S)
 	return true
 
 func letter_vowel(letter):
@@ -109,10 +121,8 @@ func _on_AudioStreamPlayer_finished():
 	elif story_node.can_choose():
 		var ch = story_node.get_choices(TranslationServer.get_locale())
 		if ch.size() == 1:
-			$ShortPhraseTimer.start()
+			short_phrase_timer.start()
 	elif story_node.can_continue():
-		phrase_pause_timer.start(randf() * PHRASE_PAUSE_TIMER_SCALE_COEF)
-		yield(phrase_pause_timer, "timeout")
 		conversation_manager.story_proceed(player)
 	else:
 		conversation_manager.stop_conversation(player)
@@ -123,3 +133,11 @@ func _on_ShortPhraseTimer_timeout():
 		conversation_manager.stop_conversation(player)
 	else:
 		conversation_manager.story_choose(player, 0)
+
+func _on_PhrasePauseTimer_timeout():
+	if not audio_stream_player.stream:
+		return
+	audio_stream_player.play()
+	if not current_speaker or not current_phonetic:
+		return
+	current_speaker.get_model().speak_text(current_phonetic, audio_stream_player.stream.get_length())

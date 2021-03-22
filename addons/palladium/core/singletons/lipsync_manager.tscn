@@ -16,3 +16,4 @@ one_shot = true
 one_shot = true
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
 [connection signal="timeout" from="ShortPhraseTimer" to="." method="_on_ShortPhraseTimer_timeout"]
+[connection signal="timeout" from="PhrasePauseTimer" to="." method="_on_PhrasePauseTimer_timeout"]

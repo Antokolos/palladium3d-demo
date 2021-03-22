@@ -45,6 +45,8 @@ func change_stretch_ratio(conversation):
 func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
+		if conversation_is_in_progress(conversation_name):
+			return
 		for conversation in pending_area_conversations:
 			if conversation_name == conversation.conversation_name:
 				return
@@ -73,6 +75,8 @@ func start_area_conversation_with_companion(conversations_map, repeatable = fals
 func start_area_conversation(conversation_name, repeatable = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
+		if conversation_is_in_progress(conversation_name):
+			return
 		for conversation in pending_area_conversations:
 			if conversation_name == conversation.conversation_name:
 				return
@@ -99,15 +103,16 @@ func start_pending_conversation_if_any():
 	pending_conversation_timer.start()
 	yield(pending_conversation_timer, "timeout")
 	var c = pending_area_conversations.pop_front()
-	start_conversation(
-		c.player,
-		c.conversation_name,
-		c.target,
-		c.initiator,
-		c.is_cutscene,
-		c.cutscene_node,
-		c.repeatable
-	)
+	if c.repeatable or conversation_is_not_finished(c.conversation_name):
+		start_conversation(
+			c.player,
+			c.conversation_name,
+			c.target,
+			c.initiator,
+			c.is_cutscene,
+			c.cutscene_node,
+			c.repeatable
+		)
 
 func stop_conversation(player):
 	if not conversation_is_in_progress():
@@ -312,7 +317,8 @@ func story_choose(player, idx):
 func proceed_story_immediately(player):
 	if lipsync_manager.is_speaking():
 		lipsync_manager.stop_sound_and_lipsync()
-	story_proceed(player)
+	else:
+		story_proceed(player)
 
 func story_proceed(player):
 	var conversation = game_state.get_hud().conversation
