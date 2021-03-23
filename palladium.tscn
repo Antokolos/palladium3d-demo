@@ -112,6 +112,7 @@ transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.1231,
 [node name="player_female" parent="ViewportContainer/Viewport/palladium" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.276566, 9.84315, 73.1262 )
 name_hint = "female"
+can_read = true
 initial_player = false
 
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/palladium/player_female"]

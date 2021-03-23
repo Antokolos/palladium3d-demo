@@ -38,6 +38,7 @@ const AXIS_VALUE_THRESHOLD = 0.15
 export var has_ranged_attack = false
 export var has_melee_attack = false
 export var can_hide = true
+export var can_read = false
 
 onready var character_nodes = $character_nodes
 onready var animation_player = $AnimationPlayer
@@ -88,6 +89,9 @@ func has_melee_attack():
 
 func can_hide():
 	return can_hide
+
+func can_read():
+	return can_read
 
 func handle_attack():
 	var possible_target = character_nodes.get_possible_attack_target(false)
