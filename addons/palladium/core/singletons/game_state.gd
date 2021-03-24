@@ -544,6 +544,7 @@ func set_health(character, health_current, health_max):
 	emit_signal("health_changed", character.get_name_hint(), player_health_current, player_health_max)
 
 func game_over():
+	conversation_manager.stop_conversation(get_player())
 	change_scene("res://addons/palladium/ui/game_over.tscn", false, true)
 
 func set_oxygen(character, oxygen_current, oxygen_max):

@@ -7,7 +7,7 @@ const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "�
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
-const PHRASE_PAUSE_TIMER_SCALE_COEF = 1.02
+const PHRASE_PAUSE_TIMER_SCALE_COEF = 0.7
 const PHRASE_PAUSE_TIMER_MIN_S = 0.02
 
 onready var audio_stream_player = $AudioStreamPlayer
@@ -21,24 +21,31 @@ func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
-	stop_sound_and_lipsync()
+	stop_sound_and_lipsync(false)
 
 func is_speaking():
 	return audio_stream_player.is_playing() \
 		or not short_phrase_timer.is_stopped() \
 		or not phrase_pause_timer.is_stopped()
 
-func stop_sound_and_lipsync():
+func stop_sound_and_lipsync(and_continue_conversation = true):
 	for character_speaker in game_state.get_characters():
 		character_speaker.get_model().stop_speaking()
-	if audio_stream_player.is_playing():
-		audio_stream_player.stop()
-	if not short_phrase_timer.is_stopped():
-		short_phrase_timer.stop()
-	if not phrase_pause_timer.is_stopped():
-		phrase_pause_timer.stop()
 	current_speaker = null
 	current_phonetic = null
+	var was_speaking = false
+	if audio_stream_player.is_playing():
+		audio_stream_player.stop()
+		was_speaking = true
+	audio_stream_player.stream = null
+	if not short_phrase_timer.is_stopped():
+		short_phrase_timer.stop()
+		was_speaking = true
+	if not phrase_pause_timer.is_stopped():
+		phrase_pause_timer.stop()
+		was_speaking = true
+	if was_speaking and and_continue_conversation:
+		continue_conversation()
 
 func get_conversation_sound_path(conversation_name, target_name_hint = null):
 	var locale = "ru" if settings.vlanguage == settings.VLANGUAGE_RU else ("en" if settings.vlanguage == settings.VLANGUAGE_EN else null)
@@ -114,25 +121,29 @@ func text_to_phonetic(text):
 	return result
 
 func _on_AudioStreamPlayer_finished():
-	stop_sound_and_lipsync()
+	if not audio_stream_player.stream:
+		return
+	var length = audio_stream_player.stream.get_length()
+	if audio_stream_player.get_playback_position() >= length:
+		short_phrase_timer.start()
+
+func _on_ShortPhraseTimer_timeout():
+	continue_conversation()
+
+func continue_conversation():
+	current_speaker = null
+	current_phonetic = null
 	var player = game_state.get_player()
 	if conversation_manager.is_finalizing():
 		conversation_manager.stop_conversation(player)
+	elif story_node.can_continue():
+		conversation_manager.story_proceed(player)
 	elif story_node.can_choose():
 		var ch = story_node.get_choices(TranslationServer.get_locale())
 		if ch.size() == 1:
-			short_phrase_timer.start()
-	elif story_node.can_continue():
-		conversation_manager.story_proceed(player)
+			conversation_manager.story_choose(player, 0)
 	else:
 		conversation_manager.stop_conversation(player)
-
-func _on_ShortPhraseTimer_timeout():
-	var player = game_state.get_player()
-	if conversation_manager.is_finalizing():
-		conversation_manager.stop_conversation(player)
-	else:
-		conversation_manager.story_choose(player, 0)
 
 func _on_PhrasePauseTimer_timeout():
 	if not audio_stream_player.stream:

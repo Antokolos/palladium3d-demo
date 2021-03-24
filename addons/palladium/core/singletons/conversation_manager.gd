@@ -283,7 +283,7 @@ func story_choose(player, idx):
 	var conversation = game_state.get_hud().conversation
 	var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
 	var conversation_actor = conversation.get_node("VBox/VBoxText/HBoxText/ActorName")
-	lipsync_manager.stop_sound_and_lipsync()  # If the character has not finished speaking, but the player already decided to continue dialogue
+	lipsync_manager.stop_sound_and_lipsync(false)  # If the character has not finished speaking, but the player already decided to continue dialogue
 	if is_finalizing or (not story_node.can_choose() and not story_node.can_continue() and idx == 0):
 		stop_conversation(player)
 	elif story_node.can_choose() and max_choice > 0 and idx < max_choice:

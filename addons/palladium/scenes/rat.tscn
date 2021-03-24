@@ -8,12 +8,12 @@
 friction = 0.0
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.198305, 0.0804571, 0.0747947 )
+extents = Vector3( 0.2, 0.2, 0.075 )
 
 [node name="rat" type="RigidBody" groups=[
-"restorable_state",
-"rats",
 "moving",
+"rats",
+"restorable_state",
 ]]
 collision_layer = 8
 collision_mask = 8194
@@ -26,7 +26,7 @@ use_distance = 4.1
 takable_id = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 shape = SubResource( 2 )
 
 [node name="PlayerSqueak" type="AudioStreamPlayer3D" parent="."]
