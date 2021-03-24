@@ -56,6 +56,8 @@ func is_conversation_finished_or_not_applicable(player_node):
 func use(player_node, camera_node):
 	if Engine.editor_hint:
 		return
+	if is_conversation_finished_or_not_applicable(player_node):
+		return
 	.use(player_node, camera_node)
 	for name_hint in conversations.keys():
 		if conversations[name_hint].empty() or not game_state.is_in_party(name_hint):
