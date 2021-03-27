@@ -166,24 +166,6 @@ margin_right = 113.0
 margin_bottom = 17.0
 text = "SETTINGS_TABLET_ORIENTATION"
 
-[node name="HJoypadType" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_right = 577.0
-margin_bottom = 20.0
-custom_constants/separation = 20
-
-[node name="JoypadType" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
-margin_left = 117.0
-margin_right = 397.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 280, 0 )
-align = 1
-
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
-margin_top = 3.0
-margin_right = 113.0
-margin_bottom = 17.0
-text = "SETTINGS_JOYPAD_TYPE"
-
 [node name="HVsync" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 210.0
 margin_right = 1574.0
@@ -302,6 +284,24 @@ margin_top = 10.0
 margin_right = 441.0
 margin_bottom = 24.0
 text = "SETTINGS_SENSITIVITY"
+
+[node name="HJoypadType" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_right = 577.0
+margin_bottom = 20.0
+custom_constants/separation = 20
+
+[node name="JoypadType" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
+margin_left = 117.0
+margin_right = 397.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 280, 0 )
+align = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
+margin_top = 3.0
+margin_right = 113.0
+margin_bottom = 17.0
+text = "SETTINGS_JOYPAD_TYPE"
 
 [node name="HQuality" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 394.0
@@ -1129,13 +1129,13 @@ texture_pressed = ExtResource( 28 )
 texture_hover = ExtResource( 29 )
 [connection signal="meta_clicked" from="TabletPanel/TabletScreen/apps/chat/VBoxContainer/ChatWindow" to="TabletPanel/TabletScreen/apps/chat" method="_on_ChatWindow_meta_clicked"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HTabletOrientation/TabletOrientation" to="." method="_on_TabletOrientation_item_selected"]
-[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType/JoypadType" to="." method="_on_JoypadType_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync/Vsync" to="." method="_on_Vsync_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HInvertYAxis/InvertYAxis" to="." method="_on_InvertYAxis_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled/CutoffEnabled" to="." method="_on_CutoffEnabled_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled" to="." method="_on_ShaderCacheEnabled_pressed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSensitivityCoef/VBoxContainer/SensitivityCoef" to="." method="_on_SensitivityCoef_value_changed"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType/JoypadType" to="." method="_on_JoypadType_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/Quality" to="." method="_on_Quality_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]

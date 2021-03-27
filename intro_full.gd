@@ -16,6 +16,8 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			get_node("camera_intro/Camera").run_camera_2()
 			$male_intro.walks_room()
 			$intro_door_1.anim_start()
+			$father.put_phone_down()
+			$intro_phone.phone_put_down()
 		"025_Andreas_return":
 			game_state.change_scene("res://forest.tscn", false, true)
 
@@ -24,6 +26,4 @@ func _on_shader_cache_processed():
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	get_node("camera_intro/Camera").run_camera_3()
-	$father.put_phone_down()
-	$intro_phone.phone_put_down()
 	conversation_manager.start_area_conversation("025_Andreas_return")

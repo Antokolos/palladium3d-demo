@@ -33,6 +33,7 @@ matched_item_names = PoolStringArray( "statue_athena" )
 [node name="CollisionShape" type="CollisionShape" parent="last_trap_postament" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11963, 0 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="PlayerPedestal" type="AudioStreamPlayer3D" parent="last_trap_postament" index="1"]
 stream = ExtResource( 3 )

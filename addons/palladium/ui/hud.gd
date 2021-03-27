@@ -2,7 +2,7 @@ extends Control
 class_name PLDHUD
 
 const MESSAGE_TIMEOUT_ITEM_S = 2
-const MESSAGE_TIMEOUT_MAX_S = 5
+const MESSAGE_TIMEOUT_MAX_S = 9
 const ALPHA_THRESHOLD = 0.01
 const ALPHA_DECREASE_FACTOR = 0.9
 const MAX_VISIBLE_ITEMS = 6
@@ -186,7 +186,7 @@ func set_underwater(player, enable):
 	if player and not player.equals(game_state.get_player()):
 		return
 	if enable:
-		queue_popup_message("MESSAGE_CONTROLS_SWIM_UP", [common_utils.get_input_control("movement_jump")])
+		queue_popup_message("MESSAGE_CONTROLS_SWIM_UP", [common_utils.get_input_control("movement_jump", false)])
 	underwater_effect.visible = enable
 
 func set_quick_items_dimmed(dimmed):
@@ -262,13 +262,18 @@ func _on_shader_cache_processed():
 	if game_state.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", [common_utils.get_input_control("item_preview_toggle", false)])
 
-func _on_item_taken(item_id, cnt, item_path):
-	queue_popup_message("MESSAGE_ITEM_TAKEN", [tr(DB.get_item_name(item_id))], true, MESSAGE_TIMEOUT_ITEM_S)
+func _on_item_taken(item_id, count_total, count_taken, item_path):
+	queue_popup_message(
+		"MESSAGE_ITEM_TAKEN" if count_taken == 1 else "MESSAGE_ITEMS_TAKEN",
+		[ tr(DB.get_item_name(item_id)) ] if count_taken == 1 else [ tr(DB.get_item_name(item_id)), count_taken ],
+		true,
+		MESSAGE_TIMEOUT_ITEM_S
+	)
 	synchronize_items()
 
-func _on_item_removed(item_id, cnt):
-	remove_ui_inventory_item(item_id, cnt)
-	remove_ui_quick_item(item_id, cnt)
+func _on_item_removed(item_id, count_total, count_removed):
+	remove_ui_inventory_item(item_id, count_removed)
+	remove_ui_quick_item(item_id, count_removed)
 	synchronize_items()
 
 func remove_ui_inventory_item(item_id, count):

@@ -25,11 +25,11 @@ func use(player_node, camera_node):
 func add_highlight(player_node):
 	return common_utils.get_action_input_control() + tr("ACTION_TAKE") if is_present() else ""
 
-func _on_item_taken(item_id, cnt, item_path):
+func _on_item_taken(item_id, count_total, count_taken, item_path):
 	if item_id == takable_id and item_path == get_path():
 		make_absent()
 
-func _on_item_removed(item_id, cnt):
+func _on_item_removed(item_id, count_total, count_removed):
 	# TODO: make present??? Likely it is handled in containers...
 	if has_node("SoundPut"):
 		$SoundPut.play()

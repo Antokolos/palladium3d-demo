@@ -141,7 +141,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55221, 0, -2.27993 )
 collision_mask = 2
 
 [node name="Apata_room" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="door_3" parent="Apata_room" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3506, 1.18912, 21.7773 )
@@ -749,19 +748,34 @@ monitorable = false
 shape = SubResource( 6 )
 
 [node name="InscriptionsPosition" type="Position3D" parent="."]
-transform = Transform( -4.37114e-08, -0.234039, 0.972228, 0, 0.972227, 0.23404, -1, 1.02302e-08, -4.24974e-08, 14.3412, 3.87822, 37.0018 )
+transform = Transform( 0.914317, -0.0947855, 0.393751, 0, 0.972227, 0.23404, -0.404999, -0.213986, 0.888925, 13.2855, 3.12206, 38.2324 )
 
 [node name="ApataDoorPosition" type="Position3D" parent="."]
 transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-08, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 20.9597, 3.87822, 39.6227 )
 
 [node name="BanditPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.48208, 1.2, 39.9036 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.53788, 1.2, 37.5244 )
+
+[node name="InscriptionsPositionPlayer" type="Position3D" parent="."]
+transform = Transform( -0.26254, 0, -0.964921, 0, 1, 0, 0.964921, 0, -0.26254, 12.9417, 1.2, 35.4944 )
+
+[node name="ChooseCompanionPositionPlayer" type="Position3D" parent="."]
+transform = Transform( -0.591833, 0, -0.806061, 0, 1, 0, 0.806061, 0, -0.591833, 7.28031, 1.2, 26.477 )
+
+[node name="ChooseCompanionPositionBandit" type="Position3D" parent="."]
+transform = Transform( -0.979747, 0, -0.200241, 0, 1, 0, 0.200241, 0, -0.979747, 5.83576, 1.2, 27.295 )
+
+[node name="InscriptionsPositionFemale" type="Position3D" parent="."]
+transform = Transform( 0.26757, 0, 0.963538, 0, 1, 0, -0.963538, 0, 0.26757, 10.8561, 1.2, 34.8762 )
+
+[node name="ChooseCompanionPositionFemale" type="Position3D" parent="."]
+transform = Transform( 0.603285, 0, 0.797525, 0, 1, 0, -0.797525, 0, 0.603285, 5.7244, 1.2, 25.2826 )
 
 [node name="ApataCutscenePosition" type="Position3D" parent="."]
 transform = Transform( -0.754209, 0.233088, -0.613872, -0.0239097, 0.924508, 0.380412, 0.656199, 0.301588, -0.691699, 21.3352, 3.76897, 24.2893 )
 
 [node name="ApataCutscenePosition2" type="Position3D" parent="."]
-transform = Transform( 0.8531, -0.179516, 0.489892, -0.0239097, 0.924508, 0.380412, -0.521199, -0.336243, 0.784406, 25.4135, 3.76897, 34.763 )
+transform = Transform( 0.336796, 0.365726, -0.867648, -0.0239097, 0.924508, 0.380412, 0.941274, -0.107376, 0.320114, 20.7337, 3.76897, 33.317 )
 
 [node name="ChooseCompanionArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.893 )
@@ -815,10 +829,10 @@ shape = SubResource( 11 )
 transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.2436, 1.2, 31.8215 )
 
 [node name="BanditSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.379, 1.2, 33.1114 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.3608, 1.2, 33.144 )
 
 [node name="PlayerSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 23.0384, 1.2, 33.1114 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 23.0202, 1.2, 33.144 )
 
 [node name="PlayerTeleportPosition" type="Position3D" parent="."]
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
@@ -844,14 +858,8 @@ usable_id = 120
 [node name="ApataTakeTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="vase_9" parent="." instance=ExtResource( 17 )]
-transform = Transform( 0.941063, 0, 0.338233, 0, 1, 0, -0.338233, 0, 0.941063, 4.54779, 1.18942, 29.6375 )
-
 [node name="vase_10" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
-
-[node name="vase_11" parent="." instance=ExtResource( 16 )]
-transform = Transform( -0.743691, 0, 0.668523, 0, 1, 0, -0.668523, 0, -0.743691, 4.03199, 1.19035, 29.9398 )
 
 [node name="last_trap_floor" parent="." instance=ExtResource( 77 )]
 

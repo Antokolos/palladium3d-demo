@@ -55,5 +55,5 @@ func item_match(item):
 			result = result or (not ch.is_present() and is_item_id_matches(item, ch.takable_id))
 	return result
 
-func get_use_action_text(player_node):
+func get_use_action_text(player_node, item):
 	return tr("ACTION_PUT_1")

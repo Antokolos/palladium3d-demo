@@ -9,7 +9,7 @@ func use_action(player_node, item):
 	visible = false
 	return true
 
-func get_use_action_text(player_node):
+func get_use_action_text(player_node, item):
 	return tr("ACTION_OPEN")
 
 func restore_state():

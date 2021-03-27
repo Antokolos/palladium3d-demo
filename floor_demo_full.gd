@@ -98,12 +98,14 @@ func use_takable(player_node, takable, parent, was_taken):
 
 func last_trap_show():
 	last_trap_postament.visible = true
+	last_trap_postament.get_node("last_trap_postament/CollisionShape").disabled = false
 	last_trap_spikes.visible = true
 	zheleznoe_uho.visible = true
 	floor_demo_blocks_floor.visible = false
 
 func last_trap_hide():
 	last_trap_postament.visible = false
+	last_trap_postament.get_node("last_trap_postament/CollisionShape").disabled = true
 	last_trap_spikes.visible = false
 	zheleznoe_uho.visible = false
 	floor_demo_blocks_floor.visible = true
@@ -228,6 +230,9 @@ func _on_AreaApata_body_entered(body):
 		body.teleport(get_node("PlayerTeleportPosition"))
 		get_node("ApataTakeTimer").start()
 		female.play_cutscene(FemaleModel.FEMALE_CUTSCENE_TAKES_APATA)
+		var chest = get_node("Apata_room/apata_chest")
+		if chest.is_opened():
+			chest.close(false, PLDItemContainer.SPEED_SCALE_INFINITY)
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_ApataTakeTimer_timeout():
@@ -264,7 +269,12 @@ func _on_AreaDeadEnd2_body_entered(body):
 
 func _on_web_destroyed(web):
 	PREFS.set_achievement("COBWEB")
-	if web.get_usable_id() == DB.UsableIds.WEB_APATA:
+	if web.get_usable_id() == DB.UsableIds.WEB_APATA \
+		and conversation_manager.conversation_is_not_finished("005_ApataInscriptions"):
+		var player = game_state.get_character(CHARS.PLAYER_NAME_HINT)
+		var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
+		player.teleport(get_node("InscriptionsPositionPlayer"))
+		female.teleport(get_node("InscriptionsPositionFemale"))
 		conversation_manager.start_area_cutscene("005_ApataInscriptions", get_node("InscriptionsPosition"))
 
 func _on_rat_state_changed(rat, state_new, state_prev):
@@ -276,11 +286,16 @@ func _on_ChooseCompanionArea_body_entered(body):
 		var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
 		if erida_trap \
 			and erida_trap.is_untouched() \
-			and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
+			and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER \
+			and conversation_manager.conversation_is_not_finished("012_ChooseCompanion"):
 			var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 			female.set_target_node(get_node("OutPosition"))
+			female.teleport(get_node("ChooseCompanionPositionFemale"))
 			var bandit = game_state.get_character(CHARS.BANDIT_NAME_HINT)
 			bandit.set_target_node(get_node("OutPosition"))
+			bandit.teleport(get_node("ChooseCompanionPositionBandit"))
+			var player = game_state.get_character(CHARS.PLAYER_NAME_HINT)
+			player.teleport(get_node("ChooseCompanionPositionPlayer"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
 		elif game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
 			conversation_manager.start_area_conversation_with_companion({
@@ -391,6 +406,15 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 		"010-1-1_Statuettes", "015-1_EridaTrap", "021-1_EridaTrapMax":
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_1")
 			game_state.get_hud().queue_popup_message("MESSAGE_CONTROLS_DIALOGUE_2")
+		"012_ChooseCompanion":
+			if not female.is_in_party():
+				female.set_hidden(true)
+				female.deactivate()
+				female.teleport(get_node("OutPosition"))
+			if not bandit.is_in_party():
+				bandit.set_hidden(true)
+				bandit.deactivate()
+				bandit.teleport(get_node("OutPosition"))
 		"019_DemoFinishedXenia", "022-1_DemoFinishedMax":
 			MEDIA.change_music_to(MEDIA.MusicId.BEGINNING)
 

@@ -14,7 +14,7 @@ signal stun_started(player_node, weapon)
 signal stun_finished(player_node)
 signal take_damage(player_node, fatal, hit_direction_node)
 
-const GRAVITY_DEFAULT = 6.2
+const GRAVITY_DEFAULT = 10.2
 const GRAVITY_UNDERWATER = 0.2
 const MAX_SPEED = 3
 const MAX_SPRINT_SPEED = 10

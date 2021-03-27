@@ -30,7 +30,8 @@ onready var first_save_slot_button = save_game_app.get_node("VBoxContainer/Slot1
 onready var load_game_app = apps.get_node("load_game_app")
 onready var autosave_load_button = load_game_app.get_node("VBoxContainer/Slot0/ButtonSlot0")
 onready var tablet_orientation = settings_app.get_node("VBoxContainer/HTabletOrientation/TabletOrientation")
-onready var joypad_type = settings_app.get_node("VBoxContainer/HJoypadType/JoypadType")
+onready var joypad_type_parent = settings_app.get_node("VBoxContainer/HJoypadType")
+onready var joypad_type = joypad_type_parent.get_node("JoypadType")
 onready var vsync = settings_app.get_node("VBoxContainer/HVsync/Vsync")
 onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullscreen")
 onready var invert_yaxis = settings_app.get_node("VBoxContainer/HInvertYAxis/InvertYAxis")
@@ -177,6 +178,7 @@ func _ready():
 
 func activate(mode):
 	visible = true
+	joypad_type_parent.visible = common_utils.has_joypads()
 	if hud.is_menu_hud():
 		desktop_container_chat.visible = false
 		desktop_container_credits.visible = true
@@ -263,7 +265,7 @@ func _on_CreditsButton_pressed():
 func _on_SettingsButton_pressed():
 	hide_everything()
 	settings_app.show()
-	joypad_type.grab_focus()
+	vsync.grab_focus()
 
 func _on_ControlsButton_pressed():
 	hide_everything()

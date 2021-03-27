@@ -6,8 +6,8 @@ signal player_registered(player)
 signal player_surge(player, enabled)
 signal player_underwater(player, enabled)
 signal player_poisoned(player, enabled, intoxication_rate)
-signal item_taken(item_id, count, item_path)
-signal item_removed(item_id, count)
+signal item_taken(item_id, count_total, count_taken, item_path)
+signal item_removed(item_id, count_total, count_removed)
 signal item_used(player_node, target, item_id)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
@@ -448,24 +448,24 @@ func take(item_id, count = 1, item_path = null):
 		if not quick_item.item_id or quick_item.item_id == DB.TakableIds.NONE:
 			quick_item.item_id = item_id
 			quick_item.count = count
-			emit_signal("item_taken", item_id, quick_item.count, item_path)
+			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
 			return
 		if item_id == quick_item.item_id:
 			quick_item.count = quick_item.count + count
-			emit_signal("item_taken", item_id, quick_item.count, item_path)
+			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
 			return
 		maxpos = maxpos + 1
 	if maxpos < DB.MAX_QUICK_ITEMS:
 		quick_items.append({ "item_id" : item_id, "count" : count })
-		emit_signal("item_taken", item_id, count, item_path)
+		emit_signal("item_taken", item_id, count, count, item_path)
 		return
 	for item in inventory:
 		if item_id == item.item_id:
 			item.count = item.count + count
-			emit_signal("item_taken", item_id, item.count, item_path)
+			emit_signal("item_taken", item_id, item.count, count, item_path)
 			return
 	inventory.append({ "item_id" : item_id, "count" : count })
-	emit_signal("item_taken", item_id, count, item_path)
+	emit_signal("item_taken", item_id, count, count, item_path)
 	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", [common_utils.get_input_control("inventory_toggle", false)])
 
 func remove(item_id, count = 1):
@@ -475,7 +475,7 @@ func remove(item_id, count = 1):
 			item.count = item.count - count
 			if item.count <= 0:
 				inventory.remove(idx)
-			emit_signal("item_removed", item_id, item.count)
+			emit_signal("item_removed", item_id, item.count, count)
 			return
 		idx = idx + 1
 	for quick_item in quick_items:
@@ -483,7 +483,7 @@ func remove(item_id, count = 1):
 			quick_item.count = quick_item.count - count
 			if quick_item.count <= 0:
 				quick_item.item_id = null
-			emit_signal("item_removed", item_id, quick_item.count)
+			emit_signal("item_removed", item_id, quick_item.count, count)
 			return
 
 func item_used(player_node, target, item_id):

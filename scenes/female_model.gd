@@ -9,7 +9,7 @@ const FEMALE_CUTSCENE_KISS = 4
 func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")
 
-func _on_item_taken(takable_id, count, item_path):
+func _on_item_taken(takable_id, count_total, count_taken, item_path):
 	var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
 	if main_skeleton == "Female_palladium_armature" and apata_trap and apata_trap.is_untouched(): # Apply only to female model and only when the trap is still armed
 		if takable_id == DB.TakableIds.APATA:

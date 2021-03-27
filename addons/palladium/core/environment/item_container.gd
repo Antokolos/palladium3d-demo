@@ -1,6 +1,8 @@
 extends PLDUsable
 class_name PLDItemContainer
 
+const SPEED_SCALE_INFINITY = 1000.0
+
 export(DB.ContainerIds) var container_id = DB.ContainerIds.NONE
 export var initially_opened = false
 export var path_blocker = ""
