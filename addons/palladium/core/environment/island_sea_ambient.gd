@@ -15,6 +15,8 @@ func set_attenuation(attenuation_sea, attenuation_wind):
 	$AudioStreamWind.set_volume_db(-attenuation_wind)
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	var player = game_state.get_player()
 	if player:
 		var player_origin = player.get_global_transform().origin

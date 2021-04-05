@@ -33,6 +33,8 @@ func _on_resolution_changed():
 	viewport.size = Vector2(int(width * pixels_size), int(height * pixels_size))
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	if active:
 		var player = game_state.get_player()
 		persp(player)

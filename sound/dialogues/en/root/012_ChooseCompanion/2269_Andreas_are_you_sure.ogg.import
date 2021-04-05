@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2269_Andreas_are_you_sure.ogg-17e7d2f2fec081a6ffd15d46c4d4c055.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/2269_Andreas_are_you_sure.ogg"
+dest_files=[ "res://.import/2269_Andreas_are_you_sure.ogg-17e7d2f2fec081a6ffd15d46c4d4c055.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2505_Ksenia_ty_boishsya.ogg-ed1b3e171875803d2356b794b2920935.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/006_Rats/2505_Ksenia_ty_boishsya.ogg"
+dest_files=[ "res://.import/2505_Ksenia_ty_boishsya.ogg-ed1b3e171875803d2356b794b2920935.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

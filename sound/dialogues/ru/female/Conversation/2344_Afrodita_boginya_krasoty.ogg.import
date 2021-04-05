@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2344_Afrodita_boginya_krasoty.ogg-a7d18f164b4174d15591426995ac7930.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Conversation/2344_Afrodita_boginya_krasoty.ogg"
+dest_files=[ "res://.import/2344_Afrodita_boginya_krasoty.ogg-a7d18f164b4174d15591426995ac7930.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -20,20 +20,20 @@ func use_use_target(player_node, use_target, item, result):
 			get_node("ceiling_armat004/AnimationPlayer").play_backwards("trap_final_1")
 			deactivate_forever()
 
-func activate(and_change_state = true):
-	.activate(and_change_state)
-	get_node("ceiling_armat005/AnimationPlayer").play("trap_final_1.001", -1, SPIKES_SPEED)
-	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, SPIKES_SPEED)
-	get_node("AnimationPlayer").play("spikes_on", -1, SPIKES_SPEED)
+func activate(and_change_state = true, is_restoring = false):
+	.activate(and_change_state, is_restoring)
+	get_node("ceiling_armat005/AnimationPlayer").play("trap_final_1.001", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else SPIKES_SPEED)
+	get_node("ceiling_armat004/AnimationPlayer").play("trap_final_1", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else SPIKES_SPEED)
+	get_node("AnimationPlayer").play("spikes_on", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else SPIKES_SPEED)
 
-func deactivate_forever(and_change_state = true):
+func deactivate_forever(and_change_state = true, is_restoring = false):
 	var is_final_destination = .is_final_destination()
-	.deactivate_forever(and_change_state)
+	.deactivate_forever(and_change_state, is_restoring)
 	if is_final_destination:
-		get_node("Armature033/AnimationPlayer").play("last_trap_steps")
-		get_node("AnimationPlayer").play("steps_up")
+		get_node("Armature033/AnimationPlayer").play("last_trap_steps", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
+		get_node("AnimationPlayer").play("steps_up", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 	else:
-		get_node("AnimationPlayer").play("spikes_off", -1, SPIKES_SPEED)
+		get_node("AnimationPlayer").play("spikes_off", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else SPIKES_SPEED)
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:

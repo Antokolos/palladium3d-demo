@@ -53,6 +53,7 @@ enum TimeOfDay {
 	NIGHT = 3
 }
 
+const SPEED_SCALE_INFINITY = 1000.0
 const SKY_ROTATION_DEGREES_DEFAULT = Vector3(0, 160, 0)
 const COLOR_WHITE = Color(1, 1, 1, 1)
 const COLOR_BLACK = Color(0, 0, 0, 0)
@@ -85,6 +86,7 @@ var saving_disabled = false
 var slot_to_load_from = -1
 var scene_path = DB.SCENE_PATH_DEFAULT
 var is_transition = false
+var is_level_ready = false setget set_level_ready, is_level_ready
 var player_name_hint = ""
 var player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 var player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
@@ -139,6 +141,14 @@ func _ready():
 	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	cleanup_paths()
 	reset_variables()
+
+func is_level_ready():
+	return is_level_ready
+
+func set_level_ready(level_ready):
+	is_level_ready = level_ready
+	if not level_ready:
+		get_tree().paused = true # To prevent possible NPEs
 
 func cleanup_paths():
 	player_paths.clear()
@@ -312,9 +322,6 @@ func set_underwater(player, enable):
 func set_poisoned(player, enable, intoxication_rate):
 	emit_signal("player_poisoned", player, enable, intoxication_rate)
 
-func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
-	player.set_look_transition(true)
-
 func get_custom_actions(item):
 	var item_record = get_registered_item_data(item.item_id)
 	return item_record.custom_actions.duplicate() if item_record else []
@@ -352,6 +359,9 @@ func change_scene(scene_path, is_transition = false, fade_out = false):
 		scenes_data[scene_path].transitions_count += 1
 	self.scene_path = scene_path
 	self.is_transition = is_transition
+	conversation_manager.stop_conversation(get_player())
+	cutscene_manager.clear_cutscene_node()
+	set_level_ready(false)
 	var gwp = get_game_window_parent() if fade_out else null
 	if gwp:
 		change_modulation(gwp, COLOR_WHITE, COLOR_BLACK)
@@ -394,6 +404,7 @@ func initiate_load(slot):
 
 	if ("scene_path" in d):
 		reset_variables()
+		story_node.reload_all_saves(slot)
 		slot_to_load_from = slot
 		scenes_data = d.scenes_data if ("scenes_data" in d) else {}
 		change_scene(d.scene_path)
@@ -544,7 +555,6 @@ func set_health(character, health_current, health_max):
 	emit_signal("health_changed", character.get_name_hint(), player_health_current, player_health_max)
 
 func game_over():
-	conversation_manager.stop_conversation(get_player())
 	change_scene("res://addons/palladium/ui/game_over.tscn", false, true)
 
 func set_oxygen(character, oxygen_current, oxygen_max):
@@ -721,9 +731,8 @@ func leave_party(name_hint):
 func register_player(player):
 	var name_hint = player.get_name_hint()
 	player_paths[name_hint] = player.get_path()
-	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	player.connect("crouching_changed", get_hud(), "on_crouching_changed")
-	player.set_look_transition()
+	player.set_look_transition_if_needed()
 	if characters_transition_data.has(name_hint):
 		set_character_data(characters_transition_data[name_hint], player)
 	emit_signal("player_registered", player)
@@ -855,7 +864,7 @@ func set_character_data(dd, character):
 		# because character.set_hidden() modifies the same collisions
 		character.kill_on_load()
 	
-	character.set_look_transition()
+	character.set_look_transition_if_needed()
 	return movement_data
 
 func restore_states():
@@ -867,7 +876,6 @@ func restore_states():
 func load_state(slot):
 	var hud = get_hud()
 	var movement_datas = []
-	story_node.reload_all_saves(slot)
 	
 	var f = File.new()
 	var error = f.open("user://saves/slot_%d/state.json" % slot, File.READ)

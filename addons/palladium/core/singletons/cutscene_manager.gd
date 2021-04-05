@@ -74,6 +74,7 @@ func restore_camera(player, conversation_name_prev = null, target_prev = null):
 # But sometimes it is needed to just clear cutscene node (for example, if your game is finished with a cutscene)
 func clear_cutscene_node():
 	cutscene_node = null
+	target = null
 	is_cutscene = false
 
 func get_cam():

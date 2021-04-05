@@ -20,10 +20,11 @@ func add_highlight(player_node):
 		return common_utils.get_action_input_control() + tr("ACTION_OPEN")
 	return ""
 
-func door_open(with_sound, update_state):
+func door_open(with_sound, update_state, immediately = false):
 	get_node("closed_door").disabled = true
 	get_node("opened_door").disabled = false
-	anim_player.play("ArmatureAction.001", -1, 0.35)
+	var sp = PLDGameState.SPEED_SCALE_INFINITY if immediately else 0.35
+	anim_player.play("ArmatureAction.001", -1, sp)
 	if with_sound:
 		$AudioStreamPlayer.play()
 	if update_state:
@@ -32,4 +33,4 @@ func door_open(with_sound, update_state):
 func restore_state():
 	var state = game_state.get_multistate_state(get_path())
 	if state == STATE_OPENED:
-		door_open(false, false)
+		door_open(false, false, true)

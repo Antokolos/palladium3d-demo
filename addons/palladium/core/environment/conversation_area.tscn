@@ -15,4 +15,8 @@ conversations = {
 "skeleton": ""
 }
 cutscene_node_path = null
+
+[node name="ConversationDelayTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="body_entered" from="." to="." method="_on_conversation_area_body_entered"]
+[connection signal="timeout" from="ConversationDelayTimer" to="." method="_on_ConversationDelayTimer_timeout"]

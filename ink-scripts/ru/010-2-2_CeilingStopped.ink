@@ -1,2 +1,2 @@
-Кажется потолок остановился, но что дальше, Макс?	# actor:player # voiceover:120_kazhetsya_potolok_ostanovilsya.ogg
+Кажется потолок остановился, но что дальше, Макс?	# actor:player # voiceover:2522_kazhetsya_potolok.ogg
 Надо подождать. Думаю, ловушка должна деактивироваться.	# actor:bandit # voiceover:15_nado_podozhdat.ogg

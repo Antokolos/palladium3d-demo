@@ -3,6 +3,8 @@ extends Label
 const COUNT_TORCHES = true
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		return
 	if not settings.performance_stats:
 		visible = false
 		return

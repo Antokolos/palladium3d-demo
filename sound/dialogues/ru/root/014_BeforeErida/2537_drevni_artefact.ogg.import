@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2537_drevni_artefact.ogg-99848bafe0981748df15b42b173c9dc1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/2537_drevni_artefact.ogg"
+dest_files=[ "res://.import/2537_drevni_artefact.ogg-99848bafe0981748df15b42b173c9dc1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

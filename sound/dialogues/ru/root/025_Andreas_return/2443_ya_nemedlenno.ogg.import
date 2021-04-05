@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2443_ya_nemedlenno.ogg-d6a8b41d0ff3d54c5e77eeb088075f13.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/2443_ya_nemedlenno.ogg"
+dest_files=[ "res://.import/2443_ya_nemedlenno.ogg-d6a8b41d0ff3d54c5e77eeb088075f13.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

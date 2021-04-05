@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2574_i_gde_zhe_vy.ogg-4eeef65011b5ed3e58d76c8171568c17.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/2574_i_gde_zhe_vy.ogg"
+dest_files=[ "res://.import/2574_i_gde_zhe_vy.ogg-4eeef65011b5ed3e58d76c8171568c17.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

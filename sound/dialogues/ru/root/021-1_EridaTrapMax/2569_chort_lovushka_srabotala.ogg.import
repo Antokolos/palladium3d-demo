@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2569_chort_lovushka_srabotala.ogg-e0756b139ad4220db211b2ec1d115f24.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-1_EridaTrapMax/2569_chort_lovushka_srabotala.ogg"
+dest_files=[ "res://.import/2569_chort_lovushka_srabotala.ogg-e0756b139ad4220db211b2ec1d115f24.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

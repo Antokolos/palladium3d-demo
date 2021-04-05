@@ -42,56 +42,70 @@ func change_stretch_ratio(conversation):
 	conversation_text_prev.set("size_flags_stretch_ratio", stretch_ratio)
 	conversation_text.set("size_flags_stretch_ratio", stretch_ratio)
 
-func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false):
+func discard_all_conversations(player):
+	pending_area_conversations.clear()
+	pending_conversation_timer.stop()
+	stop_conversation(player)
+
+func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false, exclusive = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
 			return
-		for conversation in pending_area_conversations:
-			if conversation_name == conversation.conversation_name:
-				return
-		pending_area_conversations.push_back(
-			{
-				"player" : player,
-				"conversation_name" : conversation_name,
-				"target" : null,
-				"initiator" : null,
-				"is_cutscene" : true,
-				"cutscene_node" : cutscene_node,
-				"repeatable" : repeatable
-			}
-		)
-		return
+		if exclusive:
+			discard_all_conversations(player)
+		else:
+			for conversation in pending_area_conversations:
+				if conversation_name == conversation.conversation_name:
+					return
+			pending_area_conversations.push_back(
+				{
+					"player" : player,
+					"conversation_name" : conversation_name,
+					"target" : null,
+					"initiator" : null,
+					"is_cutscene" : true,
+					"cutscene_node" : cutscene_node,
+					"repeatable" : repeatable
+				}
+			)
+			return
 	if repeatable or conversation_is_not_finished(conversation_name):
 		player.rest()
 		start_conversation(player, conversation_name, null, null, true, cutscene_node, repeatable)
 
-func start_area_conversation_with_companion(conversations_map, repeatable = false):
+func start_area_conversation_with_companion(conversations_map, repeatable = false, exclusive = false):
 	for name_hint in conversations_map.keys():
 		if game_state.is_in_party(name_hint):
-			start_area_conversation(conversations_map[name_hint], repeatable)
+			start_area_conversation(conversations_map[name_hint], repeatable, exclusive)
 			return
 
-func start_area_conversation(conversation_name, repeatable = false):
+func enable_conversation(conversation_name, enable):
+	story_node.enable_conversation(conversation_name + ".ink.json", enable)
+
+func start_area_conversation(conversation_name, repeatable = false, exclusive = false):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
-			return
-		for conversation in pending_area_conversations:
-			if conversation_name == conversation.conversation_name:
-				return
-		pending_area_conversations.push_back(
-			{
-				"player" : player,
-				"conversation_name" : conversation_name,
-				"target" : null,
-				"initiator" : null,
-				"is_cutscene" : false,
-				"cutscene_node" : null,
-				"repeatable" : repeatable
-			}
-		)
-		return false
+			return false
+		if exclusive:
+			discard_all_conversations(player)
+		else:
+			for conversation in pending_area_conversations:
+				if conversation_name == conversation.conversation_name:
+					return false
+			pending_area_conversations.push_back(
+				{
+					"player" : player,
+					"conversation_name" : conversation_name,
+					"target" : null,
+					"initiator" : null,
+					"is_cutscene" : false,
+					"cutscene_node" : null,
+					"repeatable" : repeatable
+				}
+			)
+			return false
 	if repeatable or conversation_is_not_finished(conversation_name):
 		start_conversation(player, conversation_name, null, null, false, null, repeatable)
 		return true
@@ -132,11 +146,14 @@ func stop_conversation(player):
 	previous_actor_name = null
 	#is_finalizing = false -- this had some troubles with the lipsync_manager, it is better to not touch it now
 	var hud = game_state.get_hud()
-	hud.conversation.visible = false
-	hud.show_game_ui(true)
+	if hud:
+		hud.conversation.visible = false
+		hud.show_game_ui(true)
 	if conversation_name_prev.find(MEETING_CONVERSATION_PREFIX) == 0:
 		emit_signal("meeting_finished", player, target_prev, initiator_prev)
-	player.get_cam().enable_use(true)
+	var cam = player.get_cam()
+	if cam:
+		cam.enable_use(true)
 	emit_signal("conversation_finished", player, conversation_name_prev, target_prev, initiator_prev, last_result)
 	start_pending_conversation_if_any()
 
@@ -225,6 +242,8 @@ func arrange_meeting(player, target, initiator, is_cutscene = false, cutscene_no
 func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null, repeatable = false):
 	if self.conversation_name == conversation_name:
 		return
+	if story_node.is_disabled(conversation_name + ".ink.json"):
+		return
 	if is_cutscene:
 		cutscene_manager.start_cutscene(player, cutscene_node, conversation_name, target)
 	else:
@@ -305,8 +324,15 @@ func story_choose(player, idx):
 			conversation_actor.text = tr(current_actor_name) + ": " if current_actor_name else ""
 			var vtags = get_vvalue(tags_dict)
 			if vtags and vtags.has("voiceover"):
+				# For simplicity, we are always using Russian text to autocreate lipsync
+				# To get more correct representation of English phonemes, you can use 'transcription' tag in the Ink file
+				# TODO: Alternatively, code for lipsync autocreation from English text should be written
+				var text = "" if vtags.has("no_lipsync") else texts["ru"] #get_vvalue(texts)
+				var transcription = vtags["transcription"] if vtags.has("transcription") and not vtags.has("no_lipsync") else null
 				var character = game_state.get_character(current_actor_name)
-				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"]) # no lipsync for choices
+				var pre_delay = float(tags["pre_delay"]) if tags and tags.has("pre_delay") else 0.0
+				var post_delay = float(tags["post_delay"]) if tags and tags.has("post_delay") else 0.0
+				has_sound = lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, transcription, pre_delay, post_delay)
 			change_stretch_ratio(conversation)
 		conversation.visible = settings.need_subtitles() or not has_sound
 		if not has_sound:
@@ -321,7 +347,10 @@ func proceed_story_immediately(player):
 		story_proceed(player)
 
 func story_proceed(player):
-	var conversation = game_state.get_hud().conversation
+	var hud = game_state.get_hud()
+	if not hud:
+		return
+	var conversation = hud.conversation
 	var has_voiceover = false
 	if story_node.can_continue():
 		var conversation_text = conversation.get_node("VBox/VBoxText/HBoxText/ConversationText")
@@ -343,9 +372,12 @@ func story_proceed(player):
 			# For simplicity, we are always using Russian text to autocreate lipsync
 			# To get more correct representation of English phonemes, you can use 'transcription' tag in the Ink file
 			# TODO: Alternatively, code for lipsync autocreation from English text should be written
-			var text = texts["ru"] #get_vvalue(texts)
-			var character = game_state.get_companion(current_actor_name)
-			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, vtags["transcription"] if vtags.has("transcription") else null)
+			var text = "" if vtags.has("no_lipsync") else texts["ru"] #get_vvalue(texts)
+			var transcription = vtags["transcription"] if vtags.has("transcription") and not vtags.has("no_lipsync") else null
+			var character = game_state.get_character(current_actor_name)
+			var pre_delay = float(tags["pre_delay"]) if tags and tags.has("pre_delay") else 0.0
+			var post_delay = float(tags["post_delay"]) if tags and tags.has("post_delay") else 0.0
+			lipsync_manager.play_sound_and_start_lipsync(character, conversation_name, target.name_hint if target else null, vtags["voiceover"], text, transcription, pre_delay, post_delay)
 		change_stretch_ratio(conversation)
 	var can_continue = not is_finalizing and story_node.can_continue()
 	var can_choose = not is_finalizing and story_node.can_choose()

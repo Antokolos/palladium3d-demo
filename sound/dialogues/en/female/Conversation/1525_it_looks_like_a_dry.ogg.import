@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1525_it_looks_like_a_dry.ogg-ebbfd63e3cf9b3f53a179586511ab738.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/1525_it_looks_like_a_dry.ogg"
+dest_files=[ "res://.import/1525_it_looks_like_a_dry.ogg-ebbfd63e3cf9b3f53a179586511ab738.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

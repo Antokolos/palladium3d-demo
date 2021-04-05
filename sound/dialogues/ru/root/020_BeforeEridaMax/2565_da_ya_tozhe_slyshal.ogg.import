@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2565_da_ya_tozhe_slyshal.ogg-a7ce2e0ea94e1b2bf94e8f15aa1aec28.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/2565_da_ya_tozhe_slyshal.ogg"
+dest_files=[ "res://.import/2565_da_ya_tozhe_slyshal.ogg-a7ce2e0ea94e1b2bf94e8f15aa1aec28.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

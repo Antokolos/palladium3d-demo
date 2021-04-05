@@ -7,12 +7,13 @@ const CONSONANTS_EXCLUSIONS =[          "Г", "Д",           "К",           "�
 const SPECIALS = ["Ь", "Ъ", "Й"]
 const STOPS = [".", "!", "?", ";", ":"]
 const MINIMUM_AUTO_ADVANCE_TIME_SEC = 1.8
-const PHRASE_PAUSE_TIMER_SCALE_COEF = 0.7
-const PHRASE_PAUSE_TIMER_MIN_S = 0.02
+const PRE_DELAY_TIMER_SCALE_COEF = 0.7
+const PRE_DELAY_TIMER_MIN_S = 0.02
+const POST_DELAY_TIMER_MIN_S = 0.01
 
 onready var audio_stream_player = $AudioStreamPlayer
-onready var short_phrase_timer = $ShortPhraseTimer
-onready var phrase_pause_timer = $PhrasePauseTimer
+onready var post_delay_timer = $PostDelayTimer
+onready var pre_delay_timer = $PreDelayTimer
 
 var current_speaker = null
 var current_phonetic = null
@@ -25,8 +26,8 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 
 func is_speaking():
 	return audio_stream_player.is_playing() \
-		or not short_phrase_timer.is_stopped() \
-		or not phrase_pause_timer.is_stopped()
+		or not post_delay_timer.is_stopped() \
+		or not pre_delay_timer.is_stopped()
 
 func stop_sound_and_lipsync(and_continue_conversation = true):
 	for character_speaker in game_state.get_characters():
@@ -38,11 +39,11 @@ func stop_sound_and_lipsync(and_continue_conversation = true):
 		audio_stream_player.stop()
 		was_speaking = true
 	audio_stream_player.stream = null
-	if not short_phrase_timer.is_stopped():
-		short_phrase_timer.stop()
+	if not post_delay_timer.is_stopped():
+		post_delay_timer.stop()
 		was_speaking = true
-	if not phrase_pause_timer.is_stopped():
-		phrase_pause_timer.stop()
+	if not pre_delay_timer.is_stopped():
+		pre_delay_timer.stop()
 		was_speaking = true
 	if was_speaking and and_continue_conversation:
 		continue_conversation()
@@ -53,7 +54,7 @@ func get_conversation_sound_path(conversation_name, target_name_hint = null):
 		return null
 	return "res://sound/dialogues/%s/%s/%s/" % [locale, target_name_hint if target_name_hint else "root", conversation_name]
 
-func play_sound_and_start_lipsync(character, conversation_name, target_name_hint, file_name, text = null, transcription = null):
+func play_sound_and_start_lipsync(character, conversation_name, target_name_hint, file_name, text = null, transcription = null, pre_delay_time_s = 0.0, post_delay_time_s = 0.0):
 	var conversation_sound_path = get_conversation_sound_path(conversation_name, target_name_hint)
 	if not conversation_sound_path:
 		return false
@@ -67,11 +68,26 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 	else:
 		return false
 	var length = stream.get_length()
-	short_phrase_timer.wait_time = 0.01 if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
+	post_delay_timer.wait_time = (
+		post_delay_time_s
+			if post_delay_time_s > 0.0
+			else (
+				POST_DELAY_TIMER_MIN_S
+					if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC
+					else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
+			)
+	)
 	audio_stream_player.stream = stream
 	current_speaker = character
 	current_phonetic = transcription if transcription else (text_to_phonetic(text.strip_edges()) if text else null)
-	phrase_pause_timer.start(randf() * PHRASE_PAUSE_TIMER_SCALE_COEF + PHRASE_PAUSE_TIMER_MIN_S)
+	pre_delay_timer.wait_time = (
+		pre_delay_time_s
+			if pre_delay_time_s > 0.0
+			else (
+				randf() * PRE_DELAY_TIMER_SCALE_COEF + PRE_DELAY_TIMER_MIN_S
+			)
+	)
+	pre_delay_timer.start()
 	return true
 
 func letter_vowel(letter):
@@ -125,9 +141,9 @@ func _on_AudioStreamPlayer_finished():
 		return
 	var length = audio_stream_player.stream.get_length()
 	if audio_stream_player.get_playback_position() >= length:
-		short_phrase_timer.start()
+		post_delay_timer.start()
 
-func _on_ShortPhraseTimer_timeout():
+func _on_PostDelayTimer_timeout():
 	continue_conversation()
 
 func continue_conversation():
@@ -145,7 +161,7 @@ func continue_conversation():
 	else:
 		conversation_manager.stop_conversation(player)
 
-func _on_PhrasePauseTimer_timeout():
+func _on_PreDelayTimer_timeout():
 	if not audio_stream_player.stream:
 		return
 	audio_stream_player.play()

@@ -14,6 +14,7 @@ shader_param/uv_offset_scale = Vector2( 16, 16 )
 shader_param/uv_offset_time_scale = 0.05
 shader_param/uv_offset_amplitude = 0.2
 shader_param/texture_scale = Vector2( 256, 256 )
+shader_param/use_refraction = false
 shader_param/refraction = 0.05
 shader_param/use_proximity_fade = true
 shader_param/proximity_fade_distance = 1.1

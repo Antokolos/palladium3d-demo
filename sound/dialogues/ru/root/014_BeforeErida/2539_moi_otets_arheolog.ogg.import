@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2539_moi_otets_arheolog.ogg-b5d08232e296cd9c063dcdd23c7f89f6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/2539_moi_otets_arheolog.ogg"
+dest_files=[ "res://.import/2539_moi_otets_arheolog.ogg-b5d08232e296cd9c063dcdd23c7f89f6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

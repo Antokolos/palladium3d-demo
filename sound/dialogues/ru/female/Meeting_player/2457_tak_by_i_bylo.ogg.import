@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2457_tak_by_i_bylo.ogg-ed2b9e55c51b23fae03666fb243362df.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2457_tak_by_i_bylo.ogg"
+dest_files=[ "res://.import/2457_tak_by_i_bylo.ogg-ed2b9e55c51b23fae03666fb243362df.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

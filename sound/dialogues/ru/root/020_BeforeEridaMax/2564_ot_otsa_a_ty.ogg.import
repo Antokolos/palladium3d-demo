@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2564_ot_otsa_a_ty.ogg-66ffe65d91b0eb1913448ae32ab188de.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/2564_ot_otsa_a_ty.ogg"
+dest_files=[ "res://.import/2564_ot_otsa_a_ty.ogg-66ffe65d91b0eb1913448ae32ab188de.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

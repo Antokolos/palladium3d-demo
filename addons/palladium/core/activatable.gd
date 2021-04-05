@@ -44,7 +44,7 @@ func change_state(new_state):
 	game_state.set_activatable_state(get_path(), new_state)
 	emit_signal("state_changed", self, previous_state, new_state)
 
-func activate(and_change_state = true):
+func activate(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.ACTIVATED)
 
@@ -66,7 +66,7 @@ func is_deactivated():
 		_:
 			return false
 
-func deactivate(and_change_state = true):
+func deactivate(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.DEACTIVATED)
 
@@ -88,7 +88,7 @@ func is_paused():
 		_:
 			return false
 
-func pause(and_change_state = true):
+func pause(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.PAUSED)
 
@@ -108,40 +108,40 @@ func is_final_destination():
 			push_warning("Unknown activatable state: " + str(state))
 			return false
 
-func activate_forever(and_change_state = true):
+func activate_forever(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.ACTIVATED_FOREVER)
 
-func deactivate_forever(and_change_state = true):
+func deactivate_forever(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.DEACTIVATED_FOREVER)
 
-func pause_forever(and_change_state = true):
+func pause_forever(and_change_state = true, is_restoring = false):
 	if and_change_state and not is_final_destination():
 		change_state(PLDGameState.ActivatableState.PAUSED_FOREVER)
 
 func restore_state():
 	var state = get_activatable_state()
-	restore_from_state(state)
+	restore_from_state(state, true)
 
-func restore_from_state(state):
+func restore_from_state(state, is_restoring = false):
 	match state:
 		PLDGameState.ActivatableState.DEFAULT:
 			if default_state == PLDGameState.ActivatableState.DEFAULT:
 				push_error("Activatable default state is set to Default")
 			else:
-				restore_from_state(default_state)
+				restore_from_state(default_state, is_restoring)
 		PLDGameState.ActivatableState.ACTIVATED:
-			activate(false)
+			activate(false, is_restoring)
 		PLDGameState.ActivatableState.DEACTIVATED:
-			deactivate(false)
+			deactivate(false, is_restoring)
 		PLDGameState.ActivatableState.PAUSED:
-			pause(false)
+			pause(false, is_restoring)
 		PLDGameState.ActivatableState.ACTIVATED_FOREVER:
-			activate_forever(false)
+			activate_forever(false, is_restoring)
 		PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
-			deactivate_forever(false)
+			deactivate_forever(false, is_restoring)
 		PLDGameState.ActivatableState.PAUSED_FOREVER:
-			pause_forever(false)
+			pause_forever(false, is_restoring)
 		_:
 			push_warning("Unknown activatable state: " + str(state))

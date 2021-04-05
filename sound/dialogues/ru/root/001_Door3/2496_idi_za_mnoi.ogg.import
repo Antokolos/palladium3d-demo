@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2496_idi_za_mnoi.ogg-d2b7e49a3c30a6663af4646862899b84.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/2496_idi_za_mnoi.ogg"
+dest_files=[ "res://.import/2496_idi_za_mnoi.ogg-d2b7e49a3c30a6663af4646862899b84.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

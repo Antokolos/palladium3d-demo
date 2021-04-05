@@ -46,7 +46,10 @@ func use_lootable(player_node, lootable):
 	match takable_id:
 		DB.TakableIds.COIN:
 			if game_state.is_in_party(CHARS.BANDIT_NAME_HINT):
-				conversation_manager.start_area_conversation("193_some_gold_after_all")
+				if game_state.is_in_party(CHARS.PLAYER_NAME_HINT):
+					conversation_manager.start_area_conversation("193_some_gold_after_all")
+				else:
+					conversation_manager.enable_conversation("193_some_gold_after_all", false)
 
 func use_takable(player_node, takable, parent, was_taken):
 	var takable_id = takable.takable_id
@@ -232,7 +235,7 @@ func _on_AreaApata_body_entered(body):
 		female.play_cutscene(FemaleModel.FEMALE_CUTSCENE_TAKES_APATA)
 		var chest = get_node("Apata_room/apata_chest")
 		if chest.is_opened():
-			chest.close(false, PLDItemContainer.SPEED_SCALE_INFINITY)
+			chest.close(false, PLDGameState.SPEED_SCALE_INFINITY)
 		conversation_manager.start_area_cutscene("009_ApataTrap", get_node("ApataCutscenePosition"))
 
 func _on_ApataTakeTimer_timeout():

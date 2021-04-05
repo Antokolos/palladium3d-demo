@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2511_ya_nadeyus.ogg-ad6fc96bdc8612dc7b1ec15434d3a3dc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/2511_ya_nadeyus.ogg"
+dest_files=[ "res://.import/2511_ya_nadeyus.ogg-ad6fc96bdc8612dc7b1ec15434d3a3dc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

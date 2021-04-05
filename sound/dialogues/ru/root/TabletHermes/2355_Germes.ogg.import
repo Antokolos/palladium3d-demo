@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2355_Germes.ogg-0fd30832acac9a98a106ccc572f8bbc0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/TabletHermes/2355_Germes.ogg"
+dest_files=[ "res://.import/2355_Germes.ogg-0fd30832acac9a98a106ccc572f8bbc0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

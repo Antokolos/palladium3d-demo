@@ -28,16 +28,16 @@ func do_rest_shot(shot_idx):
 	return false
 
 func is_speak_active():
-	return $AnimationTree.get("parameters/SpeakShot/active")
+	return animation_tree.get("parameters/SpeakShot/active")
 
 func do_speak_shot(shot_idx):
-	$AnimationTree.set("parameters/SpeakTransition/current", shot_idx)
-	$AnimationTree.set("parameters/SpeakShot/active", true)
+	animation_tree.set("parameters/SpeakTransition/current", shot_idx)
+	animation_tree.set("parameters/SpeakShot/active", true)
 	if backpack_animation_player and backpack_speak_animations.has(shot_idx):
 		backpack_animation_player.play(backpack_speak_animations[shot_idx])
 
 func stop_speak_shot():
-	$AnimationTree.set("parameters/SpeakShot/active", false)
+	animation_tree.set("parameters/SpeakShot/active", false)
 
 func play_cutscene(cutscene_id):
 	.play_cutscene(cutscene_id)
@@ -45,9 +45,10 @@ func play_cutscene(cutscene_id):
 		backpack_animation_player.play(backpack_cutscene_animations[cutscene_id])
 
 func set_transition_lips(t):
-	var transition = $AnimationTree.get("parameters/Transition_Lips/current")
+	animation_tree.set("parameters/Blend2_Lips/blend_amount", 1.0 if t > 0 else 0.0)
+	var transition = animation_tree.get("parameters/Transition_Lips/current")
 	if transition != t:
-		$AnimationTree.set("parameters/Transition_Lips/current", t)
+		animation_tree.set("parameters/Transition_Lips/current", t)
 
 func get_lips_transition_by_phoneme(phoneme):
 	var p = phoneme.to_upper()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://assets/male.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/male_model.gd" type="Script" id=2]
@@ -85,7 +85,7 @@ input_2/name = "state 2"
 input_2/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=15]
-input_count = 4
+input_count = 5
 xfade_time = 0.5
 input_0/name = "look"
 input_0/auto_advance = false
@@ -95,6 +95,8 @@ input_2/name = "run"
 input_2/auto_advance = false
 input_3/name = "crouch"
 input_3/auto_advance = false
+input_4/name = "fall"
+input_4/auto_advance = false
 
 [sub_resource type="AnimationNodeTransition" id=16]
 input_count = 18
@@ -208,53 +210,56 @@ animation = "male_death_last_frame"
 [sub_resource type="AnimationNodeAnimation" id=40]
 animation = "male_empty"
 
-[sub_resource type="AnimationNodeAnimation" id=41]
-animation = "male_death"
+[sub_resource type="AnimationNodeAnimation" id=58]
+animation = "male_falls_down_trap"
 
 [sub_resource type="AnimationNodeAnimation" id=42]
-animation = "male_handshake_bandit"
+animation = "male_death"
 
 [sub_resource type="AnimationNodeAnimation" id=43]
-animation = "male_handshake_female"
+animation = "male_handshake_bandit"
 
 [sub_resource type="AnimationNodeAnimation" id=44]
-animation = "male_headturn_left"
+animation = "male_handshake_female"
 
 [sub_resource type="AnimationNodeAnimation" id=45]
-animation = "male_headturn_right"
+animation = "male_headturn_left"
 
 [sub_resource type="AnimationNodeAnimation" id=46]
-animation = "male_injury"
+animation = "male_headturn_right"
 
 [sub_resource type="AnimationNodeAnimation" id=47]
-animation = "male_kiss"
-
-[sub_resource type="AnimationNodeAnimation" id=48]
-animation = "male_rest"
-
-[sub_resource type="AnimationNodeAnimation" id=49]
 animation = "male_injury"
 
+[sub_resource type="AnimationNodeAnimation" id=48]
+animation = "male_kiss"
+
+[sub_resource type="AnimationNodeAnimation" id=49]
+animation = "male_rest"
+
 [sub_resource type="AnimationNodeAnimation" id=50]
-animation = "male_pushes_chest"
+animation = "male_injury"
 
 [sub_resource type="AnimationNodeAnimation" id=51]
-animation = "male_squats"
+animation = "male_pushes_chest"
 
 [sub_resource type="AnimationNodeAnimation" id=52]
-animation = "male_squat_rest"
+animation = "male_squats"
 
 [sub_resource type="AnimationNodeAnimation" id=53]
-animation = "male_squats_reversed"
+animation = "male_squat_rest"
 
 [sub_resource type="AnimationNodeAnimation" id=54]
-animation = "male_walks"
+animation = "male_squats_reversed"
 
 [sub_resource type="AnimationNodeAnimation" id=55]
+animation = "male_walks"
+
+[sub_resource type="AnimationNodeAnimation" id=56]
 animation = "male_crouches_squatted"
 
-[sub_resource type="AnimationNodeBlendTree" id=56]
-graph_offset = Vector2( 3371.46, 317.5 )
+[sub_resource type="AnimationNodeBlendTree" id=57]
+graph_offset = Vector2( -143.971, -403.558 )
 nodes/AliveTransition/node = SubResource( 1 )
 nodes/AliveTransition/position = Vector2( 4000, 260 )
 nodes/Animation/node = SubResource( 2 )
@@ -334,51 +339,50 @@ nodes/b9/position = Vector2( 2840, 1420 )
 nodes/dead/node = SubResource( 39 )
 nodes/dead/position = Vector2( 3720, 360 )
 nodes/empty/node = SubResource( 40 )
-nodes/empty/position = Vector2( 2180, 260 )
-nodes/fatal/node = SubResource( 41 )
+nodes/empty/position = Vector2( 1980, 260 )
+nodes/fall/node = SubResource( 58 )
+nodes/fall/position = Vector2( 120, 100 )
+nodes/fatal/node = SubResource( 42 )
 nodes/fatal/position = Vector2( 3760, 520 )
-nodes/handshake_bandit/node = SubResource( 42 )
-nodes/handshake_bandit/position = Vector2( 2120, 520 )
-nodes/handshake_female/node = SubResource( 43 )
-nodes/handshake_female/position = Vector2( 2120, 640 )
-nodes/headturn_left/node = SubResource( 44 )
-nodes/headturn_left/position = Vector2( 260, 280 )
-nodes/headturn_right/node = SubResource( 45 )
-nodes/headturn_right/position = Vector2( 260, 140 )
-nodes/jumpscare/node = SubResource( 46 )
+nodes/handshake_bandit/node = SubResource( 43 )
+nodes/handshake_bandit/position = Vector2( 1920, 500 )
+nodes/handshake_female/node = SubResource( 44 )
+nodes/handshake_female/position = Vector2( 1920, 620 )
+nodes/headturn_left/node = SubResource( 45 )
+nodes/headturn_left/position = Vector2( 260, 340 )
+nodes/headturn_right/node = SubResource( 46 )
+nodes/headturn_right/position = Vector2( 260, 220 )
+nodes/jumpscare/node = SubResource( 47 )
 nodes/jumpscare/position = Vector2( 3760, 640 )
-nodes/kiss/node = SubResource( 47 )
-nodes/kiss/position = Vector2( 2220, 780 )
-nodes/look/node = SubResource( 48 )
+nodes/kiss/node = SubResource( 48 )
+nodes/kiss/position = Vector2( 2000, 740 )
+nodes/look/node = SubResource( 49 )
 nodes/look/position = Vector2( -700, -740 )
-nodes/normal/node = SubResource( 49 )
+nodes/normal/node = SubResource( 50 )
 nodes/normal/position = Vector2( 3760, 760 )
 nodes/output/position = Vector2( 4500, 260 )
-nodes/player_pushes_chest/node = SubResource( 50 )
-nodes/player_pushes_chest/position = Vector2( 2140, 400 )
-nodes/sit_down/node = SubResource( 51 )
+nodes/player_pushes_chest/node = SubResource( 51 )
+nodes/player_pushes_chest/position = Vector2( 1940, 380 )
+nodes/sit_down/node = SubResource( 52 )
 nodes/sit_down/position = Vector2( -200, -460 )
-nodes/squat_rest/node = SubResource( 52 )
+nodes/squat_rest/node = SubResource( 53 )
 nodes/squat_rest/position = Vector2( -220, -340 )
-nodes/stand_up/node = SubResource( 53 )
+nodes/stand_up/node = SubResource( 54 )
 nodes/stand_up/position = Vector2( -160, -760 )
-nodes/walk/node = SubResource( 54 )
+nodes/walk/node = SubResource( 55 )
 nodes/walk/position = Vector2( 200, -260 )
-nodes/walk_squat/node = SubResource( 55 )
+nodes/walk_squat/node = SubResource( 56 )
 nodes/walk_squat/position = Vector2( 100, -20 )
-node_connections = [ "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "CutsceneTransition", 2, "handshake_bandit", "CutsceneTransition", 3, "handshake_female", "CutsceneTransition", 4, "kiss", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "AliveTransition", 0, "Blend2_Lips", "AliveTransition", 1, "dead", "DamageShot", 0, "AliveTransition", "DamageShot", 1, "DamageTransition", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "DamageTransition", 0, "fatal", "DamageTransition", 1, "jumpscare", "DamageTransition", 2, "normal", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "RestTransition", 0, "alt_rest1", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "output", 0, "DamageShot" ]
+node_connections = [ "output", 0, "DamageShot", "Blend2_Head", 0, "Blend2_Aux", "Blend2_Head", 1, "headturn_left", "Blend2_Lips", 0, "CutsceneShot", "Blend2_Lips", 1, "Transition_Lips", "CutsceneTransition", 0, "empty", "CutsceneTransition", 1, "player_pushes_chest", "CutsceneTransition", 2, "handshake_bandit", "CutsceneTransition", 3, "handshake_female", "CutsceneTransition", 4, "kiss", "DamageTransition", 0, "fatal", "DamageTransition", 1, "jumpscare", "DamageTransition", 2, "normal", "DamageShot", 0, "AliveTransition", "DamageShot", 1, "DamageTransition", "AliveTransition", 0, "Blend2_Lips", "AliveTransition", 1, "dead", "Blend2_Aux", 0, "Transition", "Blend2_Aux", 1, "headturn_right", "LookTransition", 0, "stand_up", "LookTransition", 1, "SpeakShot", "LookTransition", 2, "sit_down", "LookTransition", 3, "squat_rest", "RestShot", 0, "Blend2_Head", "RestShot", 1, "RestTransition", "CutsceneShot", 0, "RestShot", "CutsceneShot", 1, "CutsceneTransition", "SpeakShot", 0, "look", "SpeakShot", 1, "SpeakTransition", "Transition_Lips", 0, "b0", "Transition_Lips", 1, "b1", "Transition_Lips", 2, "b2", "Transition_Lips", 3, "b3", "Transition_Lips", 4, "b4", "Transition_Lips", 5, "b5", "Transition_Lips", 6, "b6", "Transition_Lips", 7, "b7", "Transition_Lips", 8, "b8", "Transition_Lips", 9, "b9", "Transition_Lips", 10, "b10", "Transition_Lips", 11, "b11", "Transition_Lips", 12, "b12", "Transition_Lips", 13, "b13", "Transition_Lips", 14, "b14", "Transition_Lips", 15, "b15", "Transition_Lips", 16, "b16", "Transition_Lips", 17, "b17", "RestTransition", 0, "alt_rest1", "SpeakTransition", 0, "alt_speak1", "SpeakTransition", 1, "alt_speak2", "SpeakTransition", 2, "alt_speak3", "Transition", 0, "LookTransition", "Transition", 1, "walk", "Transition", 2, "Animation", "Transition", 3, "walk_squat", "Transition", 4, "fall" ]
 
-[node name="male" index="0" instance=ExtResource( 1 )]
+[node name="male" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 main_skeleton = "Male_palladium"
 rest_shots_max = 1
 speak_shots_max = 3
 
-[node name="Male_palladium" parent="." index="0"]
-bones/77/bound_children = [ NodePath("spine01BoneAttachment") ]
-
 [node name="spine01BoneAttachment" parent="Male_palladium" index="1"]
-transform = Transform( 1, 6.70552e-08, 8.3819e-08, -5.7742e-08, -0.289161, -0.957281, 8.3819e-09, 0.957281, -0.28916, 0.0399999, 15.1748, -0.536099 )
+transform = Transform( 1, -0.000617769, 0.000208478, -1.86823e-06, -0.322239, -0.946659, 0.00065204, 0.946659, -0.322238, 0.0401915, 15.1634, -0.460129 )
 
 [node name="backpack" parent="Male_palladium/spine01BoneAttachment/backpack_Armature" index="1"]
 layers = 1029
@@ -411,7 +415,7 @@ layers = 1027
 layers = 1027
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
-tree_root = SubResource( 56 )
+tree_root = SubResource( 57 )
 anim_player = NodePath("../Male_palladium/AnimationPlayer")
 active = true
 parameters/AliveTransition/current = 0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2577_a_ya_dobudu.ogg-01413b5638bb6f67f562f6a29f974a50.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022-1_DemoFinishedMax/2577_a_ya_dobudu.ogg"
+dest_files=[ "res://.import/2577_a_ya_dobudu.ogg-01413b5638bb6f67f562f6a29f974a50.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

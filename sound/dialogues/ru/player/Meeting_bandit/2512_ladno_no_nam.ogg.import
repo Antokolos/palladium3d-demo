@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2512_ladno_no_nam.ogg-0584f37a23e0c7f2cc599e8013a5102d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/2512_ladno_no_nam.ogg"
+dest_files=[ "res://.import/2512_ladno_no_nam.ogg-0584f37a23e0c7f2cc599e8013a5102d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

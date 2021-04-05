@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Xenia, what is written here? ",{"#":"actor:player"},"\n","^Ares. ",{"#":"actor:female"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Xenia, what is written here? ",{"#":"actor:player"},{"#":"voiceover:2329_Xenia_what_is_written.ogg"},"\n","^Ares. ",{"#":"actor:female"},{"#":"voiceover:2356_Eris.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

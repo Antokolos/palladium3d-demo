@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2470_chort_znaet_chto.ogg-32576d2bb59bd5c07ec7e664fedf09b8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2470_chort_znaet_chto.ogg"
+dest_files=[ "res://.import/2470_chort_znaet_chto.ogg-32576d2bb59bd5c07ec7e664fedf09b8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

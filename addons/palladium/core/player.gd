@@ -224,6 +224,9 @@ func get_movement_data(is_player):
 		return .get_movement_data(is_player)
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		character_nodes.stop_all()
+		return
 	if not is_activated() or is_hidden():
 		return
 	var is_player = is_player()

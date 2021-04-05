@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2025_i_have_no_ideas.ogg-84a28f6e51aed6a1b0540cba4700ee6f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/2025_i_have_no_ideas.ogg"
+dest_files=[ "res://.import/2025_i_have_no_ideas.ogg-84a28f6e51aed6a1b0540cba4700ee6f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2471_chto_ty_zdes.ogg-cb70bd2e62b4e745d9e4b7081861d052.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/2471_chto_ty_zdes.ogg"
+dest_files=[ "res://.import/2471_chto_ty_zdes.ogg-cb70bd2e62b4e745d9e4b7081861d052.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

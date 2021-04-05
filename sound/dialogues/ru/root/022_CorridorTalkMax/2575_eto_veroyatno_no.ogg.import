@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2575_eto_veroyatno_no.ogg-5b88050d103abccf441b0b080f0b74fe.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/2575_eto_veroyatno_no.ogg"
+dest_files=[ "res://.import/2575_eto_veroyatno_no.ogg-5b88050d103abccf441b0b080f0b74fe.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -133,6 +133,8 @@ func restore_state():
 		flashlight.show()
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	# ----------------------------------
 	# Turning the flashlight on/off
 	if flashlight \

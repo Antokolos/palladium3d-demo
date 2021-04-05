@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2510_Maks_ty_tozhe.ogg-f2729f86a6852a904a7b8f3625616696.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/2510_Maks_ty_tozhe.ogg"
+dest_files=[ "res://.import/2510_Maks_ty_tozhe.ogg-f2729f86a6852a904a7b8f3625616696.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

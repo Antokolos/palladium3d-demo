@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2472_eto_shantazh.ogg-84bd086c34bea0472bf5884a0857fb40.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/2472_eto_shantazh.ogg"
+dest_files=[ "res://.import/2472_eto_shantazh.ogg-84bd086c34bea0472bf5884a0857fb40.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2573_ty_uveren.ogg-0c00c8d223939b450164ea748eca8ed2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/022_CorridorTalkMax/2573_ty_uveren.ogg"
+dest_files=[ "res://.import/2573_ty_uveren.ogg-0c00c8d223939b450164ea748eca8ed2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

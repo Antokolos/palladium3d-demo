@@ -13,6 +13,7 @@ uniform sampler2D texturemap : hint_albedo;
 uniform vec2 texture_scale = vec2(8.0, 4.0);
 
 uniform sampler2D normalmap : hint_normal;
+uniform bool use_refraction = true;
 uniform float refraction = 0.05;
 uniform bool use_proximity_fade = true;
 uniform float proximity_fade_distance = 1.1;
@@ -49,7 +50,7 @@ void fragment() {
 	
 	/* It seems that refraction cannot be used together with proximity fade under GLES2 :( */
 	// Refraction
-	if (!OUTPUT_IS_SRGB || !use_proximity_fade) {
+	if (use_refraction && (!OUTPUT_IS_SRGB || !use_proximity_fade)) {
 		vec3 ref_normal = normalize( mix(NORMAL,TANGENT * NORMALMAP.x + BINORMAL * NORMALMAP.y + NORMAL * NORMALMAP.z,NORMALMAP_DEPTH) );
 		vec2 ref_ofs = SCREEN_UV - ref_normal.xy * refraction;
 		EMISSION += textureLod(SCREEN_TEXTURE,ref_ofs,ROUGHNESS * 8.0).rgb * (1.0 - ALPHA);

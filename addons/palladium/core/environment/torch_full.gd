@@ -58,6 +58,8 @@ func restore_state():
 	enable(active, false)
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		return
 	if not torch_light.visible or persistent:
 		raycast.enabled = false
 		return

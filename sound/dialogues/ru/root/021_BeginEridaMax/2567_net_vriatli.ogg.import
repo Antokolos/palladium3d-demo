@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2567_net_vriatli.ogg-0f1f03fab2ca1312cbdfd788589b862b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021_BeginEridaMax/2567_net_vriatli.ogg"
+dest_files=[ "res://.import/2567_net_vriatli.ogg-0f1f03fab2ca1312cbdfd788589b862b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

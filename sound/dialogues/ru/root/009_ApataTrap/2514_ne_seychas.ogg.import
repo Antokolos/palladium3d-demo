@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2514_ne_seychas.ogg-b6f882632ca918340faae2a86229d716.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/2514_ne_seychas.ogg"
+dest_files=[ "res://.import/2514_ne_seychas.ogg-b6f882632ca918340faae2a86229d716.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -317,6 +317,7 @@ func has_path():
 func build_path(target_position):
 	var current_position = get_global_transform().origin
 	var mov_vec = target_position - current_position
+	var is_far_away = mov_vec.length() > MAX_RANGE
 	mov_vec.y = 0
 	if in_party:
 		if mov_vec.length() < CLOSEUP_RANGE - ALIGNMENT_RANGE:
@@ -329,7 +330,7 @@ func build_path(target_position):
 			if mov_pt.length() <= mov_vec.length():
 				break
 			path.pop_back()
-	if has_collisions() and path.empty(): # should check possible stuck
+	if (is_far_away or has_collisions()) and path.empty(): # should check possible stuck
 		#clear_path()
 		update_navpath(current_position, target_position)
 

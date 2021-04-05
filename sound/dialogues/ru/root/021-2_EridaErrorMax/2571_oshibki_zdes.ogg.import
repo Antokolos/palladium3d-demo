@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2571_oshibki_zdes.ogg-3a6244a656dd92ee018bd9083aa40d90.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-2_EridaErrorMax/2571_oshibki_zdes.ogg"
+dest_files=[ "res://.import/2571_oshibki_zdes.ogg-3a6244a656dd92ee018bd9083aa40d90.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

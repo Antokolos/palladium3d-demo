@@ -1,7 +1,7 @@
-Ксения, что здесь написано?	# actor:player # voiceover:115_Xenia_chto_zdes_napisano.ogg
+Ксения, что здесь написано?	# actor:player # voiceover:2517_Ksenia_chto_zdes.ogg
 На стене написано: «Раскрой обман и восстанови истину». На пьедестале где статуэтка со сферой: «Театр», рядом – «Астрономия» и под статуэткой с маской – «История».	# actor:female # voiceover:214_na_stene_napisano.ogg
 + +	[Ты знаешь что-то об этих статуэтках?]
-	Ты знаешь что-то об этих статуэтках?	# actor:player # voiceover:117_ty_znaesh_chto_to.ogg
+	Ты знаешь что-то об этих статуэтках?	# actor:player # voiceover:2519_ty_znaesh_chto_to.ogg
 	Похоже статуэтки изображают муз. Всего их двенадцать, но здесь только три. Покровительница театра – Мельпомена, астрономии – Урания, истории – Клио. Точно не помню у кого какие должны быть атрибуты, но мне кажется музы стоят не на своих пьедесталах.	# actor:female # voiceover:215_pohozhe_statuetki_izobrazhayut.ogg
 + +	[Ясно.]
-	Ясно.	# actor:player # voiceover:116_yasno.ogg
+	Ясно.	# actor:player # voiceover:2518_yasno.ogg

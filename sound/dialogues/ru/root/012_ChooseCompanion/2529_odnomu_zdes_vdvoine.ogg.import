@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2529_odnomu_zdes_vdvoine.ogg-63b1cec44a86947b008fb2f83d78ce0e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/2529_odnomu_zdes_vdvoine.ogg"
+dest_files=[ "res://.import/2529_odnomu_zdes_vdvoine.ogg-63b1cec44a86947b008fb2f83d78ce0e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

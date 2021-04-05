@@ -108,25 +108,25 @@ func return_fake_palladium():
 	if state == STATE_MOVED_DOWN:
 		set_state(STATE_MOVING_UP_FAKE)
 
-func rotate_postament():
+func rotate_postament(speed_scale = 1.0):
 	if already_rotated:
 		return
 	player_pedestal.play()
-	postament_anim_player.play("postament_180")
-	hatch_anim_player.play("Armature.034Action")
+	postament_anim_player.play("postament_180", -1, speed_scale)
+	hatch_anim_player.play("Armature.034Action", -1, speed_scale)
 
-func set_state(new_state):
+func set_state(new_state, speed_scale = 1.0):
 	state = new_state
 	game_state.set_multistate_state(get_path(), new_state)
 	match state:
 		STATE_READY:
-			rotate_postament()
+			rotate_postament(speed_scale)
 		STATE_MOVING_DOWN:
 			palladium_fake.visible = true
-			postament_anim_player.play("postament_moves_down")
+			postament_anim_player.play("postament_moves_down", -1, speed_scale)
 			player_pedestal.play()
 		STATE_MOVED_DOWN:
-			hatch_anim_player.play_backwards("Armature.034Action")
+			hatch_anim_player.play("Armature.034Action", -1, -speed_scale, true)
 			player_hatch.play()
 			player_processing.play()
 		STATE_PREPARING_REAL:
@@ -135,17 +135,17 @@ func set_state(new_state):
 		STATE_MOVING_UP_REAL, STATE_MOVING_UP_FAKE:
 			palladium_real.visible = (state == STATE_MOVING_UP_REAL)
 			palladium_fake.visible = (state == STATE_MOVING_UP_FAKE)
-			hatch_anim_player.play("Armature.034Action")
-			postament_anim_player.play_backwards("postament_moves_down")
+			hatch_anim_player.play("Armature.034Action", -1, speed_scale)
+			postament_anim_player.play("postament_moves_down", -1, -speed_scale, true)
 			player_pedestal.play()
 		STATE_MOVED_UP_REAL, STATE_MOVED_UP_FAKE:
 			palladium_real.visible = (state == STATE_MOVED_UP_REAL)
 			palladium_fake.visible = (state == STATE_MOVED_UP_FAKE)
-			rotate_postament()
+			rotate_postament(speed_scale)
 			if palladium_real.visible:
 				conversation_manager.start_area_conversation("175-5_Palladium")
 		STATE_FINISHED_REAL, STATE_FINISHED_FAKE, STATE_FINISHED_EMPTY:
-			rotate_postament()
+			rotate_postament(speed_scale)
 
 func restore_state():
-	set_state(game_state.get_multistate_state(get_path()))
+	set_state(game_state.get_multistate_state(get_path()), PLDGameState.SPEED_SCALE_INFINITY)

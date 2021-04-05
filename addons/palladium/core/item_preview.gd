@@ -101,6 +101,8 @@ func _input(event):
 					angle_rad_y = 0
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	if item_holder_node.get_child_count() > 0:
 		item_holder_node.rotate_x(angle_rad_x)
 		item_holder_node.rotate_y(angle_rad_y)

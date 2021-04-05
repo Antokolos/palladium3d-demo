@@ -7,12 +7,12 @@ const INJURY_RATE = 20
 
 onready var character = get_parent()
 
-onready var cutscene_timer = $CutsceneTimer
 onready var oxygen_timer = $OxygenTimer
 onready var poison_timer = $PoisonTimer
 onready var stun_timer = $StunTimer
 onready var attack_timer = $AttackTimer
 onready var rest_timer = $RestTimer
+onready var fall_timer = $FallTimer
 
 onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
@@ -78,7 +78,7 @@ func add_ray_to_character(another_character):
 	r.set_collision_mask_bit(1, true)
 	r.set_collision_mask_bit(2, true)
 	r.set_collision_mask_bit(10, true)
-	r.set_collision_mask_bit(13, true)
+	r.set_collision_mask_bit(13, false) # Obstacles is NOT a collision
 	rays_to_characters.add_child(r)
 	update_ray_to_character(another_character, r)
 	return r
@@ -100,9 +100,6 @@ func enable_rays_to_character(another_character, enable):
 		r.enabled = enable
 		return true
 	return false
-
-func start_cutscene_timer():
-	cutscene_timer.start()
 
 func play_walking_sound(is_sprinting):
 	if not sound_player_walking.is_playing():
@@ -194,12 +191,15 @@ func play_attack_sound():
 func play_sound_miss():
 	sound_player_miss.play()
 
-func attack_start():
+func attack_start(immediately = false):
 # TODO: Check it is OK
 #	if not character.is_activated():
 #		return
 	if not is_attacking():
-		attack_timer.start()
+		if immediately:
+			_on_AttackTimer_timeout()
+		else:
+			attack_timer.start()
 
 func stop_attack():
 	if is_attacking():
@@ -211,6 +211,21 @@ func start_rest_timer():
 
 func stop_rest_timer():
 	rest_timer.stop()
+
+func start_fall_timer():
+	if fall_timer.is_stopped():
+		fall_timer.start()
+
+func stop_fall_timer():
+	fall_timer.stop()
+
+func stop_all():
+	stop_rest_timer()
+	stop_fall_timer()
+	stop_attack()
+	stun_timer.stop()
+	poison_timer.stop()
+	oxygen_timer.stop()
 
 func enable_areas(enable):
 	standing_area.get_node("CollisionShape").disabled = not enable
@@ -224,11 +239,8 @@ func is_low_ceiling():
 	return standing_area.get_overlapping_bodies().size() > 0
 
 func _on_HealTimer_timeout():
-	if character.is_player():
+	if character.is_player() and game_state.is_level_ready():
 		game_state.set_health(character, game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
-
-func _on_CutsceneTimer_timeout():
-	character.set_look_transition(true)
 
 func _on_OxygenTimer_timeout():
 	if oxygen_timer.is_stopped():
@@ -276,6 +288,9 @@ func _on_AttackTimer_timeout():
 
 func _on_RestTimer_timeout():
 	character.get_model().look()
+
+func _on_FallTimer_timeout():
+	character.get_model().fall()
 
 func _on_VisibilityNotifier_screen_entered():
 	character.emit_signal("visibility_to_player_changed", character, false, true)

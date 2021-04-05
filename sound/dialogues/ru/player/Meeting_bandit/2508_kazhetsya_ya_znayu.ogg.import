@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2508_kazhetsya_ya_znayu.ogg-aad892569a0f1177a8c1e5115c98dfbd.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_bandit/2508_kazhetsya_ya_znayu.ogg"
+dest_files=[ "res://.import/2508_kazhetsya_ya_znayu.ogg-aad892569a0f1177a8c1e5115c98dfbd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Ксения, что здесь написано?  ",{"#":"actor:player"},"\n","^Гермес. ",{"#":"actor:female"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Ксения, что здесь написано?  ",{"#":"actor:player"},{"#":"voiceover:2331_Ksenia_chto_zdes_napisano.ogg"},"\n","^Гермес. ",{"#":"actor:female"},{"#":"voiceover:2355_Germes.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

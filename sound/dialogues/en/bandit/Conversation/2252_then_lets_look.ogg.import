@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2252_then_lets_look.ogg-b71f53f7e3b3c25777315e2d89295ac8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/2252_then_lets_look.ogg"
+dest_files=[ "res://.import/2252_then_lets_look.ogg-b71f53f7e3b3c25777315e2d89295ac8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

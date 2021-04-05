@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2521_horosho_na_schot_tri.ogg-55998f93fe9e8d8ad907c2dfaf65a31e.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/2521_horosho_na_schot_tri.ogg"
+dest_files=[ "res://.import/2521_horosho_na_schot_tri.ogg-55998f93fe9e8d8ad907c2dfaf65a31e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

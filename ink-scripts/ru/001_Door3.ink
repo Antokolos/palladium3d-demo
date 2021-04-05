@@ -1,11 +1,11 @@
 Вот это да! А как ты это нашёл? Куда ведёт эта лестница?	# actor:female # voiceover:169_vot_eto_da_a_kak.ogg
-Что ты здесь делаешь?	# actor:player # voiceover:76_chto_ty_ztes.ogg
+Что ты здесь делаешь?	# actor:player # voiceover:2494_chto_ty_zdes.ogg
 Я ждала, ждала когда ты придёшь и мне стало скучно.	# actor:female # voiceover:170_ya_zhdala_zhdala.ogg
-Ладно, пойдём на берег, может нас заметят с какого-нибудь судна идущего в Грецию и не придётся два дня ждать паром.	# actor:player # voiceover:77_ladno_poydyom_na_bereg.ogg
+Ладно, пойдём на берег, может нас заметят с какого-нибудь судна идущего в Грецию и не придётся два дня ждать паром.	# actor:player # voiceover:2494_ladno_poidyom_na.ogg
 Но как же, мы разве не узнаем что там внизу?	# actor:female # voiceover:171_no_kak_zhe_razve_my.ogg
-Там очевидно древнее сооружение. Спускаться туда очень рискованно, в любой момент может произойти обвал.	# actor:player # voiceover:78_tam_ochen_drevnee.ogg
+Там очевидно древнее сооружение. Спускаться туда очень рискованно, в любой момент может произойти обвал.	# actor:player # voiceover:2495_tam_ochevidno.ogg
 А мы не пойдём далеко, только чуть-чуть спустимся по лестнице.	# actor:female # voiceover:172_a_my_ne_poydem_daleko.ogg
-Ты понимаешь, что там очень опасно?	# actor:player # voiceover:79_ty_ponimaesh_chto_tam.ogg
+Ты понимаешь, что там очень опасно?	# actor:player # voiceover:2495_ty_ponimaesh_chto.ogg
 Такова работа археологов! А я почти всю жизнь изучаю культуру и историю Древней Греции всё свободное время просиживая в библиотеках и интернете. И вот наконец-то представился шанс исследовать что-то реальное, осязаемое! Ты же как исследователь должен меня понять! Мы немедленно должны узнать что там. А вдруг, пока ты со мной возишься, кто-то обнаружит этот вход и присвоит себе эту находку? Я чувствую, ты обнаружил что-то очень древнее. Это будет сенсация!	# actor:female # voiceover:173_takova_rabota_arheologov.ogg
-Иди за мной след в след. Ничего не трогай и не отставай.	# actor:player # voiceover:80_idi_za_mnoy_sled.ogg
+Иди за мной след в след. Ничего не трогай и не отставай.	# actor:player # voiceover:2496_idi_za_mnoi.ogg
 Спасибо, Андреас! Вот увидишь, я хороший компаньон.	# actor:female # voiceover:174_spasibo_andreas.ogg

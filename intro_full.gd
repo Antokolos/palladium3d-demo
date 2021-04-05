@@ -1,6 +1,7 @@
 extends PLDLevel
 
 func do_init(is_loaded):
+	MEDIA.stop_music()
 	game_state.set_player_name_hint(CHARS.PLAYER_NAME_HINT)
 	$intro_phone.phone_idle()
 	$male_bag.being_carried()

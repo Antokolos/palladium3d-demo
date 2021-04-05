@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2332_i_think_palladium_.ogg-f560967ae4cc40713b09bc38aff8ebb4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/2332_i_think_palladium_.ogg"
+dest_files=[ "res://.import/2332_i_think_palladium_.ogg-f560967ae4cc40713b09bc38aff8ebb4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

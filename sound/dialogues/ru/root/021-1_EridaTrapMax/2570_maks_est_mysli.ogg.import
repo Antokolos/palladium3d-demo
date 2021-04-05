@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2570_maks_est_mysli.ogg-3232e8c45b81367e32cad6296c9819ad.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-1_EridaTrapMax/2570_maks_est_mysli.ogg"
+dest_files=[ "res://.import/2570_maks_est_mysli.ogg-3232e8c45b81367e32cad6296c9819ad.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

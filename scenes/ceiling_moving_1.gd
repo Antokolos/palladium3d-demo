@@ -38,26 +38,26 @@ func activate_partial():
 	activate()
 	$PartialActivationTimer.start()
 
-func activate(and_change_state = true):
-	.activate(and_change_state)
+func activate(and_change_state = true, is_restoring = false):
+	.activate(and_change_state, is_restoring)
 	var speed = get_ceiling_speed()
 	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, speed)
 	ceiling_sound_play()
 
-func pause(and_change_state = true):
-	.pause(and_change_state)
+func pause(and_change_state = true, is_restoring = false):
+	.pause(and_change_state, is_restoring)
 	get_node("ceiling_armat000/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
 	ceiling_sound_stop()
 
-func deactivate_forever(and_change_state = true):
+func deactivate_forever(and_change_state = true, is_restoring = false):
 	if not is_final_destination():
 		var speed = get_ceiling_speed()
 		get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
 		get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
 		ceiling_sound_play()
-	.deactivate_forever(and_change_state)
+	.deactivate_forever(and_change_state, is_restoring)
 
 func restore_state():
 	if is_activated():
@@ -100,6 +100,8 @@ func _on_DeactivationTimer_timeout():
 	conversation_manager.start_area_conversation("010-2-3_CeilingUp")
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		return
 	chest_shape.disabled = game_state.story_vars.apata_chest_rigid != 0
 	if not is_activated():
 		does_damage = false

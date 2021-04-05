@@ -22,6 +22,7 @@ func _ready():
 	do_init(is_loaded)
 	if not is_loaded:
 		game_state.autosave_create()
+	game_state.set_level_ready(true)
 
 func do_init(is_loaded):
 	# Override in children instead of _ready()

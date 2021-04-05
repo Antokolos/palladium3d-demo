@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2522_kazhetsya_potolok.ogg-7dfe1bb2839234ddabd59e42a3a083b1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/010-2-2_CeilingStopped/2522_kazhetsya_potolok.ogg"
+dest_files=[ "res://.import/2522_kazhetsya_potolok.ogg-7dfe1bb2839234ddabd59e42a3a083b1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

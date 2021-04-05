@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2562_togda_idom_otyshem.ogg-64d6cf552d853d18911b8c58f8772457.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/019_DemoFinishedXenia/2562_togda_idom_otyshem.ogg"
+dest_files=[ "res://.import/2562_togda_idom_otyshem.ogg-64d6cf552d853d18911b8c58f8772457.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2549_pohozhe_eto_komnata.ogg-dfcaf7e2da344663717447064fa5c58c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016-1_AresRoom/2549_pohozhe_eto_komnata.ogg"
+dest_files=[ "res://.import/2549_pohozhe_eto_komnata.ogg-dfcaf7e2da344663717447064fa5c58c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

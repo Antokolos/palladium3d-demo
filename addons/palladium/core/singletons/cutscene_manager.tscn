@@ -3,4 +3,5 @@
 [ext_resource path="res://addons/palladium/core/singletons/cutscene_manager.gd" type="Script" id=1]
 
 [node name="cutscene_manager" type="Node"]
+pause_mode = 1
 script = ExtResource( 1 )

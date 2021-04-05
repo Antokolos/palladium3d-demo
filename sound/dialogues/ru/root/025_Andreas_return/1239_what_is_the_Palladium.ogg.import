@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1239_what_is_the_Palladium.ogg-cd82d96186b873bd7d252ecba5b991a1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/1239_what_is_the_Palladium.ogg"
+dest_files=[ "res://.import/1239_what_is_the_Palladium.ogg-cd82d96186b873bd7d252ecba5b991a1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

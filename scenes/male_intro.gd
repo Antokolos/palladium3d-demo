@@ -18,7 +18,7 @@ var name_hint = CHARS.PLAYER_NAME_HINT
 func _ready():
 	game_state.register_player(self)
 
-func set_look_transition(force = false):
+func set_look_transition_if_needed():
 	pass
 
 func get_lips_transition_by_phoneme(phoneme):

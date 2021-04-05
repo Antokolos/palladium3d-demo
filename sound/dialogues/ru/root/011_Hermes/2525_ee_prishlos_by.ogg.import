@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2525_ee_prishlos_by.ogg-17c840e556b40835b98057c05a27c1e8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/2525_ee_prishlos_by.ogg"
+dest_files=[ "res://.import/2525_ee_prishlos_by.ogg-17c840e556b40835b98057c05a27c1e8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

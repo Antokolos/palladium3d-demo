@@ -3,17 +3,18 @@
 [ext_resource path="res://addons/palladium/core/singletons/lipsync_manager.gd" type="Script" id=1]
 
 [node name="lipsync_manager" type="Node"]
+pause_mode = 1
 script = ExtResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Speech"
 
-[node name="ShortPhraseTimer" type="Timer" parent="."]
+[node name="PostDelayTimer" type="Timer" parent="."]
 wait_time = 0.01
 one_shot = true
 
-[node name="PhrasePauseTimer" type="Timer" parent="."]
+[node name="PreDelayTimer" type="Timer" parent="."]
 one_shot = true
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
-[connection signal="timeout" from="ShortPhraseTimer" to="." method="_on_ShortPhraseTimer_timeout"]
-[connection signal="timeout" from="PhrasePauseTimer" to="." method="_on_PhrasePauseTimer_timeout"]
+[connection signal="timeout" from="PostDelayTimer" to="." method="_on_PostDelayTimer_timeout"]
+[connection signal="timeout" from="PreDelayTimer" to="." method="_on_PreDelayTimer_timeout"]

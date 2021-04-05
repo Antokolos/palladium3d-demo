@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1303_lets_think_logically.ogg-edc9e1b0637023c45c79a3b919ce5e3a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/1303_lets_think_logically.ogg"
+dest_files=[ "res://.import/1303_lets_think_logically.ogg-edc9e1b0637023c45c79a3b919ce5e3a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

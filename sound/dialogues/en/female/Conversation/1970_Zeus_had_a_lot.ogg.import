@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1970_Zeus_had_a_lot.ogg-eda8cee25929f87e47f483352a93df87.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/1970_Zeus_had_a_lot.ogg"
+dest_files=[ "res://.import/1970_Zeus_had_a_lot.ogg-eda8cee25929f87e47f483352a93df87.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

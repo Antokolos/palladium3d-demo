@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2526_chto_proizoidot_tochno.ogg-345c5eeba246d5651d4860156a4181c8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/011_Hermes/2526_chto_proizoidot_tochno.ogg"
+dest_files=[ "res://.import/2526_chto_proizoidot_tochno.ogg-345c5eeba246d5651d4860156a4181c8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

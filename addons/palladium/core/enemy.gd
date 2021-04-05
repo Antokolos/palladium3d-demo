@@ -60,7 +60,6 @@ func activate():
 	.activate()
 	hits = 0
 	set_sprinting(false)
-	character_nodes.start_cutscene_timer()
 
 func get_preferred_target():
 	if not is_activated():
@@ -71,6 +70,8 @@ func set_states():
 	set_states_for_character(get_nearest_character(true))
 
 func set_states_for_character(character):
+	if not character:
+		return
 	if character.is_hidden() \
 		or get_relationship() >= 0 \
 		or get_morale() < 0:
@@ -90,6 +91,9 @@ func set_states_for_character(character):
 		set_sprinting(false)
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		character_nodes.stop_all()
+		return
 	.do_process(delta, false)
 	if not is_activated():
 		return

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2542_sudya_po_dospeham.ogg-3ef6da23d3b9a8dd9fc26371c7b6df63.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/2542_sudya_po_dospeham.ogg"
+dest_files=[ "res://.import/2542_sudya_po_dospeham.ogg-3ef6da23d3b9a8dd9fc26371c7b6df63.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1635_i_remember_that_Ares.ogg-d9f0e24cfa0fccc3900b88d4b51f84eb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/1635_i_remember_that_Ares.ogg"
+dest_files=[ "res://.import/1635_i_remember_that_Ares.ogg-d9f0e24cfa0fccc3900b88d4b51f84eb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

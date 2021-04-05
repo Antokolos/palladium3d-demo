@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2559_nikto_te_zapreshal.ogg-8fdaa1c5e5c50652583e92e228134543.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/018_CorridorTalk/2559_nikto_te_zapreshal.ogg"
+dest_files=[ "res://.import/2559_nikto_te_zapreshal.ogg-8fdaa1c5e5c50652583e92e228134543.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

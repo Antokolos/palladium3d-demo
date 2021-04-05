@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2438_znachit_labirint.ogg-443fdc1c0477e6abf149ff34d6ed7b66.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/025_Andreas_return/2438_znachit_labirint.ogg"
+dest_files=[ "res://.import/2438_znachit_labirint.ogg-443fdc1c0477e6abf149ff34d6ed7b66.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

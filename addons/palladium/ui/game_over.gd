@@ -42,7 +42,6 @@ func _on_ButtonSlot5_pressed():
 	game_state.initiate_load(5)
 
 func _on_ButtonMainMenu_pressed():
-	cutscene_manager.clear_cutscene_node()
 	game_state.change_scene("res://main_menu.tscn")
 
 func _on_ButtonQuit_pressed():

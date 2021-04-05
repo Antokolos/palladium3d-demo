@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2561_boishsya_stanu.ogg-3b6c258cd6389fff4d6f863d4792bdb8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/019_DemoFinishedXenia/2561_boishsya_stanu.ogg"
+dest_files=[ "res://.import/2561_boishsya_stanu.ogg-3b6c258cd6389fff4d6f863d4792bdb8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

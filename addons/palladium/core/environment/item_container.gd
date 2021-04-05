@@ -1,8 +1,6 @@
 extends PLDUsable
 class_name PLDItemContainer
 
-const SPEED_SCALE_INFINITY = 1000.0
-
 export(DB.ContainerIds) var container_id = DB.ContainerIds.NONE
 export var initially_opened = false
 export var path_blocker = ""
@@ -69,9 +67,9 @@ func restore_state():
 	var state = game_state.get_container_state(get_path())
 	if state == PLDGameState.ContainerState.DEFAULT:
 		if initially_opened:
-			open(false)
+			open(false, PLDGameState.SPEED_SCALE_INFINITY)
 		return
 	if state == PLDGameState.ContainerState.OPENED:
-		open(false)
+		open(false, PLDGameState.SPEED_SCALE_INFINITY)
 	else:
-		close(false)
+		close(false, PLDGameState.SPEED_SCALE_INFINITY)

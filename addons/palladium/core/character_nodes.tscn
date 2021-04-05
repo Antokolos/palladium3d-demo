@@ -50,7 +50,7 @@ collision_mask = 7
 shape = SubResource( 2 )
 
 [node name="RaysToCharacters" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
 [node name="RangedDamageRayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
@@ -61,11 +61,6 @@ collision_mask = 15367
 [node name="HealTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
-
-[node name="CutsceneTimer" type="Timer" parent="."]
-process_mode = 0
-wait_time = 0.5
-one_shot = true
 
 [node name="OxygenTimer" type="Timer" parent="."]
 
@@ -84,14 +79,19 @@ process_mode = 0
 wait_time = 0.5
 one_shot = true
 
+[node name="FallTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.02
+one_shot = true
+
 [node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
-[connection signal="timeout" from="CutsceneTimer" to="." method="_on_CutsceneTimer_timeout"]
 [connection signal="timeout" from="OxygenTimer" to="." method="_on_OxygenTimer_timeout"]
 [connection signal="timeout" from="PoisonTimer" to="." method="_on_PoisonTimer_timeout"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="timeout" from="RestTimer" to="." method="_on_RestTimer_timeout"]
+[connection signal="timeout" from="FallTimer" to="." method="_on_FallTimer_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

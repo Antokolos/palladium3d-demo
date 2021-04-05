@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2458_tam_kuda_ya.ogg-6f965b71c69ea253d9c084aa4fa4b578.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2458_tam_kuda_ya.ogg"
+dest_files=[ "res://.import/2458_tam_kuda_ya.ogg-6f965b71c69ea253d9c084aa4fa4b578.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

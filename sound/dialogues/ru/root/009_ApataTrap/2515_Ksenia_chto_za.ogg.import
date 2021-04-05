@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2515_Ksenia_chto_za.ogg-0a4da509e2b04bc5ba9cd6eb82ff85dc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/009_ApataTrap/2515_Ksenia_chto_za.ogg"
+dest_files=[ "res://.import/2515_Ksenia_chto_za.ogg-0a4da509e2b04bc5ba9cd6eb82ff85dc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

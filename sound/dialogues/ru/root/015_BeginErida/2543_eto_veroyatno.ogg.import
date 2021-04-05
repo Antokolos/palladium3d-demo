@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2543_eto_veroyatno.ogg-983ad835048a80ba2a8cc721ff121d27.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/2543_eto_veroyatno.ogg"
+dest_files=[ "res://.import/2543_eto_veroyatno.ogg-983ad835048a80ba2a8cc721ff121d27.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

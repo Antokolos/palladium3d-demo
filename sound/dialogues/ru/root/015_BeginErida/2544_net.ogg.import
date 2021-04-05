@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2544_net.ogg-efe6036990484bd628140f9b3e702318.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015_BeginErida/2544_net.ogg"
+dest_files=[ "res://.import/2544_net.ogg-efe6036990484bd628140f9b3e702318.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

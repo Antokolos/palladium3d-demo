@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2474_poveriv_chto_ty.ogg-0407b27e9ec0761907ac68b004288baa.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/2474_poveriv_chto_ty.ogg"
+dest_files=[ "res://.import/2474_poveriv_chto_ty.ogg-0407b27e9ec0761907ac68b004288baa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

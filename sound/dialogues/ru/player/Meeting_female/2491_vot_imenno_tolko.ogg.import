@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2491_vot_imenno_tolko.ogg-9cfe0e9866559e7f14f93f1f9402cf90.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/2491_vot_imenno_tolko.ogg"
+dest_files=[ "res://.import/2491_vot_imenno_tolko.ogg-9cfe0e9866559e7f14f93f1f9402cf90.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

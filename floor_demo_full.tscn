@@ -231,7 +231,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0059, 2.85138, 19.8031 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5236, 2.66402, 33.9859 )
 
 [node name="torch_full3" parent="Apata_room" instance=ExtResource( 21 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23.809, 2.66526, 40.8915 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 23.809, 2.66526, 40.8915 )
 
 [node name="torch_full5" parent="Apata_room" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5262, 2.66656, 26.8437 )
@@ -282,16 +282,16 @@ editor/display_folded = true
 transform = Transform( -0.999908, 0, 0.0135483, 0, 1, 0, -0.0135483, 0, -0.999908, 6.06551, 3.66712, 22.6969 )
 
 [node name="column_28" parent="Hermes_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15.3912, 1.49648, 19.1959 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 15.3912, 1.49648, 19.1959 )
 
 [node name="column_30" parent="Hermes_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15.5415, 1.49648, 31.3841 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 15.5415, 1.49648, 31.3841 )
 
 [node name="column_29" parent="Hermes_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7.23274, 1.49648, 19.1959 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 7.23274, 1.49648, 19.1959 )
 
 [node name="column_31" parent="Hermes_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7.17041, 1.49648, 31.3841 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 7.17041, 1.49648, 31.3841 )
 
 [node name="postament_flat4" parent="Hermes_room" instance=ExtResource( 29 )]
 editor/display_folded = true
@@ -335,7 +335,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10435, 0.847464, -0.251385 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.0761054, 0.00997353 )
 
 [node name="hermes_mosaic" parent="Hermes_room" instance=ExtResource( 35 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.1219, 4.19836, 17.7641 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 11.1219, 4.19836, 17.7641 )
 
 [node name="hermes_mosaic_2" parent="Hermes_room" instance=ExtResource( 36 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2328, 1.23007, 25.0973 )
@@ -363,31 +363,31 @@ script = ExtResource( 37 )
 activatable_id = 30
 
 [node name="torch_full6" parent="Erida_room" instance=ExtResource( 21 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28.1137, 3.964, 36.4844 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1137, 3.964, 36.4844 )
 
 [node name="torch_full8" parent="Erida_room" instance=ExtResource( 21 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28.1137, 3.964, 29.107 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1137, 3.964, 29.107 )
 
 [node name="torch_full7" parent="Erida_room" instance=ExtResource( 21 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28.1132, 3.964, 21.628 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -28.1132, 3.964, 21.628 )
 
 [node name="column_18" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.2, 1.47912, 39.2085 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2, 1.47912, 39.2085 )
 
 [node name="column_21" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.9348, 1.49184, 39.2085 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -16.9348, 1.49184, 39.2085 )
 
 [node name="column_19" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.2544, 1.41242, 25.4323 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2544, 1.41242, 25.4323 )
 
 [node name="column_32" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.2544, 1.41242, 33.0753 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -27.2544, 1.41242, 33.0753 )
 
 [node name="column_20" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -27.2399, 1.44865, 18.8926 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -27.2399, 1.44865, 18.8926 )
 
 [node name="column_23" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16.9747, 1.46137, 19.1959 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -16.9747, 1.46137, 19.1959 )
 
 [node name="statues_postament_1" parent="Erida_room" instance=ExtResource( 38 )]
 transform = Transform( -0.532055, 0, 0.84671, 0, 1, 0, -0.84671, 0, -0.532055, -22.5014, 1.19997, 25.4013 )
@@ -434,7 +434,7 @@ transform = Transform( 0.967159, 0.252371, 0.0302241, -0.0340106, 0.0106518, 0.9
 transform = Transform( 0.999046, 0, 0.0436803, 0, 1, 0, -0.0436803, 0, 0.999046, -22.1767, 1.18002, 19.0506 )
 
 [node name="column_22" parent="Erida_room" instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.9892, 1.42514, 31.3499 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -16.9892, 1.42514, 31.3499 )
 
 [node name="EridaTrapSound1" type="AudioStreamPlayer3D" parent="Erida_room"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5219, 2, 39.0533 )
@@ -461,7 +461,7 @@ unit_db = -18.0
 bus = "Sound"
 
 [node name="eris_particles" parent="Erida_room" instance=ExtResource( 50 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -22.3974, 4.20243, 29.3131 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, -22.3974, 4.20243, 29.3131 )
 
 [node name="Ares_room_enabler" parent="." instance=ExtResource( 2 )]
 editor/display_folded = true
@@ -485,16 +485,16 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64801, 3.66712, 22.1418 )
 
 [node name="column_24" parent="Ares_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.98095, 1.44795, 19.1959 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -5.98095, 1.44795, 19.1959 )
 
 [node name="column_26" parent="Ares_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.98095, 1.43932, 31.2623 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -5.98095, 1.43932, 31.2623 )
 
 [node name="column_25" parent="Ares_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.8673, 1.44795, 19.1959 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -13.8673, 1.44795, 19.1959 )
 
 [node name="column_27" parent="Ares_room" instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.8673, 1.43932, 31.2623 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -13.8673, 1.43932, 31.2623 )
 
 [node name="postament_flat2" parent="Ares_room" instance=ExtResource( 29 )]
 editor/display_folded = true
@@ -531,16 +531,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9267, 1.58522, 21.0346 )
 
 [node name="granite_base_6" parent="Ares_room" instance=ExtResource( 12 )]
 editor/display_folded = true
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.29208, 1.20675, 21.447 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -5.29208, 1.20675, 21.447 )
 
 [node name="sword" parent="Ares_room/granite_base_6" instance=ExtResource( 57 )]
-transform = Transform( -0.0433195, 0.0240685, 0.998771, 0.00104294, 0.99971, -0.0240459, -0.999061, 1.05207e-09, -0.043332, -0.294041, 0.654566, -4.76837e-07 )
+transform = Transform( -0.0433195, 0.0240685, 0.998771, 0.00104294, 0.99971, -0.0240459, -0.999061, 1.05207e-009, -0.043332, -0.294041, 0.654566, -4.76837e-007 )
 
 [node name="bow" parent="Ares_room" instance=ExtResource( 58 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.76091, 3.97121, 29.9481 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.76091, 3.97121, 29.9481 )
 
 [node name="bow2" parent="Ares_room" instance=ExtResource( 58 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.902, 3.97121, 29.9481 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -14.902, 3.97121, 29.9481 )
 
 [node name="vase_8" parent="." instance=ExtResource( 33 )]
 transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 4.31345, 1.19006, 19.7316 )
@@ -549,10 +549,10 @@ transform = Transform( 0.40287, 0, -0.915257, 0, 1, 0, 0.915257, 0, 0.40287, 4.3
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94061, 3.964, 21.6072 )
 
 [node name="torch_full4" parent="." instance=ExtResource( 21 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.55781, 3.964, 31.4475 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.55781, 3.964, 31.4475 )
 
 [node name="torch_full9" parent="." instance=ExtResource( 21 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -34.7238, 3.964, 34.1097 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -34.7238, 3.964, 34.1097 )
 
 [node name="column_3" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75205, 1.42885, 46.6765 )
@@ -564,22 +564,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.91065, 1.4724, 39.3336 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.1028, 1.38926, 46.6765 )
 
 [node name="column_12" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35.2486, 1.47313, 38.5063 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 35.2486, 1.47313, 38.5063 )
 
 [node name="column_15" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -33.8392, 1.4724, 38.7145 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -33.8392, 1.4724, 38.7145 )
 
 [node name="column_13" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35.2486, 1.47313, 29.2148 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 35.2486, 1.47313, 29.2148 )
 
 [node name="column_16" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -33.8392, 1.4724, 29.423 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -33.8392, 1.4724, 29.423 )
 
 [node name="column_14" parent="." instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 35.2486, 1.47313, 18.6844 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 35.2486, 1.47313, 18.6844 )
 
 [node name="column_17" parent="." instance=ExtResource( 28 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -33.8392, 1.4724, 18.8926 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -33.8392, 1.4724, 18.8926 )
 
 [node name="column_4" parent="." instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9663, 1.52234, 46.7339 )
@@ -603,13 +603,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7625, 1.47047, 46.4043 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88818, 1.43088, 46.4043 )
 
 [node name="column_6" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.9187, 1.47047, 46.7765 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -23.9187, 1.47047, 46.7765 )
 
 [node name="column_7" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.8918, 1.43088, 46.7765 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 10.8918, 1.43088, 46.7765 )
 
 [node name="column_34" parent="." instance=ExtResource( 28 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.06699, 1.51402, 39.4013 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 7.06699, 1.51402, 39.4013 )
 
 [node name="spider_web_1" parent="." instance=ExtResource( 59 )]
 editor/display_folded = true
@@ -658,7 +658,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6506, 1.27446, 39.6931 )
 pedestal_id = 40
 
 [node name="statue_hermes" parent="postament_1_1" instance=ExtResource( 30 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.39066, 0 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 1.39066, 0 )
 visible = false
 
 [node name="door_debris" parent="." instance=ExtResource( 67 )]
@@ -667,7 +667,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19466, 1.72087, 32.9329 )
 [node name="demo_ceiling" parent="." instance=ExtResource( 68 )]
 
 [node name="tablet_Ares" parent="." instance=ExtResource( 69 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.60744, 7.28487, 26.5618 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -3.60744, 7.28487, 26.5618 )
 
 [node name="tablet_Hermes" parent="." instance=ExtResource( 70 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02011, 7.30213, 26.2661 )
@@ -680,10 +680,10 @@ transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999
 
 [node name="vase_52" parent="." instance=ExtResource( 14 )]
 editor/display_folded = true
-transform = Transform( 0.412308, 0, 1.49416, 0, 1.55, 0, -1.49416, 0, 0.412308, 35.2237, 1.34907, 23.2499 )
+transform = Transform( 0.64067, 0, 1.4114, 0, 1.55, 0, -1.4114, 0, 0.64067, 35.4982, 1.18135, 23.2499 )
 
 [node name="spider_small" parent="vase_52" instance=ExtResource( 60 )]
-transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-05, 0.631213, -0.0024662 )
+transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-005, 0.631213, -0.0024662 )
 
 [node name="AreaDeadEnd" type="Area" parent="."]
 editor/display_folded = true
@@ -751,7 +751,7 @@ shape = SubResource( 6 )
 transform = Transform( 0.914317, -0.0947855, 0.393751, 0, 0.972227, 0.23404, -0.404999, -0.213986, 0.888925, 13.2855, 3.12206, 38.2324 )
 
 [node name="ApataDoorPosition" type="Position3D" parent="."]
-transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-08, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 20.9597, 3.87822, 39.6227 )
+transform = Transform( 0.51376, -0.200783, 0.834109, 1.59957e-008, 0.972229, 0.234032, -0.857935, -0.120236, 0.499492, 20.9597, 3.87822, 39.6227 )
 
 [node name="BanditPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.53788, 1.2, 37.5244 )
@@ -786,7 +786,7 @@ monitorable = false
 shape = SubResource( 7 )
 
 [node name="ChooseCompanionPosition" type="Position3D" parent="."]
-transform = Transform( -4.35223e-08, 0.0929206, -0.995674, 4.06169e-09, 0.995674, 0.0929206, 1, 0, -4.37114e-08, 1.8185, 3.71403, 26.5125 )
+transform = Transform( -4.35223e-008, 0.0929206, -0.995674, 4.06169e-009, 0.995674, 0.0929206, 1, 0, -4.37114e-008, 1.8185, 3.71403, 26.5125 )
 
 [node name="OutPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571505, 9.89932, 73.3017 )
@@ -829,16 +829,16 @@ shape = SubResource( 11 )
 transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 25.2436, 1.2, 31.8215 )
 
 [node name="BanditSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24.3608, 1.2, 33.144 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 24.3608, 1.2, 33.144 )
 
 [node name="PlayerSavePosition" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 23.0202, 1.2, 33.144 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.0202, 1.2, 33.144 )
 
 [node name="PlayerTeleportPosition" type="Position3D" parent="."]
 transform = Transform( -0.690903, 0, 0.722947, 0, 1, 0, -0.722947, 0, -0.690903, 21.592, 1.2, 29.5225 )
 
 [node name="PositionApata" type="Position3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 23.7234, 1.21485, 27.6382 )
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 23.7234, 1.21485, 27.6382 )
 
 [node name="PositionApata2" type="Position3D" parent="."]
 transform = Transform( 0.680557, 0, -0.732695, 0, 1, 0, 0.732695, 0, 0.680557, 22.4661, 1.21485, 28.5788 )
@@ -886,7 +886,17 @@ conversations = {
 "player": "",
 "skeleton": ""
 }
+conversaton_delays = {
+"bandit": 0.0,
+"father": 0.0,
+"female": 0.0,
+"minotaur": 0.0,
+"player": 0.0,
+"skeleton": 0.0
+}
 cutscene_node_path = NodePath("PositionCamera")
+repeatable = false
+exclusive = false
 
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_palladium"]
 shape = SubResource( 12 )
@@ -895,10 +905,10 @@ shape = SubResource( 12 )
 transform = Transform( 0.00151398, 0.449004, -0.893528, 0.00638483, 0.893507, 0.449004, 0.999978, -0.00638481, -0.00151407, -4.11073, 0.957338, 0.402145 )
 
 [node name="PositionCompanion" type="Position3D" parent="conversation_area_palladium"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.559672, -2.02729, 1.92109 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.559672, -2.02729, 1.92109 )
 
 [node name="PositionPlayer" type="Position3D" parent="conversation_area_palladium"]
-transform = Transform( 1, 0, -5.58794e-09, 0, 1, 0, 5.58794e-09, 0, 1, 0.436014, -2.027, -3.37814 )
+transform = Transform( 1, 0, -5.58794e-009, 0, 1, 0, 5.58794e-009, 0, 1, 0.436014, -2.027, -3.37814 )
 [connection signal="body_entered" from="AreaDeadEnd" to="." method="_on_AreaDeadEnd_body_entered"]
 [connection signal="body_entered" from="AreaDeadEnd2" to="." method="_on_AreaDeadEnd2_body_entered"]
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]

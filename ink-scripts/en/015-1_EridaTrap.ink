@@ -5,5 +5,6 @@ It's gas coming inside the room. Try to breathe slowly. We need to solve the rid
 *	[Xenia, is there a myth about Eris?]
 	Xenia, is there a myth about Eris?	# actor:player # voiceover:487_Xenia_is_there_a_myth.ogg
 	Eris is a goddess of strife. She was the one to stealthily place an apple inscribed with "callisti", which means "for the most beautiful", before Hera, Aphrodite, and Athena. The goddesses started to dispute to whom this apple was addressed.	# actor:female # voiceover:567_Eris_is_a_goddess_of_strife.ogg
+	Aphrodite is the goddess of beauty, Athena is the goddess of fair war, and Hera is the supreme goddess. # actor:female # voiceover:2345_Aphrodite_is_the_goddess_of.ogg
 *	[Finish the conversation.]
 	... # finalizer

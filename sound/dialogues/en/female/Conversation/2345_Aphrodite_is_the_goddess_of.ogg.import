@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2345_Aphrodite_is_the_goddess_of.ogg-6bae057421f7b84130f6cacda95e02d8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/2345_Aphrodite_is_the_goddess_of.ogg"
+dest_files=[ "res://.import/2345_Aphrodite_is_the_goddess_of.ogg-6bae057421f7b84130f6cacda95e02d8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

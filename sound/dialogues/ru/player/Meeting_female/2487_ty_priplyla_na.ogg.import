@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2487_ty_priplyla_na.ogg-545c8378d705ad38ab1c466f723290e4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/player/Meeting_female/2487_ty_priplyla_na.ogg"
+dest_files=[ "res://.import/2487_ty_priplyla_na.ogg-545c8378d705ad38ab1c466f723290e4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

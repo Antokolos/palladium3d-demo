@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2495_ty_ponimaesh_chto.ogg-2276ba8fa37bc59790247eb3c6e32e32.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door3/2495_ty_ponimaesh_chto.ogg"
+dest_files=[ "res://.import/2495_ty_ponimaesh_chto.ogg-2276ba8fa37bc59790247eb3c6e32e32.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

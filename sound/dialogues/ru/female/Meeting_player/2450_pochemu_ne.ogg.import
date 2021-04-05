@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2450_pochemu_ne.ogg-4423b0f513c74c483e696349f2dec36a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2450_pochemu_ne.ogg"
+dest_files=[ "res://.import/2450_pochemu_ne.ogg-4423b0f513c74c483e696349f2dec36a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

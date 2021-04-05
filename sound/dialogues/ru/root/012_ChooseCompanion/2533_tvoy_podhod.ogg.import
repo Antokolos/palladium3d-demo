@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2533_tvoy_podhod.ogg-1efb3e15021a5038a246a25409cf372b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/2533_tvoy_podhod.ogg"
+dest_files=[ "res://.import/2533_tvoy_podhod.ogg-1efb3e15021a5038a246a25409cf372b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2534_razve_tebe_ne_lubopytno.ogg-83016ef57b3e6a11f72d41fe75f53577.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/2534_razve_tebe_ne_lubopytno.ogg"
+dest_files=[ "res://.import/2534_razve_tebe_ne_lubopytno.ogg-83016ef57b3e6a11f72d41fe75f53577.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2503_tochno_ne_znayu.ogg-7f65385c7419079cb80b1d2ad305f3c6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/2503_tochno_ne_znayu.ogg"
+dest_files=[ "res://.import/2503_tochno_ne_znayu.ogg-7f65385c7419079cb80b1d2ad305f3c6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

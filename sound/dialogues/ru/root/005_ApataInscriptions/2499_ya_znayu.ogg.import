@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2499_ya_znayu.ogg-6ed635bc178b311d8a1826ed2a8228f5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/2499_ya_znayu.ogg"
+dest_files=[ "res://.import/2499_ya_znayu.ogg-6ed635bc178b311d8a1826ed2a8228f5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

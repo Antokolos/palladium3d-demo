@@ -34,28 +34,30 @@ func enable_collisions(body, enable):
 		if collision is CollisionShape:
 			collision.disabled = not enable
 
-func do_open(with_sound):
-	anim_player.play(anim_name_open, -1, -anim_speed_scale if reverse else anim_speed_scale, reverse)
+func do_open(with_sound, immediately = false):
+	var sp = PLDGameState.SPEED_SCALE_INFINITY if immediately else anim_speed_scale
+	anim_player.play(anim_name_open, -1, -sp if reverse else sp, reverse)
 	enable_collisions(door_body, false)
 	game_state.set_door_state(get_path(), true)
 	if with_sound and has_node("door_sound"):
 		get_node("door_sound").play(false)
 
-func open(with_sound = true, force = false):
+func open(with_sound = true, force = false, immediately = false):
 	if not force and is_opened():
 		return false
 	if not lock_sound_player or not with_sound:
-		do_open(with_sound)
+		do_open(with_sound, immediately)
 	else:
 		lock_sound_player.play()
 	return true
 
-func close(with_sound = true, force = false):
+func close(with_sound = true, force = false, immediately = false):
 	if not force and not is_opened():
 		return false
 	if with_sound and has_node("door_sound"):
 		get_node("door_sound").play(true)
-	anim_player.play(anim_name_open, -1, anim_speed_scale if reverse else -anim_speed_scale, not reverse)
+	var sp = PLDGameState.SPEED_SCALE_INFINITY if immediately else anim_speed_scale
+	anim_player.play(anim_name_open, -1, sp if reverse else -sp, not reverse)
 	game_state.set_door_state(get_path(), false)
 	enable_collisions(door_body, true)
 	return true
@@ -66,6 +68,6 @@ func is_opened():
 
 func restore_state():
 	if is_opened():
-		open(false, true)
+		open(false, true, true)
 	else:
-		close(false, true)
+		close(false, true, true)

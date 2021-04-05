@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1726_is_there_a_legend.ogg-08d1827014ebf4345f70d94cb7784a6f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/1726_is_there_a_legend.ogg"
+dest_files=[ "res://.import/1726_is_there_a_legend.ogg-08d1827014ebf4345f70d94cb7784a6f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

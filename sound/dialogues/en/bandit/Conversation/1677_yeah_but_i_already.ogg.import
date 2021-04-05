@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1677_yeah_but_i_already.ogg-d0944a55d197fd9f64781fc11423524b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/1677_yeah_but_i_already.ogg"
+dest_files=[ "res://.import/1677_yeah_but_i_already.ogg-d0944a55d197fd9f64781fc11423524b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

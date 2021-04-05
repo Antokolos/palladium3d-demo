@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2354_Ares.ogg-690b3ea01464cf20fc697761fa1854c7.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/TabletAres/2354_Ares.ogg"
+dest_files=[ "res://.import/2354_Ares.ogg-690b3ea01464cf20fc697761fa1854c7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

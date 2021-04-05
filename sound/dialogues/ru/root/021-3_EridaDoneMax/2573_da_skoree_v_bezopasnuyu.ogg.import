@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2573_da_skoree_v_bezopasnuyu.ogg-c6b2350b9ddeec4a6276b1ddc0f7d05c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/021-3_EridaDoneMax/2573_da_skoree_v_bezopasnuyu.ogg"
+dest_files=[ "res://.import/2573_da_skoree_v_bezopasnuyu.ogg-c6b2350b9ddeec4a6276b1ddc0f7d05c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

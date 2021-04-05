@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2253_no_andreas_the_chest_looks.ogg-4093010e768e0ad880b1ffbeb3901784.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Conversation/2253_no_andreas_the_chest_looks.ogg"
+dest_files=[ "res://.import/2253_no_andreas_the_chest_looks.ogg-4093010e768e0ad880b1ffbeb3901784.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2329_Xenia_what_is_written.ogg-75d34d9fc48938131f7d6e9944c147c1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/TabletHermes/2329_Xenia_what_is_written.ogg"
+dest_files=[ "res://.import/2329_Xenia_what_is_written.ogg-75d34d9fc48938131f7d6e9944c147c1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

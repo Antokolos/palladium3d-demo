@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2572_vot_chort_shipenie.ogg-02074c6aae0d7bdff3ab0df8f4c88bd5.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-2_EridaError/2572_vot_chort_shipenie.ogg"
+dest_files=[ "res://.import/2572_vot_chort_shipenie.ogg-02074c6aae0d7bdff3ab0df8f4c88bd5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

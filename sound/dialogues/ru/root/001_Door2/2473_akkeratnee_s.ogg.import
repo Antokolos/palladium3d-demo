@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2473_akkeratnee_s.ogg-7a6bfa01e339a4488d3ad8eadd4d3eb1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Door2/2473_akkeratnee_s.ogg"
+dest_files=[ "res://.import/2473_akkeratnee_s.ogg-7a6bfa01e339a4488d3ad8eadd4d3eb1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

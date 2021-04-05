@@ -194,6 +194,8 @@ func set_quick_items_dimmed(dimmed):
 	panel_style.set("bg_color", COLOR_DIMMED if dimmed else COLOR_TRANSPARENT)
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	process_popup_messages(delta)
 
 func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):

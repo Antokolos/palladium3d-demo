@@ -28,6 +28,8 @@ func set_attenuation(attenuation):
 	stop_sound.set_volume_db(-attenuation)
 
 func _physics_process(delta):
+	if not game_state.is_level_ready():
+		return
 	var player = game_state.get_player()
 	if not player:
 		return

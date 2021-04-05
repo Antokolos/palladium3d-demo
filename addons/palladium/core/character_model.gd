@@ -6,6 +6,7 @@ signal character_dead(player)
 signal character_dying(player)
 
 const CUTSCENE_EMPTY = 0
+const CUTSCENE_FADEIN_TIME = 0.5
 
 const LOOK_TRANSITION_STAND_UP = 0
 const LOOK_TRANSITION_STANDING = 1
@@ -23,6 +24,7 @@ const TRANSITION_LOOK = 0
 const TRANSITION_WALK = 1
 const TRANSITION_RUN = 2
 const TRANSITION_CROUCH = 3
+const TRANSITION_FALL = 4
 
 const REST_POSE_CHANGE_TIME_S = 7
 const ROTATE_HEAD_ANGLE_TOLERANCE_DEG = 2.0
@@ -39,6 +41,7 @@ onready var rest_timer = $RestTimer
 
 var look_angle_tgt_deg = 0
 var look_angle_cur_deg = 0
+var cutscene_time = 0
 var simple_mode = false
 var was_dying = false
 
@@ -237,6 +240,11 @@ func walk(is_crouching = false, is_sprinting = false):
 	rest_timer.stop()
 	stop_rest_shot()
 
+func fall():
+	set_transition(TRANSITION_FALL)
+	rest_timer.stop()
+	stop_rest_shot()
+
 func attack(attack_anim_idx = -1):
 	var s = attack_cutscene_ids.size()
 # TODO: Check it is OK
@@ -251,9 +259,21 @@ func attack(attack_anim_idx = -1):
 	return true
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	process_head_rotation()
 	if not simple_mode:
-		if not is_cutscene():
+		var is_cutscene = is_cutscene()
+		if is_cutscene:
+			cutscene_time += delta
+			if cutscene_time > CUTSCENE_FADEIN_TIME and is_looped_cutscene():
+				var player = get_node("../..")
+				animation_tree.set(
+					"parameters/LookTransition/current",
+					LOOK_TRANSITION_SQUATTING if player.is_crouching() else LOOK_TRANSITION_STANDING
+				)
+		else:
+			cutscene_time = 0
 			stop_cutscene()
 		if was_dying and is_dead():
 			var player = get_node("../..")

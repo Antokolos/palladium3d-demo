@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2501_otkuda_ty_znaesh.ogg-85bd18f0c9e9ca50f7724da715a18bfb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/2501_otkuda_ty_znaesh.ogg"
+dest_files=[ "res://.import/2501_otkuda_ty_znaesh.ogg-85bd18f0c9e9ca50f7724da715a18bfb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

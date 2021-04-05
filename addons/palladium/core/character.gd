@@ -5,6 +5,7 @@ signal player_changed(player_new, player_prev)
 signal visibility_to_player_changed(player_node, previous_state, new_state)
 signal patrolling_changed(player_node, previous_state, new_state)
 signal aggressive_changed(player_node, previous_state, new_state)
+signal morale_changed(player_node, previous_value, new_value)
 signal crouching_changed(player_node, previous_state, new_state)
 signal floor_collision_changed(player_node, previous_state, new_state)
 signal attack_started(player_node, target)
@@ -46,8 +47,8 @@ onready var animation_player = $AnimationPlayer
 var vel = Vector3()
 
 var is_hidden = false
-var is_patrolling = false
-var is_aggressive = false
+var is_patrolling = false setget set_patrolling
+var is_aggressive = false setget set_aggressive
 var is_crouching = false
 var is_sprinting = false
 var is_underwater = false
@@ -55,7 +56,7 @@ var is_air_pocket = false  # is_air_pocket flag is not stored in the save file
 var is_poisoned = false
 var intoxication : int = 0
 var relationship : int = 0
-var morale : int = 0
+var morale : int = 0 setget set_morale
 var stuns_count : int = 0
 var has_floor_collision = true
 var force_physics = false
@@ -114,7 +115,7 @@ func attack_start(possible_attack_target, attack_anim_idx = -1):
 		emit_signal("attack_started", self, possible_attack_target)
 		set_point_of_interest(possible_attack_target)
 		get_model().attack(attack_anim_idx)
-		character_nodes.attack_start()
+		character_nodes.attack_start(attack_anim_idx == -1)
 
 func stop_attack():
 	if is_attacking():
@@ -307,6 +308,7 @@ func _on_player_registered(player):
 		push_error("Player not set")
 		return
 	player.connect("aggressive_changed", self, "_on_aggressive_changed")
+	player.connect("morale_changed", self, "_on_morale_changed")
 	var model = player.get_model()
 	if not model:
 		push_error("Model not set")
@@ -321,6 +323,9 @@ func _on_aggressive_changed(player_node, previous_state, new_state):
 		clear_point_of_interest()
 	else:
 		clear_poi_if_it_is(player_node)
+
+func _on_morale_changed(player_node, previous_value, new_value):
+	pass
 
 func _on_character_dead(player):
 	if equals(player):
@@ -426,10 +431,20 @@ func set_target_node(node, update_navpath = true, force_no_sprinting = false):
 func rest():
 	get_model().look()
 
-func set_look_transition(force = false):
-	if force \
-		or conversation_manager.meeting_is_in_progress(name_hint, CHARS.PLAYER_NAME_HINT) \
-		or conversation_manager.meeting_is_finished(name_hint, CHARS.PLAYER_NAME_HINT):
+func need_to_set_look_transition():
+	return (
+		conversation_manager.meeting_is_in_progress(
+			name_hint,
+			CHARS.PLAYER_NAME_HINT
+		) \
+		or conversation_manager.meeting_is_finished(
+			name_hint,
+			CHARS.PLAYER_NAME_HINT
+		)
+	)
+
+func set_look_transition_if_needed():
+	if need_to_set_look_transition():
 		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
 
 func is_cutscene(cutscene_id = -1):
@@ -437,7 +452,6 @@ func is_cutscene(cutscene_id = -1):
 
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
-	character_nodes.start_cutscene_timer()
 
 func play_jumpscare(hideout):
 	get_model().play_jumpscare(hideout)
@@ -531,8 +545,11 @@ func set_relationship(relationship : int):
 func get_morale() -> int:
 	return morale
 
-func set_morale(morale : int):
-	self.morale = morale
+func set_morale(morale_new : int):
+	var morale_prev = morale
+	morale = morale_new
+	if morale_prev != morale:
+		emit_signal("morale_changed", self, morale_prev, morale)
 
 func get_stuns_count() -> int:
 	return stuns_count
@@ -583,10 +600,12 @@ func is_need_to_use_physics(characters):
 		return true
 	if force_no_physics:
 		return false
-	if not is_visible_to_player():
-		return false
 	if is_player_controlled() or not has_floor_collision():
 		return true
+	if has_path():
+		return false
+	if not is_visible_to_player():
+		return false
 	for character in characters:
 		if equals(character):
 			continue
@@ -790,9 +809,9 @@ func do_process(delta, is_player):
 		if poi and has_obstacles_between(character):
 			if clear_poi_if_it_is(character):
 				poi = null
-	if not poi and (not is_activated() or is_movement_disabled() or is_hidden()):
+	var cannot_move = not is_activated() or is_movement_disabled() or is_hidden()
+	if not poi and cannot_move:
 		character_nodes.stop_walking_sound()
-		set_has_floor_collision(true)
 		return d
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
@@ -807,7 +826,9 @@ func do_process(delta, is_player):
 		character_nodes.stop_walking_sound()
 	if d.is_rotating:
 		is_air_pocket = false
-	if has_floor_collision():
+	var model = get_model()
+	var has_floor_collision = has_floor_collision()
+	if has_floor_collision:
 		var low_ceiling = character_nodes.is_low_ceiling()
 		if low_ceiling and not is_crouching:
 			sit_down()
@@ -815,14 +836,21 @@ func do_process(delta, is_player):
 			and is_crouching \
 			and not player_is_crouching \
 			and is_in_party():
-			stand_up() 
+			stand_up()
+	else:
+		character_nodes.stop_rest_timer()
+		if not has_path():
+			character_nodes.start_fall_timer()
 	if not is_visible_to_player() and not force_visibility:
 		return d
-	var model = get_model()
 	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
-	if d.is_moving or d.is_rotating:
+	if not has_floor_collision:
+		return d
+	elif d.is_moving or d.is_rotating:
 		character_nodes.stop_rest_timer()
+		character_nodes.stop_fall_timer()
 		model.walk(is_crouching, is_sprinting)
 	else:
+		character_nodes.stop_fall_timer()
 		character_nodes.start_rest_timer()
 	return d

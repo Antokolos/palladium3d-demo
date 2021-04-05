@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2502_i_chto_zhe_zdes.ogg-8096e014e3f06acc0193ac27ec8e468d.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/005_ApataInscriptions/2502_i_chto_zhe_zdes.ogg"
+dest_files=[ "res://.import/2502_i_chto_zhe_zdes.ogg-8096e014e3f06acc0193ac27ec8e468d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2540_da_a_ty_kak.ogg-250049cc32953627da6e2810d97142e2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/2540_da_a_ty_kak.ogg"
+dest_files=[ "res://.import/2540_da_a_ty_kak.ogg-250049cc32953627da6e2810d97142e2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

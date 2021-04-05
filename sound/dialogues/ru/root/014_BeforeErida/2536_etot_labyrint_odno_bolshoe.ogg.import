@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2536_etot_labyrint_odno_bolshoe.ogg-be1210b89ffa3b0a97a2b38da33d1996.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/014_BeforeErida/2536_etot_labyrint_odno_bolshoe.ogg"
+dest_files=[ "res://.import/2536_etot_labyrint_odno_bolshoe.ogg-be1210b89ffa3b0a97a2b38da33d1996.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

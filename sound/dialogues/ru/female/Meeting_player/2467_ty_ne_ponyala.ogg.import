@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2467_ty_ne_ponyala.ogg-a15adda1e9eb767ea3dea9534aa878de.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2467_ty_ne_ponyala.ogg"
+dest_files=[ "res://.import/2467_ty_ne_ponyala.ogg-a15adda1e9eb767ea3dea9534aa878de.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

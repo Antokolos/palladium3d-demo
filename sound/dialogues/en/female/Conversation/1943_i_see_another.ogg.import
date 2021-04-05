@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1943_i_see_another.ogg-b279b16600eefef9f795a4b1278c83ee.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Conversation/1943_i_see_another.ogg"
+dest_files=[ "res://.import/1943_i_see_another.ogg-b279b16600eefef9f795a4b1278c83ee.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

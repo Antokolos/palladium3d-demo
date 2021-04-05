@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2547_ksenia_est_mif_ob.ogg-098c6d1d742ac0a40de9d49649fe3e9b.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-1_EridaTrap/2547_ksenia_est_mif_ob.ogg"
+dest_files=[ "res://.import/2547_ksenia_est_mif_ob.ogg-098c6d1d742ac0a40de9d49649fe3e9b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

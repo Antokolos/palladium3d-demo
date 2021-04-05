@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2479_ladno_mne_nado.ogg-d51fedde45ebdc51ab9a38888436d1f2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Boat/2479_ladno_mne_nado.ogg"
+dest_files=[ "res://.import/2479_ladno_mne_nado.ogg-d51fedde45ebdc51ab9a38888436d1f2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

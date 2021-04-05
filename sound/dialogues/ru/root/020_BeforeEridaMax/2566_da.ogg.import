@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2566_da.ogg-cf139e98092f88acd6cc53a5847fdd26.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/020_BeforeEridaMax/2566_da.ogg"
+dest_files=[ "res://.import/2566_da.ogg-cf139e98092f88acd6cc53a5847fdd26.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

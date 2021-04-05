@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2506_net_muzhchina.ogg-faf2e3cd491f005223e3d32fa6af895f.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/006_Rats/2506_net_muzhchina.ogg"
+dest_files=[ "res://.import/2506_net_muzhchina.ogg-faf2e3cd491f005223e3d32fa6af895f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

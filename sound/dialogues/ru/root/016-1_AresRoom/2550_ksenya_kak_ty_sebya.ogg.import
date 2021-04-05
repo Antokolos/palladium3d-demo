@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2550_ksenya_kak_ty_sebya.ogg-72f69beeb951fb10f2ca4515bb375b86.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/016-1_AresRoom/2550_ksenya_kak_ty_sebya.ogg"
+dest_files=[ "res://.import/2550_ksenya_kak_ty_sebya.ogg-72f69beeb951fb10f2ca4515bb375b86.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

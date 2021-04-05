@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2570_maks_est_mysli.ogg-3f5eaebed0472920e90ab480176d2552.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/bandit/Conversation/2570_maks_est_mysli.ogg"
+dest_files=[ "res://.import/2570_maks_est_mysli.ogg-3f5eaebed0472920e90ab480176d2552.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

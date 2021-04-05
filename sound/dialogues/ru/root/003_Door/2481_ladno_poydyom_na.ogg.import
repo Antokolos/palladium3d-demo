@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2481_ladno_poydyom_na.ogg-8e36abff219f0a240bf01def44ea8e20.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/003_Door/2481_ladno_poydyom_na.ogg"
+dest_files=[ "res://.import/2481_ladno_poydyom_na.ogg-8e36abff219f0a240bf01def44ea8e20.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

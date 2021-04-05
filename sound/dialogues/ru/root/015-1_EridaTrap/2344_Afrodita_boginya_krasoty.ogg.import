@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2344_Afrodita_boginya_krasoty.ogg-787c1c2874800c9295d75b892fb651c1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/015-1_EridaTrap/2344_Afrodita_boginya_krasoty.ogg"
+dest_files=[ "res://.import/2344_Afrodita_boginya_krasoty.ogg-787c1c2874800c9295d75b892fb651c1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

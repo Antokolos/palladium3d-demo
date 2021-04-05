@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2528_vy_ponyaly_na_skolko.ogg-5a5d08330b804d5ebfa0124f9b866a6c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/012_ChooseCompanion/2528_vy_ponyaly_na_skolko.ogg"
+dest_files=[ "res://.import/2528_vy_ponyaly_na_skolko.ogg-5a5d08330b804d5ebfa0124f9b866a6c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2453_i_etot_pustynny_ostrov.ogg-c71f65e2efbb97f8e6dd4035e3161083.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2453_i_etot_pustynny_ostrov.ogg"
+dest_files=[ "res://.import/2453_i_etot_pustynny_ostrov.ogg-c71f65e2efbb97f8e6dd4035e3161083.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

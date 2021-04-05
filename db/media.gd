@@ -36,7 +36,7 @@ const SOUND = {
 	SoundId.FIRE_LIGHTER : preload("res://addons/palladium/assets/sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg"),
 	SoundId.FIRE_EXTINGUISH : preload("res://addons/palladium/assets/sound/environment/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg"),
 	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg"),
-	SoundId.OUCH : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg"),
+	SoundId.OUCH : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg")
 }
 
 onready var music_player = $MusicPlayer

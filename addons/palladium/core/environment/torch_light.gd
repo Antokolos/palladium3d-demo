@@ -51,6 +51,8 @@ func set_quality_high():
 	moving = true
 
 func _process(delta):
+	if not game_state.is_level_ready():
+		return
 	if flicker:
 		light_energy = rand_range(0.92 * max_light, max_light)
 	if moving:

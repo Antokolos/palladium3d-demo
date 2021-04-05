@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2455_net_eto_isklucheno.ogg-5a4366a7b1cda0398ec909441775a9ee.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2455_net_eto_isklucheno.ogg"
+dest_files=[ "res://.import/2455_net_eto_isklucheno.ogg-5a4366a7b1cda0398ec909441775a9ee.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

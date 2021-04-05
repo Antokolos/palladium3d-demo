@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2448_davno_ty_zdes.ogg-049bfbf0c056f44829bc2c8765e51553.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Meeting_player/2448_davno_ty_zdes.ogg"
+dest_files=[ "res://.import/2448_davno_ty_zdes.ogg-049bfbf0c056f44829bc2c8765e51553.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

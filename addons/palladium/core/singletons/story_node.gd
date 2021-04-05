@@ -272,6 +272,26 @@ func visit_count_is_at_least(story_paths : Array, visit_count):
 					return false
 	return true
 
+func enable_conversation(story_path : String, enable : bool):
+	for locale in AvailableLocales:
+		if _inkStories.has(locale):
+			if not _inkStories[locale].has(story_path):
+				push_warning("Story path %s was not found!" % story_path)
+				continue
+			var palladiumStory : PLDStory = _inkStories[locale][story_path]
+			_inkStoriesStates[locale][palladiumStory.get_story_name()].disabled = not enable
+
+func is_disabled(story_path : String):
+	for locale in AvailableLocales:
+		if _inkStories.has(locale):
+			if not _inkStories[locale].has(story_path):
+				push_warning("Story path %s was not found!" % story_path)
+				return false
+			var palladiumStory : PLDStory = _inkStories[locale][story_path]
+			if _inkStoriesStates[locale][palladiumStory.get_story_name()].disabled:
+				return true
+	return false
+
 func get_slot_caption_file_path(slot : int) -> String:
 	return "user://saves/slot_%d/caption" % slot
 
@@ -345,6 +365,7 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 	var story_name = palladiumStory.get_story_name()
 	var story = palladiumStory.get_ink_story() # Story
 	var visit_count = 0
+	var disabled = false
 	var results = []
 	if slot >= 0:
 		if _inkStoriesStates[locale].empty():
@@ -361,10 +382,12 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 			var s = _inkStoriesStates[locale][story_name]
 			var has_story_state = s.has("story_state")
 			var has_visit_count = s.has("visit_count")
+			var has_disabled = s.has("disabled")
 			var has_results = s.has("results")
 			var has_story_log = s.has("story_log")
 			var story_state = s.story_state if has_story_state else null
 			visit_count = s.visit_count if has_visit_count else 0
+			disabled = s.disabled if has_disabled else false
 			results = s.results if has_results else []
 			if has_story_log:
 				var story_log = palladiumStory.get_story_log()
@@ -375,6 +398,8 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 				story.state.load_json(story_state)
 				if not has_visit_count:
 					s["visit_count"] = visit_count
+				if not has_disabled:
+					s["disabled"] = disabled
 				if not has_results:
 					s["results"] = results
 				if not has_story_log and palladiumStory.is_chat_driven():
@@ -384,6 +409,7 @@ func load_save_or_reset(slot : int, palladiumStory : PLDStory) -> bool:
 	_inkStoriesStates[locale][story_name] = {
 		"story_state" : "",
 		"visit_count" : visit_count,
+		"disabled" : disabled,
 		"results" : results
 	}
 	if palladiumStory.is_chat_driven():
