@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/you_are_welcome.ogg-d96bed9768eada3b87c39c6d1044cda6.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Heal/you_are_welcome.ogg"
+dest_files=[ "res://.import/you_are_welcome.ogg-d96bed9768eada3b87c39c6d1044cda6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/you_are_welcome.ogg-c92feadb6213ff8ed3678290b061408c.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/bandit/Bun/you_are_welcome.ogg"
+dest_files=[ "res://.import/you_are_welcome.ogg-c92feadb6213ff8ed3678290b061408c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

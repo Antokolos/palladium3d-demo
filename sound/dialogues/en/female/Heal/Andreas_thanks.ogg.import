@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Andreas_thanks.ogg-f0ba4854a9214c6bd80fa1ef0dd988d1.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Heal/Andreas_thanks.ogg"
+dest_files=[ "res://.import/Andreas_thanks.ogg-f0ba4854a9214c6bd80fa1ef0dd988d1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pozhaluysta.ogg-923c19d5a7484aab178e1b9cfb7bcb40.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/bandit/Bun/pozhaluysta.ogg"
+dest_files=[ "res://.import/pozhaluysta.ogg-923c19d5a7484aab178e1b9cfb7bcb40.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

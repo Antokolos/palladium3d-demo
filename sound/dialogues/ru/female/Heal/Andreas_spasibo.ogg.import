@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Andreas_spasibo.ogg-9713d5e97aeaaf37826dbae9bc853960.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Heal/Andreas_spasibo.ogg"
+dest_files=[ "res://.import/Andreas_spasibo.ogg-9713d5e97aeaaf37826dbae9bc853960.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

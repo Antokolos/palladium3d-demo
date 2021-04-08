@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/you_are_welcome.ogg-c1cf4afc5db2c245895748d2342b2444.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/female/Heal/you_are_welcome.ogg"
+dest_files=[ "res://.import/you_are_welcome.ogg-c1cf4afc5db2c245895748d2342b2444.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

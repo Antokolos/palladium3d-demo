@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pozhaluysta.ogg-cbda79c07e5233ece2716f41df8a3beb.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/female/Heal/pozhaluysta.ogg"
+dest_files=[ "res://.import/pozhaluysta.ogg-cbda79c07e5233ece2716f41df8a3beb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
