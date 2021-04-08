@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2419_bandit_sigh_1.ogg-e707c1a0b54822ca25c04f300a0a186f.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2419_bandit_sigh_1.ogg"
+dest_files=[ "res://.import/2419_bandit_sigh_1.ogg-e707c1a0b54822ca25c04f300a0a186f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -267,7 +267,17 @@ func join_party():
 func is_underwater():
 	return is_underwater
 
+func breathe_in():
+	var sound_id
+	if game_state.player_name_is(CHARS.FEMALE_NAME_HINT):
+		sound_id = MEDIA.SoundId.WOMAN_BREATHE_IN_1 if randf() > 0.5 else MEDIA.SoundId.WOMAN_BREATHE_IN_2
+	else:
+		sound_id = MEDIA.SoundId.MAN_BREATHE_IN_1 if randf() > 0.5 else MEDIA.SoundId.MAN_BREATHE_IN_2
+	MEDIA.play_sound(sound_id)
+
 func set_underwater(enable):
+	if is_underwater and not enable:
+		breathe_in()
 	is_underwater = enable
 	if not enable:
 		is_air_pocket = false
@@ -595,7 +605,7 @@ func invoke_physics_pass():
 func get_snap():
 	return Vector3.UP
 
-func is_need_to_use_physics(characters):
+func is_need_to_use_physics(characters, target):
 	if force_physics:
 		return true
 	if force_no_physics:
@@ -613,15 +623,19 @@ func is_need_to_use_physics(characters):
 			return true
 	return false
 
-func has_movement(v, fc):
+func has_horz_movement(v):
 	return (
 		v.x >= MIN_MOVEMENT \
 			or v.x <= -MIN_MOVEMENT \
 			or v.z >= MIN_MOVEMENT \
-			or v.z <= -MIN_MOVEMENT \
-			or v.y > 0 \
-			or (not is_air_pocket and not fc)
+			or v.z <= -MIN_MOVEMENT
 	)
+
+func has_vert_movement(v, fc):
+	return v.y > 0 or (not is_air_pocket and not fc)
+
+func has_movement(v, fc):
+	return has_horz_movement(v) or has_vert_movement(v, fc)
 
 func move_without_physics(hvel, fc, delta):
 	if has_movement(hvel, fc):
@@ -630,7 +644,7 @@ func move_without_physics(hvel, fc, delta):
 
 func process_movement(delta, dir, characters):
 	var target = Vector3.ZERO if is_movement_disabled() else dir
-	var is_need_to_use_physics = is_need_to_use_physics(characters)
+	var is_need_to_use_physics = is_need_to_use_physics(characters, target)
 	if is_need_to_use_physics:
 		target.y = 0
 	target = target.normalized()
@@ -675,7 +689,7 @@ func process_movement(delta, dir, characters):
 	else:
 		var fc = has_floor_collision()
 		vel = move_without_physics(hvel, fc, delta)
-		return { "is_walking" : has_movement(vel, fc), "collides_floor" : fc }
+		return { "vel" : vel, "collides_floor" : fc }
 	
 	var sc = get_slide_count()
 	var character_collisions = []
@@ -713,7 +727,7 @@ func process_movement(delta, dir, characters):
 		path.push_front(start_position)
 		if DRAW_PATH:
 			draw_path()
-	return { "is_walking" : has_movement(vel, collides_floor), "collides_floor" : collides_floor }
+	return { "vel" : vel, "collides_floor" : collides_floor }
 
 func get_out_vec(normal):
 	var n = normal
@@ -815,17 +829,17 @@ func do_process(delta, is_player):
 		return d
 	var movement_data = get_movement_data(is_player)
 	update_state(movement_data)
-	var movement_process_data = process_movement(delta, movement_data.get_dir(), characters)
-	set_has_floor_collision(movement_process_data.collides_floor)
-	d.is_moving = movement_process_data.is_walking
+	var mpd = process_movement(delta, movement_data.get_dir(), characters)
+	var should_fall = not is_air_pocket and not character_nodes.has_floor_collision()
+	var fc = mpd.collides_floor and not should_fall
+	set_has_floor_collision(fc)
+	d.is_moving = has_movement(mpd.vel, fc)
 	d.is_rotating = process_rotation(not d.is_moving and is_player)
 	if d.is_moving:
 		is_air_pocket = false
 		character_nodes.play_walking_sound(is_sprinting)
 	else:
 		character_nodes.stop_walking_sound()
-	if d.is_rotating:
-		is_air_pocket = false
 	var model = get_model()
 	var has_floor_collision = has_floor_collision()
 	if has_floor_collision:
@@ -839,8 +853,8 @@ func do_process(delta, is_player):
 			stand_up()
 	else:
 		character_nodes.stop_rest_timer()
-		if not has_path():
-			character_nodes.start_fall_timer()
+		if should_fall:
+			model.fall()
 	if not is_visible_to_player() and not force_visibility:
 		return d
 	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
@@ -848,9 +862,7 @@ func do_process(delta, is_player):
 		return d
 	elif d.is_moving or d.is_rotating:
 		character_nodes.stop_rest_timer()
-		character_nodes.stop_fall_timer()
 		model.walk(is_crouching, is_sprinting)
 	else:
-		character_nodes.stop_fall_timer()
 		character_nodes.start_rest_timer()
 	return d

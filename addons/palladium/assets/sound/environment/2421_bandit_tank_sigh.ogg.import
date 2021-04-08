@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2421_bandit_tank_sigh.ogg-23b05feed6b1a4d47bea1f28c71ed782.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2421_bandit_tank_sigh.ogg"
+dest_files=[ "res://.import/2421_bandit_tank_sigh.ogg-23b05feed6b1a4d47bea1f28c71ed782.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

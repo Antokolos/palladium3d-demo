@@ -217,6 +217,7 @@ enum ButtonActivatorIds {
 enum UsableIds {
 	NONE = 0,
 	BARN_LOCK = 10,
+	FOREST_DOOR = 15,
 	LAST_TRAP_POSTAMENT = 100,
 	WEB_APATA = 120
 }
@@ -272,7 +273,7 @@ const ITEMS = {
 	TakableIds.RAT : { "item_nam" : "rat", "item_image" : "rat.png", "model_path" : "res://scenes/rat_grey.tscn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.COIN : { "item_nam" : "coin", "item_image" : "coin.png", "model_path" : "res://assets/coin.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.FLASK_EMPTY : { "item_nam" : "flask_empty", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
-	TakableIds.FLASK_HEALING : { "item_nam" : "flask_healing", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
+	TakableIds.FLASK_HEALING : { "item_nam" : "flask_healing", "item_image" : "flask.png", "model_path" : "res://assets/flask.escn", "model_use_path" : null, "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.BUN : { "item_nam" : "saffron_bun", "item_image" : "saffron_bun.png", "model_path" : "res://assets/bun.escn", "model_use_path" : null, "can_give" : true, "custom_actions" : ["item_preview_action_1"] },
 	TakableIds.ISLAND_MAP : { "item_nam" : "island_map", "item_image" : "island_child.png", "model_path" : "res://assets/island_map.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ENVELOPE : { "item_nam" : "envelope", "item_image" : "envelope.png", "model_path" : "res://assets/envelope.escn", "model_use_path" : null, "can_give" : false, "custom_actions" : ["item_preview_action_1"] },
@@ -304,11 +305,11 @@ func execute_give_item_action(player, target):
 	match item.item_id:
 		DB.TakableIds.BUN:
 			conversation_manager.start_conversation(player, "Bun", target)
+			item.remove()
 		_:
 			return false
 	hud.inventory.visible = false
 	item.used(player, target)
-	item.remove()
 	return true
 
 func item_constraints_satisfied(item, action = "item_preview_action_1"):

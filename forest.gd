@@ -1,6 +1,6 @@
 extends PLDLevel
 
-onready var pocket_book = get_node("pocket_book")
+onready var pocket_book = get_node("player_female/pocket_book")
 
 func do_init(is_loaded):
 	if game_state.current_scene_was_loaded_before() and not is_loaded:
@@ -15,8 +15,8 @@ func do_init(is_loaded):
 			player_female.deactivate()
 	if conversation_manager.meeting_is_finished(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT):
 		remove_pocket_book()
+	get_tree().call_group("usables", "connect_signals", self)
 	get_tree().call_group("takables", "connect_signals", self)
-	game_state.connect("item_used", self, "on_item_used")
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	player.connect("arrived_to", self, "_on_arrived_to")
 	player_female.connect("arrived_to", self, "_on_arrived_to")
@@ -50,22 +50,24 @@ func use_takable(player_node, takable, parent, was_taken):
 			if player_female.is_in_party():
 				conversation_manager.start_conversation(player, "001_Oak")
 
-func on_item_used(item_id, target):
-	if item_id == DB.TakableIds.BARN_LOCK_KEY and target is BarnLock:
-		var was_in_party = player_female.is_in_party()
-		if not was_in_party:
-			player_female.join_party()
-			player_female.teleport(get_node("PositionCompanion"))
-		
-		if was_in_party:
-			conversation_manager.start_conversation(player, "001_Door")
-		else:
-			var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
-			if boatFinished:
-				conversation_manager.start_conversation(player, "001_Door3")
+func use_usable(player_node, usable):
+	var usable_id = usable.usable_id
+	match usable_id:
+		DB.UsableIds.FOREST_DOOR:
+			var was_in_party = player_female.is_in_party()
+			if not was_in_party:
+				player_female.join_party()
+				player_female.teleport(get_node("PositionCompanion"))
+			
+			if was_in_party:
+				conversation_manager.start_conversation(player, "001_Door")
 			else:
-				var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT)
-				conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
+				var boatFinished = conversation_manager.conversation_is_finished("001_Boat")
+				if boatFinished:
+					conversation_manager.start_conversation(player, "001_Door3")
+				else:
+					var meetingXeniaFinished = conversation_manager.meeting_is_finished_exact(CHARS.PLAYER_NAME_HINT, CHARS.FEMALE_NAME_HINT)
+					conversation_manager.start_conversation(player, "001_Door2" if meetingXeniaFinished else "003_Door")
 
 func do_final_tween():
 	var tween = $FinalCutsceneTween

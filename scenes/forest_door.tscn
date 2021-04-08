@@ -12,23 +12,25 @@ extents = Vector3( 1.474, 1.9108, 0.260739 )
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.441273, 2.17439, 1.44147 )
 
-[node name="forest_door" instance=ExtResource( 1 )]
+[node name="forest_door" index="0" instance=ExtResource( 1 )]
 
-[node name="StaticBody" type="RigidBody" parent="." index="1" groups=[
+[node name="forest_door" type="RigidBody" parent="." index="1" groups=[
+"usables",
 "restorable_state",
 ]]
 mode = 1
 script = ExtResource( 2 )
+usable_id = 15
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StaticBody" index="0"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="forest_door" index="0"]
 stream = ExtResource( 3 )
 bus = "Sound"
 
-[node name="closed_door" type="CollisionShape" parent="StaticBody" index="1"]
+[node name="closed_door" type="CollisionShape" parent="forest_door" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76555, 0 )
 shape = SubResource( 1 )
 
-[node name="opened_door" type="CollisionShape" parent="StaticBody" index="2"]
+[node name="opened_door" type="CollisionShape" parent="forest_door" index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11874, 1.5797, -1.49314 )
 shape = SubResource( 2 )
 disabled = true

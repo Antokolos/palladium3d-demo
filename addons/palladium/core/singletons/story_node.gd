@@ -180,7 +180,10 @@ func _observe_cutscene(variable_name, new_value) -> void:
 	var v : int = int(new_value)
 	var name_hint = variable_name.substr(CUTSCENE_VAR_PREFIX.length(), variable_name.length())
 	var character = game_state.get_character(name_hint)
-	character.play_cutscene(v)
+	if character and v > 0:
+		character.play_cutscene(v)
+	else:
+		push_warning("Cannot play cutscene '%s = %d'; it can happen when story is resetting during load" % [variable_name, v])
 
 func _observe_relationship(variable_name, new_value) -> void:
 	var v : int = int(new_value)

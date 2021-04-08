@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal used(player_node, target, item_id)
+signal used(player_node, target, item_id, item_count)
 
 const BORDER_COLOR = Color(0, 1, 1, 1)
 const DEFAULT_COLOR = Color("#7e7e7e")
@@ -123,4 +123,4 @@ func remove(all_items = false):
 	game_state.remove(item_id, item_count if all_items else 1)
 
 func used(player_node, target):
-	emit_signal("used", player_node, target, item_id)
+	emit_signal("used", player_node, target, item_id, item_count)

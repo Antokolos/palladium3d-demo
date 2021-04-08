@@ -12,11 +12,11 @@ onready var poison_timer = $PoisonTimer
 onready var stun_timer = $StunTimer
 onready var attack_timer = $AttackTimer
 onready var rest_timer = $RestTimer
-onready var fall_timer = $FallTimer
 
 onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
 onready var ranged_damage_raycast = $RangedDamageRayCast
+onready var under_feet_raycast = $UnderFeetRayCast
 onready var rays_to_characters = $RaysToCharacters
 
 onready var visibility_notifier = $VisibilityNotifier
@@ -33,6 +33,7 @@ func _ready():
 	character.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	melee_damage_area.monitoring = character.has_melee_attack()
 	ranged_damage_raycast.enabled = character.has_ranged_attack()
+	under_feet_raycast.add_exception(character)
 
 func _on_player_underwater(player, enable):
 	if player and not player.equals(character):
@@ -164,6 +165,9 @@ func use_weapon(item):
 		else:
 			game_state.get_hud().queue_popup_message("MESSAGE_NOTHING_HAPPENS")
 
+func has_floor_collision():
+	return under_feet_raycast.is_colliding()
+
 func get_possible_attack_target(update_collisions):
 	if not character.is_activated():
 		return null
@@ -212,16 +216,8 @@ func start_rest_timer():
 func stop_rest_timer():
 	rest_timer.stop()
 
-func start_fall_timer():
-	if fall_timer.is_stopped():
-		fall_timer.start()
-
-func stop_fall_timer():
-	fall_timer.stop()
-
 func stop_all():
 	stop_rest_timer()
-	stop_fall_timer()
 	stop_attack()
 	stun_timer.stop()
 	poison_timer.stop()

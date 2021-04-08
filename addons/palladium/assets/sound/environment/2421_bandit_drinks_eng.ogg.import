@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2421_bandit_drinks_eng.ogg-3c11b36bea9984542b4769856d6a310f.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2421_bandit_drinks_eng.ogg"
+dest_files=[ "res://.import/2421_bandit_drinks_eng.ogg-3c11b36bea9984542b4769856d6a310f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

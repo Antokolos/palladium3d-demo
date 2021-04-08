@@ -8,7 +8,7 @@ signal player_underwater(player, enabled)
 signal player_poisoned(player, enabled, intoxication_rate)
 signal item_taken(item_id, count_total, count_taken, item_path)
 signal item_removed(item_id, count_total, count_removed)
-signal item_used(player_node, target, item_id)
+signal item_used(player_node, target, item_id, item_count)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
 
@@ -339,8 +339,9 @@ func handle_conversation(player, target, initiator):
 	conversation_manager.start_conversation(player, "Conversation", target)
 
 func handle_player_highlight(initiator, target):
-	if not target.is_in_party():
-		return common_utils.get_action_input_control() + tr("ACTION_TALK") if conversation_manager.meeting_is_not_finished(target.name_hint, initiator.name_hint) else ""
+	if not target.is_in_party() \
+		and conversation_manager.meeting_is_finished(target.name_hint, initiator.name_hint):
+		return ""
 	return common_utils.get_action_input_control() + tr("ACTION_TALK")
 
 func get_current_scene_data():
@@ -497,8 +498,8 @@ func remove(item_id, count = 1):
 			emit_signal("item_removed", item_id, quick_item.count, count)
 			return
 
-func item_used(player_node, target, item_id):
-	emit_signal("item_used", item_id, target)
+func item_used(player_node, target, item_id, item_count):
+	emit_signal("item_used", player_node, target, item_id, item_count)
 
 func set_quick_item(pos, item_id):
 	if pos >= DB.MAX_QUICK_ITEMS:

@@ -28,7 +28,19 @@ enum SoundId {
 	FIRE_LIGHTER,
 	FIRE_EXTINGUISH,
 	RAT_SQUEAK,
-	OUCH
+	OUCH_RU,
+	OUCH_EN,
+	BOTTLE_FILLING,
+	MAN_DRINKS,
+	MAN_DRINKS_ALT_RU,
+	MAN_DRINKS_ALT_EN,
+	FALLING_DOWN,
+	MAN_BREATHE_IN_TANK,
+	MAN_BREATHE_IN_1,
+	MAN_BREATHE_IN_2,
+	WOMAN_BREATHE_IN_1,
+	WOMAN_BREATHE_IN_2,
+	MAN_GETTING_HIT
 }
 
 const SOUND = {
@@ -36,7 +48,19 @@ const SOUND = {
 	SoundId.FIRE_LIGHTER : preload("res://addons/palladium/assets/sound/environment/238059__klankbeeld__cigarette-lighter-click-light-140320-0129.ogg"),
 	SoundId.FIRE_EXTINGUISH : preload("res://addons/palladium/assets/sound/environment/155660__the-semen-incident__cig-extinguish_potuh_fakel.ogg"),
 	SoundId.RAT_SQUEAK : preload("res://addons/palladium/assets/sound/environment/472399__joseagudelo__16-raton-chillando.ogg"),
-	SoundId.OUCH : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg")
+	SoundId.OUCH_RU : preload("res://addons/palladium/assets/sound/environment/2334_oy.ogg"),
+	SoundId.OUCH_EN : preload("res://addons/palladium/assets/sound/environment/2335_ouch.ogg"),
+	SoundId.BOTTLE_FILLING : preload("res://addons/palladium/assets/sound/environment/bottle_filled.ogg"),
+	SoundId.MAN_DRINKS : preload("res://addons/palladium/assets/sound/environment/2422_Andreas_drinks.ogg"),
+	SoundId.MAN_DRINKS_ALT_RU : preload("res://addons/palladium/assets/sound/environment/2421_bandit_drinks.ogg"),
+	SoundId.MAN_DRINKS_ALT_EN : preload("res://addons/palladium/assets/sound/environment/2421_bandit_drinks_eng.ogg"),
+	SoundId.FALLING_DOWN : preload("res://addons/palladium/assets/sound/environment/417994__suburbanwizard__body-fall.ogg"),
+	SoundId.MAN_BREATHE_IN_TANK : preload("res://addons/palladium/assets/sound/environment/2421_bandit_tank_sigh.ogg"),
+	SoundId.MAN_BREATHE_IN_1 : preload("res://addons/palladium/assets/sound/environment/2419_bandit_sigh_1.ogg"),
+	SoundId.MAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2420_bandit_sigh_2.ogg"),
+	SoundId.WOMAN_BREATHE_IN_1 : preload("res://addons/palladium/assets/sound/environment/2402_enhale_1.ogg"),
+	SoundId.WOMAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2402_enhale_2.ogg"),
+	SoundId.MAN_GETTING_HIT : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg")
 }
 
 onready var music_player = $MusicPlayer

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2336_mur_yelling.ogg-e472fc1296044be7eb671e86fc63c7ab.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2336_mur_yelling.ogg"
+dest_files=[ "res://.import/2336_mur_yelling.ogg-e472fc1296044be7eb671e86fc63c7ab.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

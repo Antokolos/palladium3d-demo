@@ -12,6 +12,7 @@ func use(player_node, camera_node):
 		return
 	if game_state.has_item(DB.TakableIds.ISLAND_MAP_2):
 		game_state.remove(DB.TakableIds.ISLAND_MAP_2)
+	.use(player_node, camera_node)
 	door_open(true, true)
 
 func add_highlight(player_node):

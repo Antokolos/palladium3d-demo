@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2402_enhale_2.ogg-370ba78145e5c1f686d9a34c3571606d.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2402_enhale_2.ogg"
+dest_files=[ "res://.import/2402_enhale_2.ogg-370ba78145e5c1f686d9a34c3571606d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

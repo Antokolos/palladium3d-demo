@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2422_Andreas_drinks.ogg-341bf8c7f1e25e81c10d5681c3b36c8d.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2422_Andreas_drinks.ogg"
+dest_files=[ "res://.import/2422_Andreas_drinks.ogg-341bf8c7f1e25e81c10d5681c3b36c8d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
