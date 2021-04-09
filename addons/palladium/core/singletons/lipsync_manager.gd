@@ -61,11 +61,7 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 	var stream = load(conversation_sound_path + file_name)
 	if not stream:
 		return false
-	if stream is AudioStreamOGGVorbis:
-		stream.set_loop(false)
-	elif stream is AudioStreamSample:
-		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_DISABLED)
-	else:
+	if not common_utils.set_stream_loop(stream, false):
 		return false
 	var length = stream.get_length()
 	post_delay_timer.wait_time = (

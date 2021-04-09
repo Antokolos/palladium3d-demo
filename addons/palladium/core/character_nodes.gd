@@ -122,9 +122,13 @@ func set_sound_walk(mode, replace_existing = true):
 		walk_sound_ids[0] = mode
 	else:
 		walk_sound_ids.push_front(mode)
+	var stream = CHARS.SOUND[mode] if mode != CHARS.SoundId.SOUND_WALK_NONE and CHARS.SOUND.has(mode) else null
 	sound_player_walking.stop()
-	sound_player_walking.stream = CHARS.SOUND[mode] if mode != CHARS.SoundId.SOUND_WALK_NONE and CHARS.SOUND.has(mode) else null
 	sound_player_walking.set_unit_db(0)
+	if not common_utils.set_stream_loop(stream, true):
+		sound_player_walking.stream = null
+		return
+	sound_player_walking.stream = stream
 
 func restore_sound_walk_from(mode):
 	if walk_sound_ids.size() > 1 and walk_sound_ids[0] == mode:
@@ -133,13 +137,21 @@ func restore_sound_walk_from(mode):
 
 func set_sound_attack(mode):
 	sound_player_attack.stop()
-	sound_player_attack.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
 	sound_player_attack.set_unit_db(0)
+	var stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
+	if not common_utils.set_stream_loop(stream, false):
+		sound_player_attack.stream = null
+		return
+	sound_player_attack.stream = stream
 
 func set_sound_miss(mode):
 	sound_player_miss.stop()
-	sound_player_miss.stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
 	sound_player_miss.set_unit_db(0)
+	var stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
+	if not common_utils.set_stream_loop(stream, false):
+		sound_player_miss.stream = null
+		return
+	sound_player_miss.stream = stream
 
 func set_underwater(enable):
 	if enable:

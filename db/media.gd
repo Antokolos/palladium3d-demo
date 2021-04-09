@@ -88,10 +88,8 @@ func restore_music_from(music_id):
 
 func play_sound(sound_id, is_loop = false, volume_db = 0):
 	var stream = SOUND[sound_id]
-	if stream is AudioStreamOGGVorbis:
-		stream.set_loop(is_loop)
-	elif stream is AudioStreamSample:
-		stream.set_loop_mode(AudioStreamSample.LoopMode.LOOP_FORWARD if is_loop else AudioStreamSample.LoopMode.LOOP_DISABLED)
+	if not common_utils.set_stream_loop(stream, is_loop):
+		return
 	sound_player.stream = stream
 	sound_player.set_volume_db(volume_db)
 	sound_player.play()

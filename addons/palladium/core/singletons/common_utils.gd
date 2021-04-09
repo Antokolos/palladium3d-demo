@@ -160,6 +160,18 @@ func mouse_button_to_string(button_index):
 func log10(x):
 	return log(x) / log(10.0)
 
+func set_stream_loop(stream, is_loop):
+	if not stream:
+		return false
+	if stream is AudioStreamOGGVorbis:
+		stream.set_loop(is_loop)
+		return true
+	elif stream is AudioStreamSample:
+		stream.set_loop_mode(AudioStreamSample.LOOP_FORWARD if is_loop else AudioStreamSample.LOOP_DISABLED)
+		return true
+	push_warning("Cannot set stream loop for %s" % stream.get_path())
+	return false
+
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:
 	if node is Timer:
