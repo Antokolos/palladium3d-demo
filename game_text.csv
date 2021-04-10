@@ -136,6 +136,8 @@
 "MESSAGE_CONTROLS_TOGGLE_ITEM_2","Doing so you will swap currently selected items in inventory and in quick items panel","При этом меняются местами выделенные предметы в инвентаре и панели быстрого доступа"
 "MESSAGE_COINS_INSIDE","Coins in cup: %d","Монет в чаше: %d"
 "MESSAGE_COINS_INSIDE_ADD"," (coins in cup: %d)"," (монет в чаше: %d)"
+"MESSAGE_TOO_WEAK_FOR_WEAPON","You are too weak for this weapon","Недостаточно сил для использования этого оружия"
+"MESSAGE_GAME_SAVED","Game saved","Игра сохранена"
 "TEXT_READY","Ready","Готов"
 "SETTINGS_TABLET_ORIENTATION","Tablet orientation","Ориентация планшета"
 "SETTINGS_VSYNC","Vsync","Vsync"

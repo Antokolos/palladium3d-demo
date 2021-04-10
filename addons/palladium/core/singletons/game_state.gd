@@ -1023,3 +1023,4 @@ func save_state(slot):
 		"messages" : messages
 	}
 	f.store_line( to_json(d) )
+	get_hud().queue_popup_message("MESSAGE_GAME_SAVED", [], false, 3)
