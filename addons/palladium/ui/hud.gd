@@ -51,6 +51,7 @@ var first_item_idx = 0
 var popup_message_queue = []
 
 func _ready():
+	game_state.connect("game_saved", self, "_on_game_saved")
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	game_state.connect("item_taken", self, "_on_item_taken")
 	game_state.connect("item_removed", self, "_on_item_removed")
@@ -59,6 +60,8 @@ func _ready():
 	game_state.connect("player_surge", self, "set_surge")
 	game_state.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
+	cutscene_manager.connect("camera_borrowed", self, "_on_camera_borrowed")
+	cutscene_manager.connect("camera_restored", self, "_on_camera_restored")
 	on_health_changed(CHARS.PLAYER_NAME_HINT, game_state.player_health_current, game_state.player_health_max)
 	on_oxygen_changed(CHARS.PLAYER_NAME_HINT, game_state.player_oxygen_current, game_state.player_oxygen_max)
 	common_utils.show_mouse_cursor_if_needed_in_game(self)
@@ -253,6 +256,9 @@ func insert_ui_quick_item(pos):
 		quick_items_panel.move_child(new_item, pos)
 	select_active_quick_item()
 
+func _on_game_saved():
+	queue_popup_message("MESSAGE_GAME_SAVED", [], false, 3)
+
 func _on_shader_cache_processed():
 	if cutscene_mode:
 		return
@@ -277,6 +283,13 @@ func _on_item_removed(item_id, count_total, count_removed):
 	remove_ui_inventory_item(item_id, count_removed)
 	remove_ui_quick_item(item_id, count_removed)
 	synchronize_items()
+
+func _on_camera_borrowed(player_node, cutscene_node, camera, conversation_name, target):
+	if camera:
+		camera.clear_item_use()
+
+func _on_camera_restored(player_node, cutscene_node, camera, conversation_name, target):
+	select_active_quick_item() # This will also call camera.activate_item_use() if needed
 
 func remove_ui_inventory_item(item_id, count):
 	var ui_items = inventory_panel.get_children()
@@ -392,7 +405,7 @@ func get_active_item():
 		return quick_items_panel.get_child(active_quick_item_idx)
 	return null
 
-func restore_state():
+func update_hud():
 	synchronize_items()
 	set_crouch_indicator(game_state.get_player().is_crouching())
 

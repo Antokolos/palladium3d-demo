@@ -1,5 +1,5 @@
 Wow! How did you find that? Where do these stairs lead?	# actor:female # voiceover:412_wow_how_did_you.ogg
-What are you doing here?	# actor:player # voiceover:341_what_are_you_doing_here.ogg
+What are you doing here?	# actor:player # voiceover:2582_what_are_you_doing_here.ogg
 I was waiting for your return and got bored.	# actor:female # voiceover:399_i_was_waiting_for_your_return.ogg
 Ok, let's go to the shore. Maybe some passing ship will notice us, and we won't have to wait for two days for the ferry.	# actor:player # voiceover:342_ok_lets_go_to_the_shore.ogg
 But don't you want to see what's down there?	# actor:female # voiceover:400_but_don't_you_want_to_see.ogg

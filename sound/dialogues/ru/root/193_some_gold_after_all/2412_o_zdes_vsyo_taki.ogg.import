@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2412_o_zdes_vsyo_taki.ogg-22136b8bcd8e8323be3f292cf067daa0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/193_some_gold_after_all/2412_o_zdes_vsyo_taki.ogg"
+dest_files=[ "res://.import/2412_o_zdes_vsyo_taki.ogg-22136b8bcd8e8323be3f292cf067daa0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

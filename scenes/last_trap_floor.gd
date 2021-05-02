@@ -9,6 +9,8 @@ func activate(and_change_state = true, is_restoring = false):
 	pl1.play("last_trap_tile_1", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 	pl2.play("last_trap_tile_2", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 	collision.disabled = true
+	if not is_restoring:
+		MEDIA.play_sound(MEDIA.SoundId.FEMALE_SCREAM_SHORT)
 
 func deactivate(and_change_state = true, is_restoring = false):
 	.deactivate(and_change_state, is_restoring)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2604_A_a_h_last_trap.ogg-47653b9c3d3abb4cb2a691728c1912f3.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/2604_A_a_h_last_trap.ogg"
+dest_files=[ "res://.import/2604_A_a_h_last_trap.ogg-47653b9c3d3abb4cb2a691728c1912f3.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

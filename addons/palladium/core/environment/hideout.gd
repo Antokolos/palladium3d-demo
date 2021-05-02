@@ -16,7 +16,7 @@ func use(player_node, camera_node):
 	.use(player_node, camera_node)
 	if is_conversation_finished_or_not_applicable(player_node) and all_party_members_can_hide():
 		emit_signal("use_hideout", player_node, self)
-		cutscene_manager.borrow_camera(player_node, get_node("camera_holder"))
+		cutscene_manager.borrow_camera(player_node, get_node("camera_holder"), true)
 		player_node.set_hidden(true)
 		hidden_player = player_node
 
@@ -39,12 +39,10 @@ func unhide_player():
 	cutscene_manager.restore_camera(hidden_player)
 	hidden_player = null
 
-func add_highlight(player_node):
-	if Engine.editor_hint:
-		return ""
+func get_usage_code(player_node):
 	if is_conversation_finished_or_not_applicable(player_node):
-		return common_utils.get_action_input_control() + tr("ACTION_HIDE") if all_party_members_can_hide() else ""
-	return common_utils.get_action_input_control() + tr("ACTION_DISCUSS")
+		return "ACTION_HIDE" if all_party_members_can_hide() else ""
+	return "ACTION_DISCUSS"
 
 func _input(event):
 	if Engine.editor_hint:

@@ -73,7 +73,5 @@ func use(player_node, camera_node):
 				conversation_manager.start_area_conversation(conversation, repeatable)
 			return
 
-func add_highlight(player_node):
-	if Engine.editor_hint:
-		return ""
-	return "" if is_conversation_finished_or_not_applicable(player_node) else common_utils.get_action_input_control() + tr(get_action_key(player_node))
+func get_usage_code(player_node):
+	return "" if is_conversation_finished_or_not_applicable(player_node) else get_action_key(player_node)

@@ -16,7 +16,9 @@ size = 30
 extra_spacing_char = 8
 font_data = ExtResource( 3 )
 
-[node name="menu_hud" type="Control"]
+[node name="menu_hud" type="Control" groups=[
+"hud",
+]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

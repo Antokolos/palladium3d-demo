@@ -10,8 +10,8 @@ func use(player_node, camera_node):
 	game_state.set_multistate_state(get_path(), new_state)
 	$SoundRotation.play()
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_TURN")
+func get_usage_code(player_node):
+	return "ACTION_TURN"
 
 func is_state_correct():
 	var state = $AnimationTree.get("parameters/Transition/current")

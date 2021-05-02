@@ -1,7 +1,7 @@
 extends Spatial
 
-func open(speed_scale = 1.0):
-	get_node("door_3_arm/AnimationPlayer").play("door_3", -1, speed_scale)
+func open(is_restoring = false):
+	get_node("door_3_arm/AnimationPlayer").play("door_3", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 	get_node("StaticBody/CollisionShape").disabled = true
 
 func close():
@@ -10,4 +10,4 @@ func close():
 
 func restore_state():
 	if game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.PAUSED:
-		open(PLDGameState.SPEED_SCALE_INFINITY)
+		open(true)

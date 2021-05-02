@@ -8,11 +8,11 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.793032, 0.19353, 0.451909 )
 
-[node name="golden_bricks" index="0" instance=ExtResource( 1 )]
+[node name="golden_bricks" instance=ExtResource( 1 )]
 
 [node name="golden_bricks" type="RigidBody" parent="." index="3" groups=[
-"restorable_state",
 "usables",
+"restorable_state",
 ]]
 mode = 1
 script = ExtResource( 2 )

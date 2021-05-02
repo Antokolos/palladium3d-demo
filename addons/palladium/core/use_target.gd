@@ -40,13 +40,13 @@ func item_match(item):
 			return true
 	return false
 
-func add_highlight(player_node):
+func get_usage_code(player_node):
 	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_match(item):
-			return common_utils.get_action_input_control() + get_use_action_text(player_node, item)
+			return get_use_action_code(player_node, item)
 	return ""
 
-func get_use_action_text(player_node, item):
-	return tr("ACTION_USE")
+func get_use_action_code(player_node, item):
+	return "ACTION_USE"

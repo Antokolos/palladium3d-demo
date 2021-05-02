@@ -5,7 +5,7 @@ I'll keep on going. But only alone.	# actor:bandit # voiceover:20_I'll_keep_on_g
 Being alone out here is twice as dangerous.	# actor:player # voiceover:468_being_alone_out_here.ogg
 Being with you two is three times more dangerous.	# actor:bandit # voiceover:21_three_times_more_dangerous.ogg
 I get the hint. Go together if you want; I can go through the traps on my own just fine.	# actor:female # voiceover:545_i_get_the_hint.ogg
-We need to all go together. I'm sure each of us will be extremely cautious from now on.	# actor:player # voiceover:469_we_need_to_all_go.ogg
+We need to all go together. I'm sure each of us will be extremely cautious from now on.	# actor:player # voiceover:2581_we_need_to_all_go.ogg
 I'm confident you two would just keep solving riddles and telling old stories, but I have a different approach.	# actor:bandit # voiceover:22_solving_riddles_telling_stories.ogg
 I'm sure we can come to an agreement.	# actor:player # voiceover:470_i'm_sure_we_can_come.ogg
 When the trap is triggered, there will be no time to debate.	# actor:bandit # voiceover:23_when_the_trap_is_triggered.ogg

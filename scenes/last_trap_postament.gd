@@ -60,15 +60,15 @@ func use_action(player_node, item):
 	set_state(STATE_MOVING_DOWN)
 	return true
 
-func add_highlight(player_node):
+func get_usage_code(player_node):
 	if state != STATE_READY \
 		and state != STATE_MOVED_UP_REAL \
 		and state != STATE_MOVED_UP_FAKE:
 		return ""
-	var h = .add_highlight(player_node)
-	if not h.empty():
+	var h = .get_usage_code(player_node)
+	if h and not h.empty():
 		return h
-	return (common_utils.get_action_input_control() + tr("ACTION_TAKE")) if can_take_palladium() else ""
+	return "ACTION_TAKE" if can_take_palladium() else ""
 
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:

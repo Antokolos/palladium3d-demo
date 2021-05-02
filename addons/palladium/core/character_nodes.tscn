@@ -1,13 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/palladium/core/character_nodes.gd" type="Script" id=1]
 [ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
 
 [sub_resource type="BoxShape" id=1]
-resource_local_to_scene = true
-extents = Vector3( 0.161138, 1, 0.146487 )
-
-[sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.879759, 1, 0.502388 )
 
 [node name="character_nodes" type="Spatial"]
@@ -30,16 +26,6 @@ bus = "Sound"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 bus = "Sound"
 
-[node name="StandingArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0 )
-input_ray_pickable = false
-monitorable = false
-collision_layer = 1024
-collision_mask = 1024
-
-[node name="CollisionShape" type="CollisionShape" parent="StandingArea"]
-shape = SubResource( 1 )
-
 [node name="MeleeDamageArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06667, 0.993718 )
 input_ray_pickable = false
@@ -47,7 +33,13 @@ monitorable = false
 collision_mask = 7
 
 [node name="CollisionShape" type="CollisionShape" parent="MeleeDamageArea"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
+
+[node name="StandingRayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+enabled = true
+cast_to = Vector3( 0, 0.9, 0 )
+collision_mask = 1024
 
 [node name="UnderFeetRayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
@@ -82,7 +74,7 @@ one_shot = true
 
 [node name="RestTimer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]

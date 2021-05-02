@@ -16,5 +16,5 @@ func use(player_node, camera_node):
 			game_state.change_sky_panorama(false, PANORAMA_EVENING, SKY_ROTATION_EVENING, PLDGameState.TimeOfDay.EVENING)
 		game_state.change_scene("res://forest.tscn", true)
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_GO_OUTSIDE")
+func get_usage_code(player_node):
+	return "ACTION_GO_OUTSIDE"

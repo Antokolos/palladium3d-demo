@@ -7,5 +7,5 @@ func use(player_node, camera_node):
 			character.set_pathfinding_enabled(true)
 	game_state.change_scene("res://palladium.tscn", true)
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_GO_INSIDE")
+func get_usage_code(player_node):
+	return "ACTION_GO_INSIDE"

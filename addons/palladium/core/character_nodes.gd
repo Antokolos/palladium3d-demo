@@ -13,9 +13,9 @@ onready var stun_timer = $StunTimer
 onready var attack_timer = $AttackTimer
 onready var rest_timer = $RestTimer
 
-onready var standing_area = $StandingArea
 onready var melee_damage_area = $MeleeDamageArea
 onready var ranged_damage_raycast = $RangedDamageRayCast
+onready var standing_raycast = $StandingRayCast
 onready var under_feet_raycast = $UnderFeetRayCast
 onready var rays_to_characters = $RaysToCharacters
 
@@ -33,6 +33,7 @@ func _ready():
 	character.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 	melee_damage_area.monitoring = character.has_melee_attack()
 	ranged_damage_raycast.enabled = character.has_ranged_attack()
+	standing_raycast.add_exception(character)
 	under_feet_raycast.add_exception(character)
 
 func _on_player_underwater(player, enable):
@@ -235,8 +236,10 @@ func stop_all():
 	poison_timer.stop()
 	oxygen_timer.stop()
 
-func enable_areas(enable):
-	standing_area.get_node("CollisionShape").disabled = not enable
+func enable_areas_and_raycasts(enable):
+	standing_raycast.enabled = enable
+	under_feet_raycast.enabled = enable
+	ranged_damage_raycast.enabled = enable
 	melee_damage_area.get_node("CollisionShape").disabled = not enable
 
 func is_visible_to_player():
@@ -244,7 +247,7 @@ func is_visible_to_player():
 
 func is_low_ceiling():
 	# Make sure you've set proper collision layer bit for ceiling
-	return standing_area.get_overlapping_bodies().size() > 0
+	return standing_raycast.is_colliding()
 
 func _on_HealTimer_timeout():
 	if character.is_player() and game_state.is_level_ready():
@@ -295,10 +298,8 @@ func _on_AttackTimer_timeout():
 	character.clear_point_of_interest()
 
 func _on_RestTimer_timeout():
+	stop_walking_sound()
 	character.get_model().look()
-
-func _on_FallTimer_timeout():
-	character.get_model().fall()
 
 func _on_VisibilityNotifier_screen_entered():
 	character.emit_signal("visibility_to_player_changed", character, false, true)

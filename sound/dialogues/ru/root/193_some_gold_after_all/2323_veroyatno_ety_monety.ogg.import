@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2323_veroyatno_ety_monety.ogg-91a8da0682faf5a37c7e34428cf1975a.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/193_some_gold_after_all/2323_veroyatno_ety_monety.ogg"
+dest_files=[ "res://.import/2323_veroyatno_ety_monety.ogg-91a8da0682faf5a37c7e34428cf1975a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

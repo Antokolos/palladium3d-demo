@@ -15,6 +15,7 @@ onready var rotation_helper = $Rotation_Helper
 
 var input_movement_vector = Vector2()
 var angle_rad_x = 0
+var angle_x_reset = false
 var is_in_jump = false
 
 func _ready():
@@ -30,13 +31,13 @@ func _ready():
 		enemy.connect("attack_finished", self, "_on_enemy_attack_finished")
 	#activate() -- restored from save
 
-func hit(injury_rate, hit_direction_node = null):
-	.hit(injury_rate, hit_direction_node)
+func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):
+	.hit(injury_rate, hit_direction_node, hit_dir_vec)
 	var health_new = game_state.player_health_current - injury_rate
 	if health_new > 0:
-		take_damage(false, hit_direction_node)
+		take_damage(false, hit_direction_node, hit_dir_vec)
 	else:
-		take_damage(true, hit_direction_node)
+		take_damage(true, hit_direction_node, hit_dir_vec)
 	game_state.set_health(self, health_new, game_state.player_health_max)
 
 func reset_movement():
@@ -75,7 +76,7 @@ func remove_item_from_hand():
 func process_rotation(need_to_update_collisions):
 	var result = .process_rotation(need_to_update_collisions)
 	if angle_rad_x == 0:
-		return result
+		return { "rotate_x" : false, "rotate_y" : result.rotate_y }
 	if need_to_update_collisions:
 		move_and_collide(Vector3.ZERO)
 	rotation_helper.rotate_x(angle_rad_x)
@@ -90,7 +91,10 @@ func process_rotation(need_to_update_collisions):
 	get_model_holder().rotation_degrees = model_rot
 	shape_rot.x = clamp(shape_rot.x, SHAPE_ROT_MIN_DEG, SHAPE_ROT_MAX_DEG)
 	upper_body_shape.rotation_degrees = shape_rot
-	return true
+	if angle_x_reset:
+		angle_rad_x = 0
+		angle_x_reset = false
+	return { "rotate_x" : true, "rotate_y" : result.rotate_y }
 
 func get_snap():
 	return Vector3.ZERO if is_in_jump else Vector3.UP
@@ -141,10 +145,9 @@ func _input(event):
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			angle_rad_x = deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff())
 			angle_rad_y = deg2rad(event.relative.x * settings.get_sensitivity() * -1)
-			process_rotation(true)
+			angle_x_reset = true
+			angle_y_reset = true
 			get_cam().process_rotation(self)
-			angle_rad_x = 0
-			angle_rad_y = 0
 		elif is_joypad_look(event):
 			var v = event.get_axis_value()
 			var nonzero = v > AXIS_VALUE_THRESHOLD or v < -AXIS_VALUE_THRESHOLD
@@ -226,8 +229,6 @@ func get_movement_data(is_player):
 func _physics_process(delta):
 	if not game_state.is_level_ready():
 		character_nodes.stop_all()
-		return
-	if not is_activated() or is_hidden():
 		return
 	var is_player = is_player()
 	var d = .do_process(delta, is_player)

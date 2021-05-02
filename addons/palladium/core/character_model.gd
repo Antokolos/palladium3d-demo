@@ -104,10 +104,11 @@ func stop_cutscene():
 		emit_signal("cutscene_finished", player, self, cutscene_id, was_active)
 
 func is_movement_disabled():
-	return is_looped_cutscene() \
-			or is_cutscene() \
-			or is_dead() \
-			or is_taking_damage()
+	return (
+		is_looped_cutscene()
+		or is_cutscene()
+		or is_dead()
+	)
 
 func is_dying():
 	return is_taking_damage() and animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD

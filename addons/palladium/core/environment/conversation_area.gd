@@ -8,7 +8,9 @@ export(Dictionary) var conversations = {}
 export(Dictionary) var conversaton_delays = {}
 export(NodePath) var cutscene_node_path = null
 export(bool) var repeatable = false
+export(bool) var discussable_with_self = false
 export(bool) var exclusive = false
+export(bool) var area_dependent = false
 
 onready var cutscene_node = get_node(cutscene_node_path) if cutscene_node_path and has_node(cutscene_node_path) else null
 onready var conversaton_delay_timer = $ConversationDelayTimer if has_node("ConversationDelayTimer") else null
@@ -35,10 +37,11 @@ func _on_conversation_area_body_entered(body):
 		return false
 	if not body.is_in_group("party") or game_state.is_loading():
 		return false
+	var player_name_hint = body.get_name_hint()
 	for name_hint in conversations.keys():
 		if conversations[name_hint].empty() \
-			or not game_state.is_in_party(CHARS.PLAYER_NAME_HINT) \
-			or not game_state.is_in_party(name_hint):
+			or not game_state.is_in_party(name_hint) \
+			or ((name_hint.casecmp_to(player_name_hint) == 0) and not discussable_with_self):
 			continue
 		var conversations_for_name = conversations[name_hint].split(CONVERSATIONS_DELIMITER)
 		for i in range(conversations_for_name.size()):
@@ -87,7 +90,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 				do_when_conversation_finished(name_hint, conversation_name)
 				return
 
-func _on_camera_borrowed(player_node, cutscene_node, conversation_name, target):
+func _on_camera_borrowed(player_node, cutscene_node, camera, conversation_name, target):
 	if Engine.editor_hint:
 		return
 	if not self.cutscene_node or not cutscene_node:
@@ -103,7 +106,7 @@ func _on_camera_borrowed(player_node, cutscene_node, conversation_name, target):
 				do_when_camera_borrowed(player_node, cutscene_node, name_hint, conversation_name)
 				return
 
-func _on_camera_restored(player_node, cutscene_node, conversation_name, target):
+func _on_camera_restored(player_node, cutscene_node, camera, conversation_name, target):
 	if Engine.editor_hint:
 		return
 	if not self.cutscene_node or not cutscene_node:
@@ -123,7 +126,7 @@ func _on_ConversationDelayTimer_timeout():
 	if not scheduled_conversation:
 		return
 	if cutscene_node:
-		conversation_manager.start_area_cutscene(scheduled_conversation, cutscene_node, repeatable, exclusive)
+		conversation_manager.start_area_cutscene(scheduled_conversation, cutscene_node, repeatable, exclusive, self if area_dependent else null)
 	else:
-		conversation_manager.start_area_conversation(scheduled_conversation, repeatable, exclusive)
+		conversation_manager.start_area_conversation(scheduled_conversation, repeatable, exclusive, self if area_dependent else null)
 	scheduled_conversation = null

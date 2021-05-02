@@ -1,5 +1,7 @@
 extends ColorRect
 
+signal video_cutscene_finished(video_file_name)
+
 onready var video_player = get_node("VBoxContainer/HBoxContainer/VideoPlayer")
 
 func _ready():
@@ -19,3 +21,7 @@ func is_playing():
 func _on_VideoPlayer_finished():
 	visible = false
 	game_state.get_hud().pause_game(false, false)
+	emit_signal(
+		"video_cutscene_finished",
+		video_player.stream.get_file() if video_player.stream else null
+	)

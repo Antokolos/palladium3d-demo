@@ -1,1 +1,1 @@
-﻿{"inkVersion":19,"root":[["^Андреас, спасибо. ",{"#":"actor:bandit"},"\n","^Пожалуйста. ",{"#":"actor:player"},{"#":"voiceover:pozhaluysta.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}
+﻿{"inkVersion":19,"root":[["^Андреас, спасибо. ",{"#":"actor:bandit"},{"#":"voiceover:2591_Andreas_spasibo.ogg"},"\n","^Пожалуйста. ",{"#":"actor:player"},{"#":"voiceover:pozhaluysta.ogg"},"\n",["done",{"#n":"g-0"}],null],"done",null],"listDefs":{}}

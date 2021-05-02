@@ -20,6 +20,7 @@ func do_init(is_loaded):
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	player.connect("arrived_to", self, "_on_arrived_to")
 	player_female.connect("arrived_to", self, "_on_arrived_to")
+	player_bandit.connect("arrived_to", self, "_on_arrived_to")
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
@@ -93,10 +94,12 @@ func _on_shader_cache_processed():
 				)
 			else:
 				cutscene_manager.borrow_camera(player, $PositionFinalCutscene)
-			player.set_target_node($PositionPlayer2, true, true)
 			player.set_force_physics(true)
-			player_female.set_target_node($PositionCompanion2, true, true)
+			player.set_pathfinding_enabled(false)
+			player.set_target_node($PositionPlayer2, true, true)
 			player_female.set_force_physics(true)
+			player_female.set_pathfinding_enabled(false)
+			player_female.set_target_node($PositionCompanion2, true, true)
 			player.leave_party()
 			player_female.leave_party()
 			do_final_tween()
@@ -106,10 +109,12 @@ func _on_shader_cache_processed():
 				"172_We_made_a_great_team",
 				$PositionFinalCutscene
 			)
-			player.set_target_node($PositionPlayer2, true, true)
 			player.set_force_physics(true)
-			player_bandit.set_target_node($PositionCompanion2, true, true)
+			player.set_pathfinding_enabled(false)
+			player.set_target_node($PositionPlayer2, true, true)
 			player_bandit.set_force_physics(true)
+			player_bandit.set_pathfinding_enabled(false)
+			player_bandit.set_target_node($PositionCompanion2, true, true)
 			player.leave_party()
 			player_bandit.leave_party()
 			do_final_tween()
@@ -174,6 +179,8 @@ func _on_TunnelArea_body_entered(body):
 func _on_TunnelArea_body_exited(body):
 	if body.is_in_group("party") and not game_state.is_loading():
 		body.set_sound_walk(CHARS.SoundId.SOUND_WALK_GRASS)
+		if $FinalCutsceneTween.is_active():
+			return
 		body.set_pathfinding_enabled(true)
 
 func _on_FinalCutsceneTween_tween_completed(object, key):
@@ -193,7 +200,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			set_player_final_position()
 			set_player_female_final_position()
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
-			$FinalCutsceneTimer.start(8 if player_female.get_relationship() >= 6 else 5)
+			$FinalCutsceneTimer.start(8 if player_female.get_relationship() >= 6 else 4.5)
 			yield($FinalCutsceneTimer, "timeout")
 			PREFS.set_achievement("KNOWLEDGE_IS_POWER")
 			if game_state.has_item(DB.TakableIds.PALLADIUM):
@@ -204,7 +211,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			set_player_final_position()
 			set_player_bandit_final_position()
 			cutscene_manager.borrow_camera(player, $PositionFinalCutscene2)
-			$FinalCutsceneTimer.start()
+			$FinalCutsceneTimer.start(4.5)
 			yield($FinalCutsceneTimer, "timeout")
 			PREFS.set_achievement("POWER_OF_PROGRESS")
 			if game_state.has_item(DB.TakableIds.ATHENA):

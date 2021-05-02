@@ -47,7 +47,7 @@ func discard_all_conversations(player):
 	pending_conversation_timer.stop()
 	stop_conversation(player)
 
-func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false, exclusive = false):
+func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false, exclusive = false, area_to_check : Area = null):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
@@ -66,7 +66,8 @@ func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = f
 					"initiator" : null,
 					"is_cutscene" : true,
 					"cutscene_node" : cutscene_node,
-					"repeatable" : repeatable
+					"repeatable" : repeatable,
+					"area_to_check" : area_to_check
 				}
 			)
 			return
@@ -81,9 +82,10 @@ func start_area_conversation_with_companion(conversations_map, repeatable = fals
 			return
 
 func enable_conversation(conversation_name, enable):
-	story_node.enable_conversation(conversation_name + ".ink.json", enable)
+	var cp_story = get_story_path(conversation_name)
+	story_node.enable_conversation(cp_story, enable)
 
-func start_area_conversation(conversation_name, repeatable = false, exclusive = false):
+func start_area_conversation(conversation_name, repeatable = false, exclusive = false, area_to_check : Area = null):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
@@ -102,7 +104,8 @@ func start_area_conversation(conversation_name, repeatable = false, exclusive = 
 					"initiator" : null,
 					"is_cutscene" : false,
 					"cutscene_node" : null,
-					"repeatable" : repeatable
+					"repeatable" : repeatable,
+					"area_to_check" : area_to_check
 				}
 			)
 			return false
@@ -117,6 +120,8 @@ func start_pending_conversation_if_any():
 	pending_conversation_timer.start()
 	yield(pending_conversation_timer, "timeout")
 	var c = pending_area_conversations.pop_front()
+	if not c:
+		return
 	if c.repeatable or conversation_is_not_finished(c.conversation_name):
 		start_conversation(
 			c.player,
@@ -125,7 +130,8 @@ func start_pending_conversation_if_any():
 			c.initiator,
 			c.is_cutscene,
 			c.cutscene_node,
-			c.repeatable
+			c.repeatable,
+			c.area_to_check
 		)
 
 func stop_conversation(player):
@@ -190,38 +196,33 @@ func conversation_is_not_finished(conversation_name, target_name_hint = null):
 func conversation_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
 	return check_story_result_was_achieved(conversation_name, target_name_hint, result)
 
-func check_story_not_finished(conversation_name, target_name_hint = null):
-	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
+func get_story_path(conversation_name, target_name_hint = null):
+	var cp = (("%s/" % target_name_hint) if target_name_hint else "") + "%s.ink.json" % conversation_name
 	var cp_story
 	if story_state_cache.has(cp):
 		cp_story = story_state_cache.get(cp)
 	else:
 		var locale = TranslationServer.get_locale()
 		var f = File.new()
-		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
+		var fpath = "res://ink-scripts/%s/%s" % [locale, cp]
+		var exists_cp = f.file_exists(fpath)
+		if not exists_cp:
+			push_warning("Story file %s not found" % fpath)
 		cp_story = cp if exists_cp else "Default.ink.json"
 		story_state_cache[cp] = cp_story
+	return cp_story
+
+func check_story_not_finished(conversation_name, target_name_hint = null):
+	var cp_story = get_story_path(conversation_name, target_name_hint)
 	return story_node.check_story_not_finished(cp_story)
 
 func check_story_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
-	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
-	var cp_story
-	if story_state_cache.has(cp):
-		cp_story = story_state_cache.get(cp)
-	else:
-		var locale = TranslationServer.get_locale()
-		var f = File.new()
-		var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
-		cp_story = cp if exists_cp else "Default.ink.json"
-		story_state_cache[cp] = cp_story
+	var cp_story = get_story_path(conversation_name, target_name_hint)
 	return story_node.check_story_result_was_achieved(cp_story, result)
 
 func init_story(conversation_name, target_name_hint = null, repeatable = false):
-	var locale = TranslationServer.get_locale()
-	var f = File.new()
-	var cp = ("%s/" % target_name_hint if target_name_hint else "") + "%s.ink.json" % conversation_name
-	var exists_cp = f.file_exists("res://ink-scripts/%s/%s" % [locale, cp])
-	story_node.load_story(cp if exists_cp else "Default.ink.json", false, repeatable)
+	var cp_story = get_story_path(conversation_name, target_name_hint)
+	story_node.load_story(cp_story, false, repeatable)
 	story_node.init_variables()
 	return story_node
 
@@ -239,10 +240,13 @@ func arrange_meeting(player, target, initiator, is_cutscene = false, cutscene_no
 		return true
 	return false
 
-func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null, repeatable = false):
+func start_conversation(player, conversation_name, target = null, initiator = null, is_cutscene = false, cutscene_node = null, repeatable = false, area_to_check : Area = null):
 	if self.conversation_name == conversation_name:
 		return
-	if story_node.is_disabled(conversation_name + ".ink.json"):
+	if area_to_check and not area_to_check.overlaps_body(player):
+		return
+	var cp_story = get_story_path(conversation_name, target.get_name_hint() if target else null)
+	if story_node.is_disabled(cp_story):
 		return
 	if is_cutscene:
 		cutscene_manager.start_cutscene(player, cutscene_node, conversation_name, target)

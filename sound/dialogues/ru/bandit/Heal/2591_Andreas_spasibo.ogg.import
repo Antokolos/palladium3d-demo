@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2591_Andreas_spasibo.ogg-511abce06ba8e28982ed90d6a7a275bc.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/bandit/Heal/2591_Andreas_spasibo.ogg"
+dest_files=[ "res://.import/2591_Andreas_spasibo.ogg-511abce06ba8e28982ed90d6a7a275bc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

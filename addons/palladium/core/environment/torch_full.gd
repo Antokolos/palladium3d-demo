@@ -39,8 +39,8 @@ func use(player_node, camera_node):
 		sound_burning.stop()
 	enable(active, true)
 
-func add_highlight(player_node):
-	return (common_utils.get_action_input_control() + tr("ACTION_EXTINGUISH") if is_active() else common_utils.get_action_input_control() + tr("ACTION_IGNITE"))
+func get_usage_code(player_node):
+	return "ACTION_EXTINGUISH" if is_active() else "ACTION_IGNITE"
 
 func connect_signals(target):
 	connect("state_changed", target, "_on_torch_state_changed")

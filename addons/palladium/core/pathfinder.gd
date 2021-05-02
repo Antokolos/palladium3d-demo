@@ -6,6 +6,8 @@ signal rest_state_changed(player_node, previous_state, new_state)
 signal arrived_to(player_node, target_node)
 signal arrived_to_boundary(player_node, target_node)
 
+const X_DIR = Vector3(1, 0, 0)
+const Y_DIR = Vector3(0, 1, 0)
 const Z_DIR = Vector3(0, 0, 1)
 
 const DRAW_PATH = false
@@ -29,12 +31,13 @@ onready var navigation_node = get_node(navigation_path) if navigation_path and h
 var activated = false
 var in_party = false
 var rest_state = true
-var pathfinding_enabled = true
+var pathfinding_enabled = true setget set_pathfinding_enabled, is_pathfinding_enabled
 var target_node = null
 var point_of_interest = null
 var path = []
 
 var angle_rad_y = 0
+var angle_y_reset = false
 
 ### Use target ###
 # It is very similar to the code in PLDUsable,
@@ -42,6 +45,9 @@ var angle_rad_y = 0
 
 func get_use_distance():
 	return use_distance
+
+func can_be_used_by(player_node):
+	return true
 
 func use(player_node, camera_node):
 	return false
@@ -61,17 +67,24 @@ func is_in_party():
 func set_in_party(in_party):
 	self.in_party = in_party
 
-func join_party():
+func join_party(and_clear_target_node = true):
 	activate()
 	clear_path()
+	if and_clear_target_node:
+		clear_target_node()
 	set_in_party(true)
 	reset_movement_and_rotation()
 
-func leave_party():
+func leave_party(new_target_node = null, and_teleport_to_target = false):
 	clear_path()
 	set_in_party(false)
 	reset_movement_and_rotation()
-	update_navpath_to_target()
+	if new_target_node:
+		set_target_node(new_target_node, false)
+	if and_teleport_to_target:
+		teleport(target_node)
+	else:
+		update_navpath_to_target()
 
 func equals(obj):
 	return obj and (obj.get_instance_id() == self.get_instance_id())
@@ -128,6 +141,39 @@ func reset_movement_and_rotation():
 	reset_movement()
 	reset_rotation()
 
+func get_model_holder():
+	return get_node("Model")
+
+func get_model():
+	return get_model_holder().get_child(0)
+
+func rest():
+	get_model().look()
+
+func is_cutscene(cutscene_id = -1):
+	return get_model().is_cutscene(cutscene_id)
+
+func play_cutscene(cutscene_id):
+	get_model().play_cutscene(cutscene_id)
+
+func play_jumpscare(hideout):
+	get_model().play_jumpscare(hideout)
+
+func stop_cutscene():
+	get_model().stop_cutscene()
+
+func is_dying():
+	return get_model().is_dying()
+
+func is_dead():
+	return get_model().is_dead()
+
+func is_taking_damage():
+	return get_model().is_taking_damage()
+
+func is_movement_disabled():
+	return get_model().is_movement_disabled()
+
 func get_target_node():
 	return target_node
 
@@ -181,6 +227,8 @@ func is_pathfinding_enabled():
 
 func set_pathfinding_enabled(enabled):
 	pathfinding_enabled = enabled
+	if not enabled:
+		path.clear()
 
 func get_rotation_angle(cur_dir, target_dir):
 	var c = cur_dir.normalized()
@@ -207,7 +255,8 @@ func get_follow_parameters(target, current_transform, next_position) -> PLDMovem
 	horz_dir.y = 0
 	var data : PLDMovementData = PLDMovementData.new()
 	var d = next_dir.length()
-	var need_moving = d > ALIGNMENT_RANGE and horz_dir.length() > ALIGNMENT_RANGE
+	var hd = horz_dir.length()
+	var need_moving = d > ALIGNMENT_RANGE and hd > ALIGNMENT_RANGE
 	if need_moving:
 		data.with_distance(d).with_dir(next_dir)
 	cur_dir.y = 0
@@ -371,7 +420,7 @@ func shadow_casting_enable(enable):
 
 func get_movement_data(is_player):
 	var data = PLDMovementData.new().with_rest_state(rest_state)
-	if not is_activated():
+	if not is_activated() or is_taking_damage():
 		return data
 	var target_position = get_target_position()
 	if not target_position:

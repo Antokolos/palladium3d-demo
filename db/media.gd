@@ -40,7 +40,9 @@ enum SoundId {
 	MAN_BREATHE_IN_2,
 	WOMAN_BREATHE_IN_1,
 	WOMAN_BREATHE_IN_2,
-	MAN_GETTING_HIT
+	MAN_GETTING_HIT,
+	FEMALE_SCREAM_SHORT,
+	MALE_SCREAM_SHORT
 }
 
 const SOUND = {
@@ -60,11 +62,14 @@ const SOUND = {
 	SoundId.MAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2420_bandit_sigh_2.ogg"),
 	SoundId.WOMAN_BREATHE_IN_1 : preload("res://addons/palladium/assets/sound/environment/2402_enhale_1.ogg"),
 	SoundId.WOMAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2402_enhale_2.ogg"),
-	SoundId.MAN_GETTING_HIT : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg")
+	SoundId.MAN_GETTING_HIT : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg"),
+	SoundId.FEMALE_SCREAM_SHORT : preload("res://addons/palladium/assets/sound/environment/2604_A_a_h_last_trap.ogg"),
+	SoundId.MALE_SCREAM_SHORT : preload("res://addons/palladium/assets/sound/environment/2336_mur_yelling.ogg")
 }
 
 onready var music_player = $MusicPlayer
-onready var sound_player = $SoundPlayer
+onready var sound_players = get_node("sound_players").get_children()
+onready var pre_delay_timers = get_node("pre_delay_timers").get_children()
 var music_ids = [ MusicId.NONE ]
 
 func change_music_to(music_id, replace_existing = true):
@@ -86,16 +91,34 @@ func restore_music_from(music_id):
 		music_ids.pop_front()
 		change_music_to(music_ids[0])
 
-func play_sound(sound_id, is_loop = false, volume_db = 0):
+func play_sound(sound_id, is_loop = false, volume_db = 0, pre_delay_sec = 0.0, channel = -1):
+	if channel < -1 or channel > sound_players.size():
+		push_error("Incorrect channel number %d" % channel)
+		return
 	var stream = SOUND[sound_id]
 	if not common_utils.set_stream_loop(stream, is_loop):
 		return
+	if channel >= 0:
+		play_stream(sound_players[channel], stream, volume_db, pre_delay_timers[channel], pre_delay_sec)
+	else:
+		for i in range(0, sound_players.size()):
+			var sound_player = sound_players[i]
+			var pre_delay_timer = pre_delay_timers[i]
+			if not sound_player.is_playing() and pre_delay_timer.is_stopped():
+				play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec)
+				return
+
+func play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec):
+	if pre_delay_sec > 0.0:
+		pre_delay_timer.start(pre_delay_sec)
+		yield(pre_delay_timer, "timeout")
 	sound_player.stream = stream
 	sound_player.set_volume_db(volume_db)
 	sound_player.play()
 
 func stop_sound():
-	sound_player.stop()
+	for sound_player in sound_players:
+		sound_player.stop()
 
 func stop_music():
 	music_player.stop()

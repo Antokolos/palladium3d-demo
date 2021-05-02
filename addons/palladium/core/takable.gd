@@ -22,16 +22,16 @@ func use(player_node, camera_node):
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_TAKE") if is_present() else ""
+func get_usage_code(player_node):
+	return "ACTION_TAKE" if is_present() else ""
 
 func _on_item_taken(item_id, count_total, count_taken, item_path):
-	if item_id == takable_id and item_path == get_path():
+	if has_id(item_id) and item_path == get_path():
 		make_absent()
 
 func _on_item_removed(item_id, count_total, count_removed):
 	# TODO: make present??? Likely it is handled in containers...
-	if has_node("SoundPut"):
+	if has_id(item_id) and has_node("SoundPut"):
 		$SoundPut.play()
 
 func has_id(tid):

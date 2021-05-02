@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2178_these_coins.ogg-33155061d1258a02fc80b3e3d96d8c42.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/193_some_gold_after_all/2178_these_coins.ogg"
+dest_files=[ "res://.import/2178_these_coins.ogg-33155061d1258a02fc80b3e3d96d8c42.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

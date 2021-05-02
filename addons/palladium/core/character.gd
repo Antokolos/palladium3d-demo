@@ -13,7 +13,7 @@ signal attack_stopped(player_node, target)
 signal attack_finished(player_node, target, previous_target)
 signal stun_started(player_node, weapon)
 signal stun_finished(player_node)
-signal take_damage(player_node, fatal, hit_direction_node)
+signal take_damage(player_node, fatal, hit_direction_node, hit_dir_vec)
 
 const GRAVITY_DEFAULT = 10.2
 const GRAVITY_UNDERWATER = 0.2
@@ -33,7 +33,7 @@ const PUSH_BACK_STRENGTH = 30
 const NONCHAR_PUSH_STRENGTH = 2
 const NONCHAR_COLLISION_RANGE_MAX = 5.9
 
-const MAX_SLOPE_ANGLE_RAD = deg2rad(60)
+const MAX_SLOPE_ANGLE_RAD = deg2rad(70)
 const AXIS_VALUE_THRESHOLD = 0.15
 
 export var has_ranged_attack = false
@@ -135,19 +135,19 @@ func get_last_attack_target():
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
 
-func hit(injury_rate, hit_direction_node = null):
+func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):
 	pass
 
-func miss(hit_direction_node = null):
+func miss(hit_direction_node = null, hit_dir_vec = Z_DIR):
 	pass
 
-func take_damage(fatal, hit_direction_node):
+func take_damage(fatal, hit_direction_node = null, hit_dir_vec = Z_DIR):
 	if not is_activated() or is_dying():
 		return
-	emit_signal("take_damage", self, fatal, hit_direction_node)
+	emit_signal("take_damage", self, fatal, hit_direction_node, hit_dir_vec)
 	stop_cutscene()
 	get_model().take_damage(fatal)
-	push_back(get_push_vec(hit_direction_node))
+	push_back(get_push_vec(hit_direction_node, hit_dir_vec))
 
 func kill_on_load():
 	get_model().kill_on_load()
@@ -158,12 +158,28 @@ func kill():
 	else:
 		get_model().kill()
 
+func need_to_set_look_transition():
+	return (
+		conversation_manager.meeting_is_in_progress(
+			name_hint,
+			CHARS.PLAYER_NAME_HINT
+		) \
+		or conversation_manager.meeting_is_finished(
+			name_hint,
+			CHARS.PLAYER_NAME_HINT
+		)
+	)
+
+func set_look_transition_if_needed():
+	if need_to_set_look_transition():
+		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
+
 func enable_collisions_and_interaction(enable):
 	if has_node("UpperBody_CollisionShape"):
 		$UpperBody_CollisionShape.disabled = not enable
 	$Body_CollisionShape.disabled = not enable
 	$Feet_CollisionShape.disabled = not enable
-	character_nodes.enable_areas(enable)
+	character_nodes.enable_areas_and_raycasts(enable)
 
 ### Use target ###
 
@@ -200,12 +216,6 @@ func add_highlight(player_node):
 	return ""
 
 ### Getting character's parts ###
-
-func get_model_holder():
-	return get_node("Model")
-
-func get_model():
-	return get_model_holder().get_child(0)
 
 func get_cam_holder():
 	return get_node("Rotation_Helper/Camera")
@@ -261,12 +271,15 @@ func become_player():
 	activate()
 	emit_signal("player_changed", self, player)
 
-func join_party():
-	.join_party()
+func join_party(and_clear_target_node = true):
+	.join_party(and_clear_target_node)
 	set_sprinting(false)
 
 func is_underwater():
 	return is_underwater
+
+func need_breathe_in():
+	return game_state.player_oxygen_current < game_state.player_oxygen_max * 0.9
 
 func breathe_in():
 	var sound_id
@@ -277,7 +290,9 @@ func breathe_in():
 	MEDIA.play_sound(sound_id)
 
 func set_underwater(enable):
-	if is_underwater and not enable:
+	if is_underwater \
+		and not enable \
+		and need_breathe_in():
 		breathe_in()
 	is_underwater = enable
 	if not enable:
@@ -439,49 +454,6 @@ func set_target_node(node, update_navpath = true, force_no_sprinting = false):
 	var tp = node.get_global_transform().origin
 	set_sprinting(cp.distance_to(tp) > SPRINTING_DISTANCE_THRESHOLD)
 
-func rest():
-	get_model().look()
-
-func need_to_set_look_transition():
-	return (
-		conversation_manager.meeting_is_in_progress(
-			name_hint,
-			CHARS.PLAYER_NAME_HINT
-		) \
-		or conversation_manager.meeting_is_finished(
-			name_hint,
-			CHARS.PLAYER_NAME_HINT
-		)
-	)
-
-func set_look_transition_if_needed():
-	if need_to_set_look_transition():
-		get_model().set_look_transition(PLDCharacterModel.LOOK_TRANSITION_SQUATTING if is_crouching else PLDCharacterModel.LOOK_TRANSITION_STANDING)
-
-func is_cutscene(cutscene_id = -1):
-	return get_model().is_cutscene(cutscene_id)
-
-func play_cutscene(cutscene_id):
-	get_model().play_cutscene(cutscene_id)
-
-func play_jumpscare(hideout):
-	get_model().play_jumpscare(hideout)
-
-func stop_cutscene():
-	get_model().stop_cutscene()
-
-func is_dying():
-	return get_model().is_dying()
-
-func is_dead():
-	return get_model().is_dead()
-
-func is_taking_damage():
-	return get_model().is_taking_damage()
-
-func is_movement_disabled():
-	return get_model().is_movement_disabled()
-
 func sit_down_change_collisions():
 	if animation_player.is_playing():
 		return false
@@ -586,9 +558,12 @@ func reset_rotation():
 
 func process_rotation(need_to_update_collisions):
 	if angle_rad_y == 0 or is_dying():
-		return false
+		return { "rotate_y" : false }
 	self.rotate_y(angle_rad_y)
-	return true
+	if angle_y_reset:
+		angle_rad_y = 0
+		angle_y_reset = false
+	return { "rotate_y" : true }
 
 func invoke_physics_pass():
 	set_has_floor_collision(false)
@@ -704,20 +679,35 @@ func process_movement(delta, dir, characters):
 				has_char_collision = true
 				character_collisions.append(collision)
 				break
-		var is_floor_collision = collision.collider.get_collision_mask_bit(2) and collision.normal and collision.normal.y > 0
+		var is_floor_collision = (
+			collision.collider.get_collision_layer_bit(2)
+			and collision.normal
+			and collision.normal.y > 0
+		)
 		collides_floor = collides_floor or is_floor_collision
-		if not has_char_collision and not is_floor_collision:
+		if (
+			not has_char_collision
+			and not is_floor_collision
+		):
 			nonchar_collision = collision
 	for collision in character_collisions:
 		var character = collision.collider
-		if not character.is_movement_disabled() and not character.is_player_controlled():
+		if (
+			not character.is_movement_disabled()
+			and not character.is_player_controlled()
+		):
 			character.vel = get_out_vec(-collision.normal) * PUSH_STRENGTH
 			character.vel.y = 0
 			if not is_player_controlled():
 				vel = vel - character.vel
 			character.invoke_physics_pass()
 
-	if nonchar_collision and pathfinding_enabled and not is_player_controlled():
+	if (
+		nonchar_collision
+		and pathfinding_enabled
+		and not is_movement_disabled()
+		and not is_player_controlled()
+	):
 		var v = get_out_vec(nonchar_collision.normal) * NONCHAR_PUSH_STRENGTH
 		clear_path()
 		var current_position = get_global_transform().origin
@@ -737,12 +727,12 @@ func get_out_vec(normal):
 	var coeff = rand_range(-NONCHAR_COLLISION_RANGE_MAX, NONCHAR_COLLISION_RANGE_MAX)
 	return (n + coeff * cross).normalized()
 
-func get_push_vec(direction_node):
+func get_push_vec(direction_node, dir_vec = Z_DIR):
 	if not direction_node:
 		return Vector3.ZERO
-	var dir_z = direction_node.get_global_transform().basis.z.normalized()
+	var dir_z = direction_node.get_global_transform().basis.xform(dir_vec)
 	dir_z.y = 0
-	return -dir_z * PUSH_BACK_STRENGTH
+	return -dir_z.normalized() * PUSH_BACK_STRENGTH
 
 func push_back(push_vec):
 	vel = push_vec
@@ -810,7 +800,6 @@ func set_has_floor_collision(fc):
 				character.invoke_physics_pass()
 
 func do_process(delta, is_player):
-	var d = { "is_moving" : false, "is_rotating" : false }
 	var poi = get_point_of_interest()
 	var player_is_crouching = false
 	var characters = game_state.get_characters()
@@ -824,25 +813,45 @@ func do_process(delta, is_player):
 		if poi and has_obstacles_between(character):
 			if clear_poi_if_it_is(character):
 				poi = null
-	var cannot_move = not is_activated() or is_movement_disabled() or is_hidden()
-	if not poi and cannot_move:
-		character_nodes.stop_walking_sound()
-		return d
-	var movement_data = get_movement_data(is_player)
-	update_state(movement_data)
-	var mpd = process_movement(delta, movement_data.get_dir(), characters)
-	var should_fall = not is_air_pocket and not character_nodes.has_floor_collision()
-	var fc = mpd.collides_floor and not should_fall
-	set_has_floor_collision(fc)
-	d.is_moving = has_movement(mpd.vel, fc)
-	d.is_rotating = process_rotation(not d.is_moving and is_player)
-	if d.is_moving:
-		is_air_pocket = false
-		character_nodes.play_walking_sound(is_sprinting)
-	else:
-		character_nodes.stop_walking_sound()
+	var d = {
+		"is_moving" : false,
+		"is_rotating" : false,
+		"cannot_move" : (
+			not is_activated()
+			or is_movement_disabled()
+			or is_hidden()
+			or is_dead()
+		)
+	}
 	var model = get_model()
 	var has_floor_collision = has_floor_collision()
+	var should_fall = (
+		not is_air_pocket
+		and not character_nodes.has_floor_collision()
+	)
+	if d.cannot_move:
+		reset_movement_and_rotation()
+		if not poi:
+			character_nodes.stop_walking_sound()
+			return d
+		model.rotate_head(0)
+	else:
+		var movement_data = get_movement_data(is_player)
+		update_state(movement_data)
+		var mpd = process_movement(delta, movement_data.get_dir(), characters)
+		set_has_floor_collision(mpd.collides_floor and not should_fall)
+		has_floor_collision = has_floor_collision()
+		d.is_moving = has_movement(mpd.vel, has_floor_collision)
+		model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
+	var rpd = process_rotation(not d.is_moving and is_player)
+	d.is_rotating = rpd.rotate_y or (rpd.has("rotate_x") and rpd.rotate_x)
+	if d.is_moving or rpd.rotate_y:
+		if d.is_moving:
+			is_air_pocket = false
+		if has_floor_collision:
+			character_nodes.play_walking_sound(is_sprinting)
+		else:
+			character_nodes.stop_walking_sound()
 	if has_floor_collision:
 		var low_ceiling = character_nodes.is_low_ceiling()
 		if low_ceiling and not is_crouching:
@@ -858,10 +867,9 @@ func do_process(delta, is_player):
 			model.fall()
 	if not is_visible_to_player() and not force_visibility:
 		return d
-	model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
 	if not has_floor_collision:
 		return d
-	elif d.is_moving or d.is_rotating:
+	elif d.is_moving or rpd.rotate_y:
 		character_nodes.stop_rest_timer()
 		model.walk(is_crouching, is_sprinting)
 	else:

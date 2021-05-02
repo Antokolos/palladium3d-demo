@@ -1,5 +1,9 @@
 extends PLDLootable
 
-func use(player_node, camera_node):
-	if .use(player_node, camera_node):
-		visible = false
+func make_present():
+	.make_present()
+	visible = true
+
+func make_absent():
+	.make_absent()
+	visible = false

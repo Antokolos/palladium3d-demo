@@ -5,8 +5,8 @@ func is_conversation_enabled(name_hint, conversation_idx):
 	return game_state.has_item(DB.TakableIds.ATHENA)
 
 func do_before_conversation_started(name_hint, conversation_name):
+	game_state.autosave_create()
 	if name_hint == CHARS.FEMALE_NAME_HINT and not game_state.is_saving_disabled():
-		game_state.autosave_create()
 		game_state.set_saving_disabled(true)
 
 func do_when_conversation_finished(name_hint, conversation_name):

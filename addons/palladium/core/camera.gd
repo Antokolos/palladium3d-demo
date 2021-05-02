@@ -19,6 +19,7 @@ onready var item_use = get_node("viewpoint/item_use") if has_node("viewpoint/ite
 func _ready():
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
+	game_state.connect("game_loaded", self, "_on_game_loaded")
 
 func rebuild_exceptions(player_node):
 	if use_point:
@@ -32,7 +33,7 @@ func show_cutscene_flashlight(enable):
 	cutscene_flashlight.visible = enable
 	if enable:
 		flashlight.hide()
-	elif flashlight and game_state.story_vars.flashlight_on:
+	elif flashlight and game_state.is_flashlight_on():
 		flashlight.show()
 
 func get_use_distance():
@@ -99,6 +100,9 @@ func change_quality(quality):
 	if shader_cache:
 		shader_cache.refresh(settings.shader_cache_enabled)
 
+func _on_game_loaded():
+	show_flashlight(game_state.is_flashlight_on())
+
 func set_inside(inside, bright):
 	environment.set_background(Environment.BG_COLOR_SKY if inside else Environment.BG_SKY)
 	environment.set_bg_color(Color(1, 1, 1) if bright else Color(0, 0, 0))
@@ -116,6 +120,11 @@ func activate_item_use(item):
 	if item_use:
 		item_use.activate_item(item)
 
+func clear_item_use():
+	# TODO: eliminate use cases when item_use is null
+	if item_use:
+		item_use.clear_item()
+
 func walk_initiate(player_node):
 	if item_use:
 		item_use.walk_initiate(player_node, self)
@@ -128,9 +137,12 @@ func process_rotation(player_node):
 	if item_use:
 		item_use.process_rotation(player_node, self)
 
-func restore_state():
-	if flashlight and game_state.story_vars.flashlight_on:
-		flashlight.show()
+func show_flashlight(is_show):
+	if flashlight:
+		if is_show:
+			flashlight.show()
+		else:
+			flashlight.hide()
 
 func _process(delta):
 	if not game_state.is_level_ready():
@@ -143,11 +155,11 @@ func _process(delta):
 		if flashlight.is_visible_in_tree():
 			$AudioStreamFlashlightOff.play()
 			flashlight.hide()
-			game_state.story_vars.flashlight_on = false
+			game_state.change_flashlight_state(self, false)
 		else:
 			$AudioStreamFlashlightOn.play()
 			flashlight.show()
-			game_state.story_vars.flashlight_on = true
+			game_state.change_flashlight_state(self, true)
 	# ----------------------------------
 	
 	if use_point:

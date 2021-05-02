@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2592_Andreas_spasibo_ochen.ogg-c94be827022a57874cfc0e6eec1a4bfe.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/bandit/Bun/2592_Andreas_spasibo_ochen.ogg"
+dest_files=[ "res://.import/2592_Andreas_spasibo_ochen.ogg-c94be827022a57874cfc0e6eec1a4bfe.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

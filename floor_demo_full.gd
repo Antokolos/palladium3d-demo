@@ -258,18 +258,6 @@ func _on_IgnitionArea_body_entered(body):
 		get_tree().call_group("torches", "enable", true, false)
 		conversation_manager.start_conversation(player, "004_TorchesIgnition")
 
-func _on_RatsArea_body_entered(body):
-	if body.is_in_group("party") and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-		conversation_manager.start_area_conversation("006_Rats")
-
-func _on_AreaDeadEnd_body_entered(body):
-	if body.is_in_group("party") and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-		conversation_manager.start_area_conversation("023_DemoDeadEnd")
-
-func _on_AreaDeadEnd2_body_entered(body):
-	if body.is_in_group("party") and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-		conversation_manager.start_area_conversation("023_DemoDeadEnd")
-
 func _on_web_destroyed(web):
 	PREFS.set_achievement("COBWEB")
 	if web.get_usable_id() == DB.UsableIds.WEB_APATA \
@@ -300,35 +288,6 @@ func _on_ChooseCompanionArea_body_entered(body):
 			var player = game_state.get_character(CHARS.PLAYER_NAME_HINT)
 			player.teleport(get_node("ChooseCompanionPositionPlayer"))
 			conversation_manager.start_area_cutscene("012_ChooseCompanion", get_node("ChooseCompanionPosition"))
-		elif game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
-			conversation_manager.start_area_conversation_with_companion({
-				CHARS.FEMALE_NAME_HINT : "018_CorridorTalk",
-				CHARS.BANDIT_NAME_HINT : "022_CorridorTalkMax"
-			})
-
-func _on_BeforeEridaArea_body_entered(body):
-	if body.is_in_group("party"):
-		var erida_trap = game_state.get_activatable(DB.ActivatableIds.ERIDA_TRAP)
-		if erida_trap \
-			and erida_trap.is_untouched() \
-			and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER:
-			conversation_manager.start_area_conversation_with_companion({
-				CHARS.FEMALE_NAME_HINT : "014_BeforeErida",
-				CHARS.BANDIT_NAME_HINT : "020_BeforeEridaMax"
-			})
-		elif game_state.get_activatable_state_by_id(DB.ActivatableIds.ERIDA_TRAP) == PLDGameState.ActivatableState.DEACTIVATED_FOREVER and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-			conversation_manager.start_area_conversation("017_CorridorTraps")
-
-func _on_BeginEridaArea_body_entered(body):
-	if body.is_in_group("party"):
-		conversation_manager.start_area_conversation_with_companion({
-			CHARS.FEMALE_NAME_HINT : "015_BeginErida",
-			CHARS.BANDIT_NAME_HINT : "021_BeginEridaMax"
-		})
-
-func _on_AresRoomArea_body_entered(body):
-	if body.is_in_group("party") and game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
-		conversation_manager.start_area_conversation("016-1_AresRoom")
 
 func _on_ChestArea_body_exited(body):
 	if game_state.story_vars.apata_chest_rigid > 0 and body is ApataChest and body.container_id == DB.ContainerIds.APATA_CHEST and game_state.get_activatable_state_by_id(DB.ActivatableIds.APATA_TRAP) == PLDGameState.ActivatableState.ACTIVATED and not game_state.is_loading():
@@ -423,11 +382,9 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 
 func _on_meeting_finished(player, target, initiator):
 	if initiator and initiator.name_hint == CHARS.BANDIT_NAME_HINT:
-		initiator.set_target_node(get_node("BanditSavePosition"))
-		initiator.leave_party()
+		initiator.leave_party(get_node("BanditSavePosition"))
 		var female = game_state.get_character(CHARS.FEMALE_NAME_HINT)
-		female.set_target_node(get_node("PositionApata"))
-		female.leave_party()
+		female.leave_party(get_node("PositionApata"))
 		game_state.autosave_create()
 
 func _on_door_state_changed(door_id, opened):

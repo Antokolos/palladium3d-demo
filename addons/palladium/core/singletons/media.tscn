@@ -9,5 +9,24 @@ script = ExtResource( 1 )
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Music"
 
-[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+[node name="sound_players" type="Node" parent="."]
+
+[node name="SoundPlayer1" type="AudioStreamPlayer" parent="sound_players"]
 bus = "Sound"
+
+[node name="SoundPlayer2" type="AudioStreamPlayer" parent="sound_players"]
+bus = "Sound"
+
+[node name="SoundPlayer3" type="AudioStreamPlayer" parent="sound_players"]
+bus = "Sound"
+
+[node name="pre_delay_timers" type="Node" parent="."]
+
+[node name="PreDelayTimer1" type="Timer" parent="pre_delay_timers"]
+one_shot = true
+
+[node name="PreDelayTimer2" type="Timer" parent="pre_delay_timers"]
+one_shot = true
+
+[node name="PreDelayTimer3" type="Timer" parent="pre_delay_timers"]
+one_shot = true

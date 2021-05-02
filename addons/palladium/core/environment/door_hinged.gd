@@ -10,14 +10,14 @@ func get_door_body_opened():
 		door_body_opened = get_node(door_body_opened_path)
 	return door_body_opened
 
-func open(with_sound = true, force = false, immediately = false):
-	if not .open(with_sound, force, immediately):
+func open(is_restoring = false):
+	if not .open(is_restoring):
 		return false
 	enable_collisions(get_door_body_opened(), true)
 	return true
 
-func close(with_sound = true, force = false, immediately = false):
-	if not .close(with_sound, force, immediately):
+func close(is_restoring = false):
+	if not .close(is_restoring):
 		return false
 	enable_collisions(get_door_body_opened(), false)
 	return true

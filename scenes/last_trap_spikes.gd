@@ -90,8 +90,7 @@ func _on_Area_body_entered(body):
 		if player.equals(body):
 			PREFS.set_achievement("FEEBLE_MINDEDNESS_AND_COURAGE")
 		return
-	companion.leave_party()
-	companion.set_target_node(get_node("Position3D"))
+	companion.leave_party(get_node("Position3D"))
 	conversation_manager.start_area_conversation("174-1_Are_you_alright")
 
 func _on_Area_body_exited(body):
@@ -100,5 +99,4 @@ func _on_Area_body_exited(body):
 	var companion = game_state.get_character(CHARS.FEMALE_NAME_HINT)
 	if not companion.equals(body):
 		return
-	companion.clear_target_node()
 	companion.join_party()

@@ -5,15 +5,11 @@ signal was_translated(chest)
 
 const TRANSLATE_OFFSET = Vector3(0, 0, -1.6)
 
-func open(with_sound = true, speed_scale = 0.4):
-	.open(with_sound, speed_scale)
-	if with_sound:
-		$SoundChestOpen.play()
+func open(is_restoring = false, speed_scale = 0.4):
+	.open(is_restoring, speed_scale)
 
-func close(with_sound = true, speed_scale = 0.4):
-	.close(with_sound, speed_scale)
-	if with_sound:
-		$SoundChestClose.play()
+func close(is_restoring = false, speed_scale = 0.4):
+	.close(is_restoring, speed_scale)
 
 func _on_base_animation_finished(anim_name):
 	if anim_name == "chest_push":

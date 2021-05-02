@@ -8,11 +8,15 @@ export var path_collision_closed = "closed_door"
 export var path_collision_opened = "opened_door"
 export var path_animation_player = "apatha_chest/apatha_chest_armature_lid/AnimationPlayer"
 export var path_animation_player_base = "apatha_chest/apatha_chest_armature_base/AnimationPlayer"
+export var path_sound_player_opened : NodePath = NodePath()
+export var path_sound_player_closed : NodePath = NodePath()
 export var surface_idx_door = 0
 export var anim_name = "Armature.010Action.003"
 
 onready var animation_player = get_node(path_animation_player)
 onready var animation_player_base = get_node(path_animation_player_base) if has_node(path_animation_player_base) else null
+onready var sound_player_opened = get_node(path_sound_player_opened) if not path_sound_player_opened.is_empty() and has_node(path_sound_player_opened) else null
+onready var sound_player_closed = get_node(path_sound_player_closed) if not path_sound_player_closed.is_empty() and has_node(path_sound_player_closed) else null
 var blocker_node
 var collision_closed
 var collision_opened
@@ -35,21 +39,39 @@ func is_opened():
 	var cs = game_state.get_container_state(get_path())
 	return (cs == PLDGameState.ContainerState.DEFAULT and initially_opened) or (cs == PLDGameState.ContainerState.OPENED)
 
-func open(with_sound = true, speed_scale = 1.0):
+func open(is_restoring = false, speed_scale = 1.0):
 	if blocker_node and blocker_node.opened:
 		return
-	animation_player.set_speed_scale(speed_scale)
+	if not is_restoring and is_opened():
+		return
+	animation_player.set_speed_scale(
+		PLDGameState.SPEED_SCALE_INFINITY
+			if is_restoring
+			else speed_scale
+	)
 	animation_player.play(anim_name)
 	collision_closed.disabled = true
 	collision_opened.disabled = false
-	game_state.set_container_state(get_path(), true)
+	if not is_restoring:
+		game_state.set_container_state(get_path(), true)
+		if sound_player_opened:
+			sound_player_opened.play()
 
-func close(with_sound = true, speed_scale = 1.0):
-	animation_player.set_speed_scale(speed_scale)
+func close(is_restoring = false, speed_scale = 1.0):
+	if not is_restoring and not is_opened():
+		return
+	animation_player.set_speed_scale(
+		PLDGameState.SPEED_SCALE_INFINITY
+			if is_restoring
+			else speed_scale
+	)
 	animation_player.play_backwards(anim_name)
 	collision_closed.disabled = false
 	collision_opened.disabled = true
-	game_state.set_container_state(get_path(), false)
+	if not is_restoring:
+		game_state.set_container_state(get_path(), false)
+		if sound_player_closed:
+			sound_player_closed.play()
 
 func use(player_node, camera_node):
 	if animation_player.is_playing():
@@ -60,16 +82,16 @@ func use(player_node, camera_node):
 	else:
 		open()
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_CLOSE") if is_opened() else common_utils.get_action_input_control() + tr("ACTION_OPEN")
+func get_usage_code(player_node):
+	return "ACTION_CLOSE" if is_opened() else "ACTION_OPEN"
 
 func restore_state():
 	var state = game_state.get_container_state(get_path())
 	if state == PLDGameState.ContainerState.DEFAULT:
 		if initially_opened:
-			open(false, PLDGameState.SPEED_SCALE_INFINITY)
+			open(true)
 		return
 	if state == PLDGameState.ContainerState.OPENED:
-		open(false, PLDGameState.SPEED_SCALE_INFINITY)
+		open(true)
 	else:
-		close(false, PLDGameState.SPEED_SCALE_INFINITY)
+		close(true)

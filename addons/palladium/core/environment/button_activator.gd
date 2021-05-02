@@ -18,5 +18,5 @@ func use(player_node, camera_node):
 		return
 	animation_player.play(anim_name)
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_PUSH")
+func get_usage_code(player_node):
+	return "ACTION_PUSH"

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2413_nu_esli_oni_nigde.ogg-5fd857919931d3ecc846e372fcdcb453.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/193_some_gold_after_all/2413_nu_esli_oni_nigde.ogg"
+dest_files=[ "res://.import/2413_nu_esli_oni_nigde.ogg-5fd857919931d3ecc846e372fcdcb453.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

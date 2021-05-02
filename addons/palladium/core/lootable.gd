@@ -20,8 +20,8 @@ func use(player_node, camera_node):
 	emit_signal("use_lootable", player_node, self)
 	return true
 
-func add_highlight(player_node):
-	return common_utils.get_action_input_control() + tr("ACTION_LOOT") if is_can_loot() else ""
+func get_usage_code(player_node):
+	return "ACTION_LOOT" if is_can_loot() else ""
 
 func _on_item_taken(item_id, count_total, count_taken, item_path):
 	if item_id == takable_id and item_path == get_path():

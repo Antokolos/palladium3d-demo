@@ -1,6 +1,8 @@
 extends Node
 class_name PLDGameState
 
+signal game_saved()
+signal game_loaded()
 signal shader_cache_processed()
 signal player_registered(player)
 signal player_surge(player, enabled)
@@ -11,6 +13,7 @@ signal item_removed(item_id, count_total, count_removed)
 signal item_used(player_node, target, item_id, item_count)
 signal health_changed(name_hint, health_current, health_max)
 signal oxygen_changed(name_hint, oxygen_current, oxygen_max)
+signal flashlight_state_changed(camera, flashlight_on)
 
 enum DoorState {
 	DEFAULT = 0,
@@ -178,6 +181,12 @@ func reset_variables():
 func get_game_window_parent():
 	return get_node("/root/HUD") if has_node("/root/HUD") else null
 
+func connect_video_cutscene_finished(target : Object, method : String, binds : Array = [], flags : int = 0):
+	var gwp = get_game_window_parent()
+	if gwp and gwp.has_node("video_cutscene"):
+		return gwp.get_node("video_cutscene").connect("video_cutscene_finished", target, method, binds, flags)
+	return FAILED
+
 func is_video_cutscene():
 	var gwp = get_game_window_parent()
 	if gwp and gwp.has_node("video_cutscene"):
@@ -313,6 +322,13 @@ func change_sky_panorama(
 	self.time_of_day = time_of_day
 	return panorama_prev
 
+func is_flashlight_on():
+	return game_state.story_vars.flashlight_on
+
+func change_flashlight_state(camera, flashlight_on):
+	game_state.story_vars.flashlight_on = flashlight_on
+	emit_signal("flashlight_state_changed", camera, flashlight_on)
+
 func set_surge(player, enable):
 	emit_signal("player_surge", player, enable)
 
@@ -417,13 +433,14 @@ func is_transition():
 	return is_transition
 
 func finish_load():
-	if is_loading():
+	var is_loading = is_loading()
+	if is_loading:
 		load_state(slot_to_load_from)
 		slot_to_load_from = -1
-		return true
 	else:
 		restore_states()
-	return false
+	get_tree().call_group("hud", "update_hud")
+	return is_loading
 
 func is_item_registered(item_id):
 	return DB.ITEMS.has(item_id)
@@ -721,13 +738,13 @@ func is_in_party(name_hint):
 	var character = get_character(name_hint)
 	return character and character.is_in_party()
 
-func join_party(name_hint):
+func join_party(name_hint, and_clear_target_node = true):
 	var character = get_character(name_hint)
-	character.join_party()
+	character.join_party(and_clear_target_node)
 
-func leave_party(name_hint):
+func leave_party(name_hint, new_target_node = null, and_teleport_to_target = false):
 	var character = get_character(name_hint)
-	character.leave_party()
+	character.leave_party(new_target_node, and_teleport_to_target)
 
 func register_player(player):
 	var name_hint = player.get_name_hint()
@@ -875,7 +892,6 @@ func restore_states():
 	get_tree().call_group("restorable_state", "restore_state")
 
 func load_state(slot):
-	var hud = get_hud()
 	var movement_datas = []
 	
 	var f = File.new()
@@ -907,10 +923,6 @@ func load_state(slot):
 	# usable_paths should not be loaded, it must be recreated on level startup via register_usable()
 	# activatable_paths should not be loaded, it must be recreated on level startup via register_activatable()
 	
-	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
-		movement_datas = set_characters_data(d.characters)
-		characters_transition_data = d.characters
-	
 	story_vars = d.story_vars if ("story_vars" in d) else DB.STORY_VARS_DEFAULT.duplicate(true)
 	inventory = sanitize_items(d.inventory) if ("inventory" in d) else DB.INVENTORY_DEFAULT.duplicate(true)
 	quick_items = sanitize_items(d.quick_items) if ("quick_items" in d) else DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -924,9 +936,15 @@ func load_state(slot):
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
 	restore_states()
+	
+	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
+		movement_datas = set_characters_data(d.characters)
+		characters_transition_data = d.characters
 	for md in movement_datas:
 		if md.character and md.movement_data:
 			md.character.update_state(md.movement_data)
+	
+	emit_signal("game_loaded")
 
 func autosave_create():
 	return save_state(0)
@@ -1023,4 +1041,4 @@ func save_state(slot):
 		"messages" : messages
 	}
 	f.store_line( to_json(d) )
-	get_hud().queue_popup_message("MESSAGE_GAME_SAVED", [], false, 3)
+	emit_signal("game_saved")

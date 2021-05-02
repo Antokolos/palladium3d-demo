@@ -10,7 +10,7 @@ Andreas, I think it might be this casket of Pandora. There's a legend…	# actor
 Yeah, now’s a great time for stories! Andreas, I noticed something on the ceiling, look.	# actor:bandit # voiceover:8_great_time_for_stories.ogg
 *	[Listen to Xenia.]
 	Xenia, what legend?	# actor:player # voiceover:453_Xenia_what_legend.ogg
-	When Pandora opened the casket, she released all sorts of evil spirits and misfortunes. Apate was one of them, a goddess of deception. But hope was left in the bottom of the casket, unnoticed although it had always been there.	# actor:female # voiceover:525_when_Pandora_opened_the_casket.ogg
+	When Pandora opened the casket, she released all sorts of evil spirits and misfortunes. Apate was one of them, a goddess of deception. But hope was left in the bottom of the casket, unnoticed although it had always been there.	# actor:female # voiceover:2597_when_pandora_opened.ogg
 	Apparently, Apate symbolizes all the misfortunes in Pandora's casket. But among the misfortunes and trials, there's always hope.	# actor:player # voiceover:455_apparently_Apate_symbolizes.ogg
 *	[Listen to Max.]
 	Max, what have you noticed?	# actor:player # voiceover:560_Max_what_have_you.ogg

@@ -6,6 +6,7 @@ const FEMALE_CUTSCENE_TAKES_APATA = 2
 const FEMALE_CUTSCENE_SHAKES_HAND = 3
 const FEMALE_CUTSCENE_KISS = 4
 const FEMALE_CUTSCENE_YELLS = 5
+const FEMALE_CUTSCENE_HARP_INJURY = 6
 
 func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")

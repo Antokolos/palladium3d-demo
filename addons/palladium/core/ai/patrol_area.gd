@@ -41,7 +41,7 @@ func _on_arrived_to(player_node, target_node):
 	agent.set_target_node(next_target if next_target else target_node, false)
 	agent.set_sprinting(false)
 
-func _on_take_damage(player_node, fatal, hit_direction_node):
+func _on_take_damage(player_node, fatal, hit_direction_node, hit_dir_vec):
 	var wp_data = {
 		"farthest_wp" : waypoints[0],
 		"farthest_wp_idx" : 0

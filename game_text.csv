@@ -138,6 +138,8 @@
 "MESSAGE_COINS_INSIDE_ADD"," (coins in cup: %d)"," (монет в чаше: %d)"
 "MESSAGE_TOO_WEAK_FOR_WEAPON","You are too weak for this weapon","Недостаточно сил для использования этого оружия"
 "MESSAGE_GAME_SAVED","Game saved","Игра сохранена"
+"MESSAGE_KEY_NEEDED","You need to find a key","Вам нужно найти ключ"
+"MESSAGE_KEY_USAGE_NEEDED","Select the key in inventory and use it on this lock","Выберите ключ в инвентаре и примените его на этот замок"
 "TEXT_READY","Ready","Готов"
 "SETTINGS_TABLET_ORIENTATION","Tablet orientation","Ориентация планшета"
 "SETTINGS_VSYNC","Vsync","Vsync"

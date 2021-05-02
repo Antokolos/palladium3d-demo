@@ -189,6 +189,12 @@ func set_pause_node(node : Node, pause : bool) -> void:
 func set_pause_scene(rootNode : Node, pause : bool, ignoredChilds : PoolStringArray = [null]):
 	set_pause_node(rootNode, pause)
 	for node in rootNode.get_children():
+		if pause and ( \
+				node is AudioStreamPlayer \
+				or node is AudioStreamPlayer3D \
+				or node is AudioStreamPlayer2D
+			):
+			node.stop()
 		if not (String(node.get_path()) in ignoredChilds):
 			set_pause_scene(node, pause, ignoredChilds)
 

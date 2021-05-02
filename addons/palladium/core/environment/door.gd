@@ -27,39 +27,41 @@ func _on_animation_finished(anim_name):
 	emit_signal("door_state_changed", door_id, is_opened())
 
 func _on_lock_sound_finished():
-	do_open(true)
+	do_open(false)
 
 func enable_collisions(body, enable):
 	for collision in body.get_children():
 		if collision is CollisionShape:
 			collision.disabled = not enable
 
-func do_open(with_sound, immediately = false):
-	var sp = PLDGameState.SPEED_SCALE_INFINITY if immediately else anim_speed_scale
+func do_open(is_restoring):
+	var sp = PLDGameState.SPEED_SCALE_INFINITY if is_restoring else anim_speed_scale
 	anim_player.play(anim_name_open, -1, -sp if reverse else sp, reverse)
 	enable_collisions(door_body, false)
-	game_state.set_door_state(get_path(), true)
-	if with_sound and has_node("door_sound"):
-		get_node("door_sound").play(false)
+	if not is_restoring:
+		game_state.set_door_state(get_path(), true)
+		if has_node("door_sound"):
+			get_node("door_sound").play(false)
 
-func open(with_sound = true, force = false, immediately = false):
-	if not force and is_opened():
+func open(is_restoring = false):
+	if not is_restoring and is_opened():
 		return false
-	if not lock_sound_player or not with_sound:
-		do_open(with_sound, immediately)
-	else:
+	if lock_sound_player and not is_restoring:
 		lock_sound_player.play()
+	else:
+		do_open(is_restoring)
 	return true
 
-func close(with_sound = true, force = false, immediately = false):
-	if not force and not is_opened():
+func close(is_restoring = false):
+	if not is_restoring and not is_opened():
 		return false
-	if with_sound and has_node("door_sound"):
-		get_node("door_sound").play(true)
-	var sp = PLDGameState.SPEED_SCALE_INFINITY if immediately else anim_speed_scale
+	var sp = PLDGameState.SPEED_SCALE_INFINITY if is_restoring else anim_speed_scale
 	anim_player.play(anim_name_open, -1, sp if reverse else -sp, not reverse)
-	game_state.set_door_state(get_path(), false)
 	enable_collisions(door_body, true)
+	if not is_restoring:
+		game_state.set_door_state(get_path(), false)
+		if has_node("door_sound"):
+			get_node("door_sound").play(true)
 	return true
 
 func is_opened():
@@ -68,6 +70,6 @@ func is_opened():
 
 func restore_state():
 	if is_opened():
-		open(false, true, true)
+		open(true)
 	else:
-		close(false, true, true)
+		close(true)

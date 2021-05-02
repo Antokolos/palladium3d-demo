@@ -15,10 +15,18 @@ func enable(enable):
 	ray_items.enabled = enable
 	ray_characters.enabled = enable
 
-func body_is_usable(body, distance_to_body):
-	return body \
-		and (body is PLDUsable or body is PLDPathfinder) \
+func body_is_highlightable(body, distance_to_body):
+	return (
+		body
+		and (body is PLDUsable or body is PLDPathfinder)
 		and distance_to_body <= body.get_use_distance()
+	)
+
+func body_is_usable(player_node, body, distance_to_body):
+	return (
+		body_is_highlightable(body, distance_to_body)
+		and body.can_be_used_by(player_node)
+	)
 
 func ray_action(ray, player_node, camera_node):
 	if not ray.enabled:
@@ -29,7 +37,7 @@ func ray_action(ray, player_node, camera_node):
 		var body = ray.get_collider()
 		if player_node.equals(body):
 			pass
-		elif body_is_usable(body, collision_vec.length()):
+		elif body_is_usable(player_node, body, collision_vec.length()):
 			body.use(player_node, camera_node)
 			return true
 	return false
@@ -51,11 +59,14 @@ func action(player_node, camera_node):
 func switch_highlight(player_node, body, distance_to_body):
 	if action_body:
 		var ref = action_body.get_ref()
-		if body_is_usable(ref, 0):
+		if body_is_highlightable(ref, 0):
 			ref.remove_highlight(player_node)
 	action_body = weakref(body) if body else null
-	var hint_message = body.add_highlight(player_node) if body_is_usable(body, distance_to_body) else null
-	return hint_message if hint_message else ""
+	var hint_message = body.add_highlight(player_node) if body_is_highlightable(body, distance_to_body) else null
+	return {
+		"hint_message" : hint_message if hint_message and not hint_message.empty() else null,
+		"use_distance" : distance_to_body
+	}
 
 func highlight_custom_action():
 	var item = game_state.get_hud().get_active_item()
@@ -71,24 +82,30 @@ func highlight(player_node):
 		return ""
 	if player_node.is_hidden():
 		return common_utils.get_action_input_control() + tr("ACTION_UNHIDE")
-	var text_ray_items = ray_highlight(ray_items, player_node)
-	if not text_ray_items.empty():
-		return text_ray_items
-	var text_ray_chars = ray_highlight(ray_characters, player_node)
-	if not text_ray_chars.empty():
-		return text_ray_chars
+	var data_items = ray_highlight(ray_items, player_node)
+	use_distance = data_items.use_distance
+	if data_items.hint_message:
+		return data_items.hint_message
+	var data_chars = ray_highlight(ray_characters, player_node)
+	if use_distance == 0 \
+		or (
+			data_chars.use_distance > 0
+			and data_chars.use_distance < use_distance
+		):
+		use_distance = data_chars.use_distance
+	if data_chars.hint_message:
+		return data_chars.hint_message
 	return highlight_custom_action()
 
 func ray_highlight(ray, player_node):
 	# ray.force_raycast_update() -- do not using this, because we'll call this during _physics_process
 	var body = null
+	var d = 0
 	if ray.is_colliding():
 		var collision_vec = ray.to_local(ray.get_collision_point())
 		body = ray.get_collider()
-		use_distance = 0 if player_node.equals(body) else collision_vec.length()
-	else:
-		use_distance = 0
-	return switch_highlight(player_node, body, use_distance)
+		d = 0 if player_node.equals(body) else collision_vec.length()
+	return switch_highlight(player_node, body, d)
 
 func get_use_distance():
 	return use_distance

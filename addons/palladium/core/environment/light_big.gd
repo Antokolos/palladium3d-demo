@@ -19,7 +19,7 @@ func enable_shadow_if_needed(enable):
 	set_shadow(shadow and enable)
 
 func decrease_light():
-	omni_range = 5.7
+	omni_range = 2.7
 	max_light = 0.5
 	light_energy = max_light
 

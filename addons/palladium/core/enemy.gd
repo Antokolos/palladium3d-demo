@@ -8,6 +8,8 @@ const STOP_CHASING_RANGE = 12
 export var max_hits = 0
 var hits = 0
 
+onready var hideout_decision_timer = $HideoutDecisionTimer
+
 func _ready():
 	get_tree().call_group("hideouts", "connect_signals", self)
 
@@ -47,13 +49,13 @@ func add_highlight(player_node):
 		return common_utils.get_action_input_control() + tr("ACTION_SHOOT")
 	return ""
 
-func hit(injury_rate, hit_direction_node = null):
+func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):
 	if not is_activated():
 		return
 	elif max_hits > 0 and hits > max_hits:
-		take_damage(true, hit_direction_node)
+		take_damage(true, hit_direction_node, hit_dir_vec)
 	else:
-		take_damage(false, hit_direction_node)
+		take_damage(false, hit_direction_node, hit_dir_vec)
 		hits = hits + 1
 
 func activate():
@@ -94,8 +96,8 @@ func _physics_process(delta):
 	if not game_state.is_level_ready():
 		character_nodes.stop_all()
 		return
-	.do_process(delta, false)
-	if not is_activated():
+	var d = .do_process(delta, false)
+	if is_dying() or d.cannot_move:
 		return
 	set_states()
 	if not is_aggressive():
