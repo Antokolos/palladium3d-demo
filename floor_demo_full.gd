@@ -13,7 +13,14 @@ const INSCRIPTIONS_DIALOGUES = [
 	'174_This_inscription_wasn\'t', # Name three bird companions of Athena, Hera, and Aphrodite into the iron ear
 	'179-2_Tablets', # Before picking one of the jars, you can check the contents only of one of them. And remember: tablet drawings lie
 	'195_ambrosia_cup_female', # Pour some water in the evening. In the morning the water will become ambrosia.
-	'196_trick_Zeus' # Trick Zeus
+	'196_trick_Zeus', # Trick Zeus
+	'TabletAphrodite',
+	'TabletApollo',
+	'TabletAres',
+	'TabletArtemis',
+	'TabletHebe',
+	'TabletHera',
+	'TabletHermes'
 ]
 
 onready var doors = get_node(doors_path)
