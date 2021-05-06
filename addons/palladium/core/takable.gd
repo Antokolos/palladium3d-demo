@@ -4,6 +4,7 @@ class_name PLDTakable
 signal use_takable(player_node, takable, parent, was_taken)
 
 export(DB.TakableIds) var takable_id = DB.TakableIds.NONE
+export var count = 1
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
 
@@ -18,7 +19,7 @@ func connect_signals(target):
 
 func use(player_node, camera_node):
 	var was_taken = is_present()
-	game_state.take(takable_id, 1, get_path())
+	game_state.take(takable_id, count, get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)
 	return was_taken
 

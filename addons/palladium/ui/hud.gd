@@ -280,6 +280,13 @@ func _on_item_taken(item_id, count_total, count_taken, item_path):
 	synchronize_items()
 
 func _on_item_removed(item_id, count_total, count_removed):
+	if count_total == 0 and DB.is_item_stackable(item_id):
+		queue_popup_message(
+			"MESSAGE_ITEM_REMOVED",
+			[ tr(DB.get_item_name(item_id)) ],
+			true,
+			MESSAGE_TIMEOUT_ITEM_S
+		)
 	remove_ui_inventory_item(item_id, count_removed)
 	remove_ui_quick_item(item_id, count_removed)
 	synchronize_items()

@@ -107,7 +107,7 @@ func save_prefs():
 ### GAME-SPECIFIC PART ###
 
 const STATS_DATA = {
-	"STAT_GREEK_LANGUAGE_LOVER" : {"stat_min" : 0, "stat_max" : 11}
+	"STAT_GREEK_LANGUAGE_LOVER" : {"stat_min" : 0, "stat_max" : 17}
 }
 
 const ACHIEVEMENTS_DATA = {

@@ -251,13 +251,14 @@ func attack(attack_anim_idx = -1):
 # TODO: Check it is OK
 #	if is_movement_disabled() or s == 0:
 	if s == 0:
-		return false
-	play_cutscene(
+		return -1
+	var attack_cutscene_id = (
 		attack_cutscene_ids[get_shot_idx(s)]
 			if attack_anim_idx < 0
 			else attack_anim_idx
 	)
-	return true
+	play_cutscene(attack_cutscene_id)
+	return attack_cutscene_id
 
 func _process(delta):
 	if not game_state.is_level_ready():

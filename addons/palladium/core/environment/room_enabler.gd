@@ -1,6 +1,9 @@
 extends VisibilityNotifier
 class_name PLDRoomEnabler
 
+signal player_entered_room(room_id)
+signal player_left_room(room_id)
+
 const REMOVE_FROM_TREE = false
 
 export(DB.RoomIds) var room_id = DB.RoomIds.NONE
@@ -100,7 +103,12 @@ func _physics_process(delta):
 		enable_room()
 		return
 	var origin = camera.get_global_transform().origin
+	var player_is_in_room_prev = player_is_in_room
 	player_is_in_room = get_aabb().has_point(to_local(origin))
+	if player_is_in_room and not player_is_in_room_prev:
+		emit_signal("player_entered_room", room_id)
+	elif player_is_in_room_prev and not player_is_in_room:
+		emit_signal("player_left_room", room_id)
 	var need_enable = player_is_in_room
 	if not active or not player or need_enable:
 		enable_raycasts(false)

@@ -10,6 +10,7 @@ uniform float uv_offset_time_scale = 0.05;
 uniform float uv_offset_amplitude = 0.2;
 
 uniform sampler2D texturemap : hint_albedo;
+uniform vec4 texture_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform vec2 texture_scale = vec2(8.0, 4.0);
 
 uniform sampler2D normalmap : hint_normal;
@@ -38,7 +39,7 @@ void fragment() {
 	
 	vec2 texture_uv = UV * texture_scale;
 	texture_uv += uv_offset_amplitude * texture_based_offset;
-	ALBEDO = texture(texturemap, texture_uv).rgb;
+	ALBEDO = texture(texturemap, texture_uv).rgb * texture_color.rgb;
 	if (ALBEDO.r > 0.9 && ALBEDO.g > 0.9 && ALBEDO.b > 0.9) {
 		ALPHA = 0.9;
 	} else {

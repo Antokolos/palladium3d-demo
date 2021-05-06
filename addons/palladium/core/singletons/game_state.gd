@@ -449,15 +449,18 @@ func get_registered_item_data(item_id):
 	return DB.ITEMS[item_id] if is_item_registered(item_id) else null
 
 func has_item(item_id):
+	return get_item_count(item_id) > 0
+
+func get_item_count(item_id):
 	if not item_id or item_id == DB.TakableIds.NONE:
-		return false
+		return 0
 	for quick_item in quick_items:
 		if item_id == quick_item.item_id:
-			return true
+			return quick_item.count
 	for item in inventory:
 		if item_id == item.item_id:
-			return true
-	return false
+			return item.count
+	return 0
 
 func get_quick_items_count():
 	var result = 0
@@ -470,8 +473,18 @@ func take(item_id, count = 1, item_path = null):
 	if not is_item_registered(item_id):
 		push_error("Unknown item_id: " + str(item_id))
 		return
-	var item_image = DB.ITEMS[item_id].item_image
-	var model_path = DB.ITEMS[item_id].model_path
+	var is_stackable = DB.is_item_stackable(item_id)
+	if count > 1 and not is_stackable:
+		push_warning("Trying to take %d items with id = %d, which is not stackable" % [count, item_id])
+		return
+	for item in inventory:
+		if item_id == item.item_id:
+			if not is_stackable:
+				push_warning("Trying to stack item with id = %d, which is not stackable" % item_id)
+				return
+			item.count = item.count + count
+			emit_signal("item_taken", item_id, item.count, count, item_path)
+			return
 	var maxpos = 0
 	for quick_item in quick_items:
 		if not quick_item.item_id or quick_item.item_id == DB.TakableIds.NONE:
@@ -480,6 +493,9 @@ func take(item_id, count = 1, item_path = null):
 			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
 			return
 		if item_id == quick_item.item_id:
+			if not is_stackable:
+				push_warning("Trying to stack item with id = %d, which is not stackable" % item_id)
+				return
 			quick_item.count = quick_item.count + count
 			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
 			return
@@ -488,11 +504,6 @@ func take(item_id, count = 1, item_path = null):
 		quick_items.append({ "item_id" : item_id, "count" : count })
 		emit_signal("item_taken", item_id, count, count, item_path)
 		return
-	for item in inventory:
-		if item_id == item.item_id:
-			item.count = item.count + count
-			emit_signal("item_taken", item_id, item.count, count, item_path)
-			return
 	inventory.append({ "item_id" : item_id, "count" : count })
 	emit_signal("item_taken", item_id, count, count, item_path)
 	get_hud().queue_popup_message("MESSAGE_CONTROLS_INVENTORY", [common_utils.get_input_control("inventory_toggle", false)])
@@ -503,6 +514,7 @@ func remove(item_id, count = 1):
 		if item_id == item.item_id:
 			item.count = item.count - count
 			if item.count <= 0:
+				item.count = 0
 				inventory.remove(idx)
 			emit_signal("item_removed", item_id, item.count, count)
 			return
@@ -511,6 +523,7 @@ func remove(item_id, count = 1):
 		if item_id == quick_item.item_id:
 			quick_item.count = quick_item.count - count
 			if quick_item.count <= 0:
+				quick_item.count = 0
 				quick_item.item_id = null
 			emit_signal("item_removed", item_id, quick_item.count, count)
 			return
