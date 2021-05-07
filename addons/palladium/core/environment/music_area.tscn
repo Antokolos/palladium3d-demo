@@ -17,5 +17,6 @@ bus = "Music"
 [node name="FadeInTween" type="Tween" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_music_area_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_music_area_body_exited"]
+[connection signal="finished" from="MusicPlayer" to="." method="_on_MusicPlayer_finished"]
 [connection signal="tween_completed" from="FadeOutTween" to="." method="_on_FadeOutTween_tween_completed"]
 [connection signal="tween_completed" from="FadeInTween" to="." method="_on_FadeInTween_tween_completed"]

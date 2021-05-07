@@ -3,7 +3,6 @@ extends PLDLevel
 var player_toggle_enable = true
 
 func do_init(is_loaded):
-	MEDIA.stop_music()
 	player.set_sound_walk(CHARS.SoundId.SOUND_WALK_CONCRETE)
 	player_female.set_sound_walk(CHARS.SoundId.SOUND_WALK_CONCRETE)
 	player_bandit.set_sound_walk(CHARS.SoundId.SOUND_WALK_CONCRETE)
@@ -24,6 +23,7 @@ func do_init(is_loaded):
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	if is_loaded:
 		return
+	MEDIA.change_music_to(MEDIA.MusicId.EXPLORE)
 	var apata_trap = game_state.get_activatable(DB.ActivatableIds.APATA_TRAP)
 	if apata_trap \
 		and apata_trap.is_untouched() \

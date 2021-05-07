@@ -1,15 +1,18 @@
 extends Node
 class_name PLDDBMedia
 
+signal music_finished()
+
 enum MusicId {
-	NONE,
-	LOADING,
-	OUTSIDE,
-	UNDERWATER,
-	EXPLORE,
-	DANGER,
-	GAME_OVER,
-	BEGINNING
+	NONE = 0,
+	LOADING = 10,
+	OUTSIDE = 20,
+	UNDERWATER = 30,
+	EXPLORE = 40,
+	DANGER = 50,
+	GAME_OVER = 60,
+	BEGINNING = 70,
+	FINAL_TRAP = 130
 }
 
 const MUSIC = {
@@ -17,10 +20,11 @@ const MUSIC = {
 	MusicId.LOADING : preload("res://music/loading.ogg"),
 	MusicId.OUTSIDE : preload("res://music/outside.ogg"),
 	MusicId.UNDERWATER : preload("res://music/underwater.ogg"),
-	MusicId.EXPLORE : null,
+	MusicId.EXPLORE : preload("res://music/dark-ambience-0.ogg"),
 	MusicId.DANGER : preload("res://music/sinkingisland.ogg"),
 	MusicId.GAME_OVER : preload("res://music/bleeding_out2.ogg"),
-	MusicId.BEGINNING : preload("res://music/bjs_forest.ogg")
+	MusicId.BEGINNING : preload("res://music/bjs_forest.ogg"),
+	MusicId.FINAL_TRAP : preload("res://music/Watcher.ogg")
 }
 
 enum SoundId {
@@ -71,6 +75,19 @@ onready var music_player = $MusicPlayer
 onready var sound_players = get_node("sound_players").get_children()
 onready var pre_delay_timers = get_node("pre_delay_timers").get_children()
 var music_ids = [ MusicId.NONE ]
+var music_paused = false
+
+static func lookup_music_id_from_int(music_id : int):
+	for id in MusicId:
+		if music_id == MusicId[id]:
+			return MusicId[id]
+	return MusicId.NONE
+
+static func lookup_music_ids_from_ints(music_ids : Array):
+	var result = []
+	for music_id in music_ids:
+		result.append(lookup_music_id_from_int(music_id))
+	return result
 
 func change_music_to(music_id, replace_existing = true):
 	if music_ids[0] == music_id and not replace_existing:
@@ -84,7 +101,15 @@ func change_music_to(music_id, replace_existing = true):
 		stop_music()
 	else:
 		music_player.stream = MUSIC[music_id]
-		music_player.play()
+		play_music()
+
+func restore_music_from_save(saved_music_ids):
+	music_ids = (
+		lookup_music_ids_from_ints(saved_music_ids)
+			if saved_music_ids and not saved_music_ids.empty()
+			else [ MusicId.NONE ]
+	)
+	change_music_to(music_ids[0])
 
 func restore_music_from(music_id):
 	if music_ids.size() > 1 and music_ids[0] == music_id:
@@ -94,19 +119,18 @@ func restore_music_from(music_id):
 func play_sound(sound_id, is_loop = false, volume_db = 0, pre_delay_sec = 0.0, channel = -1):
 	if channel < -1 or channel > sound_players.size():
 		push_error("Incorrect channel number %d" % channel)
-		return
+		return null
 	var stream = SOUND[sound_id]
 	if not common_utils.set_stream_loop(stream, is_loop):
-		return
+		return null
 	if channel >= 0:
-		play_stream(sound_players[channel], stream, volume_db, pre_delay_timers[channel], pre_delay_sec)
+		return play_stream(sound_players[channel], stream, volume_db, pre_delay_timers[channel], pre_delay_sec)
 	else:
 		for i in range(0, sound_players.size()):
 			var sound_player = sound_players[i]
 			var pre_delay_timer = pre_delay_timers[i]
 			if not sound_player.is_playing() and pre_delay_timer.is_stopped():
-				play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec)
-				return
+				return play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec)
 
 func play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec):
 	if pre_delay_sec > 0.0:
@@ -115,11 +139,36 @@ func play_stream(sound_player, stream, volume_db, pre_delay_timer, pre_delay_sec
 	sound_player.stream = stream
 	sound_player.set_volume_db(volume_db)
 	sound_player.play()
+	return sound_player
 
 func stop_sound():
 	for sound_player in sound_players:
 		sound_player.stop()
 
+func play_music():
+	if music_player.stream:
+		music_player.play()
+	music_paused = false
+
+func pause_music():
+	music_paused = true
+	music_player.stop()
+
 func stop_music():
 	music_player.stop()
 	music_ids = [ MusicId.NONE ]
+
+func _on_MusicPlayer_finished():
+	emit_signal("music_finished")
+	if (
+		not music_paused
+		and not music_ids.empty()
+		and music_ids[0] != MusicId.NONE
+		and music_player.stream
+		and music_player.stream.get_rid().get_id() == MUSIC[music_ids[0]].get_rid().get_id()
+	):
+		music_ids.pop_front()
+		if music_ids.empty():
+			music_ids = [ MusicId.NONE ]
+		else:
+			change_music_to(music_ids[0])

@@ -78,8 +78,7 @@ func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = f
 func start_area_conversation_with_companion(conversations_map, repeatable = false, exclusive = false):
 	for name_hint in conversations_map.keys():
 		if game_state.is_in_party(name_hint):
-			start_area_conversation(conversations_map[name_hint], repeatable, exclusive)
-			return
+			return start_area_conversation(conversations_map[name_hint], repeatable, exclusive)
 
 func enable_conversation(conversation_name, enable):
 	var cp_story = get_story_path(conversation_name)

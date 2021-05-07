@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/palladium/core/takable.gd" type="Script" id=1]
+[ext_resource path="res://assets/ammo.escn" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.0465026, 0.0274362, 0.0344463 )
+
+[node name="ammo" type="RigidBody"]
+mode = 1
+script = ExtResource( 1 )
+takable_id = 410
+count = 6
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0283168, 0.000305586 )
+shape = SubResource( 1 )
+
+[node name="ammo" parent="." instance=ExtResource( 2 )]

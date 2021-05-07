@@ -109,12 +109,12 @@ func handle_attack():
 	attack_start(possible_target)
 
 func attack_start(possible_attack_target, attack_anim_idx = -1, with_anim = true, immediately = false):
-	if not is_attacking():
+	if not character_nodes.is_attacking():
 		set_sprinting(false)
 		set_last_attack_target(possible_attack_target)
 		emit_signal("attack_started", self, possible_attack_target)
 		set_point_of_interest(possible_attack_target)
-		if with_anim:
+		if with_anim and not get_model().is_attacking():
 			get_model().attack(attack_anim_idx)
 		character_nodes.attack_start(immediately)
 

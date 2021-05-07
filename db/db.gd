@@ -295,7 +295,7 @@ const ITEMS = {
 	TakableIds.ARES : { "item_nam" : "statue_ares", "item_image" : "statue_ares.png", "model_path" : "res://assets/statue_ares.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
 	TakableIds.TUBE_BREATH : { "item_nam" : "tube_breath", "item_image" : "tube_breath.png", "model_path" : "res://assets/tube_breath.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
 	TakableIds.GOLDEN_BAR : { "item_nam" : "golden_bar", "item_image" : "golden_bars.png", "model_path" : "res://assets/golden_brick.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
-	TakableIds.BERETTA_AMMO : { "item_nam" : "beretta_ammo", "item_image" : "Zeus_hammer.png", "model_path" : "res://assets/Zeus_hammer.escn", "model_use_path" : null, "stackable" : true, "can_give" : false, "custom_actions" : [] },
+	TakableIds.BERETTA_AMMO : { "item_nam" : "beretta_ammo", "item_image" : "beretta_ammo.png", "model_path" : "res://assets/ammo.escn", "model_use_path" : null, "stackable" : true, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ATHENA : { "item_nam" : "statue_athena", "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
 	TakableIds.PALLADIUM: { "item_nam" : "palladium", "item_image" : "Palladium_real.png", "model_path" : "res://assets/Palladium_real.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
 }

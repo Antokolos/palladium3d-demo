@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/beretta_ammo.png-092536ec41569997a6978267fd6b1a0e.image"
+
+[deps]
+
+source_file="res://assets/items/beretta_ammo.png"
+dest_files=[ "res://.import/beretta_ammo.png-092536ec41569997a6978267fd6b1a0e.image" ]
+
+[params]
+

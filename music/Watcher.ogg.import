@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Watcher.ogg-903e9b60841003fe524f2ae0a623f3a6.oggstr"
+
+[deps]
+
+source_file="res://music/Watcher.ogg"
+dest_files=[ "res://.import/Watcher.ogg-903e9b60841003fe524f2ae0a623f3a6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

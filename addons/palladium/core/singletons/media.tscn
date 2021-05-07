@@ -30,3 +30,4 @@ one_shot = true
 
 [node name="PreDelayTimer3" type="Timer" parent="pre_delay_timers"]
 one_shot = true
+[connection signal="finished" from="MusicPlayer" to="." method="_on_MusicPlayer_finished"]

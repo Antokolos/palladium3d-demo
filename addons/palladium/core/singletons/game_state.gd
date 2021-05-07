@@ -949,6 +949,7 @@ func load_state(slot):
 	messages = d.messages if ("messages" in d) else MESSAGES_DEFAULT.duplicate(true)
 	
 	restore_states()
+	MEDIA.restore_music_from_save(d.music_ids if ("music_ids" in d) else null)
 	
 	if ("characters" in d and (typeof(d.characters) == TYPE_DICTIONARY)):
 		movement_datas = set_characters_data(d.characters)
@@ -1051,7 +1052,8 @@ func save_state(slot):
 		"lootables" : lootables,
 		"activatables" : activatables,
 		"multistates" : multistates,
-		"messages" : messages
+		"messages" : messages,
+		"music_ids" : MEDIA.music_ids
 	}
 	f.store_line( to_json(d) )
 	emit_signal("game_saved")

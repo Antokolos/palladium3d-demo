@@ -1,7 +1,5 @@
 extends PLDLevel
 
-onready var pocket_book = get_node("player_female/pocket_book")
-
 func do_init(is_loaded):
 	if game_state.current_scene_was_loaded_before() and not is_loaded:
 		player.teleport($PositionPlayer)
@@ -39,6 +37,7 @@ func do_init(is_loaded):
 	$SunEvening.visible = is_evening
 
 func remove_pocket_book():
+	var pocket_book = get_node("player_female/pocket_book")
 	if pocket_book:
 		pocket_book.queue_free()
 		pocket_book = null

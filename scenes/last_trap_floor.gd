@@ -11,6 +11,7 @@ func activate(and_change_state = true, is_restoring = false):
 	collision.disabled = true
 	if not is_restoring:
 		MEDIA.play_sound(MEDIA.SoundId.FEMALE_SCREAM_SHORT)
+		MEDIA.change_music_to(PLDDBMedia.MusicId.FINAL_TRAP, false)
 
 func deactivate(and_change_state = true, is_restoring = false):
 	.deactivate(and_change_state, is_restoring)

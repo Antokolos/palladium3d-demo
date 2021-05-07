@@ -17,7 +17,7 @@ const INSCRIPTIONS_DIALOGUES = [
 	'TabletAphrodite',
 	'TabletApollo',
 	'TabletAres',
-	'TabletArtemis',
+	'TabletArtemis', # 027_What's_written contains the same text but now it is unused
 	'TabletHebe',
 	'TabletHera',
 	'TabletHermes'
@@ -126,10 +126,11 @@ func check_demo_finish():
 		if not statue.is_present():
 			return
 	get_door("door_demo").open()
-	conversation_manager.start_area_conversation_with_companion({
+	if not conversation_manager.start_area_conversation_with_companion({
 		CHARS.FEMALE_NAME_HINT : "019_DemoFinishedXenia",
 		CHARS.BANDIT_NAME_HINT : "022-1_DemoFinishedMax"
-	})
+	}):
+		MEDIA.change_music_to(PLDDBMedia.MusicId.BEGINNING, false)
 
 func use_pedestal(player_node, pedestal, inventory_item, child_item):
 	var item_id = inventory_item.item_id
@@ -385,7 +386,7 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 				bandit.deactivate()
 				bandit.teleport(get_node("OutPosition"))
 		"019_DemoFinishedXenia", "022-1_DemoFinishedMax":
-			MEDIA.change_music_to(MEDIA.MusicId.BEGINNING)
+			MEDIA.change_music_to(PLDDBMedia.MusicId.BEGINNING, false)
 
 func _on_meeting_finished(player, target, initiator):
 	if initiator and initiator.name_hint == CHARS.BANDIT_NAME_HINT:
