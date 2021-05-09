@@ -6,7 +6,7 @@ signal use_usable(player_node, usable)
 const USE_DISTANCE_COMMON = 2.6
 
 export(float) var use_distance = USE_DISTANCE_COMMON
-export(DB.UsableIds) var usable_id = DB.UsableIds.NONE
+export(PLDDB.UsableIds) var usable_id = PLDDB.UsableIds.NONE
 
 func _ready():
 	if Engine.editor_hint:

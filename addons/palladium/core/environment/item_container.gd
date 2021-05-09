@@ -1,7 +1,7 @@
 extends PLDUsable
 class_name PLDItemContainer
 
-export(DB.ContainerIds) var container_id = DB.ContainerIds.NONE
+export(PLDDB.ContainerIds) var container_id = PLDDB.ContainerIds.NONE
 export var initially_opened = false
 export var path_blocker = ""
 export var path_collision_closed = "closed_door"

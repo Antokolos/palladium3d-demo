@@ -3,7 +3,7 @@ class_name PLDPedestal
 
 signal use_pedestal(player_node, pedestal, inventory_item, child_item)
 
-export(DB.PedestalIds) var pedestal_id = DB.PedestalIds.NONE
+export(PLDDB.PedestalIds) var pedestal_id = PLDDB.PedestalIds.NONE
 
 func connect_signals(target):
 	connect("use_pedestal", target, "use_pedestal")

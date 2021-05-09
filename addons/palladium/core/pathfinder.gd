@@ -156,8 +156,8 @@ func is_cutscene(cutscene_id = -1):
 func play_cutscene(cutscene_id):
 	get_model().play_cutscene(cutscene_id)
 
-func play_jumpscare(hideout):
-	get_model().play_jumpscare(hideout)
+func play_jumpscare(hideout, cutscene_id):
+	get_model().play_jumpscare(hideout, cutscene_id)
 
 func stop_cutscene():
 	get_model().stop_cutscene()

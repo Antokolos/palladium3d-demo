@@ -4,6 +4,7 @@ class_name PLDConversationArea
 
 const CONVERSATIONS_DELIMITER = ";"
 
+export(PLDDB.ConversationAreaIds) var conversation_area_id = PLDDB.ConversationAreaIds.NONE
 export(Dictionary) var conversations = {}
 export(Dictionary) var conversaton_delays = {}
 export(NodePath) var cutscene_node_path = null
@@ -28,6 +29,10 @@ func _ready():
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	cutscene_manager.connect("camera_borrowed", self, "_on_camera_borrowed")
 	cutscene_manager.connect("camera_restored", self, "_on_camera_restored")
+	game_state.register_conversation_area(self)
+
+func get_conversation_area_id():
+	return conversation_area_id
 
 func is_conversation_enabled(name_hint, conversation_idx):
 	return true

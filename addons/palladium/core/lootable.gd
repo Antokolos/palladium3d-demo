@@ -3,7 +3,7 @@ class_name PLDLootable
 
 signal use_lootable(player_node, lootable)
 
-export(DB.TakableIds) var takable_id = DB.TakableIds.NONE
+export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export(int) var count_init = 1
 export(bool) var can_loot = true
 

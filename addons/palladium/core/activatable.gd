@@ -3,7 +3,7 @@ class_name PLDActivatable
 
 signal state_changed(activatable, previous_state, new_state)
 
-export(DB.ActivatableIds) var activatable_id = DB.ActivatableIds.NONE
+export(PLDDB.ActivatableIds) var activatable_id = PLDDB.ActivatableIds.NONE
 export(PLDGameState.ActivatableState) var default_state = PLDGameState.ActivatableState.DEACTIVATED
 
 func _ready():

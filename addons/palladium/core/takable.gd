@@ -3,7 +3,7 @@ class_name PLDTakable
 
 signal use_takable(player_node, takable, parent, was_taken)
 
-export(DB.TakableIds) var takable_id = DB.TakableIds.NONE
+export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export var count = 1
 # if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true

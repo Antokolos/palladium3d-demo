@@ -99,6 +99,7 @@ var player_paths = {}
 var room_enabler_paths = {}
 var usable_paths = {}
 var activatable_paths = {}
+var conversation_area_paths = {}
 var story_vars = DB.STORY_VARS_DEFAULT.duplicate(true)
 var inventory = DB.INVENTORY_DEFAULT.duplicate(true)
 var quick_items = DB.QUICK_ITEMS_DEFAULT.duplicate(true)
@@ -158,6 +159,7 @@ func cleanup_paths():
 	room_enabler_paths.clear()
 	usable_paths.clear()
 	activatable_paths.clear()
+	conversation_area_paths.clear()
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
@@ -285,6 +287,19 @@ func get_activatable(activatable_id):
 	if not activatable_path or not has_node(activatable_path):
 		return null
 	return get_node(activatable_path)
+
+func get_conversation_area_path(conversation_area_id):
+	if not conversation_area_id \
+		or conversation_area_id == PLDDB.ConversationAreaIds.NONE \
+		or not conversation_area_paths.has(conversation_area_id):
+		return null
+	return conversation_area_paths[conversation_area_id]
+
+func get_conversation_area(conversation_area_id):
+	var conversation_area_path = get_conversation_area_path(conversation_area_id)
+	if not conversation_area_path or not has_node(conversation_area_path):
+		return null
+	return get_node(conversation_area_path)
 
 func get_level():
 	var viewport = get_viewport()
@@ -785,6 +800,12 @@ func register_activatable(activatable):
 	if not activatable_id or activatable_id == DB.ActivatableIds.NONE:
 		return
 	activatable_paths[activatable_id] = activatable.get_path()
+
+func register_conversation_area(conversation_area):
+	var conversation_area_id = conversation_area.get_conversation_area_id()
+	if not conversation_area_id or conversation_area_id == PLDDB.ConversationAreaIds.NONE:
+		return
+	conversation_area_paths[conversation_area_id] = conversation_area.get_path()
 
 func save_slot_exists(slot):
 	var f = File.new()

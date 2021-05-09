@@ -1,5 +1,6 @@
 tool
 extends Node
+class_name PLDDB
 
 ### COMMON PART ###
 const HEALING_RATE = 1
@@ -99,6 +100,10 @@ func can_execute_custom_action(item, action = "item_preview_action_1", event = n
 #}
 
 #enum ActivatableIds {
+#	NONE = 0
+#}
+
+#enum ConversationAreaIds {
 #	NONE = 0
 #}
 
@@ -232,6 +237,10 @@ enum ActivatableIds {
 	LAST_TRAP_FLOOR = 10,
 	APATA_TRAP = 20,
 	ERIDA_TRAP = 30
+}
+
+enum ConversationAreaIds {
+	NONE = 0
 }
 
 enum TakableIds {

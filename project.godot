@@ -95,6 +95,11 @@ _global_script_classes=[ {
 "path": "res://addons/palladium/core/singletons/cutscene_manager.gd"
 }, {
 "base": "Node",
+"class": "PLDDB",
+"language": "GDScript",
+"path": "res://db/db.gd"
+}, {
+"base": "Node",
 "class": "PLDDBMedia",
 "language": "GDScript",
 "path": "res://db/media.gd"
@@ -297,6 +302,7 @@ _global_script_class_icons={
 "PLDConversationArea": "",
 "PLDConversationManager": "",
 "PLDCutsceneManager": "",
+"PLDDB": "",
 "PLDDBMedia": "",
 "PLDDiscussable": "",
 "PLDDoor": "",

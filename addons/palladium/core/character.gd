@@ -829,6 +829,13 @@ func do_process(delta, is_player):
 		not is_air_pocket
 		and not character_nodes.has_floor_collision()
 	)
+	
+	model.enable_animations(
+		force_visibility
+		or is_visible_to_player()
+		or model.has_important_animations_now()
+	)
+	
 	if d.cannot_move:
 		reset_movement_and_rotation()
 		if not poi:
@@ -865,8 +872,6 @@ func do_process(delta, is_player):
 		character_nodes.stop_rest_timer()
 		if should_fall:
 			model.fall()
-	if not is_visible_to_player() and not force_visibility:
-		return d
 	if not has_floor_collision:
 		return d
 	elif d.is_moving or rpd.rotate_y:

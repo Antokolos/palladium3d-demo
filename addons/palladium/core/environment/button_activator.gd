@@ -3,7 +3,7 @@ class_name PLDButtonActivator
 
 signal use_button_activator(player_node, button_activator)
 
-export(DB.ButtonActivatorIds) var activator_id = DB.ButtonActivatorIds.NONE
+export(PLDDB.ButtonActivatorIds) var activator_id = PLDDB.ButtonActivatorIds.NONE
 export var animation_player_path = "../apple_button_armature/AnimationPlayer"
 export var anim_name = "apple_button_armatureAction"
 

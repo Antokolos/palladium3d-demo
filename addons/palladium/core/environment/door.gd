@@ -5,7 +5,7 @@ signal door_state_changed(door_id, opened)
 
 const ANIM_SPEED_SCALE = 0.725
 
-export(DB.DoorIds) var door_id = DB.DoorIds.NONE
+export(PLDDB.DoorIds) var door_id = PLDDB.DoorIds.NONE
 export var initially_opened = false
 export var reverse = false
 export var door_body_path = "StaticBody"

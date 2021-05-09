@@ -3,7 +3,7 @@ class_name PLDUseTarget
 
 signal use_use_target(player_node, use_target, item, result)
 
-export(DB.UseTargetIds) var use_target_id = DB.UseTargetIds.NONE
+export(PLDDB.UseTargetIds) var use_target_id = PLDDB.UseTargetIds.NONE
 export var remove_on_use = true
 export var remove_all_items = false
 export var matched_item_names : PoolStringArray = PoolStringArray()

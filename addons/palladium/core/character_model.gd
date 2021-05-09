@@ -53,17 +53,23 @@ func activate():
 	pass
 
 func ragdoll_start():
-	animation_tree.set_active(false)
+	enable_animations(false)
 	get_node(main_skeleton).physical_bones_start_simulation()
 
 func ragdoll_stop():
 	get_node(main_skeleton).physical_bones_stop_simulation()
-	animation_tree.set_active(true)
+	enable_animations(true)
 
 func set_simple_mode(sm):
 	simple_mode = sm
 	if simple_mode:
 		look()
+
+func enable_animations(enable):
+	if enable and not animation_tree.is_active():
+		animation_tree.set_active(true)
+	elif not enable and animation_tree.is_active():
+		animation_tree.set_active(false)
 
 func can_do_rest_shot():
 	return not is_rest_active() and not is_in_speak_mode() and not is_sitting()
@@ -90,9 +96,10 @@ func is_in_speak_mode():
 func play_cutscene(cutscene_id):
 	animation_tree.set("parameters/CutsceneTransition/current", cutscene_id)
 	animation_tree.set("parameters/CutsceneShot/active", true)
+	enable_animations(true)
 
-func play_jumpscare(hideout):
-	pass
+func play_jumpscare(hideout, cutscene_id):
+	play_cutscene(cutscene_id)
 
 func stop_cutscene():
 	var cutscene_id = get_cutscene_id()
@@ -108,6 +115,13 @@ func is_movement_disabled():
 		is_looped_cutscene()
 		or is_cutscene()
 		or is_dead()
+	)
+
+func has_important_animations_now():
+	return (
+		is_looped_cutscene()
+		or is_cutscene()
+		or is_taking_damage()
 	)
 
 func is_dying():
@@ -210,6 +224,7 @@ func take_damage(fatal):
 	animation_tree.set("parameters/DamageShot/active", true)
 	if alive and fatal:
 		kill()
+	enable_animations(true)
 
 func kill_on_load():
 	kill()
@@ -261,7 +276,10 @@ func attack(attack_anim_idx = -1):
 	return attack_cutscene_id
 
 func _process(delta):
-	if not game_state.is_level_ready():
+	if (
+		not game_state.is_level_ready()
+		or not animation_tree.is_active()
+	):
 		return
 	process_head_rotation()
 	if not simple_mode:
