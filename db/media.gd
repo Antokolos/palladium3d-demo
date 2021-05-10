@@ -68,7 +68,7 @@ const SOUND = {
 	SoundId.WOMAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2402_enhale_2.ogg"),
 	SoundId.MAN_GETTING_HIT : preload("res://addons/palladium/assets/sound/environment/163441__under7dude__man-getting-hit.ogg"),
 	SoundId.FEMALE_SCREAM_SHORT : preload("res://addons/palladium/assets/sound/environment/2604_A_a_h_last_trap.ogg"),
-	SoundId.MALE_SCREAM_SHORT : preload("res://addons/palladium/assets/sound/environment/2336_mur_yelling.ogg"),
+	SoundId.MALE_SCREAM_SHORT : preload("res://addons/palladium/assets/sound/environment/2336_mur_yelling.ogg")
 }
 
 onready var music_player = $MusicPlayer

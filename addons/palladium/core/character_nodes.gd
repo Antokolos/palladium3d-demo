@@ -22,6 +22,8 @@ onready var rays_to_characters = $RaysToCharacters
 onready var visibility_notifier = $VisibilityNotifier
 onready var sound_player_walking = $SoundWalking
 onready var sound_player_falling_to_floor = $SoundFallingToFloor
+onready var sound_player_angry = $SoundAngry
+onready var sound_player_pain = $SoundPain
 onready var sound_player_attack = $SoundAttack
 onready var sound_player_miss = $SoundMiss
 
@@ -77,9 +79,13 @@ func add_ray_to_character(another_character):
 	var r = RayCast.new()
 	r.set_name(ray_name)
 	r.enabled = another_character.is_activated()
-	r.set_collision_mask_bit(1, true)
-	r.set_collision_mask_bit(2, true)
-	r.set_collision_mask_bit(10, true)
+	r.set_collision_mask_bit(0, false) # Default layer is NOT a collision
+	r.set_collision_mask_bit(1, true) # Collides with walls
+	r.set_collision_mask_bit(2, true) # Collides with floor
+	r.set_collision_mask_bit(3, false) # Interactives is NOT a collision
+	r.set_collision_mask_bit(10, true) # Collides with ceiling
+	r.set_collision_mask_bit(11, false) # Party is NOT a collision
+	r.set_collision_mask_bit(12, false) # Enemies is NOT a collision
 	r.set_collision_mask_bit(13, false) # Obstacles is NOT a collision
 	rays_to_characters.add_child(r)
 	update_ray_to_character(another_character, r)
@@ -135,6 +141,24 @@ func restore_sound_walk_from(mode):
 	if walk_sound_ids.size() > 1 and walk_sound_ids[0] == mode:
 		walk_sound_ids.pop_front()
 		set_sound_walk(walk_sound_ids[0])
+
+func set_sound_angry(mode):
+	sound_player_angry.stop()
+	sound_player_angry.set_unit_db(6)
+	var stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
+	if not common_utils.set_stream_loop(stream, false):
+		sound_player_angry.stream = null
+		return
+	sound_player_angry.stream = stream
+
+func set_sound_pain(mode):
+	sound_player_pain.stop()
+	sound_player_pain.set_unit_db(6)
+	var stream = CHARS.SOUND[mode] if CHARS.SOUND.has(mode) else null
+	if not common_utils.set_stream_loop(stream, false):
+		sound_player_pain.stream = null
+		return
+	sound_player_pain.stream = stream
 
 func set_sound_attack(mode):
 	sound_player_attack.stop()
@@ -201,6 +225,12 @@ func get_possible_attack_target(update_collisions):
 
 func is_attacking():
 	return not attack_timer.is_stopped()
+
+func play_angry_sound():
+	sound_player_angry.play()
+
+func play_pain_sound():
+	sound_player_pain.play()
 
 func play_attack_sound():
 	sound_player_attack.play()

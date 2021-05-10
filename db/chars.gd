@@ -20,7 +20,8 @@ enum SoundId {
 	SOUND_WALK_MINOTAUR,
 	SOUND_ATTACK_GUNSHOT,
 	SOUND_ATTACK_SWOOSH,
-	SOUND_ATTACK_AXE_ON_STONE
+	SOUND_ATTACK_AXE_ON_STONE,
+	SOUND_MONSTER_ROAR
 }
 
 const SOUND = {
@@ -34,7 +35,8 @@ const SOUND = {
 	SoundId.SOUND_WALK_MINOTAUR : preload("res://sound/environment/minotaur_walk_reverb_short.ogg"),
 	SoundId.SOUND_ATTACK_GUNSHOT : preload("res://sound/environment/Labyrinth_gunshot.wav"),
 	SoundId.SOUND_ATTACK_SWOOSH : preload("res://sound/environment/sword_swing.ogg"),
-	SoundId.SOUND_ATTACK_AXE_ON_STONE : preload("res://sound/environment/pickaxe3.ogg")
+	SoundId.SOUND_ATTACK_AXE_ON_STONE : preload("res://sound/environment/pickaxe3.ogg"),
+	SoundId.SOUND_MONSTER_ROAR : preload("res://sound/environment/48688__sea-fury__monster-4.ogg")
 }
 
 var FATHER_NAME_HINT = "father"

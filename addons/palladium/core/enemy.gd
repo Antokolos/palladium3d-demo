@@ -52,7 +52,8 @@ func add_highlight(player_node):
 func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):
 	if not is_activated():
 		return
-	elif max_hits > 0 and hits > max_hits:
+	.hit(injury_rate, hit_direction_node, hit_dir_vec)
+	if max_hits > 0 and hits > max_hits:
 		take_damage(true, hit_direction_node, hit_dir_vec)
 	else:
 		take_damage(false, hit_direction_node, hit_dir_vec)

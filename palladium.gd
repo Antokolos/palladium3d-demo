@@ -16,6 +16,8 @@ func do_init(is_loaded):
 	if has_node("minotaur"):
 		var m = get_node("minotaur")
 		m.set_sound_walk(CHARS.SoundId.SOUND_WALK_MINOTAUR)
+		m.set_sound_angry(CHARS.SoundId.SOUND_MONSTER_ROAR)
+		m.set_sound_pain(CHARS.SoundId.SOUND_MONSTER_ROAR)
 		m.set_sound_attack(CHARS.SoundId.SOUND_ATTACK_AXE_ON_STONE)
 		m.set_sound_miss(CHARS.SoundId.SOUND_ATTACK_AXE_ON_STONE)
 	if not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):

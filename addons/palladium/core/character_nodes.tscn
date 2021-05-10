@@ -18,6 +18,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 stream = ExtResource( 2 )
 bus = "Sound"
 
+[node name="SoundAngry" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+unit_db = 6.0
+max_db = 6.0
+bus = "Sound"
+
+[node name="SoundPain" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+unit_db = 6.0
+max_db = 6.0
+bus = "Sound"
+
 [node name="SoundAttack" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 bus = "Sound"

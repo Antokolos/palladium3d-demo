@@ -76,6 +76,12 @@ func get_gravity():
 func set_sound_walk(mode):
 	character_nodes.set_sound_walk(mode)
 
+func set_sound_angry(mode):
+	character_nodes.set_sound_angry(mode)
+
+func set_sound_pain(mode):
+	character_nodes.set_sound_pain(mode)
+
 func set_sound_attack(mode):
 	character_nodes.set_sound_attack(mode)
 
@@ -136,7 +142,9 @@ func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
 
 func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):
-	pass
+	if not is_activated():
+		return
+	character_nodes.play_pain_sound()
 
 func miss(hit_direction_node = null, hit_dir_vec = Z_DIR):
 	pass
@@ -409,6 +417,8 @@ func set_aggressive(enable):
 	var is_aggressive_prev = is_aggressive
 	is_aggressive = enable
 	if is_aggressive_prev != is_aggressive:
+		if is_aggressive:
+			character_nodes.play_angry_sound()
 		emit_signal("aggressive_changed", self, is_aggressive_prev, is_aggressive)
 	if enable:
 		set_patrolling(false)

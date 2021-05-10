@@ -79,6 +79,7 @@ func start_area_conversation_with_companion(conversations_map, repeatable = fals
 	for name_hint in conversations_map.keys():
 		if game_state.is_in_party(name_hint):
 			return start_area_conversation(conversations_map[name_hint], repeatable, exclusive)
+	return false
 
 func enable_conversation(conversation_name, enable):
 	var cp_story = get_story_path(conversation_name)
