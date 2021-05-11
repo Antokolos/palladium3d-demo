@@ -31,7 +31,7 @@ bus = "Sound"
 
 [node name="DestroyTimer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 1.3
+wait_time = 2.2
 one_shot = true
 
 [node name="flames" parent="." instance=ExtResource( 5 )]

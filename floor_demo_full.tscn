@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=2]
+[gd_scene load_steps=105 format=2]
 
 [ext_resource path="res://floor_demo_full.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/core/environment/room_enabler.tscn" type="PackedScene" id=2]
@@ -78,19 +78,20 @@
 [ext_resource path="res://scenes/tablet_Hermes.tscn" type="PackedScene" id=76]
 [ext_resource path="res://scenes/text_5.tscn" type="PackedScene" id=77]
 [ext_resource path="res://scenes/text_6.tscn" type="PackedScene" id=78]
-[ext_resource path="res://addons/palladium/core/environment/conversation_area.tscn" type="PackedScene" id=79]
-[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=80]
-[ext_resource path="res://scenes/conversation_area_corridor_talk.gd" type="Script" id=81]
-[ext_resource path="res://scenes/conversation_area_before_eris.gd" type="Script" id=82]
-[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=83]
-[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=84]
-[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=85]
-[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=86]
-[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=87]
-[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=88]
-[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=89]
-[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=90]
-[ext_resource path="res://scenes/conversation_area_palladium.gd" type="Script" id=91]
+[ext_resource path="res://scenes/lyre_rat_sign.tscn" type="PackedScene" id=79]
+[ext_resource path="res://addons/palladium/core/environment/conversation_area.tscn" type="PackedScene" id=80]
+[ext_resource path="res://sound/environment/labyrinth_5_step_click.ogg" type="AudioStream" id=81]
+[ext_resource path="res://scenes/conversation_area_corridor_talk.gd" type="Script" id=82]
+[ext_resource path="res://scenes/conversation_area_before_eris.gd" type="Script" id=83]
+[ext_resource path="res://sound/environment/Erida_button_press_1.ogg" type="AudioStream" id=84]
+[ext_resource path="res://sound/environment/Erida_button_press_2.ogg" type="AudioStream" id=85]
+[ext_resource path="res://scenes/destructible_web.tscn" type="PackedScene" id=86]
+[ext_resource path="res://scenes/last_trap_floor.tscn" type="PackedScene" id=87]
+[ext_resource path="res://scenes/last_trap_postament.tscn" type="PackedScene" id=88]
+[ext_resource path="res://scenes/last_trap_spikes.tscn" type="PackedScene" id=89]
+[ext_resource path="res://scenes/4_Zheleznoe_uho.tscn" type="PackedScene" id=90]
+[ext_resource path="res://scenes/floor_demo_blocks_floor.tscn" type="PackedScene" id=91]
+[ext_resource path="res://scenes/conversation_area_palladium.gd" type="Script" id=92]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.60791, 2.67184, 4.90563 )
@@ -714,14 +715,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72163, 4.78111, 33.6938 )
 [node name="text_6" parent="." instance=ExtResource( 78 )]
 transform = Transform( -0.999993, 0, -0.00361947, 0, 1, 0, 0.00361947, 0, -0.999993, 14.7988, 4.78241, 40.3261 )
 
+[node name="lyre_rat_sign" parent="." instance=ExtResource( 79 )]
+transform = Transform( -1.55, 0, 1.35505e-07, 0, 1.55, 0, -1.35505e-07, 0, -1.55, 25.3556, 2.50418, 47.5635 )
+
+[node name="lyre_rat_sign2" parent="." instance=ExtResource( 79 )]
+transform = Transform( -6.77527e-08, 0, 1.55, 0, 1.55, 0, -1.55, 0, -6.77527e-08, 30.1367, 2.50418, 18.7669 )
+
 [node name="vase_52" parent="." instance=ExtResource( 14 )]
-editor/display_folded = true
 transform = Transform( 0.64067, 0, 1.4114, 0, 1.55, 0, -1.4114, 0, 0.64067, 35.4982, 1.18135, 23.2499 )
 
 [node name="spider_small" parent="vase_52" instance=ExtResource( 66 )]
 transform = Transform( -0.432766, 0.368424, 0.305306, 0.448679, 0.455484, 0.0863439, -0.166239, 0.270243, -0.561754, 7.82013e-05, 0.631213, -0.0024662 )
 
-[node name="conversation_area_dead_end" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_dead_end" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.0261, 4.169, 22.8255 )
 conversations = {
 "bandit": "",
@@ -744,7 +750,7 @@ area_dependent = true
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_dead_end"]
 shape = SubResource( 1 )
 
-[node name="conversation_area_dead_end2" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_dead_end2" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8705, 4.169, 22.8255 )
 conversations = {
 "bandit": "",
@@ -789,7 +795,7 @@ shape = SubResource( 4 )
 
 [node name="SoundIgnitionClick" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.342, 47.969 )
-stream = ExtResource( 80 )
+stream = ExtResource( 81 )
 bus = "Sound"
 
 [node name="IgnitionArea" type="Area" parent="."]
@@ -801,7 +807,7 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.189063, 0 )
 shape = SubResource( 5 )
 
-[node name="conversation_area_rats" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_rats" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.765, 3.11, 44.712 )
 conversations = {
 "bandit": "",
@@ -853,9 +859,9 @@ transform = Transform( -0.754209, 0.233088, -0.613872, -0.0239097, 0.924508, 0.3
 [node name="ApataCutscenePosition2" type="Position3D" parent="."]
 transform = Transform( 0.336796, 0.365726, -0.867648, -0.0239097, 0.924508, 0.380412, 0.941274, -0.107376, 0.320114, 20.7337, 3.76897, 33.317 )
 
-[node name="conversation_area_corridor_talk" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_corridor_talk" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.893 )
-script = ExtResource( 81 )
+script = ExtResource( 82 )
 conversations = {
 "bandit": "022_CorridorTalkMax",
 "father": "",
@@ -891,9 +897,9 @@ transform = Transform( -4.35223e-08, 0.0929206, -0.995674, 4.06169e-09, 0.995674
 [node name="OutPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571505, 9.89932, 73.3017 )
 
-[node name="conversation_area_before_eris" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_before_eris" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.92702, 2.202, 37.4223 )
-script = ExtResource( 82 )
+script = ExtResource( 83 )
 conversations = {
 "bandit": "020_BeforeEridaMax",
 "father": "",
@@ -916,7 +922,7 @@ cutscene_node_path = NodePath("")
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.20436, -0.394379 )
 shape = SubResource( 8 )
 
-[node name="conversation_area_begin_eris" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_begin_eris" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6224, 2.21311, 36.1646 )
 conversations = {
 "bandit": "021_BeginEridaMax",
@@ -938,7 +944,7 @@ conversaton_delays = {
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_begin_eris"]
 shape = SubResource( 9 )
 
-[node name="conversation_area_ares_room" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_ares_room" parent="." instance=ExtResource( 80 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.86563, 2.2516, 24.6634 )
 conversations = {
 "bandit": "",
@@ -989,13 +995,13 @@ transform = Transform( 0.680557, 0, -0.732695, 0, 1, 0, 0.732695, 0, 0.680557, 2
 
 [node name="EridaButtonCorrect" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 83 )
+stream = ExtResource( 84 )
 
 [node name="EridaButtonWrong" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4041, 2.28196, 29.1143 )
-stream = ExtResource( 84 )
+stream = ExtResource( 85 )
 
-[node name="destructible_web" parent="." instance=ExtResource( 85 )]
+[node name="destructible_web" parent="." instance=ExtResource( 86 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7175, 4.50903, 37.4462 )
 usable_id = 120
 
@@ -1005,23 +1011,23 @@ one_shot = true
 [node name="vase_10" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55832, 1.19023, 30.3094 )
 
-[node name="last_trap_floor" parent="." instance=ExtResource( 86 )]
+[node name="last_trap_floor" parent="." instance=ExtResource( 87 )]
 
-[node name="last_trap_postament" parent="." instance=ExtResource( 87 )]
+[node name="last_trap_postament" parent="." instance=ExtResource( 88 )]
 visible = false
 
-[node name="last_trap_spikes" parent="." instance=ExtResource( 88 )]
+[node name="last_trap_spikes" parent="." instance=ExtResource( 89 )]
 visible = false
 
-[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 89 )]
+[node name="4_Zheleznoe_uho" parent="." instance=ExtResource( 90 )]
 transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 4.91086, 4.24137, 30.6924 )
 visible = false
 
-[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 90 )]
+[node name="floor_demo_blocks_floor" parent="." instance=ExtResource( 91 )]
 
-[node name="conversation_area_palladium" parent="." instance=ExtResource( 79 )]
+[node name="conversation_area_palladium" parent="." instance=ExtResource( 80 )]
 transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 0.732417, 3.27982, 30.6924 )
-script = ExtResource( 91 )
+script = ExtResource( 92 )
 conversations = {
 "bandit": "173_Metallic_tube",
 "father": "",

@@ -306,7 +306,7 @@ const ITEMS = {
 	TakableIds.GOLDEN_BAR : { "item_nam" : "golden_bar", "item_image" : "golden_bars.png", "model_path" : "res://assets/golden_brick.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
 	TakableIds.BERETTA_AMMO : { "item_nam" : "beretta_ammo", "item_image" : "beretta_ammo.png", "model_path" : "res://assets/ammo.escn", "model_use_path" : null, "stackable" : true, "can_give" : false, "custom_actions" : [] },
 	TakableIds.ATHENA : { "item_nam" : "statue_athena", "item_image" : "statue_athena.png", "model_path" : "res://assets/statue_athena.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
-	TakableIds.PALLADIUM: { "item_nam" : "palladium", "item_image" : "Palladium_real.png", "model_path" : "res://assets/Palladium_real.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] },
+	TakableIds.PALLADIUM: { "item_nam" : "palladium", "item_image" : "Palladium_real.png", "model_path" : "res://assets/Palladium_real.escn", "model_use_path" : null, "stackable" : false, "can_give" : false, "custom_actions" : [] }
 }
 
 const WEAPONS_STUN = {}
@@ -359,13 +359,7 @@ func execute_custom_action(item, action = "item_preview_action_1"):
 					game_state.take(DB.TakableIds.ISLAND_MAP_2)
 				TakableIds.RAT:
 					item.remove()
-					var rat = load("res://addons/palladium/scenes/rat.tscn").instance()
-					var rat_model_holder = Spatial.new()
-					rat_model_holder.set_scale(Vector3(1.5, 1.5, 1.5))
-					rat_model_holder.set_name("Model")
-					var rat_model = load("res://scenes/rat_grey.tscn").instance()
-					rat_model_holder.add_child(rat_model)
-					rat.add_child(rat_model_holder)
+					var rat = PLDRatSource.create_rat()
 					var pl = game_state.get_player().get_model()
 					var pl_origin = pl.get_global_transform().origin
 					var shift = pl.to_global(pl.get_transform().basis.xform(Vector3(0, 0, 1))) - pl_origin

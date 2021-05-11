@@ -5,14 +5,23 @@ signal use_takable(player_node, takable, parent, was_taken)
 
 export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export var count = 1
-# if exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
+# If exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
 
 onready var initially_present = visible
+# If volatile_path is true then the item path should not be saved in game_state.
+# For example, any takables that can be dynamically created, e.g. rats
+var volatile_path = false setget set_volatile_path, is_volatile_path
 
 func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")
 	game_state.connect("item_removed", self, "_on_item_removed")
+
+func set_volatile_path(vp):
+	volatile_path = vp
+
+func is_volatile_path():
+	return volatile_path
 
 func connect_signals(target):
 	connect("use_takable", target, "use_takable")
@@ -42,6 +51,8 @@ func is_exclusive():
 	return exclusive
 
 func is_present():
+	if is_volatile_path():
+		return visible
 	var ts = game_state.get_takable_state(get_path())
 	return (ts == game_state.TakableState.DEFAULT and initially_present) or (ts == game_state.TakableState.PRESENT)
 
@@ -53,14 +64,18 @@ func enable_collisions(enable):
 func make_present():
 	visible = true
 	enable_collisions(true)
-	game_state.set_takable_state(get_path(), false)
+	if not is_volatile_path():
+		game_state.set_takable_state(get_path(), false)
 
 func make_absent():
 	visible = false
 	enable_collisions(false)
-	game_state.set_takable_state(get_path(), true)
+	if not is_volatile_path():
+		game_state.set_takable_state(get_path(), true)
 
 func restore_state():
+	if is_volatile_path():
+		return
 	var state = game_state.get_takable_state(get_path())
 	if state == game_state.TakableState.DEFAULT:
 		if initially_present:

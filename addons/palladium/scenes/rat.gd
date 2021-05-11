@@ -40,6 +40,8 @@ func can_move_without_collision(motion):
 	return motion[0] == 1.0 and motion[1] == 1.0
 
 func _integrate_forces(state):
+	if get_mode() != RigidBody.MODE_RIGID:
+		return
 	if not is_present():
 		return
 	var player = game_state.get_player()
@@ -79,6 +81,9 @@ func _integrate_forces(state):
 		param.margin = 0.001 # When almost collided
 		var motion = space_state.cast_motion(param, run_dir.normalized())
 		if not can_move_without_collision(motion):
+			var p = get_parent()
+			if p and p is PLDRatSource:
+				p.restore_rat()
 			queue_free()
 		state.set_linear_velocity(run_dir)
 	state.set_angular_velocity(Vector3.ZERO)

@@ -214,6 +214,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/palladium/core/player_model.gd"
 }, {
+"base": "Position3D",
+"class": "PLDRatSource",
+"language": "GDScript",
+"path": "res://addons/palladium/scenes/rat_source.gd"
+}, {
 "base": "PLDDiscussable",
 "class": "PLDReadable",
 "language": "GDScript",
@@ -326,6 +331,7 @@ _global_script_class_icons={
 "PLDPedestal": "",
 "PLDPlayer": "",
 "PLDPlayerModel": "",
+"PLDRatSource": "",
 "PLDReadable": "",
 "PLDRiddle": "",
 "PLDRoomEnabler": "",

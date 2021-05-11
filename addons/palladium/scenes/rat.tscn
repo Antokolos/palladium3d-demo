@@ -12,8 +12,8 @@ extents = Vector3( 0.2, 0.2, 0.075 )
 
 [node name="rat" type="RigidBody" groups=[
 "moving",
-"rats",
 "restorable_state",
+"rats",
 ]]
 collision_layer = 8
 collision_mask = 8194

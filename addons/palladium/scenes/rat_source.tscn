@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/palladium/scenes/rat_source.gd" type="Script" id=1]
+
+[node name="rat_source" type="Position3D"]
+script = ExtResource( 1 )

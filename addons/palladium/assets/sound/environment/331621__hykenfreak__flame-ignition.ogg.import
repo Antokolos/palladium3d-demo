@@ -11,5 +11,5 @@ dest_files=[ "res://.import/331621__hykenfreak__flame-ignition.ogg-9025261d951ad
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
