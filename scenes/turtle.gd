@@ -16,3 +16,6 @@ func use_action(player_node, item):
 	yield(anim_player, "animation_finished")
 	anim_player.play("turtle_rest.001")
 	return true
+
+func get_use_action_code(player_node, item):
+	return "ACTION_FEED_TURTLE"

@@ -680,7 +680,7 @@ func process_movement(delta, dir, characters):
 	var sc = get_slide_count()
 	var character_collisions = []
 	var nonchar_collision = null
-	var collides_floor = false
+	var collides_floor = character_nodes.has_floor_collision()
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
 		var has_char_collision = false
