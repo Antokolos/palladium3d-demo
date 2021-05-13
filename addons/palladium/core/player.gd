@@ -131,16 +131,17 @@ func _input(event):
 	var hud = game_state.get_hud()
 	var conversation = hud.conversation
 	if conversation.is_visible_in_tree():
-		if event.is_action_pressed("dialogue_next"):
+		if event.is_action_pressed("dialogue_next") and story_node.can_continue():
 			conversation_manager.proceed_story_immediately(self)
-		elif event.is_action_pressed("dialogue_option_1"):
-			conversation_manager.story_choose(self, 0)
-		elif event.is_action_pressed("dialogue_option_2"):
-			conversation_manager.story_choose(self, 1)
-		elif event.is_action_pressed("dialogue_option_3"):
-			conversation_manager.story_choose(self, 2)
-		elif event.is_action_pressed("dialogue_option_4"):
-			conversation_manager.story_choose(self, 3)
+		elif story_node.can_choose():
+			if event.is_action_pressed("dialogue_option_1"):
+				conversation_manager.story_choose(self, 0)
+			elif event.is_action_pressed("dialogue_option_2"):
+				conversation_manager.story_choose(self, 1)
+			elif event.is_action_pressed("dialogue_option_3"):
+				conversation_manager.story_choose(self, 2)
+			elif event.is_action_pressed("dialogue_option_4"):
+				conversation_manager.story_choose(self, 3)
 	if is_in_party() and not cutscene_manager.is_cutscene():
 		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			angle_rad_x = deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff())
