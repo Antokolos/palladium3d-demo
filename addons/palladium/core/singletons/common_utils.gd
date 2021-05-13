@@ -205,6 +205,18 @@ func shadow_casting_enable(root, enable):
 			ch.set_cast_shadows_setting(s)
 		shadow_casting_enable(ch, enable)
 
+func is_same_resource(res1 : Resource, res2 : Resource):
+	if not res1 and not res2:
+		return true
+	if res1 and not res2:
+		return false
+	if res2 and not res1:
+		return false
+	# We will check paths because res.get_rid().get_id() can both return 0 for DIFFERENT resources
+	var p1 = res1.get_path()
+	var p2 = res2.get_path()
+	return p1 and p2 and p1.casecmp_to(p2) == 0
+
 func get_input_control(act, with_colon = true):
 	var list = InputMap.get_action_list(act)
 	var has_joypads = has_joypads()

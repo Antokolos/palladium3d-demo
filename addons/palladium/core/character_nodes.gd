@@ -123,13 +123,17 @@ func play_sound_falling_to_floor():
 	sound_player_falling_to_floor.play()
 
 func set_sound_walk(mode, replace_existing = true):
-	if walk_sound_ids[0] == mode and not replace_existing:
+	var stream = CHARS.SOUND[mode] if mode != CHARS.SoundId.SOUND_WALK_NONE and CHARS.SOUND.has(mode) else null
+	if (
+		walk_sound_ids[0] == mode
+		and stream and sound_player_walking.stream
+		and common_utils.is_same_resource(stream, sound_player_walking.stream)
+	):
 		return
 	if replace_existing:
 		walk_sound_ids[0] = mode
 	else:
 		walk_sound_ids.push_front(mode)
-	var stream = CHARS.SOUND[mode] if mode != CHARS.SoundId.SOUND_WALK_NONE and CHARS.SOUND.has(mode) else null
 	sound_player_walking.stop()
 	sound_player_walking.set_unit_db(0)
 	if not common_utils.set_stream_loop(stream, true):

@@ -90,18 +90,25 @@ static func lookup_music_ids_from_ints(music_ids : Array):
 	return result
 
 func change_music_to(music_id, replace_existing = true):
-	if music_ids[0] == music_id and not replace_existing:
+	var stream = MUSIC[music_id] if music_id != MEDIA.MusicId.NONE and MUSIC.has(music_id) else null
+	if (
+		music_ids[0] == music_id
+		and stream and music_player.stream
+		and common_utils.is_same_resource(stream, music_player.stream)
+	):
+		if not music_player.is_playing():
+			play_music()
 		return
 	if replace_existing:
 		music_ids[0] = music_id
 	else:
 		music_ids.push_front(music_id)
-	if music_id == MEDIA.MusicId.NONE or not MUSIC[music_id]:
+	if stream:
+		music_player.stream = stream
+		play_music()
+	else:
 		music_player.stream = null
 		stop_music()
-	else:
-		music_player.stream = MUSIC[music_id]
-		play_music()
 
 func restore_music_from_save(saved_music_ids):
 	music_ids = (
@@ -165,7 +172,7 @@ func _on_MusicPlayer_finished():
 		and not music_ids.empty()
 		and music_ids[0] != MusicId.NONE
 		and music_player.stream
-		and music_player.stream.get_rid().get_id() == MUSIC[music_ids[0]].get_rid().get_id()
+		and common_utils.is_same_resource(music_player.stream, MUSIC[music_ids[0]])
 	):
 		music_ids.pop_front()
 		if music_ids.empty():
