@@ -21,7 +21,7 @@ func set_appearance(is_quick_item, selected):
 	var label_key = get_node("ItemBox/LabelKey")
 	var label_desc = get_node("ItemBox/LabelDesc")
 	self.is_quick_item = is_quick_item
-	if is_quick_item:
+	if is_quick_item and settings.hide_quick_item_key_labels:
 		label_key.hide()
 	else:
 		label_key.show()

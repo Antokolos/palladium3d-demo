@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2587_i_think_you_are.ogg-31ce13361648a1a3975234acf074fe16.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/2587_i_think_you_are.ogg"
+dest_files=[ "res://.import/2587_i_think_you_are.ogg-31ce13361648a1a3975234acf074fe16.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

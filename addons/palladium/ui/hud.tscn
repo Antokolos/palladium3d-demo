@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/hud.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://addons/palladium/ui/performance_stats.gd" type="Script" id=15]
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=16]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=17]
+[ext_resource path="res://addons/palladium/ui/mouse_cursor.tscn" type="PackedScene" id=18]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -510,7 +511,6 @@ texture = ExtResource( 12 )
 expand = true
 
 [node name="Info" type="VBoxContainer" parent="."]
-editor/display_folded = true
 anchor_right = 0.2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -534,18 +534,22 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Info/MainPlayer/Stats/HealthBar"]
-margin_right = 82.0
+margin_right = 95.0
 margin_bottom = 32.0
+size_flags_horizontal = 3
 text = "50/100"
+align = 1
+valign = 1
 
 [node name="Progress" type="ProgressBar" parent="Info/MainPlayer/Stats/HealthBar"]
-margin_left = 86.0
+margin_left = 99.0
 margin_top = 6.0
 margin_right = 384.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
 custom_styles/fg = SubResource( 4 )
 value = 50.0
 percent_visible = false
@@ -561,7 +565,10 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="Info/MainPlayer/Stats/OxygenBar"]
 margin_right = 82.0
 margin_bottom = 32.0
+size_flags_horizontal = 3
 text = "50/100"
+align = 1
+valign = 1
 
 [node name="Progress" type="ProgressBar" parent="Info/MainPlayer/Stats/OxygenBar"]
 margin_left = 86.0
@@ -571,12 +578,12 @@ margin_bottom = 26.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
 custom_styles/fg = SubResource( 5 )
 value = 50.0
 percent_visible = false
 
 [node name="Indicators" type="HBoxContainer" parent="."]
-editor/display_folded = true
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
@@ -625,5 +632,7 @@ margin_right = 11.0
 
 [node name="BloodSplatTimer" type="Timer" parent="."]
 wait_time = 0.05
+
+[node name="mouse_cursor" parent="." instance=ExtResource( 18 )]
 [connection signal="visibility_changed" from="VBoxContainer/Inventory" to="." method="_on_Inventory_visibility_changed"]
 [connection signal="timeout" from="BloodSplatTimer" to="." method="_on_BloodSplatTimer_timeout"]

@@ -19,7 +19,8 @@ func create_raycast(x, y, z):
 	var r = RayCast.new()
 	r.enabled = settings.cutoff_enabled
 	r.set_collision_mask_bit(0, false)
-	r.set_collision_mask_bit(1, true)
+	r.set_collision_mask_bit(1, true) # Walls
+	r.set_collision_mask_bit(4, true) # Doors
 	r.cast_to = Vector3(x, y, z)
 	return r
 

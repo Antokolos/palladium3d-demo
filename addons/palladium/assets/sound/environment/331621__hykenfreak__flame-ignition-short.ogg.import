@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/331621__hykenfreak__flame-ignition-short.ogg-518b4f66e42269200936c1fbc3831b7e.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/331621__hykenfreak__flame-ignition-short.ogg"
+dest_files=[ "res://.import/331621__hykenfreak__flame-ignition-short.ogg-518b4f66e42269200936c1fbc3831b7e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

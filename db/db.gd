@@ -6,7 +6,6 @@ class_name PLDDB
 const HEALING_RATE = 1
 const INTOXICATION_RATE_DEFAULT = 1
 const INTOXICATION_RATE_STRONG = 5
-const MAX_QUICK_ITEMS = 6
 const SCENE_PATH_DEFAULT = ""
 const SCENE_DATA_DEFAULT = { "loads_count" : 0, "transitions_count" : 0 }
 const PLAYER_HEALTH_CURRENT_DEFAULT = 100
@@ -35,6 +34,10 @@ static func get_item_data(takable_id):
 static func get_item_name(takable_id):
 	var item_data = get_item_data(takable_id)
 	return item_data.item_nam if item_data else null
+
+static func get_items_name(takable_id):
+	var item_data = get_item_data(takable_id)
+	return item_data.item_nam + "s" if item_data else null
 
 static func is_item_stackable(takable_id):
 	var item_data = get_item_data(takable_id)
@@ -319,7 +322,7 @@ func execute_give_item_action(player, target):
 	if not item:
 		return false
 	match item.item_id:
-		DB.TakableIds.BUN:
+		TakableIds.BUN:
 			conversation_manager.start_conversation(player, "Bun", target)
 			item.remove()
 		_:
@@ -355,8 +358,8 @@ func execute_custom_action(item, action = "item_preview_action_1"):
 						conversation_manager.start_conversation(player, "BunEaten")
 				TakableIds.ENVELOPE:
 					item.remove()
-					game_state.take(DB.TakableIds.BARN_LOCK_KEY)
-					game_state.take(DB.TakableIds.ISLAND_MAP_2)
+					game_state.take(TakableIds.BARN_LOCK_KEY)
+					game_state.take(TakableIds.ISLAND_MAP_2)
 				TakableIds.RAT:
 					item.remove()
 					var rat = PLDRatSource.create_rat()

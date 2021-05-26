@@ -252,6 +252,23 @@ margin_right = 274.0
 margin_bottom = 19.0
 text = "SETTINGS_SHADER_CACHE_ENABLED"
 
+[node name="HPauseOnJoypadDisconnected" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 326.0
+margin_right = 1574.0
+margin_bottom = 350.0
+custom_constants/separation = 20
+
+[node name="PauseOnJoypadDisconnected" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HPauseOnJoypadDisconnected"]
+margin_right = 24.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HPauseOnJoypadDisconnected"]
+margin_left = 44.0
+margin_top = 5.0
+margin_right = 274.0
+margin_bottom = 19.0
+text = "SETTINGS_PAUSE_ON_JOY_DISCONNECTED"
+
 [node name="HSensitivityCoef" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 355.0
 margin_right = 1574.0
@@ -1134,6 +1151,7 @@ texture_hover = ExtResource( 29 )
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HInvertYAxis/InvertYAxis" to="." method="_on_InvertYAxis_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled/CutoffEnabled" to="." method="_on_CutoffEnabled_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled" to="." method="_on_ShaderCacheEnabled_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HPauseOnJoypadDisconnected/PauseOnJoypadDisconnected" to="." method="_on_PauseOnJoypadDisconnected_pressed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSensitivityCoef/VBoxContainer/SensitivityCoef" to="." method="_on_SensitivityCoef_value_changed"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType/JoypadType" to="." method="_on_JoypadType_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/Quality" to="." method="_on_Quality_item_selected"]

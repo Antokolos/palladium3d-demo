@@ -5,6 +5,7 @@
 [node name="music_area" type="Area" groups=[
 "music_areas",
 ]]
+pause_mode = 2
 input_ray_pickable = false
 monitorable = false
 script = ExtResource( 1 )

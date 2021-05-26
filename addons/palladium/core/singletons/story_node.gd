@@ -171,10 +171,14 @@ func _observe_variable(variable_name, new_value) -> void:
 func _observe_party(variable_name, new_value) -> void:
 	var v : bool = int(new_value) > 0
 	var name_hint = variable_name.substr(PARTY_VAR_PREFIX.length(), variable_name.length())
-	if v and not game_state.is_in_party(name_hint):
-		game_state.join_party(name_hint)
-	elif not v and game_state.is_in_party(name_hint):
-		game_state.leave_party(name_hint)
+	var character = game_state.get_character(name_hint)
+	if not character:
+		push_warning("Cannot perform '%s' for character '%s'; it can happen when story is resetting during load" % ["join_party()" if v else "leave_party()", name_hint])
+		return
+	if v and not character.is_in_party():
+		character.join_party()
+	elif not v and character.is_in_party():
+		character.leave_party()
 
 func _observe_cutscene(variable_name, new_value) -> void:
 	var v : int = int(new_value)
@@ -183,19 +187,25 @@ func _observe_cutscene(variable_name, new_value) -> void:
 	if character and v > 0:
 		character.play_cutscene(v)
 	else:
-		push_warning("Cannot play cutscene '%s = %d'; it can happen when story is resetting during load" % [variable_name, v])
+		push_warning("Cannot play cutscene '%s = %d' on character '%s'; it can happen when story is resetting during load" % [variable_name, v, name_hint])
 
 func _observe_relationship(variable_name, new_value) -> void:
 	var v : int = int(new_value)
 	var name_hint = variable_name.substr(RELATIONSHIP_VAR_PREFIX.length(), variable_name.length())
 	var character = game_state.get_character(name_hint)
-	character.set_relationship(v)
+	if character:
+		character.set_relationship(v)
+	else:
+		push_warning("Cannot set relationship of '%s' to %d; it can happen when story is resetting during load" % [name_hint, v])
 
 func _observe_morale(variable_name, new_value) -> void:
 	var v : int = int(new_value)
 	var name_hint = variable_name.substr(MORALE_VAR_PREFIX.length(), variable_name.length())
 	var character = game_state.get_character(name_hint)
-	character.set_morale(v)
+	if character:
+		character.set_morale(v)
+	else:
+		push_warning("Cannot set morale of '%s' to %d; it can happen when story is resetting during load" % [name_hint, v])
 
 func init_variables() -> void:
 	var storyVars : Dictionary = game_state.story_vars

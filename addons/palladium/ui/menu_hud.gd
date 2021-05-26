@@ -3,6 +3,8 @@ extends Control
 onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
+onready var mouse_cursor = get_node("mouse_cursor")
+
 func _ready():
 	common_utils.show_mouse_cursor_if_needed_in_game(self)
 	$LabelJoyHint.visible = common_utils.has_joypads()
@@ -19,6 +21,9 @@ func is_tablet_visible():
 
 func is_quit_dialog_visible():
 	return get_node("quit_dialog").visible
+
+func get_mouse_cursor():
+	return mouse_cursor
 
 func pause_game(enable, with_dimmer = true):
 	dimmer.visible = with_dimmer and enable

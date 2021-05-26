@@ -1,8 +1,11 @@
 extends PLDLevel
 
+const PANORAMA_EVENING = preload("res://addons/palladium/assets/spherical_hdr.hdr")
+const SKY_ROTATION_EVENING = Vector3(0.0, 0.0, 0.0)
+
 func do_init(is_loaded):
 	if game_state.current_scene_was_loaded_before() and not is_loaded:
-		player.teleport($PositionPlayer)
+		player.teleport($PositionPlayer if game_state.player_name_is(CHARS.PLAYER_NAME_HINT) else $PositionOut2)
 		if game_state.is_in_party(CHARS.FEMALE_NAME_HINT):
 			player_female.teleport($PositionCompanion)
 			player_bandit.teleport($PositionOut)
@@ -32,6 +35,13 @@ func do_init(is_loaded):
 	var boat_area = get_node("BoatArea")
 	if boat_area and boat_area.overlaps_body(player) and boat_area.overlaps_body(player_female):
 		_on_BoatArea_body_entered(player)
+	if (
+		game_state.has_item(DB.TakableIds.ATHENA)
+		or game_state.has_item(DB.TakableIds.PALLADIUM)
+		or game_state.has_item(DB.TakableIds.GOLDEN_BAR)
+		or conversation_manager.conversation_is_finished("174_This_inscription_wasn't")
+	):
+		game_state.change_sky_panorama(false, PANORAMA_EVENING, SKY_ROTATION_EVENING, PLDGameState.TimeOfDay.EVENING)
 	var is_evening = (game_state.time_of_day == PLDGameState.TimeOfDay.EVENING)
 	$SunMorning.visible = not is_evening
 	$SunEvening.visible = is_evening

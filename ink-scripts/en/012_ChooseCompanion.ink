@@ -23,7 +23,7 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 	I'll give you a call, I promise.	# actor:player # voiceover:474_i'll_give_you_a_call.ogg
 	Good luck to you both.	# actor:female # voiceover:549_good_luck_to_you_both.ogg
 	~ party_female = false
-* 	[Идти одному.]
+* 	[Go alone]
 	That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
 	Andreas, I'm the only specialist on ancient Greek language and mythology. 	# actor:female # voiceover:2168_Andreas_i'm_the_only.ogg
 	Andreas, are you sure you can do this on your own?	# actor:bandit # voiceover:2269_Andreas_are_you_sure.ogg
@@ -32,6 +32,6 @@ I'm not going to dance to somebody's ancient pipe. I'm going to go my own way.	#
 	* * 	[Go with Max.]
 		-> companion_max
 	* * 	[Go alone.]
-		That is a difficult choice. I'll go alone, like I planned from the beginning.	# actor:player # voiceover:2096_that_is_a_difficult_choice.ogg
+		I'll go alone.	# actor:player # voiceover:2607_i'll_go_alone.ogg
 		~ party_bandit = false
 		~ party_female = false

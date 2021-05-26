@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2581_we_need_to_all_go.ogg-8f6b9f1177570c524afa02457777d1b4.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/2581_we_need_to_all_go.ogg"
+dest_files=[ "res://.import/2581_we_need_to_all_go.ogg-8f6b9f1177570c524afa02457777d1b4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

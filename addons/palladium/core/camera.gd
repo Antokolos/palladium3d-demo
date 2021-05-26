@@ -20,6 +20,9 @@ func _ready():
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
 	game_state.connect("game_loaded", self, "_on_game_loaded")
+	if item_preview:
+		item_preview.connect("preview_opened", self, "_on_preview_opened")
+		item_preview.connect("preview_closed", self, "_on_preview_closed")
 
 func rebuild_exceptions(player_node):
 	if use_point:
@@ -144,6 +147,13 @@ func show_flashlight(is_show):
 		else:
 			flashlight.hide()
 
+func _on_preview_opened(item):
+	clear_item_use()
+	show_cutscene_flashlight(true)
+
+func _on_preview_closed(item):
+	show_cutscene_flashlight(false)
+
 func _process(delta):
 	if not game_state.is_level_ready():
 		return
@@ -185,8 +195,7 @@ func _input(event):
 		var item = hud.get_active_item()
 		if not item:
 			return
-		hud.main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
-		item_preview.open_preview(item, hud, self)
+		item_preview.open_preview(item)
 	elif use_point and item_use and event.is_action_pressed("action"):
 		use_point.action(player, self)
 		item_use.action(player, self)

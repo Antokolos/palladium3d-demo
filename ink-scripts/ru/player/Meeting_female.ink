@@ -14,6 +14,5 @@ VAR party_female = true
 Нет, у тебя лицо слишком интеллигентное и глаза добрые, хоть ты и выглядишь суровым. Но это наверное из-за того, что ты мало улыбаешься.  Нужно чаще улыбаться.	# actor:female # voiceover:181_net_u_tebya_litso.ogg
 Ты делаешь это за двоих, так что мне ни к чему. Если хочешь, могу отвезти тебя на Крит.	# actor:player # voiceover:2492_ty_delaesh_eto_za.ogg
 Правда? Здорово, я была бы тебе очень благодар…	# actor:female # voiceover:182_pravda_zdorovo.ogg
-*	[Иди на берег и жди меня там около лодки.]
-	Иди на берег и жди меня там около лодки.	# actor:player # voiceover:2493_idi_na_bereg.ogg
-	~ party_female = false
+Иди на берег и жди меня там около лодки.	# actor:player # voiceover:2493_idi_na_bereg.ogg
+~ party_female = false

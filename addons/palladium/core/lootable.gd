@@ -6,6 +6,7 @@ signal use_lootable(player_node, lootable)
 export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export(int) var count_init = 1
 export(bool) var can_loot = true
+export(int) var max_count = 0
 
 func _ready():
 	game_state.connect("item_taken", self, "_on_item_taken")
@@ -15,6 +16,9 @@ func connect_signals(target):
 
 func use(player_node, camera_node):
 	if not is_can_loot():
+		return false
+	if max_count > 0 and game_state.get_item_count(takable_id) > max_count:
+		game_state.get_hud().queue_popup_message("MESSAGE_TOO_MANY_ITEMS", [ tr(DB.get_items_name(takable_id)) ])
 		return false
 	game_state.take(takable_id, get_count(), get_path())
 	emit_signal("use_lootable", player_node, self)

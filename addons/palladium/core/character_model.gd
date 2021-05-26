@@ -188,16 +188,20 @@ func toggle_unwanted_meshes(root, enable):
 			toggle_unwanted_meshes(m, enable)
 
 func stand_up():
-	if not is_standing():
-		animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
-		if simple_mode:
-			toggle_unwanted_meshes(get_node(main_skeleton), true)
+	if is_standing():
+		return false
+	animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_STAND_UP)
+	if simple_mode:
+		toggle_unwanted_meshes(get_node(main_skeleton), true)
+	return true
 
 func sit_down():
-	if not is_sitting():
-		animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
-		if simple_mode:
-			toggle_unwanted_meshes(get_node(main_skeleton), false)
+	if is_sitting():
+		return false
+	animation_tree.set("parameters/LookTransition/current", LOOK_TRANSITION_SIT_DOWN)
+	if simple_mode:
+		toggle_unwanted_meshes(get_node(main_skeleton), false)
+	return true
 
 func normalize_angle(look_angle_deg):
 	return look_angle_deg if abs(look_angle_deg) < 45.0 else (45.0 if look_angle_deg > 0 else -45.0)

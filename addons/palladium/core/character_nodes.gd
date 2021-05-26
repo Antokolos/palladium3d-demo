@@ -43,8 +43,9 @@ func _on_player_underwater(player, enable):
 		return
 	if enable and oxygen_timer.is_stopped():
 		oxygen_timer.start()
-	elif not enable and not oxygen_timer.is_stopped():
-		oxygen_timer.stop()
+	elif not enable:
+		if not oxygen_timer.is_stopped():
+			oxygen_timer.stop()
 		game_state.set_oxygen(character, game_state.player_oxygen_max, game_state.player_oxygen_max)
 
 func _on_player_poisoned(player, enable, intoxication_rate):
@@ -83,6 +84,7 @@ func add_ray_to_character(another_character):
 	r.set_collision_mask_bit(1, true) # Collides with walls
 	r.set_collision_mask_bit(2, true) # Collides with floor
 	r.set_collision_mask_bit(3, false) # Interactives is NOT a collision
+	r.set_collision_mask_bit(4, true) # Collides with doors
 	r.set_collision_mask_bit(10, true) # Collides with ceiling
 	r.set_collision_mask_bit(11, false) # Party is NOT a collision
 	r.set_collision_mask_bit(12, false) # Enemies is NOT a collision
@@ -311,7 +313,8 @@ func _on_AttackTimer_timeout():
 # TODO: Check it is OK
 #	if not character.is_activated():
 #		return
-	var last_attack_target = character.get_last_attack_target()
+	var last_attack_data = character.get_last_attack_data()
+	var last_attack_target = last_attack_data.target
 	var attack_target = get_possible_attack_target(true)
 	if attack_target:
 		play_attack_sound()
@@ -328,8 +331,9 @@ func _on_AttackTimer_timeout():
 		if last_attack_target:
 			last_attack_target.miss()
 		#character.stop_cutscene()
-	character.emit_signal("attack_finished", self, attack_target, last_attack_target)
+	character.emit_signal("attack_finished", character, attack_target, last_attack_target, last_attack_data.anim_idx)
 	character.clear_point_of_interest()
+	character.clear_last_attack_data()
 
 func _on_RestTimer_timeout():
 	stop_walking_sound()

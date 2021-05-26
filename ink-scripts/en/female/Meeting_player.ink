@@ -26,7 +26,7 @@ You can't go with me.	# actor:player # voiceover:317_you_can't_go_with_me.ogg
 Why not? You want me to sit on this stump for two days?	# actor:female # voiceover:362_why_not_you_want_me_to.ogg
 You would have if I hadn't shown up.	# actor:player # voiceover:318_you_would_have_if_i.ogg
 But you did show up! And I missed my ferry. That's a sign! We must go together.	# actor:female # voiceover:363_but_you_did_show_up.ogg
-The place I'm going is very dangerous. I wouldn't want to put somebody else's life at risk. Go to the shore; my boat is over there. Soon I will come and bring you back to the mainland.	# actor:player # voiceover:319_the_place_i'm_going_is_probably.ogg
+The place I'm going is probably dangerous. I wouldn't want to put somebody else's life at risk. Go to the shore; my boat is over there. Soon I will come and bring you back to the mainland.	# actor:player # voiceover:319_the_place_i'm_going_is_probably.ogg
 I see; thanks for the warning, but now I can't let you go alone. It's safer to have a companion who can give you a hand in dire straits.	# actor:female # voiceover:364_i_see_thanks_for_the_warning.ogg
 *	[Accept the offer.]
 	~ relationship_female = relationship_female + 1

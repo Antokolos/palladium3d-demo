@@ -49,15 +49,34 @@ tracks/1/keys = {
 "values": [ Vector3( 23.213, 8.67389, 31.327 ), Vector3( 23.213, 0.946324, 31.327 ), Vector3( 23.213, 0.946324, 31.327 ) ]
 }
 
-[node name="ceiling_moving_1" groups=[
+[node name="ceiling_moving_1" index="0" groups=[
 "activatables",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 activatable_id = 20
 
-[node name="ceiling_moving001" parent="ceiling_armat000" index="1"]
+[node name="ceiling_armat003" parent="." index="0"]
+transform = Transform( -1.23098, 1.38554e-005, -5.35227e-006, 1.41949e-005, 1.20154, -1.33666e-005, 5.6839e-006, -1.38558e-005, -1.15912, 23.5933, 5.74733, 31.3298 )
+
+[node name="ceiling_moving" parent="ceiling_armat003" index="1"]
+transform = Transform( -3.14172e-007, -0.000105019, -9.16445, -9.09101e-005, -9.10727, 0.000105808, -9.10727, 9.11976e-005, -8.99618e-007, 0.26775, 0.803743, 0.0705414 )
 cast_shadow = 0
 extra_cull_margin = 10.0
+
+[node name="ceiling_spikes" parent="ceiling_armat003" index="2"]
+transform = Transform( 0.915943, -2.12955e-012, 5.89098e-008, 7.66405e-010, 0.915943, -1.69512e-008, 4.97544e-008, -1.81899e-012, 0.915943, -3.90118, 2.98121, -5.61567 )
+
+[node name="ceiling_spikes001" parent="ceiling_armat003" index="3"]
+transform = Transform( 0.915943, -2.12955e-012, 5.89098e-008, 7.66405e-010, 0.915943, -1.69512e-008, 4.97544e-008, -1.81899e-012, 0.915943, -3.90117, 2.98137, 7.4531 )
+
+[node name="ceiling_spikes002" parent="ceiling_armat003" index="4"]
+transform = Transform( 0.915943, -2.12955e-012, 5.89098e-008, 7.66405e-010, 0.915943, -1.69512e-008, 4.97544e-008, -1.81899e-012, 0.915943, -3.90117, 2.98133, 4.84595 )
+
+[node name="ceiling_spikes004" parent="ceiling_armat003" index="5"]
+transform = Transform( 0.915943, -2.12955e-012, 5.89098e-008, 7.66405e-010, 0.915943, -1.69512e-008, 4.97544e-008, -1.81899e-012, 0.915943, -3.90118, 2.98127, -0.368357 )
+
+[node name="ceiling_spikes005" parent="ceiling_armat003" index="6"]
+transform = Transform( 0.915943, -2.12955e-012, 5.89098e-008, 7.66405e-010, 0.915943, -1.69512e-008, 4.97544e-008, -1.81899e-012, 0.915943, -3.90118, 2.98125, -2.99201 )
 
 [node name="DeactivationTimer" type="Timer" parent="." index="1"]
 wait_time = 3.0
@@ -129,7 +148,7 @@ autostart = true
 [node name="PartialActivationTimer" type="Timer" parent="." index="6"]
 wait_time = 20.0
 one_shot = true
-[connection signal="animation_finished" from="ceiling_armat000/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="ceiling_armat003/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="DeactivationTimer" to="." method="_on_DeactivationTimer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
 [connection signal="timeout" from="PartialActivationTimer" to="." method="_on_PartialActivationTimer_timeout"]

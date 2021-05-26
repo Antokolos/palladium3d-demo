@@ -86,6 +86,8 @@ func load_file(filename, fallback_filename):
 			continue
 		t = l.empty()
 		cur_section.append(l)
+	if not cur_section.empty():
+		result.append(cur_section)
 	file.close()
 	return result
 

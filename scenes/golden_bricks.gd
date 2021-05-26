@@ -34,6 +34,8 @@ func get_usage_code(player_node):
 func restore_state():
 	if game_state.has_item(DB.TakableIds.GOLDEN_BAR):
 		var zeus_body = game_state.get_usable(DB.UsableIds.ZEUS_POSTAMENT)
+		if not zeus_body:
+			return
 		get_brick_node().visible = false
 		if not zeus_body.cell_phone_applied():
 			.use(game_state.get_player(), null)

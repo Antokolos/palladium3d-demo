@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2585_if_i_thought_you.ogg-a5868ec3ea7c889af999987033e5d882.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/2585_if_i_thought_you.ogg"
+dest_files=[ "res://.import/2585_if_i_thought_you.ogg-a5868ec3ea7c889af999987033e5d882.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

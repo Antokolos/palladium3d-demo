@@ -75,6 +75,7 @@ func _on_focus_exited(label_container):
 	remove_selection(label_container)
 
 func refresh():
+	var label_to_select = null
 	last_selected_label = null
 	for ch in controls.get_children():
 		if ch.is_connected(
@@ -129,6 +130,8 @@ func refresh():
 		var list = InputMap.get_action_list(action)
 		var label_action_new = label_action.duplicate(0)
 		var label_key_new = label_key.duplicate(0)
+		if not label_to_select:
+			label_to_select = label_key_new
 		label_key_new.connect(
 			"gui_input",
 			self,
@@ -224,3 +227,5 @@ func refresh():
 			set_key_text(label_key_new, act)
 			set_joypad_text(label_joy_new, act)
 			set_mouse_button_text(label_mouse_button_new, act)
+	select_label(label_to_select)
+	label_to_select.grab_focus()

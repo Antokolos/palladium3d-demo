@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2583_are_you_blackmailing.ogg-936f9ad0a88e000a513d6e13ac5b5ff9.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/2583_are_you_blackmailing.ogg"
+dest_files=[ "res://.import/2583_are_you_blackmailing.ogg-936f9ad0a88e000a513d6e13ac5b5ff9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

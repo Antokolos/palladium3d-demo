@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2586_i'm_always_serious.ogg-d57478820790ff7fd521e738e82bd2f2.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door2/2586_i'm_always_serious.ogg"
+dest_files=[ "res://.import/2586_i'm_always_serious.ogg-d57478820790ff7fd521e738e82bd2f2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

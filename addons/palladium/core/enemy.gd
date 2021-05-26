@@ -2,8 +2,8 @@ extends PLDCharacter
 class_name PLDEnemy
 
 const TOO_FAR_RANGE = 10
-const AGGRESSION_RANGE = 11
-const STOP_CHASING_RANGE = 12
+const AGGRESSION_RANGE = 12
+const STOP_CHASING_RANGE = 14
 
 export var max_hits = 0
 var hits = 0
@@ -75,9 +75,17 @@ func set_states():
 func set_states_for_character(character):
 	if not character:
 		return
-	if character.is_hidden() \
-		or get_relationship() >= 0 \
-		or get_morale() < 0:
+	if (
+		get_relationship() >= 0
+		or get_morale() < 0
+		or (
+			character.is_hidden()
+			and (
+				not game_state.is_flashlight_on()
+				or not character.has_hideout()
+			)
+		)
+	):
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(character)
@@ -87,8 +95,13 @@ func set_states_for_character(character):
 	if not is_aggressive \
 		and dtp < AGGRESSION_RANGE \
 		and not has_obstacles_between(character):
-		set_sprinting(true)
 		set_aggressive(true)
+		set_target_node(
+			character.get_hideout()
+				if character.is_hidden() # and character.has_hideout() -- was checked earlier
+				else character
+		)
+		set_sprinting(true)
 	elif is_aggressive and dtp > STOP_CHASING_RANGE:
 		set_aggressive(false)
 		set_sprinting(false)

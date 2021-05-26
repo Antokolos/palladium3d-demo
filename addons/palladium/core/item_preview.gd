@@ -1,17 +1,22 @@
 extends Spatial
 
-const MAX_SIZE = Vector3(1.0, 1.0, 1.0)
+signal preview_opened(item)
+signal preview_closed(item)
+
+const MAX_SIZE = Vector3(0.5, 0.5, 0.5)
 const AXIS_VALUE_THRESHOLD = 0.15
 const KEY_LOOK_SPEED_FACTOR = 30
 onready var item_holder_node = get_node("item_holder")
 
-var hud
-var camera
-var custom_actions = []
 var inst
 var item
 var angle_rad_x = 0
 var angle_rad_y = 0
+
+func _ready():
+	var hud = game_state.get_hud()
+	connect("preview_opened", hud, "_on_preview_opened")
+	connect("preview_closed", hud, "_on_preview_closed")
 
 func vmin(vec):
 	var m = min(vec.x, vec.y)
@@ -23,38 +28,19 @@ func coord_div(vec1, vec2):
 func is_opened():
 	return item_holder_node.get_child_count() > 0
 
-func open_preview(item, hud, camera):
+func open_preview(item):
 	if not item:
 		return
 	self.item = item
-	self.hud = hud
-	self.camera = camera
 	self.inst = item.get_model_instance()
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
 	common_utils.shadow_casting_enable(inst, false)
 	item_holder_node.add_child(inst)
 	var aabb = item.get_aabb(inst)
-	var vm = min(vmin(coord_div(MAX_SIZE, aabb.size)), MAX_SIZE.x)
-	inst.scale_object_local(Vector3(vm, vm, vm))
-	hud.inventory.visible = false
-	#hud.dimmer.visible = true
-	camera.show_cutscene_flashlight(true)
-	var label_close_node = hud.actions_panel.get_node("ActionsContainer/HintLabelClose")
-	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
-	var custom_actions_node = hud.actions_panel.get_node("ActionsContainer/CustomActions")
-	for ch in custom_actions_node.get_children():
-		ch.queue_free()
-	custom_actions = game_state.get_custom_actions(item)
-	for act in custom_actions:
-		if not DB.can_execute_custom_action(item, act):
-			continue
-		var ch = label_close_node.duplicate(0)
-		ch.text = common_utils.get_input_control(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
-		custom_actions_node.add_child(ch)
-	hud.pause_game(true, false)
-	hud.show_game_ui(false)
-	hud.actions_panel.show()
+	var vmcd = vmin(coord_div(MAX_SIZE, aabb.size))
+	inst.scale_object_local(Vector3(vmcd, vmcd, vmcd))
+	emit_signal("preview_opened", item)
 
 func _input(event):
 	if item_holder_node.get_child_count() > 0 and not game_state.is_video_cutscene():
@@ -72,7 +58,7 @@ func _input(event):
 		elif DB.can_execute_custom_action(item, "item_preview_action_4", event):
 			close_preview()
 			DB.execute_custom_action(item, "item_preview_action_4")
-		elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		elif common_utils.is_mouse_captured():
 			if event is InputEventMouseMotion:
 				item_holder_node.rotate_x(deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff()))
 				item_holder_node.rotate_y(deg2rad(event.relative.x * settings.get_sensitivity()))
@@ -110,13 +96,4 @@ func _process(delta):
 func close_preview():
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
-	if hud:
-		hud.actions_panel.hide()
-		hud.show_game_ui(true)
-		if game_state.get_quick_items_count() > 1:
-			hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS", [common_utils.get_input_control("active_item_next", false), common_utils.get_input_control("active_item_back", false)])
-			if not common_utils.has_joypads():
-				hud.queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", [common_utils.get_input_control("active_item_1", false), common_utils.get_input_control("active_item_6", false)])
-	custom_actions.clear()
-	game_state.get_hud().pause_game(false, false)
-	camera.show_cutscene_flashlight(false)
+	emit_signal("preview_closed", item)

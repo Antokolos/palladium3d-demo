@@ -3,9 +3,9 @@ class_name PLDViewportHack
 
 # See https://github.com/godotengine/godot/issues/17326
 func do_input(event):
-	.do_input(event)
+	var r = .do_input(event)
 	if get_tree().paused:
-		return
+		return r
 	if event is InputEventMouse:
 		var mouseEvent = event.duplicate()
 		var viewport_size = $Viewport.size
@@ -15,3 +15,4 @@ func do_input(event):
 		$Viewport.unhandled_input(mouseEvent)
 	else:
 		$Viewport.unhandled_input(event)
+	return r

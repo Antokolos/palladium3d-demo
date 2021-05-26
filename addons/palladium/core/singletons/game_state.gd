@@ -501,12 +501,16 @@ func take(item_id, count = 1, item_path = null):
 			emit_signal("item_taken", item_id, item.count, count, item_path)
 			return
 	var maxpos = 0
+	var quick_item_candidate = null
 	for quick_item in quick_items:
-		if not quick_item.item_id or quick_item.item_id == DB.TakableIds.NONE:
-			quick_item.item_id = item_id
-			quick_item.count = count
-			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
-			return
+		if (
+			(
+				not quick_item.item_id
+				or quick_item.item_id == DB.TakableIds.NONE
+			)
+			and not quick_item_candidate
+		):
+			quick_item_candidate = quick_item
 		if item_id == quick_item.item_id:
 			if not is_stackable:
 				push_warning("Trying to stack item with id = %d, which is not stackable" % item_id)
@@ -515,7 +519,12 @@ func take(item_id, count = 1, item_path = null):
 			emit_signal("item_taken", item_id, quick_item.count, count, item_path)
 			return
 		maxpos = maxpos + 1
-	if maxpos < DB.MAX_QUICK_ITEMS:
+	if quick_item_candidate:
+		quick_item_candidate.item_id = item_id
+		quick_item_candidate.count = count
+		emit_signal("item_taken", item_id, quick_item_candidate.count, count, item_path)
+		return
+	elif maxpos < PLDHUD.MAX_QUICK_ITEMS:
 		quick_items.append({ "item_id" : item_id, "count" : count })
 		emit_signal("item_taken", item_id, count, count, item_path)
 		return
@@ -532,7 +541,7 @@ func remove(item_id, count = 1):
 				item.count = 0
 				inventory.remove(idx)
 			emit_signal("item_removed", item_id, item.count, count)
-			return
+			return item.count
 		idx = idx + 1
 	for quick_item in quick_items:
 		if item_id == quick_item.item_id:
@@ -541,13 +550,14 @@ func remove(item_id, count = 1):
 				quick_item.count = 0
 				quick_item.item_id = null
 			emit_signal("item_removed", item_id, quick_item.count, count)
-			return
+			return quick_item.count
+	return 0
 
 func item_used(player_node, target, item_id, item_count):
 	emit_signal("item_used", player_node, target, item_id, item_count)
 
 func set_quick_item(pos, item_id):
-	if pos >= DB.MAX_QUICK_ITEMS:
+	if pos >= PLDHUD.MAX_QUICK_ITEMS:
 		return
 	for i in range(quick_items.size(), pos + 1):
 		quick_items.append({ "item_id" : null, "count" : 0 })
@@ -768,10 +778,16 @@ func is_in_party(name_hint):
 
 func join_party(name_hint, and_clear_target_node = true):
 	var character = get_character(name_hint)
+	if not character:
+		push_error("Cannot join character '%s' to party, because this character was not found" % name_hint)
+		return
 	character.join_party(and_clear_target_node)
 
 func leave_party(name_hint, new_target_node = null, and_teleport_to_target = false):
 	var character = get_character(name_hint)
+	if not character:
+		push_error("Cannot leave character '%s' from party, because this character was not found" % name_hint)
+		return
 	character.leave_party(new_target_node, and_teleport_to_target)
 
 func register_player(player):
@@ -874,9 +890,6 @@ func set_character_data(dd, character):
 		elif not dd.is_crouching and character.is_crouching():
 			character.stand_up()
 	
-	if ("is_underwater" in dd):
-		set_underwater(character, dd.is_underwater)
-	
 	if ("is_poisoned" in dd and "intoxication" in dd):
 		character.intoxication = int(dd.intoxication)
 		set_poisoned(character, dd.is_poisoned, character.intoxication)
@@ -891,7 +904,10 @@ func set_character_data(dd, character):
 		character.stuns_count = int(dd.stuns_count)
 	
 	if ("is_hidden" in dd):
-		character.set_hidden(dd.is_hidden)
+		var hideout_path = (
+			dd.hideout_path if "hideout_path" in dd and dd.hideout_path else ""
+		)
+		character.set_hidden(dd.is_hidden, hideout_path)
 	
 	if ("is_sprinting" in dd):
 		character.set_sprinting(dd.is_sprinting)
@@ -993,11 +1009,7 @@ func get_characters_data():
 		var name_hint = character.get_name_hint()
 		characters[name_hint] = get_character_data(character)
 	for name_hint in characters_transition_data.keys():
-		if characters.has(name_hint):
-			for pk in characters[name_hint]["positions"].keys():
-				if pk != scene_path:
-					characters[name_hint]["positions"][pk] = characters_transition_data[name_hint]["positions"][pk]
-		else:
+		if not characters.has(name_hint):
 			characters[name_hint] = characters_transition_data[name_hint]
 	return characters
 
@@ -1010,13 +1022,13 @@ func get_character_data(character):
 		"pathfinding_enabled" : character.is_pathfinding_enabled(),
 		"in_party" : p,
 		"is_crouching" : character.is_crouching(),
-		"is_underwater" : character.is_underwater(),
 		"is_poisoned" : character.is_poisoned(),
 		"intoxication" : character.get_intoxication(),
 		"relationship" : character.get_relationship(),
 		"morale" : character.get_morale(),
 		"stuns_count" : character.get_stuns_count(),
 		"is_hidden" : character.is_hidden(),
+		"hideout_path" : character.get_hideout_path(),
 		"is_sprinting" : character.is_sprinting(),
 		"force_physics" : character.is_force_physics(),
 		"force_no_physics" : character.is_force_no_physics(),
@@ -1036,6 +1048,15 @@ func get_character_data(character):
 	]
 	result["positions"][scene_path]["origin"] = [o.x, o.y, o.z]
 	result["positions"][scene_path]["target_path"] = t.get_path() if t else null
+	var name_hint = character.get_name_hint()
+	if (
+		not characters_transition_data.has(name_hint)
+		or not characters_transition_data[name_hint].has("positions")
+	):
+		return result
+	for pk in characters_transition_data[name_hint]["positions"].keys():
+		if pk != scene_path:
+			result["positions"][pk] = characters_transition_data[name_hint]["positions"][pk]
 	return result
 
 func save_state(slot):

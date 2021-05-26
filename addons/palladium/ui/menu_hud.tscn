@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/menu_hud.gd" type="Script" id=2]
 [ext_resource path="res://addons/palladium/assets/fonts/Forum-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/palladium/ui/mouse_cursor.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 92
@@ -76,3 +77,5 @@ color = Color( 0.140625, 0.140625, 0.140625, 0.901961 )
 visible = false
 
 [node name="quit_dialog" parent="." instance=ExtResource( 5 )]
+
+[node name="mouse_cursor" parent="." instance=ExtResource( 6 )]

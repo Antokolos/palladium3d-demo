@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2582_what_are_you_doing_here.ogg-6b13711cd257ab9c2d184d281141d094.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Door3/2582_what_are_you_doing_here.ogg"
+dest_files=[ "res://.import/2582_what_are_you_doing_here.ogg-6b13711cd257ab9c2d184d281141d094.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

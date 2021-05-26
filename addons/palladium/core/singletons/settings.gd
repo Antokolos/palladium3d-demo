@@ -56,6 +56,8 @@ enum InputType {
 var tablet_orientation = TABLET_HORIZONTAL
 var joypad_type = JOYPAD_XBOX
 var performance_stats = false
+var hide_quick_item_key_labels = false
+var pause_on_joy_disconnected = true
 var cutoff_enabled = false
 var shader_cache_enabled = true
 var vsync = true
@@ -112,6 +114,12 @@ func load_settings():
 
 	if ("performance_stats" in d):
 		performance_stats = bool(d.performance_stats)
+
+	if ("hide_quick_item_key_labels" in d):
+		hide_quick_item_key_labels = bool(d.hide_quick_item_key_labels)
+
+	if ("pause_on_joy_disconnected" in d):
+		pause_on_joy_disconnected = bool(d.pause_on_joy_disconnected)
 
 	if ("cutoff_enabled" in d):
 		cutoff_enabled = bool(d.cutoff_enabled)
@@ -170,6 +178,8 @@ func save_settings():
 		"tablet_orientation" : tablet_orientation,
 		"joypad_type" : joypad_type,
 		"performance_stats" : performance_stats,
+		"hide_quick_item_key_labels" : hide_quick_item_key_labels,
+		"pause_on_joy_disconnected" : pause_on_joy_disconnected,
 		"cutoff_enabled" : cutoff_enabled,
 		"shader_cache_enabled" : shader_cache_enabled,
 		"vsync" : vsync,
@@ -344,6 +354,9 @@ func set_cutoff_enabled(ce):
 func set_shader_cache_enabled(sce):
 	shader_cache_enabled = sce
 	emit_signal("shader_cache_enabled_changed", sce)
+
+func set_pause_on_joy_disconnected(pjd):
+	pause_on_joy_disconnected = pjd
 
 func set_subtitles(s):
 	subtitles = s

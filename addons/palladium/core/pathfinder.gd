@@ -104,24 +104,18 @@ func is_rest_state():
 
 func activate():
 	var activated_prev = activated
-	var rest_state_prev = rest_state
 	activated = true
-	rest_state = false
 	reset_movement_and_rotation()
 	if activated_prev != activated:
 		emit_signal("activated_changed", self, activated_prev, activated)
-	if rest_state_prev != rest_state:
-		emit_signal("rest_state_changed", self, rest_state_prev, rest_state)
+	change_rest_state_to(false)
 
 func deactivate():
 	var activated_prev = activated
-	var rest_state_prev = rest_state
 	activated = false
-	rest_state = true
 	if activated_prev != activated:
 		emit_signal("activated_changed", self, activated_prev, activated)
-	if rest_state_prev != rest_state:
-		emit_signal("rest_state_changed", self, rest_state_prev, rest_state)
+	change_rest_state_to(true)
 
 func has_collisions():
 	var sc = get_slide_count()
@@ -210,7 +204,7 @@ func clear_point_of_interest():
 	set_point_of_interest(null)
 
 func get_preferred_target():
-	return target_node if not in_party else (game_state.get_companion() if is_player() else game_state.get_player())
+	return get_target_node() if not in_party else (game_state.get_companion() if is_player() else game_state.get_player())
 
 func get_target_position():
 	var t = get_preferred_target()
@@ -299,6 +293,7 @@ func follow(current_transform, next_position):
 	var was_moving = not is_rest_state()
 	var current_actor = conversation_manager.get_current_actor()
 	var previous_actor = conversation_manager.get_previous_actor()
+	var target = get_target_node() # can be overridden if needed
 	var data = get_follow_parameters(
 		point_of_interest if point_of_interest else (
 			current_actor
@@ -310,8 +305,8 @@ func follow(current_transform, next_position):
 				)
 		),
 		current_transform,
-		target_node.get_global_transform().origin
-			if target_node and point_of_interest and target_node.get_instance_id() == point_of_interest.get_instance_id()
+		target.get_global_transform().origin
+			if target and point_of_interest and target.get_instance_id() == point_of_interest.get_instance_id()
 			else next_position
 	)
 	var d = data.get_distance()
@@ -319,13 +314,13 @@ func follow(current_transform, next_position):
 	
 	if not in_party \
 		and d > ALIGNMENT_RANGE \
-		and target_node \
+		and target \
 		and zero_rotation \
-		and is_arrived_to_boundary(target_node):
+		and is_arrived_to_boundary(target):
 		return data \
 			.clear_dir() \
 			.with_rest_state(true) \
-			.with_signal("arrived_to_boundary", [target_node])
+			.with_signal("arrived_to_boundary", [target])
 	elif not path.empty():
 		data.with_rest_state(false)
 		if d <= ALIGNMENT_RANGE:
@@ -337,14 +332,14 @@ func follow(current_transform, next_position):
 		data.with_rest_state(false)
 	else:
 		if in_party:
-			if not cutscene_manager.is_cutscene():
+			if not point_of_interest and not cutscene_manager.is_cutscene():
 				data.clear_rotation_angle()
 			return data.clear_dir().with_rest_state(zero_rotation)
-		elif was_moving and target_node and zero_rotation and d <= ALIGNMENT_RANGE:
+		elif was_moving and target and zero_rotation and d <= ALIGNMENT_RANGE:
 			return data \
 				.clear_dir() \
 				.with_rest_state(true) \
-				.with_signal("arrived_to", [target_node])
+				.with_signal("arrived_to", [target])
 	return data
 
 func update_navpath(pstart, pend):
@@ -432,6 +427,14 @@ func get_movement_data(is_player):
 	
 	return data
 
+func change_rest_state_to(rest_state_new):
+	if rest_state == rest_state_new:
+		return false
+	var rest_state_prev = rest_state
+	rest_state = rest_state_new
+	emit_signal("rest_state_changed", self, rest_state_prev, rest_state)
+	return true
+
 func update_state(data : PLDMovementData):
 	if not is_player_controlled():
 		angle_rad_y = 0
@@ -442,10 +445,7 @@ func update_state(data : PLDMovementData):
 			elif data.get_rotation_angle() < -ROTATION_ANGLE_MIN_RAD:
 				angle_rad_y = deg2rad(KEY_LOOK_SPEED_FACTOR * settings.get_sensitivity() * -1)
 	if data.has_rest_state(): 
-		var rest_state_new = data.get_rest_state()
-		if rest_state != rest_state_new:
-			rest_state = rest_state_new
-			emit_signal("rest_state_changed", self, rest_state, rest_state_new)
+		change_rest_state_to(data.get_rest_state())
 	data.emit_sgnl_if_exists(self)
 
 func _on_character_dead(player):

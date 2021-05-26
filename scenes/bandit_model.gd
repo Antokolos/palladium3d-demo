@@ -12,6 +12,8 @@ const BANDIT_CUTSCENE_HARP_INJURY = 7
 const TRANSITION_NORMAL = 0
 const TRANSITION_WITH_GUN = 1
 
+export var backpack_walk_with_gun_anim = ""
+
 onready var pistol = get_node("Bandit_armature/PistolAttachment/Position3D/beretta")
 
 func _ready():
@@ -24,18 +26,19 @@ func _ready():
 func attack(attack_anim_idx = -1):
 	var ammo_count = game_state.get_item_count(DB.TakableIds.BERETTA_AMMO)
 	if ammo_count <= 0:
-		return
+		return -1
 	var attack_cutscene_id = .attack(
 		attack_anim_idx if ammo_count > 1 else BANDIT_CUTSCENE_SHOOTS
 	)
 	if attack_cutscene_id > 0:
 		pistol.shoot()
-		var ad = 2 if attack_cutscene_id == BANDIT_CUTSCENE_SHOOTS_NEW else 1
-		game_state.remove(DB.TakableIds.BERETTA_AMMO, ad)
-		if ammo_count - ad <= 0:
-			remove_gun()
+	return attack_cutscene_id
 
 func restore_state():
+	var minotaur_labyrinth = game_state.get_room_enabler(DB.RoomIds.MINOTAUR_LABYRINTH)
+	if not minotaur_labyrinth:
+		remove_gun()
+		return
 	if conversation_manager.conversation_is_finished("136_What_is_that_noise") \
 		and game_state.get_item_count(DB.TakableIds.BERETTA_AMMO) > 0:
 		take_gun()
@@ -61,8 +64,8 @@ func take_gun():
 	if pistol.visible:
 		return
 	play_cutscene(BANDIT_CUTSCENE_GRABS_GUN)
-	$AnimationTree.set("parameters/LookTypeTransition/current", TRANSITION_WITH_GUN)
-	$AnimationTree.set("parameters/WalkTypeTransition/current", TRANSITION_WITH_GUN)
+	animation_tree.set("parameters/LookTypeTransition/current", TRANSITION_WITH_GUN)
+	animation_tree.set("parameters/WalkTypeTransition/current", TRANSITION_WITH_GUN)
 	var pt = $PistolTimer
 	pt.start()
 	yield(pt, "timeout")
@@ -71,6 +74,14 @@ func take_gun():
 func remove_gun():
 	if not pistol.visible:
 		return
-	$AnimationTree.set("parameters/LookTypeTransition/current", TRANSITION_NORMAL)
-	$AnimationTree.set("parameters/WalkTypeTransition/current", TRANSITION_NORMAL)
+	animation_tree.set("parameters/LookTypeTransition/current", TRANSITION_NORMAL)
+	animation_tree.set("parameters/WalkTypeTransition/current", TRANSITION_NORMAL)
 	pistol.visible = false
+
+func play_backpack_walk(is_crouching, is_sprinting):
+	var with_gun = (
+		animation_tree.get("parameters/WalkTypeTransition/current") == TRANSITION_WITH_GUN
+	)
+	if not with_gun or is_crouching or is_sprinting:
+		return .play_backpack_walk(is_crouching, is_sprinting)
+	change_backpack_anim_if_needed(backpack_walk_with_gun_anim)

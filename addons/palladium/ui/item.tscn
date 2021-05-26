@@ -2,10 +2,6 @@
 
 [ext_resource path="res://addons/palladium/ui/item.gd" type="Script" id=1]
 
-
-
-
-
 [sub_resource type="StyleBoxFlat" id=1]
 resource_local_to_scene = true
 bg_color = Color( 0, 0, 0, 0 )

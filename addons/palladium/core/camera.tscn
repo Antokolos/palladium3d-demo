@@ -22,13 +22,12 @@ far = 23.0
 script = ExtResource( 2 )
 
 [node name="culling_rays" type="Spatial" parent="."]
-editor/display_folded = true
 script = ExtResource( 3 )
 
 [node name="RayCast" type="RayCast" parent="culling_rays"]
 enabled = true
 cast_to = Vector3( 0, 0, -23 )
-collision_mask = 2
+collision_mask = 18
 
 [node name="Gun_Fire_Points" type="Spatial" parent="."]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.05 )

@@ -8,9 +8,9 @@ signal aggressive_changed(player_node, previous_state, new_state)
 signal morale_changed(player_node, previous_value, new_value)
 signal crouching_changed(player_node, previous_state, new_state)
 signal floor_collision_changed(player_node, previous_state, new_state)
-signal attack_started(player_node, target)
-signal attack_stopped(player_node, target)
-signal attack_finished(player_node, target, previous_target)
+signal attack_started(player_node, target, attack_anim_idx)
+signal attack_stopped(player_node, target, attack_anim_idx)
+signal attack_finished(player_node, target, previous_target, attack_anim_idx)
 signal stun_started(player_node, weapon)
 signal stun_finished(player_node)
 signal take_damage(player_node, fatal, hit_direction_node, hit_dir_vec)
@@ -47,11 +47,12 @@ onready var animation_player = $AnimationPlayer
 var vel = Vector3()
 
 var is_hidden = false
+var hideout_path : String = ""
 var is_patrolling = false setget set_patrolling
 var is_aggressive = false setget set_aggressive
 var is_crouching = false
 var is_sprinting = false
-var is_underwater = false
+var is_underwater = false  # is_underwater flag is not stored in the save file
 var is_air_pocket = false  # is_air_pocket flag is not stored in the save file
 var is_poisoned = false
 var intoxication : int = 0
@@ -63,6 +64,7 @@ var force_physics = false
 var force_no_physics = false
 var force_visibility = false
 var last_attack_target = null
+var last_attack_anim_idx = -1
 
 func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
@@ -115,28 +117,35 @@ func handle_attack():
 	attack_start(possible_target)
 
 func attack_start(possible_attack_target, attack_anim_idx = -1, with_anim = true, immediately = false):
-	if not character_nodes.is_attacking():
-		set_sprinting(false)
-		set_last_attack_target(possible_attack_target)
-		emit_signal("attack_started", self, possible_attack_target)
-		set_point_of_interest(possible_attack_target)
-		if with_anim and not get_model().is_attacking():
-			get_model().attack(attack_anim_idx)
-		character_nodes.attack_start(immediately)
+	if character_nodes.is_attacking():
+		return
+	set_sprinting(false)
+	last_attack_target = possible_attack_target
+	set_point_of_interest(possible_attack_target)
+	last_attack_anim_idx = attack_anim_idx
+	if with_anim and not get_model().is_attacking():
+		last_attack_anim_idx = get_model().attack(attack_anim_idx)
+	character_nodes.attack_start(immediately)
+	emit_signal("attack_started", self, possible_attack_target, last_attack_anim_idx)
 
 func stop_attack():
-	if is_attacking():
-		stop_cutscene()
-		character_nodes.stop_attack()
-		emit_signal("attack_stopped", self, last_attack_target)
-		clear_point_of_interest()
-		last_attack_target = null
+	if not is_attacking():
+		return
+	stop_cutscene()
+	character_nodes.stop_attack()
+	emit_signal("attack_stopped", self, last_attack_target, last_attack_anim_idx)
+	clear_point_of_interest()
+	clear_last_attack_data()
 
-func set_last_attack_target(last_attack_target):
-	self.last_attack_target = last_attack_target
+func clear_last_attack_data():
+	last_attack_target = null
+	last_attack_anim_idx = -1
 
-func get_last_attack_target():
-	return last_attack_target
+func get_last_attack_data():
+	return {
+		"target" : last_attack_target,
+		"anim_idx" : last_attack_anim_idx
+	}
 
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
@@ -274,7 +283,6 @@ func become_player():
 		player_model.set_simple_mode(false)
 		player.activate()
 	game_state.set_player_name_hint(get_name_hint())
-	game_state.set_underwater(self, is_underwater())
 	game_state.set_poisoned(self, is_poisoned(), get_intoxication())
 	activate()
 	emit_signal("player_changed", self, player)
@@ -297,27 +305,31 @@ func breathe_in():
 		sound_id = MEDIA.SoundId.MAN_BREATHE_IN_1 if randf() > 0.5 else MEDIA.SoundId.MAN_BREATHE_IN_2
 	MEDIA.play_sound(sound_id)
 
-func set_underwater(enable):
+func set_underwater(enable, and_emit_signal = true):
 	if is_underwater \
 		and not enable \
 		and need_breathe_in():
 		breathe_in()
 	is_underwater = enable
+	if and_emit_signal and is_player():
+		game_state.set_underwater(self, enable)
 	if not enable:
 		is_air_pocket = false
+	elif conversation_manager.conversation_is_in_progress():
+		conversation_manager.stop_conversation(game_state.get_player())
 	vel.y = -DIVE_SPEED if enable or vel.y <= 0.0 else BOB_UP_SPEED
 	character_nodes.set_underwater(enable)
+
+func _on_player_underwater(player, enable):
+	if player and not equals(player):
+		return
+	set_underwater(enable, false)
 
 func is_air_pocket():
 	return is_air_pocket
 
 func set_air_pocket(enable):
 	is_air_pocket = enable
-
-func _on_player_underwater(player, enable):
-	if player and not equals(player):
-		return
-	set_underwater(enable)
 
 func is_poisoned():
 	return is_poisoned
@@ -368,6 +380,10 @@ func _on_character_dead(player):
 	clear_poi_if_it_is(player)
 	._on_character_dead(player)
 
+func _on_character_dying(player):
+	invoke_physics_pass()
+	._on_character_dying(player)
+
 func activate():
 	.activate()
 	get_model().activate()
@@ -383,12 +399,14 @@ func is_visible_to_player():
 func is_hidden():
 	return is_hidden
 
-func set_hidden(enable):
+func set_hidden(enable, hideout_path_str : String = ""):
 	if is_hidden and not enable:
 		enable_collisions_and_interaction(true)
 		is_hidden = false
+		hideout_path = hideout_path_str
 	elif not is_hidden and enable:
 		is_hidden = true
+		hideout_path = hideout_path_str
 		enable_collisions_and_interaction(false)
 	else:
 		return
@@ -397,7 +415,16 @@ func set_hidden(enable):
 	if is_player:
 		var companions = game_state.get_companions()
 		for companion in companions:
-			companion.set_hidden(enable)
+			companion.set_hidden(enable, hideout_path_str)
+
+func get_hideout_path():
+	return hideout_path
+
+func has_hideout():
+	return hideout_path and not hideout_path.empty() and has_node(hideout_path)
+
+func get_hideout():
+	return get_node(hideout_path) if has_hideout() else null
 
 func is_patrolling():
 	return is_patrolling
@@ -680,7 +707,7 @@ func process_movement(delta, dir, characters):
 	var sc = get_slide_count()
 	var character_collisions = []
 	var nonchar_collision = null
-	var collides_floor = character_nodes.has_floor_collision()
+	var collides_floor = false
 	for i in range(0, sc):
 		var collision = get_slide_collision(i)
 		var has_char_collision = false
@@ -809,10 +836,16 @@ func set_has_floor_collision(fc):
 					continue
 				character.invoke_physics_pass()
 
-func do_process(delta, is_player):
-	var poi = get_point_of_interest()
+func change_rest_state_to(rest_state_new):
+	var was_changed = .change_rest_state_to(rest_state_new)
+	if was_changed:
+		# When the character started to move or stopped
+		invoke_physics_pass()
+	return was_changed
+
+func update_rays_to_characters(characters):
 	var player_is_crouching = false
-	var characters = game_state.get_characters()
+	var poi = get_point_of_interest()
 	for character in characters:
 		if character.is_player_controlled():
 			player_is_crouching = character.is_crouching()
@@ -820,9 +853,24 @@ func do_process(delta, is_player):
 			continue
 		if not update_ray_to_character(character):
 			add_ray_to_character(character)
-		if poi and has_obstacles_between(character):
+		var has_obstacles = has_obstacles_between(character)
+		if poi and has_obstacles:
 			if clear_poi_if_it_is(character):
 				poi = null
+		elif (
+			not poi
+			and not has_obstacles
+			and is_in_party()
+			and not is_player_controlled()
+			and not character.is_dead()
+			and character.is_aggressive()
+		):
+			set_point_of_interest(character)
+			poi = character
+	return { "poi" : poi, "player_is_crouching" : player_is_crouching }
+
+func do_process(delta, is_player):
+	var characters = game_state.get_characters()
 	var d = {
 		"is_moving" : false,
 		"is_rotating" : false,
@@ -848,10 +896,6 @@ func do_process(delta, is_player):
 	
 	if d.cannot_move:
 		reset_movement_and_rotation()
-		if not poi:
-			character_nodes.stop_walking_sound()
-			return d
-		model.rotate_head(0)
 	else:
 		var movement_data = get_movement_data(is_player)
 		update_state(movement_data)
@@ -861,13 +905,19 @@ func do_process(delta, is_player):
 		d.is_moving = has_movement(mpd.vel, has_floor_collision)
 		model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
 	var rpd = process_rotation(not d.is_moving and is_player)
+	var urd = update_rays_to_characters(characters)
+	if d.cannot_move:
+		if not urd.poi:
+			character_nodes.stop_walking_sound()
+			return d
+		model.rotate_head(0)
 	d.is_rotating = rpd.rotate_y or (rpd.has("rotate_x") and rpd.rotate_x)
 	if d.is_moving or rpd.rotate_y:
 		if d.is_moving:
 			is_air_pocket = false
 		if has_floor_collision:
 			character_nodes.play_walking_sound(is_sprinting)
-		else:
+		elif not character_nodes.has_floor_collision():
 			character_nodes.stop_walking_sound()
 	if has_floor_collision:
 		var low_ceiling = character_nodes.is_low_ceiling()
@@ -875,7 +925,7 @@ func do_process(delta, is_player):
 			sit_down()
 		elif not low_ceiling \
 			and is_crouching \
-			and not player_is_crouching \
+			and not urd.player_is_crouching \
 			and is_in_party():
 			stand_up()
 	else:

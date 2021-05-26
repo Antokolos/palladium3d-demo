@@ -37,6 +37,8 @@ onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullsc
 onready var invert_yaxis = settings_app.get_node("VBoxContainer/HInvertYAxis/InvertYAxis")
 onready var cutoff_enabled = settings_app.get_node("VBoxContainer/HCutoffEnabled/CutoffEnabled")
 onready var shader_cache_enabled = settings_app.get_node("VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled")
+onready var pause_on_joypad_disconnected_parent = settings_app.get_node("VBoxContainer/HPauseOnJoypadDisconnected")
+onready var pause_on_joypad_disconnected = pause_on_joypad_disconnected_parent.get_node("PauseOnJoypadDisconnected")
 onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
 onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolution")
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
@@ -90,6 +92,9 @@ func _ready():
 
 	shader_cache_enabled.pressed = settings.shader_cache_enabled
 	_on_ShaderCacheEnabled_pressed()
+
+	pause_on_joypad_disconnected.pressed = settings.pause_on_joy_disconnected
+	_on_PauseOnJoypadDisconnected_pressed()
 
 	sensitivity_coef_node.value = common_utils.log10(settings.sensitivity_coef)
 	_on_SensitivityCoef_value_changed(sensitivity_coef_node.value)
@@ -178,7 +183,9 @@ func _ready():
 
 func activate(mode):
 	visible = true
-	joypad_type_parent.visible = common_utils.has_joypads()
+	var has_joypads = common_utils.has_joypads()
+	joypad_type_parent.visible = has_joypads
+	pause_on_joypad_disconnected_parent.visible = has_joypads
 	if hud.is_menu_hud():
 		desktop_container_chat.visible = false
 		desktop_container_credits.visible = true
@@ -271,7 +278,6 @@ func _on_ControlsButton_pressed():
 	hide_everything()
 	controls_app.show()
 	controls_app.refresh()
-	home_button.grab_focus()
 
 func refresh_slot_captions(is_load, base_node):
 	var starting_slot = 0 if is_load else 1
@@ -412,6 +418,10 @@ func _on_CutoffEnabled_pressed():
 func _on_ShaderCacheEnabled_pressed():
 	var sce = shader_cache_enabled.is_pressed() if shader_cache_enabled else settings.shader_cache_enabled
 	settings.set_shader_cache_enabled(sce)
+
+func _on_PauseOnJoypadDisconnected_pressed():
+	var pjd = pause_on_joypad_disconnected.is_pressed() if pause_on_joypad_disconnected else settings.pause_on_joy_disconnected
+	settings.set_pause_on_joy_disconnected(pjd)
 
 func _on_Quality_item_selected(ID):
 	settings.set_quality(ID)

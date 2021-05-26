@@ -4,16 +4,10 @@
 [ext_resource path="res://addons/palladium/core/environment/door.gd" type="Script" id=2]
 [ext_resource path="res://addons/palladium/core/environment/door_sound.tscn" type="PackedScene" id=3]
 
-
-
-
-
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 4.21977, 3.31324, 0.529293 )
 
-[node name="door_demo" groups=[
+[node name="door_demo" index="0" groups=[
 "restorable_state",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -22,12 +16,12 @@ anim_player_path = "demo_door_Armature002/AnimationPlayer"
 anim_name_open = "demo_door_ArmatureAction.002"
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 17
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00352108, 3.47375, 0 )
 shape = SubResource( 1 )
 
 [node name="door_sound" parent="." index="2" instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0, 3.07793, 0 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3.07793, 0 )

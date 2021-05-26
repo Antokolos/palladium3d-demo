@@ -34,7 +34,8 @@ func do_init(is_loaded):
 		player_female.teleport(floor_demo_full.get_node("PositionApata"))
 		player_bandit.teleport(floor_demo_full.get_node("BanditSavePosition"))
 	else:
-		player.teleport($PositionPlayer)
+		if game_state.player_name_is(CHARS.PLAYER_NAME_HINT):
+			player.teleport($PositionPlayer)
 		if player_female.is_in_party():
 			player_female.teleport($PositionCompanion)
 			player_bandit.teleport($PositionOut)

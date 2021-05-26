@@ -7,6 +7,7 @@ export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export var count = 1
 # If exclusive == true, then this item should not be present at the same time as the another items on the same pedestal or in the same container
 export var exclusive = true
+export(int) var max_count = 0
 
 onready var initially_present = visible
 # If volatile_path is true then the item path should not be saved in game_state.
@@ -27,6 +28,9 @@ func connect_signals(target):
 	connect("use_takable", target, "use_takable")
 
 func use(player_node, camera_node):
+	if max_count > 0 and game_state.get_item_count(takable_id) > max_count:
+		game_state.get_hud().queue_popup_message("MESSAGE_TOO_MANY_ITEMS", [ tr(DB.get_items_name(takable_id)) ])
+		return false
 	var was_taken = is_present()
 	game_state.take(takable_id, count, get_path())
 	emit_signal("use_takable", player_node, self, get_parent(), was_taken)

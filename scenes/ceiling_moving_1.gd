@@ -41,20 +41,20 @@ func activate_partial():
 func activate(and_change_state = true, is_restoring = false):
 	.activate(and_change_state, is_restoring)
 	var speed = get_ceiling_speed()
-	get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, speed)
+	get_node("ceiling_armat003/AnimationPlayer").play("ceiling_action.003", -1, speed)
 	get_node("AnimationPlayer").play("CollisionAnim", -1, speed)
 	ceiling_sound_play()
 
 func pause(and_change_state = true, is_restoring = false):
 	.pause(and_change_state, is_restoring)
-	get_node("ceiling_armat000/AnimationPlayer").stop(false)
+	get_node("ceiling_armat003/AnimationPlayer").stop(false)
 	get_node("AnimationPlayer").stop(false)
 	ceiling_sound_stop()
 
 func deactivate_forever(and_change_state = true, is_restoring = false):
 	if not is_final_destination():
 		var speed = get_ceiling_speed()
-		get_node("ceiling_armat000/AnimationPlayer").play("ceiling_action.000", -1, -speed, true)
+		get_node("ceiling_armat003/AnimationPlayer").play("ceiling_action.003", -1, -speed, true)
 		get_node("AnimationPlayer").play("CollisionAnim", -1, -speed, true)
 		ceiling_sound_play()
 	.deactivate_forever(and_change_state, is_restoring)
@@ -64,7 +64,7 @@ func restore_state():
 		activate(false)
 	elif is_paused():
 		activate(false)
-		get_node("ceiling_armat000/AnimationPlayer").seek(20, true)
+		get_node("ceiling_armat003/AnimationPlayer").seek(20, true)
 		get_node("AnimationPlayer").seek(20, true)
 		pause(false)
 	else:

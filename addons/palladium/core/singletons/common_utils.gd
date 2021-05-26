@@ -1,9 +1,14 @@
 extends Node
 
+signal mouse_mode_changed(mouse_mode)
+
 const APP_STEAM_ID = 1137270
 onready var _steam = Engine.get_singleton("Steam") if Engine.has_singleton("Steam") else null
 
+var mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
 	if not _steam:
 		return
@@ -17,25 +22,43 @@ func has_joypads():
 
 func _on_joy_connection_changed(device_id, is_connected):
 	if not is_connected:
+		if not settings.pause_on_joy_disconnected:
+			return
 		if not get_tree().paused:
 			# When the controller is unplugged during gameplay, automatically pause the game
 			toggle_pause_menu()
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		var viewport = game_state.get_viewport()
-		viewport.warp_mouse(Vector2(OS.window_size.x / 2, OS.window_size.y / 2))
+		var mouse_cursor = game_state.get_hud().get_mouse_cursor()
+		if mouse_cursor:
+			mouse_cursor.warp_mouse_in_center()
+		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func set_mouse_mode(mode):
+	mouse_mode = mode
+	match mode:
+		Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		_:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	emit_signal("mouse_mode_changed", mouse_mode)
+
+func is_mouse_captured():
+	return mouse_mode == Input.MOUSE_MODE_CAPTURED
+
+func is_mouse_visible():
+	return mouse_mode == Input.MOUSE_MODE_VISIBLE
 
 func show_mouse_cursor_if_needed(show, force = false):
 	if show:
-		Input.set_mouse_mode(
+		set_mouse_mode(
 			Input.MOUSE_MODE_VISIBLE
 				if force or not has_joypads()
 				else Input.MOUSE_MODE_CAPTURED
 		)
 	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func show_mouse_cursor_if_needed_in_game(hud):
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if hud.is_menu_hud() else Input.MOUSE_MODE_CAPTURED)
+	set_mouse_mode(Input.MOUSE_MODE_VISIBLE if hud.is_menu_hud() else Input.MOUSE_MODE_CAPTURED)
 
 func toggle_pause_menu():
 	var ev = InputEventAction.new()

@@ -14,6 +14,5 @@ Exactly. Only you and I. Aren't you scared to be here with me alone?	# actor:pla
 No, you have kind eyes, and your face tells me you are a good person, even though you look serious. That's probably because you don't smile much. You need to smile more often.	# actor:female # voiceover:410_no_you_have_kind.ogg
 You're doing it enough for both of us, so I don't have to. I can bring you to Crete if you want.	# actor:player # voiceover:352_you_are_doing_it_enough.ogg
 Really? Cool, I'd be very greatf…	# actor:female # voiceover:411_really_cool.ogg
-*	[Go to the shore and wait for me by the boat.]
-	Go to the shore and wait for me by the boat.	# actor:player # voiceover:432_go_to_the_shore.ogg
-	~ party_female = false
+Go to the shore and wait for me by the boat.	# actor:player # voiceover:432_go_to_the_shore.ogg
+~ party_female = false

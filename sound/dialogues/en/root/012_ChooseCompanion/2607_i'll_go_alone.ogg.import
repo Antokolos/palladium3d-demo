@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2607_i'll_go_alone.ogg-7b70163c29daf6369fa38b58e8dacab8.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/012_ChooseCompanion/2607_i'll_go_alone.ogg"
+dest_files=[ "res://.import/2607_i'll_go_alone.ogg-7b70163c29daf6369fa38b58e8dacab8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

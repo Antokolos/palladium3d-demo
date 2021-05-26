@@ -30,9 +30,9 @@ var x_dir = Vector3(4, 0, 0)
 var state = RatState.REST
 
 func use(player_node, camera_node):
-	PREFS.set_achievement("RAT_TERROR")
-	MEDIA.play_sound(MEDIA.SoundId.RAT_SQUEAK)
-	return .use(player_node, camera_node)
+	if .use(player_node, camera_node):
+		PREFS.set_achievement("RAT_TERROR")
+		MEDIA.play_sound(MEDIA.SoundId.RAT_SQUEAK)
 
 func can_move_without_collision(motion):
 	# This condition WAS CORRECTED after switching to 3.1, see here:

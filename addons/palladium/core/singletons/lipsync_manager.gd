@@ -161,6 +161,12 @@ func _on_PreDelayTimer_timeout():
 	if not audio_stream_player.stream:
 		return
 	audio_stream_player.play()
-	if not current_speaker or not current_phonetic:
+	if not current_speaker:
 		return
-	current_speaker.get_model().speak_text(current_phonetic, audio_stream_player.stream.get_length())
+	var model = current_speaker.get_model()
+	if not model:
+		return
+	if current_phonetic:
+		model.speak_text(current_phonetic, audio_stream_player.stream.get_length())
+	else:
+		model.stop_speaking() # because otherwise closed lips can interfere with some animation, e.g. yelling animation with opened mouth

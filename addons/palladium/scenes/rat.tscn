@@ -12,8 +12,8 @@ extents = Vector3( 0.2, 0.2, 0.075 )
 
 [node name="rat" type="RigidBody" groups=[
 "moving",
-"restorable_state",
 "rats",
+"restorable_state",
 ]]
 collision_layer = 8
 collision_mask = 8194
@@ -24,6 +24,7 @@ axis_lock_angular_z = true
 script = ExtResource( 1 )
 use_distance = 4.1
 takable_id = 1
+max_count = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )

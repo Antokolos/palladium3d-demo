@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2597_when_pandora_opened.ogg-b33a3f3c9be6a8f60b823beeddd6f7f0.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/009_ApataTrap/2597_when_pandora_opened.ogg"
+dest_files=[ "res://.import/2597_when_pandora_opened.ogg-b33a3f3c9be6a8f60b823beeddd6f7f0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -104,20 +104,20 @@ func _on_character_dead(player):
 	if equals(player):
 		game_state.game_over()
 
-func _on_enemy_attack_started(player_node, target):
+func _on_enemy_attack_started(player_node, target, attack_anim_idx):
 	if is_player_controlled() or not is_in_party():
 		return
-	set_point_of_interest(player_node)
+	#set_point_of_interest(player_node) -- should be already set
 
 func _on_enemy_attack_stopped(player_node, target):
 	if is_player_controlled() or not is_in_party():
 		return
-	clear_poi_if_it_is(player_node)
+	#clear_poi_if_it_is(player_node) -- better not to do it to minimize rotations
 
-func _on_enemy_attack_finished(player_node, target, previous_target):
+func _on_enemy_attack_finished(player_node, target, previous_target, attack_anim_idx):
 	if is_player_controlled() or not is_in_party():
 		return
-	clear_poi_if_it_is(player_node)
+	#clear_poi_if_it_is(player_node) -- better not to do it to minimize rotations
 
 func is_joypad_look(event):
 	if not event is InputEventJoypadMotion:
@@ -143,7 +143,10 @@ func _input(event):
 		elif event.is_action_pressed("dialogue_next"):
 			conversation_manager.proceed_story_immediately(self)
 	if is_in_party() and not cutscene_manager.is_cutscene():
-		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if (
+			common_utils.is_mouse_captured()
+			and event is InputEventMouseMotion
+		):
 			angle_rad_x = deg2rad(event.relative.y * settings.get_sensitivity() * settings.get_yaxis_coeff())
 			angle_rad_y = deg2rad(event.relative.x * settings.get_sensitivity() * -1)
 			angle_x_reset = true

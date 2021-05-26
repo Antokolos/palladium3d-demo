@@ -17,7 +17,7 @@ func use(player_node, camera_node):
 	if is_conversation_finished_or_not_applicable(player_node) and all_party_members_can_hide():
 		emit_signal("use_hideout", player_node, self)
 		cutscene_manager.borrow_camera(player_node, get_node("camera_holder"), true)
-		player_node.set_hidden(true)
+		player_node.set_hidden(true, get_path())
 		hidden_player = player_node
 
 func all_party_members_can_hide():

@@ -6,6 +6,7 @@ const MESSAGE_TIMEOUT_MAX_S = 9
 const ALPHA_THRESHOLD = 0.01
 const ALPHA_DECREASE_FACTOR = 0.9
 const MAX_VISIBLE_ITEMS = 6
+const MAX_QUICK_ITEMS = 6
 const COLOR_WHITE = Color(1.0, 1.0, 1.0, 1.0)
 const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
@@ -44,6 +45,8 @@ onready var health_progress = health_bar.get_node("Progress")
 onready var oxygen_bar = info_panel.get_node("MainPlayer/Stats/OxygenBar")
 onready var oxygen_label = oxygen_bar.get_node("Label")
 onready var oxygen_progress = oxygen_bar.get_node("Progress")
+
+onready var mouse_cursor = get_node("mouse_cursor")
 
 var active_item_idx = 0
 var active_quick_item_idx = 0
@@ -139,7 +142,7 @@ func clear_popup_message():
 	return not message_labels[0].visible
 
 func on_health_changed(name_hint, health_current, health_max):
-	health_label.text = "%d/%d" % [health_current, health_max]
+	health_label.text = "%3d/%3d" % [health_current, health_max]
 	if health_current < health_progress.value and $BloodSplatTimer.is_stopped():
 		$BloodSplat.visible = true
 		$BloodSplat.set_modulate(COLOR_BLOOD)
@@ -149,7 +152,7 @@ func on_health_changed(name_hint, health_current, health_max):
 
 func on_oxygen_changed(name_hint, oxygen_current, oxygen_max):
 	oxygen_bar.visible = oxygen_current < oxygen_max
-	oxygen_label.text = "%d/%d" % [oxygen_current, oxygen_max]
+	oxygen_label.text = "%3d/%3d" % [oxygen_current, oxygen_max]
 	oxygen_progress.value = oxygen_current
 	oxygen_progress.max_value = oxygen_max
 
@@ -229,7 +232,7 @@ func synchronize_items():
 	for pos in range(0, MAX_VISIBLE_ITEMS):
 		insert_ui_inventory_item(pos)
 	cleanup_panel(quick_items_panel)
-	for pos in range(0, DB.MAX_QUICK_ITEMS):
+	for pos in range(0, MAX_QUICK_ITEMS):
 		insert_ui_quick_item(pos)
 
 func insert_ui_inventory_item(pos):
@@ -298,6 +301,36 @@ func _on_camera_borrowed(player_node, cutscene_node, camera, conversation_name, 
 func _on_camera_restored(player_node, cutscene_node, camera, conversation_name, target):
 	select_active_quick_item() # This will also call camera.activate_item_use() if needed
 
+func _on_preview_opened(item):
+	main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
+	var label_close_node = actions_panel.get_node("ActionsContainer/HintLabelClose")
+	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
+	var custom_actions_node = actions_panel.get_node("ActionsContainer/CustomActions")
+	for ch in custom_actions_node.get_children():
+		ch.queue_free()
+	var custom_actions = game_state.get_custom_actions(item)
+	for act in custom_actions:
+		if not DB.can_execute_custom_action(item, act):
+			continue
+		var ch = label_close_node.duplicate(0)
+		ch.text = common_utils.get_input_control(act) + tr(DB.get_item_name(item.item_id) + "_" + act)
+		custom_actions_node.add_child(ch)
+	inventory.visible = false
+	#dimmer.visible = true
+	pause_game(true, false)
+	show_game_ui(false)
+	actions_panel.show()
+
+func _on_preview_closed(item):
+	actions_panel.hide()
+	show_game_ui(true)
+	if game_state.get_quick_items_count() > 1:
+		queue_popup_message("MESSAGE_CONTROLS_ITEMS", [common_utils.get_input_control("active_item_next", false), common_utils.get_input_control("active_item_back", false)])
+		if not common_utils.has_joypads():
+			queue_popup_message("MESSAGE_CONTROLS_ITEMS_KEYS", [common_utils.get_input_control("active_item_1", false), common_utils.get_input_control("active_item_6", false)])
+	select_active_quick_item() # This will also call camera.activate_item_use() if needed
+	pause_game(false, false)
+
 func remove_ui_inventory_item(item_id, count):
 	var ui_items = inventory_panel.get_children()
 	var idx = 0
@@ -345,7 +378,7 @@ func is_valid_index(item_idx):
 	return item_idx >= 0 and item_idx < MAX_VISIBLE_ITEMS and first_item_idx + item_idx < game_state.inventory.size()
 
 func is_valid_quick_index(item_idx):
-	return item_idx >= 0 and item_idx < DB.MAX_QUICK_ITEMS
+	return item_idx >= 0 and item_idx < MAX_QUICK_ITEMS
 
 func select_active_item():
 	var items = inventory_panel.get_children()
@@ -355,7 +388,7 @@ func select_active_item():
 	for item in items:
 		if items[idx].item_id and items[idx].item_id != DB.TakableIds.NONE:
 			var label_key = items[idx].get_node("ItemBox/LabelKey")
-			label_key.text = str(idx + 1)
+			label_key.text = common_utils.get_input_control("active_item_%d" % (idx + 1), false)
 			if idx == active_item_idx:
 				items[idx].set_selected(true)
 				label_key.set("custom_colors/font_color", Color(1, 0, 0))
@@ -390,8 +423,15 @@ func select_active_quick_item():
 	if active_quick_item_idx < items.size():
 		activate_item_use(items[active_quick_item_idx])
 	for item in items:
+		var label_key = items[idx].get_node("ItemBox/LabelKey")
+		label_key.text = common_utils.get_input_control("active_item_%d" % (idx + 1), false)
 		var is_active = idx == active_quick_item_idx
-		items[idx].set_selected(is_active)
+		if is_active:
+			label_key.set("custom_colors/font_color", Color(1, 0, 0))
+			items[idx].set_selected(true)
+		else:
+			label_key.set("custom_colors/font_color", Color(1, 1, 1))
+			items[idx].set_selected(false)
 		if is_active and (not inventory.is_visible_in_tree() or not is_valid_index(active_item_idx)):
 			info_label.text = tr(DB.get_item_name(items[idx].item_id)) if items[idx].item_id and items[idx].item_id != DB.TakableIds.NONE else ""
 		idx = idx + 1
@@ -411,6 +451,9 @@ func get_active_item():
 	if is_valid_quick_index(active_quick_item_idx) and quick_items_panel.get_child(active_quick_item_idx).item_id:
 		return quick_items_panel.get_child(active_quick_item_idx)
 	return null
+
+func get_mouse_cursor():
+	return mouse_cursor
 
 func update_hud():
 	synchronize_items()
