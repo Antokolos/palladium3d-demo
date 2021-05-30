@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/166-1_a_ty_chego.ogg-c713609b17485b989548d0dabe5e5f34.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/ru/root/001_Boat/166-1_a_ty_chego.ogg"
+dest_files=[ "res://.import/166-1_a_ty_chego.ogg-c713609b17485b989548d0dabe5e5f34.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

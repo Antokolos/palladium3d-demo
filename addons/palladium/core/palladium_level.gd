@@ -17,6 +17,7 @@ func _ready():
 	if not is_loadable:
 		game_state.restore_states()
 		do_init(false)
+		game_state.set_level_ready(true)
 		return
 	var is_loaded = game_state.finish_load()
 	do_init(is_loaded)

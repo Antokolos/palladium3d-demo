@@ -204,6 +204,7 @@ func use_weapon(item):
 			character.inc_stuns_count()
 			common_utils.set_pause_scene(character, true)
 			character.emit_signal("stun_started", character, item)
+			character.clear_target_node()
 			stun_timer.start(weapon_data.stun_duration)
 		else:
 			game_state.get_hud().queue_popup_message("MESSAGE_NOTHING_HAPPENS")

@@ -104,6 +104,10 @@ func bind_external_functions(story):
 	story.bind_external_function("is_final_destination", game_state, "_is_final_destination")
 	story.bind_external_function("is_actual", game_state, "_is_actual")
 	story.bind_external_function("conversation_is_not_finished", conversation_manager, "conversation_is_not_finished")
+	story.bind_external_function("meeting_is_finished", conversation_manager, "meeting_is_finished")
+	story.bind_external_function("meeting_is_finished_exact", conversation_manager, "meeting_is_finished_exact")
+	story.bind_external_function("meeting_is_not_finished", conversation_manager, "meeting_is_not_finished")
+	story.bind_external_function("meeting_is_not_finished_exact", conversation_manager, "meeting_is_not_finished_exact")
 
 func load_story_from_file(path : String): # Story
 	var text : String = ""

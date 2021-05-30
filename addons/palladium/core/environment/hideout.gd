@@ -44,6 +44,11 @@ func get_usage_code(player_node):
 		return "ACTION_HIDE" if all_party_members_can_hide() else ""
 	return "ACTION_DISCUSS"
 
+func add_highlight(player_node):
+	if not get_hidden_player():
+		return .add_highlight(player_node)
+	return .add_highlight(player_node) + ", " + tr("MESSAGE_CONTROLS_FLASHLIGHT" % common_utils.get_input_control("flashlight", false))
+
 func _input(event):
 	if Engine.editor_hint:
 		return

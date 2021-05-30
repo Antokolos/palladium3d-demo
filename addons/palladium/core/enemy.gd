@@ -3,7 +3,7 @@ class_name PLDEnemy
 
 const TOO_FAR_RANGE = 10
 const AGGRESSION_RANGE = 12
-const STOP_CHASING_RANGE = 14
+const STOP_CHASING_RANGE = 20
 
 export var max_hits = 0
 var hits = 0
@@ -92,9 +92,12 @@ func set_states_for_character(character):
 	var is_aggressive = is_aggressive()
 	if is_aggressive and (dtp > TOO_FAR_RANGE or character.is_sprinting()):
 		set_sprinting(true)
-	if not is_aggressive \
-		and dtp < AGGRESSION_RANGE \
-		and not has_obstacles_between(character):
+	var has_obstacles = has_obstacles_between(character)
+	if (
+		not is_aggressive
+		and dtp < AGGRESSION_RANGE
+		and not has_obstacles
+	):
 		set_aggressive(true)
 		set_target_node(
 			character.get_hideout()
@@ -102,7 +105,14 @@ func set_states_for_character(character):
 				else character
 		)
 		set_sprinting(true)
-	elif is_aggressive and dtp > STOP_CHASING_RANGE:
+	elif (
+		is_aggressive
+		and dtp > STOP_CHASING_RANGE
+		and has_obstacles
+	):
+		var target = get_target_node()
+		if target and not target.get_parent() is PLDPatrolArea:
+			clear_target_node()
 		set_aggressive(false)
 		set_sprinting(false)
 

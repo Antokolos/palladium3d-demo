@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/palladium/env_opt.tres" type="Environment" id=1]
 [ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://addons/palladium/core/item_use.gd" type="Script" id=7]
 [ext_resource path="res://sound/environment/flashlight_on.ogg" type="AudioStream" id=8]
 [ext_resource path="res://sound/environment/flashlight_off.ogg" type="AudioStream" id=9]
+[ext_resource path="res://addons/palladium/core/separated_viewport.gd" type="Script" id=10]
+[ext_resource path="res://addons/palladium/ui/viewport.gd" type="Script" id=11]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.05, 0.05, 0.05 )
@@ -68,9 +70,10 @@ visible = false
 
 [node name="Flashlight" type="SpotLight" parent="Flashlight"]
 transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 0, 0, 0 )
+layers = 33
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.42
-light_cull_mask = 4293919745
+light_cull_mask = 4293919777
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 spot_range = 18.0
@@ -80,9 +83,10 @@ spot_angle_attenuation = 2.07053
 
 [node name="OmniLight" type="OmniLight" parent="Flashlight"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+layers = 33
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.42
-light_cull_mask = 4293919745
+light_cull_mask = 4293919777
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 omni_range = 1.5
@@ -93,9 +97,10 @@ visible = false
 
 [node name="Flashlight" type="SpotLight" parent="CutsceneFlashlight"]
 transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 0, 0, 0 )
+layers = 33
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.42
-light_cull_mask = 4293919745
+light_cull_mask = 4293919777
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 spot_range = 18.0
@@ -105,9 +110,10 @@ spot_angle_attenuation = 2.07053
 
 [node name="OmniLight" type="OmniLight" parent="CutsceneFlashlight"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+layers = 33
 light_color = Color( 1, 0.913725, 0.768627, 1 )
 light_energy = 0.42
-light_cull_mask = 4293918721
+light_cull_mask = 4293919777
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.3
 omni_range = 1.5
@@ -119,3 +125,37 @@ bus = "Sound"
 [node name="AudioStreamFlashlightOff" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 bus = "Sound"
+
+[node name="separated_viewport" type="ViewportContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = ExtResource( 10 )
+
+[node name="dimmer" type="ColorRect" parent="separated_viewport"]
+visible = false
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.141176, 0.141176, 0.141176, 0.25098 )
+
+[node name="Viewport" type="Viewport" parent="separated_viewport"]
+size = Vector2( 1920, 1080 )
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+render_target_update_mode = 0
+gui_disable_input = true
+script = ExtResource( 11 )
+
+[node name="Camera" type="Camera" parent="separated_viewport/Viewport"]
+cull_mask = 32
+current = true
+fov = 55.0
+far = 5.0

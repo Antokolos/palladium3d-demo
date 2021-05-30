@@ -129,8 +129,7 @@ func _input(event):
 	if not is_player() or not is_activated():
 		return
 	var hud = game_state.get_hud()
-	var conversation = hud.conversation
-	if conversation.is_visible_in_tree():
+	if conversation_manager.conversation_is_in_progress():
 		if story_node.can_choose():
 			if event.is_action_pressed("dialogue_option_1"):
 				conversation_manager.story_choose(self, 0)

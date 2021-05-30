@@ -5,8 +5,9 @@
 [node name="torch_light" type="OmniLight" groups=[
 "light_sources",
 ]]
+layers = 33
 light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
-light_cull_mask = 4293920771
+light_cull_mask = 4293920803
 shadow_enabled = true
 shadow_color = Color( 0.639216, 0.639216, 0.639216, 1 )
 shadow_bias = 0.1

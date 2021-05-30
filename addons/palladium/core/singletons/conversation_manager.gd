@@ -47,7 +47,7 @@ func discard_all_conversations(player):
 	pending_conversation_timer.stop()
 	stop_conversation(player)
 
-func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false, exclusive = false, area_to_check : Area = null):
+func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = false, exclusive = false, area_to_check : Area = null, pending_delay = 2.0):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
@@ -67,7 +67,8 @@ func start_area_cutscene(conversation_name, cutscene_node = null, repeatable = f
 					"is_cutscene" : true,
 					"cutscene_node" : cutscene_node,
 					"repeatable" : repeatable,
-					"area_to_check" : area_to_check
+					"area_to_check" : area_to_check,
+					"pending_delay" : pending_delay
 				}
 			)
 			return
@@ -85,7 +86,7 @@ func enable_conversation(conversation_name, enable):
 	var cp_story = get_story_path(conversation_name)
 	story_node.enable_conversation(cp_story, enable)
 
-func start_area_conversation(conversation_name, repeatable = false, exclusive = false, area_to_check : Area = null):
+func start_area_conversation(conversation_name, repeatable = false, exclusive = false, area_to_check : Area = null, pending_delay = 2.0):
 	var player = game_state.get_player()
 	if conversation_is_in_progress():
 		if conversation_is_in_progress(conversation_name):
@@ -105,7 +106,8 @@ func start_area_conversation(conversation_name, repeatable = false, exclusive = 
 					"is_cutscene" : false,
 					"cutscene_node" : null,
 					"repeatable" : repeatable,
-					"area_to_check" : area_to_check
+					"area_to_check" : area_to_check,
+					"pending_delay" : pending_delay
 				}
 			)
 			return false
@@ -117,11 +119,12 @@ func start_area_conversation(conversation_name, repeatable = false, exclusive = 
 func start_pending_conversation_if_any():
 	if pending_area_conversations.empty():
 		return
-	pending_conversation_timer.start()
-	yield(pending_conversation_timer, "timeout")
 	var c = pending_area_conversations.pop_front()
 	if not c:
 		return
+	if c.pending_delay > 0.0:
+		pending_conversation_timer.start(c.pending_delay)
+		yield(pending_conversation_timer, "timeout")
 	if c.repeatable or conversation_is_not_finished(c.conversation_name):
 		start_conversation(
 			c.player,
@@ -187,14 +190,17 @@ func meeting_is_finished(character1_name_hint, character2_name_hint):
 func meeting_is_not_finished(character1_name_hint, character2_name_hint):
 	return not meeting_is_finished(character1_name_hint, character2_name_hint)
 
+func meeting_is_not_finished_exact(character1_name_hint, character2_name_hint):
+	return not meeting_is_finished_exact(character1_name_hint, character2_name_hint)
+
 func conversation_is_finished(conversation_name, target_name_hint = null):
 	return not conversation_is_not_finished(conversation_name, target_name_hint)
 
 func conversation_is_not_finished(conversation_name, target_name_hint = null):
 	return check_story_not_finished(conversation_name, target_name_hint)
 
-func conversation_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
-	return check_story_result_was_achieved(conversation_name, target_name_hint, result)
+func conversation_result_was_achieved(conversation_name, result = 0, target_name_hint = null):
+	return check_story_result_was_achieved(conversation_name, result, target_name_hint)
 
 func get_story_path(conversation_name, target_name_hint = null):
 	var cp = (("%s/" % target_name_hint) if target_name_hint else "") + "%s.ink.json" % conversation_name
@@ -216,7 +222,7 @@ func check_story_not_finished(conversation_name, target_name_hint = null):
 	var cp_story = get_story_path(conversation_name, target_name_hint)
 	return story_node.check_story_not_finished(cp_story)
 
-func check_story_result_was_achieved(conversation_name, target_name_hint = null, result = 0):
+func check_story_result_was_achieved(conversation_name, result = 0, target_name_hint = null):
 	var cp_story = get_story_path(conversation_name, target_name_hint)
 	return story_node.check_story_result_was_achieved(cp_story, result)
 

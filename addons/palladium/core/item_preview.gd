@@ -25,6 +25,13 @@ func vmin(vec):
 func coord_div(vec1, vec2):
 	return Vector3(vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z)
 
+func toggle_meshes(root, enable):
+	for m in root.get_children():
+		if m is MeshInstance:
+			m.set_layer_mask_bit(5, enable)
+		else:
+			toggle_meshes(m, enable)
+
 func is_opened():
 	return item_holder_node.get_child_count() > 0
 
@@ -36,6 +43,7 @@ func open_preview(item):
 	for ch in item_holder_node.get_children():
 		ch.queue_free()
 	common_utils.shadow_casting_enable(inst, false)
+	toggle_meshes(inst, true)
 	item_holder_node.add_child(inst)
 	var aabb = item.get_aabb(inst)
 	var vmcd = vmin(coord_div(MAX_SIZE, aabb.size))
@@ -95,5 +103,6 @@ func _process(delta):
 
 func close_preview():
 	for ch in item_holder_node.get_children():
+		toggle_meshes(ch, false)
 		ch.queue_free()
 	emit_signal("preview_closed", item)

@@ -21,10 +21,11 @@ onready var info_label = main_hud.get_node("HBoxInfo/InfoLabel")
 onready var inventory = get_node("VBoxContainer/Inventory")
 onready var inventory_panel = inventory.get_node("VBoxContainer/InventoryContainer")
 onready var actions_panel = get_node("VBoxContainer/ActionsPanel")
+onready var messages_container = get_node("HBoxMessages/VBoxContainer")
 onready var message_labels = [
-	get_node("HBoxMessages/VBoxContainer/Label"),
-	get_node("HBoxMessages/VBoxContainer/Label2"),
-	get_node("HBoxMessages/VBoxContainer/Label3")
+	messages_container.get_node("Label"),
+	messages_container.get_node("Label2"),
+	messages_container.get_node("Label3")
 ]
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
@@ -100,6 +101,10 @@ func queue_popup_message(template, args = [], fade = false, timeout_max = MESSAG
 
 func process_popup_messages(delta):
 	if popup_message_queue.empty():
+		return
+	var is_in_conversation = conversation_manager.conversation_is_in_progress()
+	messages_container.visible = not is_in_conversation
+	if is_in_conversation:
 		return
 	for i in range(0, popup_message_queue.size()):
 		var message = popup_message_queue[i]
@@ -302,6 +307,7 @@ func _on_camera_restored(player_node, cutscene_node, camera, conversation_name, 
 	select_active_quick_item() # This will also call camera.activate_item_use() if needed
 
 func _on_preview_opened(item):
+	messages_container.visible = false
 	main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 	var label_close_node = actions_panel.get_node("ActionsContainer/HintLabelClose")
 	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
@@ -322,6 +328,7 @@ func _on_preview_opened(item):
 	actions_panel.show()
 
 func _on_preview_closed(item):
+	messages_container.visible = true
 	actions_panel.hide()
 	show_game_ui(true)
 	if game_state.get_quick_items_count() > 1:

@@ -146,6 +146,7 @@
 "MESSAGE_FULL_HEALTH","Your health is full","Вы полностью здоровы"
 "MESSAGE_OUT_OF_AMMO","Out of ammo","Нет патронов"
 "MESSAGE_TOO_MANY_ITEMS","You pockets are already full of %s","У вас уже максимальное количество %s"
+"MESSAGE_CLIMB_HIGHER","It's inconvenient to hit from here, you have to climb higher","Неудобно бить отсюда, надо забраться повыше"
 "TEXT_READY","Ready","Готов"
 "SETTINGS_TABLET_ORIENTATION","Tablet orientation","Ориентация планшета"
 "SETTINGS_VSYNC","Vsync","Vsync"

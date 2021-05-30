@@ -48,8 +48,7 @@ func restore_state():
 func _on_conversation_finished(player, conversation_name, target, initiator, last_result):
 	match conversation_name:
 		"136_What_is_that_noise":
-			if not game_state.has_item(DB.TakableIds.BERETTA_AMMO):
-				game_state.take(DB.TakableIds.BERETTA_AMMO, 10)
+			game_state.take(DB.TakableIds.BERETTA_AMMO, 10)
 			take_gun()
 
 func _on_player_entered_room(room_id):

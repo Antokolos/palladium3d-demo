@@ -257,7 +257,7 @@ func _on_AreaMuses_body_entered(body):
 
 func _on_AreaApataDone_body_entered(body):
 	if body.is_in_group("party") and body.is_player():
-		conversation_manager.start_area_conversation("011_Hermes")
+		conversation_manager.start_area_conversation("011_Hermes", false, false, null, 0.0)
 
 func _on_IgnitionArea_body_entered(body):
 	var player = game_state.get_player()

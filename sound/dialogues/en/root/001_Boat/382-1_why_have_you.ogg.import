@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/382-1_why_have_you.ogg-f5bb1b93ce472a4b0543f0e1a97b7706.oggstr"
+
+[deps]
+
+source_file="res://sound/dialogues/en/root/001_Boat/382-1_why_have_you.ogg"
+dest_files=[ "res://.import/382-1_why_have_you.ogg-f5bb1b93ce472a4b0543f0e1a97b7706.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

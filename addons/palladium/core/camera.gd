@@ -16,6 +16,8 @@ onready var shader_cache = get_node("viewpoint/shader_cache") if has_node("viewp
 onready var item_preview = get_node("viewpoint/item_preview") if has_node("viewpoint/item_preview") else null
 onready var item_use = get_node("viewpoint/item_use") if has_node("viewpoint/item_use") else null
 
+onready var separated_viewport = get_node("separated_viewport") if has_node("separated_viewport") else null
+
 func _ready():
 	change_quality(settings.quality)
 	settings.connect("quality_changed", self, "change_quality")
@@ -53,6 +55,8 @@ func change_quality(quality):
 	match quality:
 		settings.QUALITY_NORM:
 			self.environment = env_norm
+			if separated_viewport:
+				separated_viewport.set_camera_environment(env_norm)
 			#get_tree().call_group("lightmaps", "enable", false)
 			#game_state.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_normal")
@@ -65,6 +69,8 @@ func change_quality(quality):
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_OPT:
 			self.environment = env_opt
+			if separated_viewport:
+				separated_viewport.set_camera_environment(env_opt)
 			#get_tree().call_group("lightmaps", "enable", true)
 			#game_state.get_viewport().shadow_atlas_size = 2048
 			get_tree().call_group("fire_sources", "set_quality_optimal")
@@ -77,6 +83,8 @@ func change_quality(quality):
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 0)
 		settings.QUALITY_GOOD:
 			self.environment = env_good
+			if separated_viewport:
+				separated_viewport.set_camera_environment(env_good)
 			#get_tree().call_group("lightmaps", "enable", false)
 			#game_state.get_viewport().shadow_atlas_size = 4096
 			get_tree().call_group("fire_sources", "set_quality_good")
@@ -89,6 +97,8 @@ func change_quality(quality):
 			ProjectSettings.set_setting("rendering/quality/shadows/filter_mode", 1)
 		settings.QUALITY_HIGH:
 			self.environment = env_high
+			if separated_viewport:
+				separated_viewport.set_camera_environment(env_high)
 			#get_tree().call_group("lightmaps", "enable", false)
 			#game_state.get_viewport().shadow_atlas_size = 8192
 			get_tree().call_group("fire_sources", "set_quality_high")
@@ -120,13 +130,14 @@ func change_culling():
 
 func activate_item_use(item):
 	# TODO: eliminate use cases when item_use is null
-	if item_use:
-		item_use.activate_item(item)
+	if item_use and item_use.activate_item(item):
+		separated_viewport.visible = true
 
 func clear_item_use():
 	# TODO: eliminate use cases when item_use is null
 	if item_use:
 		item_use.clear_item()
+		separated_viewport.visible = false
 
 func walk_initiate(player_node):
 	if item_use:
@@ -150,9 +161,14 @@ func show_flashlight(is_show):
 func _on_preview_opened(item):
 	clear_item_use()
 	show_cutscene_flashlight(true)
+	separated_viewport.visible = true
+	separated_viewport.show_dimmer(true)
 
 func _on_preview_closed(item):
 	show_cutscene_flashlight(false)
+	separated_viewport.show_dimmer(false)
+	if not item_use or not item_use.get_item_in_use():
+		separated_viewport.visible = false
 
 func _process(delta):
 	if not game_state.is_level_ready():
