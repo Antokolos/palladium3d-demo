@@ -133,6 +133,12 @@ func is_dead():
 func is_taking_damage():
 	return animation_tree.get("parameters/DamageShot/active")
 
+func is_jumpscare():
+	return (
+		is_taking_damage()
+		and animation_tree.get("parameters/DamageTransition/current") == DAMAGE_TRANSITION_JUMPSCARE
+	)
+
 func get_cutscene_id():
 	return animation_tree.get("parameters/CutsceneTransition/current")
 
@@ -303,7 +309,7 @@ func _process(delta):
 			var player = get_node("../..")
 			emit_signal("character_dead", player)
 			was_dying = false
-		elif not was_dying and is_dying():
+		elif not was_dying and not is_jumpscare() and is_dying():
 			var player = get_node("../..")
 			emit_signal("character_dying", player)
 			was_dying = true

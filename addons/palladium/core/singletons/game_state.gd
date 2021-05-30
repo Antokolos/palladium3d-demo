@@ -208,7 +208,7 @@ func get_active_item():
 	return hud.get_active_item() if hud else null
 
 func get_viewport():
-	return get_node("/root/HUD/ViewportContainer/Viewport")
+	return get_node("/root/HUD/ViewportContainer/Viewport") if has_node("/root/HUD/ViewportContainer/Viewport") else get_node("/root")
 
 func get_player():
 	return get_node(player_paths[player_name_hint]) if has_character(player_name_hint) else null

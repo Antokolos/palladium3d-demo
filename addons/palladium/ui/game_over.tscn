@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/game_over.gd" type="Script" id=2]
 [ext_resource path="res://addons/palladium/assets/images/game_over.png" type="Texture" id=3]
 [ext_resource path="res://addons/palladium/assets/fonts/roboto.bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://addons/palladium/styles/tablet_caption_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/palladium/ui/mouse_cursor.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
@@ -172,6 +173,8 @@ margin_bottom = 38.0
 rect_min_size = Vector2( 290, 0 )
 custom_colors/font_color = Color( 0.6, 0.8, 0.2, 1 )
 text = "BUTTON_QUIT"
+
+[node name="mouse_cursor" parent="." instance=ExtResource( 6 )]
 [connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot0/ButtonSlot0" to="." method="_on_ButtonSlot0_pressed"]
 [connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSlot1_pressed"]
 [connection signal="pressed" from="ColorRect/HBoxContainer/VBoxContainer/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSlot2_pressed"]
