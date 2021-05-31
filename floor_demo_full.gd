@@ -405,7 +405,7 @@ func _on_door_state_changed(door_id, opened):
 				and conversation_manager.conversation_is_not_finished("009_ApataTrap"):
 				var player = game_state.get_player()
 				cutscene_manager.restore_camera(player)
-				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition"))
+				cutscene_manager.borrow_camera(player, get_node("ApataCutscenePosition3"))
 
 func _on_arrived_to(player_node, target_node):
 	var tid = target_node.get_instance_id()
