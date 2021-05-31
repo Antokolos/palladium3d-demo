@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Aphrodita_postament_doors.ogg-b86da7a6923b36bc1564e7afcef95139.oggstr"
+
+[deps]
+
+source_file="res://sound/environment/Aphrodita_postament_doors.ogg"
+dest_files=[ "res://.import/Aphrodita_postament_doors.ogg-b86da7a6923b36bc1564e7afcef95139.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
