@@ -1,7 +1,7 @@
 extends PLDUsable
 class_name PLDLightSource
 
-signal state_changed(light_source, active)
+signal state_changed(light_source, active, updated)
 
 const DISTANCE_TO_CAMERA_MAX = 36
 
@@ -27,7 +27,7 @@ func enable(active, update):
 		torch_light.enable(active)
 	if update:
 		game_state.set_light_state(get_path(), active)
-	emit_signal("state_changed", self, active)
+	emit_signal("state_changed", self, active, update)
 
 func use(player_node, camera_node):
 	var active = not is_active()
