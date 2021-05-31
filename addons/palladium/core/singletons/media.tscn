@@ -20,6 +20,12 @@ bus = "Sound"
 [node name="SoundPlayer3" type="AudioStreamPlayer" parent="sound_players"]
 bus = "Sound"
 
+[node name="SoundPlayer4" type="AudioStreamPlayer" parent="sound_players"]
+bus = "Sound"
+
+[node name="SoundPlayer5" type="AudioStreamPlayer" parent="sound_players"]
+bus = "Sound"
+
 [node name="pre_delay_timers" type="Node" parent="."]
 
 [node name="PreDelayTimer1" type="Timer" parent="pre_delay_timers"]
@@ -29,5 +35,11 @@ one_shot = true
 one_shot = true
 
 [node name="PreDelayTimer3" type="Timer" parent="pre_delay_timers"]
+one_shot = true
+
+[node name="PreDelayTimer4" type="Timer" parent="pre_delay_timers"]
+one_shot = true
+
+[node name="PreDelayTimer5" type="Timer" parent="pre_delay_timers"]
 one_shot = true
 [connection signal="finished" from="MusicPlayer" to="." method="_on_MusicPlayer_finished"]

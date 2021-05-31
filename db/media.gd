@@ -39,6 +39,11 @@ enum SoundId {
 	MAN_DRINKS_ALT_RU = 90,
 	MAN_DRINKS_ALT_EN = 100,
 	FALLING_DOWN = 110,
+	SPLASH_IN = 112,
+	SPLASH_OUT = 114,
+	BUBBLES_1 = 116,
+	BUBBLES_2 = 117,
+	BUBBLES_3 = 118,
 	MAN_BREATHE_IN_TANK = 120,
 	MAN_BREATHE_IN_1 = 130,
 	MAN_BREATHE_IN_2 = 140,
@@ -61,6 +66,11 @@ const SOUND = {
 	SoundId.MAN_DRINKS_ALT_RU : preload("res://addons/palladium/assets/sound/environment/2421_bandit_drinks.ogg"),
 	SoundId.MAN_DRINKS_ALT_EN : preload("res://addons/palladium/assets/sound/environment/2421_bandit_drinks_eng.ogg"),
 	SoundId.FALLING_DOWN : preload("res://addons/palladium/assets/sound/environment/417994__suburbanwizard__body-fall.ogg"),
+	SoundId.SPLASH_IN : preload("res://addons/palladium/assets/sound/environment/splash_in.ogg"),
+	SoundId.SPLASH_OUT : preload("res://addons/palladium/assets/sound/environment/splash_out.ogg"),
+	SoundId.BUBBLES_1 : preload("res://addons/palladium/assets/sound/environment/bubbles-single1.ogg"),
+	SoundId.BUBBLES_2 : preload("res://addons/palladium/assets/sound/environment/bubbles-single2.ogg"),
+	SoundId.BUBBLES_3 : preload("res://addons/palladium/assets/sound/environment/bubbles-single3.ogg"),
 	SoundId.MAN_BREATHE_IN_TANK : preload("res://addons/palladium/assets/sound/environment/2421_bandit_tank_sigh.ogg"),
 	SoundId.MAN_BREATHE_IN_1 : preload("res://addons/palladium/assets/sound/environment/2419_bandit_sigh_1.ogg"),
 	SoundId.MAN_BREATHE_IN_2 : preload("res://addons/palladium/assets/sound/environment/2420_bandit_sigh_2.ogg"),
@@ -122,6 +132,11 @@ func restore_music_from(music_id):
 	if music_ids.size() > 1 and music_ids[0] == music_id:
 		music_ids.pop_front()
 		change_music_to(music_ids[0])
+
+func play_random_sound(sound_ids : Array, is_loop = false, volume_db = 0, pre_delay_sec = 0.0, channel = -1):
+	if not sound_ids or sound_ids.empty():
+		return
+	play_sound(sound_ids[randi() % sound_ids.size()], is_loop, volume_db, pre_delay_sec, channel)
 
 func play_sound(sound_id, is_loop = false, volume_db = 0, pre_delay_sec = 0.0, channel = -1):
 	if channel < -1 or channel > sound_players.size():

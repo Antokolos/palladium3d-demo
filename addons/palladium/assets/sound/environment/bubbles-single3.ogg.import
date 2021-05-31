@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bubbles-single3.ogg-71e1d02728305f28818cbd3504613d46.oggstr"
+
+[deps]
+
+source_file="res://addons/palladium/assets/sound/environment/bubbles-single3.ogg"
+dest_files=[ "res://.import/bubbles-single3.ogg-71e1d02728305f28818cbd3504613d46.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

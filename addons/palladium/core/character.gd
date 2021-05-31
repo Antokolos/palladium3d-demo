@@ -299,10 +299,11 @@ func need_breathe_in():
 
 func breathe_in():
 	var sound_id
+	MEDIA.play_sound(PLDDBMedia.SoundId.SPLASH_IN)
 	if game_state.player_name_is(CHARS.FEMALE_NAME_HINT):
-		sound_id = MEDIA.SoundId.WOMAN_BREATHE_IN_1 if randf() > 0.5 else MEDIA.SoundId.WOMAN_BREATHE_IN_2
+		sound_id = PLDDBMedia.SoundId.WOMAN_BREATHE_IN_1 if randf() > 0.5 else PLDDBMedia.SoundId.WOMAN_BREATHE_IN_2
 	else:
-		sound_id = MEDIA.SoundId.MAN_BREATHE_IN_1 if randf() > 0.5 else MEDIA.SoundId.MAN_BREATHE_IN_2
+		sound_id = PLDDBMedia.SoundId.MAN_BREATHE_IN_1 if randf() > 0.5 else PLDDBMedia.SoundId.MAN_BREATHE_IN_2
 	MEDIA.play_sound(sound_id)
 
 func set_underwater(enable, and_emit_signal = true):
