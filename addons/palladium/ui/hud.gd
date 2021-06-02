@@ -11,6 +11,12 @@ const COLOR_WHITE = Color(1.0, 1.0, 1.0, 1.0)
 const COLOR_BLOOD = Color(1.0, 0.0, 0.0, 1.0)
 const COLOR_DIMMED = Color(0.0, 0.0, 0.0, 0.5)
 const COLOR_TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
+const ALWAYS_VISIBLE_MESSAGE_TEMPLATES = [
+	"MESSAGE_ITEM_REMOVED",
+	"MESSAGE_ITEM_TAKEN",
+	"MESSAGE_ITEMS_TAKEN"
+]
+
 
 export var cutscene_mode = false
 
@@ -87,9 +93,29 @@ func show_game_ui(enable):
 	if not v:
 		inventory.visible = false
 
+func has_same_message(template : String, args : Array):
+	if ALWAYS_VISIBLE_MESSAGE_TEMPLATES.find(template) > 0:
+		return false
+	for message in popup_message_queue:
+		if template.casecmp_to(message.template) != 0:
+			continue
+		var asz = args.size()
+		if asz != message.args.size():
+			continue
+		for i in range(0, asz):
+			if args[i] != message.args[i]:
+				continue
+		return true
+	return false
+
 func queue_popup_message(template, args = [], fade = false, timeout_max = MESSAGE_TIMEOUT_MAX_S):
+	if not template:
+		return
 	if game_state.get_message_state(template):
 		game_state.set_message_state(template, false)
+		if has_same_message(template, args):
+			# To prevent spamming multiple identical messages
+			return
 		popup_message_queue.push_back({
 			"template" : template,
 			"args" : args,

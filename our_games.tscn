@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/torches.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://addons/palladium/assets/images/about/red_hood.jpg" type="Texture" id=9]
 [ext_resource path="res://addons/palladium/assets/images/about/the_barbarian.jpg" type="Texture" id=10]
 [ext_resource path="res://addons/palladium/assets/images/about/wild_island_quest.jpg" type="Texture" id=11]
+[ext_resource path="res://addons/palladium/ui/mouse_cursor.tscn" type="PackedScene" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -401,6 +402,8 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 100, 50 )
 size_flags_vertical = 4
 text = "ABOUT_BACK"
+
+[node name="mouse_cursor" parent="." instance=ExtResource( 12 )]
 [connection signal="meta_clicked" from="VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer/HBoxAuthor/SiteUrl" to="." method="_on_SiteUrl_meta_clicked"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer/GamesContent/HBoxContainerCaptions/CaptionsGrid/ABOUT_CAPTION_IKE" to="." method="_on_ABOUT_CAPTION_IKE_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer/GamesContent/HBoxContainerCaptions/CaptionsGrid/ABOUT_CAPTION_NONLINEAR_TQ" to="." method="_on_ABOUT_CAPTION_NONLINEAR_TQ_pressed"]

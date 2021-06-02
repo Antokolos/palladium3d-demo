@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://addons/palladium/ui/viewport_hack.gd" type="Script" id=1]
 [ext_resource path="res://addons/palladium/ui/viewport.tscn" type="PackedScene" id=2]
@@ -6,32 +6,35 @@
 [ext_resource path="res://scenes/menu_floor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/menu_postament_flat.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/menu_vase_octopus_1.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/menu_vase_octopus_2.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/our_games.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/our_games_rus.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/menu_postament_new_game.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/menu_statue.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/new_game.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/new_game_rus.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/menu_rat_exit.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/exit.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/exit_rus.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/menu_vase_credits.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/credits.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/credits_rus.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/menu_chest.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/load_rus.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/load_game.tscn" type="PackedScene" id=22]
-[ext_resource path="res://addons/palladium/core/environment/torch_full.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/settings.tscn" type="PackedScene" id=24]
-[ext_resource path="res://scenes/settings_rus.tscn" type="PackedScene" id=25]
-[ext_resource path="res://scenes/menu_spider.tscn" type="PackedScene" id=26]
-[ext_resource path="res://addons/palladium/scenes/rat.tscn" type="PackedScene" id=27]
-[ext_resource path="res://scenes/rat_grey.tscn" type="PackedScene" id=28]
-[ext_resource path="res://assets/vabtablack.material" type="Material" id=29]
-[ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=30]
-[ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=31]
-[ext_resource path="res://addons/palladium/ui/menu_hud.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scenes/flower.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/flower_leaf.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/menu_vase_octopus_2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/flower_bud.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/our_games.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/our_games_rus.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/menu_postament_new_game.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/menu_statue.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/new_game.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/new_game_rus.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/menu_rat_exit.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/exit.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/exit_rus.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/menu_vase_credits.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/credits.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/credits_rus.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/menu_chest.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/load_rus.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/load_game.tscn" type="PackedScene" id=25]
+[ext_resource path="res://addons/palladium/core/environment/torch_full.tscn" type="PackedScene" id=26]
+[ext_resource path="res://scenes/settings.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/settings_rus.tscn" type="PackedScene" id=28]
+[ext_resource path="res://scenes/menu_spider.tscn" type="PackedScene" id=29]
+[ext_resource path="res://addons/palladium/scenes/rat.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/rat_grey.tscn" type="PackedScene" id=31]
+[ext_resource path="res://assets/vabtablack.material" type="Material" id=32]
+[ext_resource path="res://addons/palladium/core/camera.gd" type="Script" id=33]
+[ext_resource path="res://sound/environment/click.wav" type="AudioStream" id=34]
+[ext_resource path="res://addons/palladium/ui/menu_hud.tscn" type="PackedScene" id=35]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 7, 2 )
@@ -55,7 +58,6 @@ stretch = true
 script = ExtResource( 1 )
 
 [node name="Viewport" parent="ViewportContainer" instance=ExtResource( 2 )]
-editor/display_folded = true
 size = Vector2( 1920, 1080 )
 physics_object_picking = true
 
@@ -73,13 +75,31 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36987, 1.40064, -2.6662 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0656885, 0.0529861 )
 visible = false
 
-[node name="menu_vase_octopus_2" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 7 )]
+[node name="flower" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_1" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 0.997756, -0.0669501, 0, 0.0669501, 0.997756, 0, -1.16467, -0.117529 )
+
+[node name="flower_leaf3" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_1" instance=ExtResource( 8 )]
+transform = Transform( -0.979372, 0, -0.202064, 0, 1, 0, 0.202064, 0, -0.979372, -2.38419e-007, 0.36213, 2.38419e-007 )
+
+[node name="flower_leaf4" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_1" instance=ExtResource( 8 )]
+transform = Transform( 0.989106, 0, 0.147202, 0, 1, 0, -0.147202, 0, 0.989106, 0, 0.36213, 2.38419e-007 )
+
+[node name="menu_vase_octopus_2" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 9 )]
 transform = Transform( 0.999848, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 0.0656885, 0.0529861 )
 
-[node name="our_games" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 8 )]
+[node name="flower_bud" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_2" instance=ExtResource( 10 )]
+transform = Transform( 1, -0.000357926, 3.66941e-006, 0.000357926, 0.99979, -0.0205056, 3.66941e-006, 0.0205056, 0.99979, 0.00265288, -1.10467, -0.151986 )
+
+[node name="flower_leaf" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_2" instance=ExtResource( 8 )]
+transform = Transform( -0.982749, 0, -0.184941, 0, 1, 0, 0.184941, 0, -0.982749, -2.38419e-007, 0.36213, 2.38419e-007 )
+
+[node name="flower_leaf2" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat/menu_vase_octopus_2" instance=ExtResource( 8 )]
+transform = Transform( 0.991524, 0, 0.129918, 0, 1, 0, -0.129918, 0, 0.991524, 0, 0.36213, 2.38419e-007 )
+
+[node name="our_games" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0636023, 0 )
 
-[node name="our_games_rus" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 9 )]
+[node name="our_games_rus" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat" instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0571499, 0 )
 
 [node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport/main_menu/menu_postament_flat"]
@@ -89,17 +109,17 @@ light_color = Color( 1, 0.913725, 0.768627, 1 )
 spot_range = 1.46786
 spot_angle = 36.8701
 
-[node name="menu_postament_new_game" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 10 )]
+[node name="menu_postament_new_game" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 13 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9463, 1.14733, -0.789663 )
 
-[node name="menu_statue" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 11 )]
+[node name="menu_statue" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0205593, 1.19596, 0.551479 )
 
-[node name="new_game" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 12 )]
+[node name="new_game" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179145, 0.504949 )
 
-[node name="new_game_rus" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 13 )]
+[node name="new_game_rus" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.201352, 0.49617 )
 
 [node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game"]
@@ -110,23 +130,23 @@ light_energy = 0.7
 spot_range = 2.70743
 spot_angle = 18.9608
 
-[node name="menu_rat_exit" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 14 )]
+[node name="menu_rat_exit" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 17 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.534654, 1.17227, -8.62621 )
 
-[node name="exit" parent="ViewportContainer/Viewport/main_menu/menu_rat_exit" instance=ExtResource( 15 )]
+[node name="exit" parent="ViewportContainer/Viewport/main_menu/menu_rat_exit" instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.211868, 0.94651, 4.11028 )
 
-[node name="exit_rus" parent="ViewportContainer/Viewport/main_menu/menu_rat_exit" instance=ExtResource( 16 )]
+[node name="exit_rus" parent="ViewportContainer/Viewport/main_menu/menu_rat_exit" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.287394, 0.953081, 4.10797 )
 
-[node name="menu_vase_credits" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 17 )]
+[node name="menu_vase_credits" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.748762, 1.17695, -0.823688 )
 
-[node name="credits" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits" instance=ExtResource( 18 )]
+[node name="credits" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits" instance=ExtResource( 21 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308621, 0 )
 
-[node name="credits_rus" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits" instance=ExtResource( 19 )]
+[node name="credits_rus" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.302101, 0 )
 
 [node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport/main_menu/menu_vase_credits"]
@@ -136,48 +156,48 @@ light_color = Color( 1, 0.913725, 0.768627, 1 )
 spot_range = 1.46786
 spot_angle = 36.8701
 
-[node name="menu_chest" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 20 )]
+[node name="menu_chest" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 23 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79263, 1.18172, -1.79258 )
 
-[node name="load_rus" parent="ViewportContainer/Viewport/main_menu/menu_chest" instance=ExtResource( 21 )]
+[node name="load_rus" parent="ViewportContainer/Viewport/main_menu/menu_chest" instance=ExtResource( 24 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573952, 0.576237, 0.574753 )
 
-[node name="load_game" parent="ViewportContainer/Viewport/main_menu/menu_chest" instance=ExtResource( 22 )]
+[node name="load_game" parent="ViewportContainer/Viewport/main_menu/menu_chest" instance=ExtResource( 25 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.587911, 0.569134, 0.766794 )
 
-[node name="torch_full" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 23 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.09862, 2.83154, -4.66698 )
+[node name="torch_full" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 26 )]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -1.09862, 2.83154, -4.66698 )
 
-[node name="torch_full2" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 23 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.24419, 2.83154, -4.66698 )
+[node name="torch_full2" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 26 )]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.24419, 2.83154, -4.66698 )
 
-[node name="settings" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 24 )]
+[node name="settings" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 27 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39638, 2.75542, -4.55224 )
 sfx_player_over_path = "../SFXOver"
 
-[node name="settings_rus" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 25 )]
+[node name="settings_rus" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61211, 2.74432, -4.54793 )
 sfx_player_over_path = "../SFXOver"
 
-[node name="menu_spider" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 26 )]
+[node name="menu_spider" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0767672, -0.027156, -0.42101 )
 
-[node name="rat" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 27 )]
+[node name="rat" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 30 )]
 transform = Transform( -0.447965, 0, -0.894051, 0, 1, 0, 0.894051, 0, -0.447965, -0.5236, 1.35378, -4.94844 )
 
 [node name="Model" type="Spatial" parent="ViewportContainer/Viewport/main_menu/rat"]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 
-[node name="rat_grey" parent="ViewportContainer/Viewport/main_menu/rat/Model" instance=ExtResource( 28 )]
+[node name="rat_grey" parent="ViewportContainer/Viewport/main_menu/rat/Model" instance=ExtResource( 31 )]
 
 [node name="rat_cover" type="MeshInstance" parent="ViewportContainer/Viewport/main_menu"]
 transform = Transform( 1, 0, -0.000220925, -0.000188879, 0.51852, -0.855067, 0.000114462, 0.855067, 0.518523, -0.483793, 1.5287, -5.49916 )
 cast_shadow = 2
 mesh = SubResource( 1 )
-material/0 = ExtResource( 29 )
+material/0 = ExtResource( 32 )
 
 [node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport/main_menu"]
-transform = Transform( 1, 1.85973e-08, -0.000220866, 0.000139976, -0.773586, 0.633692, -0.000170847, -0.633692, -0.773586, -0.483795, 2.06734, -5.98628 )
+transform = Transform( 1, 1.85973e-008, -0.000220866, 0.000139976, -0.773586, 0.633692, -0.000170847, -0.633692, -0.773586, -0.483795, 2.06734, -5.98628 )
 light_color = Color( 0.960784, 0.67451, 0.227451, 1 )
 shadow_enabled = true
 shadow_bias = 0.01
@@ -189,10 +209,10 @@ spot_angle = 20.6364
 transform = Transform( 0.906308, -0.144544, 0.397131, 0, 0.939693, 0.34202, -0.422618, -0.309976, 0.851651, 0.174137, 4.26169, 4.0748 )
 current = true
 fov = 33.0
-script = ExtResource( 30 )
+script = ExtResource( 33 )
 
 [node name="SFXOver" type="AudioStreamPlayer" parent="ViewportContainer/Viewport/main_menu"]
-stream = ExtResource( 31 )
+stream = ExtResource( 34 )
 volume_db = -27.0
 bus = "Sound"
 
@@ -205,4 +225,4 @@ collision_mask = 15375
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.764866, 1.0711, -2.08213 )
 shape = SubResource( 2 )
 
-[node name="hud" parent="." instance=ExtResource( 32 )]
+[node name="hud" parent="." instance=ExtResource( 35 )]
