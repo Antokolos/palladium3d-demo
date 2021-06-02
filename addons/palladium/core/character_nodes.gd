@@ -4,7 +4,6 @@ class_name PLDCharacterNodes
 const FRIENDLY_FIRE_ENABLED = false
 const OXYGEN_DECREASE_RATE = 5
 const INJURY_RATE = 20
-const BUBBLES_RATE = 20
 
 onready var character = get_parent()
 
@@ -288,15 +287,19 @@ func is_low_ceiling():
 	return standing_raycast.is_colliding()
 
 func _on_HealTimer_timeout():
-	if character.is_player() and game_state.is_level_ready():
-		game_state.set_health(character, game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
+	if (
+		not character.is_player()
+		or not game_state.is_level_ready()
+		or not oxygen_timer.is_stopped()
+		or not poison_timer.is_stopped()
+	):
+		return
+	game_state.set_health(character, game_state.player_health_current + DB.HEALING_RATE, game_state.player_health_max)
 
 func _on_OxygenTimer_timeout():
 	if oxygen_timer.is_stopped():
 		return
 	var oxygen_new = game_state.player_oxygen_current - OXYGEN_DECREASE_RATE
-	if oxygen_new % BUBBLES_RATE == 0:
-		MEDIA.play_random_sound([ PLDDBMedia.SoundId.BUBBLES_1, PLDDBMedia.SoundId.BUBBLES_2, PLDDBMedia.SoundId.BUBBLES_3 ])
 	game_state.set_oxygen(character, oxygen_new, game_state.player_oxygen_max)
 
 func _on_PoisonTimer_timeout():

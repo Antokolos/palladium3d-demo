@@ -616,7 +616,14 @@ func game_over():
 func set_oxygen(character, oxygen_current, oxygen_max):
 	# TODO: use 'character' param to set oxygen for different characters
 	if oxygen_current < 0:
-		set_health(character, player_health_current - DB.SUFFOCATION_DAMAGE_RATE, player_health_max)
+		var health_new = player_health_current - PLDDB.SUFFOCATION_DAMAGE_RATE
+		if (
+			health_new > 0
+			and health_new % PLDDB.BUBBLES_RATE == 0
+			and health_new < (player_health_max / 2)
+		):
+			MEDIA.play_random_sound([ PLDDBMedia.SoundId.BUBBLES_1, PLDDBMedia.SoundId.BUBBLES_2, PLDDBMedia.SoundId.BUBBLES_3 ])
+		set_health(character, health_new, player_health_max)
 		return
 	player_oxygen_current = oxygen_current if oxygen_current < oxygen_max else oxygen_max
 	player_oxygen_max = oxygen_max
