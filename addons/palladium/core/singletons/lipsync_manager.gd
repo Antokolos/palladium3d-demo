@@ -70,7 +70,7 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 			else (
 				POST_DELAY_TIMER_MIN_S
 					if length >= MINIMUM_AUTO_ADVANCE_TIME_SEC
-					else MINIMUM_AUTO_ADVANCE_TIME_SEC - length
+					else MINIMUM_AUTO_ADVANCE_TIME_SEC - length + POST_DELAY_TIMER_MIN_S
 			)
 	)
 	audio_stream_player.stream = stream

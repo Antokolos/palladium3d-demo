@@ -125,10 +125,19 @@ func has_important_animations_now():
 	)
 
 func is_dying():
-	return is_taking_damage() and animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+	return (
+		is_taking_damage()
+		and animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+	)
 
 func is_dead():
-	return not is_taking_damage() and animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+	return (
+		animation_tree.get("parameters/AliveTransition/current") == ALIVE_TRANSITION_DEAD
+		and (
+			not is_taking_damage()
+			or animation_tree.get("parameters/DamageTransition/current") == DAMAGE_TRANSITION_JUMPSCARE
+		)
+	)
 
 func is_taking_damage():
 	return animation_tree.get("parameters/DamageShot/active")
