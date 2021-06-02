@@ -4,7 +4,7 @@
 [ext_resource path="res://sound/environment/falling_to_floor.ogg" type="AudioStream" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.879759, 1, 0.502388 )
+extents = Vector3( 0.88, 1, 0.75 )
 
 [node name="character_nodes" type="Spatial"]
 script = ExtResource( 1 )
@@ -39,7 +39,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 bus = "Sound"
 
 [node name="MeleeDamageArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06667, 0.993718 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.067, 1.25 )
 input_ray_pickable = false
 monitorable = false
 collision_mask = 7
