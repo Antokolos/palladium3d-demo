@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.85382, 2.13358, 3.70064 )
 
-[node name="rock_large_2" index="0" instance=ExtResource( 1 )]
+[node name="rock_large_2" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="1"]
 
