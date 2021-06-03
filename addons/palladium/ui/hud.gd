@@ -336,7 +336,16 @@ func _on_preview_opened(item):
 	messages_container.visible = false
 	main_hud.get_node("HBoxHints/ActionHintLabel").text = ""
 	var label_close_node = actions_panel.get_node("ActionsContainer/HintLabelClose")
-	label_close_node.text = common_utils.get_input_control("item_preview_toggle") + tr("ACTION_CLOSE_PREVIEW")
+	label_close_node.text = (
+		common_utils.get_input_control("item_preview_toggle")
+		+ tr("ACTION_CLOSE_PREVIEW")
+		+ " | "
+		+ common_utils.get_input_control("item_preview_zoom_in", true, true)
+		+ tr("ACTION_ZOOM_IN")
+		+ " | "
+		+ common_utils.get_input_control("item_preview_zoom_out", true, true)
+		+ tr("ACTION_ZOOM_OUT")
+	)
 	var custom_actions_node = actions_panel.get_node("ActionsContainer/CustomActions")
 	for ch in custom_actions_node.get_children():
 		ch.queue_free()

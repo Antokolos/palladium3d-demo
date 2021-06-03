@@ -240,20 +240,25 @@ func is_same_resource(res1 : Resource, res2 : Resource):
 	var p2 = res2.get_path()
 	return p1 and p2 and p1.casecmp_to(p2) == 0
 
-func get_input_control(act, with_colon = true):
+func get_input_control(act, with_colon = true, prefer_mouse = false):
 	var list = InputMap.get_action_list(act)
 	var has_joypads = has_joypads()
 	var trail = ": " if with_colon else ""
 	for action in list:
-		if not has_joypads and action is InputEventKey:
-			return action.as_text() + trail
-		elif has_joypads and action is InputEventJoypadButton:
-			var button_index = action.get_button_index()
-			return joy_button_to_string(button_index) + trail
-		elif has_joypads and action is InputEventJoypadMotion:
-			var axis = action.get_axis()
-			var axis_value = action.get_axis_value()
-			return joy_axis_to_string(axis, axis_value) + trail
+		if has_joypads:
+			if action is InputEventJoypadButton:
+				var button_index = action.get_button_index()
+				return joy_button_to_string(button_index) + trail
+			elif action is InputEventJoypadMotion:
+				var axis = action.get_axis()
+				var axis_value = action.get_axis_value()
+				return joy_axis_to_string(axis, axis_value) + trail
+		elif prefer_mouse:
+			if action is InputEventMouseButton:
+				return mouse_button_to_string(action.get_button_index()) + trail
+		else:
+			if action is InputEventKey:
+				return action.as_text() + trail
 	return ""
 
 func get_action_input_control():
