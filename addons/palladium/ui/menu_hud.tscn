@@ -63,7 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v. 1.0.7"
+text = "v. 1.0.8"
 align = 2
 valign = 2
 

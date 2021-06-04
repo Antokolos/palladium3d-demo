@@ -624,10 +624,12 @@ func is_need_to_use_physics(characters, target):
 		return true
 	if force_no_physics:
 		return false
-	if is_player_controlled() or not has_floor_collision():
+	if is_player_controlled() or not character_nodes.has_floor_collision():
 		return true
 	if has_path():
 		return false
+	if not has_floor_collision():
+		return true
 	if not is_visible_to_player():
 		return false
 	for character in characters:
@@ -902,7 +904,7 @@ func do_process(delta, is_player):
 		update_state(movement_data)
 		var mpd = process_movement(delta, movement_data.get_dir(), characters)
 		set_has_floor_collision(mpd.collides_floor and not should_fall)
-		has_floor_collision = has_floor_collision()
+		has_floor_collision = has_floor_collision() or not should_fall
 		d.is_moving = has_movement(mpd.vel, has_floor_collision)
 		model.rotate_head(movement_data.get_rotation_angle_to_target_deg())
 	var rpd = process_rotation(not d.is_moving and is_player)

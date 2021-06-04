@@ -353,7 +353,11 @@ func get_navpath(pstart, pend):
 	var p1 = navigation_node.get_closest_point(pstart)
 	var p2 = navigation_node.get_closest_point(pend)
 	var p = navigation_node.get_simple_path(p1, p2, true)
-	return Array(p) # Vector3array too complex to use, convert to regular array
+	if p.size() < 2:
+		# If navigation failed for some reason, create path from single end point
+		return [ pend ]
+	else:
+		return Array(p) # Vector3array too complex to use, convert to regular array
 
 func has_path():
 	return not path.empty()

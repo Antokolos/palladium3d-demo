@@ -63,6 +63,7 @@ func play_sound_and_start_lipsync(character, conversation_name, target_name_hint
 		return false
 	if not common_utils.set_stream_loop(stream, false):
 		return false
+	stop_sound_and_lipsync(false)
 	var length = stream.get_length()
 	post_delay_timer.wait_time = (
 		post_delay_time_s
