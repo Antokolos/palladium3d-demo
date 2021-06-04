@@ -48,6 +48,7 @@ var vel = Vector3()
 
 var is_hidden = false
 var hideout_path : String = ""
+var too_late_to_unhide = false setget set_too_late_to_unhide, is_too_late_to_unhide
 var is_patrolling = false setget set_patrolling
 var is_aggressive = false setget set_aggressive
 var is_crouching = false
@@ -426,6 +427,12 @@ func has_hideout():
 
 func get_hideout():
 	return get_node(hideout_path) if has_hideout() else null
+
+func set_too_late_to_unhide(is_too_late):
+	too_late_to_unhide = is_too_late
+
+func is_too_late_to_unhide():
+	return too_late_to_unhide
 
 func is_patrolling():
 	return is_patrolling

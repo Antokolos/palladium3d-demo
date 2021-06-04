@@ -81,6 +81,8 @@ func highlight(player_node):
 	if game_state.get_hud().is_in_conversation():
 		return ""
 	if player_node.is_hidden():
+		if player_node.is_too_late_to_unhide():
+			return ""
 		return common_utils.get_action_input_control() + tr("ACTION_UNHIDE") + " | " + tr("MESSAGE_CONTROLS_FLASHLIGHT") % common_utils.get_input_control("flashlight", false)
 	var data_items = ray_highlight(ray_items, player_node)
 	use_distance = data_items.use_distance
