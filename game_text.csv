@@ -128,6 +128,7 @@
 "MESSAGE_ITEM_TAKEN","You have taken the item: %s","Вы взяли предмет: %s"
 "MESSAGE_ITEMS_TAKEN","You have taken the items: %s x %d","Вы взяли предметы: %s x %d"
 "MESSAGE_NOTHING_HAPPENS","Nothing happens","Ничего не происходит"
+"MESSAGE_CHANGE_SETTINGS","You can change graphics settings and controls in the menu for a better gaming experience","В меню вы можете изменить настройки графики и управления"
 "MESSAGE_CONTROLS_MOVE","Use %s to move, use %s to run","Используйте %s для движения, %s для бега"
 "MESSAGE_CONTROLS_JUMP","Use %s to jump","Используйте %s для прыжка"
 "MESSAGE_CONTROLS_SWIM_UP","Use %s to swim up","Используйте %s для всплытия"

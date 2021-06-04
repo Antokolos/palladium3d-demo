@@ -303,6 +303,7 @@ func _on_shader_cache_processed():
 	queue_popup_message("MESSAGE_CONTROLS_MOVE", [wasd, common_utils.get_input_control("movement_sprint", false)])
 	if game_state.get_quick_items_count() > 0:
 		queue_popup_message("MESSAGE_CONTROLS_EXAMINE", [common_utils.get_input_control("item_preview_toggle", false)])
+	queue_popup_message("MESSAGE_CHANGE_SETTINGS")
 
 func _on_item_taken(item_id, count_total, count_taken, item_path):
 	queue_popup_message(
