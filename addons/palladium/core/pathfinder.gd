@@ -172,9 +172,16 @@ func get_target_node():
 	return target_node
 
 func set_target_node(node, update_navpath = true):
+	if node:
+		if (
+			target_node
+			and target_node.get_instance_id() == node.get_instance_id()
+		):
+			return false
 	target_node = node
 	if update_navpath:
 		update_navpath_to_target()
+	return true
 
 func update_navpath_to_target():
 	if target_node:

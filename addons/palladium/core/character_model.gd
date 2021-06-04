@@ -122,6 +122,7 @@ func has_important_animations_now():
 		is_looped_cutscene()
 		or is_cutscene()
 		or is_taking_damage()
+		or animation_tree.get("parameters/Transition/current") == TRANSITION_FALL
 	)
 
 func is_dying():

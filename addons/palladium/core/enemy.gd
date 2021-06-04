@@ -78,43 +78,39 @@ func set_states_for_character(character):
 	if (
 		get_relationship() >= 0
 		or get_morale() < 0
-		or (
-			character.is_hidden()
-			and (
-				not game_state.is_flashlight_on()
-				or not character.has_hideout()
-			)
-		)
 	):
 		set_aggressive(false)
 		return
 	var dtp = get_distance_to_character(character)
-	var is_aggressive = is_aggressive()
-	if is_aggressive and (dtp > TOO_FAR_RANGE or character.is_sprinting()):
+	var is_hidden = character.is_hidden()
+	var was_aggressive = is_aggressive()
+	if was_aggressive and (dtp > TOO_FAR_RANGE or character.is_sprinting()):
 		set_sprinting(true)
 	var has_obstacles = has_obstacles_between(character)
 	if (
-		not is_aggressive
-		and dtp < AGGRESSION_RANGE
-		and not has_obstacles
-	):
-		set_aggressive(true)
-		set_target_node(
-			character.get_hideout()
-				if character.is_hidden() # and character.has_hideout() -- was checked earlier
-				else character
-		)
-		set_sprinting(true)
-	elif (
-		is_aggressive
+		was_aggressive
 		and dtp > STOP_CHASING_RANGE
 		and has_obstacles
 	):
-		var target = get_target_node()
-		if target and not target.get_parent() is PLDPatrolArea:
-			clear_target_node()
 		set_aggressive(false)
 		set_sprinting(false)
+	elif (
+		dtp < AGGRESSION_RANGE
+		and not has_obstacles
+		and (
+			not is_hidden
+			or game_state.is_flashlight_on()
+		)
+	):
+		if not was_aggressive:
+			set_aggressive(true)
+			set_sprinting(true)
+		var new_target = (
+			character.get_hideout().get_enemy_holder()
+				if is_hidden and character.has_hideout()
+				else character
+		)
+		set_target_node(new_target)
 
 func _physics_process(delta):
 	if not game_state.is_level_ready():
@@ -127,7 +123,7 @@ func _physics_process(delta):
 	if not is_aggressive():
 		var target = get_target_node()
 		if target and not target.get_parent() is PLDPatrolArea:
-			return
+			clear_target_node()
 		if not is_patrolling():
 			set_patrolling(true)
 		return

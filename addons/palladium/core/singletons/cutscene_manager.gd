@@ -85,6 +85,15 @@ func clear_cutscene_node():
 	target = null
 	is_cutscene = false
 
+func cutscene_node_is(node):
+	if not node and not cutscene_node:
+		return true
+	if not node and cutscene_node:
+		return false
+	if node and not cutscene_node:
+		return false
+	return node.get_instance_id() == cutscene_node.get_instance_id()
+
 func get_cam():
 	return cutscene_node.get_child(0) if cutscene_node and cutscene_node.get_child_count() > 0 else null
 

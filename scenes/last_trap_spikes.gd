@@ -30,7 +30,7 @@ func deactivate_forever(and_change_state = true, is_restoring = false):
 	var is_final_destination = .is_final_destination()
 	.deactivate_forever(and_change_state, is_restoring)
 	if is_final_destination:
-		get_node("Armature033/AnimationPlayer").play("last_trap_steps", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
+		get_node("Armature033/AnimationPlayer").play("last_trap_steps_2", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 		get_node("AnimationPlayer").play("steps_up", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else 1.0)
 	else:
 		get_node("AnimationPlayer").play("spikes_off", -1, PLDGameState.SPEED_SCALE_INFINITY if is_restoring else SPIKES_SPEED)
@@ -62,7 +62,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			deactivate_forever()
 			conversation_manager.start_area_conversation("175-1-1_Spikes_are_back")
 		"spikes_off":
-			get_node("Armature033/AnimationPlayer").play("last_trap_steps")
+			get_node("Armature033/AnimationPlayer").play("last_trap_steps_2")
 			get_node("AnimationPlayer").play("steps_up")
 		"steps_up":
 			var player = game_state.get_player()

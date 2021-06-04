@@ -260,11 +260,15 @@ func _on_AreaApataDone_body_entered(body):
 		conversation_manager.start_area_conversation("011_Hermes", false, false, null, 0.0)
 
 func _on_IgnitionArea_body_entered(body):
-	var player = game_state.get_player()
-	if body.is_in_group("party") and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition") and conversation_manager.conversation_is_not_finished("004_TorchesIgnition"):
+	if (
+		body.is_in_group("party")
+		and body.is_player()
+		and not conversation_manager.conversation_is_in_progress("004_TorchesIgnition")
+		and conversation_manager.conversation_is_not_finished("004_TorchesIgnition")
+	):
 		$SoundIgnitionClick.play()
 		get_tree().call_group("torches", "enable", true, false)
-		conversation_manager.start_conversation(player, "004_TorchesIgnition")
+		conversation_manager.start_area_conversation("004_TorchesIgnition")
 
 func _on_web_destroyed(web):
 	PREFS.set_achievement("COBWEB")

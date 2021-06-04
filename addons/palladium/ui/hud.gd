@@ -31,7 +31,8 @@ onready var messages_container = get_node("HBoxMessages/VBoxContainer")
 onready var message_labels = [
 	messages_container.get_node("Label"),
 	messages_container.get_node("Label2"),
-	messages_container.get_node("Label3")
+	messages_container.get_node("Label3"),
+	messages_container.get_node("Label4")
 ]
 onready var conversation = get_node("VBoxContainer/Conversation")
 onready var dimmer = get_node("Dimmer")
@@ -166,8 +167,10 @@ func clear_popup_message():
 	message_labels[0].visible = message_labels[1].visible
 	message_labels[1].text = message_labels[2].text if message_labels[2].visible else ""
 	message_labels[1].visible = message_labels[2].visible
-	message_labels[2].text = ""
-	message_labels[2].visible = false
+	message_labels[2].text = message_labels[3].text if message_labels[3].visible else ""
+	message_labels[2].visible = message_labels[3].visible
+	message_labels[3].text = ""
+	message_labels[3].visible = false
 	if not popup_message_queue.empty():
 		popup_message_queue.pop_front()
 	return not message_labels[0].visible

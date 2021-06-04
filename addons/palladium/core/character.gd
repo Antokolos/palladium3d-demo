@@ -486,18 +486,24 @@ func get_aggression_target():
 	return get_nearest_character(true)
 
 func set_target_node(node, update_navpath = true, force_no_sprinting = false):
-	.set_target_node(node, update_navpath)
+	var result = .set_target_node(node, update_navpath)
+	if not result:
+		return false
 	if not node or is_player_controlled():
-		return
+		return result
 	if force_no_sprinting:
 		set_sprinting(false)
-		return
+		return result
 	if not is_in_party() and get_morale() >= 0:
 		set_sprinting(false)
-		return
+		return result
 	var cp = get_global_transform().origin
 	var tp = node.get_global_transform().origin
-	set_sprinting(cp.distance_to(tp) > SPRINTING_DISTANCE_THRESHOLD)
+	var d = cp.distance_to(tp)
+	set_sprinting(d > SPRINTING_DISTANCE_THRESHOLD)
+	if d <= ALIGNMENT_RANGE:
+		emit_signal("arrived_to", [ node ])
+	return result
 
 func sit_down_change_collisions():
 	if animation_player.is_playing():

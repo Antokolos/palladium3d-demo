@@ -38,6 +38,8 @@ func can_take_palladium():
 	)
 
 func use(player_node, camera_node):
+	if conversation_manager.conversation_is_not_finished("175_Andreas_what_is_that_sound"):
+		return
 	if state != STATE_READY \
 		and state != STATE_MOVED_UP_REAL \
 		and state != STATE_MOVED_UP_FAKE:
@@ -61,6 +63,8 @@ func use_action(player_node, item):
 	return true
 
 func get_usage_code(player_node):
+	if conversation_manager.conversation_is_not_finished("175_Andreas_what_is_that_sound"):
+		return ""
 	if state != STATE_READY \
 		and state != STATE_MOVED_UP_REAL \
 		and state != STATE_MOVED_UP_FAKE:

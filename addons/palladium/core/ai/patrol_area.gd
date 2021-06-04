@@ -24,10 +24,15 @@ func _ready():
 func _on_patrolling_changed(player_node, previous_state, new_state):
 	if agent.get_morale() < 0:
 		return
+	var target = agent.get_target_node()
 	if new_state:
 		do_patrol()
-	else:
-		agent.set_target_node(null)
+	elif (
+		target
+		and target.get_parent()
+		and target.get_parent().get_instance_id() != get_instance_id()
+	):
+		agent.clear_target_node()
 
 func _on_arrived_to(player_node, target_node):
 	var p = target_node.get_parent()

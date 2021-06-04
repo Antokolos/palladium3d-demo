@@ -109,7 +109,7 @@ func _on_enemy_attack_started(player_node, target, attack_anim_idx):
 		return
 	#set_point_of_interest(player_node) -- should be already set
 
-func _on_enemy_attack_stopped(player_node, target):
+func _on_enemy_attack_stopped(player_node, target, attack_anim_idx):
 	if is_player_controlled() or not is_in_party():
 		return
 	#clear_poi_if_it_is(player_node) -- better not to do it to minimize rotations
