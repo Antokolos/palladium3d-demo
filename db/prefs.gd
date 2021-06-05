@@ -33,11 +33,13 @@ func set_achievement(achievement_id, modification_id = MODIFICATION_ID_DEFAULT):
 			if ACHIEVEMENTS_DATA[aid].has("stat_id"):
 				var stat_id = ACHIEVEMENTS_DATA[aid]["stat_id"]
 				m = STATS_DATA[stat_id]["stat_max"]
-			var l = achievements[achievement_id].size()
+			var l = achievements[aid].size()
 			if PERFECT_GAME_ACHIEVEMENT_ID.casecmp_to(aid) != 0 and l < m:
+				achievements[PERFECT_GAME_ACHIEVEMENT_ID].clear()
+				common_utils.clear_achievement(PERFECT_GAME_ACHIEVEMENT_ID)
 				save_prefs()
 				return false
-		achievements[PERFECT_GAME_ACHIEVEMENT_ID][modification_id] = 1
+		achievements[PERFECT_GAME_ACHIEVEMENT_ID][MODIFICATION_ID_DEFAULT] = 1
 		common_utils.set_achievement(PERFECT_GAME_ACHIEVEMENT_ID)
 	save_prefs()
 	return true
