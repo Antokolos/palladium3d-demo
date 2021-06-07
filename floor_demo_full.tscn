@@ -859,7 +859,6 @@ transform = Transform( 0.336796, 0.365726, -0.867648, -0.0239097, 0.924508, 0.38
 [node name="conversation_area_corridor_talk" parent="." instance=ExtResource( 79 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494, 4.381, 25.893 )
 script = ExtResource( 81 )
-conversation_area_id = 0
 conversations = {
 "bandit": "022_CorridorTalkMax",
 "father": "",
@@ -877,10 +876,6 @@ conversaton_delays = {
 "skeleton": 0.0
 }
 cutscene_node_path = NodePath("")
-repeatable = false
-discussable_with_self = false
-exclusive = false
-area_dependent = false
 
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_corridor_talk"]
 shape = SubResource( 7 )
@@ -902,7 +897,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571505, 9.89932, 73.3017 )
 [node name="conversation_area_before_eris" parent="." instance=ExtResource( 79 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.92702, 2.202, 37.4223 )
 script = ExtResource( 82 )
-conversation_area_id = 0
 conversations = {
 "bandit": "020_BeforeEridaMax",
 "father": "",
@@ -920,10 +914,6 @@ conversaton_delays = {
 "skeleton": 0.0
 }
 cutscene_node_path = NodePath("")
-repeatable = false
-discussable_with_self = false
-exclusive = false
-area_dependent = false
 
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_before_eris"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.20436, -0.394379 )
@@ -1037,7 +1027,6 @@ visible = false
 [node name="conversation_area_palladium" parent="." instance=ExtResource( 79 )]
 transform = Transform( 0.999899, 0, -0.0142185, 0, 1, 0, 0.0142185, 0, 0.999899, 0.732417, 3.27982, 30.6924 )
 script = ExtResource( 91 )
-conversation_area_id = 0
 conversations = {
 "bandit": "173_Metallic_tube",
 "father": "",
@@ -1055,10 +1044,6 @@ conversaton_delays = {
 "skeleton": 0.0
 }
 cutscene_node_path = NodePath("PositionCamera")
-repeatable = false
-discussable_with_self = false
-exclusive = false
-area_dependent = false
 
 [node name="CollisionShape" type="CollisionShape" parent="conversation_area_palladium"]
 shape = SubResource( 12 )
@@ -1082,6 +1067,9 @@ transform = Transform( -6.55663e-008, -0.065946, 1.49855, 3.18401e-010, 1.49855,
 transform = Transform( 1.05, 0, 0, 0, 0.92, 0, 0, 0, 1, 0.429867, 10.2868, 74.7445 )
 
 [node name="vabtablack_demo" parent="." instance=ExtResource( 94 )]
+
+[node name="PositionCompanionRespawn" type="Position3D" parent="."]
+transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.808252, 1.25253, 20.8253 )
 [connection signal="body_entered" from="AreaApata" to="." method="_on_AreaApata_body_entered"]
 [connection signal="body_entered" from="AreaMuses" to="." method="_on_AreaMuses_body_entered"]
 [connection signal="body_entered" from="AreaApataDone" to="." method="_on_AreaApataDone_body_entered"]

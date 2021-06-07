@@ -161,6 +161,7 @@
 "SETTINGS_CUTOFF_ENABLED","Dynamic camera distance (can help with performance)","Динамическая дальность камеры (может улучшить производительность)"
 "SETTINGS_SHADER_CACHE_ENABLED","Use shader cache (use it if you experience stutters during the game)","Использовать кэш шейдеров (используйте, если во время игры возникают подвисания)"
 "SETTINGS_PAUSE_ON_JOY_DISCONNECTED","Pause game if joypad was disconnected","Ставить игру на паузу при отключении контроллера"
+"SETTINGS_DISABLE_MOUSE_IF_JOY_CONNECTED","Disable mouse if joypad is connected","Отключить мышь, если контроллер подключен"
 "SETTINGS_SENSITIVITY","Mouse sensitivity","Чувствительность мыши"
 "SETTINGS_QUALITY","Quality","Качество"
 "SETTINGS_RESOLUTION","Resolution","Разрешение"

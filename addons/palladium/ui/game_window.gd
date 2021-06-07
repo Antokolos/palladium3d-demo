@@ -6,7 +6,11 @@ func _input(event):
 		get_tree().set_input_as_handled()
 
 func do_input(event):
-	if common_utils.has_joypads() and event is InputEventMouseMotion:
+	if (
+		settings.disable_mouse_if_joy_connected
+		and common_utils.has_joypads()
+		and event is InputEventMouseMotion
+	):
 		return 2
 	if common_utils.is_mouse_captured():
 		var is_joy_motion = event is InputEventJoypadMotion

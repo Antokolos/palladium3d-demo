@@ -20,8 +20,11 @@ func do_init(is_loaded):
 	get_tree().call_group("takables", "connect_signals", self)
 	game_state.connect("shader_cache_processed", self, "_on_shader_cache_processed")
 	player.connect("arrived_to", self, "_on_arrived_to")
+	player.connect("out_of_bounds", self, "_on_out_of_bounds")
 	player_female.connect("arrived_to", self, "_on_arrived_to")
+	player_female.connect("out_of_bounds", self, "_on_out_of_bounds")
 	player_bandit.connect("arrived_to", self, "_on_arrived_to")
+	player_bandit.connect("out_of_bounds", self, "_on_out_of_bounds")
 	conversation_manager.connect("conversation_finished", self, "_on_conversation_finished")
 	conversation_manager.connect("meeting_started", self, "_on_meeting_started")
 	conversation_manager.connect("meeting_finished", self, "_on_meeting_finished")
@@ -142,6 +145,11 @@ func _on_meeting_started(player, target, initiator):
 func _on_meeting_finished(player, target, initiator):
 	if not player_female.is_in_party():
 		player_female.set_target_node(get_node("PositionBoat"))
+
+func _on_out_of_bounds(player_node):
+	if not player_node or not player_node.is_in_party():
+		return
+	player_node.teleport($PositionCompanion)
 
 func _on_AreaGrass_body_entered(body):
 	if body.is_in_group("party"):

@@ -323,6 +323,7 @@ func _on_conversation_started(player, conversation_name, target, initiator):
 
 func _on_player_registered(player):
 	player.connect("arrived_to", self, "_on_arrived_to")
+	player.connect("out_of_bounds", self, "_on_out_of_bounds")
 	player.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
@@ -417,6 +418,11 @@ func _on_arrived_to(player_node, target_node):
 	if tid == oid and not player_node.is_in_party():
 		player_node.set_hidden(true)
 		player_node.deactivate()
+
+func _on_out_of_bounds(player_node):
+	if not player_node or not player_node.is_in_party():
+		return
+	player_node.teleport($PositionCompanionRespawn)
 
 func restore_state():
 	if game_state.has_item(DB.TakableIds.ATHENA) or game_state.get_activatable_state_by_id(DB.ActivatableIds.LAST_TRAP_FLOOR) == PLDGameState.ActivatableState.ACTIVATED:

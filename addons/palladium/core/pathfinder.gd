@@ -5,10 +5,12 @@ signal activated_changed(player_node, previous_state, new_state)
 signal rest_state_changed(player_node, previous_state, new_state)
 signal arrived_to(player_node, target_node)
 signal arrived_to_boundary(player_node, target_node)
+signal out_of_bounds(player_node)
 
 const X_DIR = Vector3(1, 0, 0)
 const Y_DIR = Vector3(0, 1, 0)
 const Z_DIR = Vector3(0, 0, 1)
+const MAX_LOWER_LIMIT_Y = -99
 
 const DRAW_PATH = false
 
@@ -426,12 +428,15 @@ func shadow_casting_enable(enable):
 
 func get_movement_data(is_player):
 	var data = PLDMovementData.new().with_rest_state(rest_state)
+	var current_transform = get_global_transform()
+	if current_transform.origin.y < MAX_LOWER_LIMIT_Y:
+		data.with_signal("out_of_bounds", [])
+		return data
 	if not is_activated() or is_taking_damage():
 		return data
 	var target_position = get_target_position()
 	if not target_position:
 		return data
-	var current_transform = get_global_transform()
 	if not is_player or not in_party or cutscene_manager.is_cutscene():
 		build_path(target_position)
 		return follow(current_transform, path.front() if path.size() > 0 else target_position)

@@ -223,7 +223,10 @@ func get_movement_data(is_player):
 			dir_input += -cam_xform.basis.z.normalized() * n.y
 			dir_input += cam_xform.basis.x.normalized() * n.x
 			get_cam().walk_initiate(self)
-			return PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
+			var data = PLDMovementData.new().with_dir(dir_input).with_rest_state(false)
+			if cam_xform.origin.y < MAX_LOWER_LIMIT_Y:
+				data.with_signal("out_of_bounds", [])
+			return data
 	else:
 		if is_player and not cutscene_manager.is_cutscene():
 			get_cam().walk_stop(self)
