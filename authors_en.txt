@@ -21,6 +21,24 @@ Andreas: Anton Kolosov
 Xenia: Olga Kolosova
 Max: Sergey Sevostianov
 
+[b]Software[/b]
+[url=https://www.gimp.org]GIMP[/url], free and open source image editor.
+[url=https://www.audacityteam.org]Audacity[/url], free, open source, cross-platform audio software for multi-track recording and editing.
+[url=https://www.blender.org]Blender[/url], free and open source 3D Creation Suite.
+[url=http://www.makehuman.org]MakeHuman[/url], open source tool for making 3D characters.
+[url=https://boundingboxsoftware.com/materialize]Materialize[/url], stand alone open source tool for creating materials for use in games from images.
+[url=https://www.libreoffice.org]LibreOffice[/url], a powerful and free office suite.
+[url=https://www.sublimetext.com]Sublime Text[/url], the sophisticated text editor for code, markup and prose.
+[url=https://obsproject.com]OBS Studio[/url], free and open source software for video recording and live streaming.
+[url=https://www.videosoftdev.com]VSDC[/url], Free Video Editor for Windows.
+[url=https://www.ffmpeg.org]FFmpeg[/url], a complete, cross-platform solution to record, convert and stream audio and video.
+[url=https://visualstudio.microsoft.com]Visual Studio[/url], full-featured IDE to code, debug, test, and deploy to any platform.
+[url=https://godotengine.org]Godot Engine[/url], free and open source 2D and 3D game engine.
+[url=https://github.com/inkle/ink]Inkle's Ink[/url], scripting language for writing interactive narrative.
+[url=https://github.com/ephread/inkgd]Inkgd[/url], implementation of [url=https://github.com/inkle/ink]inkle's Ink[/url] in pure GDScript, with editor support.
+[url=https://github.com/Gramps/GodotSteam]GodotSteam[/url], Steam API for the Godot game engine (version 3.0 - 3.3.1). For the Windows, Linux, and Mac platforms.
+[url=https://github.com/benbishopnz/godot-credits]Godot-credits[/url], a basic credits scene for use in Godot game development engine.
+
 [b]Fonts[/b]
 [url=https://www.1001fonts.com/roboto-font.html]Roboto Font Family[/url] by Christian Robertson, Font data copyright Google 2014, [url=http://www.apache.org/licenses/LICENSE-2.0]Apache License[/url]
 [url=https://www.1001fonts.com/forum-font.html]Forum Regular[/url] Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>, [url=http://scripts.sil.org/OFL]OFL[/url]

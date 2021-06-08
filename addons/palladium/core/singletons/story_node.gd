@@ -53,7 +53,7 @@ func _add_runtime():
 	make_slot_dirs(3)
 	make_slot_dirs(4)
 	make_slot_dirs(5)
-	reset_all()
+	rebuild_all()
 
 func _remove_runtime():
 	InkRuntime.deinit(get_tree().root)
@@ -444,6 +444,9 @@ func reload_all_saves(slot : int) -> void:
 			load_save_or_reset(slot, palladiumStory)
 
 func reset_all():
+	reload_all_saves(-1)
+
+func rebuild_all():
 	build_stories_cache(-1, INK_SCRIPTS_DIR)
 
 func can_continue() -> bool:

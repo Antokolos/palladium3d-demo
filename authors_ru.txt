@@ -21,6 +21,24 @@ techniX
 Ксения: Ольга Колосова
 Макс: Сергей Севостьянов
 
+[b]Программы[/b]
+[url=https://www.gimp.org]GIMP[/url], бесплатный редактор изображений с открытым исходным кодом.
+[url=https://www.audacityteam.org]Audacity[/url], бесплатное кроссплатформенное программное обеспечение для работы со звуком с открытым исходным кодом для многодорожечной записи и редактирования.
+[url=https://www.blender.org]Blender[/url], бесплатный пакет программ для создания 3D графики с открытым исходным кодом.
+[url=http://www.makehuman.org]MakeHuman[/url], инструмент с открытым кодом для создания 3D персонажей.
+[url=https://boundingboxsoftware.com/materialize]Materialize[/url], инструмент с открытым кодом для создания материалов из изображений для использования в играх.
+[url=https://ru.libreoffice.org]LibreOffice[/url], бесплатный офисный пакет с открытым исходным кодом.
+[url=https://www.sublimetext.com]Sublime Text[/url], продвинутый текстовый редактор для кода, разметки и прозы.
+[url=https://obsproject.com/ru]OBS Studio[/url], бесплатная программа с открытым исходным кодом для записи видео и потокового вещания.
+[url=https://www.videosoftdev.com/ru]VSDC[/url], бесплатный редактор для видео и аудио.
+[url=https://www.ffmpeg.org]FFmpeg[/url], полное кроссплатформенное решение для записи, преобразования и потоковой передачи аудио и видео.
+[url=https://visualstudio.microsoft.com/ru]Visual Studio[/url], полнофункциональная интегрированная среда разработки для написания, отладки, тестирования и развертывания кода на любой платформе.
+[url=https://godotengine.org]Godot Engine[/url], открытый кроссплатформенный 2D и 3D игровой движок с открытым исходным кодом.
+[url=https://github.com/inkle/ink]Inkle's Ink[/url], язык сценариев для написания интерактивного повествования.
+[url=https://github.com/ephread/inkgd]Inkgd[/url], реализация языка [url=https://github.com/inkle/ink]Ink[/url] на чистом GDScript, с поддержкой редактора.
+[url=https://github.com/Gramps/GodotSteam]GodotSteam[/url], API Steam для игрового движка Godot (версий 3.0 - 3.3.1). Для Windows, Linux и Mac.
+[url=https://github.com/benbishopnz/godot-credits]Godot-credits[/url], базовый код для создания титров для игрового движка Godot.
+
 [b]Шрифты[/b]
 [url=https://www.1001fonts.com/roboto-font.html]Roboto Font Family[/url] от Christian Robertson, Font data copyright Google 2014, [url=http://www.apache.org/licenses/LICENSE-2.0]Apache License[/url]
 [url=https://www.1001fonts.com/forum-font.html]Forum Regular[/url] Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>, [url=http://scripts.sil.org/OFL]OFL[/url]
