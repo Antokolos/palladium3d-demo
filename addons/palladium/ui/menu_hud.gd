@@ -4,14 +4,16 @@ onready var dimmer = get_node("Dimmer")
 onready var tablet = get_node("tablet")
 
 onready var mouse_cursor = get_node("mouse_cursor")
+onready var label_joy_hint = get_node("LabelJoyHint")
 
 func _ready():
 	common_utils.show_mouse_cursor_if_needed_in_game(self)
-	$LabelJoyHint.visible = common_utils.has_joypads()
+	label_joy_hint.text = tr("MAIN_MENU_JOY_HINT") % common_utils.get_input_control("ui_accept", false)
+	label_joy_hint.visible = common_utils.has_joypads()
 	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
 
 func _on_joy_connection_changed(device_id, is_connected):
-	$LabelJoyHint.visible = common_utils.has_joypads()
+	label_joy_hint.visible = common_utils.has_joypads()
 
 func is_menu_hud():
 	return true

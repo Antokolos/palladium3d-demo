@@ -52,7 +52,6 @@ anchor_top = 1.0
 anchor_right = 0.9
 anchor_bottom = 1.0
 grow_vertical = 0
-text = "MAIN_MENU_JOY_HINT"
 align = 1
 valign = 1
 
