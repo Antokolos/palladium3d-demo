@@ -69,7 +69,7 @@ func _ready():
 	_on_TabletOrientation_item_selected(settings.tablet_orientation)
 
 	joypad_type.add_item("XBOX", settings.JOYPAD_XBOX)
-	joypad_type.add_item("PS", settings.JOYPAD_PS)
+	joypad_type.add_item("PlayStation", settings.JOYPAD_PS)
 	joypad_type.add_item("NINTENDO", settings.JOYPAD_NINTENDO)
 	match (settings.joypad_type):
 		settings.JOYPAD_XBOX:
