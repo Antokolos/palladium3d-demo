@@ -384,6 +384,9 @@ func current_scene_was_loaded_before():
 	return get_current_scene_data().loads_count > 1
 
 func change_scene(scene_path, is_transition = false, fade_out = false):
+	for character in get_characters():
+		if character.is_stunned():
+			character.stun_stop()
 	characters_transition_data = get_characters_data() if is_transition else {}
 	if not scenes_data.has(scene_path):
 		scenes_data[scene_path] = DB.SCENE_DATA_DEFAULT.duplicate(true)

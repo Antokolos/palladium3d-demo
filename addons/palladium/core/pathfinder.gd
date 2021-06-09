@@ -97,9 +97,13 @@ func is_player():
 func is_player_controlled():
 	return is_in_party() and is_player() and not cutscene_manager.is_cutscene()
 
+func is_activated_flag():
+	# If we want to just check the activation flag and not the pause state
+	return activated
+
 func is_activated():
 	# Checking is_physics_processing() because node can be paused
-	return activated and is_physics_processing()
+	return is_activated_flag() and is_physics_processing()
 
 func is_rest_state():
 	return rest_state

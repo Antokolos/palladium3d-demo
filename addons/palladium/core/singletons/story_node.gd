@@ -35,7 +35,11 @@ var _inkStoriesStates = Dictionary()
 # This map will be cleared when the game is saved.
 var _currentSessionStories = Dictionary()
 
+var actors_regex = RegEx.new()
+
 func _ready():
+	# actors_regex.compile("#\\s*actor:(\\S*)") -- this RegEx can be used to search in *.ink file, but for *.ink.json we should use another one
+	actors_regex.compile("{\"#\":\"actor:([^\"]+)")
 	call_deferred("_add_runtime")
 
 func _exit_tree():
@@ -85,11 +89,12 @@ func build_stories_cache_for_locale(slot : int, storiesDirectoryPath : String, l
 		elif file.ends_with(".ink.json"):
 			var storyName : String = ("" if subPath.empty() else subPath + "/") + file
 			var storyPath : String = basePath + "/" + file
-			var story = load_story_from_file(storyPath)
+			var story_data = load_story_from_file(storyPath)
+			var story = story_data.story
 			bind_external_functions(story)
 			# TODO: Probably we need to support multiple chat driven stories?
 			var chatDriven : bool = (file == "Chat.ink.json")
-			var palladiumStory : PLDStory = PLDStory.new(story, storiesDirectoryPath, locale, storyName, chatDriven)
+			var palladiumStory : PLDStory = PLDStory.new(story, storiesDirectoryPath, locale, storyName, chatDriven, story_data.actors)
 			load_save_or_reset(slot, palladiumStory)
 			storiesByLocale[("" if subPath.empty() else subPath + "/") + file] = palladiumStory
 	dir.list_dir_end()
@@ -111,12 +116,25 @@ func bind_external_functions(story):
 
 func load_story_from_file(path : String): # Story
 	var text : String = ""
+	var actors = []
 	var file : File = File.new()
 	if file.file_exists(path):
 		file.open(path, File.READ)
 		text = file.get_as_text()
+		for result in actors_regex.search_all(text):
+			var a = result.get_string(1)
+			var new_actor = true
+			for actor in actors:
+				if actor.casecmp_to(a) == 0:
+					new_actor = false
+					break
+			if new_actor:
+				actors.append(a)
 		file.close()
-	return Story.new(text)
+	return {
+		"story" : Story.new(text),
+		"actors" : actors
+	}
 
 # Very similar to load_story(), but does not change the _inkStory
 func check_story_not_finished(storyPath : String) -> bool:
@@ -155,7 +173,7 @@ func load_story(storyPath : String, chatDriven : bool, repeatable : bool) -> voi
 		if _inkStory.has(locale):
 			_inkStory.erase(locale)
 		if not _inkStories.has(locale):
-			continue;
+			continue
 		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
 		if storiesByLocale.has(storyPath):
 			var cachedPalladiumStory : PLDStory = storiesByLocale[storyPath]
@@ -168,6 +186,19 @@ func load_story(storyPath : String, chatDriven : bool, repeatable : bool) -> voi
 			_inkStory[locale].reset_state()
 			_inkStoriesStates[locale][storyPath].story_state = ""
 		_currentSessionStories[locale][storyPath] = _inkStory[locale]
+
+func get_actors_name_hints(storyPath : String):
+	for locale in AvailableLocales:
+		if not _inkStories.has(locale):
+			continue
+		var storiesByLocale : Dictionary = _inkStories[locale] # Dictionary<String, PLDStory>
+		if storiesByLocale.has(storyPath):
+			var cachedPalladiumStory : PLDStory = storiesByLocale[storyPath]
+			# In fact, all locales should hold the same actors
+			return cachedPalladiumStory.get_actors()
+		else:
+			push_error("Story '%s' for locale '%s' was not found in cache")
+	return []
 
 func _observe_variable(variable_name, new_value) -> void:
 	game_state.story_vars[variable_name] = new_value

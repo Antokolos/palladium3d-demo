@@ -12,7 +12,7 @@ signal attack_started(player_node, target, attack_anim_idx)
 signal attack_stopped(player_node, target, attack_anim_idx)
 signal attack_finished(player_node, target, previous_target, attack_anim_idx)
 signal stun_started(player_node, weapon)
-signal stun_finished(player_node)
+signal stun_finished(player_node, prematurely)
 signal take_damage(player_node, fatal, hit_direction_node, hit_dir_vec)
 
 const GRAVITY_DEFAULT = 10.2
@@ -584,6 +584,12 @@ func set_morale(morale_new : int):
 	morale = morale_new
 	if morale_prev != morale:
 		emit_signal("morale_changed", self, morale_prev, morale)
+
+func is_stunned():
+	return character_nodes.is_stunned()
+
+func stun_stop():
+	return character_nodes.stun_stop(true)
 
 func get_stuns_count() -> int:
 	return stuns_count

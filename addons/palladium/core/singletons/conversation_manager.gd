@@ -254,6 +254,14 @@ func start_conversation(player, conversation_name, target = null, initiator = nu
 	var cp_story = get_story_path(conversation_name, target.get_name_hint() if target else null)
 	if story_node.is_disabled(cp_story):
 		return
+	for actor in story_node.get_actors_name_hints(cp_story):
+		var character = game_state.get_character(actor)
+		if character:
+			if character.is_stunned():
+				# We can also emit signals and then restart the dialogue if we need to, but let's just remove the stun for now
+				character.stun_stop()
+			if not character.is_activated_flag():
+				return
 	if is_cutscene:
 		cutscene_manager.start_cutscene(player, cutscene_node, conversation_name, target)
 	else:

@@ -201,13 +201,30 @@ func use_weapon(item):
 		var weapon_data = DB.get_weapon_stun_data(item.item_id)
 		if weapon_data.stun_duration > 0:
 			MEDIA.play_sound(weapon_data.sound_id)
-			character.inc_stuns_count()
-			common_utils.set_pause_scene(character, true)
-			character.emit_signal("stun_started", character, item)
-			character.clear_target_node()
-			stun_timer.start(weapon_data.stun_duration)
+			stun_start(item, weapon_data.stun_duration)
 		else:
 			game_state.get_hud().queue_popup_message("MESSAGE_NOTHING_HAPPENS")
+
+func stun_start(item, stun_duration):
+	character.inc_stuns_count()
+	common_utils.set_pause_scene(character, true)
+	character.emit_signal("stun_started", character, item)
+	character.clear_target_node()
+	stun_timer.start(stun_duration)
+
+func is_stunned():
+	return not stun_timer.is_stopped()
+
+func stun_stop(prematurely):
+	var was_stunned = not stun_timer.is_stopped()
+	if was_stunned:
+		stun_timer.stop()
+	if prematurely and not was_stunned:
+		# It looks like that the stun has been already stopped by timer
+		return was_stunned
+	common_utils.set_pause_scene(character, false)
+	character.emit_signal("stun_finished", character, prematurely)
+	return was_stunned
 
 func has_floor_collision():
 	return under_feet_raycast.is_colliding()
@@ -308,8 +325,7 @@ func _on_PoisonTimer_timeout():
 	game_state.set_health(character, game_state.player_health_current - character.get_intoxication(), game_state.player_health_max)
 
 func _on_StunTimer_timeout():
-	common_utils.set_pause_scene(character, false)
-	character.emit_signal("stun_finished", character)
+	stun_stop(false)
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):
 	if is_attacking() and player_model.is_attack_cutscene(cutscene_id):

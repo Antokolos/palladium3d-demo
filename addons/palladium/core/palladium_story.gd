@@ -13,11 +13,14 @@ var _name : String
 var _storylog : Dictionary
 # Story choices can be chosen in chat
 var _chatdriven : bool
+# Story actors
+var _actors : Array
 
-func _init(inkstory, stories_path : String, locale : String, name : String, chatdriven : bool):
+func _init(inkstory, stories_path : String, locale : String, name : String, chatdriven : bool, actors : Array):
 	_inkstory = inkstory
 	_storylog = Dictionary()
 	_chatdriven = chatdriven
+	_actors = actors.duplicate(true)
 	_stories_path = stories_path
 	_locale = locale
 	_name = name
@@ -45,3 +48,7 @@ func is_chat_driven():
 
 func set_chat_driven(chatdriven : bool):
 	_chatdriven = chatdriven
+
+func get_actors():
+	# We return a copy to avoid side effects at all costs...
+	return _actors.duplicate(true)
