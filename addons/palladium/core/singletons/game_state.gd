@@ -1028,7 +1028,7 @@ func get_character_data(character):
 	var p = character.is_in_party()
 	
 	var result = {
-		"activated" : character.is_activated(),
+		"activated" : character.is_activated_flag(),
 		"dead" : character.is_dead(),
 		"pathfinding_enabled" : character.is_pathfinding_enabled(),
 		"in_party" : p,
