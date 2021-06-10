@@ -156,6 +156,15 @@ func is_hidden():
 func is_crouching():
 	return false
 
+func is_stunned():
+	return false
+
+func is_activated_flag():
+	return true
+
+func is_activated():
+	return true
+
 func play_cutscene(cutscene_id):
 	$AnimationTree.set("parameters/CutsceneTransition/current", cutscene_id)
 	$AnimationTree.set("parameters/CutsceneShot/active", true)
