@@ -48,14 +48,21 @@ var angle_y_reset = false
 func get_use_distance():
 	return use_distance
 
+func get_usage_code(player_node):
+	return ""
+
 func can_be_used_by(player_node):
-	return true
+	var uc = get_usage_code(player_node)
+	return uc and not uc.empty()
 
 func use(player_node, camera_node):
-	return false
+	return can_be_used_by(player_node)
 
 func add_highlight(player_node):
-	return ""
+	var uc = get_usage_code(player_node)
+	if not uc or uc.empty():
+		return ""
+	return common_utils.get_action_input_control() + tr(uc)
 
 func remove_highlight(player_node):
 	pass

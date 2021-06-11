@@ -370,12 +370,6 @@ func handle_conversation(player, target, initiator):
 		return
 	conversation_manager.start_conversation(player, "Conversation", target)
 
-func handle_player_highlight(initiator, target):
-	if not target.is_in_party() \
-		and conversation_manager.meeting_is_finished(target.name_hint, initiator.name_hint):
-		return ""
-	return common_utils.get_action_input_control() + tr("ACTION_TALK")
-
 func get_current_scene_data():
 	var scene_path = get_tree().current_scene.filename
 	return scenes_data[scene_path] if scenes_data.has(scene_path) else DB.SCENE_DATA_DEFAULT.duplicate(true)

@@ -36,17 +36,17 @@ func use(player_node, camera_node):
 func ask_for_attack(attacker):
 	attacker.attack_start(self)
 
-func add_highlight(player_node):
+func get_usage_code(player_node):
 	if not is_activated() or is_dying():
 		return ""
-	var h = .add_highlight(player_node)
-	if not h.empty():
-		return h
+	var uc = .get_usage_code(player_node)
+	if not uc.empty():
+		return uc
 	var attacker = get_possible_attacker()
 	if player_node.equals(attacker):
-		return common_utils.get_action_input_control() + tr("ACTION_SHOOT")
+		return "ACTION_SHOOT"
 	elif attacker:
-		return common_utils.get_action_input_control() + tr("ACTION_SHOOT")
+		return "ACTION_SHOOT"
 	return ""
 
 func hit(injury_rate, hit_direction_node = null, hit_dir_vec = Z_DIR):

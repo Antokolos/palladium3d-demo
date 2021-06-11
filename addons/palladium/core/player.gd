@@ -61,9 +61,14 @@ func use(player_node, camera_node):
 		game_state.handle_conversation(player_node, self, player_node)
 	return true
 
-func add_highlight(player_node):
-	var h = .add_highlight(player_node)
-	return game_state.handle_player_highlight(player_node, self) if h.empty() else h
+func get_usage_code(player_node):
+	var uc = .get_usage_code(player_node)
+	if not uc.empty():
+		return uc
+	if not is_in_party() \
+		and conversation_manager.meeting_is_finished(get_name_hint(), player_node.get_name_hint()):
+		return ""
+	return "ACTION_TALK"
 
 ### States ###
 

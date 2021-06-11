@@ -223,15 +223,15 @@ func can_be_given(item):
 		return false
 	return item.can_be_given()
 
-func add_highlight(player_node):
+func get_usage_code(player_node):
 	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if item_is_weapon(item):
-			return common_utils.get_action_input_control() + tr("ACTION_ATTACK")
+			return "ACTION_ATTACK"
 		if can_be_given(item) and conversation_manager.meeting_is_finished(player_node.get_name_hint(), get_name_hint()):
-			return common_utils.get_action_input_control() + tr("ACTION_GIVE")
-	return ""
+			return "ACTION_GIVE"
+	return .get_usage_code(player_node)
 
 ### Getting character's parts ###
 
