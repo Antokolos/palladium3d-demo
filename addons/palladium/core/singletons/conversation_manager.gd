@@ -122,20 +122,30 @@ func start_pending_conversation_if_any():
 	var c = pending_area_conversations.pop_front()
 	if not c:
 		return
+	if conversation_is_finished(c.conversation_name) and not c.repeatable:
+		return
 	if c.pending_delay > 0.0:
 		pending_conversation_timer.start(c.pending_delay)
 		yield(pending_conversation_timer, "timeout")
-	if c.repeatable or conversation_is_not_finished(c.conversation_name):
-		start_conversation(
-			c.player,
-			c.conversation_name,
-			c.target,
-			c.initiator,
-			c.is_cutscene,
-			c.cutscene_node,
-			c.repeatable,
-			c.area_to_check
-		)
+	if conversation_is_in_progress():
+		if conversation_is_in_progress(c.conversation_name):
+			return
+		for conversation in pending_area_conversations:
+			if c.conversation_name == conversation.conversation_name:
+				# This is highly unlikely, but let's check this anyway
+				return
+		pending_area_conversations.push_front(c)
+		return
+	start_conversation(
+		c.player,
+		c.conversation_name,
+		c.target,
+		c.initiator,
+		c.is_cutscene,
+		c.cutscene_node,
+		c.repeatable,
+		c.area_to_check
+	)
 
 func stop_conversation(player):
 	if not conversation_is_in_progress():
