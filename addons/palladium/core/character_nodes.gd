@@ -13,6 +13,7 @@ onready var stun_timer = $StunTimer
 onready var attack_timer = $AttackTimer
 onready var rest_timer = $RestTimer
 
+onready var melee_attack_area = $MeleeAttackArea
 onready var melee_damage_area = $MeleeDamageArea
 onready var ranged_damage_raycast = $RangedDamageRayCast
 onready var standing_raycast = $StandingRayCast
@@ -33,6 +34,7 @@ func _ready():
 	game_state.connect("player_underwater", self, "_on_player_underwater")
 	game_state.connect("player_poisoned", self, "_on_player_poisoned")
 	character.get_model().connect("cutscene_finished", self, "_on_cutscene_finished")
+	melee_attack_area.monitoring = character.has_melee_attack()
 	melee_damage_area.monitoring = character.has_melee_attack()
 	ranged_damage_raycast.enabled = character.has_ranged_attack()
 	standing_raycast.add_exception(character)
@@ -233,6 +235,24 @@ func get_possible_attack_target(update_collisions):
 	if not character.is_activated():
 		return null
 	if character.has_melee_attack():
+		for body in melee_attack_area.get_overlapping_bodies():
+			if character.equals(body):
+				continue
+			if body.is_in_group("party") or body.is_in_group("enemies"):
+				return body
+	if character.has_ranged_attack():
+		if update_collisions:
+			ranged_damage_raycast.force_raycast_update()
+		if ranged_damage_raycast.is_colliding():
+			var body = ranged_damage_raycast.get_collider()
+			if body.is_in_group("party") or body.is_in_group("enemies"):
+				return body
+	return null
+
+func get_possible_damage_target(update_collisions):
+	if not character.is_activated():
+		return null
+	if character.has_melee_attack():
 		for body in melee_damage_area.get_overlapping_bodies():
 			if character.equals(body):
 				continue
@@ -294,6 +314,7 @@ func enable_areas_and_raycasts(enable):
 	standing_raycast.enabled = enable
 	under_feet_raycast.enabled = enable
 	ranged_damage_raycast.enabled = enable
+	melee_attack_area.get_node("CollisionShape").disabled = not enable
 	melee_damage_area.get_node("CollisionShape").disabled = not enable
 
 func is_visible_to_player():
@@ -339,7 +360,7 @@ func _on_AttackTimer_timeout():
 #		return
 	var last_attack_data = character.get_last_attack_data()
 	var last_attack_target = last_attack_data.target
-	var attack_target = get_possible_attack_target(true)
+	var attack_target = get_possible_damage_target(true)
 	if attack_target:
 		play_attack_sound()
 		if attack_target.is_in_group("party"):

@@ -164,6 +164,7 @@ func cleanup_paths():
 
 func reset_variables():
 	scene_path = DB.SCENE_PATH_DEFAULT
+	scenes_data = {}
 	player_name_hint = ""
 	player_health_current = DB.PLAYER_HEALTH_CURRENT_DEFAULT
 	player_health_max = DB.PLAYER_HEALTH_MAX_DEFAULT
