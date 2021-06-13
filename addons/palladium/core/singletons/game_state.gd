@@ -138,12 +138,6 @@ static func sanitize_items(items):
 	return result
 
 func _ready():
-	sky_outside = PanoramaSky.new()
-	sky_outside.panorama = load("res://addons/palladium/assets/cape_hill_4k.hdr")
-	sky_outside.radiance_size = Sky.RADIANCE_SIZE_32
-	sky_inside = PanoramaSky.new()
-	sky_inside.panorama = load("res://addons/palladium/assets/ui/undersky5.png")
-	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	cleanup_paths()
 	reset_variables()
 
@@ -163,6 +157,12 @@ func cleanup_paths():
 	conversation_area_paths.clear()
 
 func reset_variables():
+	sky_outside = PanoramaSky.new()
+	sky_outside.panorama = load("res://addons/palladium/assets/cape_hill_4k.hdr")
+	sky_outside.radiance_size = Sky.RADIANCE_SIZE_32
+	sky_inside = PanoramaSky.new()
+	sky_inside.panorama = load("res://addons/palladium/assets/ui/undersky5.png")
+	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
 	scene_path = DB.SCENE_PATH_DEFAULT
 	scenes_data = {}
 	player_name_hint = ""
