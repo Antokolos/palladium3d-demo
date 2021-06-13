@@ -36,7 +36,7 @@ func attack(attack_anim_idx = -1):
 
 func restore_state():
 	var minotaur_labyrinth = game_state.get_room_enabler(DB.RoomIds.MINOTAUR_LABYRINTH)
-	if not minotaur_labyrinth:
+	if not minotaur_labyrinth or not minotaur_labyrinth.player_is_in_room():
 		remove_gun()
 		return
 	if conversation_manager.conversation_is_finished("136_What_is_that_noise") \

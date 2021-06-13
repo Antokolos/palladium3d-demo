@@ -58,9 +58,6 @@ func is_room_enabled():
 	else:
 		return room_node.visible
 
-func player_is_in_room():
-	return player_is_in_room
-
 func enable_room():
 	var room_node = get_room_node()
 	if REMOVE_FROM_TREE:
@@ -89,6 +86,18 @@ func set_active(active):
 	if not active:
 		enable_room()
 
+func player_is_in_room(camera_global_origin = null):
+	var origin = camera_global_origin
+	if not origin:
+		var player = game_state.get_player()
+		if not player:
+			return false
+		var camera = player.get_cam()
+		if not camera:
+			return false
+		origin = camera.get_global_transform().origin
+	return get_aabb().has_point(to_local(origin))
+
 func _physics_process(delta):
 	if not game_state.is_level_ready():
 		return
@@ -104,7 +113,7 @@ func _physics_process(delta):
 		return
 	var origin = camera.get_global_transform().origin
 	var player_is_in_room_prev = player_is_in_room
-	player_is_in_room = get_aabb().has_point(to_local(origin))
+	player_is_in_room = player_is_in_room(origin)
 	if player_is_in_room and not player_is_in_room_prev:
 		emit_signal("player_entered_room", room_id)
 	elif player_is_in_room_prev and not player_is_in_room:
