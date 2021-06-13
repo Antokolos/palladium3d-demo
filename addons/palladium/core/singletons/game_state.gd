@@ -163,6 +163,8 @@ func reset_variables():
 	sky_inside = PanoramaSky.new()
 	sky_inside.panorama = load("res://addons/palladium/assets/ui/undersky5.png")
 	sky_inside.radiance_size = Sky.RADIANCE_SIZE_32
+	sky_rotation_degrees = SKY_ROTATION_DEGREES_DEFAULT
+	time_of_day = TimeOfDay.MORNING
 	scene_path = DB.SCENE_PATH_DEFAULT
 	scenes_data = {}
 	player_name_hint = ""
