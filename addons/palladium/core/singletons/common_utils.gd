@@ -287,6 +287,14 @@ func set_achievement(achievement_name, and_store_stats = true):
 		store_stats()
 	return result
 
+func has_achievement(achievement_name):
+	if not is_steam_running():
+		return {
+			"ret" : false,
+			"achieved" : false
+		}
+	return _steam.getAchievement(achievement_name)
+
 func set_achievement_progress(achievement_name, progress_current, progress_max, and_store_stats = true):
 	if not is_steam_running():
 		return false

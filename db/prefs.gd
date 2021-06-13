@@ -75,8 +75,11 @@ func resend_achievements():
 			store_achievement(achievement_id)
 		elif CLEAR_ON_SERVER_IF_NOT_IN_PREFS:
 			common_utils.clear_achievement(achievement_id, false)
-	if CLEAR_ON_SERVER_IF_NOT_IN_PREFS:
-		common_utils.store_stats()
+		else: # not CLEAR_ON_SERVER_IF_NOT_IN_PREFS
+			var ach = common_utils.has_achievement(achievement_id)
+			if ach and ach.ret and ach.achieved:
+				set_achievement(achievement_id)
+	common_utils.store_stats()
 
 func load_prefs():
 	var f = File.new()
