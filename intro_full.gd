@@ -23,6 +23,8 @@ func _on_conversation_finished(player, conversation_name, target, initiator, las
 			game_state.change_scene("res://forest.tscn", false, true)
 
 func _on_shader_cache_processed():
+	$male_bag.visible = true
+	$male_intro.visible = true
 	conversation_manager.start_area_conversation("024_Phone")
 
 func _on_cutscene_finished(player, player_model, cutscene_id, was_active):

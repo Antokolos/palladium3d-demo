@@ -50,8 +50,10 @@ is_loadable = false
 [node name="father" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 9 )]
 
 [node name="male_intro" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 10 )]
+visible = false
 
 [node name="male_bag" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 11 )]
+visible = false
 
 [node name="intro_phone" parent="ViewportContainer/Viewport/intro_full" instance=ExtResource( 12 )]
 
