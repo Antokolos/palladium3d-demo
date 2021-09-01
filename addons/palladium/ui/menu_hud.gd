@@ -5,9 +5,12 @@ onready var tablet = get_node("tablet")
 
 onready var mouse_cursor = get_node("mouse_cursor")
 onready var label_joy_hint = get_node("LabelJoyHint")
+onready var image_adjust = get_node("ImageAdjust")
 
 func _ready():
 	common_utils.show_mouse_cursor_if_needed_in_game(self)
+	settings.connect("image_adjust_changed", self, "_on_image_adjust_changed")
+	_on_image_adjust_changed(settings.use_image_adjust, settings.brightness, settings.contrast, settings.saturation)
 	label_joy_hint.text = tr("MAIN_MENU_JOY_HINT") % common_utils.get_input_control("ui_accept", false)
 	label_joy_hint.visible = common_utils.has_joypads()
 	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
@@ -45,6 +48,12 @@ func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 
 func update_hud():
 	pass
+
+func _on_image_adjust_changed(enabled, brightness, contrast, saturation):
+	image_adjust.visible = enabled
+	image_adjust.material.set_shader_param("brightness", brightness)
+	image_adjust.material.set_shader_param("contrast", contrast)
+	image_adjust.material.set_shader_param("saturation", saturation)
 
 func _unhandled_input(event):
 	if not get_tree().paused and event.is_action_pressed("ui_tablet_toggle") and not game_state.is_video_cutscene():

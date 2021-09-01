@@ -2,6 +2,7 @@ extends Control
 class_name PLDTablet
 
 const SENS_FORMAT = "%0.2f"
+const ADJUST_FORMAT = "%0.2f"
 
 onready var tablet_panel = get_node("TabletPanel")
 onready var home_button = get_node("TabletPanel/HomeButton")
@@ -53,6 +54,13 @@ onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVol
 onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolume/MusicVolume")
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
 onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
+onready var use_image_adjust = settings_app.get_node("VBoxContainer/HImageAdjust/UseImageAdjust")
+onready var brightness = settings_app.get_node("VBoxContainer/HImageAdjust/BoxBrightness/Brightness")
+onready var brightness_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer/LabelValue")
+onready var contrast = settings_app.get_node("VBoxContainer/HImageAdjust/BoxContrast/Contrast")
+onready var contrast_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer/LabelValue")
+onready var saturation = settings_app.get_node("VBoxContainer/HImageAdjust/BoxSaturation/Saturation")
+onready var saturation_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer/LabelValue")
 
 enum ActivationMode {DESKTOP, CHAT, CREDITS, MAP, DOCUMENTS, SETTINGS, SAVE, LOAD}
 
@@ -185,6 +193,12 @@ func _ready():
 	music_volume_node.value = settings.music_volume
 	sound_volume_node.value = settings.sound_volume
 	speech_volume_node.value = settings.speech_volume
+	
+	use_image_adjust.pressed = settings.use_image_adjust
+	brightness.value = settings.brightness
+	contrast.value = settings.contrast
+	saturation.value = settings.saturation
+	_on_UseImageAdjust_pressed()
 
 func activate(mode):
 	visible = true
@@ -472,3 +486,25 @@ func _on_SoundVolume_value_changed(value):
 
 func _on_SpeechVolume_value_changed(value):
 	settings.set_speech_volume(value)
+
+func _on_UseImageAdjust_pressed():
+	var ia = use_image_adjust.is_pressed() if use_image_adjust else settings.use_image_adjust
+	settings.set_use_image_adjust(ia)
+	if brightness:
+		brightness.get_parent().visible = ia
+	if contrast:
+		contrast.get_parent().visible = ia
+	if saturation:
+		saturation.get_parent().visible = ia
+
+func _on_Brightness_value_changed(value):
+	settings.set_brightness(value)
+	brightness_value.text = ADJUST_FORMAT % value
+
+func _on_Contrast_value_changed(value):
+	settings.set_contrast(value)
+	contrast_value.text = ADJUST_FORMAT % value
+
+func _on_Saturation_value_changed(value):
+	settings.set_saturation(value)
+	saturation_value.text = ADJUST_FORMAT % value

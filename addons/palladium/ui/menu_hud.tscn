@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/palladium/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/palladium/ui/menu_hud.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/palladium/ui/tablet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/palladium/ui/quit_dialog.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/palladium/ui/mouse_cursor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/palladium/shaders/image_adjust.tres" type="Material" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 92
@@ -62,7 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v. 1.0.15"
+text = "v. 1.0.16"
 align = 2
 valign = 2
 
@@ -78,3 +79,12 @@ visible = false
 [node name="quit_dialog" parent="." instance=ExtResource( 5 )]
 
 [node name="mouse_cursor" parent="." instance=ExtResource( 6 )]
+
+[node name="ImageAdjust" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

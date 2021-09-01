@@ -6,6 +6,7 @@ signal quality_changed(ID)
 signal resolution_changed(ID)
 signal cutoff_enabled_changed(enabled)
 signal shader_cache_enabled_changed(enabled)
+signal image_adjust_changed(enabled, brightness, contrast, saturation)
 
 const BASE_SENSITIVITY = 0.1
 const SENSITIVITY_COEF_DEFAULT = 1.0
@@ -79,6 +80,10 @@ var master_volume = MASTER_VOLUME_DEFAULT
 var music_volume = MUSIC_VOLUME_DEFAULT
 var sound_volume = SOUND_VOLUME_DEFAULT
 var speech_volume = SPEECH_VOLUME_DEFAULT
+var use_image_adjust = false
+var brightness = 1.0
+var contrast = 1.0
+var saturation = 1.0
 
 var resolutions = [
 {
@@ -172,6 +177,18 @@ func load_settings():
 
 	if ("speech_volume" in d):
 		speech_volume = int(d.speech_volume)
+	
+	if ("use_image_adjust" in d):
+		use_image_adjust = bool(d.use_image_adjust)
+
+	if ("brightness" in d):
+		brightness = float(d.brightness)
+
+	if ("contrast" in d):
+		contrast = float(d.contrast)
+
+	if ("saturation" in d):
+		saturation = float(d.saturation)
 
 func save_settings():
 	var f = File.new()
@@ -200,7 +217,11 @@ func save_settings():
 		"master_volume" : master_volume,
 		"music_volume" : music_volume,
 		"sound_volume" : sound_volume,
-		"speech_volume" : speech_volume
+		"speech_volume" : speech_volume,
+		"use_image_adjust" : use_image_adjust,
+		"brightness" : brightness,
+		"contrast" : contrast,
+		"saturation" : saturation
 	}
 	f.store_line( to_json(d) )
 
@@ -331,6 +352,22 @@ func set_sound_volume(level):
 func set_speech_volume(level):
 	speech_volume = level
 	set_volume(speech_bus_id, level)
+
+func set_use_image_adjust(enable):
+	use_image_adjust = enable
+	emit_signal("image_adjust_changed", use_image_adjust, brightness, contrast, saturation)
+
+func set_brightness(b):
+	brightness = b
+	emit_signal("image_adjust_changed", use_image_adjust, brightness, contrast, saturation)
+
+func set_contrast(c):
+	contrast = c
+	emit_signal("image_adjust_changed", use_image_adjust, brightness, contrast, saturation)
+
+func set_saturation(s):
+	saturation = s
+	emit_signal("image_adjust_changed", use_image_adjust, brightness, contrast, saturation)
 
 func set_vsync(vs):
 	OS.set_use_vsync(vs)

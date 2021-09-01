@@ -497,6 +497,7 @@ custom_constants/separation = 20
 margin_right = 280.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 280, 0 )
+ticks_on_borders = true
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume"]
 margin_left = 300.0
@@ -523,6 +524,144 @@ margin_top = 1.0
 margin_right = 474.0
 margin_bottom = 15.0
 text = "SETTINGS_VOLUME_SPEECH"
+
+[node name="HImageAdjust" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 444.0
+margin_right = 1574.0
+margin_bottom = 464.0
+custom_constants/separation = 20
+
+[node name="UseImageAdjust" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
+margin_top = -147.0
+margin_right = 24.0
+margin_bottom = -123.0
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
+margin_left = 300.0
+margin_top = 3.0
+margin_right = 384.0
+margin_bottom = 17.0
+text = "SETTINGS_IMAGE_ADJUST"
+
+[node name="BoxBrightness" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
+margin_top = 167.0
+margin_right = 1574.0
+margin_bottom = 183.0
+custom_constants/separation = 20
+
+[node name="Brightness" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness"]
+margin_right = 280.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 280, 0 )
+min_value = 0.2
+max_value = 4.0
+step = 0.01
+value = 0.2
+ticks_on_borders = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "SETTINGS_BRIGHTNESS"
+align = 1
+
+[node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "1.00"
+align = 1
+
+[node name="BoxContrast" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
+margin_top = 167.0
+margin_right = 1574.0
+margin_bottom = 183.0
+custom_constants/separation = 20
+
+[node name="Contrast" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast"]
+margin_right = 280.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 280, 0 )
+min_value = 0.2
+max_value = 4.0
+step = 0.01
+value = 0.2
+ticks_on_borders = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "SETTINGS_CONTRAST"
+align = 1
+
+[node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "1.00"
+align = 1
+
+[node name="BoxSaturation" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
+margin_top = 167.0
+margin_right = 1574.0
+margin_bottom = 183.0
+custom_constants/separation = 20
+
+[node name="Saturation" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation"]
+margin_right = 280.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 280, 0 )
+min_value = 0.2
+max_value = 4.0
+step = 0.01
+value = 0.2
+ticks_on_borders = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "SETTINGS_SATURATION"
+align = 1
+
+[node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer"]
+margin_left = 300.0
+margin_top = 1.0
+margin_right = 474.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "1.00"
+align = 1
 
 [node name="controls_app" type="Panel" parent="TabletPanel/TabletScreen/apps"]
 visible = false
@@ -1183,6 +1322,10 @@ texture_hover = ExtResource( 29 )
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume/MusicVolume" to="." method="_on_MusicVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume/SoundVolume" to="." method="_on_SoundVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume/SpeechVolume" to="." method="_on_SpeechVolume_value_changed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/UseImageAdjust" to="." method="_on_UseImageAdjust_pressed"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness/Brightness" to="." method="_on_Brightness_value_changed"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast/Contrast" to="." method="_on_Contrast_value_changed"]
+[connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation/Saturation" to="." method="_on_Saturation_value_changed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot1/ButtonSlot1" to="." method="_on_ButtonSaveSlot1_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot2/ButtonSlot2" to="." method="_on_ButtonSaveSlot2_pressed"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/save_game_app/VBoxContainer/Slot3/ButtonSlot3" to="." method="_on_ButtonSaveSlot3_pressed"]

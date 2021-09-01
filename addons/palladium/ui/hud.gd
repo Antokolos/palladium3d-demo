@@ -40,6 +40,7 @@ onready var tablet = get_node("tablet")
 onready var crosshair = get_node("Crosshair")
 onready var surge_effect = get_node("SurgeEffect")
 onready var underwater_effect = get_node("UnderwaterEffect")
+onready var image_adjust = get_node("ImageAdjust")
 
 onready var indicators_panel = get_node("Indicators")
 onready var indicator_crouch = indicators_panel.get_node("IndicatorCrouchPanel/IndicatorCrouch")
@@ -71,6 +72,8 @@ func _ready():
 	game_state.connect("player_surge", self, "set_surge")
 	game_state.connect("player_underwater", self, "set_underwater")
 	settings.connect("language_changed", self, "on_language_changed")
+	settings.connect("image_adjust_changed", self, "_on_image_adjust_changed")
+	_on_image_adjust_changed(settings.use_image_adjust, settings.brightness, settings.contrast, settings.saturation)
 	cutscene_manager.connect("camera_borrowed", self, "_on_camera_borrowed")
 	cutscene_manager.connect("camera_restored", self, "_on_camera_restored")
 	on_health_changed(CHARS.PLAYER_NAME_HINT, game_state.player_health_current, game_state.player_health_max)
@@ -579,3 +582,21 @@ func _on_BloodSplatTimer_timeout():
 		$BloodSplat.visible = false
 		$BloodSplatTimer.stop()
 	$BloodSplat.set_modulate(m)
+
+func _on_image_adjust_changed(enabled, brightness, contrast, saturation):
+	image_adjust.visible = enabled and not surge_effect.visible and not underwater_effect.visible
+	image_adjust.material.set_shader_param("brightness", brightness)
+	image_adjust.material.set_shader_param("contrast", contrast)
+	image_adjust.material.set_shader_param("saturation", saturation)
+
+func _on_SurgeEffect_visibility_changed():
+	if surge_effect.visible:
+		image_adjust.visible = false
+	else:
+		image_adjust.visible = settings.use_image_adjust
+
+func _on_UnderwaterEffect_visibility_changed():
+	if underwater_effect.visible:
+		image_adjust.visible = false
+	else:
+		image_adjust.visible = settings.use_image_adjust

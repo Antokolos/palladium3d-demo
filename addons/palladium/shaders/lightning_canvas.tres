@@ -6,6 +6,11 @@ code = "shader_type canvas_item;
 //uniform vec2 resolution = vec2(1024.0, 256.0);
 uniform vec3 color = vec3(4.75, 5.0, 20.0);
 
+uniform bool use_image_adjust = false;
+uniform float brightness = 1.0;
+uniform float contrast = 1.0;
+uniform float saturation = 1.0;
+
 float rand(vec2 co){
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
@@ -51,9 +56,20 @@ void fragment()
 	vec2 uv = UV * 2.0 - 1.0;
 	float t = 0.1 * abs(1.0 / (envelope(uv) + fbm(uv + TIME)));
 	vec3 finalColor = t * color;
+	
+	if (use_image_adjust) {
+		finalColor = mix(vec3(0.0), finalColor, brightness);
+		finalColor = mix(vec3(0.5), finalColor, contrast);
+		finalColor = mix(vec3(dot(vec3(1.0), finalColor) * 0.33333), finalColor, saturation);
+	}
+	
 	COLOR = vec4(finalColor, 0.1);
 }"
 
 [resource]
 shader = SubResource( 1 )
 shader_param/color = Vector3( 4.75, 5, 20 )
+shader_param/use_image_adjust = false
+shader_param/brightness = 1.0
+shader_param/contrast = 1.0
+shader_param/saturation = 1.0
