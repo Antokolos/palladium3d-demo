@@ -167,9 +167,9 @@ margin_bottom = 17.0
 text = "SETTINGS_TABLET_ORIENTATION"
 
 [node name="HVsync" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 210.0
+margin_top = 162.0
 margin_right = 1574.0
-margin_bottom = 234.0
+margin_bottom = 186.0
 custom_constants/separation = 20
 
 [node name="Vsync" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVsync"]
@@ -185,9 +185,9 @@ margin_bottom = 19.0
 text = "SETTINGS_VSYNC"
 
 [node name="HFullscreen" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 239.0
+margin_top = 191.0
 margin_right = 1574.0
-margin_bottom = 263.0
+margin_bottom = 215.0
 custom_constants/separation = 20
 
 [node name="Fullscreen" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HFullscreen"]
@@ -202,9 +202,9 @@ margin_bottom = 19.0
 text = "SETTINGS_FULLSCREEN"
 
 [node name="HInvertYAxis" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 268.0
+margin_top = 220.0
 margin_right = 1574.0
-margin_bottom = 292.0
+margin_bottom = 244.0
 custom_constants/separation = 20
 
 [node name="InvertYAxis" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HInvertYAxis"]
@@ -219,9 +219,9 @@ margin_bottom = 19.0
 text = "SETTINGS_INVERT_YAXIS"
 
 [node name="HCutoffEnabled" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 297.0
+margin_top = 249.0
 margin_right = 1574.0
-margin_bottom = 321.0
+margin_bottom = 273.0
 custom_constants/separation = 20
 
 [node name="CutoffEnabled" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HCutoffEnabled"]
@@ -236,9 +236,9 @@ margin_bottom = 19.0
 text = "SETTINGS_CUTOFF_ENABLED"
 
 [node name="HShaderCacheEnabled" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 326.0
+margin_top = 278.0
 margin_right = 1574.0
-margin_bottom = 350.0
+margin_bottom = 302.0
 custom_constants/separation = 20
 
 [node name="ShaderCacheEnabled" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HShaderCacheEnabled"]
@@ -253,9 +253,9 @@ margin_bottom = 19.0
 text = "SETTINGS_SHADER_CACHE_ENABLED"
 
 [node name="HPauseOnJoypadDisconnected" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 326.0
+margin_top = 307.0
 margin_right = 1574.0
-margin_bottom = 350.0
+margin_bottom = 331.0
 custom_constants/separation = 20
 
 [node name="PauseOnJoypadDisconnected" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HPauseOnJoypadDisconnected"]
@@ -265,14 +265,14 @@ margin_bottom = 24.0
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HPauseOnJoypadDisconnected"]
 margin_left = 44.0
 margin_top = 5.0
-margin_right = 274.0
+margin_right = 311.0
 margin_bottom = 19.0
 text = "SETTINGS_PAUSE_ON_JOY_DISCONNECTED"
 
 [node name="HDisableMouseIfJoypadConnected" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 326.0
+margin_top = 336.0
 margin_right = 1574.0
-margin_bottom = 350.0
+margin_bottom = 360.0
 custom_constants/separation = 20
 
 [node name="DisableMouseIfJoypadConnected" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HDisableMouseIfJoypadConnected"]
@@ -282,14 +282,14 @@ margin_bottom = 24.0
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HDisableMouseIfJoypadConnected"]
 margin_left = 44.0
 margin_top = 5.0
-margin_right = 274.0
+margin_right = 346.0
 margin_bottom = 19.0
 text = "SETTINGS_DISABLE_MOUSE_IF_JOY_CONNECTED"
 
 [node name="HSensitivityCoef" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 355.0
+margin_top = 365.0
 margin_right = 1574.0
-margin_bottom = 389.0
+margin_bottom = 399.0
 custom_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSensitivityCoef"]
@@ -321,27 +321,28 @@ margin_bottom = 24.0
 text = "SETTINGS_SENSITIVITY"
 
 [node name="HJoypadType" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_right = 577.0
-margin_bottom = 20.0
+margin_top = 404.0
+margin_right = 1574.0
+margin_bottom = 424.0
 custom_constants/separation = 20
 
 [node name="JoypadType" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
-margin_left = 117.0
-margin_right = 397.0
+margin_right = 280.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 280, 0 )
 align = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HJoypadType"]
+margin_left = 300.0
 margin_top = 3.0
-margin_right = 113.0
+margin_right = 449.0
 margin_bottom = 17.0
 text = "SETTINGS_JOYPAD_TYPE"
 
 [node name="HQuality" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 394.0
+margin_top = 429.0
 margin_right = 1574.0
-margin_bottom = 414.0
+margin_bottom = 449.0
 custom_constants/separation = 20
 
 [node name="Quality" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality"]
@@ -358,9 +359,9 @@ margin_bottom = 17.0
 text = "SETTINGS_QUALITY"
 
 [node name="HResolution" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 419.0
+margin_top = 454.0
 margin_right = 1574.0
-margin_bottom = 439.0
+margin_bottom = 474.0
 custom_constants/separation = 20
 
 [node name="Resolution" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HResolution"]
@@ -377,9 +378,9 @@ margin_bottom = 17.0
 text = "SETTINGS_RESOLUTION"
 
 [node name="HAA" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 444.0
+margin_top = 479.0
 margin_right = 1574.0
-margin_bottom = 464.0
+margin_bottom = 499.0
 custom_constants/separation = 20
 
 [node name="AA" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA"]
@@ -396,9 +397,9 @@ margin_bottom = 17.0
 text = "SETTINGS_AA"
 
 [node name="HLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 469.0
+margin_top = 504.0
 margin_right = 1574.0
-margin_bottom = 489.0
+margin_bottom = 524.0
 custom_constants/separation = 20
 
 [node name="Language" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage"]
@@ -415,9 +416,11 @@ margin_bottom = 17.0
 text = "SETTINGS_LANGUAGE"
 
 [node name="HVLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 494.0
-margin_right = 1574.0
-margin_bottom = 514.0
+editor/display_folded = true
+margin_left = 458.0
+margin_top = 504.0
+margin_right = 904.0
+margin_bottom = 524.0
 custom_constants/separation = 20
 
 [node name="VLanguage" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage"]
@@ -433,17 +436,18 @@ margin_right = 446.0
 margin_bottom = 17.0
 text = "SETTINGS_VLANGUAGE"
 
-[node name="HSubtitles" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 519.0
-margin_right = 1574.0
-margin_bottom = 543.0
+[node name="HSubtitles" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage"]
+margin_left = -458.0
+margin_top = 25.0
+margin_right = 1116.0
+margin_bottom = 49.0
 custom_constants/separation = 20
 
-[node name="Subtitles" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSubtitles"]
+[node name="Subtitles" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/HSubtitles"]
 margin_right = 24.0
 margin_bottom = 24.0
 
-[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSubtitles"]
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/HSubtitles"]
 margin_left = 44.0
 margin_top = 5.0
 margin_right = 176.0
@@ -451,9 +455,10 @@ margin_bottom = 19.0
 text = "SETTINGS_SUBTITLES"
 
 [node name="HMasterVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 548.0
+editor/display_folded = true
+margin_top = 558.0
 margin_right = 1574.0
-margin_bottom = 564.0
+margin_bottom = 574.0
 custom_constants/separation = 20
 
 [node name="MasterVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume"]
@@ -469,9 +474,9 @@ margin_bottom = 15.0
 text = "SETTINGS_VOLUME_MASTER"
 
 [node name="HMusicVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 569.0
+margin_top = 579.0
 margin_right = 1574.0
-margin_bottom = 585.0
+margin_bottom = 595.0
 custom_constants/separation = 20
 
 [node name="MusicVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume"]
@@ -488,9 +493,9 @@ margin_bottom = 15.0
 text = "SETTINGS_VOLUME_MUSIC"
 
 [node name="HSoundVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 590.0
+margin_top = 600.0
 margin_right = 1574.0
-margin_bottom = 606.0
+margin_bottom = 616.0
 custom_constants/separation = 20
 
 [node name="SoundVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume"]
@@ -507,9 +512,9 @@ margin_bottom = 15.0
 text = "SETTINGS_VOLUME_SOUND"
 
 [node name="HSpeechVolume" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 611.0
+margin_top = 621.0
 margin_right = 1574.0
-margin_bottom = 627.0
+margin_bottom = 637.0
 custom_constants/separation = 20
 
 [node name="SpeechVolume" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSpeechVolume"]
@@ -526,28 +531,26 @@ margin_bottom = 15.0
 text = "SETTINGS_VOLUME_SPEECH"
 
 [node name="HImageAdjust" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
-margin_top = 444.0
+margin_top = 642.0
 margin_right = 1574.0
-margin_bottom = 464.0
+margin_bottom = 676.0
 custom_constants/separation = 20
 
 [node name="UseImageAdjust" type="CheckBox" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
-margin_top = -147.0
 margin_right = 24.0
-margin_bottom = -123.0
+margin_bottom = 34.0
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
-margin_left = 300.0
-margin_top = 3.0
-margin_right = 384.0
-margin_bottom = 17.0
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 205.0
+margin_bottom = 24.0
 text = "SETTINGS_IMAGE_ADJUST"
 
 [node name="BoxBrightness" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
-margin_top = 167.0
-margin_right = 1574.0
-margin_bottom = 183.0
-custom_constants/separation = 20
+margin_left = 225.0
+margin_right = 505.0
+margin_bottom = 34.0
 
 [node name="Brightness" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness"]
 margin_right = 280.0
@@ -560,34 +563,31 @@ value = 0.2
 ticks_on_borders = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 280.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_right = 146.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "SETTINGS_BRIGHTNESS"
 align = 1
 
 [node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_left = 150.0
+margin_right = 280.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "1.00"
 align = 1
 
 [node name="BoxContrast" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
-margin_top = 167.0
-margin_right = 1574.0
-margin_bottom = 183.0
-custom_constants/separation = 20
+margin_left = 525.0
+margin_right = 805.0
+margin_bottom = 34.0
 
 [node name="Contrast" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast"]
 margin_right = 280.0
@@ -600,34 +600,31 @@ value = 0.2
 ticks_on_borders = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 280.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_right = 138.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "SETTINGS_CONTRAST"
 align = 1
 
 [node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_left = 142.0
+margin_right = 280.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "1.00"
 align = 1
 
 [node name="BoxSaturation" type="VBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust"]
-margin_top = 167.0
-margin_right = 1574.0
-margin_bottom = 183.0
-custom_constants/separation = 20
+margin_left = 825.0
+margin_right = 1105.0
+margin_bottom = 34.0
 
 [node name="Saturation" type="HSlider" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation"]
 margin_right = 280.0
@@ -640,25 +637,23 @@ value = 0.2
 ticks_on_borders = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 280.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_right = 149.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "SETTINGS_SATURATION"
 align = 1
 
 [node name="LabelValue" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer"]
-margin_left = 300.0
-margin_top = 1.0
-margin_right = 474.0
-margin_bottom = 15.0
+margin_left = 153.0
+margin_right = 280.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "1.00"
 align = 1
@@ -1317,7 +1312,7 @@ texture_hover = ExtResource( 29 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/VLanguage" to="." method="_on_VLanguage_item_selected"]
-[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSubtitles/Subtitles" to="." method="_on_Subtitles_pressed"]
+[connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HVLanguage/HSubtitles/Subtitles" to="." method="_on_Subtitles_pressed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMasterVolume/MasterVolume" to="." method="_on_MasterVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HMusicVolume/MusicVolume" to="." method="_on_MusicVolume_value_changed"]
 [connection signal="value_changed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HSoundVolume/SoundVolume" to="." method="_on_SoundVolume_value_changed"]
