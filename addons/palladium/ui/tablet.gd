@@ -38,16 +38,16 @@ onready var fullscreen = settings_app.get_node("VBoxContainer/HFullscreen/Fullsc
 onready var invert_yaxis = settings_app.get_node("VBoxContainer/HInvertYAxis/InvertYAxis")
 onready var cutoff_enabled = settings_app.get_node("VBoxContainer/HCutoffEnabled/CutoffEnabled")
 onready var shader_cache_enabled = settings_app.get_node("VBoxContainer/HShaderCacheEnabled/ShaderCacheEnabled")
-onready var pause_on_joypad_disconnected_parent = settings_app.get_node("VBoxContainer/HPauseOnJoypadDisconnected")
+onready var pause_on_joypad_disconnected_parent = settings_app.get_node("VBoxContainer/HJoypadType/HPauseOnJoypadDisconnected")
 onready var pause_on_joypad_disconnected = pause_on_joypad_disconnected_parent.get_node("PauseOnJoypadDisconnected")
 onready var disable_mouse_if_joypad_connected_parent = settings_app.get_node("VBoxContainer/HDisableMouseIfJoypadConnected")
 onready var disable_mouse_if_joypad_connected = disable_mouse_if_joypad_connected_parent.get_node("DisableMouseIfJoypadConnected")
 onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
-onready var resolution = settings_app.get_node("VBoxContainer/HResolution/Resolution")
+onready var resolution = settings_app.get_node("VBoxContainer/HQuality/HResolution/Resolution")
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
-onready var vlanguage = settings_app.get_node("VBoxContainer/HVLanguage/VLanguage")
-onready var subtitles = settings_app.get_node("VBoxContainer/HVLanguage/HSubtitles/Subtitles")
+onready var vlanguage = settings_app.get_node("VBoxContainer/HLanguage/HVLanguage/VLanguage")
+onready var subtitles = settings_app.get_node("VBoxContainer/HLanguage/HSubtitles/Subtitles")
 onready var sensitivity_coef_node = settings_app.get_node("VBoxContainer/HSensitivityCoef/VBoxContainer/SensitivityCoef")
 onready var sensitivity_coef_label_node = settings_app.get_node("VBoxContainer/HSensitivityCoef/VBoxContainer/Label")
 onready var master_volume_node = settings_app.get_node("VBoxContainer/HMasterVolume/MasterVolume")
@@ -55,12 +55,12 @@ onready var music_volume_node = settings_app.get_node("VBoxContainer/HMusicVolum
 onready var sound_volume_node = settings_app.get_node("VBoxContainer/HSoundVolume/SoundVolume")
 onready var speech_volume_node = settings_app.get_node("VBoxContainer/HSpeechVolume/SpeechVolume")
 onready var use_image_adjust = settings_app.get_node("VBoxContainer/HImageAdjust/UseImageAdjust")
-onready var brightness = settings_app.get_node("VBoxContainer/HImageAdjust/BoxBrightness/Brightness")
-onready var brightness_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxBrightness/HBoxContainer/LabelValue")
-onready var contrast = settings_app.get_node("VBoxContainer/HImageAdjust/BoxContrast/Contrast")
-onready var contrast_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxContrast/HBoxContainer/LabelValue")
-onready var saturation = settings_app.get_node("VBoxContainer/HImageAdjust/BoxSaturation/Saturation")
-onready var saturation_value = settings_app.get_node("VBoxContainer/HImageAdjust/BoxSaturation/HBoxContainer/LabelValue")
+onready var brightness = settings_app.get_node("VBoxContainer/HBoxBrightness/BoxBrightness/Brightness")
+onready var brightness_value = settings_app.get_node("VBoxContainer/HBoxBrightness/BoxBrightness/HBoxContainer/LabelValue")
+onready var contrast = settings_app.get_node("VBoxContainer/HBoxContrast/BoxContrast/Contrast")
+onready var contrast_value = settings_app.get_node("VBoxContainer/HBoxContrast/BoxContrast/HBoxContainer/LabelValue")
+onready var saturation = settings_app.get_node("VBoxContainer/HBoxSaturation/BoxSaturation/Saturation")
+onready var saturation_value = settings_app.get_node("VBoxContainer/HBoxSaturation/BoxSaturation/HBoxContainer/LabelValue")
 
 enum ActivationMode {DESKTOP, CHAT, CREDITS, MAP, DOCUMENTS, SETTINGS, SAVE, LOAD}
 
@@ -491,11 +491,11 @@ func _on_UseImageAdjust_pressed():
 	var ia = use_image_adjust.is_pressed() if use_image_adjust else settings.use_image_adjust
 	settings.set_use_image_adjust(ia)
 	if brightness:
-		brightness.get_parent().visible = ia
+		brightness.get_parent().get_parent().visible = ia
 	if contrast:
-		contrast.get_parent().visible = ia
+		contrast.get_parent().get_parent().visible = ia
 	if saturation:
-		saturation.get_parent().visible = ia
+		saturation.get_parent().get_parent().visible = ia
 
 func _on_Brightness_value_changed(value):
 	settings.set_brightness(value)
