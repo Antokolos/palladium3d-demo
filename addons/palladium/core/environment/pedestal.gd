@@ -8,15 +8,6 @@ export(PLDDB.PedestalIds) var pedestal_id = PLDDB.PedestalIds.NONE
 func connect_signals(target):
 	connect("use_pedestal", target, "use_pedestal")
 
-func can_be_used_by(player_node):
-	var hud = game_state.get_hud()
-	if hud and hud.get_active_item():
-		var item = hud.get_active_item()
-		for id in DB.get_pedestal_applicable_items():
-			if item.has_item_id(id):
-				return true
-	return .can_be_used_by(player_node)
-
 func cannot_use_action(player_node, item):
 	if not settings.is_difficulty_hard():
 		return true
@@ -71,6 +62,19 @@ func item_match(item):
 				return false
 			result = result or (not ch.is_present() and is_item_id_matches(item, ch.takable_id))
 	return result
+
+func get_usage_code(player_node):
+	if not is_empty():
+		return ""
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		for id in DB.get_pedestal_applicable_items():
+			if item.has_item_id(id):
+				return get_use_action_code(player_node, item)
+		if item_match(item):
+			return get_use_action_code(player_node, item)
+	return ""
 
 func get_use_action_code(player_node, item):
 	return "ACTION_PUT_1"
