@@ -43,6 +43,7 @@ onready var pause_on_joypad_disconnected = pause_on_joypad_disconnected_parent.g
 onready var disable_mouse_if_joypad_connected_parent = settings_app.get_node("VBoxContainer/HDisableMouseIfJoypadConnected")
 onready var disable_mouse_if_joypad_connected = disable_mouse_if_joypad_connected_parent.get_node("DisableMouseIfJoypadConnected")
 onready var quality = settings_app.get_node("VBoxContainer/HQuality/Quality")
+onready var difficulty = settings_app.get_node("VBoxContainer/HDifficulty/Difficulty")
 onready var resolution = settings_app.get_node("VBoxContainer/HQuality/HResolution/Resolution")
 onready var aa = settings_app.get_node("VBoxContainer/HAA/AA")
 onready var language = settings_app.get_node("VBoxContainer/HLanguage/Language")
@@ -126,6 +127,15 @@ func _ready():
 		settings.QUALITY_HIGH:
 			quality.select(3)
 	# _on_Quality_item_selected(settings.quality) -- not needed here, will be done on player _ready
+
+	difficulty.add_item(tr("SETTINGS_DIFFICULTY_NORMAL"), settings.DIFFICULTY_NORMAL)
+	difficulty.add_item(tr("SETTINGS_DIFFICULTY_HARD"), settings.DIFFICULTY_HARD)
+	match (settings.difficulty):
+		settings.DIFFICULTY_NORMAL:
+			difficulty.select(0)
+		settings.DIFFICULTY_HARD:
+			difficulty.select(1)
+	# _on_Difficulty_item_selected(settings.difficulty) -- not needed here, will be done on player _ready
 
 	var i = 0
 	var ssize = OS.get_screen_size()
@@ -449,6 +459,9 @@ func _on_DisableMouseIfJoypadConnected_pressed():
 
 func _on_Quality_item_selected(ID):
 	settings.set_quality(ID)
+
+func _on_Difficulty_item_selected(ID):
+	settings.set_difficulty(ID)
 
 func _on_Resolution_item_selected(ID):
 	settings.set_resolution(ID)

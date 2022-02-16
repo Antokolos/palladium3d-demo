@@ -8,6 +8,23 @@ export(PLDDB.PedestalIds) var pedestal_id = PLDDB.PedestalIds.NONE
 func connect_signals(target):
 	connect("use_pedestal", target, "use_pedestal")
 
+func can_be_used_by(player_node):
+	var hud = game_state.get_hud()
+	if hud and hud.get_active_item():
+		var item = hud.get_active_item()
+		for id in DB.get_pedestal_applicable_items():
+			if item.has_item_id(id):
+				return true
+	return .can_be_used_by(player_node)
+
+func cannot_use_action(player_node, item):
+	if not settings.is_difficulty_hard():
+		return true
+	MEDIA.play_sound(MEDIA.SoundId.MALE_SCREAM_SHORT)
+	game_state.set_surge(game_state.get_player(), true)
+	game_state.kill_party()
+	return true
+
 func use_action(player_node, item):
 	var child_item = make_present(item)
 	emit_signal("use_pedestal", player_node, self, item, child_item)

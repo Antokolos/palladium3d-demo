@@ -364,6 +364,7 @@ rect_min_size = Vector2( 150, 0 )
 text = "SETTINGS_QUALITY"
 
 [node name="HResolution" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality"]
+editor/display_folded = true
 margin_top = 25.0
 margin_right = 1574.0
 margin_bottom = 45.0
@@ -402,6 +403,25 @@ margin_top = 3.0
 margin_right = 384.0
 margin_bottom = 17.0
 text = "SETTINGS_AA"
+
+[node name="HDifficulty" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
+margin_top = 479.0
+margin_right = 1574.0
+margin_bottom = 499.0
+custom_constants/separation = 20
+
+[node name="Difficulty" type="OptionButton" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HDifficulty"]
+margin_right = 280.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 280, 0 )
+align = 1
+
+[node name="Label" type="Label" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HDifficulty"]
+margin_left = 300.0
+margin_top = 3.0
+margin_right = 384.0
+margin_bottom = 17.0
+text = "SETTINGS_DIFFICULTY"
 
 [node name="HLanguage" type="HBoxContainer" parent="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer"]
 margin_top = 504.0
@@ -1345,6 +1365,7 @@ texture_hover = ExtResource( 29 )
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/Quality" to="." method="_on_Quality_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HQuality/HResolution/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HAA/AA" to="." method="_on_AA_item_selected"]
+[connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HDifficulty/Difficulty" to="." method="_on_Difficulty_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/Language" to="." method="_on_Language_item_selected"]
 [connection signal="item_selected" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/HVLanguage/VLanguage" to="." method="_on_VLanguage_item_selected"]
 [connection signal="pressed" from="TabletPanel/TabletScreen/apps/settings_app/VBoxContainer/HLanguage/HSubtitles/Subtitles" to="." method="_on_Subtitles_pressed"]

@@ -44,6 +44,9 @@ static func is_item_stackable(takable_id):
 	var item_data = get_item_data(takable_id)
 	return item_data.stackable if item_data else false
 
+static func get_pedestal_applicable_items():
+	return PEDESTAL_APPLICABLE_ITEMS
+
 static func is_weapon_stun(takable_id):
 	if not takable_id or takable_id == TakableIds.NONE:
 		return false
@@ -114,6 +117,10 @@ func can_execute_custom_action(item, action = "item_preview_action_1", event = n
 #enum TakableIds {
 #	NONE = 0
 #}
+
+#const PEDESTAL_APPLICABLE_ITEMS = [
+#	TakableIds.XXX
+#]
 
 #enum UseTargetIds {
 #	NONE = 0
@@ -273,6 +280,17 @@ enum TakableIds {
 	ATHENA = 430,
 	PALLADIUM = 440
 }
+
+const PEDESTAL_APPLICABLE_ITEMS = [
+	TakableIds.SPHERE_FOR_POSTAMENT,
+	TakableIds.APATA,
+	TakableIds.URANIA,
+	TakableIds.CLIO,
+	TakableIds.MELPOMENE,
+	TakableIds.HERMES,
+	TakableIds.ERIDA,
+	TakableIds.ARES
+]
 
 enum UseTargetIds {
 	NONE = 0,

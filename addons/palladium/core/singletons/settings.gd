@@ -3,6 +3,7 @@ class_name PLDSettings
 
 signal language_changed(ID)
 signal quality_changed(ID)
+signal difficulty_changed(ID)
 signal resolution_changed(ID)
 signal cutoff_enabled_changed(enabled)
 signal shader_cache_enabled_changed(enabled)
@@ -32,6 +33,9 @@ const QUALITY_HIGH = 3
 const QUALITY_GOOD = 2
 const QUALITY_OPT = 1
 const QUALITY_NORM = 0
+
+const DIFFICULTY_HARD = 1
+const DIFFICULTY_NORMAL = 0
 
 const RESOLUTION_NATIVE = 4
 const RESOLUTION_1080 = 3
@@ -67,6 +71,7 @@ var fullscreen = true
 var invert_yaxis = false
 var sensitivity_coef = SENSITIVITY_COEF_DEFAULT
 var quality = QUALITY_OPT
+var difficulty = DIFFICULTY_NORMAL
 var resolution = RESOLUTION_NATIVE
 var aa_quality = AA_2X
 var language = LANGUAGE_EN
@@ -151,6 +156,9 @@ func load_settings():
 	if ("quality" in d):
 		quality = int(d.quality)
 
+	if ("difficulty" in d):
+		difficulty = int(d.difficulty)
+
 	if ("resolution" in d):
 		resolution = int(d.resolution)
 
@@ -209,6 +217,7 @@ func save_settings():
 		"invert_yaxis" : invert_yaxis,
 		"sensitivity_coef" : sensitivity_coef,
 		"quality" : quality,
+		"difficulty" : difficulty,
 		"resolution" : resolution,
 		"aa_quality" : aa_quality,
 		"language" : language,
@@ -412,6 +421,13 @@ func need_subtitles():
 func set_quality(ID):
 	quality = ID
 	emit_signal("quality_changed", ID)
+
+func set_difficulty(ID):
+	difficulty = ID
+	emit_signal("difficulty_changed", ID)
+
+func is_difficulty_hard():
+	return difficulty == DIFFICULTY_HARD
 
 func get_resolution_size(ID):
 	var maxid = resolutions.size() - 1

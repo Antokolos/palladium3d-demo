@@ -17,6 +17,7 @@ func use(player_node, camera_node):
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
 		if not item_match(item):
+			cannot_use_action(player_node, item)
 			return
 		hud.inventory.visible = false
 		item.used(player_node, self)
@@ -25,6 +26,9 @@ func use(player_node, camera_node):
 			item.remove(remove_all_items)
 		post_use_action(player_node, item, result)
 		emit_signal("use_use_target", player_node, self, item, result)
+
+func cannot_use_action(player_node, item):
+	return true
 
 func use_action(player_node, item):
 	return true
