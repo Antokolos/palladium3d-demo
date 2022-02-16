@@ -46,6 +46,9 @@ func show_tablet(is_show, activation_mode = PLDTablet.ActivationMode.DESKTOP):
 		settings.save_settings()
 		settings.save_input()
 
+func show_difficulty_dialog():
+	get_node("difficulty_dialog").popup_centered_ratio(0.5)
+
 func update_hud():
 	pass
 

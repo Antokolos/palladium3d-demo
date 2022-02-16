@@ -167,6 +167,7 @@
 "SETTINGS_DIFFICULTY","Game difficulty","Сложность игры"
 "SETTINGS_DIFFICULTY_NORMAL","Normal","Нормально"
 "SETTINGS_DIFFICULTY_HARD","Hard","Сложно"
+"DIALOG_DIFFICULTY_LABEL","Please select game difficulty. You can change it later in settings if you want to.","Пожалуйста, выберите сложность игры. Вы сможете изменить её позднее в настройках, если захотите."
 "SETTINGS_RESOLUTION","Resolution","Разрешение"
 "SETTINGS_AA","Anti-aliasing","Антиалиасинг"
 "SETTINGS_LANGUAGE","Language","Язык"

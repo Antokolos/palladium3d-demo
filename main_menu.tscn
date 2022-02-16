@@ -116,7 +116,6 @@ transform = Transform( -0.979372, 0, -0.202064, 0, 1, 0, 0.202064, 0, -0.979372,
 transform = Transform( 0.989106, 0, 0.147203, 0, 1, 0, -0.147203, 0, 0.989106, 0, 0.427819, 0.0529864 )
 
 [node name="menu_postament_new_game" parent="ViewportContainer/Viewport/main_menu" instance=ExtResource( 14 )]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9463, 1.14733, -0.789663 )
 
 [node name="menu_statue" parent="ViewportContainer/Viewport/main_menu/menu_postament_new_game" instance=ExtResource( 15 )]

@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.779865, 0.138945, 0.153607 )
 
-[node name="new_game_rus" index="0" instance=ExtResource( 1 )]
+[node name="new_game_rus" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 text_path = "Text"
 activation_lang_id = 1
