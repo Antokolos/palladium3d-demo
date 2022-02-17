@@ -54,26 +54,22 @@ func has_id(tid):
 func is_exclusive():
 	return exclusive
 
+func is_existent():
+	return is_present()
+
 func is_present():
 	if is_volatile_path():
 		return visible
 	var ts = game_state.get_takable_state(get_path())
 	return (ts == game_state.TakableState.DEFAULT and initially_present) or (ts == game_state.TakableState.PRESENT)
 
-func enable_collisions(enable):
-	for ch in get_children():
-		if ch is CollisionShape:
-			ch.disabled = not enable
-
 func make_present():
-	visible = true
-	enable_collisions(true)
+	make_present_without_state_change()
 	if not is_volatile_path():
 		game_state.set_takable_state(get_path(), false)
 
 func make_absent():
-	visible = false
-	enable_collisions(false)
+	make_absent_without_state_change()
 	if not is_volatile_path():
 		game_state.set_takable_state(get_path(), true)
 

@@ -12,13 +12,13 @@ func _input(event):
 
 func _on_DifficultyHardButton_pressed():
 	visible = false
-	settings.set_difficulty(settings.DIFFICULTY_HARD)
+	settings.set_difficulty(PLDSettings.DIFFICULTY_HARD)
 	game_state.get_hud().pause_game(false)
 	game_state.change_scene("res://intro_full.tscn")
 
 func _on_DifficultyNormalButton_pressed():
 	visible = false
-	settings.set_difficulty(settings.DIFFICULTY_NORMAL)
+	settings.set_difficulty(PLDSettings.DIFFICULTY_NORMAL)
 	game_state.get_hud().pause_game(false)
 	game_state.change_scene("res://intro_full.tscn")
 

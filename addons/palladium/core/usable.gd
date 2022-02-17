@@ -7,11 +7,42 @@ const USE_DISTANCE_COMMON = 2.6
 
 export(float) var use_distance = USE_DISTANCE_COMMON
 export(PLDDB.UsableIds) var usable_id = PLDDB.UsableIds.NONE
+export(bool) var remove_on_hard_difficulty = false
 
 func _ready():
 	if Engine.editor_hint:
 		return
 	game_state.register_usable(self)
+	if remove_on_hard_difficulty and settings.is_difficulty_hard():
+		make_absent_without_state_change()
+	settings.connect("difficulty_changed", self, "_on_difficulty_changed")
+
+func is_existent():
+	# It can be made invisible via make_absent_without_state_change(), but in global sense it always "exists"
+	# This behaviour can (and probably should) be redefined in child classes (for example, takable is not existent when it was taken)
+	return true
+
+func enable_collisions(enable):
+	for ch in get_children():
+		if ch is CollisionShape:
+			ch.disabled = not enable
+
+func make_present_without_state_change():
+	visible = true
+	enable_collisions(true)
+
+func make_absent_without_state_change():
+	visible = false
+	enable_collisions(false)
+
+func _on_difficulty_changed(ID):
+	match ID:
+		PLDSettings.DIFFICULTY_NORMAL:
+			if is_existent():
+				make_present_without_state_change()
+		PLDSettings.DIFFICULTY_HARD:
+			if remove_on_hard_difficulty:
+				make_absent_without_state_change()
 
 func get_usable_id():
 	return usable_id

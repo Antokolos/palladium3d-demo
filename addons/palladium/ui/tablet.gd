@@ -128,12 +128,12 @@ func _ready():
 			quality.select(3)
 	# _on_Quality_item_selected(settings.quality) -- not needed here, will be done on player _ready
 
-	difficulty.add_item(tr("SETTINGS_DIFFICULTY_NORMAL"), settings.DIFFICULTY_NORMAL)
-	difficulty.add_item(tr("SETTINGS_DIFFICULTY_HARD"), settings.DIFFICULTY_HARD)
+	difficulty.add_item(tr("SETTINGS_DIFFICULTY_NORMAL"), PLDSettings.DIFFICULTY_NORMAL)
+	difficulty.add_item(tr("SETTINGS_DIFFICULTY_HARD"), PLDSettings.DIFFICULTY_HARD)
 	match (settings.difficulty):
-		settings.DIFFICULTY_NORMAL:
+		PLDSettings.DIFFICULTY_NORMAL:
 			difficulty.select(0)
-		settings.DIFFICULTY_HARD:
+		PLDSettings.DIFFICULTY_HARD:
 			difficulty.select(1)
 	# _on_Difficulty_item_selected(settings.difficulty) -- not needed here, will be done on player _ready
 
