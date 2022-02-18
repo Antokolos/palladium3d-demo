@@ -64,16 +64,15 @@ func item_match(item):
 	return result
 
 func get_usage_code(player_node):
-	if not is_empty():
-		return ""
 	var hud = game_state.get_hud()
 	if hud and hud.get_active_item():
 		var item = hud.get_active_item()
-		for id in DB.get_pedestal_applicable_items():
-			if item.has_item_id(id):
-				return get_use_action_code(player_node, item)
 		if item_match(item):
 			return get_use_action_code(player_node, item)
+		if is_empty():
+			for id in DB.get_pedestal_applicable_items():
+				if item.has_item_id(id):
+					return get_use_action_code(player_node, item)
 	return ""
 
 func get_use_action_code(player_node, item):
