@@ -3,7 +3,6 @@ class_name PLDCharacterNodes
 
 const FRIENDLY_FIRE_ENABLED = false
 const OXYGEN_DECREASE_RATE = 5
-const INJURY_RATE = 20
 
 onready var character = get_parent()
 
@@ -366,9 +365,9 @@ func _on_AttackTimer_timeout():
 		if attack_target.is_in_group("party"):
 			if FRIENDLY_FIRE_ENABLED \
 				or not character.is_in_group("party"):
-				attack_target.hit(INJURY_RATE)
+				attack_target.hit(last_attack_data.injury_rate)
 		elif attack_target.is_in_group("enemies"):
-			attack_target.hit(INJURY_RATE)
+			attack_target.hit(last_attack_data.injury_rate)
 		if last_attack_target and attack_target.get_instance_id() != last_attack_target.get_instance_id():
 			last_attack_target.miss()
 	else:

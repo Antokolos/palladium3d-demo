@@ -27,6 +27,7 @@ const DEACCEL= 16
 const SPRINT_ACCEL = 4.5
 const MIN_MOVEMENT = 0.01
 const SPRINTING_DISTANCE_THRESHOLD = 10
+const INJURY_RATE = 20
 
 const PUSH_STRENGTH = 10
 const PUSH_BACK_STRENGTH = 30
@@ -145,8 +146,12 @@ func clear_last_attack_data():
 func get_last_attack_data():
 	return {
 		"target" : last_attack_target,
-		"anim_idx" : last_attack_anim_idx
+		"anim_idx" : last_attack_anim_idx,
+		"injury_rate" : get_attack_injury_rate()
 	}
+
+func get_attack_injury_rate():
+	return INJURY_RATE
 
 func is_attacking():
 	return character_nodes.is_attacking() or get_model().is_attacking()
@@ -677,6 +682,12 @@ func move_without_physics(hvel, fc, delta):
 		global_translate(hvel * delta)
 	return hvel
 
+func get_max_speed():
+	return MAX_SPEED
+
+func get_max_sprint_speed():
+	return MAX_SPRINT_SPEED
+
 func process_movement(delta, dir, characters):
 	var target = Vector3.ZERO if is_movement_disabled() else dir
 	var is_need_to_use_physics = is_need_to_use_physics(characters, target)
@@ -690,9 +701,9 @@ func process_movement(delta, dir, characters):
 		vel.y -= delta * get_gravity()
 
 	if is_sprinting:
-		target *= MAX_SPRINT_SPEED
+		target *= get_max_sprint_speed()
 	else:
-		target *= MAX_SPEED
+		target *= get_max_speed()
 
 	var hvel = vel
 	hvel.y = 0 if is_need_to_use_physics else target.y
