@@ -2,6 +2,7 @@ extends WindowDialog
 
 func _ready():
 	get_close_button().connect("pressed", self, "_on_DifficultyNormalButton_pressed")
+	get_node("VBoxContainer/HBoxContainer/DifficultyNormalButton").grab_focus()
 
 func _input(event):
 	if not visible:
