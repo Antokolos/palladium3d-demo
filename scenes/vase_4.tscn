@@ -11,7 +11,6 @@ extents = Vector3( 0.355888, 0.330617, 0.367869 )
 ]]
 mode = 1
 script = ExtResource( 1 )
-remove_on_hard_difficulty = true
 takable_id = 1
 can_loot_on_hard_difficulty = false
 max_count = 5
