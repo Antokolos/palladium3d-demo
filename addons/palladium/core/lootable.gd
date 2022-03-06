@@ -6,6 +6,7 @@ signal use_lootable(player_node, lootable)
 export(PLDDB.TakableIds) var takable_id = PLDDB.TakableIds.NONE
 export(int) var count_init = 1
 export(bool) var can_loot = true
+export(bool) var can_loot_on_hard_difficulty = true
 export(int) var max_count = 0
 
 func _ready():
@@ -35,7 +36,7 @@ func has_id(tid):
 	return takable_id == tid
 
 func is_can_loot():
-	return can_loot and is_present()
+	return can_loot and is_present() and (can_loot_on_hard_difficulty or not settings.is_difficulty_hard())
 
 func get_count():
 	return game_state.get_lootable_count(get_path())

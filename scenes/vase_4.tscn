@@ -13,6 +13,7 @@ mode = 1
 script = ExtResource( 1 )
 remove_on_hard_difficulty = true
 takable_id = 1
+can_loot_on_hard_difficulty = false
 max_count = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

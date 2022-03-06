@@ -12,6 +12,7 @@ extents = Vector3( 0.238545, 0.403932, 0.245942 )
 mode = 1
 script = ExtResource( 1 )
 can_loot = false
+can_loot_on_hard_difficulty = false
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.400466, 0 )
