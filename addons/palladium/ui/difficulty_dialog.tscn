@@ -44,24 +44,24 @@ alignment = 1
 [node name="DifficultyHardButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_right = 173.0
 margin_bottom = 38.0
-focus_neighbour_left = NodePath("../NoButton")
-focus_neighbour_top = NodePath("../NoButton")
-focus_neighbour_right = NodePath("../NoButton")
-focus_neighbour_bottom = NodePath("../NoButton")
-focus_next = NodePath("../NoButton")
-focus_previous = NodePath("../NoButton")
+focus_neighbour_left = NodePath("../DifficultyNormalButton")
+focus_neighbour_top = NodePath("../DifficultyNormalButton")
+focus_neighbour_right = NodePath("../DifficultyNormalButton")
+focus_neighbour_bottom = NodePath("../DifficultyNormalButton")
+focus_next = NodePath("../DifficultyNormalButton")
+focus_previous = NodePath("../DifficultyNormalButton")
 text = "SETTINGS_DIFFICULTY_HARD"
 
 [node name="DifficultyNormalButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 203.0
 margin_right = 366.0
 margin_bottom = 38.0
-focus_neighbour_left = NodePath("../YesButton")
-focus_neighbour_top = NodePath("../YesButton")
-focus_neighbour_right = NodePath("../YesButton")
-focus_neighbour_bottom = NodePath("../YesButton")
-focus_next = NodePath("../YesButton")
-focus_previous = NodePath("../YesButton")
+focus_neighbour_left = NodePath("../DifficultyHardButton")
+focus_neighbour_top = NodePath("../DifficultyHardButton")
+focus_neighbour_right = NodePath("../DifficultyHardButton")
+focus_neighbour_bottom = NodePath("../DifficultyHardButton")
+focus_next = NodePath("../DifficultyHardButton")
+focus_previous = NodePath("../DifficultyHardButton")
 text = "SETTINGS_DIFFICULTY_NORMAL"
 [connection signal="about_to_show" from="." to="." method="_on_difficulty_dialog_about_to_show"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DifficultyHardButton" to="." method="_on_DifficultyHardButton_pressed"]
