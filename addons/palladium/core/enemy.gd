@@ -69,6 +69,15 @@ func get_preferred_target():
 		return null
 	return get_aggression_target() if is_aggressive() else .get_preferred_target()
 
+func get_too_far_range():
+	return TOO_FAR_RANGE
+
+func get_aggression_range():
+	return AGGRESSION_RANGE
+
+func get_stop_chasing_range():
+	return STOP_CHASING_RANGE
+
 func set_states():
 	set_states_for_character(get_nearest_character(true))
 
@@ -84,18 +93,18 @@ func set_states_for_character(character):
 	var dtp = get_distance_to_character(character)
 	var is_hidden = character.is_hidden()
 	var was_aggressive = is_aggressive()
-	if was_aggressive and (dtp > TOO_FAR_RANGE or character.is_sprinting()):
+	if was_aggressive and (dtp > get_too_far_range() or character.is_sprinting()):
 		set_sprinting(true)
 	var has_obstacles = has_obstacles_between(character)
 	if (
 		was_aggressive
-		and dtp > STOP_CHASING_RANGE
+		and dtp > get_stop_chasing_range()
 		and has_obstacles
 	):
 		set_aggressive(false)
 		set_sprinting(false)
 	elif (
-		dtp < AGGRESSION_RANGE
+		dtp < get_aggression_range()
 		and not has_obstacles
 		and (
 			not is_hidden
