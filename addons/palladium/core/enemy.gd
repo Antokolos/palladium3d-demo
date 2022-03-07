@@ -125,7 +125,7 @@ func _physics_process(delta):
 	if not game_state.is_level_ready():
 		character_nodes.stop_all()
 		return
-	var d = .do_process(delta, false)
+	var d = do_process(delta, false)
 	if is_dying() or d.cannot_move:
 		return
 	set_states()
