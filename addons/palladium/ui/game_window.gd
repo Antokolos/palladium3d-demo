@@ -22,22 +22,14 @@ func do_input(event):
 			return 2
 		else:
 			return 0
-	if not event is InputEventMouseButton \
-		and (event.is_action_pressed("action") or event.is_action_pressed("ui_accept")):
+	var hud = game_state.get_hud()
+	if (
+		hud
+		and not event is InputEventMouseButton
+		and (event.is_action_pressed("action") or event.is_action_pressed("ui_accept"))
+	):
 		if not get_tree().paused \
-			or game_state.get_hud().is_tablet_visible() \
-			or game_state.get_hud().is_quit_dialog_visible():
-			click_the_left_mouse_button()
+			or hud.is_tablet_visible() \
+			or hud.is_quit_dialog_visible():
+			hud.get_mouse_cursor().click_the_left_mouse_button()
 	return 1
-
-func click_the_left_mouse_button():
-	var evt = InputEventMouseButton.new()
-	evt.factor = 1
-	evt.button_index = BUTTON_LEFT
-	evt.button_mask = BUTTON_MASK_LEFT
-	evt.position = get_viewport().get_mouse_position()
-	evt.global_position = evt.position
-	evt.pressed = true
-	get_tree().input_event(evt)
-	evt.pressed = false
-	get_tree().input_event(evt)

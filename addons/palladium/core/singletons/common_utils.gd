@@ -27,9 +27,6 @@ func _on_joy_connection_changed(device_id, is_connected):
 		if not get_tree().paused:
 			# When the controller is unplugged during gameplay, automatically pause the game
 			toggle_pause_menu()
-		var mouse_cursor = game_state.get_hud().get_mouse_cursor()
-		if mouse_cursor:
-			mouse_cursor.warp_mouse_in_center()
 		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func set_mouse_mode(mode):
